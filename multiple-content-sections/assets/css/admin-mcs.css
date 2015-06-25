@@ -1,0 +1,40 @@
+#mcs-container .spinner {
+	margin: 0px 10px 0;
+}
+
+.mcs-section-controls-container .spinner,
+.mcs-section-remove-container .spinner {
+	float: none;
+}
+
+.mcs-right {
+	text-align: right;
+}
+
+.mcs-section-meta .mcs-right,
+.mcs-section-controls-container .mcs-right {
+	float: right;
+}
+
+.js .multiple-content-sections-postbox .hndle {
+	cursor: pointer;
+}
+.js .ui-sortable .multiple-content-sections-postbox .hndle {
+	cursor: move;
+}
+
+.mcs-section-meta .dashicons {
+	font-size: 17px;
+	text-decoration: none;
+}
+
+.mcs-block-click {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	z-index: 100;
+	display:block;
+	background:transparent;
+}
