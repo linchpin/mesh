@@ -3,7 +3,7 @@
 Plugin Name: Multiple Content Sections
 Plugin URI: http://linchpin.agency
 Description: Add multiple content sections on a post by post basis.
-Version: 1.0.1
+Version: 1.1
 Author: Linchpin
 Author URI: http://linchpin.agency
 License: GPLv2 or later
@@ -24,6 +24,9 @@ class Multiple_Content_Sections {
 		add_action( 'edit_page_form', array( $this, 'edit_page_form' ) );
 
 		add_action( 'save_post', array( $this, 'save_post' ), 10, 2 );
+
+		add_filter( 'content_edit_pre', array( $this, 'the_content' ) );
+		add_filter( 'the_content', array( $this, 'the_content' ), 5 );
 
 		add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_styles' ) );
@@ -155,6 +158,39 @@ class Multiple_Content_Sections {
 				update_post_meta( $section->ID, '_mcs_template', $template );
 			}
 		}
+
+		//Save a page's content sections as post content for searchability
+		$section_query = mcs_get_sections( $post_id, 'query' );
+
+		if ( $section_query->have_posts() ) {
+
+			$section_content[] = '<div id="mcs-section-content">';
+
+			foreach ( $section_query->posts as $p ) {
+				$section_content[] = strip_tags( $p->post_title );
+				$section_content[] = strip_tags( $p->post_content );
+			}
+
+			$section_content[] = '</div>';
+
+			remove_action( 'save_post', array( $this, 'save_post' ), 10, 2 );
+
+			wp_update_post( array(
+				'ID' => $post_id,
+				'post_content' => $post->post_content . implode( ' ' , $section_content ),
+			) );
+
+			add_action( 'save_post', array( $this, 'save_post' ), 10, 2 );
+		}
+	}
+
+	function the_content( $content ) {
+		$pos = strpos( $content, '<div id="mcs-section-content">' );
+		if ( false !== $pos ) {
+			$content = substr( $content, 0, ( strlen( $content ) - $pos ) * -1 );
+		}
+
+		return $content;
 	}
 
 	/**
