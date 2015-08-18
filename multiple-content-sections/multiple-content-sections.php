@@ -144,7 +144,12 @@ class Multiple_Content_Sections {
 			$updates = array(
 				'ID' => (int) $section_id,
 				'post_title' => sanitize_text_field( $section_data['post_title'] ),
-				'post_content' => wp_kses_post( $section_data['post_content'] ),
+				'post_content' => wp_kses( $section_data['post_content'], array_merge(
+					array(
+						'iframe' => array( 'src' => true, 'style' => true, 'id' => true, 'class' => true )
+					),
+					wp_kses_allowed_html( 'post' )
+				) ),
 				'post_status' => $status,
 			);
 
@@ -167,6 +172,10 @@ class Multiple_Content_Sections {
 			$section_content[] = '<div id="mcs-section-content">';
 
 			foreach ( $section_query->posts as $p ) {
+				if ( 'publish' != $p->post_status ) {
+					continue;
+				}
+
 				$section_content[] = strip_tags( $p->post_title );
 				$section_content[] = strip_tags( $p->post_content );
 			}
@@ -402,18 +411,18 @@ function the_mcs_content( $post_id = '' ) {
  * @return void
  */
 function mcs_display_sections( $post_id = '' ) {
-	global $post;
+	global $post, $mcs_section_query;
 
 	if ( empty( $post_id ) ) {
 		$post_id = $post->ID;
 	}
 
-	if ( ! $section_query = mcs_get_sections( $post_id, 'query' ) ) {
+	if ( ! $mcs_section_query = mcs_get_sections( $post_id, 'query' ) ) {
 		return;
 	}
 
-	if ( $section_query = mcs_get_sections( get_the_ID(), 'query' ) ) {
-		if ( $section_query->have_posts() ) : while ( $section_query->have_posts() ) : $section_query->the_post();
+	if ( ! empty( $mcs_section_query ) ) {
+		if ( $mcs_section_query->have_posts() ) : while ( $mcs_section_query->have_posts() ) : $mcs_section_query->the_post();
 			the_mcs_content();
 		endwhile; endif; wp_reset_postdata();
 	}
