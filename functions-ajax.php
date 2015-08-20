@@ -65,9 +65,12 @@ class Multiple_Content_Sections_AJAX {
 	 * @since 1.2.0
 	 */
 	function mcs_choose_layout() {
-//		check_ajax_referer( 'mcs_choose_layout_nonce', 'mcs_choose_layout_nonce' );
+		check_ajax_referer( 'mcs_choose_layout_nonce', 'mcs_choose_layout_nonce' );
 
-		$section_layout = (int) $_POST['mcs_section_layout'];
+		if( ! $section_layout = sanitize_title( $_POST['mcs_section_layout'] ) ) {
+			$section_layout = 'default';
+		}
+
 		$section_ID     = (int) $_POST['mcs_section_id'];
 
 		if ( ! is_admin() ) {
@@ -78,7 +81,7 @@ class Multiple_Content_Sections_AJAX {
 			return;
 		}
 
-		include LINCHPIN_MCS___PLUGIN_DIR . 'admin/templates/columns-2.php';
+		include LINCHPIN_MCS___PLUGIN_DIR . 'admin/templates/' . $section_layout . '.php';
 
 		wp_die();
 	}

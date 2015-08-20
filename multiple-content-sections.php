@@ -237,6 +237,8 @@ class Multiple_Content_Sections {
 
 		wp_localize_script( 'admin-mcs', 'mcs_data', array(
 			'post_id' => $post->ID,
+			'site_uri' => site_url(),
+			'choose_layout_nonce' => wp_create_nonce( 'mcs_choose_layout_nonce' ),
 			'remove_section_nonce' => wp_create_nonce( 'mcs_remove_section_nonce' ),
 			'add_section_nonce' => wp_create_nonce( 'mcs_add_section_nonce' ),
 			'reorder_section_nonce' => wp_create_nonce( 'mcs_reorder_section_nonce' ),

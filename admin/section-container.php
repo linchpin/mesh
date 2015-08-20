@@ -32,7 +32,7 @@
 
 				<label for="mcs-sections[<?php esc_attr_e( $section->ID ); ?>][template]"><strong><?php esc_html_e( 'Template:', 'linchpin-mcs' ); ?></strong></label>
 				<select class="mcs-choose-layout" name="mcs-sections[<?php esc_attr_e( $section->ID ); ?>][template]">
-					<option value=""><?php esc_html_e( 'Default', 'linchpin-mcs' ); ?></option>
+					<option value="default"><?php esc_html_e( 'Default', 'linchpin-mcs' ); ?></option>
 					<option value="columns-2"><?php esc_html_e( '2 Content Columns', 'linchpin-mcs' ); ?></option>
 					<?php foreach ( array_keys( $templates ) as $template ) : ?>
 						<option value="<?php esc_attr_e( $template ); ?>" <?php selected( $selected, $template ); ?>><?php esc_html_e( $templates[ $template ] ); ?></option>
@@ -44,9 +44,12 @@
 		<div class="mcs-editor-area" id="mcs-sections-editor-<?php esc_attr_e( $section->ID ); ?>">
 			<?php
 			// @todo: Load in the editor sections here using ajax or otherwise.
+
+			$section_id = $section->ID;
+			$section_post_content = $section->post_content;
+
 			switch ( $template ) {
 				case 'columns-2' :
-					$section_id = $section->ID;
 					include LINCHPIN_MCS___PLUGIN_DIR . 'admin/templates/columns-2.php';
 				break;
 				default :
