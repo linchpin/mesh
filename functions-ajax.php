@@ -20,7 +20,7 @@ class Multiple_Content_Sections_AJAX {
 	 */
 	function __construct() {
 		add_action( 'wp_ajax_mcs_add_section',           array( $this, 'mcs_add_section' ) );
-		add_action( 'wp_ajax_mcs_add_section',           array( $this, 'mcs_choose_layout' ) );
+		add_action( 'wp_ajax_mcs_choose_layout',         array( $this, 'mcs_choose_layout' ) );
 		add_action( 'wp_ajax_mcs_remove_section',        array( $this, 'mcs_remove_section' ) );
 		add_action( 'wp_ajax_mcs_update_order',          array( $this, 'mcs_update_order' ) );
 		add_action( 'wp_ajax_mcs_update_featured_image', array( $this, 'mcs_update_featured_image' ) );
@@ -65,9 +65,22 @@ class Multiple_Content_Sections_AJAX {
 	 * @since 1.2.0
 	 */
 	function mcs_choose_layout() {
-		check_ajax_referer( 'mcs_choose_layout_nonce', 'mcs_choose_layout_nonce' );
+//		check_ajax_referer( 'mcs_choose_layout_nonce', 'mcs_choose_layout_nonce' );
 
+		$section_layout = (int) $_POST['mcs_section_layout'];
+		$section_ID     = (int) $_POST['mcs_section_id'];
 
+		if ( ! is_admin() ) {
+			return;
+		}
+
+		if ( ! current_user_can( 'edit_post', $section_ID ) ) {
+			return;
+		}
+
+		include LINCHPIN_MCS___PLUGIN_DIR . 'admin/templates/columns-2.php';
+
+		wp_die();
 	}
 
 	/**
@@ -78,7 +91,7 @@ class Multiple_Content_Sections_AJAX {
 	function mcs_remove_section() {
 		check_ajax_referer( 'mcs_remove_section_nonce', 'mcs_remove_section_nonce' );
 
-		$post_id = (int) $_POST['mcs_post_id'];
+		$post_id    = (int) $_POST['mcs_post_id'];
 		$section_id = (int) $_POST['mcs_section_id'];
 
 		if ( empty( $post_id ) || empty( $section_id ) ) {
@@ -108,7 +121,7 @@ class Multiple_Content_Sections_AJAX {
 	function mcs_update_order() {
 		check_ajax_referer( 'mcs_reorder_section_nonce', 'mcs_reorder_section_nonce' );
 
-		$post_id = (int) $_POST['mcs_post_id'];
+		$post_id     = (int) $_POST['mcs_post_id'];
 		$section_ids = array_map( 'intval', $_POST['mcs_section_ids'] );
 
 		if ( empty( $post_id ) || empty( $section_ids ) ) {

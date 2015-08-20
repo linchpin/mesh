@@ -12,4 +12,3 @@
 wp_editor( $section->post_content, 'mcs-section-editor-' . $section->ID, array(
 	'textarea_name' => 'mcs-sections[' . $section->ID . '][post_content]',
 ) );
-?>

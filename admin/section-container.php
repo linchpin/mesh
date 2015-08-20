@@ -41,10 +41,18 @@
 			</span>
 		</p>
 
-		<div class="mcs-editor-area">
-			<?php // @todo: Load in the editor sections here using ajax or otherwise. ?>
-
-			<?php include LINCHPIN_MCS___PLUGIN_DIR . 'admin/templates/default.php'; ?>
+		<div class="mcs-editor-area" id="mcs-sections-editor-<?php esc_attr_e( $section->ID ); ?>">
+			<?php
+			// @todo: Load in the editor sections here using ajax or otherwise.
+			switch ( $template ) {
+				case 'columns-2' :
+					$section_id = $section->ID;
+					include LINCHPIN_MCS___PLUGIN_DIR . 'admin/templates/columns-2.php';
+				break;
+				default :
+					include LINCHPIN_MCS___PLUGIN_DIR . 'admin/templates/default.php';
+			}
+			?>
 		</div>
 		<p class="mcs-section-remove-container mcs-right">
 			<span class="spinner"></span>

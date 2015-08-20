@@ -38,30 +38,47 @@ multiple_content_sections.admin = function ( $ ) {
 			}
 		},
 
-		choose_layout : function(event) {
-			console.log( 'change layout' );
+		choose_layout : function( event ) {
 
 			event.preventDefault();
 			event.stopPropagation();
 
+			var $this      = $(this),
+				$spinner   = $this.siblings('.spinner'),
+				$section   = $this.parents('.multiple-content-sections-section'),
+				section_id = $section.attr('data-mcs-section-id');
+
+			if ( $this.hasClass('disabled') ) {
+				return false;
+			}
+
+			$spinner.addClass('is-active');
+
 			$.post( ajaxurl, {
-				action: 'mcs_choose_layout',
-				mcs_post_id: mcs_data.section_id,
-				mcs_add_section_nonce: mcs_data.add_section_nonce
-			}, function(response){
+				action                  : 'mcs_choose_layout',
+				mcs_post_id             : mcs_data.post_id,
+				mcs_section_id          : section_id
+			//	mcs_choose_layout_nonce : mcs_data.add_section_nonce
+			}, function( response ) {
 				if ( response ) {
-					var $response = $response_div = $( '<div />' ).html(response),
-						$actual_response = $( '.multiple-content-sections-section', $response ),
-						editor_id = '#mcs-section-editor-' + $actual_response.attr( 'data-mcs-section-id' ),
-						$editor = $(editor_id, $response );
 
-					$section_container.append( $actual_response );
+					var $response = $( '<div />' ).html( response );
+
+					$( '#mcs-sections-editor-' + section_id ).html('').append( $response );
+
+					tinymce.get('mcs-section-editor-' + section_id).remove();
+					// tinymce.get('mcs-section-editor-' + section_id + '-support' ).remove();
+
+					tinymce.init({
+
+						selector : '#mcs-section-editor-' + section_id
+					});
+
+					tinymce.init({
+						selector : '#mcs-section-editor-' + section_id + '-support'
+					});
+
 					$spinner.removeClass('is-active');
-
-					$postboxes = $('.multiple-content-sections-section', $meta_box_container);
-					if ( $postboxes.length > 1 ) {
-						$reorder_button.removeClass( 'disabled' );
-					}
 
 				} else {
 					$spinner.removeClass('is-active');

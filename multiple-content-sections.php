@@ -321,10 +321,16 @@ function mcs_add_section_admin_markup( $section, $closed = false ) {
 	include LINCHPIN_MCS___PLUGIN_DIR . '/admin/section-container.php';
 }
 
+/**
+* @param $post_id
+* @param string $return_type
+ *
+*@return array|WP_Query
+ */
 function mcs_get_sections( $post_id, $return_type = 'array' ) {
 	$content_sections = new WP_Query( array(
 		'post_type' => 'mcs_section',
-		'posts_per_page' => 100,
+		'posts_per_page' => 50,
 		'orderby' => 'menu_order',
 		'order' => 'ASC',
 		'post_parent' => (int) $post_id,
