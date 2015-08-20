@@ -10,7 +10,7 @@ multiple_content_sections.admin = function ( $ ) {
 		$add_button         = $('.mcs-section-add'),
 		$meta_box_container = $('#mcs-container'),
 		$section_container  = $('#multiple-content-sections-container'),
-		media_frames = [];
+		media_frames        = [];
 
 	return {
 
@@ -24,6 +24,8 @@ multiple_content_sections.admin = function ( $ ) {
 				.on('click', '.mcs-section-reorder', multiple_content_sections.admin.reorder_sections )
 				.on('click', '.mcs-save-order', multiple_content_sections.admin.save_section_order )
 
+				.on('change', '.mcs-choose-layout', multiple_content_sections.admin.choose_layout )
+
 				.on('click', '.mcs-featured-image-choose', multiple_content_sections.admin.choose_background )
 				.on('click.OpenMediaManager', '.mcs-featured-image-choose', multiple_content_sections.admin.choose_background )
 
@@ -34,6 +36,38 @@ multiple_content_sections.admin = function ( $ ) {
 			if ( $sections.length <= 1 ) {
 				$reorder_button.addClass( 'disabled' );
 			}
+		},
+
+		choose_layout : function(event) {
+			console.log( 'change layout' );
+
+			event.preventDefault();
+			event.stopPropagation();
+
+			$.post( ajaxurl, {
+				action: 'mcs_choose_layout',
+				mcs_post_id: mcs_data.section_id,
+				mcs_add_section_nonce: mcs_data.add_section_nonce
+			}, function(response){
+				if ( response ) {
+					var $response = $response_div = $( '<div />' ).html(response),
+						$actual_response = $( '.multiple-content-sections-section', $response ),
+						editor_id = '#mcs-section-editor-' + $actual_response.attr( 'data-mcs-section-id' ),
+						$editor = $(editor_id, $response );
+
+					$section_container.append( $actual_response );
+					$spinner.removeClass('is-active');
+
+					$postboxes = $('.multiple-content-sections-section', $meta_box_container);
+					if ( $postboxes.length > 1 ) {
+						$reorder_button.removeClass( 'disabled' );
+					}
+
+				} else {
+					$spinner.removeClass('is-active');
+				}
+			});
+
 		},
 
 		add_section : function(event) {
