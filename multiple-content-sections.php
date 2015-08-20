@@ -8,15 +8,34 @@ Author: Linchpin
 Author URI: http://linchpin.agency
 License: GPLv2 or later
 */
+
+// Make sure we don't expose any info if called directly.
+if ( ! function_exists( 'add_action' ) ) {
+exit;
+}
+
+define( 'LINCHPIN_MCS_VERSION', '1.2.0' );
+define( 'LINCHPIN_MCS_PLUGIN_NAME', 'Multiple Content Sections' );
+define( 'LINCHPIN_MCS__MINIMUM_WP_VERSION', '4.0' );
+define( 'LINCHPIN_MCS___PLUGIN_URL', plugin_dir_url( __FILE__ ) );
+define( 'LINCHPIN_MCS___PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
+
+/**
+ * Class Multiple_Content_Sections
+ */
 class Multiple_Content_Sections {
 
+	/**
+	 * Store available templates.
+	 *
+	 * @var array
+	 */
 	public $templates = array();
 
 	/**
 	 * __construct function.
 	 *
 	 * @access public
-	 * @return void
 	 */
 	function __construct() {
 		add_action( 'init', array( $this, 'init' ) );
@@ -37,7 +56,7 @@ class Multiple_Content_Sections {
 	}
 
 	/**
-	 * init function.
+	 * Init function.
 	 *
 	 * @access public
 	 * @return void
@@ -128,11 +147,11 @@ class Multiple_Content_Sections {
 		foreach ( $_POST['mcs-sections'] as $section_id => $section_data ) {
 			$section = get_post( (int) $section_id );
 
-			if ( 'mcs_section' != $section->post_type ) {
+			if ( 'mcs_section' !== $section->post_type ) {
 				continue;
 			}
 
-			if ( $post_id != $section->post_parent ) {
+			if ( $post_id !== $section->post_parent ) {
 				continue;
 			}
 
@@ -172,7 +191,7 @@ class Multiple_Content_Sections {
 			$section_content[] = '<div id="mcs-section-content">';
 
 			foreach ( $section_query->posts as $p ) {
-				if ( 'publish' != $p->post_status ) {
+				if ( 'publish' !== $p->post_status ) {
 					continue;
 				}
 
@@ -182,7 +201,7 @@ class Multiple_Content_Sections {
 
 			$section_content[] = '</div>';
 
-			remove_action( 'save_post', array( $this, 'save_post' ), 10, 2 );
+			remove_action( 'save_post', array( $this, 'save_post' ), 10, 2 ); // @todo: Needs review I think remove action only calls for 3 items
 
 			wp_update_post( array(
 				'ID' => $post_id,
@@ -218,6 +237,8 @@ class Multiple_Content_Sections {
 
 		wp_localize_script( 'admin-mcs', 'mcs_data', array(
 			'post_id' => $post->ID,
+			'site_uri' => site_url(),
+			'choose_layout_nonce' => wp_create_nonce( 'mcs_choose_layout_nonce' ),
 			'remove_section_nonce' => wp_create_nonce( 'mcs_remove_section_nonce' ),
 			'add_section_nonce' => wp_create_nonce( 'mcs_add_section_nonce' ),
 			'reorder_section_nonce' => wp_create_nonce( 'mcs_reorder_section_nonce' ),
@@ -298,56 +319,20 @@ function mcs_add_section_admin_markup( $section, $closed = false ) {
 	$selected = get_post_meta( $section->ID, '_mcs_template', true );
 
 	$featured_image_id = get_post_thumbnail_id( $section->ID );
-	?>
-	<div class="multiple-content-sections-section multiple-content-sections-postbox postbox <?php echo $closed ? 'closed' : '' ; ?>" data-mcs-section-id="<?php echo $section->ID; ?>">
-		<div class="handlediv" title="Click to toggle"><br></div>
-		<h3 class="hndle ui-sortable-handle"><span><?php echo $section->post_title; ?></span><span class="spinner"></span></h3>
-		<div class="inside">
-			<p>
-				<input type="text" name="mcs-sections[<?php echo $section->ID; ?>][post_title]" class="mcs-section-title widefat" value="<?php esc_attr_e( $section->post_title ); ?>" />
-			</p>
-			<p class="mcs-section-meta">
-				<span class="mcs-right">
-					<?php if ( empty( $featured_image_id ) ) : ?>
-						<a href="" class="mcs-featured-image-choose">Choose background image</a>
-					<?php else : ?>
-						<a href="" class="mcs-featured-image-choose" data-mcs-section-featured-image="<?php esc_attr_e( $featured_image_id ); ?>"><?php echo get_the_title( $featured_image_id ); ?> <span class="dashicons dashicons-edit"></span></a>
-					<?php endif; ?>
-				</span>
-				<span class="mcs-left">
-					<label for="mcs-sections[<?php echo $section->ID; ?>][post_status]"><strong>Status: </strong></label>
-					<select name="mcs-sections[<?php echo $section->ID; ?>][post_status]">
-						<option value="draft" <?php selected( $section->post_status, 'draft' ); ?>>Draft</option>
-						<option value="publish" <?php selected( $section->post_status, 'publish' ); ?>>Published</option>
-					</select>
 
-					<label for="mcs-sections[<?php echo $section->ID; ?>][template]"><strong>Template: </strong></label>
-					<select name="mcs-sections[<?php echo $section->ID; ?>][template]">
-						<option value="">Default</option>
-						<?php foreach ( array_keys( $templates ) as $template ) : ?>
-							<option value="<?php echo $template; ?>" <?php selected( $selected, $template ); ?>><?php echo $templates[ $template ]; ?></option>
-						<?php endforeach; ?>
-					</select>
-				</span>
-			</p>
-			<?php
-				wp_editor( $section->post_content, 'mcs-section-editor-' . $section->ID, array(
-					'textarea_name' => 'mcs-sections[' . $section->ID . '][post_content]',
-				) );
-			?>
-			<p class="mcs-section-remove-container mcs-right">
-				<span class="spinner"></span>
-				<a href="" class="button mcs-section-remove">Remove Section</a>
-			</p>
-		</div>
-	</div>
-	<?php
+	include LINCHPIN_MCS___PLUGIN_DIR . '/admin/section-container.php';
 }
 
+/**
+* @param $post_id
+* @param string $return_type
+ *
+*@return array|WP_Query
+ */
 function mcs_get_sections( $post_id, $return_type = 'array' ) {
 	$content_sections = new WP_Query( array(
 		'post_type' => 'mcs_section',
-		'posts_per_page' => 100,
+		'posts_per_page' => 50,
 		'orderby' => 'menu_order',
 		'order' => 'ASC',
 		'post_parent' => (int) $post_id,
@@ -379,7 +364,7 @@ function the_mcs_content( $post_id = '' ) {
 		$post_id = $post->ID;
 	}
 
-	if ( 'mcs_section' != get_post_type( $post_id ) ) {
+	if ( 'mcs_section' !== get_post_type( $post_id ) ) {
 		return;
 	}
 

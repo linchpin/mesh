@@ -12,8 +12,21 @@
 }
 
 .mcs-section-meta .mcs-right,
-.mcs-section-controls-container .mcs-right {
+.mcs-section-controls-container .mcs-right,
+.mcs-editor-area .mcs-right {
 	float: right;
+}
+
+.columns-6 {
+	width:49%;
+}
+
+.mcs-editor-area .mcs-left {
+	float: left;
+}
+
+.mcs-editor-area {
+	overflow:hidden;
 }
 
 .js .multiple-content-sections-postbox .hndle {

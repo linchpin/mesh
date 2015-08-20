@@ -10,7 +10,7 @@ multiple_content_sections.admin = function ( $ ) {
 		$add_button         = $('.mcs-section-add'),
 		$meta_box_container = $('#mcs-container'),
 		$section_container  = $('#multiple-content-sections-container'),
-		media_frames = [];
+		media_frames        = [];
 
 	return {
 
@@ -24,6 +24,8 @@ multiple_content_sections.admin = function ( $ ) {
 				.on('click', '.mcs-section-reorder', multiple_content_sections.admin.reorder_sections )
 				.on('click', '.mcs-save-order', multiple_content_sections.admin.save_section_order )
 
+				.on('change', '.mcs-choose-layout', multiple_content_sections.admin.choose_layout )
+
 				.on('click', '.mcs-featured-image-choose', multiple_content_sections.admin.choose_background )
 				.on('click.OpenMediaManager', '.mcs-featured-image-choose', multiple_content_sections.admin.choose_background )
 
@@ -34,6 +36,157 @@ multiple_content_sections.admin = function ( $ ) {
 			if ( $sections.length <= 1 ) {
 				$reorder_button.addClass( 'disabled' );
 			}
+		},
+
+		choose_layout : function( event ) {
+
+			event.preventDefault();
+			event.stopPropagation();
+
+			var $this      = $(this),
+				$spinner   = $this.siblings('.spinner'),
+				$section   = $this.parents('.multiple-content-sections-section'),
+				section_id = $section.attr('data-mcs-section-id');
+
+			if ( $this.hasClass('disabled') ) {
+				return false;
+			}
+
+			$spinner.addClass('is-active');
+
+			$.post( ajaxurl, {
+				action                  : 'mcs_choose_layout',
+				mcs_post_id             : mcs_data.post_id,
+				mcs_section_id          : section_id,
+				mcs_section_layout      : $(this).val(),
+				mcs_choose_layout_nonce : mcs_data.choose_layout_nonce
+			}, function( response ) {
+				if ( response ) {
+
+					var $response = $( '<div />' ).html( response );
+
+					$( '#mcs-sections-editor-' + section_id ).html('').append( $response );
+
+					if( typeof tinymce.editors !== 'undefined' ) {
+
+						if( tinymce.editors[ 'mcs-section-editor-' + section_id ] ) {
+							tinymce.get('mcs-section-editor-' + section_id ).remove();
+						}
+
+						if( tinymce.editors[ 'mcs-section-editor-' + section_id + '-support' ] ) {
+							tinymce.get('mcs-section-editor-' + section_id + '-support' ).remove();
+						}
+					}
+
+					if( $('#mcs-section-editor-' + section_id ).length > 0 ) {
+						tinymce.init({
+							theme: "modern",
+							skin: "lightgray",
+							language: "en",
+							formats: {
+								alignleft: [{
+									selector: "p,h1,h2,h3,h4,h5,h6,td,th,div,ul,ol,li",
+									styles: {textAlign: "left"}
+								}, {selector: "img,table,dl.wp-caption", classes: "alignleft"}],
+								aligncenter: [{
+									selector: "p,h1,h2,h3,h4,h5,h6,td,th,div,ul,ol,li",
+									styles: {textAlign: "center"}
+								}, {selector: "img,table,dl.wp-caption", classes: "aligncenter"}],
+								alignright: [{
+									selector: "p,h1,h2,h3,h4,h5,h6,td,th,div,ul,ol,li",
+									styles: {textAlign: "right"}
+								}, {selector: "img,table,dl.wp-caption", classes: "alignright"}],
+								strikethrough: {inline: "del"}
+							},
+							relative_urls: false,
+							remove_script_host: false,
+							convert_urls: false,
+							browser_spellcheck: true,
+							fix_list_elements: true,
+							entities: "38,amp,60,lt,62,gt",
+							entity_encoding: "raw",
+							keep_styles: false,
+							cache_suffix: "wp-mce-4203-20150730",
+							preview_styles: "font-family font-size font-weight font-style text-decoration text-transform",
+							end_container_on_empty_block: true,
+							wpeditimage_disable_captions: false,
+							wpeditimage_html5_captions: true,
+							plugins: "charmap,colorpicker,hr,lists,media,paste,tabfocus,textcolor,fullscreen,wordpress,wpautoresize,wpeditimage,wpemoji,wpgallery,wplink,wpdialogs,wptextpattern,wpview",
+							content_css: mcs_data.site_url + "/wp-includes/css/dashicons.css?ver=4.3," + mcs_data.site_url + "/wp-includes/js/tinymce/skins/wordpress/wp-content.css?ver=4.3,https://fonts.googleapis.com/css?family=Noto+Sans%3A400italic%2C700italic%2C400%2C700%7CNoto+Serif%3A400italic%2C700italic%2C400%2C700%7CInconsolata%3A400%2C700&subset=latin%2Clatin-ext," + mcs_data.site_url + "/wp-content/themes/twentyfifteen/css/editor-style.css," + mcs_data.site_url + "/wp-content/themes/twentyfifteen/genericons/genericons.css",
+							resize: false,
+							menubar: false,
+							wpautop: true,
+							indent: false,
+							toolbar1: "bold,italic,bullist,numlist,blockquote,hr,alignleft,aligncenter,alignright,link,unlink,spellchecker",
+							toolbar2: "",
+							toolbar3: "",
+							toolbar4: "",
+							tabfocus_elements: "content-html,save-post",
+							body_class: "content post-type-page post-status-publish locale-en-us",
+							wp_autoresize_on: true,
+							add_unload_trigger: false,
+							selector: '#mcs-section-editor-' + section_id
+						});
+					}
+
+					if( $('#mcs-section-editor-' + section_id + '-support' ).length > 0 ) {
+						tinymce.init({
+							theme: "modern",
+							skin: "lightgray",
+							language: "en",
+							formats: {
+								alignleft: [{
+									selector: "p,h1,h2,h3,h4,h5,h6,td,th,div,ul,ol,li",
+									styles: {textAlign: "left"}
+								}, {selector: "img,table,dl.wp-caption", classes: "alignleft"}],
+								aligncenter: [{
+									selector: "p,h1,h2,h3,h4,h5,h6,td,th,div,ul,ol,li",
+									styles: {textAlign: "center"}
+								}, {selector: "img,table,dl.wp-caption", classes: "aligncenter"}],
+								alignright: [{
+									selector: "p,h1,h2,h3,h4,h5,h6,td,th,div,ul,ol,li",
+									styles: {textAlign: "right"}
+								}, {selector: "img,table,dl.wp-caption", classes: "alignright"}],
+								strikethrough: {inline: "del"}
+							},
+							relative_urls: false,
+							remove_script_host: false,
+							convert_urls: false,
+							browser_spellcheck: true,
+							fix_list_elements: true,
+							entities: "38,amp,60,lt,62,gt",
+							entity_encoding: "raw",
+							keep_styles: false,
+							cache_suffix: "wp-mce-4203-20150730",
+							preview_styles: "font-family font-size font-weight font-style text-decoration text-transform",
+							end_container_on_empty_block: true,
+							wpeditimage_disable_captions: false,
+							wpeditimage_html5_captions: true,
+							plugins: "charmap,colorpicker,hr,lists,media,paste,tabfocus,textcolor,fullscreen,wordpress,wpautoresize,wpeditimage,wpemoji,wpgallery,wplink,wpdialogs,wptextpattern,wpview",
+							content_css: mcs_data.site_url + "/wp-includes/css/dashicons.css?ver=4.3," + mcs_data.site_url + "/wp-includes/js/tinymce/skins/wordpress/wp-content.css?ver=4.3,https://fonts.googleapis.com/css?family=Noto+Sans%3A400italic%2C700italic%2C400%2C700%7CNoto+Serif%3A400italic%2C700italic%2C400%2C700%7CInconsolata%3A400%2C700&subset=latin%2Clatin-ext," + mcs_data.site_url + "/wp-content/themes/twentyfifteen/css/editor-style.css," + mcs_data.site_url + "/wp-content/themes/twentyfifteen/genericons/genericons.css",
+							resize: false,
+							menubar: false,
+							wpautop: true,
+							indent: false,
+							toolbar1: "bold,italic,bullist,numlist,blockquote,hr,alignleft,aligncenter,alignright,link,unlink,spellchecker",
+							toolbar2: "",
+							toolbar3: "",
+							toolbar4: "",
+							tabfocus_elements: "content-html,save-post",
+							body_class: "content post-type-page post-status-publish locale-en-us",
+							wp_autoresize_on: false,
+							add_unload_trigger: false,
+							selector: '#mcs-section-editor-' + section_id + '-support'
+						});
+					}
+
+					$spinner.removeClass('is-active');
+
+				} else {
+					$spinner.removeClass('is-active');
+				}
+			});
+
 		},
 
 		add_section : function(event) {
