@@ -11,8 +11,8 @@
 
 <div class="mcs-left columns-6">
 	<?php
-	wp_editor( $section_post_content, 'mcs-section-editor-' . $section_ID, array(
-		'textarea_name' => 'mcs-sections[' . $section_ID . '][post_content]',
+	wp_editor( apply_filters( 'content_edit_pre', $blocks[0]->post_content ), 'mcs-section-editor-' . $blocks[0]->ID, array(
+		'textarea_name' => 'mcs-sections[' . $section->ID . '][blocks][' . $blocks[0]->ID . ']',
 		'teeny' => true,
 		'tinymce'          => array(
 			'resize'                => false,
@@ -34,8 +34,8 @@
 
 <div class="mcs-right columns-6">
 	<?php
-	wp_editor( $section_post_support_content, 'mcs-section-editor-' . $section_ID . '-support', array(
-		'textarea_name' => 'mcs-sections[' . $section_ID . '][post_content_support]',
+	wp_editor( apply_filters( 'content_edit_pre', $blocks[0]->post_content ), 'mcs-section-editor-' . $blocks[1]->ID, array(
+		'textarea_name' => 'mcs-sections[' . $section->ID . '][blocks][' . $blocks[0]->ID . ']',
 		'teeny' => true,
 		'tinymce'          => array(
 			'resize'                => false,

@@ -13,7 +13,7 @@
 
 .mcs-section-meta .mcs-right,
 .mcs-section-controls-container .mcs-right,
-.mcs-editor-area .mcs-right {
+.mcs-editor-blocks .mcs-right {
 	float: right;
 }
 
@@ -47,11 +47,11 @@
 	width:49%;
 }
 
-.mcs-editor-area .mcs-left {
+.mcs-editor-blocks .mcs-left {
 	float: left;
 }
 
-.mcs-editor-area {
+.mcs-editor-blocks {
 	overflow:hidden;
 }
 
