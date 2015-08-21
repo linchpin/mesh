@@ -71,11 +71,7 @@ class Multiple_Content_Sections_AJAX {
 			$section_layout = 'default';
 		}
 
-		$section_ID     = (int) $_POST['mcs_section_id'];
-
-		if ( ! is_admin() ) {
-			return;
-		}
+		$section_ID = (int) $_POST['mcs_section_id'];
 
 		if ( ! current_user_can( 'edit_post', $section_ID ) ) {
 			return;
