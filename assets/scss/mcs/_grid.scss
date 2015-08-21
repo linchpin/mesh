@@ -1,0 +1,12 @@
+@for $i from 1 through 12  {
+	.mcs-columns-#{$i} {
+		width: ($i/12) * 100%;
+	}
+}
+
+[class*="mcs-columns"] {
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	float: left;
+	padding: 0 15px;
+}

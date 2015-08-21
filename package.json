@@ -8,10 +8,13 @@
   },
   "devDependencies": {
     "grunt": "~0.4.1",
+    "grunt-contrib-cssmin": "~0.6.0",
     "grunt-contrib-uglify": "~0.2.7",
     "grunt-contrib-watch": "^0.6.1",
     "grunt-newer": "^1.0.0",
-    "matchdep": "^0.3.0"
+    "grunt-sass": "^1.0.0",
+    "matchdep": "^0.3.0",
+    "node-sass": "^2.0.0"
   },
   "keywords": []
 }
