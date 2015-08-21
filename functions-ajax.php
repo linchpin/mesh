@@ -81,6 +81,10 @@ class Multiple_Content_Sections_AJAX {
 			return;
 		}
 
+		$post= get_post( $section_ID );
+
+		$section_post_content = $post->post_content;
+
 		include LINCHPIN_MCS___PLUGIN_DIR . 'admin/templates/' . $section_layout . '.php';
 
 		wp_die();

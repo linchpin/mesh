@@ -17,6 +17,32 @@
 	float: right;
 }
 
+#multiple-content-sections-container .postbox .handlediv:before {
+	right: 12px;
+	font: normal 20px/1 'dashicons';
+	speak: none;
+	display: inline-block;
+	padding: 8px 10px;
+	top: 0;
+	position: relative;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	text-decoration: none !important;
+	content: '\f142';
+}
+
+#multiple-content-sections-container .postbox.closed .handlediv:before {
+	content: '\f140';
+}
+
+#multiple-content-sections-container .postbox.ui-sortable-handle .handlediv:before {
+	content: '\f156';
+}
+
+#multiple-content-sections-container .ui-sortable-handle {
+	border-color:#009FD4;
+}
+
 .columns-6 {
 	width:49%;
 }

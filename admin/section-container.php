@@ -9,7 +9,9 @@
 ?>
 
 <div class="multiple-content-sections-section multiple-content-sections-postbox postbox <?php echo $closed ? 'closed' : '' ; ?>" data-mcs-section-id="<?php esc_attr_e( $section->ID ); ?>">
-	<div class="handlediv" title="Click to toggle"><br></div>
+	<div class="handlediv" title="Click to toggle">
+		<br>
+	</div>
 	<h3 class="hndle ui-sortable-handle"><span><?php echo $section->post_title; ?></span><span class="spinner"></span></h3>
 	<div class="inside">
 		<p>
@@ -45,7 +47,7 @@
 			<?php
 			// @todo: Load in the editor sections here using ajax or otherwise.
 
-			$section_id = $section->ID;
+			$section_ID = $section->ID;
 			$section_post_content = $section->post_content;
 
 			switch ( $template ) {
