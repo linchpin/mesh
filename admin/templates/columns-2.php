@@ -9,7 +9,7 @@
 
 ?>
 
-<div class="mcs-left columns-6">
+<div class="mcs-columns-6">
 	<?php
 	wp_editor( apply_filters( 'content_edit_pre', $blocks[0]->post_content ), 'mcs-section-editor-' . $blocks[0]->ID, array(
 		'textarea_name' => 'mcs-sections[' . $section->ID . '][blocks][' . $blocks[0]->ID . ']',
@@ -32,7 +32,7 @@
 	?>
 </div>
 
-<div class="mcs-right columns-6">
+<div class="mcs-columns-6">
 	<?php
 	wp_editor( apply_filters( 'content_edit_pre', $blocks[0]->post_content ), 'mcs-section-editor-' . $blocks[1]->ID, array(
 		'textarea_name' => 'mcs-sections[' . $section->ID . '][blocks][' . $blocks[0]->ID . ']',
