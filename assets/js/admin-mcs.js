@@ -8,6 +8,7 @@ multiple_content_sections.admin = function ( $ ) {
 		$body		        = $('body'),
 		$reorder_button     = $('.mcs-section-reorder'),
 		$add_button         = $('.mcs-section-add'),
+		$expand_button      = $('.mcs-section-expand'),
 		$meta_box_container = $('#mcs-container'),
 		$section_container  = $('#multiple-content-sections-container'),
 		media_frames        = [],
@@ -291,6 +292,7 @@ multiple_content_sections.admin = function ( $ ) {
 					'class' : 'mcs-block-click'
 				});
 
+			$expand_button.addClass('disabled');
 			$add_button.addClass('disabled');
 			$meta_box_container.addClass('mcs-is-ordering');
 
@@ -335,6 +337,7 @@ multiple_content_sections.admin = function ( $ ) {
 
 			$reorder_spinner.addClass( 'is-active' );
 
+			$expand_button.removeClass('disabled');
 			$add_button.removeClass('disabled');
 			$this.text('Reorder').addClass('mcs-section-reorder').removeClass('mcs-save-order');
 
