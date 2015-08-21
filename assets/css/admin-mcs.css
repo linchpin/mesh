@@ -39,6 +39,10 @@
 	content: '\f156';
 }
 
+#multiple-content-sections-container .ui-sortable-handle {
+	border-color:#009FD4;
+}
+
 .columns-6 {
 	width:49%;
 }

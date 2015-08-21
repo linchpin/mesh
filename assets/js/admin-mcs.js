@@ -302,7 +302,7 @@ multiple_content_sections.admin = function ( $ ) {
 
 			$('.mcs-block-click').on('click', multiple_content_sections.admin.block_click );
 
-			$this.text('Save Order').addClass('mcs-save-order').removeClass('mcs-section-reorder');
+			$this.text('Save Order').addClass('mcs-save-order button-primary').removeClass('mcs-section-reorder');
 
 			$sections.each(function(){
 				$(this).addClass('closed');
@@ -339,7 +339,7 @@ multiple_content_sections.admin = function ( $ ) {
 
 			$expand_button.removeClass('disabled');
 			$add_button.removeClass('disabled');
-			$this.text('Reorder').addClass('mcs-section-reorder').removeClass('mcs-save-order');
+			$this.text('Reorder').addClass('mcs-section-reorder').removeClass('mcs-save-order button-primary');
 
 			$('.multiple-content-sections-postbox', $section_container).each(function(){
 				section_ids.push( $(this).attr('data-mcs-section-id') );
