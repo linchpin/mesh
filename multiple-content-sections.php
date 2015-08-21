@@ -91,18 +91,21 @@ class Multiple_Content_Sections {
 		<div id="mcs-container">
 			<?php wp_nonce_field( 'mcs_content_sections_nonce', 'mcs_content_sections_nonce' ); ?>
 			<h2>Multiple Content Sections</h2>
-			<p class="description">
-				Multiple content sections allows you to easily segment your page's contents into different blocks of markup.
-			</p>
+			<div id="description" class="description notice notice-info is-dismissible below-h2">
+				<p>Multiple content sections allows you to easily segment your page's contents into different blocks of markup.</p>
+				<button type="button" class="notice-dismiss"><span class="screen-reader-text">Dismiss this notice.</span></button>
+			</div>
+
 			<p class="mcs-section-controls-container">
 				<span class="mcs-left">
-					<a href="" class="button mcs-section-reorder">Reorder</a>
+					<a href="#" class="button mcs-section-reorder"><?php esc_html_e( 'Reorder', 'lincpin-mcs' ); ?></a>
 					<span class="spinner mcs-reorder-spinner"></span>
+					<a href="#" class="button mcs-section-expand"><?php esc_html_e( 'Expand All', 'lincpin-mcs' ); ?></a>
 				</span>
 
 				<span class="mcs-right">
 					<span class="spinner mcs-add-spinner"></span>
-					<a href="" class="button mcs-section-add">Add Section</a>
+					<a href="#" class="button mcs-section-add"><?php esc_html_e( 'Add Section', 'lincpin-mcs' ); ?></a>
 				</span>
 			</p>
 

@@ -20,7 +20,7 @@ wp_editor( $section_post_content, 'mcs-section-editor-' . $section_ID, array(
 		'autoresize_min_height' => 150,
 		'wp_autoresize_on'      => false,
 		'plugins'               => 'lists,media,paste,tabfocus,fullscreen,wordpress,wpautoresize,wpeditimage,wpgallery,wplink,wptextpattern,wpview',
-		'toolbar1'              => 'bold,italic,bullist,numlist,blockquote,link,unlink'
+		'toolbar1'              => 'bold,italic,bullist,numlist,blockquote,link,unlink',
 	),
 	'quicktags' => array(
 		'buttons' => 'strong,em,link,block,del,ins,img,ul,ol,li,code,more',

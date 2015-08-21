@@ -10,7 +10,8 @@ multiple_content_sections.admin = function ( $ ) {
 		$add_button         = $('.mcs-section-add'),
 		$meta_box_container = $('#mcs-container'),
 		$section_container  = $('#multiple-content-sections-container'),
-		media_frames        = [];
+		media_frames        = [],
+		temp_data_storage   = {};
 
 	return {
 
@@ -29,6 +30,8 @@ multiple_content_sections.admin = function ( $ ) {
 				.on('click', '.mcs-featured-image-choose', multiple_content_sections.admin.choose_background )
 				.on('click.OpenMediaManager', '.mcs-featured-image-choose', multiple_content_sections.admin.choose_background )
 
+				.on('click', '.mcs-section-expand', multiple_content_sections.admin.expand_all_sections )
+
 				.on('keyup', '.mcs-section-title', multiple_content_sections.admin.change_section_title );
 
 			var $sections = $( '.multiple-content-sections-section' );
@@ -36,6 +39,24 @@ multiple_content_sections.admin = function ( $ ) {
 			if ( $sections.length <= 1 ) {
 				$reorder_button.addClass( 'disabled' );
 			}
+		},
+
+		expand_all_sections : function( event ) {
+
+			event.preventDefault();
+			event.stopPropagation();
+
+			var $this = $(this);
+
+			$this.toggleClass('expanded');
+
+			if( ! $this.hasClass('expanded') ) {
+				$this.text('Expand All');
+			} else {
+				$this.text('Collapse All');
+			}
+
+			$('#multiple-content-sections-container .hndle').trigger('click');
 		},
 
 		choose_layout : function( event ) {
@@ -112,7 +133,7 @@ multiple_content_sections.admin = function ( $ ) {
 							wpeditimage_disable_captions: false,
 							wpeditimage_html5_captions: true,
 							plugins: "charmap,colorpicker,hr,lists,media,paste,tabfocus,textcolor,fullscreen,wordpress,wpautoresize,wpeditimage,wpemoji,wpgallery,wplink,wpdialogs,wptextpattern,wpview",
-							content_css: mcs_data.site_url + "/wp-includes/css/dashicons.css?ver=4.3," + mcs_data.site_url + "/wp-includes/js/tinymce/skins/wordpress/wp-content.css?ver=4.3,https://fonts.googleapis.com/css?family=Noto+Sans%3A400italic%2C700italic%2C400%2C700%7CNoto+Serif%3A400italic%2C700italic%2C400%2C700%7CInconsolata%3A400%2C700&subset=latin%2Clatin-ext," + mcs_data.site_url + "/wp-content/themes/twentyfifteen/css/editor-style.css," + mcs_data.site_url + "/wp-content/themes/twentyfifteen/genericons/genericons.css",
+							content_css: mcs_data.site_uri + "/wp-includes/css/dashicons.css?ver=4.3," + mcs_data.site_uri + "/wp-includes/js/tinymce/skins/wordpress/wp-content.css?ver=4.3,https://fonts.googleapis.com/css?family=Noto+Sans%3A400italic%2C700italic%2C400%2C700%7CNoto+Serif%3A400italic%2C700italic%2C400%2C700%7CInconsolata%3A400%2C700&subset=latin%2Clatin-ext," + mcs_data.site_uri + "/wp-content/themes/twentyfifteen/css/editor-style.css," + mcs_data.site_uri + "/wp-content/themes/twentyfifteen/genericons/genericons.css",
 							resize: false,
 							menubar: false,
 							wpautop: true,
@@ -163,7 +184,7 @@ multiple_content_sections.admin = function ( $ ) {
 							wpeditimage_disable_captions: false,
 							wpeditimage_html5_captions: true,
 							plugins: "charmap,colorpicker,hr,lists,media,paste,tabfocus,textcolor,fullscreen,wordpress,wpautoresize,wpeditimage,wpemoji,wpgallery,wplink,wpdialogs,wptextpattern,wpview",
-							content_css: mcs_data.site_url + "/wp-includes/css/dashicons.css?ver=4.3," + mcs_data.site_url + "/wp-includes/js/tinymce/skins/wordpress/wp-content.css?ver=4.3,https://fonts.googleapis.com/css?family=Noto+Sans%3A400italic%2C700italic%2C400%2C700%7CNoto+Serif%3A400italic%2C700italic%2C400%2C700%7CInconsolata%3A400%2C700&subset=latin%2Clatin-ext," + mcs_data.site_url + "/wp-content/themes/twentyfifteen/css/editor-style.css," + mcs_data.site_url + "/wp-content/themes/twentyfifteen/genericons/genericons.css",
+							content_css: mcs_data.site_uri + "/wp-includes/css/dashicons.css?ver=4.3," + mcs_data.site_uri + "/wp-includes/js/tinymce/skins/wordpress/wp-content.css?ver=4.3,https://fonts.googleapis.com/css?family=Noto+Sans%3A400italic%2C700italic%2C400%2C700%7CNoto+Serif%3A400italic%2C700italic%2C400%2C700%7CInconsolata%3A400%2C700&subset=latin%2Clatin-ext," + mcs_data.site_uri + "/wp-content/themes/twentyfifteen/css/editor-style.css," + mcs_data.site_uri + "/wp-content/themes/twentyfifteen/genericons/genericons.css",
 							resize: false,
 							menubar: false,
 							wpautop: true,
