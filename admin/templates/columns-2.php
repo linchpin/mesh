@@ -23,7 +23,6 @@
 			'wp_autoresize_on'      => false,
 			'plugins'               => 'lists,media,paste,tabfocus,fullscreen,wordpress,wpautoresize,wpeditimage,wpgallery,wplink,wptextpattern,wpview',
 			'toolbar1'              => 'bold,italic,bullist,numlist,blockquote,link,unlink',
-			'toolbar2'              => 'undo,redo',
 		),
 		'quicktags' => array(
 			'buttons' => 'strong,em,link,block,del,ins,img,ul,ol,li,code,more',
@@ -34,8 +33,8 @@
 
 <div class="mcs-columns-6">
 	<?php
-	wp_editor( apply_filters( 'content_edit_pre', $blocks[0]->post_content ), 'mcs-section-editor-' . $blocks[1]->ID, array(
-		'textarea_name' => 'mcs-sections[' . $section->ID . '][blocks][' . $blocks[0]->ID . ']',
+	wp_editor( apply_filters( 'content_edit_pre', $blocks[1]->post_content ), 'mcs-section-editor-' . $blocks[1]->ID, array(
+		'textarea_name' => 'mcs-sections[' . $section->ID . '][blocks][' . $blocks[1]->ID . ']',
 		'teeny' => true,
 		'tinymce'          => array(
 			'resize'                => false,
@@ -46,7 +45,6 @@
 			'wp_autoresize_on'      => false,
 			'plugins'               => 'lists,media,paste,tabfocus,fullscreen,wordpress,wpautoresize,wpeditimage,wpgallery,wplink,wptextpattern,wpview',
 			'toolbar1'              => 'bold,italic,bullist,numlist,blockquote,link,unlink',
-			'toolbar2'              => 'undo,redo',
 		),
 		'quicktags' => array(
 			'buttons' => 'strong,em,link,block,del,ins,img,ul,ol,li,code,more',

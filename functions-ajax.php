@@ -81,9 +81,9 @@ class Multiple_Content_Sections_AJAX {
 			wp_die();
 		}
 
-		$post = get_post( $section_id );
+		$section = get_post( $section_id );
 
-		if ( empty( $post ) ) {
+		if ( empty( $section ) ) {
 			wp_die();
 		}
 

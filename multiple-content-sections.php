@@ -98,14 +98,14 @@ class Multiple_Content_Sections {
 
 			<div class="row mcs-section-controls-container">
 				<div class="mcs-left">
-					<a href="#" class="button mcs-section-reor6der"><?php esc_html_e( 'Reorder', 'lincpin-mcs' ); ?></a>
+					<a href="#" class="button mcs-section-reorder"><?php esc_html_e( 'Reorder', 'lincpin-mcs' ); ?></a>
 					<span class="spinner mcs-reorder-spinner"></span>
 					<a href="#" class="button mcs-section-expand"><?php esc_html_e( 'Expand All', 'lincpin-mcs' ); ?></a>
 				</div>
 
 				<div class="mcs-right">
 					<span class="spinner mcs-add-spinner"></span>
-					<a href="#" class="button mcs-section-add"><?php esc_html_e( 'Add Section', 'lincpin-mcs' ); ?></a>
+					<a href="#" class="button mcs-section-add"><span class="dashicons dashicons-plus"></span><?php esc_html_e( 'Add Section', 'lincpin-mcs' ); ?></a>
 				</div>
 			</div>
 

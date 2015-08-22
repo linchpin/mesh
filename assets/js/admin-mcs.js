@@ -4,8 +4,7 @@ if( typeof(multiple_content_sections) == 'undefined' ) {
 
 multiple_content_sections.admin = function ( $ ) {
 
-	var $doc                = $(document),
-		$body		        = $('body'),
+	var $body		        = $('body'),
 		$reorder_button     = $('.mcs-section-reorder'),
 		$add_button         = $('.mcs-section-add'),
 		$expand_button      = $('.mcs-section-expand'),
@@ -13,7 +12,55 @@ multiple_content_sections.admin = function ( $ ) {
 		$section_container  = $('#multiple-content-sections-container'),
 		$description        = $('#mcs-description'),
 		media_frames        = [],
-		temp_data_storage   = {};
+
+		// since 1.3.5
+		temp_data_storage   = {
+			theme: "modern",
+			skin: "lightgray",
+			language: "en",
+			formats: {
+				alignleft: [{
+					selector: "p,h1,h2,h3,h4,h5,h6,td,th,div,ul,ol,li",
+					styles: {textAlign: "left"}
+				}, {selector: "img,table,dl.wp-caption", classes: "alignleft"}],
+				aligncenter: [{
+					selector: "p,h1,h2,h3,h4,h5,h6,td,th,div,ul,ol,li",
+					styles: {textAlign: "center"}
+				}, {selector: "img,table,dl.wp-caption", classes: "aligncenter"}],
+				alignright: [{
+					selector: "p,h1,h2,h3,h4,h5,h6,td,th,div,ul,ol,li",
+					styles: {textAlign: "right"}
+				}, {selector: "img,table,dl.wp-caption", classes: "alignright"}],
+				strikethrough: {inline: "del"}
+			},
+			relative_urls: false,
+			remove_script_host: false,
+			convert_urls: false,
+			browser_spellcheck: true,
+			fix_list_elements: true,
+			entities: "38,amp,60,lt,62,gt",
+			entity_encoding: "raw",
+			keep_styles: false,
+			cache_suffix: "wp-mce-4203-20150730",
+			preview_styles: "font-family font-size font-weight font-style text-decoration text-transform",
+			end_container_on_empty_block: true,
+			wpeditimage_disable_captions: false,
+			wpeditimage_html5_captions: true,
+			plugins: "charmap,colorpicker,hr,lists,media,paste,tabfocus,textcolor,fullscreen,wordpress,wpautoresize,wpeditimage,wpemoji,wpgallery,wplink,wpdialogs,wptextpattern,wpview",
+			content_css: mcs_data.site_uri + "/wp-includes/css/dashicons.css?ver=4.3," + mcs_data.site_uri + "/wp-includes/js/tinymce/skins/wordpress/wp-content.css?ver=4.3,https://fonts.googleapis.com/css?family=Noto+Sans%3A400italic%2C700italic%2C400%2C700%7CNoto+Serif%3A400italic%2C700italic%2C400%2C700%7CInconsolata%3A400%2C700&subset=latin%2Clatin-ext," + mcs_data.site_uri + "/wp-content/themes/twentyfifteen/css/editor-style.css," + mcs_data.site_uri + "/wp-content/themes/twentyfifteen/genericons/genericons.css",
+			resize: false,
+			menubar: false,
+			wpautop: true,
+			indent: false,
+			toolbar1: "bold,italic,bullist,numlist,blockquote,hr,alignleft,aligncenter,alignright,link,unlink,spellchecker",
+			toolbar2: "",
+			toolbar3: "",
+			toolbar4: "",
+			tabfocus_elements: "content-html,save-post",
+			body_class: "content post-type-page post-status-publish locale-en-us",
+			wp_autoresize_on: true,
+			add_unload_trigger: false
+		};
 
 	return {
 
@@ -43,6 +90,13 @@ multiple_content_sections.admin = function ( $ ) {
 			}
 		},
 
+		/**
+		 * 1 click to expand or collpase sections
+		 *
+		 * @since 1.3.0
+		 *
+		 * @param event
+		 */
 		expand_all_sections : function( event ) {
 
 			event.preventDefault();
@@ -58,9 +112,17 @@ multiple_content_sections.admin = function ( $ ) {
 				$this.text('Collapse All');
 			}
 
-			$('#multiple-content-sections-container .hndle').trigger('click');
+			$('#multiple-content-sections-container').find('.hndle').trigger('click');
 		},
 
+		/**
+		 * Choose what layout is used for the section
+		 *
+		 * @since 1.1.0
+		 *
+		 * @param event
+		 * @returns {boolean}
+		 */
 		choose_layout : function( event ) {
 
 			event.preventDefault();
@@ -77,6 +139,8 @@ multiple_content_sections.admin = function ( $ ) {
 
 			$spinner.addClass('is-active');
 
+			console.log( section_id );
+
 			$.post( ajaxurl, {
 				action                  : 'mcs_choose_layout',
 				mcs_post_id             : mcs_data.post_id,
@@ -86,122 +150,34 @@ multiple_content_sections.admin = function ( $ ) {
 			}, function( response ) {
 				if ( response ) {
 
-					var $response = $( '<div />' ).html( response );
+					var $response = $( '<div />' ).html( response ),
+						$editors  = $response.find('.wp-editor-area');
 
 					$( '#mcs-sections-editor-' + section_id ).html('').append( $response );
 
-					if( typeof tinymce.editors !== 'undefined' ) {
+					// Loop through all of our edits in the response
 
-						if( tinymce.editors[ 'mcs-section-editor-' + section_id ] ) {
-							tinymce.get('mcs-section-editor-' + section_id ).remove();
+					console.log( tinymce.editors );
+
+					console.log( $editors );
+
+					$editors.each(function() {
+						var editor_id   = $(this).prop('id'),
+							editor_data = temp_data_storage;
+
+						console.log( editor_id );
+
+						// Reset our editors if we have any
+						if( typeof tinymce.editors !== 'undefined' ) {
+							if ( tinymce.editors[ editor_id ] ) {
+								tinymce.get( editor_id ).remove();
+							}
 						}
 
-						if( tinymce.editors[ 'mcs-section-editor-' + section_id + '-support' ] ) {
-							tinymce.get('mcs-section-editor-' + section_id + '-support' ).remove();
-						}
-					}
-
-					if( $('#mcs-section-editor-' + section_id ).length > 0 ) {
-						tinymce.init({
-							theme: "modern",
-							skin: "lightgray",
-							language: "en",
-							formats: {
-								alignleft: [{
-									selector: "p,h1,h2,h3,h4,h5,h6,td,th,div,ul,ol,li",
-									styles: {textAlign: "left"}
-								}, {selector: "img,table,dl.wp-caption", classes: "alignleft"}],
-								aligncenter: [{
-									selector: "p,h1,h2,h3,h4,h5,h6,td,th,div,ul,ol,li",
-									styles: {textAlign: "center"}
-								}, {selector: "img,table,dl.wp-caption", classes: "aligncenter"}],
-								alignright: [{
-									selector: "p,h1,h2,h3,h4,h5,h6,td,th,div,ul,ol,li",
-									styles: {textAlign: "right"}
-								}, {selector: "img,table,dl.wp-caption", classes: "alignright"}],
-								strikethrough: {inline: "del"}
-							},
-							relative_urls: false,
-							remove_script_host: false,
-							convert_urls: false,
-							browser_spellcheck: true,
-							fix_list_elements: true,
-							entities: "38,amp,60,lt,62,gt",
-							entity_encoding: "raw",
-							keep_styles: false,
-							cache_suffix: "wp-mce-4203-20150730",
-							preview_styles: "font-family font-size font-weight font-style text-decoration text-transform",
-							end_container_on_empty_block: true,
-							wpeditimage_disable_captions: false,
-							wpeditimage_html5_captions: true,
-							plugins: "charmap,colorpicker,hr,lists,media,paste,tabfocus,textcolor,fullscreen,wordpress,wpautoresize,wpeditimage,wpemoji,wpgallery,wplink,wpdialogs,wptextpattern,wpview",
-							content_css: mcs_data.site_uri + "/wp-includes/css/dashicons.css?ver=4.3," + mcs_data.site_uri + "/wp-includes/js/tinymce/skins/wordpress/wp-content.css?ver=4.3,https://fonts.googleapis.com/css?family=Noto+Sans%3A400italic%2C700italic%2C400%2C700%7CNoto+Serif%3A400italic%2C700italic%2C400%2C700%7CInconsolata%3A400%2C700&subset=latin%2Clatin-ext," + mcs_data.site_uri + "/wp-content/themes/twentyfifteen/css/editor-style.css," + mcs_data.site_uri + "/wp-content/themes/twentyfifteen/genericons/genericons.css",
-							resize: false,
-							menubar: false,
-							wpautop: true,
-							indent: false,
-							toolbar1: "bold,italic,bullist,numlist,blockquote,hr,alignleft,aligncenter,alignright,link,unlink,spellchecker",
-							toolbar2: "",
-							toolbar3: "",
-							toolbar4: "",
-							tabfocus_elements: "content-html,save-post",
-							body_class: "content post-type-page post-status-publish locale-en-us",
-							wp_autoresize_on: true,
-							add_unload_trigger: false,
-							selector: '#mcs-section-editor-' + section_id
-						});
-					}
-
-					if( $('#mcs-section-editor-' + section_id + '-support' ).length > 0 ) {
-						tinymce.init({
-							theme: "modern",
-							skin: "lightgray",
-							language: "en",
-							formats: {
-								alignleft: [{
-									selector: "p,h1,h2,h3,h4,h5,h6,td,th,div,ul,ol,li",
-									styles: {textAlign: "left"}
-								}, {selector: "img,table,dl.wp-caption", classes: "alignleft"}],
-								aligncenter: [{
-									selector: "p,h1,h2,h3,h4,h5,h6,td,th,div,ul,ol,li",
-									styles: {textAlign: "center"}
-								}, {selector: "img,table,dl.wp-caption", classes: "aligncenter"}],
-								alignright: [{
-									selector: "p,h1,h2,h3,h4,h5,h6,td,th,div,ul,ol,li",
-									styles: {textAlign: "right"}
-								}, {selector: "img,table,dl.wp-caption", classes: "alignright"}],
-								strikethrough: {inline: "del"}
-							},
-							relative_urls: false,
-							remove_script_host: false,
-							convert_urls: false,
-							browser_spellcheck: true,
-							fix_list_elements: true,
-							entities: "38,amp,60,lt,62,gt",
-							entity_encoding: "raw",
-							keep_styles: false,
-							cache_suffix: "wp-mce-4203-20150730",
-							preview_styles: "font-family font-size font-weight font-style text-decoration text-transform",
-							end_container_on_empty_block: true,
-							wpeditimage_disable_captions: false,
-							wpeditimage_html5_captions: true,
-							plugins: "charmap,colorpicker,hr,lists,media,paste,tabfocus,textcolor,fullscreen,wordpress,wpautoresize,wpeditimage,wpemoji,wpgallery,wplink,wpdialogs,wptextpattern,wpview",
-							content_css: mcs_data.site_uri + "/wp-includes/css/dashicons.css?ver=4.3," + mcs_data.site_uri + "/wp-includes/js/tinymce/skins/wordpress/wp-content.css?ver=4.3,https://fonts.googleapis.com/css?family=Noto+Sans%3A400italic%2C700italic%2C400%2C700%7CNoto+Serif%3A400italic%2C700italic%2C400%2C700%7CInconsolata%3A400%2C700&subset=latin%2Clatin-ext," + mcs_data.site_uri + "/wp-content/themes/twentyfifteen/css/editor-style.css," + mcs_data.site_uri + "/wp-content/themes/twentyfifteen/genericons/genericons.css",
-							resize: false,
-							menubar: false,
-							wpautop: true,
-							indent: false,
-							toolbar1: "bold,italic,bullist,numlist,blockquote,hr,alignleft,aligncenter,alignright,link,unlink,spellchecker",
-							toolbar2: "",
-							toolbar3: "",
-							toolbar4: "",
-							tabfocus_elements: "content-html,save-post",
-							body_class: "content post-type-page post-status-publish locale-en-us",
-							wp_autoresize_on: false,
-							add_unload_trigger: false,
-							selector: '#mcs-section-editor-' + section_id + '-support'
-						});
-					}
+						// Setup our editors
+						editor_data.selector = '#' + editor_id;
+						tinymce.init( editor_data );
+					});
 
 					$spinner.removeClass('is-active');
 
@@ -240,6 +216,7 @@ multiple_content_sections.admin = function ( $ ) {
 					$spinner.removeClass('is-active');
 
 					$postboxes = $('.multiple-content-sections-section', $meta_box_container);
+
 					if ( $postboxes.length > 1 ) {
 						$reorder_button.removeClass( 'disabled' );
 					}
@@ -324,7 +301,7 @@ multiple_content_sections.admin = function ( $ ) {
 		 * @param string message The message to display
 		 * @param string type The type of message to display (warning|info|success)
 		 */
-		update_notifications( message, type ) {
+		update_notifications : function( message, type ) {
 
 			$description
 				.removeClass('notice-info notice-warning notice-success')

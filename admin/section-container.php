@@ -46,15 +46,16 @@
 
 		<div class="mcs-editor-blocks" id="mcs-sections-editor-<?php esc_attr_e( $section->ID ); ?>">
 		<?php
-			if ( $blocks = mcs_maybe_create_section_blocks( $section ) ) {
-				switch ( $template ) {
-					case 'columns-2.php' :
-						include LINCHPIN_MCS___PLUGIN_DIR . '/admin/templates/columns-2.php';
-						break;
-					default :
-						include LINCHPIN_MCS___PLUGIN_DIR . '/admin/templates/default.php';
-				}
+		if ( $blocks = mcs_maybe_create_section_blocks( $section ) ) {
+
+			switch ( $selected ) {
+				case 'columns-2.php' :
+					include LINCHPIN_MCS___PLUGIN_DIR . '/admin/templates/columns-2.php';
+					break;
+				default :
+					include LINCHPIN_MCS___PLUGIN_DIR . '/admin/templates/default.php';
 			}
+		}
 		?>
 		</div>
 		<p class="mcs-section-remove-container mcs-right">
