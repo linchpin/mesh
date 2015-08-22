@@ -90,17 +90,29 @@ class Multiple_Content_Sections {
 		<hr />
 		<div id="mcs-container">
 			<?php wp_nonce_field( 'mcs_content_sections_nonce', 'mcs_content_sections_nonce' ); ?>
+
 			<h3><?php esc_html_e( 'Multiple Content Sections', 'linchpin-mcs' ); ?></h3>
+
 			<div id="mcs-description" class="description notice notice-info is-dismissible below-h2">
-				<p><?php esc_html_e( 'Multiple content sections allows you to easily segment your page\'s contents into different blocks of markup.', 'linchpin-mcs' ); ?></p>
+				<p>
+				<?php if ( empty( $content_sections ) ) : ?>
+					<?php esc_html_e( 'You haven\'t added any content sections yet! It\'s easy click ', 'linchpin-mcs' ); ?>
+					<a href="#" class="button mcs-section-add"><span class="dashicons dashicons-plus"></span><?php esc_html_e( 'Add Section', 'lincpin-mcs' ); ?></a>
+					<?php esc_html_e( ' to get started', 'linchpin-mcs' ); ?>
+				<?php else : ?>
+					<?php esc_html_e( 'Multiple content sections allow you to easily segment your page\'s contents into different blocks of markup.', 'linchpin-mcs' ); ?>
+				<?php endif; ?>
+				</p>
+
+
 				<button type="button" class="notice-dismiss"><span class="screen-reader-text">Dismiss this notice.</span></button>
 			</div>
 
 			<div class="row mcs-section-controls-container">
 				<div class="mcs-left">
-					<a href="#" class="button mcs-section-reorder"><?php esc_html_e( 'Reorder', 'lincpin-mcs' ); ?></a>
+					<a href="#" class="button mcs-section-reorder<?php if ( empty( $content_sections ) ) : ?> disabled<?php endif; ?>"><?php esc_html_e( 'Reorder', 'lincpin-mcs' ); ?></a>
 					<span class="spinner mcs-reorder-spinner"></span>
-					<a href="#" class="button mcs-section-expand"><?php esc_html_e( 'Expand All', 'lincpin-mcs' ); ?></a>
+					<a href="#" class="button mcs-section-expand<?php if ( empty( $content_sections ) ) : ?> disabled<?php endif; ?>"><?php esc_html_e( 'Expand All', 'lincpin-mcs' ); ?></a>
 				</div>
 
 				<div class="mcs-right">
