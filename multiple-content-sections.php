@@ -150,15 +150,16 @@ class Multiple_Content_Sections {
 		foreach ( $_POST['mcs-sections'] as $section_id => $section_data ) {
 			$section = get_post( (int) $section_id );
 
-			if ( 'mcs_section' !== $section->post_type ) {
+			if ( 'mcs_section' != $section->post_type ) {
 				continue;
 			}
 
-			if ( $post_id !== $section->post_parent ) {
+			if ( $post_id != $section->post_parent ) {
 				continue;
 			}
 
-			$status = $section_data['post_status'];
+			$status = sanitize_post_field( 'post_status', $section_data['post_status'] );
+
 			if ( ! in_array( $status, array( 'publish', 'draft' ) ) ) {
 				$status = 'draft';
 			}
@@ -183,6 +184,36 @@ class Multiple_Content_Sections {
 				delete_post_meta( $section->ID, '_mcs_template' );
 			} else {
 				update_post_meta( $section->ID, '_mcs_template', $template );
+			}
+
+			//Process the section's blocks
+			if ( empty( $section_data['blocks'] ) ) {
+				$section_data['blocks'] = array();
+
+				foreach ( $section_data['blocks'] as $block_id => $block_content ) {
+					$block = get_post( (int) $block_id );
+
+					if ( 'mcs_section' != $block->post_type ) {
+						continue;
+					}
+
+					if ( $section->ID != $block->post_parent ) {
+						continue;
+					}
+
+					$updates = array(
+						'ID' => (int) $block_id,
+						'post_content' => wp_kses( $block_content, array_merge(
+							array(
+								'iframe' => array( 'src' => true, 'style' => true, 'id' => true, 'class' => true )
+							),
+							wp_kses_allowed_html( 'post' )
+						) ),
+						'post_status' => $status,
+					);
+
+					wp_update_post( $updates );
+				}
 			}
 		}
 
@@ -418,4 +449,56 @@ function mcs_display_sections( $post_id = '' ) {
 			the_mcs_content();
 		endwhile; endif; wp_reset_postdata();
 	}
+}
+
+/**
+ * Get a section's blocks.
+ *
+ * @access public
+ * @param mixed $section_id
+ * @return void
+ */
+function mcs_get_section_blocks( $section_id, $post_status = 'publish' ) {
+	$content_blocks = new WP_Query( array(
+		'post_type' => 'mcs_section',
+		'post_status' => $post_status,
+		'posts_per_page' => 50,
+		'orderby' => 'menu_order',
+		'order' => 'ASC',
+		'post_parent' => (int) $section_id,
+	) );
+
+	if ( $content_blocks->have_posts() ) {
+		return $content_blocks->posts;
+	} else {
+		return array();
+	}
+}
+
+/**
+ * Make sure a section has a certain number of blocks
+ *
+ * @access public
+ * @param mixed $section_id
+ * @param mixed $number_needed
+ * @return void
+ */
+function mcs_maybe_create_section_blocks( $section_id, $number_needed ) {
+	$blocks = mcs_get_section_blocks( $section_id );
+	$count = count( $blocks );
+
+	//Create enough blocks to fill the section
+	while ( $count < $number_needed ) {
+		wp_insert_post( array(
+			'post_type' => 'mcs_section',
+			'post_title' => 'Block ' . $count,
+			'post_parent' => $section_id,
+			'menu_order' => $count,
+			'post_name' => 'section-' . $section_id . '-block',
+		) );
+
+		++$count;
+	}
+
+	return mcs_get_section_blocks( $section_id );
 }

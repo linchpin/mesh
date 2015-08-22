@@ -50,6 +50,10 @@ class Multiple_Content_Sections_AJAX {
 
 		if ( $new_section = wp_insert_post( $args ) ) {
 			$section = get_post( $new_section );
+
+			//Make sure the new section has one block (default number needed)
+			mcs_maybe_create_section_blocks( $section->ID, 1 );
+
 			mcs_add_section_admin_markup( $section );
 			wp_die();
 		} else {
@@ -67,25 +71,37 @@ class Multiple_Content_Sections_AJAX {
 	function mcs_choose_layout() {
 		check_ajax_referer( 'mcs_choose_layout_nonce', 'mcs_choose_layout_nonce' );
 
-		if( ! $section_layout = sanitize_title( $_POST['mcs_section_layout'] ) ) {
-			$section_layout = 'default';
+		if ( ! $template = sanitize_text_field( $_POST['mcs_section_layout'] ) ) {
+			$template = 'default.php';
 		}
 
-		$section_ID     = (int) $_POST['mcs_section_id'];
+		$section_id = (int) $_POST['mcs_section_id'];
 
-		if ( ! is_admin() ) {
-			return;
+		if ( empty( $section_id ) || ! current_user_can( 'edit_post', $section_id ) ) {
+			wp_die();
 		}
 
-		if ( ! current_user_can( 'edit_post', $section_ID ) ) {
-			return;
+		$post = get_post( $section_id );
+
+		if ( empty( $post ) ) {
+			wp_die();
 		}
 
-		$post= get_post( $section_ID );
+		update_post_meta( $section_id, '_mcs_template', $template );
 
-		$section_post_content = $post->post_content;
+		$template_data = apply_filters( 'mcs_section_data', array(
+			'default.php' => array(
+				'blocks' => 1,
+			),
+			'columns-2.php' => array(
+				'blocks' => 2,
+			),
+		) );
 
-		include LINCHPIN_MCS___PLUGIN_DIR . 'admin/templates/' . $section_layout . '.php';
+		//Make sure that a section has enough blocks to fill the template
+		$blocks = mcs_maybe_create_section_blocks( $section_id, $template_data[ $template ]['blocks'] );
+
+		include( LINCHPIN_MCS___PLUGIN_DIR . 'admin/templates/' . $template );
 
 		wp_die();
 	}
@@ -114,6 +130,13 @@ class Multiple_Content_Sections_AJAX {
 		}
 
 		if ( wp_trash_post( $section_id ) ) {
+			//trash the section's blocks
+			foreach ( mcs_get_section_blocks( $section_id ) as $block ) {
+				if ( $section_id == $block->post_parent ) {
+					wp_trash_post( $block->ID );
+				}
+			}
+
 			wp_die( 1 );
 		} else {
 			wp_die( -1 );
