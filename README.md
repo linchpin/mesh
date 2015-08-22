@@ -4,6 +4,12 @@ Adds the ability to define multiple content areas within pages, posts and custom
 
 ##Change Log
 
+###1.3
+
+* Added notifcations on saving, reordering
+* Added css of admin elements
+* Added better structure for notifications
+
 ###1.2
 
 * Added README.md

@@ -3,7 +3,7 @@
 Plugin Name: Multiple Content Sections
 Plugin URI: http://linchpin.agency
 Description: Add multiple content sections on a post by post basis.
-Version: 1.1
+Version: 1.3
 Author: Linchpin
 Author URI: http://linchpin.agency
 License: GPLv2 or later
@@ -14,7 +14,7 @@ if ( ! function_exists( 'add_action' ) ) {
 exit;
 }
 
-define( 'LINCHPIN_MCS_VERSION', '1.2.0' );
+define( 'LINCHPIN_MCS_VERSION', '1.3.0' );
 define( 'LINCHPIN_MCS_PLUGIN_NAME', 'Multiple Content Sections' );
 define( 'LINCHPIN_MCS__MINIMUM_WP_VERSION', '4.0' );
 define( 'LINCHPIN_MCS___PLUGIN_URL', plugin_dir_url( __FILE__ ) );
@@ -91,7 +91,7 @@ class Multiple_Content_Sections {
 		<div id="mcs-container">
 			<?php wp_nonce_field( 'mcs_content_sections_nonce', 'mcs_content_sections_nonce' ); ?>
 			<h2>Multiple Content Sections</h2>
-			<div id="description" class="description notice notice-info is-dismissible below-h2">
+			<div id="mcs-description" class="description notice notice-info is-dismissible below-h2">
 				<p>Multiple content sections allows you to easily segment your page's contents into different blocks of markup.</p>
 				<button type="button" class="notice-dismiss"><span class="screen-reader-text">Dismiss this notice.</span></button>
 			</div>
@@ -168,7 +168,7 @@ class Multiple_Content_Sections {
 				'post_title' => sanitize_text_field( $section_data['post_title'] ),
 				'post_content' => wp_kses( $section_data['post_content'], array_merge(
 					array(
-						'iframe' => array( 'src' => true, 'style' => true, 'id' => true, 'class' => true )
+						'iframe' => array( 'src' => true, 'style' => true, 'id' => true, 'class' => true ),
 					),
 					wp_kses_allowed_html( 'post' )
 				) ),
@@ -246,6 +246,10 @@ class Multiple_Content_Sections {
 			'add_section_nonce' => wp_create_nonce( 'mcs_add_section_nonce' ),
 			'reorder_section_nonce' => wp_create_nonce( 'mcs_reorder_section_nonce' ),
 			'featured_image_nonce' => wp_create_nonce( 'mcs_featured_image_nonce' ),
+			'labels' => array(
+				'reorder' => __( 'Be sure to save order of your sections once your changes are complete.', 'linchpin-mcs' ),
+				'description' => __( 'Multiple content sections allows you to easily segment your page\'s contents into different blocks of markup.', 'linchpin-mcs' ),
+			),
 		) );
 	}
 

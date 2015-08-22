@@ -11,6 +11,7 @@ multiple_content_sections.admin = function ( $ ) {
 		$expand_button      = $('.mcs-section-expand'),
 		$meta_box_container = $('#mcs-container'),
 		$section_container  = $('#multiple-content-sections-container'),
+		$description        = $('#mcs-description'),
 		media_frames        = [],
 		temp_data_storage   = {};
 
@@ -287,7 +288,7 @@ multiple_content_sections.admin = function ( $ ) {
 
 			var $this = $(this),
 				$reorder_spinner = $this.siblings('.spinner'),
-				$sections = $( '.multiple-content-sections-postbox', $section_container )
+				$sections = $( '.multiple-content-sections-postbox', $section_container),
 				$block_click_span = $( '<span />' ).attr({
 					'class' : 'mcs-block-click'
 				});
@@ -295,6 +296,8 @@ multiple_content_sections.admin = function ( $ ) {
 			$expand_button.addClass('disabled');
 			$add_button.addClass('disabled');
 			$meta_box_container.addClass('mcs-is-ordering');
+
+			multiple_content_sections.admin.update_notifications( 'reorder', 'warning' );
 
 			$('.hndle', $meta_box_container ).each(function(){
 				$(this).prepend( $block_click_span.clone() );
@@ -311,6 +314,29 @@ multiple_content_sections.admin = function ( $ ) {
 			$section_container.sortable({
 				update: multiple_content_sections.admin.save_section_order_sortable
 			});
+		},
+
+		/**
+		 * Utility method to display notification information
+		 *
+		 * @since 1.3.0
+		 *
+		 * @param string message The message to display
+		 * @param string type The type of message to display (warning|info|success)
+		 */
+		update_notifications( message, type ) {
+
+			$description
+				.removeClass('notice-info notice-warning notice-success')
+				.addClass('notice-' + type )
+				.find('p')
+				.text( mcs_data.labels[ message ] );
+
+			if( ! $description.is(':visible') ) {
+				$description.css({'opacity' : 0 }).show();
+			}
+
+			$description.fadeIn('fast');
 		},
 
 		save_section_order_sortable : function( event, ui ) {
@@ -346,6 +372,10 @@ multiple_content_sections.admin = function ( $ ) {
 			});
 
 			$('.mcs-block-click').remove();
+
+			if( $description.is(':visible') ) {
+				$description.removeClass('notice-warning').addClass('notice-info').find('p').text( mcs_data.labels.description );
+			}
 
 			multiple_content_sections.admin.save_section_ajax( section_ids, $reorder_spinner );
 
