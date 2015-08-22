@@ -52,7 +52,7 @@ class Multiple_Content_Sections_AJAX {
 			$section = get_post( $new_section );
 
 			//Make sure the new section has one block (default number needed)
-			mcs_maybe_create_section_blocks( $section->ID, 1 );
+			mcs_maybe_create_section_blocks( $section, 1 );
 
 			mcs_add_section_admin_markup( $section );
 			wp_die();
@@ -99,9 +99,9 @@ class Multiple_Content_Sections_AJAX {
 		) );
 
 		//Make sure that a section has enough blocks to fill the template
-		$blocks = mcs_maybe_create_section_blocks( $section_id, $template_data[ $template ]['blocks'] );
+		$blocks = mcs_maybe_create_section_blocks( $section, $template_data[ $template ]['blocks'] );
 
-		include( LINCHPIN_MCS___PLUGIN_DIR . 'admin/templates/' . $template );
+		include( LINCHPIN_MCS___PLUGIN_DIR . '/admin/templates/' . $template );
 
 		wp_die();
 	}

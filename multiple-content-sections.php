@@ -90,24 +90,24 @@ class Multiple_Content_Sections {
 		<hr />
 		<div id="mcs-container">
 			<?php wp_nonce_field( 'mcs_content_sections_nonce', 'mcs_content_sections_nonce' ); ?>
-			<h2>Multiple Content Sections</h2>
+			<h3><?php esc_html_e( 'Multiple Content Sections', 'linchpin-mcs' ); ?></h3>
 			<div id="mcs-description" class="description notice notice-info is-dismissible below-h2">
-				<p>Multiple content sections allows you to easily segment your page's contents into different blocks of markup.</p>
+				<p><?php esc_html_e( 'Multiple content sections allows you to easily segment your page\'s contents into different blocks of markup.', 'linchpin-mcs' ); ?></p>
 				<button type="button" class="notice-dismiss"><span class="screen-reader-text">Dismiss this notice.</span></button>
 			</div>
 
-			<p class="mcs-section-controls-container">
-				<span class="mcs-left">
-					<a href="#" class="button mcs-section-reorder"><?php esc_html_e( 'Reorder', 'lincpin-mcs' ); ?></a>
+			<div class="row mcs-section-controls-container">
+				<div class="mcs-left">
+					<a href="#" class="button mcs-section-reor6der"><?php esc_html_e( 'Reorder', 'lincpin-mcs' ); ?></a>
 					<span class="spinner mcs-reorder-spinner"></span>
 					<a href="#" class="button mcs-section-expand"><?php esc_html_e( 'Expand All', 'lincpin-mcs' ); ?></a>
-				</span>
+				</div>
 
-				<span class="mcs-right">
+				<div class="mcs-right">
 					<span class="spinner mcs-add-spinner"></span>
 					<a href="#" class="button mcs-section-add"><?php esc_html_e( 'Add Section', 'lincpin-mcs' ); ?></a>
-				</span>
-			</p>
+				</div>
+			</div>
 
 			<div id="multiple-content-sections-container">
 				<?php foreach ( $content_sections as $key => $section ) : ?>
@@ -294,14 +294,15 @@ class Multiple_Content_Sections {
 		wp_enqueue_style( 'admin-mcs', plugins_url( 'assets/css/admin-mcs.css', __FILE__ ), array(), '1.0' );
 	}
 }
+
 $multiple_content_sections = new Multiple_Content_Sections();
 
 /**
  * Load a list of template files for .
  *
  * @access public
- * @param string $section_templates (default: '')
- * @return void
+ * @param string $section_templates (default: '') Our list of available templates.
+ * @return mixed
  */
 function mcs_locate_template_files( $section_templates = '' ) {
 	$current_theme = wp_get_theme();
@@ -341,8 +342,8 @@ function mcs_locate_template_files( $section_templates = '' ) {
  * Return admin facing markup for a section.
  *
  * @access public
- * @param mixed $post_id
- * @return void
+ * @param  object $section
+ * @return void Prints the markup of the admin panel
  */
 function mcs_add_section_admin_markup( $section, $closed = false ) {
 	if ( ! is_admin() ) {
@@ -355,7 +356,6 @@ function mcs_add_section_admin_markup( $section, $closed = false ) {
 
 	$templates = mcs_locate_template_files();
 	$selected = get_post_meta( $section->ID, '_mcs_template', true );
-
 	$featured_image_id = get_post_thumbnail_id( $section->ID );
 
 	include LINCHPIN_MCS___PLUGIN_DIR . '/admin/section-container.php';
@@ -455,8 +455,11 @@ function mcs_display_sections( $post_id = '' ) {
  * Get a section's blocks.
  *
  * @access public
- * @param mixed $section_id
- * @return void
+ *
+ * @param  int    $section_id
+ * @param  string $post_status
+ *
+ * @return array
  */
 function mcs_get_section_blocks( $section_id, $post_status = 'publish' ) {
 	$content_blocks = new WP_Query( array(
@@ -477,28 +480,30 @@ function mcs_get_section_blocks( $section_id, $post_status = 'publish' ) {
 
 /**
  * Make sure a section has a certain number of blocks
+ * @todo: Should always be at least 1 section?
  *
  * @access public
- * @param mixed $section_id
- * @param mixed $number_needed
- * @return void
+ * @param  mixed $section
+ * @param  int   $number_needed
+ * @return array
  */
-function mcs_maybe_create_section_blocks( $section_id, $number_needed ) {
-	$blocks = mcs_get_section_blocks( $section_id );
+function mcs_maybe_create_section_blocks( $section, $number_needed = 0 ) {
+
+	$blocks = mcs_get_section_blocks( $section->ID, $section->post_status );
 	$count = count( $blocks );
 
 	//Create enough blocks to fill the section
 	while ( $count < $number_needed ) {
 		wp_insert_post( array(
-			'post_type' => 'mcs_section',
-			'post_title' => 'Block ' . $count,
+			'post_type'   => 'mcs_section',
+			'post_title'  => 'Block ' . $count,
 			'post_parent' => $section_id,
-			'menu_order' => $count,
-			'post_name' => 'section-' . $section_id . '-block',
+			'menu_order'  => $count,
+			'post_name'   => 'section-' . $section->ID . '-block',
 		) );
 
 		++$count;
 	}
 
-	return mcs_get_section_blocks( $section_id );
+	return mcs_get_section_blocks( $section->ID, $section->post_status );
 }

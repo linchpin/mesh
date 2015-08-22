@@ -7,12 +7,12 @@
  * @since 1.2.0
  */
 ?>
-
-<div class="multiple-content-sections-section multiple-content-sections-postbox postbox <?php echo $closed ? 'closed' : '' ; ?>" data-mcs-section-id="<?php esc_attr_e( $section->ID ); ?>">
+<?php // <?php echo $closed ? 'closed' : '' ; ?>
+<div class="multiple-content-sections-section multiple-content-sections-postbox postbox" data-mcs-section-id="<?php esc_attr_e( $section->ID ); ?>">
 	<div class="handlediv" title="Click to toggle">
 		<br>
 	</div>
-	<h3 class="hndle ui-sortable-handle"><span><?php echo $section->post_title; ?></span><span class="spinner"></span></h3>
+	<h3 class="hndle ui-sortable-handle"><span><?php esc_html_e( $section->post_title ); ?></span><span class="spinner"></span></h3>
 	<div class="inside">
 		<p>
 			<input type="text" name="mcs-sections[<?php esc_attr_e( $section->ID ); ?>][post_title]" class="mcs-section-title widefat" value="<?php esc_attr_e( $section->post_title ); ?>" />
@@ -34,8 +34,8 @@
 
 				<label for="mcs-sections[<?php esc_attr_e( $section->ID ); ?>][template]"><strong><?php esc_html_e( 'Template:', 'linchpin-mcs' ); ?></strong></label>
 				<select class="mcs-choose-layout" name="mcs-sections[<?php esc_attr_e( $section->ID ); ?>][template]">
-					<option value="default.php"><?php esc_html_e( 'Default', 'linchpin-mcs' ); ?></option>
-					<option value="columns-2.php"><?php esc_html_e( '2 Content Columns', 'linchpin-mcs' ); ?></option>
+					<option value="default.php" <?php selected( $selected, 'default.php' ); ?>><?php esc_html_e( 'Default', 'linchpin-mcs' ); ?></option>
+					<option value="columns-2.php" <?php selected( $selected, 'columns-2.php' ); ?>><?php esc_html_e( '2 Content Columns', 'linchpin-mcs' ); ?></option>
 
 					<?php foreach ( array_keys( $templates ) as $template ) : ?>
 						<option value="<?php esc_attr_e( $template ); ?>" <?php selected( $selected, $template ); ?>><?php esc_html_e( $templates[ $template ] ); ?></option>
@@ -46,14 +46,13 @@
 
 		<div class="mcs-editor-blocks" id="mcs-sections-editor-<?php esc_attr_e( $section->ID ); ?>">
 		<?php
-			if ( $blocks = mcs_get_section_blocks( $section->ID ) ) {
+			if ( $blocks = mcs_maybe_create_section_blocks( $section ) ) {
 				switch ( $template ) {
 					case 'columns-2.php' :
-						include LINCHPIN_MCS___PLUGIN_DIR . 'admin/templates/columns-2.php';
+						include LINCHPIN_MCS___PLUGIN_DIR . '/admin/templates/columns-2.php';
 						break;
-
 					default :
-						include LINCHPIN_MCS___PLUGIN_DIR . 'admin/templates/default.php';
+						include LINCHPIN_MCS___PLUGIN_DIR . '/admin/templates/default.php';
 				}
 			}
 		?>
