@@ -170,10 +170,14 @@ class Multiple_Content_Sections {
 				continue;
 			}
 
-			$status = sanitize_post_field( 'post_status', $section_data['post_status'] );
+			$status = sanitize_post_field( 'post_status', $section_data['post_status'], $post_id, 'db' );
 
 			if ( ! in_array( $status, array( 'publish', 'draft' ) ) ) {
 				$status = 'draft';
+			}
+
+			if ( empty( $section_data['post_content'] ) ) {
+				$section_data['post_content'] = '';
 			}
 
 			$updates = array(
@@ -198,12 +202,15 @@ class Multiple_Content_Sections {
 				update_post_meta( $section->ID, '_mcs_template', $template );
 			}
 
-			//Process the section's blocks
+			// Process the section's blocks.
 			if ( empty( $section_data['blocks'] ) ) {
 				$section_data['blocks'] = array();
+			}
 
-				foreach ( $section_data['blocks'] as $block_id => $block_content ) {
-					$block = get_post( (int) $block_id );
+			foreach ( $section_data['blocks'] as $block_id => $block_content ) {
+				$block = get_post( (int) $block_id );
+
+				if ( ! empty( $block ) ) {
 
 					if ( 'mcs_section' != $block->post_type ) {
 						continue;
@@ -212,20 +219,27 @@ class Multiple_Content_Sections {
 					if ( $section->ID != $block->post_parent ) {
 						continue;
 					}
-
-					$updates = array(
-						'ID' => (int) $block_id,
-						'post_content' => wp_kses( $block_content, array_merge(
-							array(
-								'iframe' => array( 'src' => true, 'style' => true, 'id' => true, 'class' => true )
-							),
-							wp_kses_allowed_html( 'post' )
-						) ),
-						'post_status' => $status,
-					);
-
-					wp_update_post( $updates );
 				}
+
+				error_log( $block_id );
+
+				$updates = array(
+					'ID' => (int) $block_id,
+					'post_content' => wp_kses( $block_content, array_merge(
+						array(
+							'iframe' => array(
+								'src' => true,
+							   'style' => true,
+							   'id' => true,
+							   'class' => true,
+							),
+						),
+						wp_kses_allowed_html( 'post' )
+					) ),
+					'post_status' => $status,
+				);
+
+				wp_update_post( $updates );
 			}
 		}
 
