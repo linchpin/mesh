@@ -88,6 +88,24 @@ multiple_content_sections.admin = function ( $ ) {
 			if ( $sections.length <= 1 ) {
 				$reorder_button.addClass( 'disabled' );
 			}
+
+			$( ".columns" ).sortable({
+				handle: ".block-header",
+				cancel: ".block-toggle",
+				placeholder: "block-placeholder"
+			});
+
+			$( ".block" )
+				.addClass( "ui-widget ui-widget-content ui-helper-clearfix" )
+				.find( ".portlet-header" )
+				.addClass( "hndle ui-sortable-handle" )
+				.prepend( "<span class='block-toggle'></span>");
+
+			$( ".block-toggle" ).click(function() {
+				var icon = $( this );
+				icon.toggleClass( "ui-icon-minusthick ui-icon-plusthick" );
+				icon.closest( ".portlet" ).find( ".portlet-content" ).toggle();
+			});
 		},
 
 		/**

@@ -12,7 +12,7 @@
 	<div class="handlediv" title="Click to toggle">
 		<br>
 	</div>
-	<h3 class="hndle ui-sortable-handle"><span><?php esc_html_e( $section->post_title ); ?></span><span class="spinner"></span></h3>
+	<h3 class="hndle"><span><?php esc_html_e( $section->post_title ); ?></span><span class="spinner"></span></h3>
 	<div class="inside">
 		<p>
 			<input type="text" name="mcs-sections[<?php esc_attr_e( $section->ID ); ?>][post_title]" class="mcs-section-title widefat" value="<?php esc_attr_e( $section->post_title ); ?>" />
