@@ -204,7 +204,7 @@ multiple_content_sections.admin = function ( $ ) {
 
 					// Loop through all of our edits in the response
 
-					multiple_content_sections.admin.reorder_blocks( $$editors );
+					multiple_content_sections.admin.reorder_blocks( $editors );
 
 					$spinner.removeClass('is-active');
 
