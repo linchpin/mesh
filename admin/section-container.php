@@ -55,6 +55,18 @@
 				default :
 					include LINCHPIN_MCS___PLUGIN_DIR . '/admin/templates/default.php';
 			}
+
+			// @todo: If we have more blocks than we can display output the disabled ones
+			if ( count( $blocks ) > 2 ) {
+				?>
+				<h4>Unused or hidden blocks</h4>
+				<ul>
+				<?php foreach( $blocks as $block ) : ?>
+					<li><?php esc_html_e( $block->ID ); ?></li>
+				<?php endforeach; ?>
+				</ul>
+				<?php
+			}
 		}
 		?>
 		</div>

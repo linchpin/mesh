@@ -157,10 +157,6 @@ class Multiple_Content_Sections_AJAX {
 		$section_id = (int) $_POST['mcs_section_id'];
 		$block_ids  = array_map( 'intval', $_POST['mcs_blocks_ids'] );
 
-		error_log( $section_id );
-
-
-
 		if ( empty( $section_id ) || empty( $block_ids ) ) {
 			wp_die( -1 );
 		}
