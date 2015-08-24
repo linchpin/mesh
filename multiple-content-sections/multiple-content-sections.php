@@ -122,9 +122,6 @@ class Multiple_Content_Sections {
 			return;
 		}
 
-		$current_sections = mcs_get_sections( $post_id );
-		$current_section_ids = wp_list_pluck( $current_sections, 'ID' );
-
 		foreach ( $_POST['mcs-sections'] as $section_id => $section_data ) {
 			$section = get_post( (int) $section_id );
 
@@ -164,7 +161,8 @@ class Multiple_Content_Sections {
 			}
 		}
 
-		//Save a page's content sections as post content for searchability
+		// Save a page's content sections as post content for searchability.
+/*
 		$section_query = mcs_get_sections( $post_id, 'query' );
 
 		if ( $section_query->have_posts() ) {
@@ -191,6 +189,7 @@ class Multiple_Content_Sections {
 
 			add_action( 'save_post', array( $this, 'save_post' ), 10, 2 );
 		}
+*/
 	}
 
 	function the_content( $content ) {
