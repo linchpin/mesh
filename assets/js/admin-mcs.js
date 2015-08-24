@@ -89,10 +89,12 @@ multiple_content_sections.admin = function ( $ ) {
 				$reorder_button.addClass( 'disabled' );
 			}
 
-			$( ".columns" ).sortable({
+			$( ".mcs-editor-blocks" ).sortable({
 				handle: ".block-header",
-				cancel: ".block-toggle",
-				placeholder: "block-placeholder"
+				placeholder: "block-placeholder",
+				update: function( event, ui ) {
+					multiple_content_sections.admin.reorder_blocks( $( event.target ).find('.wp-editor-area') );
+				}
 			});
 
 			$( ".block" )
@@ -109,7 +111,32 @@ multiple_content_sections.admin = function ( $ ) {
 		},
 
 		/**
-		 * 1 click to expand or collpase sections
+		 * Render Block after reorder or change.
+		 *
+		 * @since 1.3.5
+		 *
+		 * @param $editors
+		 */
+		reorder_blocks : function( $editors ) {
+			$editors.each(function() {
+				var editor_id   = $(this).prop('id'),
+					editor_data = temp_data_storage;
+
+				// Reset our editors if we have any
+				if( typeof tinymce.editors !== 'undefined' ) {
+					if ( tinymce.editors[ editor_id ] ) {
+						tinymce.get( editor_id ).remove();
+					}
+				}
+
+				// Setup our editors
+				editor_data.selector = '#' + editor_id;
+				tinymce.init( editor_data );
+			});
+		},
+
+		/**
+		 * 1 click to expand or collapse sections
 		 *
 		 * @since 1.3.0
 		 *
@@ -157,8 +184,6 @@ multiple_content_sections.admin = function ( $ ) {
 
 			$spinner.addClass('is-active');
 
-			console.log( section_id );
-
 			$.post( ajaxurl, {
 				action                  : 'mcs_choose_layout',
 				mcs_post_id             : mcs_data.post_id,
@@ -175,27 +200,7 @@ multiple_content_sections.admin = function ( $ ) {
 
 					// Loop through all of our edits in the response
 
-					console.log( tinymce.editors );
-
-					console.log( $editors );
-
-					$editors.each(function() {
-						var editor_id   = $(this).prop('id'),
-							editor_data = temp_data_storage;
-
-						console.log( editor_id );
-
-						// Reset our editors if we have any
-						if( typeof tinymce.editors !== 'undefined' ) {
-							if ( tinymce.editors[ editor_id ] ) {
-								tinymce.get( editor_id ).remove();
-							}
-						}
-
-						// Setup our editors
-						editor_data.selector = '#' + editor_id;
-						tinymce.init( editor_data );
-					});
+					multiple_content_sections.admin.reorder_blocks( $$editors );
 
 					$spinner.removeClass('is-active');
 

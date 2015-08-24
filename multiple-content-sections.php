@@ -3,7 +3,7 @@
 Plugin Name: Multiple Content Sections
 Plugin URI: http://linchpin.agency
 Description: Add multiple content sections on a post by post basis.
-Version: 1.3
+Version: 1.3.5
 Author: Linchpin
 Author URI: http://linchpin.agency
 License: GPLv2 or later

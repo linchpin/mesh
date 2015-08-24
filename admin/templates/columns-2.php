@@ -12,7 +12,6 @@
 
 
 <div class="mcs-columns-6 columns">
-
 	<div class="block">
 		<div class="block-header"><?php esc_html_e( $blocks[0]->post_title ); ?></div>
 		<div class="block-content">
@@ -40,9 +39,8 @@
 </div>
 
 <div class="mcs-columns-6 columns">
-
 	<div class="block">
-		<div class="block-header"><?php esc_html_e( $blocks[1]->post_title ) ;?></div>
+		<div class="block-header"><?php esc_html_e( $blocks[1]->post_title ); ?></div>
 		<div class="block-content">
 		<?php
 		wp_editor( apply_filters( 'content_edit_pre', $blocks[1]->post_content ), 'mcs-section-editor-' . $blocks[1]->ID, array(

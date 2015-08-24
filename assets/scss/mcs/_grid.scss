@@ -11,8 +11,16 @@
 	padding: 0 1px;
 }
 
-.block {
+#multiple-content-sections-container .block {
   border: 1px dotted #ccc;
+
+  .ui-sortable-handle {
+    border-bottom:1px solid #ccc;
+  }
+}
+
+.block-header {
+  padding:5px;
 }
 
 .block-content {
