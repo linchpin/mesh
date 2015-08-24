@@ -4,6 +4,19 @@ Adds the ability to define multiple content areas within pages, posts and custom
 
 ##Change Log
 
+###1.3.5
+
+* Added the ability to reorder blocks
+* Better redrawing of editable areas after reordering
+* Minor sanitizing fixes
+* Added ajax order saving on reordering blocks
+
+###1.3
+
+* Added notifications on saving, reordering
+* Added css of admin elements
+* Added better structure for notifications
+
 ###1.2
 
 * Added README.md

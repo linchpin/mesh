@@ -8,5 +8,27 @@
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;
 	float: left;
-	padding: 0 15px;
+	padding: 0 1px;
+}
+
+#multiple-content-sections-container .block {
+  border: 1px dotted #ccc;
+
+  .ui-sortable-handle {
+    border-bottom:1px solid #ccc;
+  }
+}
+
+.block-header {
+  padding:5px;
+}
+
+.block-content {
+  padding:5px;
+}
+
+.block-placeholder {
+  border: 1px dotted #ccc;
+  margin: 0 1em 1em 0;
+  min-height: 400px;
 }

@@ -4,15 +4,63 @@ if( typeof(multiple_content_sections) == 'undefined' ) {
 
 multiple_content_sections.admin = function ( $ ) {
 
-	var $doc                = $(document),
-		$body		        = $('body'),
+	var $body		        = $('body'),
 		$reorder_button     = $('.mcs-section-reorder'),
 		$add_button         = $('.mcs-section-add'),
 		$expand_button      = $('.mcs-section-expand'),
 		$meta_box_container = $('#mcs-container'),
 		$section_container  = $('#multiple-content-sections-container'),
+		$description        = $('#mcs-description'),
 		media_frames        = [],
-		temp_data_storage   = {};
+
+		// since 1.3.5
+		temp_data_storage   = {
+			theme: "modern",
+			skin: "lightgray",
+			language: "en",
+			formats: {
+				alignleft: [{
+					selector: "p,h1,h2,h3,h4,h5,h6,td,th,div,ul,ol,li",
+					styles: {textAlign: "left"}
+				}, {selector: "img,table,dl.wp-caption", classes: "alignleft"}],
+				aligncenter: [{
+					selector: "p,h1,h2,h3,h4,h5,h6,td,th,div,ul,ol,li",
+					styles: {textAlign: "center"}
+				}, {selector: "img,table,dl.wp-caption", classes: "aligncenter"}],
+				alignright: [{
+					selector: "p,h1,h2,h3,h4,h5,h6,td,th,div,ul,ol,li",
+					styles: {textAlign: "right"}
+				}, {selector: "img,table,dl.wp-caption", classes: "alignright"}],
+				strikethrough: {inline: "del"}
+			},
+			relative_urls: false,
+			remove_script_host: false,
+			convert_urls: false,
+			browser_spellcheck: true,
+			fix_list_elements: true,
+			entities: "38,amp,60,lt,62,gt",
+			entity_encoding: "raw",
+			keep_styles: false,
+			cache_suffix: "wp-mce-4203-20150730",
+			preview_styles: "font-family font-size font-weight font-style text-decoration text-transform",
+			end_container_on_empty_block: true,
+			wpeditimage_disable_captions: false,
+			wpeditimage_html5_captions: true,
+			plugins: "charmap,colorpicker,hr,lists,media,paste,tabfocus,textcolor,fullscreen,wordpress,wpautoresize,wpeditimage,wpemoji,wpgallery,wplink,wpdialogs,wptextpattern,wpview",
+			content_css: mcs_data.site_uri + "/wp-includes/css/dashicons.css?ver=4.3," + mcs_data.site_uri + "/wp-includes/js/tinymce/skins/wordpress/wp-content.css?ver=4.3,https://fonts.googleapis.com/css?family=Noto+Sans%3A400italic%2C700italic%2C400%2C700%7CNoto+Serif%3A400italic%2C700italic%2C400%2C700%7CInconsolata%3A400%2C700&subset=latin%2Clatin-ext," + mcs_data.site_uri + "/wp-content/themes/twentyfifteen/css/editor-style.css," + mcs_data.site_uri + "/wp-content/themes/twentyfifteen/genericons/genericons.css",
+			resize: false,
+			menubar: false,
+			wpautop: true,
+			indent: false,
+			toolbar1: "bold,italic,bullist,numlist,blockquote,hr,alignleft,aligncenter,alignright,link,unlink,spellchecker",
+			toolbar2: "",
+			toolbar3: "",
+			toolbar4: "",
+			tabfocus_elements: "content-html,save-post",
+			body_class: "content post-type-page post-status-publish locale-en-us",
+			wp_autoresize_on: true,
+			add_unload_trigger: false
+		};
 
 	return {
 
@@ -40,8 +88,64 @@ multiple_content_sections.admin = function ( $ ) {
 			if ( $sections.length <= 1 ) {
 				$reorder_button.addClass( 'disabled' );
 			}
+
+			$( ".mcs-editor-blocks" ).sortable({
+				handle: ".block-header",
+				placeholder: "block-placeholder",
+				update: function( event, ui ) {
+					multiple_content_sections.admin.reorder_blocks( $( event.target ).find('.wp-editor-area') );
+
+					var section_id = $(event.target).parents('.multiple-content-sections-postbox').attr('data-mcs-section-id');
+
+					multiple_content_sections.admin.save_block_order_sortable( section_id, event, ui );
+				}
+			});
+
+			$( ".block" )
+				.addClass( "ui-widget ui-widget-content ui-helper-clearfix" )
+				.find( ".portlet-header" )
+				.addClass( "hndle ui-sortable-handle" )
+				.prepend( "<span class='block-toggle'></span>");
+
+			$( ".block-toggle" ).click(function() {
+				var icon = $( this );
+				icon.toggleClass( "ui-icon-minusthick ui-icon-plusthick" );
+				icon.closest( ".portlet" ).find( ".portlet-content" ).toggle();
+			});
 		},
 
+		/**
+		 * Render Block after reorder or change.
+		 *
+		 * @since 1.3.5
+		 *
+		 * @param $editors
+		 */
+		reorder_blocks : function( $editors ) {
+			$editors.each(function() {
+				var editor_id   = $(this).prop('id'),
+					editor_data = temp_data_storage;
+
+				// Reset our editors if we have any
+				if( typeof tinymce.editors !== 'undefined' ) {
+					if ( tinymce.editors[ editor_id ] ) {
+						tinymce.get( editor_id ).remove();
+					}
+				}
+
+				// Setup our editors
+				editor_data.selector = '#' + editor_id;
+				tinymce.init( editor_data );
+			});
+		},
+
+		/**
+		 * 1 click to expand or collapse sections
+		 *
+		 * @since 1.3.0
+		 *
+		 * @param event
+		 */
 		expand_all_sections : function( event ) {
 
 			event.preventDefault();
@@ -57,9 +161,17 @@ multiple_content_sections.admin = function ( $ ) {
 				$this.text('Collapse All');
 			}
 
-			$('#multiple-content-sections-container .hndle').trigger('click');
+			$('#multiple-content-sections-container').find('.hndle').trigger('click');
 		},
 
+		/**
+		 * Choose what layout is used for the section
+		 *
+		 * @since 1.1.0
+		 *
+		 * @param event
+		 * @returns {boolean}
+		 */
 		choose_layout : function( event ) {
 
 			event.preventDefault();
@@ -85,122 +197,14 @@ multiple_content_sections.admin = function ( $ ) {
 			}, function( response ) {
 				if ( response ) {
 
-					var $response = $( '<div />' ).html( response );
+					var $response = $( '<div />' ).html( response ),
+						$editors  = $response.find('.wp-editor-area');
 
 					$( '#mcs-sections-editor-' + section_id ).html('').append( $response );
 
-					if( typeof tinymce.editors !== 'undefined' ) {
+					// Loop through all of our edits in the response
 
-						if( tinymce.editors[ 'mcs-section-editor-' + section_id ] ) {
-							tinymce.get('mcs-section-editor-' + section_id ).remove();
-						}
-
-						if( tinymce.editors[ 'mcs-section-editor-' + section_id + '-support' ] ) {
-							tinymce.get('mcs-section-editor-' + section_id + '-support' ).remove();
-						}
-					}
-
-					if( $('#mcs-section-editor-' + section_id ).length > 0 ) {
-						tinymce.init({
-							theme: "modern",
-							skin: "lightgray",
-							language: "en",
-							formats: {
-								alignleft: [{
-									selector: "p,h1,h2,h3,h4,h5,h6,td,th,div,ul,ol,li",
-									styles: {textAlign: "left"}
-								}, {selector: "img,table,dl.wp-caption", classes: "alignleft"}],
-								aligncenter: [{
-									selector: "p,h1,h2,h3,h4,h5,h6,td,th,div,ul,ol,li",
-									styles: {textAlign: "center"}
-								}, {selector: "img,table,dl.wp-caption", classes: "aligncenter"}],
-								alignright: [{
-									selector: "p,h1,h2,h3,h4,h5,h6,td,th,div,ul,ol,li",
-									styles: {textAlign: "right"}
-								}, {selector: "img,table,dl.wp-caption", classes: "alignright"}],
-								strikethrough: {inline: "del"}
-							},
-							relative_urls: false,
-							remove_script_host: false,
-							convert_urls: false,
-							browser_spellcheck: true,
-							fix_list_elements: true,
-							entities: "38,amp,60,lt,62,gt",
-							entity_encoding: "raw",
-							keep_styles: false,
-							cache_suffix: "wp-mce-4203-20150730",
-							preview_styles: "font-family font-size font-weight font-style text-decoration text-transform",
-							end_container_on_empty_block: true,
-							wpeditimage_disable_captions: false,
-							wpeditimage_html5_captions: true,
-							plugins: "charmap,colorpicker,hr,lists,media,paste,tabfocus,textcolor,fullscreen,wordpress,wpautoresize,wpeditimage,wpemoji,wpgallery,wplink,wpdialogs,wptextpattern,wpview",
-							content_css: mcs_data.site_uri + "/wp-includes/css/dashicons.css?ver=4.3," + mcs_data.site_uri + "/wp-includes/js/tinymce/skins/wordpress/wp-content.css?ver=4.3,https://fonts.googleapis.com/css?family=Noto+Sans%3A400italic%2C700italic%2C400%2C700%7CNoto+Serif%3A400italic%2C700italic%2C400%2C700%7CInconsolata%3A400%2C700&subset=latin%2Clatin-ext," + mcs_data.site_uri + "/wp-content/themes/twentyfifteen/css/editor-style.css," + mcs_data.site_uri + "/wp-content/themes/twentyfifteen/genericons/genericons.css",
-							resize: false,
-							menubar: false,
-							wpautop: true,
-							indent: false,
-							toolbar1: "bold,italic,bullist,numlist,blockquote,hr,alignleft,aligncenter,alignright,link,unlink,spellchecker",
-							toolbar2: "",
-							toolbar3: "",
-							toolbar4: "",
-							tabfocus_elements: "content-html,save-post",
-							body_class: "content post-type-page post-status-publish locale-en-us",
-							wp_autoresize_on: true,
-							add_unload_trigger: false,
-							selector: '#mcs-section-editor-' + section_id
-						});
-					}
-
-					if( $('#mcs-section-editor-' + section_id + '-support' ).length > 0 ) {
-						tinymce.init({
-							theme: "modern",
-							skin: "lightgray",
-							language: "en",
-							formats: {
-								alignleft: [{
-									selector: "p,h1,h2,h3,h4,h5,h6,td,th,div,ul,ol,li",
-									styles: {textAlign: "left"}
-								}, {selector: "img,table,dl.wp-caption", classes: "alignleft"}],
-								aligncenter: [{
-									selector: "p,h1,h2,h3,h4,h5,h6,td,th,div,ul,ol,li",
-									styles: {textAlign: "center"}
-								}, {selector: "img,table,dl.wp-caption", classes: "aligncenter"}],
-								alignright: [{
-									selector: "p,h1,h2,h3,h4,h5,h6,td,th,div,ul,ol,li",
-									styles: {textAlign: "right"}
-								}, {selector: "img,table,dl.wp-caption", classes: "alignright"}],
-								strikethrough: {inline: "del"}
-							},
-							relative_urls: false,
-							remove_script_host: false,
-							convert_urls: false,
-							browser_spellcheck: true,
-							fix_list_elements: true,
-							entities: "38,amp,60,lt,62,gt",
-							entity_encoding: "raw",
-							keep_styles: false,
-							cache_suffix: "wp-mce-4203-20150730",
-							preview_styles: "font-family font-size font-weight font-style text-decoration text-transform",
-							end_container_on_empty_block: true,
-							wpeditimage_disable_captions: false,
-							wpeditimage_html5_captions: true,
-							plugins: "charmap,colorpicker,hr,lists,media,paste,tabfocus,textcolor,fullscreen,wordpress,wpautoresize,wpeditimage,wpemoji,wpgallery,wplink,wpdialogs,wptextpattern,wpview",
-							content_css: mcs_data.site_uri + "/wp-includes/css/dashicons.css?ver=4.3," + mcs_data.site_uri + "/wp-includes/js/tinymce/skins/wordpress/wp-content.css?ver=4.3,https://fonts.googleapis.com/css?family=Noto+Sans%3A400italic%2C700italic%2C400%2C700%7CNoto+Serif%3A400italic%2C700italic%2C400%2C700%7CInconsolata%3A400%2C700&subset=latin%2Clatin-ext," + mcs_data.site_uri + "/wp-content/themes/twentyfifteen/css/editor-style.css," + mcs_data.site_uri + "/wp-content/themes/twentyfifteen/genericons/genericons.css",
-							resize: false,
-							menubar: false,
-							wpautop: true,
-							indent: false,
-							toolbar1: "bold,italic,bullist,numlist,blockquote,hr,alignleft,aligncenter,alignright,link,unlink,spellchecker",
-							toolbar2: "",
-							toolbar3: "",
-							toolbar4: "",
-							tabfocus_elements: "content-html,save-post",
-							body_class: "content post-type-page post-status-publish locale-en-us",
-							wp_autoresize_on: false,
-							add_unload_trigger: false,
-							selector: '#mcs-section-editor-' + section_id + '-support'
-						});
-					}
+					multiple_content_sections.admin.reorder_blocks( $$editors );
 
 					$spinner.removeClass('is-active');
 
@@ -239,6 +243,7 @@ multiple_content_sections.admin = function ( $ ) {
 					$spinner.removeClass('is-active');
 
 					$postboxes = $('.multiple-content-sections-section', $meta_box_container);
+
 					if ( $postboxes.length > 1 ) {
 						$reorder_button.removeClass( 'disabled' );
 					}
@@ -287,7 +292,7 @@ multiple_content_sections.admin = function ( $ ) {
 
 			var $this = $(this),
 				$reorder_spinner = $this.siblings('.spinner'),
-				$sections = $( '.multiple-content-sections-postbox', $section_container )
+				$sections = $( '.multiple-content-sections-postbox', $section_container),
 				$block_click_span = $( '<span />' ).attr({
 					'class' : 'mcs-block-click'
 				});
@@ -295,6 +300,8 @@ multiple_content_sections.admin = function ( $ ) {
 			$expand_button.addClass('disabled');
 			$add_button.addClass('disabled');
 			$meta_box_container.addClass('mcs-is-ordering');
+
+			multiple_content_sections.admin.update_notifications( 'reorder', 'warning' );
 
 			$('.hndle', $meta_box_container ).each(function(){
 				$(this).prepend( $block_click_span.clone() );
@@ -310,6 +317,72 @@ multiple_content_sections.admin = function ( $ ) {
 
 			$section_container.sortable({
 				update: multiple_content_sections.admin.save_section_order_sortable
+			});
+		},
+
+		/**
+		 * Utility method to display notification information
+		 *
+		 * @since 1.3.0
+		 *
+		 * @param string message The message to display
+		 * @param string type The type of message to display (warning|info|success)
+		 */
+		update_notifications : function( message, type ) {
+
+			$description
+				.removeClass('notice-info notice-warning notice-success')
+				.addClass('notice-' + type )
+				.find('p')
+				.text( mcs_data.labels[ message ] );
+
+			if( ! $description.is(':visible') ) {
+				$description.css({'opacity' : 0 }).show();
+			}
+
+			$description.fadeIn('fast');
+		},
+
+		/**
+		 * Save the order of our blocks after drag and drop reorde
+		 *
+		 * @param int    section_id
+		 * @param object event
+		 * @param object ui
+		 */
+		save_block_order_sortable : function( section_id, event, ui ) {
+
+			var $reorder_spinner = $('.mcs-reorder-spinner'),
+				block_ids = [];
+
+			$( '#mcs-sections-editor-' + section_id ).find( '.block' ).each( function() {
+				block_ids.push( $(this).attr('data-mcs-block-id') );
+			});
+
+			response = multiple_content_sections.admin.save_block_ajax( section_id, block_ids, $reorder_spinner );
+		},
+
+		/**
+		 * Save when we reorder our blocks within a section
+		 *
+		 * @since 1.3.5
+		 *
+		 * @param section_id
+		 * @param block_ids
+		 * @param $reorder_spinner
+		 */
+		save_block_ajax : function( section_id, block_ids, $reorder_spinner ) {
+
+			$.post( ajaxurl, {
+				'action': 'mcs_update_block_order',
+				'mcs_section_id'    : section_id,
+				'mcs_blocks_ids' : block_ids,
+				'mcs_reorder_blocks_nonce' : mcs_data.reorder_blocks_nonce
+			}, function( response ) {
+
+				console.log( response );
+
+				// $current_spinner.removeClass( 'is-active' );
 			});
 		},
 
@@ -346,6 +419,10 @@ multiple_content_sections.admin = function ( $ ) {
 			});
 
 			$('.mcs-block-click').remove();
+
+			if( $description.is(':visible') ) {
+				$description.removeClass('notice-warning').addClass('notice-info').find('p').text( mcs_data.labels.description );
+			}
 
 			multiple_content_sections.admin.save_section_ajax( section_ids, $reorder_spinner );
 
