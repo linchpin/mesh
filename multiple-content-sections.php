@@ -156,8 +156,7 @@ class Multiple_Content_Sections {
 			return;
 		}
 
-		$current_sections = mcs_get_sections( $post_id );
-		$current_section_ids = wp_list_pluck( $current_sections, 'ID' );
+		remove_action( 'save_post', array( $this, 'save_post' ), 10 );
 
 		foreach ( $_POST['mcs-sections'] as $section_id => $section_data ) {
 			$section = get_post( (int) $section_id );
@@ -210,15 +209,8 @@ class Multiple_Content_Sections {
 			foreach ( $section_data['blocks'] as $block_id => $block_content ) {
 				$block = get_post( (int) $block_id );
 
-				if ( ! empty( $block ) ) {
-
-					if ( 'mcs_section' != $block->post_type ) {
-						continue;
-					}
-
-					if ( $section->ID != $block->post_parent ) {
-						continue;
-					}
+				if ( empty( $block ) || 'mcs_section' != $block->post_type || $section->ID != $block->post_parent ) {
+					continue;
 				}
 
 				$updates = array(
@@ -241,33 +233,48 @@ class Multiple_Content_Sections {
 			}
 		}
 
-		// Save a page's content sections as post content for searchability.
-		$section_query = mcs_get_sections( $post_id, 'query' );
+		// Save a block's content into its section, and then into it's page
+		$section_posts = mcs_get_sections( $post_id );
 
-		if ( $section_query->have_posts() ) {
+		if ( ! empty( $section_posts ) ) {
+			foreach ( $section_posts as $p ) {
+				$section_content = array();
 
-			$section_content[] = '<div id="mcs-section-content">';
+				$blocks = mcs_get_section_blocks( $p->ID );
 
-			foreach ( $section_query->posts as $p ) {
+				foreach ( $blocks as $b ) {
+					$section_content[] = strip_tags( $b->post_content );
+				}
+
+				wp_update_post( array(
+					'ID' => $p->ID,
+					'post_content' => implode( ' ', $section_content ),
+				) );
+			}
+
+			//Get the sections again
+			$section_posts = mcs_get_sections( $post_id );
+			$page_content_sections = array();
+			$page_content_sections[] = '<div id="mcs-section-content">';
+
+			foreach ( $section_posts as $p ) {
 				if ( 'publish' !== $p->post_status ) {
 					continue;
 				}
 
-				$section_content[] = strip_tags( $p->post_title );
-				$section_content[] = strip_tags( $p->post_content );
+				$page_content_sections[] = strip_tags( $p->post_title );
+				$page_content_sections[] = strip_tags( $p->post_content );
 			}
 
-			$section_content[] = '</div>';
-
-			remove_action( 'save_post', array( $this, 'save_post' ), 10, 2 ); // @todo: Needs review I think remove action only calls for 3 items
+			$page_content_sections[] = '</div>';
 
 			wp_update_post( array(
 				'ID' => $post_id,
-				'post_content' => $post->post_content . implode( ' ' , $section_content ),
+				'post_content' => $post->post_content . implode( ' ' , $page_content_sections ),
 			) );
-
-			add_action( 'save_post', array( $this, 'save_post' ), 10, 2 );
 		}
+
+		add_action( 'save_post', array( $this, 'save_post' ), 10, 2 );
 	}
 
 	/**
