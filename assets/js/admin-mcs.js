@@ -94,6 +94,10 @@ multiple_content_sections.admin = function ( $ ) {
 				placeholder: "block-placeholder",
 				update: function( event, ui ) {
 					multiple_content_sections.admin.reorder_blocks( $( event.target ).find('.wp-editor-area') );
+
+					var section_id = $(event.target).parents('.multiple-content-sections-postbox').attr('data-mcs-section-id');
+
+					multiple_content_sections.admin.save_block_order_sortable( section_id, event, ui );
 				}
 			});
 
@@ -337,6 +341,49 @@ multiple_content_sections.admin = function ( $ ) {
 			}
 
 			$description.fadeIn('fast');
+		},
+
+		/**
+		 * Save the order of our blocks after drag and drop reorde
+		 *
+		 * @param int    section_id
+		 * @param object event
+		 * @param object ui
+		 */
+		save_block_order_sortable : function( section_id, event, ui ) {
+
+			var $reorder_spinner = $('.mcs-reorder-spinner'),
+				block_ids = [];
+
+			$( '#mcs-sections-editor-' + section_id ).find( '.block' ).each( function() {
+				block_ids.push( $(this).attr('data-mcs-block-id') );
+			});
+
+			response = multiple_content_sections.admin.save_block_ajax( section_id, block_ids, $reorder_spinner );
+		},
+
+		/**
+		 * Save when we reorder our blocks within a section
+		 *
+		 * @since 1.3.5
+		 *
+		 * @param section_id
+		 * @param block_ids
+		 * @param $reorder_spinner
+		 */
+		save_block_ajax : function( section_id, block_ids, $reorder_spinner ) {
+
+			$.post( ajaxurl, {
+				'action': 'mcs_update_block_order',
+				'mcs_section_id'    : section_id,
+				'mcs_blocks_ids' : block_ids,
+				'mcs_reorder_blocks_nonce' : mcs_data.reorder_blocks_nonce
+			}, function( response ) {
+
+				console.log( response );
+
+				// $current_spinner.removeClass( 'is-active' );
+			});
 		},
 
 		save_section_order_sortable : function( event, ui ) {

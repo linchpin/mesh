@@ -23,6 +23,7 @@ class Multiple_Content_Sections_AJAX {
 		add_action( 'wp_ajax_mcs_choose_layout',         array( $this, 'mcs_choose_layout' ) );
 		add_action( 'wp_ajax_mcs_remove_section',        array( $this, 'mcs_remove_section' ) );
 		add_action( 'wp_ajax_mcs_update_order',          array( $this, 'mcs_update_order' ) );
+		add_action( 'wp_ajax_mcs_update_block_order',    array( $this, 'mcs_update_block_order' ) );
 		add_action( 'wp_ajax_mcs_update_featured_image', array( $this, 'mcs_update_featured_image' ) );
 	}
 
@@ -144,7 +145,50 @@ class Multiple_Content_Sections_AJAX {
 	}
 
 	/**
-	 * Save the update order of sections after drag and drop reordering
+	 * Save the order of blocks within a section after drag and drop reordering
+	 *
+	 * @since 1.3.5
+	 */
+	function mcs_update_block_order() {
+		check_ajax_referer( 'mcs_reorder_blocks_nonce', 'mcs_reorder_blocks_nonce' );
+
+		error_log( print_r( $_POST['mcs_block_ids'] , true ) ) ;
+
+		$section_id = (int) $_POST['mcs_section_id'];
+		$block_ids  = array_map( 'intval', $_POST['mcs_blocks_ids'] );
+
+		error_log( $section_id );
+
+
+
+		if ( empty( $section_id ) || empty( $block_ids ) ) {
+			wp_die( -1 );
+		}
+
+		foreach ( $block_ids as $key => $block_id ) {
+			$block = get_post( $block_id );
+
+			if ( empty( $block ) ) {
+				continue;
+			}
+
+			if ( $block->post_parent !== $section_id ) {
+				continue;
+			}
+
+			$post_args = array(
+				'ID' => $block_id,
+				'menu_order' => $key,
+			);
+
+			wp_update_post( $post_args );
+		}
+
+		wp_die(1);
+	}
+
+	/**
+	 * Save the order of sections after drag and drop reordering
 	 *
 	 * @since 1.0
 	 */
