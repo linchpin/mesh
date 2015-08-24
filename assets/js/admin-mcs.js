@@ -197,7 +197,7 @@ multiple_content_sections.admin = function ( $ ) {
 			}, function( response ) {
 				if ( response ) {
 
-					var $response = $( '<div />' ).html( response ),
+					var $response = $( response ),
 						$editors  = $response.find('.wp-editor-area');
 
 					$( '#mcs-sections-editor-' + section_id ).html('').append( $response );
@@ -212,7 +212,6 @@ multiple_content_sections.admin = function ( $ ) {
 					$spinner.removeClass('is-active');
 				}
 			});
-
 		},
 
 		add_section : function(event) {

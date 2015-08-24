@@ -8,9 +8,6 @@
  */
 
 ?>
-
-
-
 <div class="mcs-columns-6 columns">
 	<div class="block" id="mcs-block-editor-<?php esc_attr_e( $blocks[0]->ID ); ?>"  data-mcs-block-id="<?php esc_attr_e( $blocks[0]->ID ); ?>">
 		<div class="block-header"><?php esc_html_e( $blocks[0]->post_title ); ?></div>

@@ -26,3 +26,5 @@ wp_editor( apply_filters( 'content_edit_pre', $blocks[0]->post_content ), 'mcs-s
 		'buttons' => 'strong,em,link,block,del,ins,img,ul,ol,li,code,more',
 	),
 ) );
+
+

@@ -11,7 +11,7 @@ License: GPLv2 or later
 
 // Make sure we don't expose any info if called directly.
 if ( ! function_exists( 'add_action' ) ) {
-exit;
+	exit;
 }
 
 define( 'LINCHPIN_MCS_VERSION', '1.3.5' );
@@ -33,11 +33,26 @@ class Multiple_Content_Sections {
 	public $templates = array();
 
 	/**
+     * Store the available blocks per template
+	 *
+	 * @var array
+	 */
+	public static $template_data = array(
+		'default.php' => array(
+			'blocks' => 1,
+		),
+		'columns-2.php' => array(
+			'blocks' => 2,
+		),
+	) ;
+
+	/**
 	 * __construct function.
 	 *
 	 * @access public
 	 */
 	function __construct() {
+
 		add_action( 'init', array( $this, 'init' ) );
 
 		add_action( 'edit_page_form', array( $this, 'edit_page_form' ) );
@@ -233,7 +248,7 @@ class Multiple_Content_Sections {
 			}
 		}
 
-		// Save a block's content into its section, and then into it's page
+		// Save a block's content into its section, and then into it's page.
 		$section_posts = mcs_get_sections( $post_id );
 
 		if ( ! empty( $section_posts ) ) {
@@ -252,7 +267,7 @@ class Multiple_Content_Sections {
 				) );
 			}
 
-			//Get the sections again
+			// Get the sections again.
 			$section_posts = mcs_get_sections( $post_id );
 			$page_content_sections = array();
 			$page_content_sections[] = '<div id="mcs-section-content">';
@@ -278,6 +293,7 @@ class Multiple_Content_Sections {
 	}
 
 	/**
+     * Simple loop to get our sections
      *
      * @param $content
      *
@@ -310,12 +326,12 @@ class Multiple_Content_Sections {
 		wp_localize_script( 'admin-mcs', 'mcs_data', array(
 			'post_id' => $post->ID,
 			'site_uri' => site_url(),
-			'choose_layout_nonce' => wp_create_nonce( 'mcs_choose_layout_nonce' ),
-			'remove_section_nonce' => wp_create_nonce( 'mcs_remove_section_nonce' ),
-			'add_section_nonce' => wp_create_nonce( 'mcs_add_section_nonce' ),
+			'choose_layout_nonce'   => wp_create_nonce( 'mcs_choose_layout_nonce' ),
+			'remove_section_nonce'  => wp_create_nonce( 'mcs_remove_section_nonce' ),
+			'add_section_nonce'     => wp_create_nonce( 'mcs_add_section_nonce' ),
 			'reorder_section_nonce' => wp_create_nonce( 'mcs_reorder_section_nonce' ),
-			'featured_image_nonce' => wp_create_nonce( 'mcs_featured_image_nonce' ),
-			'reorder_blocks_nonce' => wp_create_nonce( 'mcs_reorder_blocks_nonce' ),
+			'featured_image_nonce'  => wp_create_nonce( 'mcs_featured_image_nonce' ),
+			'reorder_blocks_nonce'  => wp_create_nonce( 'mcs_reorder_blocks_nonce' ),
 			'labels' => array(
 				'reorder' => __( 'Be sure to save order of your sections once your changes are complete.', 'linchpin-mcs' ),
 				'description' => __( 'Multiple content sections allows you to easily segment your page\'s contents into different blocks of markup.', 'linchpin-mcs' ),
@@ -394,7 +410,7 @@ function mcs_add_section_admin_markup( $section, $closed = false ) {
 	}
 
 	$templates = mcs_locate_template_files();
-	$selected = get_post_meta( $section->ID, '_mcs_template', true );
+	$selected_template = get_post_meta( $section->ID, '_mcs_template', true );
 	$featured_image_id = get_post_thumbnail_id( $section->ID );
 
 	include LINCHPIN_MCS___PLUGIN_DIR . '/admin/section-container.php';

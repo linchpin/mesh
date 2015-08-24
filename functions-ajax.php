@@ -72,8 +72,8 @@ class Multiple_Content_Sections_AJAX {
 	function mcs_choose_layout() {
 		check_ajax_referer( 'mcs_choose_layout_nonce', 'mcs_choose_layout_nonce' );
 
-		if ( ! $template = sanitize_text_field( $_POST['mcs_section_layout'] ) ) {
-			$template = 'default.php';
+		if ( ! $selected_template = sanitize_text_field( $_POST['mcs_section_layout'] ) ) {
+			$selected_template = 'default.php';
 		}
 
 		$section_id = (int) $_POST['mcs_section_id'];
@@ -88,21 +88,20 @@ class Multiple_Content_Sections_AJAX {
 			wp_die();
 		}
 
-		update_post_meta( $section_id, '_mcs_template', $template );
+		update_post_meta( $section_id, '_mcs_template', $selected_template );
 
-		$template_data = apply_filters( 'mcs_section_data', array(
-			'default.php' => array(
-				'blocks' => 1,
-			),
-			'columns-2.php' => array(
-				'blocks' => 2,
-			),
-		) );
+		$template_data = apply_filters( 'mcs_section_data', Multiple_Content_Sections::$template_data );
 
-		//Make sure that a section has enough blocks to fill the template
-		$blocks = mcs_maybe_create_section_blocks( $section, $template_data[ $template ]['blocks'] );
+		// Make sure that a section has enough blocks to fill the template.
+		$blocks = mcs_maybe_create_section_blocks( $section, $template_data[ $selected_template ]['blocks'] );
 
-		include( LINCHPIN_MCS___PLUGIN_DIR . '/admin/templates/' . $template );
+		if ( $template_data[ $selected_template ]['blocks'] > 1 ) {
+			include( LINCHPIN_MCS___PLUGIN_DIR . '/admin/section-template-reordering.php' );
+		}
+
+		include( LINCHPIN_MCS___PLUGIN_DIR . '/admin/templates/' . $selected_template );
+
+		include( LINCHPIN_MCS___PLUGIN_DIR . '/admin/section-template-warnings.php' );
 
 		wp_die();
 	}
