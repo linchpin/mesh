@@ -6,9 +6,12 @@
  * @subpackage AdminTemplates
  * @since 1.2.0
  */
+
+if ( ! $closed_metaboxes = get_user_option( 'closedpostboxes_page' ) ) {
+	$closed_metaboxes = array();
+}
 ?>
-<?php // <?php echo $closed ? 'closed' : '' ; ?>
-<div class="multiple-content-sections-section multiple-content-sections-postbox postbox" data-mcs-section-id="<?php esc_attr_e( $section->ID ); ?>">
+<div class="multiple-content-sections-section multiple-content-sections-postbox postbox<?php if ( in_array( 'mcs-section-' . esc_attr( $section->ID ), $closed_metaboxes ) ) : ?> closed<?php endif; ?>" data-mcs-section-id="<?php esc_attr_e( $section->ID ); ?>" id="mcs-section-<?php esc_attr_e( $section->ID ); ?>">
 	<div class="handlediv" title="Click to toggle">
 		<br>
 	</div>
