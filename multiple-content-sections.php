@@ -321,7 +321,7 @@ class Multiple_Content_Sections {
 			return;
 		}
 
-		wp_enqueue_script( 'admin-mcs', plugins_url( 'assets/js/admin-mcs.js', __FILE__ ), array( 'jquery', 'jquery-ui-sortable' ), '1.0', true );
+		wp_enqueue_script( 'admin-mcs', plugins_url( 'assets/js/admin-mcs.js', __FILE__ ), array( 'jquery', 'jquery-ui-sortable', 'jquery-ui-slider' ), '1.0', true );
 
 		wp_localize_script( 'admin-mcs', 'mcs_data', array(
 			'post_id' => $post->ID,

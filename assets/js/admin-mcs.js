@@ -112,6 +112,42 @@ multiple_content_sections.admin = function ( $ ) {
 				icon.toggleClass( "ui-icon-minusthick ui-icon-plusthick" );
 				icon.closest( ".portlet" ).find( ".portlet-content" ).toggle();
 			});
+
+			$('.column-slider').addClass('ui-slider-horizontal').slider({
+				value:6,
+				min:0,
+				max:12,
+				step:1,
+				change:function( event, ui ) {
+
+					var $tgt = $( event.target );
+
+					if( $tgt.slider( "value" ) > 9 ){
+						$tgt.slider( "value", 9 );
+					}
+
+					if( $tgt.slider( "value" ) < 3 ){
+						$tgt.slider( "value", 3 );
+					}
+
+					console.log( $tgt.slider( "value" ) );
+
+					var $columns      = $tgt.parent().parent().find('.mcs-editor-blocks').find('.columns'),
+						column_total  = 12,
+						column_value  = $tgt.slider( "value"),
+						column_start  = column_value;
+
+					$columns.removeClass (function (index, css) {
+						return (css.match (/\mcs-columns-\d+/g) || []).join(' ');
+					});
+
+					$columns.each( function() {
+						$(this).addClass('mcs-columns-' + column_start );
+
+						column_start = column_total - column_value;
+					} );
+				}
+			});
 		},
 
 		/**
@@ -378,9 +414,6 @@ multiple_content_sections.admin = function ( $ ) {
 				'mcs_blocks_ids' : block_ids,
 				'mcs_reorder_blocks_nonce' : mcs_data.reorder_blocks_nonce
 			}, function( response ) {
-
-				console.log( response );
-
 				// $current_spinner.removeClass( 'is-active' );
 			});
 		},

@@ -20,7 +20,7 @@ if ( ! $closed_metaboxes = get_user_option( 'closedpostboxes_page' ) ) {
 		<p>
 			<input type="text" name="mcs-sections[<?php esc_attr_e( $section->ID ); ?>][post_title]" class="mcs-section-title widefat" value="<?php esc_attr_e( $section->post_title ); ?>" />
 		</p>
-		<p class="mcs-section-meta">
+		<div class="mcs-section-meta">
 			<span class="mcs-right">
 				<?php if ( empty( $featured_image_id ) ) : ?>
 					<a href="#" class="mcs-featured-image-choose"><?php esc_html_e( 'Choose background image', 'linchpin-mcs' ); ?></a>
@@ -45,10 +45,13 @@ if ( ! $closed_metaboxes = get_user_option( 'closedpostboxes_page' ) ) {
 					<?php endforeach; ?>
 				</select>
 			</span>
-		</p>
+
+			<div class="wp-slider column-slider"><span class="ui-slider-handle ui-state-default ui-corner-all" tabindex="0"></span></div>
+		</div>
 
 		<div class="mcs-editor-blocks" id="mcs-sections-editor-<?php esc_attr_e( $section->ID ); ?>">
-		<?php
+
+			<?php
 		if ( $blocks = mcs_maybe_create_section_blocks( $section ) ) {
 
 			include LINCHPIN_MCS___PLUGIN_DIR . '/admin/section-template-reordering.php';
