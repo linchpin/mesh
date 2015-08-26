@@ -1,5 +1,5 @@
 <?php
-/*
+/**
 Plugin Name: Multiple Content Sections
 Plugin URI: http://linchpin.agency
 Description: Add multiple content sections on a post by post basis.
@@ -7,7 +7,9 @@ Version: 1.3.5
 Author: Linchpin
 Author URI: http://linchpin.agency
 License: GPLv2 or later
-*/
+ *
+ * @package MultipleContentSections
+ */
 
 // Make sure we don't expose any info if called directly.
 if ( ! function_exists( 'add_action' ) ) {
@@ -33,16 +35,27 @@ class Multiple_Content_Sections {
 	public $templates = array();
 
 	/**
-     * Store the available blocks per template
+	 * Store the available blocks per template.
+	 *
+	 * @since 1.3.5
 	 *
 	 * @var array
 	 */
 	public static $template_data = array(
 		'default.php' => array(
+			'label' => 'Default',
 			'blocks' => 1,
+			'widths' => array( 12 ),
 		),
 		'columns-2.php' => array(
+			'label' => '2 Columns',
 			'blocks' => 2,
+			'widths' => array( 6, 6 ),
+		),
+		'columns-3.php' => array(
+			'label' => '3 Columns',
+			'blocks' => 3,
+			'widths' => array( 4, 4, 4 ),
 		),
 	) ;
 
@@ -153,12 +166,12 @@ class Multiple_Content_Sections {
 	 * @return void
 	 */
 	function save_post( $post_id, $post ) {
-		//Skip revisions and autosaves
+		// Skip revisions and autosaves.
 		if ( wp_is_post_revision( $post_id ) || ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) ) {
 			return;
 		}
 
-		//Users should have the ability to edit listings.
+		// Users should have the ability to edit listings.
 		if ( ! current_user_can( 'edit_post', $post_id ) ) {
 			return;
 		}
@@ -217,11 +230,13 @@ class Multiple_Content_Sections {
 			}
 
 			// Process the section's blocks.
-			if ( empty( $section_data['blocks'] ) ) {
-				$section_data['blocks'] = array();
+			$blocks = array();
+
+			if ( ! empty( $section_data['blocks'] ) ) {
+				$blocks = $section_data['blocks'];
 			}
 
-			foreach ( $section_data['blocks'] as $block_id => $block_content ) {
+			foreach ( $blocks as $block_id => $block_data ) {
 				$block = get_post( (int) $block_id );
 
 				if ( empty( $block ) || 'mcs_section' != $block->post_type || $section->ID != $block->post_parent ) {
@@ -230,7 +245,7 @@ class Multiple_Content_Sections {
 
 				$updates = array(
 					'ID' => (int) $block_id,
-					'post_content' => wp_kses( $block_content, array_merge(
+					'post_content' => wp_kses( $block_data['post_content'], array_merge(
 						array(
 							'iframe' => array(
 								'src' => true,
@@ -245,6 +260,14 @@ class Multiple_Content_Sections {
 				);
 
 				wp_update_post( $updates );
+
+				$block_column_width = (int) $section_data['blocks'][ $block_id ]['columns'];
+
+				if ( empty( $block_column_width ) ) {
+					delete_post_meta( $block_id, '_mcs_column_width' );
+				} else {
+					update_post_meta( $block_id, '_mcs_column_width', $block_column_width );
+				}
 			}
 		}
 
@@ -410,7 +433,12 @@ function mcs_add_section_admin_markup( $section, $closed = false ) {
 	}
 
 	$templates = mcs_locate_template_files();
-	$selected_template = get_post_meta( $section->ID, '_mcs_template', true );
+
+	// Make sure we always have a template.
+	if ( ! $selected_template = get_post_meta( $section->ID, '_mcs_template', true ) ) {
+		$selected_template = 'default.php';
+	}
+
 	$featured_image_id = get_post_thumbnail_id( $section->ID );
 
 	include LINCHPIN_MCS___PLUGIN_DIR . '/admin/section-container.php';

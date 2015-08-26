@@ -24,6 +24,7 @@ class Multiple_Content_Sections_AJAX {
 		add_action( 'wp_ajax_mcs_remove_section',        array( $this, 'mcs_remove_section' ) );
 		add_action( 'wp_ajax_mcs_update_order',          array( $this, 'mcs_update_order' ) );
 		add_action( 'wp_ajax_mcs_update_block_order',    array( $this, 'mcs_update_block_order' ) );
+		add_action( 'wp_ajax_mcs_update_block_widths',   array( $this, 'mcs_update_block_widths' ) );
 		add_action( 'wp_ajax_mcs_update_featured_image', array( $this, 'mcs_update_featured_image' ) );
 	}
 
@@ -52,7 +53,7 @@ class Multiple_Content_Sections_AJAX {
 		if ( $new_section = wp_insert_post( $args ) ) {
 			$section = get_post( $new_section );
 
-			//Make sure the new section has one block (default number needed)
+			// Make sure the new section has one block (default number needed)
 			mcs_maybe_create_section_blocks( $section, 1 );
 
 			mcs_add_section_admin_markup( $section );
@@ -151,8 +152,6 @@ class Multiple_Content_Sections_AJAX {
 	function mcs_update_block_order() {
 		check_ajax_referer( 'mcs_reorder_blocks_nonce', 'mcs_reorder_blocks_nonce' );
 
-		error_log( print_r( $_POST['mcs_block_ids'] , true ) ) ;
-
 		$section_id = (int) $_POST['mcs_section_id'];
 		$block_ids  = array_map( 'intval', $_POST['mcs_blocks_ids'] );
 
@@ -179,7 +178,39 @@ class Multiple_Content_Sections_AJAX {
 			wp_update_post( $post_args );
 		}
 
-		wp_die(1);
+		wp_die( 1 );
+	}
+
+	/**
+	 * Save the width of blocks within a section after drag and drop resize
+	 *
+	 * @since 1.3.5
+	 */
+	function mcs_update_block_widths() {
+		check_ajax_referer( 'mcs_reorder_blocks_nonce', 'mcs_reorder_blocks_nonce' );
+
+		$mcs_blocks  = $_POST['mcs_post_data'];
+		$blocks      = array_map( 'intval', $mcs_blocks['blocks'] );
+
+		if ( empty( $mcs_blocks['section_id'] ) || empty( $blocks ) ) {
+			wp_die( -1 );
+		}
+
+		foreach ( $blocks as $block_id => $block_width ) {
+			$block = get_post( $block_id );
+
+			if ( empty( $block ) ) {
+				continue;
+			}
+
+			if ( $block->post_parent !== (int) $mcs_blocks['section_id'] ) {
+				continue;
+			}
+
+			update_post_meta( $block_id, '_mcs_column_width', $block_width );
+		}
+
+		wp_die( 1 );
 	}
 
 	/**
@@ -242,7 +273,7 @@ class Multiple_Content_Sections_AJAX {
 
 		update_post_meta( $post_id, '_thumbnail_id', $image_id );
 
-		wp_die();
+		wp_die( 1 );
 	}
 }
 

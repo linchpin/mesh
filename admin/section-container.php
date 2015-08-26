@@ -36,27 +36,37 @@ if ( ! $closed_metaboxes = get_user_option( 'closedpostboxes_page' ) ) {
 				</select>
 
 				<label for="mcs-sections[<?php esc_attr_e( $section->ID ); ?>][template]"><strong><?php esc_html_e( 'Template:', 'linchpin-mcs' ); ?></strong></label>
+
 				<select class="mcs-choose-layout" name="mcs-sections[<?php esc_attr_e( $section->ID ); ?>][template]">
-					<option value="default.php" <?php selected( $selected_template, 'default.php' ); ?>><?php esc_html_e( 'Default', 'linchpin-mcs' ); ?></option>
-					<option value="columns-2.php" <?php selected( $selected_template, 'columns-2.php' ); ?>><?php esc_html_e( '2 Content Columns', 'linchpin-mcs' ); ?></option>
+
+					<?php $mcs_templates = Multiple_Content_Sections::$template_data; ?>
+
+					<?php foreach ( $mcs_templates as $key => $mcs_template ) : ?>
+						<option value="<?php esc_attr_e( $key ); ?>" <?php selected( $selected_template, $key ); ?>><?php esc_html_e( $mcs_template['label'], 'linchpin-mcs' ); ?></option>
+					<?php endforeach; ?>
 
 					<?php foreach ( array_keys( $templates ) as $template ) : ?>
 						<option value="<?php esc_attr_e( $template ); ?>" <?php selected( $selected_template, $template ); ?>><?php esc_html_e( $templates[ $template ] ); ?></option>
 					<?php endforeach; ?>
 				</select>
 			</span>
-
-			<div class="wp-slider column-slider"><span class="ui-slider-handle ui-state-default ui-corner-all" tabindex="0"></span></div>
 		</div>
 
 		<div class="mcs-editor-blocks" id="mcs-sections-editor-<?php esc_attr_e( $section->ID ); ?>">
 
-			<?php
+		<?php
 		if ( $blocks = mcs_maybe_create_section_blocks( $section ) ) {
 
 			include LINCHPIN_MCS___PLUGIN_DIR . '/admin/section-template-reordering.php';
 
+			if ( (int) Multiple_Content_Sections::$template_data[ $selected_template ]['blocks'] > 1 ) : ?>
+				<div class="wp-slider column-slider" data-mcs-columns="<?php esc_attr_e( get_post_meta( $blocks[0]->ID, '_mcs_column_width', true ) ); ?>"><span class="ui-slider-handle ui-state-default ui-corner-all" tabindex="0"></span></div>
+			<?php endif;
+
 			switch ( $selected_template ) {
+				case 'columns-3.php' :
+					include LINCHPIN_MCS___PLUGIN_DIR . '/admin/templates/columns-3.php';
+					break;
 				case 'columns-2.php' :
 					include LINCHPIN_MCS___PLUGIN_DIR . '/admin/templates/columns-2.php';
 					break;
@@ -66,6 +76,7 @@ if ( ! $closed_metaboxes = get_user_option( 'closedpostboxes_page' ) ) {
 
 			include LINCHPIN_MCS___PLUGIN_DIR . '/admin/section-template-warnings.php';
 		}
+
 		?>
 		</div>
 		<p class="mcs-section-remove-container mcs-right">

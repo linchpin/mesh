@@ -113,40 +113,17 @@ multiple_content_sections.admin = function ( $ ) {
 				icon.closest( ".portlet" ).find( ".portlet-content" ).toggle();
 			});
 
-			$('.column-slider').addClass('ui-slider-horizontal').slider({
-				value:6,
-				min:0,
-				max:12,
-				step:1,
-				change:function( event, ui ) {
+			$('.column-slider').addClass('ui-slider-horizontal').each(function() {
 
-					var $tgt = $( event.target );
+				var $this = $(this);
 
-					if( $tgt.slider( "value" ) > 9 ){
-						$tgt.slider( "value", 9 );
-					}
-
-					if( $tgt.slider( "value" ) < 3 ){
-						$tgt.slider( "value", 3 );
-					}
-
-					console.log( $tgt.slider( "value" ) );
-
-					var $columns      = $tgt.parent().parent().find('.mcs-editor-blocks').find('.columns'),
-						column_total  = 12,
-						column_value  = $tgt.slider( "value"),
-						column_start  = column_value;
-
-					$columns.removeClass (function (index, css) {
-						return (css.match (/\mcs-columns-\d+/g) || []).join(' ');
-					});
-
-					$columns.each( function() {
-						$(this).addClass('mcs-columns-' + column_start );
-
-						column_start = column_total - column_value;
-					} );
-				}
+				$this.slider({
+					value: $this.attr('data-mcs-columns'),
+					min:0,
+					max:12,
+					step:1,
+					change : multiple_content_sections.admin.save_column_widths
+				});
 			});
 		},
 
@@ -267,21 +244,21 @@ multiple_content_sections.admin = function ( $ ) {
 				action: 'mcs_add_section',
 				mcs_post_id: mcs_data.post_id,
 				mcs_add_section_nonce: mcs_data.add_section_nonce
-			}, function(response){
+			}, function( response ){
 				if ( response ) {
-					var $response = $response_div = $( '<div />' ).html(response),
-						$actual_response = $( '.multiple-content-sections-section', $response ),
-						editor_id = '#mcs-section-editor-' + $actual_response.attr( 'data-mcs-section-id' ),
-						$editor = $(editor_id, $response );
+					var $response = $( response ),
+						$editors  = $response.find('.wp-editor-area');
 
-					$section_container.append( $actual_response );
+					$section_container.append( $response );
 					$spinner.removeClass('is-active');
 
-					$postboxes = $('.multiple-content-sections-section', $meta_box_container);
+					var $postboxes = $('.multiple-content-sections-section', $meta_box_container );
 
 					if ( $postboxes.length > 1 ) {
 						$reorder_button.removeClass( 'disabled' );
 					}
+
+					multiple_content_sections.admin.reorder_blocks( $editors );
 
 				} else {
 					$spinner.removeClass('is-active');
@@ -321,7 +298,77 @@ multiple_content_sections.admin = function ( $ ) {
 			});
 		},
 
-		reorder_sections : function(event) {
+		/**
+		 * Save when a user adjust column widths still allow 12 columns min max
+		 * but cap the limits to 3 and 9 based on common usage.
+		 *
+		 * @todo: Add filters for column min, max
+		 *
+		 * @since 1.3.5
+		 *
+		 * @param event
+		 * @param ui
+		 */
+		save_column_widths : function( event, ui ) {
+
+			var $tgt          = $( event.target),
+				$columns      = $tgt.parent().parent().find('.mcs-editor-blocks').find('.columns'),
+				column_total  = 12,
+				column_value  = $tgt.slider( "value"),
+				column_start  = column_value,
+				post_data     = {
+					post_id : parseInt( mcs_data.post_id ),
+					section_id : parseInt( $tgt.closest('.multiple-content-sections-section').attr('data-mcs-section-id') ),
+					blocks : {}
+				};
+
+			// cap max column width
+			if( column_value > 9 ){
+				$tgt.slider( "value", 9 );
+			}
+
+			// cap min column width
+			if( column_value < 3 ){
+				$tgt.slider( "value", 3 );
+			}
+
+			// Custom class removal based on regex pattern
+			$columns.removeClass (function (index, css) {
+				return (css.match (/\mcs-columns-\d+/g) || []).join(' ');
+			});
+
+			$columns.each( function() {
+				var $this = $(this),
+					block_id = parseInt( $this.find('.block').attr('data-mcs-block-id') ),
+					$column_input = $this.find('.column-width');
+
+				$this.addClass( 'mcs-columns-' + column_start );
+
+				if( block_id && column_start ) {
+					$column_input.val( column_start );
+					post_data.blocks[ block_id.toString() ] = column_start;
+				}
+
+				column_start = column_total - column_value;
+			} );
+
+			$.post( ajaxurl, {
+				'action': 'mcs_update_block_widths',
+				'mcs_post_data' : post_data,
+				'mcs_reorder_blocks_nonce' : mcs_data.reorder_blocks_nonce
+			}, function( response ) {
+				// $current_spinner.removeClass( 'is-active' );
+			});
+		},
+
+		/**
+		 * Save when sections are reordered
+		 *
+		 * @since 1.0
+		 *
+		 * @param event
+		 */
+		reorder_sections : function( event ) {
 			event.preventDefault();
 			event.stopPropagation();
 
@@ -464,7 +511,7 @@ multiple_content_sections.admin = function ( $ ) {
 		save_section_ajax : function( section_ids, $current_spinner ) {
 			$.post( ajaxurl, {
                 'action': 'mcs_update_order',
-                'mcs_post_id'    : mcs_data.post_id,
+                'mcs_post_id'    : parseInt( mcs_data.post_id ),
                 'mcs_section_ids' : section_ids,
                 'mcs_reorder_section_nonce' : mcs_data.reorder_section_nonce
             }, function( response ) {
@@ -492,10 +539,10 @@ multiple_content_sections.admin = function ( $ ) {
 			event.preventDefault();
 			event.stopPropagation();
 
-			var $button = $(this),
-				$section = $button.parents('.multiple-content-sections-postbox'),
-				section_id = $section.attr('data-mcs-section-id'),
-				frame_id = 'mcs-background-select-' + section_id,
+			var $button       = $(this),
+				$section      = $button.parents('.multiple-content-sections-postbox'),
+				section_id    = parseInt( $section.attr('data-mcs-section-id') ),
+				frame_id      = 'mcs-background-select-' + section_id,
 				current_image = $button.attr('data-mcs-section-featured-image');
 
 	        // If the frame already exists, re-open it.
@@ -534,13 +581,13 @@ multiple_content_sections.admin = function ( $ ) {
 
 				$.post( ajaxurl, {
 	                'action': 'mcs_update_featured_image',
-	                'mcs_section_id'  : section_id,
-	                'mcs_image_id' : media_attachment.id,
+	                'mcs_section_id'  : parseInt( section_id ),
+	                'mcs_image_id' : parseInt( media_attachment.id ),
 	                'mcs_featured_image_nonce' : mcs_data.featured_image_nonce
 	            }, function( response ) {
 					if ( response != -1 ) {
 						current_image = media_attachment.id;
-						$button.text( media_attachment.title ).attr('data-mcs-section-featured-image', media_attachment.id ).append( $edit_icon );
+						$button.text( media_attachment.title ).attr('data-mcs-section-featured-image', parseInt( media_attachment.id ) ).append( $edit_icon );
 					}
 	            });
 	        });
