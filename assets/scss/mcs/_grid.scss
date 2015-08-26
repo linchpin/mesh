@@ -4,6 +4,10 @@
 	}
 }
 
+.mcs-row {
+	@include clearfix;
+}
+
 [class*="mcs-columns"] {
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;
