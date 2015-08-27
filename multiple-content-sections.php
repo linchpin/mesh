@@ -74,6 +74,7 @@ class Multiple_Content_Sections {
 
 		add_filter( 'content_edit_pre', array( $this, 'the_content' ) );
 		add_filter( 'the_content', array( $this, 'the_content' ), 5 );
+		add_filter( 'post_class', array( $this, 'post_class' ) );
 
 		add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_styles' ) );
@@ -348,6 +349,14 @@ class Multiple_Content_Sections {
 		}
 
 		return $content;
+	}
+
+	function post_class( $classes ) {
+		if ( $custom_class = get_post_meta( get_the_ID(), '_mcs_css_class', true ) ) {
+			$classes[] = $custom_class;
+
+			return $classes;
+		}
 	}
 
 	/**
