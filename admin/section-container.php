@@ -2,9 +2,10 @@
 /**
  * Container Template for editors
  *
+ * @since 1.2.0
+ *
  * @package MultipleContentSection
  * @subpackage AdminTemplates
- * @since 1.2.0
  */
 
 if ( ! $closed_metaboxes = get_user_option( 'closedpostboxes_page' ) ) {

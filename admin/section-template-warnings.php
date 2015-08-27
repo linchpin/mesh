@@ -23,7 +23,10 @@
 		$i = Multiple_Content_Sections::$template_data[ $selected_template ]['blocks'];
 
 		while ( $i <= count( $blocks ) ) {
-			esc_html_e( $blocks[ $i ]->ID );
+			if ( ! empty( $blocks[ $i ] ) ) {
+				esc_html_e( $blocks[ $i ]->ID );
+			}
+
 			$i++;
 		}
 		?>

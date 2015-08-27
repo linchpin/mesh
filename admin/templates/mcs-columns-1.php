@@ -8,9 +8,12 @@
  */
 
 ?>
+
+<?php print_r( $blocks[0] ); ?>
+
 <?php
 wp_editor( apply_filters( 'content_edit_pre', $blocks[0]->post_content ), 'mcs-section-editor-' . $blocks[0]->ID, array(
-	'textarea_name' => 'mcs-sections[' . $section->ID . '][blocks][' . $blocks[0]->ID . ']',
+	'textarea_name' => 'mcs-sections[' . $section->ID . '][blocks][' . $blocks[0]->ID . '][post_content]',
 	'teeny' => true,
 	'tinymce'          => array(
 		'resize'                => false,

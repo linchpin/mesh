@@ -230,7 +230,7 @@ class Multiple_Content_Sections {
 				update_post_meta( $section->ID, '_mcs_template', $template );
 			}
 
-			// Save CSS Classes
+			// Save CSS Classes.
 			$css_classes = explode( ' ', $section_data['css_class'] );
 			$sanitized_css_classes = array();
 
@@ -256,6 +256,8 @@ class Multiple_Content_Sections {
 			foreach ( $blocks as $block_id => $block_data ) {
 				$block = get_post( (int) $block_id );
 
+				error_log( $block_id . ' : ' . print_r( $block_data, true ) );
+
 				if ( empty( $block ) || 'mcs_section' != $block->post_type || $section->ID != $block->post_parent ) {
 					continue;
 				}
@@ -266,9 +268,9 @@ class Multiple_Content_Sections {
 						array(
 							'iframe' => array(
 								'src' => true,
-							   'style' => true,
-							   'id' => true,
-							   'class' => true,
+								'style' => true,
+								'id' => true,
+								'class' => true,
 							),
 						),
 						wp_kses_allowed_html( 'post' )
@@ -362,7 +364,7 @@ class Multiple_Content_Sections {
 			return;
 		}
 
-		wp_enqueue_script( 'admin-mcs', plugins_url( 'assets/js/admin-mcs.js', __FILE__ ), array( 'jquery', 'jquery-ui-sortable', 'jquery-ui-slider' ), '1.0', true );
+		wp_enqueue_script( 'admin-mcs', plugins_url( 'assets/js/admin-mcs.js', __FILE__ ), array( 'jquery', 'jquery-ui-draggable', 'jquery-ui-droppable', 'jquery-ui-slider' ), '1.0', true );
 
 		wp_localize_script( 'admin-mcs', 'mcs_data', array(
 			'post_id' => $post->ID,

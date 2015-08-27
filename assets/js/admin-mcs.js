@@ -89,29 +89,7 @@ multiple_content_sections.admin = function ( $ ) {
 				$reorder_button.addClass( 'disabled' );
 			}
 
-			$( ".mcs-editor-blocks" ).sortable({
-				handle: ".block-header",
-				placeholder: "block-placeholder",
-				update: function( event, ui ) {
-					multiple_content_sections.admin.reorder_blocks( $( event.target ).find('.wp-editor-area') );
-
-					var section_id = $(event.target).parents('.multiple-content-sections-postbox').attr('data-mcs-section-id');
-
-					multiple_content_sections.admin.save_block_order_sortable( section_id, event, ui );
-				}
-			});
-
-			$( ".block" )
-				.addClass( "ui-widget ui-widget-content ui-helper-clearfix" )
-				.find( ".portlet-header" )
-				.addClass( "hndle ui-sortable-handle" )
-				.prepend( "<span class='block-toggle'></span>");
-
-			$( ".block-toggle" ).click(function() {
-				var icon = $( this );
-				icon.toggleClass( "ui-icon-minusthick ui-icon-plusthick" );
-				icon.closest( ".portlet" ).find( ".portlet-content" ).toggle();
-			});
+			multiple_content_sections.admin.setup_drag_drop();
 
 			$('.column-slider').addClass('ui-slider-horizontal').each(function() {
 
@@ -124,6 +102,58 @@ multiple_content_sections.admin = function ( $ ) {
 					step:1,
 					change : multiple_content_sections.admin.save_column_widths
 				});
+			});
+		},
+
+		setup_drag_drop : function() {
+
+			$( ".mcs-editor-blocks .block" ).draggable({
+				'appendTo' : 'body',
+			//	containment : '.mcs-editor-blocks',
+				helper : 'original',
+				revert: true
+			});
+/*
+			$( ".block" )
+				.addClass( "ui-widget ui-widget-content ui-helper-clearfix" )
+				.find( ".block-header" )
+				.addClass( "hndle ui-sortable-handle" )
+				.prepend( "<span class='block-toggle'></span>");
+
+			$( ".block-toggle" ).click(function() {
+				var icon = $( this );
+				icon.toggleClass( "ui-icon-minusthick ui-icon-plusthick" );
+				icon.closest( ".block" ).find( ".block-content" ).toggle();
+			}); */
+
+			$( ".drop-target" ).droppable({
+				accept: ".block:not(.ui-sortable-helper)",
+				activeClass: "ui-state-hover",
+				hoverClass: "ui-state-active",
+				handle: ".block-header",
+				revert: true,
+				drop: function( event, ui ) {
+
+					var $this = $(this),
+						$swap_clone  = ui.draggable,
+						$swap_parent = ui.draggable.parent(),
+						$tgt         = $( event.target),
+						$tgt_clone   = $tgt.find('.block'),
+						$section     = $tgt.parents('.multiple-content-sections-section'),
+						section_id   = $section.attr('data-mcs-section-id');
+
+					$swap_clone.css( { 'top':'','left':'' } );
+
+					$this.append( $swap_clone );
+					$swap_parent.append( $tgt_clone );
+
+					multiple_content_sections.admin.reorder_blocks( $section.find('.wp-editor-area') );
+					multiple_content_sections.admin.save_block_order_sortable( section_id, event, ui );
+
+					multiple_content_sections.admin.setup_drag_drop();
+
+					return false;
+				}
 			});
 		},
 
@@ -149,6 +179,8 @@ multiple_content_sections.admin = function ( $ ) {
 				// Setup our editors
 				editor_data.selector = '#' + editor_id;
 				tinymce.init( editor_data );
+
+				//tinyMCE.execCommand('mceRepaint', false, editor_id );
 			});
 		},
 
