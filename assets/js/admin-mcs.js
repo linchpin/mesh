@@ -311,8 +311,8 @@ multiple_content_sections.admin = function ( $ ) {
 		 */
 		save_column_widths : function( event, ui ) {
 
-			var $tgt          = $( event.target),
-				$columns      = $tgt.parent().parent().find('.mcs-editor-blocks').find('.columns'),
+			var $tgt          = $( event.target ),
+				$columns      = $tgt.parent().parent().parent().find('.mcs-editor-blocks').find('.columns'),
 				column_total  = 12,
 				column_value  = $tgt.slider( "value"),
 				column_start  = column_value,

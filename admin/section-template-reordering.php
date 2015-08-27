@@ -14,6 +14,6 @@
 	<p>
 		<?php esc_html_e( 'Reorder your content blocks by dragging and dropping.', 'linchpin-mcs' ); ?>
 	</p>
-	<button type="button" class="notice-dismiss"><span class="screen-reader-text">Dismiss this notice.</span></button>
+	<button type="button" class="notice-dismiss"><span class="screen-reader-text"><?php esc_html_e( 'Dismiss this notice.', 'linchpin-mcs' ); ?></span></button>
 </div>
 <?php endif; ?>

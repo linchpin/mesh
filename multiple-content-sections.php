@@ -42,17 +42,17 @@ class Multiple_Content_Sections {
 	 * @var array
 	 */
 	public static $template_data = array(
-		'default.php' => array(
-			'label' => 'Default',
+		'mcs-columns-1.php' => array(
+			'label' => '1 Columns',
 			'blocks' => 1,
 			'widths' => array( 12 ),
 		),
-		'columns-2.php' => array(
+		'mcs-columns-2.php' => array(
 			'label' => '2 Columns',
 			'blocks' => 2,
 			'widths' => array( 6, 6 ),
 		),
-		'columns-3.php' => array(
+		'mcs-columns-3.php' => array(
 			'label' => '3 Columns',
 			'blocks' => 3,
 			'widths' => array( 4, 4, 4 ),
@@ -135,14 +135,14 @@ class Multiple_Content_Sections {
 				<button type="button" class="notice-dismiss"><span class="screen-reader-text">Dismiss this notice.</span></button>
 			</div>
 
-			<div class="row mcs-section-controls-container">
-				<div class="mcs-left">
+			<div class="mcs-row mcs-section-controls-container">
+				<div class="mcs-columns-7">
 					<a href="#" class="button mcs-section-reorder<?php if ( empty( $content_sections ) ) : ?> disabled<?php endif; ?>"><?php esc_html_e( 'Reorder', 'lincpin-mcs' ); ?></a>
 					<span class="spinner mcs-reorder-spinner"></span>
 					<a href="#" class="button mcs-section-expand<?php if ( empty( $content_sections ) ) : ?> disabled<?php endif; ?>"><?php esc_html_e( 'Expand All', 'lincpin-mcs' ); ?></a>
 				</div>
 
-				<div class="mcs-right">
+				<div class="mcs-columns-5">
 					<span class="spinner mcs-add-spinner"></span>
 					<a href="#" class="button mcs-section-add"><span class="dashicons dashicons-plus"></span><?php esc_html_e( 'Add Section', 'lincpin-mcs' ); ?></a>
 				</div>
@@ -221,12 +221,29 @@ class Multiple_Content_Sections {
 
 			wp_update_post( $updates );
 
+			// Save Template.
 			$template = sanitize_text_field( $section_data['template'] );
 
 			if ( empty( $template ) ) {
 				delete_post_meta( $section->ID, '_mcs_template' );
 			} else {
 				update_post_meta( $section->ID, '_mcs_template', $template );
+			}
+
+			// Save CSS Classes
+			$css_classes = explode( ' ', $section_data['css_class'] );
+			$sanitized_css_classes = array();
+
+			foreach( $css_classes as $css ) {
+				$sanitized_css_classes[] = sanitize_html_class( $css );
+			}
+
+			$sanitized_css_classes = implode( ' ', $sanitized_css_classes );
+
+			if ( empty( $sanitized_css_classes ) ) {
+				delete_post_meta( $section->ID, '_mcs_css_class' );
+			} else {
+				update_post_meta( $section->ID, '_mcs_css_class', $sanitized_css_classes );
 			}
 
 			// Process the section's blocks.
@@ -316,14 +333,15 @@ class Multiple_Content_Sections {
 	}
 
 	/**
-     * Simple loop to get our sections
-     *
-     * @param $content
-     *
-     * @return string
-     */
+	 * Simple loop to get our sections
+	 *
+	 * @param string $content
+	 *
+	 * @return string
+	 */
 	function the_content( $content ) {
 		$pos = strpos( $content, '<div id="mcs-section-content">' );
+
 		if ( false !== $pos ) {
 			$content = substr( $content, 0, ( strlen( $content ) - $pos ) * -1 );
 		}
@@ -436,12 +454,14 @@ function mcs_add_section_admin_markup( $section, $closed = false ) {
 
 	// Make sure we always have a template.
 	if ( ! $selected_template = get_post_meta( $section->ID, '_mcs_template', true ) ) {
-		$selected_template = 'default.php';
+		$selected_template = 'mcs-columns-1.php';
 	}
+
+	$css_class = get_post_meta( $section->ID, '_mcs_css_class', true );
 
 	$featured_image_id = get_post_thumbnail_id( $section->ID );
 
-	include LINCHPIN_MCS___PLUGIN_DIR . '/admin/section-container.php';
+	include LINCHPIN_MCS___PLUGIN_DIR . 'admin/section-container.php';
 }
 
 /**
@@ -497,16 +517,23 @@ function the_mcs_content( $post_id = '' ) {
 
 	if ( $located ) {
 		return;
-	}
+	} else {
 
-	?>
-	<div <?php post_class(); ?>
-		<h3 title="<?php the_title_attribute(); ?>"><?php the_title(); ?></h3>
-		<div class="entry">
-			<?php the_content(); ?>
-		</div>
-	</div>
-	<?php
+		$file = LINCHPIN_MCS___PLUGIN_DIR . '/templates/' . $template;
+
+		if ( file_exists( $file ) ) {
+			include $file;
+		} else {
+			?>
+			<div <?php post_class(); ?>
+				<h3 title="<?php the_title_attribute(); ?>"><?php the_title(); ?></h3>
+				<div class="entry">
+					<?php the_content(); ?>
+				</div>
+			</div>
+			<?php
+		}
+	}
 }
 
 /**
