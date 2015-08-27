@@ -71,10 +71,6 @@ if ( ! $closed_metaboxes = get_user_option( 'closedpostboxes_page' ) ) {
 
 			include LINCHPIN_MCS___PLUGIN_DIR . 'admin/section-template-reordering.php';
 
-			if ( (int) Multiple_Content_Sections::$template_data[ $selected_template ]['blocks'] > 1 ) : ?>
-				<div class="wp-slider column-slider" data-mcs-columns="<?php esc_attr_e( get_post_meta( $blocks[0]->ID, '_mcs_column_width', true ) ); ?>"><span class="ui-slider-handle ui-state-default ui-corner-all" tabindex="0"></span></div>
-			<?php endif;
-
 			include LINCHPIN_MCS___PLUGIN_DIR . 'admin/templates/' . $selected_template;
 
 			include LINCHPIN_MCS___PLUGIN_DIR . 'admin/section-template-warnings.php';

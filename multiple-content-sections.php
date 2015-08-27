@@ -256,8 +256,6 @@ class Multiple_Content_Sections {
 			foreach ( $blocks as $block_id => $block_data ) {
 				$block = get_post( (int) $block_id );
 
-				error_log( $block_id . ' : ' . print_r( $block_data, true ) );
-
 				if ( empty( $block ) || 'mcs_section' != $block->post_type || $section->ID != $block->post_parent ) {
 					continue;
 				}
@@ -282,7 +280,8 @@ class Multiple_Content_Sections {
 
 				$block_column_width = (int) $section_data['blocks'][ $block_id ]['columns'];
 
-				if ( empty( $block_column_width ) ) {
+				// If we don't have a column width defined or we are using a 1 column layout clear our saved widths.
+				if ( empty( $block_column_width ) || 'mcs-columns-1.php' == $template ) {
 					delete_post_meta( $block_id, '_mcs_column_width' );
 				} else {
 					update_post_meta( $block_id, '_mcs_column_width', $block_column_width );

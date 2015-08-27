@@ -8,7 +8,6 @@
  */
 
 ?>
-
 <?php if ( ! empty( $selected_template ) && count( $blocks ) > Multiple_Content_Sections::$template_data[ $selected_template ]['blocks'] ) : ?>
 	<div id="mcs-description" class="description notice notice-info is-dismissible below-h2">
 		<p>

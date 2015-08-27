@@ -89,8 +89,12 @@ multiple_content_sections.admin = function ( $ ) {
 				$reorder_button.addClass( 'disabled' );
 			}
 
+			multiple_content_sections.admin.setup_slider();
 			multiple_content_sections.admin.setup_drag_drop();
 
+		},
+
+		setup_slider : function() {
 			$('.column-slider').addClass('ui-slider-horizontal').each(function() {
 
 				var $this = $(this);
@@ -113,13 +117,13 @@ multiple_content_sections.admin = function ( $ ) {
 				helper : 'original',
 				revert: true
 			});
-/*
+
 			$( ".block" )
 				.addClass( "ui-widget ui-widget-content ui-helper-clearfix" )
 				.find( ".block-header" )
 				.addClass( "hndle ui-sortable-handle" )
 				.prepend( "<span class='block-toggle'></span>");
-
+/*
 			$( ".block-toggle" ).click(function() {
 				var icon = $( this );
 				icon.toggleClass( "ui-icon-minusthick ui-icon-plusthick" );
@@ -250,6 +254,8 @@ multiple_content_sections.admin = function ( $ ) {
 					// Loop through all of our edits in the response
 
 					multiple_content_sections.admin.reorder_blocks( $editors );
+
+					multiple_content_sections.admin.setup_slider();
 
 					$spinner.removeClass('is-active');
 

@@ -96,6 +96,12 @@ class Multiple_Content_Sections_AJAX {
 		// Make sure that a section has enough blocks to fill the template.
 		$blocks = mcs_maybe_create_section_blocks( $section, $template_data[ $selected_template ]['blocks'] );
 
+		if( 'mcs-columns-1.php' == $selected_template ) {
+			foreach ( $blocks as $block ) {
+				delete_post_meta( $block->ID, '_mcs_column_width' );
+			}
+		}
+
 		if ( $template_data[ $selected_template ]['blocks'] > 1 ) {
 			include( LINCHPIN_MCS___PLUGIN_DIR . '/admin/section-template-reordering.php' );
 		}
