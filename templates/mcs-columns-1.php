@@ -2,6 +2,8 @@
 /*
  * MCS Template: 1 Column
  *
+ * MCS Template Blocks: 1
+ *
  * @since 1.3.5
  *
  * @package MultipleContentSections
@@ -9,7 +11,7 @@
  */
 ?>
 
-<section <?php post_class( 'mcs-section mcs-col-1' ) ?>>
+<section <?php post_class() ?>>
 	<div class="row">
 		<div class="small-12 columns">
 			<h2 class="entry-title"><?php the_title(); ?></h2>

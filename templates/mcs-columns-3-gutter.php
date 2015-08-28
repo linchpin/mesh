@@ -1,10 +1,6 @@
 <?php
 /*
  * MCS Template: 2 Column w/ Gutter
- *
- * MCS Template Blocks: 2
- * MCS Template Gap : 1
- *
  */
 ?>
 

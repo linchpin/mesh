@@ -2,6 +2,8 @@
 /*
  * MCS Template: 2 Columns
  *
+ * MCS Template Blocks: 2
+ *
  * @since 1.3.5
  *
  * @package MultipleContentSections
