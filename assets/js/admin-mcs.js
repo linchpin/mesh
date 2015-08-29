@@ -352,7 +352,7 @@ multiple_content_sections.admin = function ( $ ) {
 			var $tgt          = $( event.target ),
 				$columns      = $tgt.parent().parent().parent().find('.mcs-editor-blocks').find('.columns'),
 				column_total  = 12,
-				column_value  = $tgt.slider( "value"),
+				column_value  = $tgt.slider( "value" ),
 				column_start  = column_value,
 				post_data     = {
 					post_id : parseInt( mcs_data.post_id ),
@@ -363,11 +363,15 @@ multiple_content_sections.admin = function ( $ ) {
 			// cap max column width
 			if( column_value > 9 ){
 				$tgt.slider( "value", 9 );
+				column_value = 9;
+				column_start = 9;
 			}
 
 			// cap min column width
 			if( column_value < 3 ){
 				$tgt.slider( "value", 3 );
+				column_value = 3;
+				column_start = 3;
 			}
 
 			// Custom class removal based on regex pattern

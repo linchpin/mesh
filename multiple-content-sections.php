@@ -116,11 +116,16 @@ class Multiple_Content_Sections {
 	function edit_page_form( $post ) {
 		$content_sections = mcs_get_sections( $post->ID );
 		?>
-		<hr />
 		<div id="mcs-container">
 			<?php wp_nonce_field( 'mcs_content_sections_nonce', 'mcs_content_sections_nonce' ); ?>
 
-			<h3><?php esc_html_e( 'Multiple Content Sections', 'linchpin-mcs' ); ?></h3>
+			<h2 class="mcs-section-controls-container">
+				<?php esc_html_e( 'Multiple Content Sections', 'linchpin-mcs' ); ?>
+				<a href="#" class="page-title-action mcs-section-reorder<?php if ( empty( $content_sections ) ) : ?> disabled<?php endif; ?>"><?php esc_html_e( 'Reorder Sections', 'lincpin-mcs' ); ?></a>
+				<a href="#" class="page-title-action mcs-section-expand<?php if ( empty( $content_sections ) ) : ?> disabled<?php endif; ?>"><?php esc_html_e( 'Expand All', 'lincpin-mcs' ); ?></a>
+				<a href="#" class="page-title-action mcs-section-add"><span class="dashicons dashicons-plus"></span><?php esc_html_e( 'Add Section', 'lincpin-mcs' ); ?></a>
+				<span class="spinner mcs-reorder-spinner"></span>
+			</h2>
 
 			<div id="mcs-description" class="description notice notice-info is-dismissible below-h2">
 				<p>
@@ -134,19 +139,6 @@ class Multiple_Content_Sections {
 				</p>
 
 				<button type="button" class="notice-dismiss"><span class="screen-reader-text">Dismiss this notice.</span></button>
-			</div>
-
-			<div class="mcs-row mcs-section-controls-container">
-				<div class="mcs-columns-7">
-					<a href="#" class="button mcs-section-reorder<?php if ( empty( $content_sections ) ) : ?> disabled<?php endif; ?>"><?php esc_html_e( 'Reorder', 'lincpin-mcs' ); ?></a>
-					<span class="spinner mcs-reorder-spinner"></span>
-					<a href="#" class="button mcs-section-expand<?php if ( empty( $content_sections ) ) : ?> disabled<?php endif; ?>"><?php esc_html_e( 'Expand All', 'lincpin-mcs' ); ?></a>
-				</div>
-
-				<div class="mcs-columns-5">
-					<span class="spinner mcs-add-spinner"></span>
-					<a href="#" class="button mcs-section-add"><span class="dashicons dashicons-plus"></span><?php esc_html_e( 'Add Section', 'lincpin-mcs' ); ?></a>
-				</div>
 			</div>
 
 			<div id="multiple-content-sections-container">
