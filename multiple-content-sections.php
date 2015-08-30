@@ -343,6 +343,11 @@ class Multiple_Content_Sections {
 		return $content;
 	}
 
+	/**
+	 * @param $classes
+	 *
+	 * @return array
+	 */
 	function post_class( $classes ) {
 		if ( $custom_class = get_post_meta( get_the_ID(), '_mcs_css_class', true ) ) {
 			$classes[] = $custom_class;
@@ -415,6 +420,11 @@ function mcs_locate_template_files( $section_templates = '' ) {
 				continue;
 			}
 
+
+			if ( ! preg_match( '|MCS Template Blocks:(.*)$|mi' ) {
+				continue;
+			}
+
 			$section_templates[ $file ] = _cleanup_header_comment( $header[1] );
 		}
 	}
@@ -424,7 +434,7 @@ function mcs_locate_template_files( $section_templates = '' ) {
 	 *
 	 * This filter does not currently allow for page templates to be added.
 	 *
-	 * @since 3.9.0
+	 * @since 1.3.5
 	 *
 	 * @param array        $page_templates Array of page templates. Keys are filenames,
 	 *                                     values are translated names.
@@ -604,7 +614,7 @@ function mcs_maybe_create_section_blocks( $section, $number_needed = 0 ) {
 	$blocks = mcs_get_section_blocks( $section->ID, $section->post_status );
 	$count = count( $blocks );
 
-	//Create enough blocks to fill the section
+	// Create enough blocks to fill the section.
 	while ( $count < $number_needed ) {
 		wp_insert_post( array(
 			'post_type'   => 'mcs_section',

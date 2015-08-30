@@ -1,8 +1,8 @@
 <?php
 /*
- * MCS Template: 2 Columns
+ * MCS Template: 3 Columns
  *
- * MCS Template Blocks: 2
+ * MCS Template Blocks: 3
  *
  * @since 1.3.5
  *
