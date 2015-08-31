@@ -16,23 +16,17 @@ if ( ! $closed_metaboxes = get_user_option( 'closedpostboxes_page' ) ) {
 	<div class="handlediv" title="Click to toggle">
 		<br>
 	</div>
-	<h3 class="hndle">
+	<h3 class="hndle mcs-row">
 		<span><?php esc_html_e( $section->post_title ); ?></span><span class="spinner"></span>
 
-		<div class="mcs-right misc-pub-section misc-pub-section-status"><label for="section-status-select-<?php esc_attr_e( $section->ID ); ?>">Status:</label>
-			<span id="section-status-display">Published</span>
-			<a href="#section_status_<?php esc_attr_e( $section->ID ); ?>" class="edit-post-status hide-if-no-js" style="display: inline;"><span aria-hidden="true">Edit</span> <span class="screen-reader-text">Edit status</span></a>
-
-			<div id="section-status-select-<?php esc_attr_e( $section->ID ); ?>" class="hide-if-js" style="display: none;">
-				<input type="hidden" name="hidden_post_status" id="hidden_post_status" value="publish">
+		<div class="mcs-right">
+			<div id="section-status-select-<?php esc_attr_e( $section->ID ); ?>">
+				<label for="section-status-select-<?php esc_attr_e( $section->ID ); ?>"><strong><?php esc_html_e( 'Status:', 'linchpin-mcs' ); ?></strong></label>
 				<select id="section-status-select-<?php esc_attr_e( $section->ID ); ?>" name="mcs-sections[<?php esc_attr_e( $section->ID ); ?>][post_status]">
 					<option value="draft" <?php selected( $section->post_status, 'draft' ); ?>><?php esc_html_e( 'Draft', 'linchpin-mcs' ); ?></option>
 					<option value="publish" <?php selected( $section->post_status, 'publish' ); ?>><?php esc_html_e( 'Published', 'linchpin-mcs' ); ?></option>
 				</select>
-				<a href="#section_status_<?php esc_attr_e( $section->ID ); ?>" class="save-section-status hide-if-no-js button">OK</a>
-				<a href="#section_status_<?php esc_attr_e( $section->ID ); ?>" class="cancel-section-status hide-if-no-js button-cancel">Cancel</a>
 			</div>
-
 		</div>
 	</h3>
 	<div class="inside">
@@ -53,8 +47,6 @@ if ( ! $closed_metaboxes = get_user_option( 'closedpostboxes_page' ) ) {
 				<?php endif; ?>
 			</div>
 			<div class="mcs-columns-9 text-right">
-				<label for="mcs-sections[<?php esc_attr_e( $section->ID ); ?>][post_status]"><strong><?php esc_html_e( 'Status:', 'linchpin-mcs' ); ?></strong></label>
-
 				<label for="mcs-sections[<?php esc_attr_e( $section->ID ); ?>][template]"><strong><?php esc_html_e( 'Template:', 'linchpin-mcs' ); ?></strong></label>
 
 				<select class="mcs-choose-layout" name="mcs-sections[<?php esc_attr_e( $section->ID ); ?>][template]">
@@ -92,9 +84,11 @@ if ( ! $closed_metaboxes = get_user_option( 'closedpostboxes_page' ) ) {
 		}
 		?>
 		</div>
-		<p class="mcs-section-remove-container mcs-right">
-			<span class="spinner"></span>
-			<a href="#" class="button mcs-section-remove"><?php esc_html_e( 'Remove Section', 'linchpin-mcs' ); ?></a>
-		</p>
+		<div class="mcs-row">
+			<div class="mcs-section-remove-container mcs-right">
+				<span class="spinner"></span>
+				<a href="#" class="button mcs-section-remove"><?php esc_html_e( 'Remove Section', 'linchpin-mcs' ); ?></a>
+			</div>
+		</div>
 	</div>
 </div>
