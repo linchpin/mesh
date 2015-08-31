@@ -344,16 +344,22 @@ class Multiple_Content_Sections {
 	}
 
 	/**
-	 * @param $classes
+	 * post_class function.
+	 *
+	 * Filter custom classes to section container
+	 *
+	 * @param array $classes
 	 *
 	 * @return array
 	 */
 	function post_class( $classes ) {
-		if ( $custom_class = get_post_meta( get_the_ID(), '_mcs_css_class', true ) ) {
-			$classes[] = $custom_class;
+		$classes[] = 'mcs-section';
 
-			return $classes;
+		if ( $custom_class = get_post_meta( get_the_ID(), '_mcs_css_class', true ) ) {
+			$classes[] = esc_attr( $custom_class );
 		}
+
+		return $classes;
 	}
 
 	/**
