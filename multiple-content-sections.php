@@ -420,12 +420,11 @@ function mcs_locate_template_files( $section_templates = '' ) {
 				continue;
 			}
 
-
-			if ( ! preg_match( '|MCS Template Blocks:(.*)$|mi' ) {
-				continue;
-			}
-
 			$section_templates[ $file ] = _cleanup_header_comment( $header[1] );
+
+		//	if ( preg_match( '|MCS Template Blocks:(.*)$|mi', file_get_contents( $full_path ), $header ) ) {
+		//		$section_templates[ $file ]['blocks'] = ;
+		//	}
 		}
 	}
 

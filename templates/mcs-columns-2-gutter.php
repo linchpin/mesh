@@ -8,7 +8,7 @@
  */
 ?>
 
-<section <?php post_class( 'mcs-section 2col-thirtysixty' ) ?>>
+<section <?php post_class() ?>>
 	<div class="row">
 		<div class="small-12 medium-4 columns">
 			<?php if ( has_post_thumbnail() ) : ?>
