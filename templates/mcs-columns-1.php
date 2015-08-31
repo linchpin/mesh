@@ -9,17 +9,17 @@
  * @package MultipleContentSections
  * @subpackage Templates
  */
+
+if ( has_post_thumbnail() ) {
+	$image = wp_get_attachment_image_src( get_post_thumbnail_id( get_the_ID() ) );
+	$style = ' style="background-image: url(' . $image[0] . ');"';
+}
 ?>
 
-<section <?php post_class() ?>>
+<section <?php post_class(); if ( ! empty( $style ) ) echo $style; ?>>
 	<div class="row">
 		<div class="small-12 columns">
 			<h2 class="entry-title"><?php the_title(); ?></h2>
-			<?php if ( has_post_thumbnail() ) : ?>
-				<div class="small-only-text-center">
-					<?php the_post_thumbnail(); ?>
-				</div>
-			<?php endif; ?>
 			<?php
 			if ( $blocks = mcs_get_section_blocks( get_the_ID() ) ) {
 				foreach ( $blocks as $block ) {
