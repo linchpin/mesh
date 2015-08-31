@@ -427,7 +427,7 @@ function mcs_locate_template_files( $section_templates = '' ) {
 			}
 
 
-			if ( ! preg_match( '|MCS Template Blocks:(.*)$|mi' ) {
+			if ( ! preg_match( '|MCS Template Blocks:(.*)$|mi' ) ) {
 				continue;
 			}
 
