@@ -31,11 +31,8 @@ if ( ! $closed_metaboxes = get_user_option( 'closedpostboxes_page' ) ) {
 	</h3>
 	<div class="inside">
 		<div class="mcs-row">
-			<div class="mcs-columns-10">
+			<div class="mcs-columns-12">
 				<input type="text" name="mcs-sections[<?php esc_attr_e( $section->ID ); ?>][post_title]" class="mcs-section-title widefat" value="<?php esc_attr_e( $section->post_title ); ?>" />
-			</div>
-			<div class="mcs-columns-2">
-
 			</div>
 		</div>
 		<div class="mcs-section-meta mcs-row">
@@ -44,21 +41,15 @@ if ( ! $closed_metaboxes = get_user_option( 'closedpostboxes_page' ) ) {
 					<a href="#" class="mcs-featured-image-choose "><span class="dashicons dashicons-format-image"></span><?php esc_html_e( 'Set background image', 'linchpin-mcs' ); ?></a>
 				<?php else : ?>
 					<a href="#" class="mcs-featured-image-choose" data-mcs-section-featured-image="<?php esc_attr_e( $featured_image_id ); ?>"><?php echo get_the_title( $featured_image_id ); ?> <span class="dashicons dashicons-edit"></span></a>
+					<a href="#" class="mcs-featured-image-trash" data-mcs-section-featured-image="<?php esc_attr_e( $featured_image_id ); ?>"><?php esc_html_e( 'Remove', 'linchpin-mcs' ); ?> <span class="dashicons dashicons-trash"></span></a>
 				<?php endif; ?>
 			</div>
 			<div class="mcs-columns-9 text-right">
 				<label for="mcs-sections[<?php esc_attr_e( $section->ID ); ?>][template]"><strong><?php esc_html_e( 'Template:', 'linchpin-mcs' ); ?></strong></label>
 
 				<select class="mcs-choose-layout" name="mcs-sections[<?php esc_attr_e( $section->ID ); ?>][template]">
-
-					<?php $mcs_templates = Multiple_Content_Sections::$template_data; ?>
-
-					<?php foreach ( $mcs_templates as $key => $mcs_template ) : ?>
-						<option value="<?php esc_attr_e( $key ); ?>" <?php selected( $selected_template, $key ); ?>><?php esc_html_e( $mcs_template['label'], 'linchpin-mcs' ); ?></option>
-					<?php endforeach; ?>
-
 					<?php foreach ( array_keys( $templates ) as $template ) : ?>
-						<option value="<?php esc_attr_e( $template ); ?>" <?php selected( $selected_template, $template ); ?>><?php esc_html_e( $templates[ $template ] ); ?></option>
+						<option value="<?php esc_attr_e( $template ); ?>" <?php selected( $selected_template, $template ); ?>><?php esc_html_e( $templates[ $template ]['file'] ); ?></option>
 					<?php endforeach; ?>
 				</select>
 				<label for="mcs-sections[<?php esc_attr_e( $section->ID ); ?>][css-class]">
@@ -72,13 +63,9 @@ if ( ! $closed_metaboxes = get_user_option( 'closedpostboxes_page' ) ) {
 		<?php
 		if ( $blocks = mcs_maybe_create_section_blocks( $section ) ) {
 
-			if ( ! isset( $selected_template ) ) {
-				$selected_template = 'mcs-columns-1.php';
-			}
-
 			include LINCHPIN_MCS___PLUGIN_DIR . 'admin/section-template-reordering.php';
 
-			include LINCHPIN_MCS___PLUGIN_DIR . 'admin/templates/' . $selected_template;
+			include LINCHPIN_MCS___PLUGIN_DIR . 'admin/section-blocks.php';
 
 			include LINCHPIN_MCS___PLUGIN_DIR . 'admin/section-template-warnings.php';
 		}

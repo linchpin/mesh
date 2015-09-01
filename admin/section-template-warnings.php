@@ -8,7 +8,7 @@
  */
 
 ?>
-<?php if ( ! empty( $selected_template ) && count( $blocks ) > Multiple_Content_Sections::$template_data[ $selected_template ]['blocks'] ) : ?>
+<?php if ( ! empty( $selected_template ) && count( $blocks ) > $templates[ $selected_template ]['blocks'] ) : ?>
 	<div id="mcs-warnings-<?php esc_attr_e( $section->ID ); ?>" class="description notice notice-info is-dismissible below-h2">
 		<p>
 			<?php esc_html_e( 'Your sections template selection does not have enough spots to display all of your blocks', 'linchpin-mcs' ); ?>
@@ -19,11 +19,11 @@
 	</div>
 	<p>Unused or hidden blocks :
 		<?php
-		$i = Multiple_Content_Sections::$template_data[ $selected_template ]['blocks'];
+		$i = $templates[ $selected_template ]['blocks'];
 
 		while ( $i <= count( $blocks ) ) {
 			if ( ! empty( $blocks[ $i ] ) ) {
-				esc_html_e( $blocks[ $i ]->ID );
+				esc_html_e( $blocks[ $i ]->ID . ',' );
 			}
 
 			$i++;

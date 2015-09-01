@@ -79,6 +79,8 @@ multiple_content_sections.admin = function ( $ ) {
 				.on('click', '.mcs-featured-image-choose', multiple_content_sections.admin.choose_background )
 				.on('click.OpenMediaManager', '.mcs-featured-image-choose', multiple_content_sections.admin.choose_background )
 
+				.on('click', '.mcs-featured-image-trash', multiple_content_sections.admin.remove_background )
+
 				.on('click', '.mcs-section-expand', multiple_content_sections.admin.expand_all_sections )
 
 				.on('keyup', '.mcs-section-title', multiple_content_sections.admin.change_section_title );
@@ -97,15 +99,32 @@ multiple_content_sections.admin = function ( $ ) {
 		setup_slider : function() {
 			$('.column-slider').addClass('ui-slider-horizontal').each(function() {
 
-				var $this = $(this);
+				var $this    = $(this),
+					blocks   = parseInt( $this.attr('data-mcs-blocks') ),
+					is_range = ( blocks > 2 )? true : false,
+					vals = $.parseJSON( $this.attr('data-mcs-columns') ),
+					data = {
+						value: vals[0],
+						range: is_range,
+						min:0,
+						max:12,
+						step:1,
+						change : multiple_content_sections.admin.save_column_widths
+					};
 
-				$this.slider({
-					value: $this.attr('data-mcs-columns'),
-					min:0,
-					max:12,
-					step:1,
-					change : multiple_content_sections.admin.save_column_widths
-				});
+				//if( blocks == 2 ) {
+				//	data.values = vals;
+				//	data.value = null;
+				//}
+
+				if( blocks === 3 ) {
+					vals[1] = vals[0] + vals[1]; // add the first 2 columns together
+					vals.pop();
+					data.values = vals;
+					data.value = null;
+				}
+
+				$this.slider( data );
 			});
 		},
 
@@ -351,6 +370,7 @@ multiple_content_sections.admin = function ( $ ) {
 
 			var $tgt          = $( event.target ),
 				$columns      = $tgt.parent().parent().parent().find('.mcs-editor-blocks').find('.columns'),
+				column_length = $columns.length,
 				column_total  = 12,
 				column_value  = $tgt.slider( "value" ),
 				column_start  = column_value,
@@ -358,20 +378,67 @@ multiple_content_sections.admin = function ( $ ) {
 					post_id : parseInt( mcs_data.post_id ),
 					section_id : parseInt( $tgt.closest('.multiple-content-sections-section').attr('data-mcs-section-id') ),
 					blocks : {}
-				};
+				},
+				max_width = 12,
+				min_width = 3,
+				slider_0 = ( column_value )? column_value : $tgt.slider( "values", 0 ),
+				slider_1 = $tgt.slider( "values", 1 ),
+				column_values = [];
 
 			// cap max column width
-			if( column_value > 9 ){
-				$tgt.slider( "value", 9 );
-				column_value = 9;
-				column_start = 9;
+
+			if( column_length == 2 ) {
+
+				max_width = 9;
+				min_width = 3;
+
+				column_value = Math.max( min_width, column_value );
+				column_value = Math.min( max_width, column_value );
+
+				// cap min column width
+				if( column_value != $tgt.slider( "value" ) ) {
+					$tgt.slider( "value", column_value );
+				}
+
+				column_values = [
+					column_value,
+					column_total - column_value
+				];
 			}
 
-			// cap min column width
-			if( column_value < 3 ){
-				$tgt.slider( "value", 3 );
-				column_value = 3;
-				column_start = 3;
+			if( column_length == 3 ) {
+
+				max_width = 6;
+				min_width = 3;
+
+				if( slider_0 > max_width ){
+					$tgt.slider( "values", [ $tgt.slider( "value", 0 ), max_width ] );
+					column_value = max_width;
+					column_start = max_width;
+				}
+
+				// cap min column width
+				if( slider_0 < min_width ){
+					$tgt.slider( "value", min_width );
+					column_value = min_width;
+					column_start = min_width;
+				}
+
+				min_width = slider_0 + 3;
+				max_width = 9;
+
+				if( slider_1 > max_width ){
+					$tgt.slider( "values", [ $tgt.slider( "value", 0 ), max_width ] );
+					column_value = max_width;
+					column_start = max_width;
+				}
+
+				// cap min column width
+				if( slider_1 < min_width ){
+					$tgt.slider( "value", min_width );
+					column_value = min_width;
+					column_start = min_width;
+				}
 			}
 
 			// Custom class removal based on regex pattern
@@ -379,19 +446,17 @@ multiple_content_sections.admin = function ( $ ) {
 				return (css.match (/\mcs-columns-\d+/g) || []).join(' ');
 			});
 
-			$columns.each( function() {
+			$columns.each( function( index ) {
 				var $this = $(this),
 					block_id = parseInt( $this.find('.block').attr('data-mcs-block-id') ),
 					$column_input = $this.find('.column-width');
 
-				$this.addClass( 'mcs-columns-' + column_start );
+				$this.addClass( 'mcs-columns-' + column_values[ index ] );
 
-				if( block_id && column_start ) {
-					$column_input.val( column_start );
-					post_data.blocks[ block_id.toString() ] = column_start;
+				if( block_id && column_values[ index ] ) {
+					$column_input.val( column_values[ index ] );
+					post_data.blocks[ block_id.toString() ] = column_values[ index ];
 				}
-
-				column_start = column_total - column_value;
 			} );
 
 			$.post( ajaxurl, {
@@ -573,8 +638,49 @@ multiple_content_sections.admin = function ( $ ) {
 			$('h3.hndle', $postbox).html( current_title );
 		},
 
+		/**
+		 * Block our click event while reordering
+		 *
+		 * @since 1.0.0
+		 *
+		 * @param event
+		 */
 		block_click : function(event){
 			event.stopImmediatePropagation();
+		},
+
+		/**
+		 * Remove our selected background
+		 *
+		 * @since 1.3.6
+		 *
+		 * @param event
+		 */
+		remove_background : function(event) {
+
+			event.preventDefault();
+			event.stopPropagation();
+
+			var $button       = $(this),
+				$section      = $button.parents('.multiple-content-sections-postbox'),
+				section_id    = parseInt( $section.attr('data-mcs-section-id') ),
+				current_image = $button.attr('data-mcs-section-featured-image'),
+				$edit_icon = $( '<span />' ).attr({
+					'class' : 'dashicons dashicons-format-image'
+				});
+
+			$.post( ajaxurl, {
+				'action': 'mcs_update_featured_image',
+				'mcs_section_id'  : parseInt( section_id ),
+				'mcs_featured_image_nonce' : mcs_data.featured_image_nonce
+			}, function( response ) {
+				if ( response != -1 ) {
+					$button.prev().text( mcs_data.labels.add_image).prepend( $edit_icon );
+					$button.remove();
+			//		$button.text( mcs_data.labels.add_image ).attr('data-mcs-section-featured-image', '').prepend( $edit_icon );
+				}
+			});
+
 		},
 
 		choose_background : function(event) {
@@ -617,9 +723,17 @@ multiple_content_sections.admin = function ( $ ) {
             media_frames[ frame_id ].on('select', function(){
 	            // Grab our attachment selection and construct a JSON representation of the model.
 	            var media_attachment = media_frames[ frame_id ].state().get('selection').first().toJSON(),
-	            	$edit_icon = $( '<span />' ).attr({
-		            	'class' : 'dashicons dashicons-edit'
-		            });
+	            	$edit_icon = $( '<span />', {
+						'class' : 'dashicons dashicons-edit'
+					}),
+					$trash_icon = $( '<span />', {
+						'class' : 'dashicons dashicons-trash'
+					}),
+					$trash = $('<a/>', {
+						'data-mcs-section-featured-image': '',
+						'href' : '#',
+						'class' : 'mcs-featured-image-trash'
+					}).text( mcs_data.labels.remove_image).prepend( $trash_icon );
 
 				$.post( ajaxurl, {
 	                'action': 'mcs_update_featured_image',
@@ -629,7 +743,11 @@ multiple_content_sections.admin = function ( $ ) {
 	            }, function( response ) {
 					if ( response != -1 ) {
 						current_image = media_attachment.id;
-						$button.text( media_attachment.title ).attr('data-mcs-section-featured-image', parseInt( media_attachment.id ) ).append( $edit_icon );
+						$button
+							.text( media_attachment.title )
+							.attr('data-mcs-section-featured-image', parseInt( media_attachment.id ) )
+							.append( $edit_icon )
+							.after( $trash );
 					}
 	            });
 	        });

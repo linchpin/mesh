@@ -389,6 +389,8 @@ class Multiple_Content_Sections {
 			'labels' => array(
 				'reorder' => __( 'Be sure to save order of your sections once your changes are complete.', 'linchpin-mcs' ),
 				'description' => __( 'Multiple content sections allows you to easily segment your page\'s contents into different blocks of markup.', 'linchpin-mcs' ),
+				'add_image' => __( 'Set background image', 'linchpin-mcs' ),
+				'remove_image' => __( 'Remove background', 'linchpin-mcs' ),
 			),
 		) );
 	}
@@ -402,9 +404,66 @@ class Multiple_Content_Sections {
 	function admin_enqueue_styles() {
 		wp_enqueue_style( 'admin-mcs', plugins_url( 'assets/css/admin-mcs.css', __FILE__ ), array(), '1.0' );
 	}
+
+	/**
+	 * @param $path
+	 * @param null $extensions
+	 * @param int $depth
+	 * @param string $relative_path
+	 *
+	 * @return array|bool
+	 */
+	public static function scandir( $path, $extensions = null, $depth = 0, $relative_path = '' ) {
+	    if ( ! is_dir( $path ) )
+	        return false;
+
+	    if ( $extensions ) {
+	        $extensions = (array) $extensions;
+	        $_extensions = implode( '|', $extensions );
+	    }
+
+	    $relative_path = trailingslashit( $relative_path );
+	    if ( '/' == $relative_path )
+	        $relative_path = '';
+
+	    $results = scandir( $path );
+	    $files = array();
+
+	    foreach ( $results as $result ) {
+	        if ( '.' == $result[0] )
+	            continue;
+	        if ( is_dir( $path . '/' . $result ) ) {
+	            if ( ! $depth || 'CVS' == $result )
+	                continue;
+	            $found = self::scandir( $path . '/' . $result, $extensions, $depth - 1 , $relative_path . $result );
+	            $files = array_merge_recursive( $files, $found );
+	        } elseif ( ! $extensions || preg_match( '~\.(' . $_extensions . ')$~', $result ) ) {
+	            $files[ $relative_path . $result ] = $path . '/' . $result;
+	        }
+	    }
+
+    return $files;
+}
+
 }
 
 $multiple_content_sections = new Multiple_Content_Sections();
+
+/**
+ * @param null $type
+ * @param int $depth
+ * @param bool|false $search_parent
+ *
+ * @return array
+ */
+function mcs_get_files( $type = null, $depth = 0, $search_parent = false, $directory = '' ) {
+    $files = (array) Multiple_Content_Sections::scandir( $directory, $type, $depth );
+
+    if ( $search_parent && $this->parent() )
+        $files += (array) Multiple_Content_Sections::scandir( $directory, $type, $depth );
+
+    return $files;
+}
 
 /**
  * Load a list of template files.
@@ -416,21 +475,38 @@ $multiple_content_sections = new Multiple_Content_Sections();
 function mcs_locate_template_files( $section_templates = '' ) {
 	$current_theme = wp_get_theme();
 
-	if ( ! is_array( $section_templates ) ) {
-		$section_templates = array();
+	$section_templates = array();
 
-		$files = (array) $current_theme->get_files( 'php', 1 );
+	$plugin_template_files = (array) mcs_get_files( 'php', 1, false, LINCHPIN_MCS___PLUGIN_DIR . 'templates/' );
 
-		foreach ( $files as $file => $full_path ) {
-			if ( ! preg_match( '|MCS Template:(.*)$|mi', file_get_contents( $full_path ), $header ) ) {
-				continue;
-			}
+	// Loop through our local plugin templates
 
-			$section_templates[ $file ] = _cleanup_header_comment( $header[1] );
+	foreach( $plugin_template_files as $plugin_file => $plugin_file_full_path ) {
+		if ( ! preg_match( '|MCS Template:(.*)$|mi', file_get_contents( $plugin_file_full_path ), $header ) ) {
+			continue;
+		}
 
-		//	if ( preg_match( '|MCS Template Blocks:(.*)$|mi', file_get_contents( $full_path ), $header ) ) {
-		//		$section_templates[ $file ]['blocks'] = ;
-		//	}
+		$section_templates[ $plugin_file ]['file'] = _cleanup_header_comment( $header[1] );
+
+		if ( preg_match( '/MCS Template Blocks: ?([0-9]{1,2})$/mi', file_get_contents( $plugin_file_full_path ), $block_header ) ) {
+			$section_templates[ $plugin_file ]['blocks'] = $block_header[1];
+		}
+	}
+
+	$files = (array) $current_theme->get_files( 'php', 1 );
+
+	// Loop through our theme templates. This should be made into utility method.
+
+	foreach ( $files as $file => $full_path ) {
+
+		if ( ! preg_match( '|MCS Template:(.*)$|mi', file_get_contents( $full_path ), $header ) ) {
+			continue;
+		}
+
+		$section_templates[ $file ]['file'] = _cleanup_header_comment( $header[1] );
+
+		if ( preg_match( '/MCS Template Blocks: ?([0-9]{1,2})$/mi', file_get_contents( $full_path ), $block_header ) ) {
+			$section_templates[ $file ]['blocks'] = (int) $block_header[0];
 		}
 	}
 

@@ -91,22 +91,23 @@ class Multiple_Content_Sections_AJAX {
 
 		update_post_meta( $section_id, '_mcs_template', $selected_template );
 
-		$template_data = apply_filters( 'mcs_section_data', Multiple_Content_Sections::$template_data );
+		$block_template = mcs_locate_template_files();
+
+		$templates = apply_filters( 'mcs_section_data', $block_template );
 
 		// Make sure that a section has enough blocks to fill the template.
-		$blocks = mcs_maybe_create_section_blocks( $section, $template_data[ $selected_template ]['blocks'] );
+		$blocks = mcs_maybe_create_section_blocks( $section, $templates[ $selected_template ]['blocks'] );
 
-		if( 'mcs-columns-1.php' == $selected_template ) {
-			foreach ( $blocks as $block ) {
-				delete_post_meta( $block->ID, '_mcs_column_width' );
-			}
+		// Reset our widths on layout change.
+		foreach ( $blocks as $block ) {
+			delete_post_meta( $block->ID, '_mcs_column_width' );
 		}
 
-		if ( $template_data[ $selected_template ]['blocks'] > 1 ) {
+		if ( $templates[ $selected_template ]['blocks'] > 1 ) {
 			include( LINCHPIN_MCS___PLUGIN_DIR . '/admin/section-template-reordering.php' );
 		}
 
-		include( LINCHPIN_MCS___PLUGIN_DIR . '/admin/templates/' . $selected_template );
+		include( LINCHPIN_MCS___PLUGIN_DIR . '/admin/section-blocks.php' );
 
 		include( LINCHPIN_MCS___PLUGIN_DIR . '/admin/section-template-warnings.php' );
 
@@ -269,11 +270,17 @@ class Multiple_Content_Sections_AJAX {
 		$post_id = (int) $_POST['mcs_section_id'];
 		$image_id = (int) $_POST['mcs_image_id'];
 
-		if ( 'attachment' !== get_post_type( $image_id ) ) {
+		if ( 'mcs_section' !== get_post_type( $post_id ) ) {
 			wp_die( -1 );
 		}
 
-		if ( 'mcs_section' !== get_post_type( $post_id ) ) {
+		if ( empty( $image_id ) ) {
+			delete_post_meta( $post_id, '_thumbnail_id' );
+
+			die(1);
+		}
+
+		if ( 'attachment' !== get_post_type( $image_id ) ) {
 			wp_die( -1 );
 		}
 
