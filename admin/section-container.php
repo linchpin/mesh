@@ -20,9 +20,9 @@ if ( ! $closed_metaboxes = get_user_option( 'closedpostboxes_page' ) ) {
 		<span><?php esc_html_e( $section->post_title ); ?></span><span class="spinner"></span>
 
 		<div class="mcs-right">
-			<div id="section-status-select-<?php esc_attr_e( $section->ID ); ?>">
+			<div id="section-status-select-<?php esc_attr_e( $section->ID ); ?>-container">
 				<label for="section-status-select-<?php esc_attr_e( $section->ID ); ?>"><strong><?php esc_html_e( 'Status:', 'linchpin-mcs' ); ?></strong></label>
-				<select id="section-status-select-<?php esc_attr_e( $section->ID ); ?>" name="mcs-sections[<?php esc_attr_e( $section->ID ); ?>][post_status]">
+				<select class="mcs-block-propagation" id="section-status-select-<?php esc_attr_e( $section->ID ); ?>" name="mcs-sections[<?php esc_attr_e( $section->ID ); ?>][post_status]">
 					<option value="draft" <?php selected( $section->post_status, 'draft' ); ?>><?php esc_html_e( 'Draft', 'linchpin-mcs' ); ?></option>
 					<option value="publish" <?php selected( $section->post_status, 'publish' ); ?>><?php esc_html_e( 'Published', 'linchpin-mcs' ); ?></option>
 				</select>
@@ -47,7 +47,7 @@ if ( ! $closed_metaboxes = get_user_option( 'closedpostboxes_page' ) ) {
 			<div class="mcs-columns-9 text-right">
 				<label for="mcs-sections[<?php esc_attr_e( $section->ID ); ?>][template]"><strong><?php esc_html_e( 'Template:', 'linchpin-mcs' ); ?></strong></label>
 
-				<select class="mcs-choose-layout" name="mcs-sections[<?php esc_attr_e( $section->ID ); ?>][template]">
+				<select class="mcs-choose-layout" id="mcs-sections-template-<?php esc_attr_e( $section->ID ); ?>" name="mcs-sections[<?php esc_attr_e( $section->ID ); ?>][template]">
 					<?php foreach ( array_keys( $templates ) as $template ) : ?>
 						<option value="<?php esc_attr_e( $template ); ?>" <?php selected( $selected_template, $template ); ?>><?php esc_html_e( $templates[ $template ]['file'] ); ?></option>
 					<?php endforeach; ?>

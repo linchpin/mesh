@@ -46,7 +46,7 @@ multiple_content_sections.admin = function ( $ ) {
 			end_container_on_empty_block: true,
 			wpeditimage_disable_captions: false,
 			wpeditimage_html5_captions: true,
-			plugins: "charmap,colorpicker,hr,lists,media,paste,tabfocus,textcolor,fullscreen,wordpress,wpautoresize,wpeditimage,wpemoji,wpgallery,wplink,wpdialogs,wptextpattern,wpview",
+			plugins: "charmap,colorpicker,hr,lists,media,paste,tabfocus,textcolor,fullscreen,wordpress,wpeditimage,wpemoji,wpgallery,wplink,wpdialogs,wptextpattern,wpview",
 			content_css: mcs_data.site_uri + "/wp-includes/css/dashicons.css?ver=4.3," + mcs_data.site_uri + "/wp-includes/js/tinymce/skins/wordpress/wp-content.css?ver=4.3,https://fonts.googleapis.com/css?family=Noto+Sans%3A400italic%2C700italic%2C400%2C700%7CNoto+Serif%3A400italic%2C700italic%2C400%2C700%7CInconsolata%3A400%2C700&subset=latin%2Clatin-ext," + mcs_data.site_uri + "/wp-content/themes/twentyfifteen/css/editor-style.css," + mcs_data.site_uri + "/wp-content/themes/twentyfifteen/genericons/genericons.css",
 			resize: false,
 			menubar: false,
@@ -58,7 +58,7 @@ multiple_content_sections.admin = function ( $ ) {
 			toolbar4: "",
 			tabfocus_elements: "content-html,save-post",
 			body_class: "content post-type-page post-status-publish locale-en-us",
-			wp_autoresize_on: true,
+			wp_autoresize_on: false,
 			add_unload_trigger: false
 		};
 
@@ -83,7 +83,9 @@ multiple_content_sections.admin = function ( $ ) {
 
 				.on('click', '.mcs-section-expand', multiple_content_sections.admin.expand_all_sections )
 
-				.on('keyup', '.mcs-section-title', multiple_content_sections.admin.change_section_title );
+				.on('keyup', '.mcs-section-title', multiple_content_sections.admin.change_section_title )
+
+				.on('click', '.mcs-block-propagation', multiple_content_sections.admin.block_propagation );
 
 			var $sections = $( '.multiple-content-sections-section' );
 
@@ -284,6 +286,14 @@ multiple_content_sections.admin = function ( $ ) {
 			});
 		},
 
+		/**
+		 * Add a new section to our content
+		 *
+		 * @since 1.0.0
+		 *
+		 * @param event
+		 * @returns {boolean}
+		 */
 		add_section : function(event) {
 			event.preventDefault();
 			event.stopPropagation();
@@ -482,7 +492,7 @@ multiple_content_sections.admin = function ( $ ) {
 			var $this = $(this),
 				$reorder_spinner = $this.siblings('.spinner'),
 				$sections = $( '.multiple-content-sections-postbox', $section_container),
-				$block_click_span = $( '<span />' ).attr({
+				$block_click_span = $( '<span />', {
 					'class' : 'mcs-block-click'
 				});
 
@@ -647,6 +657,21 @@ multiple_content_sections.admin = function ( $ ) {
 		 */
 		block_click : function(event){
 			event.stopImmediatePropagation();
+		},
+
+		/**
+		 * Block our click event
+		 *
+		 * @since 1.3.7
+		 *
+		 * @param event
+		 */
+		block_propagation : function(event){
+			event.stopImmediatePropagation();
+			event.preventDefault();
+			event.stopPropagation();
+
+			return;
 		},
 
 		/**

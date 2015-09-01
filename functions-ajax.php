@@ -74,7 +74,7 @@ class Multiple_Content_Sections_AJAX {
 		check_ajax_referer( 'mcs_choose_layout_nonce', 'mcs_choose_layout_nonce' );
 
 		if ( ! $selected_template = sanitize_text_field( $_POST['mcs_section_layout'] ) ) {
-			$selected_template = 'default.php';
+			$selected_template = 'mcs-columns-1.php';
 		}
 
 		$section_id = (int) $_POST['mcs_section_id'];
@@ -103,13 +103,9 @@ class Multiple_Content_Sections_AJAX {
 			delete_post_meta( $block->ID, '_mcs_column_width' );
 		}
 
-		if ( $templates[ $selected_template ]['blocks'] > 1 ) {
-			include( LINCHPIN_MCS___PLUGIN_DIR . '/admin/section-template-reordering.php' );
-		}
-
-		include( LINCHPIN_MCS___PLUGIN_DIR . '/admin/section-blocks.php' );
-
-		include( LINCHPIN_MCS___PLUGIN_DIR . '/admin/section-template-warnings.php' );
+		include( LINCHPIN_MCS___PLUGIN_DIR . 'admin/section-template-reordering.php' );
+		include( LINCHPIN_MCS___PLUGIN_DIR . 'admin/section-blocks.php' );
+		include( LINCHPIN_MCS___PLUGIN_DIR . 'admin/section-template-warnings.php' );
 
 		wp_die();
 	}

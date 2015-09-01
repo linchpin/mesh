@@ -524,7 +524,7 @@ function mcs_locate_template_files( $section_templates = '' ) {
 	 */
 	$return = apply_filters( 'mcs_section_templates', $section_templates );
 
-	return array_intersect_assoc( $return, $section_templates );
+	return $section_templates;
 }
 
 /**
