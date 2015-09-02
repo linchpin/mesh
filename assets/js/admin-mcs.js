@@ -102,6 +102,63 @@ multiple_content_sections.admin = function ( $ ) {
 
 		},
 
+		change_column_widths : function( event, ui ) {
+			var $tgt          = $( event.target ),
+				$columns      = $tgt.parent().parent().parent().find('.mcs-editor-blocks').find('.columns').addClass('dragging'),
+				column_length = $columns.length,
+				column_total  = 12,
+				column_value  = ui.value,
+				column_start  = column_value,
+				max_width = 12,
+				min_width = 3,
+				slider_0 = ( column_value && 2 > column_length )? column_value : ui.values[0],
+				slider_1 = ui.values[1],
+				column_values = [];
+
+			// cap max column width
+
+			if( column_length == 2 ) {
+
+				max_width = 9;
+				min_width = 3;
+
+				column_value = Math.max( min_width, column_value );
+				column_value = Math.min( max_width, column_value );
+			}
+
+			if( column_length == 3 ) {
+
+				max_width = 6;
+				min_width = 3;
+
+				column_values = [];
+
+				column_value = Math.max(min_width, slider_0);
+				column_value = Math.min(max_width, column_value);
+
+				column_values[0] = column_value;
+
+				min_width = slider_0 + 3;
+				max_width = 9;
+
+				column_value = Math.max(min_width, slider_1);
+				column_value = Math.min(max_width, column_value);
+
+				column_values[1] = column_value - column_values[0];
+				column_values[2] = column_total - ( column_values[0] + column_values[1] );
+			}
+
+			console.log( column_values );
+
+			// Custom class removal based on regex pattern
+			$columns.removeClass (function (index, css) {
+				return (css.match (/\mcs-columns-\d+/g) || []).join(' ');
+			}).each( function( index ) {
+				$(this).addClass( 'mcs-columns-' + column_values[ index ] );
+			} );
+
+		},
+
 		setup_slider : function() {
 			$('.column-slider').addClass('ui-slider-horizontal').each(function() {
 
@@ -115,7 +172,8 @@ multiple_content_sections.admin = function ( $ ) {
 						min:0,
 						max:12,
 						step:1,
-						change : multiple_content_sections.admin.save_column_widths
+						change : multiple_content_sections.admin.save_column_widths,
+						slide : multiple_content_sections.admin.change_column_widths
 					};
 
 				if( blocks === 3 ) {
@@ -390,7 +448,7 @@ multiple_content_sections.admin = function ( $ ) {
 				},
 				max_width = 12,
 				min_width = 3,
-				slider_0 = ( column_value )? column_value : $tgt.slider( "values", 0 ),
+				slider_0 = ( column_value && 2 > column_length ) ? column_value : $tgt.slider( "values", 0 ),
 				slider_1 = $tgt.slider( "values", 1 ),
 				column_values = [];
 
