@@ -85,7 +85,11 @@ multiple_content_sections.admin = function ( $ ) {
 
 				.on('keyup', '.mcs-section-title', multiple_content_sections.admin.change_section_title )
 
-				.on('click', '.mcs-block-propagation', multiple_content_sections.admin.block_propagation );
+				.on('click', '.mcs-block-propagation', multiple_content_sections.admin.block_propagation )
+
+				.on('click', '.mcs-block-featured-image-choose', multiple_content_sections.admin.choose_block_background )
+				.on('click.OpenMediaManager', '.mcs-block-featured-image-choose', multiple_content_sections.admin.choose_block_background )
+				.on('click', '.mcs-block-featured-image-trash', multiple_content_sections.admin.remove_block_background );
 
 			var $sections = $( '.multiple-content-sections-section' );
 
@@ -113,11 +117,6 @@ multiple_content_sections.admin = function ( $ ) {
 						step:1,
 						change : multiple_content_sections.admin.save_column_widths
 					};
-
-				//if( blocks == 2 ) {
-				//	data.values = vals;
-				//	data.value = null;
-				//}
 
 				if( blocks === 3 ) {
 					vals[1] = vals[0] + vals[1]; // add the first 2 columns together
@@ -421,33 +420,26 @@ multiple_content_sections.admin = function ( $ ) {
 				max_width = 6;
 				min_width = 3;
 
-				if( slider_0 > max_width ){
-					$tgt.slider( "values", [ $tgt.slider( "value", 0 ), max_width ] );
-					column_value = max_width;
-					column_start = max_width;
-				}
+				column_values = [];
 
-				// cap min column width
-				if( slider_0 < min_width ){
-					$tgt.slider( "value", min_width );
-					column_value = min_width;
-					column_start = min_width;
-				}
+				column_value = Math.max( min_width, slider_0 );
+				column_value = Math.min( max_width, column_value );
+
+				column_values[0] = column_value;
 
 				min_width = slider_0 + 3;
 				max_width = 9;
 
-				if( slider_1 > max_width ){
-					$tgt.slider( "values", [ $tgt.slider( "value", 0 ), max_width ] );
-					column_value = max_width;
-					column_start = max_width;
-				}
+				column_value = Math.max( min_width, slider_1 );
+				column_value = Math.min( max_width, column_value );
 
-				// cap min column width
-				if( slider_1 < min_width ){
-					$tgt.slider( "value", min_width );
-					column_value = min_width;
-					column_start = min_width;
+				column_values[1] = column_value - column_values[0];
+
+				column_values[2] = column_total - ( column_values[0] + column_values[1] );
+
+				if( column_values[0] != $tgt.slider( 'option', "values" )[0] || column_value != $tgt.slider( 'option', "values")[1] ) {
+					$tgt.slider( "option", "values", [ column_value[0], column_value ]).refresh();
+					return;
 				}
 			}
 
@@ -645,7 +637,7 @@ multiple_content_sections.admin = function ( $ ) {
 				current_title = 'No Title';
 			}
 
-			$('h3.hndle', $postbox).html( current_title );
+			$postbox.find('.handle-title').text( current_title );
 		},
 
 		/**
@@ -705,7 +697,6 @@ multiple_content_sections.admin = function ( $ ) {
 			//		$button.text( mcs_data.labels.add_image ).attr('data-mcs-section-featured-image', '').prepend( $edit_icon );
 				}
 			});
-
 		},
 
 		choose_background : function(event) {
@@ -779,6 +770,113 @@ multiple_content_sections.admin = function ( $ ) {
 
 	        // Now that everything has been set, let's open up the frame.
 	        media_frames[ frame_id ].open();
+		},
+
+		choose_block_background : function(event) {
+			event.preventDefault();
+			event.stopPropagation();
+
+			var $button       = $(this),
+				$section      = $button.parents('.block'),
+				section_id    = parseInt( $section.attr('data-mcs-block-id') ),
+				frame_id      = 'mcs-background-select-' + section_id,
+				current_image = $button.attr('data-mcs-block-featured-image');
+
+			// If the frame already exists, re-open it.
+			if ( media_frames[ frame_id ] ) {
+				media_frames[ frame_id ].uploader.uploader.param( 'mcs_upload', 'true' );
+				media_frames[ frame_id ].open();
+				return;
+			}
+
+			/**
+			 * The media frame doesn't exist let, so let's create it with some options.
+			 */
+			media_frames[ frame_id ] = wp.media.frames.media_frames = wp.media({
+				className: 'media-frame mcs-media-frame',
+				frame: 'select',
+				multiple: false,
+				title: 'Select Block Background',
+				button: {
+					text: 'Select Block Background'
+				}
+			});
+
+			media_frames[ frame_id ].on('open', function(){
+				// Grab our attachment selection and construct a JSON representation of the model.
+				var selection = media_frames[ frame_id ].state().get('selection');
+
+				selection.add( wp.media.attachment( current_image ) );
+			});
+
+			media_frames[ frame_id ].on('select', function(){
+				// Grab our attachment selection and construct a JSON representation of the model.
+				var media_attachment = media_frames[ frame_id ].state().get('selection').first().toJSON(),
+					$edit_icon = $( '<span />', {
+						'class' : 'dashicons dashicons-edit'
+					}),
+					$trash_icon = $( '<span />', {
+						'class' : 'dashicons dashicons-trash'
+					}),
+					$trash = $('<button/>', {
+						'type' : 'button',
+						'data-mcs-section-featured-image': '',
+						'href' : '#',
+						'class' : 'mcs-featured-image-trash'
+					}).text( mcs_data.labels.remove_image).prepend( $trash_icon );
+
+				$.post( ajaxurl, {
+					'action': 'mcs_update_featured_image',
+					'mcs_section_id'  : parseInt( section_id ),
+					'mcs_image_id' : parseInt( media_attachment.id ),
+					'mcs_featured_image_nonce' : mcs_data.featured_image_nonce
+				}, function( response ) {
+					if ( response != -1 ) {
+						current_image = media_attachment.id;
+						$button
+							.text( media_attachment.title )
+							.attr('data-mcs-section-featured-image', parseInt( media_attachment.id ) )
+							.append( $edit_icon )
+							.after( $trash );
+					}
+				});
+			});
+
+			// Now that everything has been set, let's open up the frame.
+			media_frames[ frame_id ].open();
+		},
+
+		/**
+		 * Remove our Block's selected background
+		 *
+		 * @since 1.3.6
+		 *
+		 * @param event
+		 */
+		remove_block_background : function(event) {
+
+			event.preventDefault();
+			event.stopPropagation();
+
+			var $button       = $(this),
+				$section      = $button.parents('.block'),
+				section_id    = parseInt( $section.attr('data-mcs-block-id') ),
+				frame_id      = 'mcs-background-select-' + section_id,
+				current_image = $button.attr('data-mcs-block-featured-image'),
+				$edit_icon = $( '<span />' ).attr({
+					'class' : 'dashicons dashicons-format-image'
+				});
+
+			$.post( ajaxurl, {
+				'action': 'mcs_update_featured_image',
+				'mcs_section_id'  : parseInt( section_id ),
+				'mcs_featured_image_nonce' : mcs_data.featured_image_nonce
+			}, function( response ) {
+				if ( response != -1 ) {
+					$button.prev().text( mcs_data.labels.add_image ).prepend( $edit_icon );
+					$button.remove();
+				}
+			});
 		}
 	};
 } ( jQuery );

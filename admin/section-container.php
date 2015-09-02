@@ -17,7 +17,7 @@ if ( ! $closed_metaboxes = get_user_option( 'closedpostboxes_page' ) ) {
 		<br>
 	</div>
 	<h3 class="hndle mcs-row">
-		<span><?php esc_html_e( $section->post_title ); ?></span><span class="spinner"></span>
+		<span class="handle-title"><?php esc_html_e( $section->post_title ); ?></span><span class="spinner"></span>
 
 		<div class="mcs-right">
 			<div id="section-status-select-<?php esc_attr_e( $section->ID ); ?>-container">

@@ -103,9 +103,9 @@ class Multiple_Content_Sections_AJAX {
 			delete_post_meta( $block->ID, '_mcs_column_width' );
 		}
 
-		include( LINCHPIN_MCS___PLUGIN_DIR . 'admin/section-template-reordering.php' );
-		include( LINCHPIN_MCS___PLUGIN_DIR . 'admin/section-blocks.php' );
-		include( LINCHPIN_MCS___PLUGIN_DIR . 'admin/section-template-warnings.php' );
+		include( LINCHPIN_MCS___PLUGIN_DIR . '/admin/section-template-reordering.php' );
+		include( LINCHPIN_MCS___PLUGIN_DIR . '/admin/section-blocks.php' );
+		include( LINCHPIN_MCS___PLUGIN_DIR . '/admin/section-template-warnings.php' );
 
 		wp_die();
 	}

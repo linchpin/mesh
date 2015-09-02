@@ -4,14 +4,14 @@
  *
  * MCS Template Blocks: 4
  *
- * @since 1.4.0
+ * @since 1.3.6
  *
  * @package MultipleContentSections
  * @subpackage Templates
  */
 ?>
 
-<section <?php post_class() ?>>
+<section <?php post_class() ?> <?php mcs_section_background(); ?>>
 	<div class="row">
 		<?php $blocks = mcs_get_section_blocks( get_the_ID() ); ?>
 		<?php foreach ( $blocks as $block ) : ?>

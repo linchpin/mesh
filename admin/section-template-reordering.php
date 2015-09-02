@@ -39,7 +39,7 @@ while ( $block_increment < $section_blocks ) {
 		$block_columns = $default_block_columns;
 	}
 
-	$block_sizes[] = $block_columns;
+	$block_sizes[] = (int) $block_columns;
 
 	$block_increment++;
 }

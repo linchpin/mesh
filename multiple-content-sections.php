@@ -1,12 +1,12 @@
 <?php
 /**
-Plugin Name: Multiple Content Sections
-Plugin URI: http://linchpin.agency
-Description: Add multiple content sections on a post by post basis.
-Version: 1.3.6
-Author: Linchpin
-Author URI: http://linchpin.agency
-License: GPLv2 or later
+* Plugin Name: Multiple Content Sections
+* Plugin URI: http://linchpin.agency
+* Description: Add multiple content sections on a post by post basis.
+* Version: 1.3.7
+* Author: Linchpin
+* Author URI: http://linchpin.agency
+* License: GPLv2 or later
  *
  * @package MultipleContentSections
  */
@@ -16,7 +16,7 @@ if ( ! function_exists( 'add_action' ) ) {
 	exit;
 }
 
-define( 'LINCHPIN_MCS_VERSION', '1.3.6' );
+define( 'LINCHPIN_MCS_VERSION', '1.3.7' );
 define( 'LINCHPIN_MCS_PLUGIN_NAME', 'Multiple Content Sections' );
 define( 'LINCHPIN_MCS__MINIMUM_WP_VERSION', '4.0' );
 define( 'LINCHPIN_MCS___PLUGIN_URL', plugin_dir_url( __FILE__ ) );
@@ -33,6 +33,15 @@ class Multiple_Content_Sections {
 	 * @var array
 	 */
 	public $templates = array();
+
+	/**
+	 * @var array
+	 */
+	public $editors = array();
+
+	/*
+	 * 'mcs-section-editor-' . $blocks[ $block_increment ]->ID
+	 */
 
 	/**
 	 * Store the available blocks per template.
@@ -82,6 +91,32 @@ class Multiple_Content_Sections {
 		if ( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
 			include_once( 'functions-ajax.php' );
 		}
+
+		add_action( 'media_buttons', array( $this, 'add_media_buttons' ), 999, 1 );
+
+	}
+
+	/**
+	 * Add media buttons to our block editors
+     *
+	 *
+	 * @param $editor_id
+	 */
+	function add_media_buttons( $editor_id ) {
+
+		$editor_id = (int) str_replace( 'mcs-section-editor-', '', $editor_id );
+
+		if ( 'mcs_section' === get_post_type( $editor_id ) ) :
+
+			$featured_image_id = get_post_thumbnail_id( $editor_id );
+
+			if ( empty( $featured_image_id ) ) : ?>
+				<button class="button mcs-block-featured-image-choose"><span class="dashicons dashicons-format-image"></span><?php esc_attr_e( 'Add Block Background Image', 'linchpin-mce' ); ?></button>
+			<?php else : ?>
+				<button class="button mcs-block-featured-image-choose" data-mcs-section-featured-image="<?php esc_attr_e( $featured_image_id ); ?>"><?php echo get_the_title( $featured_image_id ); ?> <span class="dashicons dashicons-edit"></span></button>
+				<button class="button mcs-block-featured-image-trash" data-mcs-section-featured-image="<?php esc_attr_e( $featured_image_id ); ?>"><?php esc_html_e( 'Remove', 'linchpin-mcs' ); ?> <span class="dashicons dashicons-trash"></span></button>
+			<?php endif; ?>
+		<?php endif;
 	}
 
 	/**
@@ -110,7 +145,9 @@ class Multiple_Content_Sections {
 	 * edit_form_advanced function.
 	 *
 	 * @access public
+	 *
 	 * @param object $post WordPress Post Object.
+	 *
 	 * @return void
 	 */
 	function edit_page_form( $post ) {
@@ -154,8 +191,10 @@ class Multiple_Content_Sections {
 	 * save_post function.
 	 *
 	 * @access public
+	 *
 	 * @param mixed  $post_id
      * @param object $post
+	 *
 	 * @return void
 	 */
 	function save_post( $post_id, $post ) {
@@ -278,6 +317,28 @@ class Multiple_Content_Sections {
 					delete_post_meta( $block_id, '_mcs_column_width' );
 				} else {
 					update_post_meta( $block_id, '_mcs_column_width', $block_column_width );
+				}
+
+				/**
+				 * @todo: optimize this loop into a utility method
+				 */
+
+				$block_css_class = $section_data['blocks'][ $block_id ]['css_class'];
+
+				// Save CSS Classes.
+				$css_classes = explode( ' ', $block_css_class );
+				$sanitized_css_classes = array();
+
+				foreach ( $css_classes as $css ) {
+					$sanitized_css_classes[] = sanitize_html_class( $css );
+				}
+
+				$sanitized_css_classes = implode( ' ', $sanitized_css_classes );
+
+				if ( empty( $sanitized_css_classes ) ) {
+					delete_post_meta( $block_id, '_mcs_css_class' );
+				} else {
+					update_post_meta( $block_id, '_mcs_css_class', $sanitized_css_classes );
 				}
 			}
 		}
@@ -415,7 +476,7 @@ class Multiple_Content_Sections {
 	 */
 	public static function scandir( $path, $extensions = null, $depth = 0, $relative_path = '' ) {
 	    if ( ! is_dir( $path ) )
-	        return false;
+	        {return false;}
 
 	    if ( $extensions ) {
 	        $extensions = (array) $extensions;
@@ -424,17 +485,17 @@ class Multiple_Content_Sections {
 
 	    $relative_path = trailingslashit( $relative_path );
 	    if ( '/' == $relative_path )
-	        $relative_path = '';
+	        {$relative_path = '';}
 
 	    $results = scandir( $path );
 	    $files = array();
 
 	    foreach ( $results as $result ) {
 	        if ( '.' == $result[0] )
-	            continue;
+	            {continue;}
 	        if ( is_dir( $path . '/' . $result ) ) {
 	            if ( ! $depth || 'CVS' == $result )
-	                continue;
+	                {continue;}
 	            $found = self::scandir( $path . '/' . $result, $extensions, $depth - 1 , $relative_path . $result );
 	            $files = array_merge_recursive( $files, $found );
 	        } elseif ( ! $extensions || preg_match( '~\.(' . $_extensions . ')$~', $result ) ) {
@@ -460,7 +521,7 @@ function mcs_get_files( $type = null, $depth = 0, $search_parent = false, $direc
     $files = (array) Multiple_Content_Sections::scandir( $directory, $type, $depth );
 
     if ( $search_parent && $this->parent() )
-        $files += (array) Multiple_Content_Sections::scandir( $directory, $type, $depth );
+        {$files += (array) Multiple_Content_Sections::scandir( $directory, $type, $depth );}
 
     return $files;
 }
@@ -469,7 +530,9 @@ function mcs_get_files( $type = null, $depth = 0, $search_parent = false, $direc
  * Load a list of template files.
  *
  * @access public
+ *
  * @param string $section_templates (default: '') Our list of available templates.
+ *
  * @return mixed
  */
 function mcs_locate_template_files( $section_templates = '' ) {
@@ -531,8 +594,10 @@ function mcs_locate_template_files( $section_templates = '' ) {
  * Return admin facing markup for a section.
  *
  * @access public
- * @param  object $section Current section being manipulated.
- * @return void Prints the markup of the admin panel
+ *
+*@param  object $section Current section being manipulated.
+ *
+*@return void Prints the markup of the admin panel
  */
 function mcs_add_section_admin_markup( $section, $closed = false ) {
 	if ( ! is_admin() ) {
@@ -588,10 +653,13 @@ function mcs_get_sections( $post_id, $return_type = 'array' ) {
  * Load a specified template file for a section
  *
  * @access public
- * @param string $post_id (default: '')
- * @return void
+ *
+*@param string $post_id (default: '')
+ *
+*@return void
  */
 function the_mcs_content( $post_id = '' ) {
+
 	global $post;
 
 	if ( empty( $post_id ) ) {
@@ -603,7 +671,7 @@ function the_mcs_content( $post_id = '' ) {
 	}
 
 	if ( ! $template = get_post_meta( $post_id, '_mcs_template', true ) ) {
-		$template = 'mcs-default.php';
+		$template = 'mcs-columns-1.php';
 	}
 
 	$located = locate_template( sanitize_text_field( $template ), true, false );
@@ -633,8 +701,10 @@ function the_mcs_content( $post_id = '' ) {
  * mcs_display_sections function.
  *
  * @access public
- * @param string $post_id (default: '')
- * @return void
+ *
+*@param string $post_id (default: '')
+ *
+*@return void
  */
 function mcs_display_sections( $post_id = '' ) {
 	global $post, $mcs_section_query;
@@ -686,8 +756,10 @@ function mcs_get_section_blocks( $section_id, $post_status = 'publish' ) {
  * @todo: Should always be at least 1 section?
  *
  * @access public
+ *
  * @param  mixed $section
  * @param  int   $number_needed
+ *
  * @return array
  */
 function mcs_maybe_create_section_blocks( $section, $number_needed = 0 ) {
@@ -709,4 +781,28 @@ function mcs_maybe_create_section_blocks( $section, $number_needed = 0 ) {
 	}
 
 	return mcs_get_section_blocks( $section->ID, $section->post_status );
+}
+
+function mcs_section_background( $post_id = 0, $echo = true ) {
+
+	global $post;
+
+	if( empty( $post_id ) ) {
+		$post_id  = $post->ID;
+	}
+
+	if ( has_post_thumbnail() ) {
+		$image = wp_get_attachment_image_src( get_post_thumbnail_id( get_the_ID() ), 'full' );
+		$style = 'data-interchange="[' . esc_url( $image[0] ) . ', (default)], [' . esc_url( $image[0] ) . ', (large)]" style="background-image: url(' . esc_url( $image[0] ) . ');"';
+	}
+
+	if ( empty( $style ) ) {
+		return;
+	} else {
+		if ( false === $echo ) {
+			return style;
+		} else {
+			echo $style;
+		}
+	}
 }

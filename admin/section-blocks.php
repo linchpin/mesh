@@ -29,12 +29,25 @@
 			$block_columns = $default_block_columns;
 		}
 
+		$block_css_class = get_post_meta( $blocks[ $block_increment ]->ID, '_mcs_css_class', true );
+
 		?>
 
 		<div class="mcs-columns-<?php esc_attr_e( $block_columns ); ?> columns">
 			<div class="drop-target">
 				<div class="block" id="mcs-block-editor-<?php esc_attr_e( $blocks[ $block_increment ]->ID ); ?>"  data-mcs-block-id="<?php esc_attr_e( $blocks[ $block_increment ]->ID ); ?>">
-					<div class="block-header"><?php esc_html_e( $blocks[ $block_increment ]->post_title ); ?> (<?php esc_html_e( $blocks[ $block_increment ]->ID ); ?>)</div>
+					<div class="block-header">
+						<div class="mcs-row">
+							<div class="mcs-columns-6">
+								<?php esc_html_e( $blocks[ $block_increment ]->post_title ); ?> (<?php esc_html_e( $blocks[ $block_increment ]->ID ); ?>)
+							</div>
+							<div class="mcs-columns-6 text-right">
+								<label for="mcs-sections-<?php esc_attr_e( $blocks[ $block_increment ]->ID ); ?>-css-class">
+									<?php esc_html_e( 'Block CSS Class', 'linchpin-mcs' ); ?><input type="text" id="mcs-sections-<?php esc_attr_e( $blocks[ $block_increment ]->ID ); ?>-css-class" name="mcs-sections[<?php esc_attr_e( $section->ID ); ?>][blocks][<?php esc_attr_e( $blocks[ $block_increment ]->ID ); ?>][css_class]" value="<?php esc_attr_e( $block_css_class ); ?>" />
+								</label>
+							</div>
+						</div>
+					</div>
 					<div class="block-content">
 						<?php
 						wp_editor( apply_filters( 'content_edit_pre', $blocks[ $block_increment ]->post_content ), 'mcs-section-editor-' . $blocks[ $block_increment ]->ID, array(
@@ -51,15 +64,17 @@
 								'toolbar1'              => 'bold,italic,bullist,numlist,blockquote,link,unlink',
 							),
 							'quicktags' => array(
-								'buttons' => 'strong,em,link,block,del,ins,img,ul,ol,li,code,more',
+								'buttons' => 'strong,em,link,block,img,ul,ol,li',
 							),
 						) );
 						?>
 					</div>
 
 					<input type="hidden" class="column-width" name="mcs-sections[<?php esc_attr_e( $section->ID ); ?>][blocks][<?php esc_attr_e( $blocks[ $block_increment ]->ID ); ?>][columns]" value="<?php esc_attr_e( $block_columns ); ?>"/>
+
 				</div>
 			</div>
 		</div>
-	<?php $block_increment++; endwhile; ?>
+	<?php $block_increment++;
+	endwhile; ?>
 </div>

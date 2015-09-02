@@ -10,13 +10,9 @@
  * @subpackage Templates
  */
 
-if ( has_post_thumbnail() ) {
-	$image = wp_get_attachment_image_src( get_post_thumbnail_id( get_the_ID() ) );
-	$style = ' style="background-image: url(' . $image[0] . ');"';
-}
 ?>
 
-<section <?php post_class(); if ( ! empty( $style ) ) echo $style; ?>>
+<section <?php post_class(); ?> <?php mcs_section_background(); ?>>
 	<div class="row">
 		<div class="small-12 columns">
 			<h2 class="entry-title"><?php the_title(); ?></h2>
