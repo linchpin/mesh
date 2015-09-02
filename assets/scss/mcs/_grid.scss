@@ -16,50 +16,47 @@
 }
 
 .mcs-section-meta {
-  border: 1px solid #dedede;
-  padding: 3px 0;
-  border-bottom: 1px solid #dedede;
-  margin: 2px 0;
-  background-color: #f5f5f5;
+	background-color: $light-grey;
+	border: 1px solid $grey;
+	margin: 2px 0;
+	padding: 3px 0;
 }
 
 #multiple-content-sections-container {
-  .block {
-    border: 1px dotted #ccc;
+	.block {
+		border: 1px dotted $dark-grey;
 
-    .ui-sortable-handle {
-      border-bottom: 1px solid #dedede;
-    }
-  }
+		.ui-sortable-handle {
+			border-bottom: 1px solid $grey;
+		}
+	}
 
-  .wp-slider {
-    position:absolute;
-    left: 0;
-    right: 0;
-    bottom: 50%;
-    z-index:1000;
-    border:none;
-  }
+	.wp-slider {
+		border: none;
+
+		position: absolute;
+		right: 0;
+		bottom: 50%;
+		left: 0;
+		z-index: 1000;
+	}
 }
 
-.block-header {
-  padding:5px;
-}
-
+.block-header,
 .block-content {
-  padding:5px;
+	padding: 5px;
 }
 
 .block-placeholder {
-  border: 1px dotted #dedede;
-  margin: 0 1em 1em 0;
-  min-height: 400px;
+	border: 1px dotted $grey;
+	margin: 0 1em 1em 0;
+	min-height: 400px;
 }
 
 .text-right {
-  text-align : right;
+	text-align : right;
 }
 
 .text-left {
-  text-align : left;
+	text-align : left;
 }

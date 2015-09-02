@@ -11,7 +11,7 @@
 
 #multiple-content-sections-container {
 	.ui-sortable-handle {
-		border-color: #009fd4;
+		border-color: $blue;
 	}
 
 	.postbox {
@@ -42,8 +42,8 @@
 }
 
 .mcs-editor-blocks {
-	overflow:hidden;
-  	position:relative;
+	overflow: hidden;
+	position: relative;
 }
 
 .js {
@@ -62,8 +62,8 @@
 }
 
 .mcs-block-click {
-	background:transparent;
-	display:block;
+	background: transparent;
+	display: block;
 
 	position: absolute;
 	top: 0;
@@ -74,9 +74,9 @@
 }
 
 .mcs-left {
-  float:left;
+	float: left;
 }
 
 .mcs-right {
-  float:right;
+	float: right;
 }
