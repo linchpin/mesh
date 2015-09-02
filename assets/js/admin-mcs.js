@@ -172,8 +172,8 @@ multiple_content_sections.admin = function ( $ ) {
 						min:0,
 						max:12,
 						step:1,
-						change : multiple_content_sections.admin.save_column_widths,
-						slide : multiple_content_sections.admin.change_column_widths
+						change : multiple_content_sections.admin.save_column_widths
+						//slide : multiple_content_sections.admin.change_column_widths
 					};
 
 				if( blocks === 3 ) {
@@ -193,7 +193,8 @@ multiple_content_sections.admin = function ( $ ) {
 				'appendTo' : 'body',
 			//	containment : '.mcs-editor-blocks',
 				helper : 'original',
-				revert: true
+				revert: true,
+				handle: '.mcs-row-title'
 			});
 
 			$( ".block" )

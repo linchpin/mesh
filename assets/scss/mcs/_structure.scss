@@ -25,6 +25,10 @@
 		&.ui-state-active {
 			border-color: $dark-grey;
 		}
+
+		.hndle {
+			cursor: default;
+		}
 	}
 }
 
@@ -86,16 +90,6 @@
 	position: relative;
 }
 
-.js {
-	.multiple-content-sections-postbox .hndle {
-		cursor: pointer;
-	}
-
-	.ui-sortable .multiple-content-sections-postbox .hndle {
-		cursor: move;
-	}
-}
-
 .mcs-section-meta {
 	background-color: $light-grey;
 	border: 1px solid $grey;
@@ -103,6 +97,7 @@
 	margin: 2px 0;
 	padding: 3px 0;
 
+	.dashicons:before,
 	.dashicons-before:before {
 		font-size: 17px;
 		text-decoration: none;

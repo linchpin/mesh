@@ -111,7 +111,7 @@ class Multiple_Content_Sections {
 			$featured_image_id = get_post_thumbnail_id( $editor_id );
 
 			if ( empty( $featured_image_id ) ) : ?>
-				<button class="button mcs-block-featured-image-choose dashicons-before dashicons-format-image"><?php esc_attr_e( 'Add Block Background Image', 'linchpin-mce' ); ?></button>
+				<button class="button mcs-block-featured-image-choose dashicons-before dashicons-format-image"><?php esc_attr_e( 'Set Background Image', 'linchpin-mce' ); ?></button>
 			<?php else : ?>
 				<button class="button mcs-block-featured-image-choose dashicons-before dashicons-edit" data-mcs-section-featured-image="<?php esc_attr_e( $featured_image_id ); ?>"><?php echo get_the_title( $featured_image_id ); ?></button>
 				<button class="button mcs-block-featured-image-trash dashicons-before dashicons-trash" data-mcs-section-featured-image="<?php esc_attr_e( $featured_image_id ); ?>"><?php esc_html_e( 'Remove', 'linchpin-mcs' ); ?></button>
@@ -450,8 +450,8 @@ class Multiple_Content_Sections {
 			'labels' => array(
 				'reorder' => __( 'Be sure to save order of your sections once your changes are complete.', 'linchpin-mcs' ),
 				'description' => __( 'Multiple content sections allows you to easily segment your page\'s contents into different blocks of markup.', 'linchpin-mcs' ),
-				'add_image' => __( 'Set background image', 'linchpin-mcs' ),
-				'remove_image' => __( 'Remove background', 'linchpin-mcs' ),
+				'add_image' => __( 'Set Background Image', 'linchpin-mcs' ),
+				'remove_image' => __( 'Remove Background', 'linchpin-mcs' ),
 			),
 		) );
 	}

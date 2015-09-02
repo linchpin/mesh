@@ -38,10 +38,10 @@ if ( ! $closed_metaboxes = get_user_option( 'closedpostboxes_page' ) ) {
 		<div class="mcs-section-meta mcs-row">
 			<div class="mcs-columns-3">
 				<?php if ( empty( $featured_image_id ) ) : ?>
-					<a href="#" class="mcs-featured-image-choose dashicons-before dashicons-format-image"><?php esc_html_e( 'Set background image', 'linchpin-mcs' ); ?></a>
+					<a href="#" class="mcs-featured-image-choose button dashicons-before dashicons-format-image"><?php esc_html_e( 'Set Background Image', 'linchpin-mcs' ); ?></a>
 				<?php else : ?>
-					<a href="#" class="mcs-featured-image-choose dashicons-before dashicons-edit" data-mcs-section-featured-image="<?php esc_attr_e( $featured_image_id ); ?>"><?php echo get_the_title( $featured_image_id ); ?></a>
-					<a href="#" class="mcs-featured-image-trash dashicons-before dashicons-trash" data-mcs-section-featured-image="<?php esc_attr_e( $featured_image_id ); ?>"><?php esc_html_e( 'Remove', 'linchpin-mcs' ); ?></a>
+					<a href="#" class="mcs-featured-image-choose button dashicons-before dashicons-edit" data-mcs-section-featured-image="<?php esc_attr_e( $featured_image_id ); ?>"><?php echo get_the_title( $featured_image_id ); ?></a>
+					<a href="#" class="mcs-featured-image-trash button dashicons-before dashicons-trash" data-mcs-section-featured-image="<?php esc_attr_e( $featured_image_id ); ?>"><?php esc_html_e( 'Remove', 'linchpin-mcs' ); ?></a>
 				<?php endif; ?>
 			</div>
 			<div class="mcs-columns-9 text-right">
