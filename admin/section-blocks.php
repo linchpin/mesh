@@ -22,6 +22,10 @@
 
 	while ( $block_increment < $section_blocks ) :
 
+		if ( empty( $blocks[ $block_increment ] ) ) {
+			continue;
+		}
+
 		$block_columns = get_post_meta( $blocks[ $block_increment ]->ID, '_mcs_column_width', true );
 
 		// Get how wide our column is. If no width is defined fall back to the default for that template. If no blocks are defined fall back to a 12 column
@@ -35,11 +39,11 @@
 
 		<div class="mcs-columns-<?php esc_attr_e( $block_columns ); ?> columns">
 			<div class="drop-target">
-				<div class="block" id="mcs-block-editor-<?php esc_attr_e( $blocks[ $block_increment ]->ID ); ?>"  data-mcs-block-id="<?php esc_attr_e( $blocks[ $block_increment ]->ID ); ?>">
+				<div class="block" id="mcs-block-editor-<?php esc_attr_e( $blocks[ $block_increment ]->ID ); ?>" data-mcs-block-id="<?php esc_attr_e( $blocks[ $block_increment ]->ID ); ?>">
 					<div class="block-header">
 						<div class="mcs-row">
 							<div class="mcs-columns-6">
-								<?php esc_html_e( $blocks[ $block_increment ]->post_title ); ?> (<?php esc_html_e( $blocks[ $block_increment ]->ID ); ?>)
+								<?php esc_html_e( $blocks[ $block_increment ]->post_title ); ?> (<?php esc_html_e( $blocks[ $block_increment ]->ID ); ?>) [<?php esc_html_e( $blocks[ $block_increment ]->post_status ); ?>]
 							</div>
 							<div class="mcs-columns-6 text-right">
 								<label for="mcs-sections-<?php esc_attr_e( $blocks[ $block_increment ]->ID ); ?>-css-class">

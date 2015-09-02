@@ -229,7 +229,7 @@ class Multiple_Content_Sections {
 				continue;
 			}
 
-			$status = sanitize_post_field( 'post_status', $section_data['post_status'], $post_id, 'db' );
+			$status = sanitize_post_field( 'post_status', $section_data['post_status'], $post_id, 'attribute' );
 
 			if ( ! in_array( $status, array( 'publish', 'draft' ) ) ) {
 				$status = 'draft';
