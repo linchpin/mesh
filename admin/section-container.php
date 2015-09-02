@@ -38,10 +38,10 @@ if ( ! $closed_metaboxes = get_user_option( 'closedpostboxes_page' ) ) {
 		<div class="mcs-section-meta mcs-row">
 			<div class="mcs-columns-3">
 				<?php if ( empty( $featured_image_id ) ) : ?>
-					<a href="#" class="mcs-featured-image-choose "><span class="dashicons dashicons-format-image"></span><?php esc_html_e( 'Set background image', 'linchpin-mcs' ); ?></a>
+					<a href="#" class="mcs-featured-image-choose dashicons-before dashicons-format-image"><?php esc_html_e( 'Set background image', 'linchpin-mcs' ); ?></a>
 				<?php else : ?>
-					<a href="#" class="mcs-featured-image-choose" data-mcs-section-featured-image="<?php esc_attr_e( $featured_image_id ); ?>"><?php echo get_the_title( $featured_image_id ); ?> <span class="dashicons dashicons-edit"></span></a>
-					<a href="#" class="mcs-featured-image-trash" data-mcs-section-featured-image="<?php esc_attr_e( $featured_image_id ); ?>"><?php esc_html_e( 'Remove', 'linchpin-mcs' ); ?> <span class="dashicons dashicons-trash"></span></a>
+					<a href="#" class="mcs-featured-image-choose dashicons-before dashicons-edit" data-mcs-section-featured-image="<?php esc_attr_e( $featured_image_id ); ?>"><?php echo get_the_title( $featured_image_id ); ?></a>
+					<a href="#" class="mcs-featured-image-trash dashicons-before dashicons-trash" data-mcs-section-featured-image="<?php esc_attr_e( $featured_image_id ); ?>"><?php esc_html_e( 'Remove', 'linchpin-mcs' ); ?></a>
 				<?php endif; ?>
 			</div>
 			<div class="mcs-columns-9 text-right">
@@ -53,7 +53,7 @@ if ( ! $closed_metaboxes = get_user_option( 'closedpostboxes_page' ) ) {
 					<?php endforeach; ?>
 				</select>
 				<label for="mcs-sections[<?php esc_attr_e( $section->ID ); ?>][css-class]">
-					<?php esc_html_e( 'CSS Class', 'linchpin-mcs' ); ?><input type="text" name="mcs-sections[<?php esc_attr_e( $section->ID ); ?>][css_class]" value="<?php esc_attr_e( $css_class ); ?>" />
+					<strong><?php esc_html_e( 'CSS Class', 'linchpin-mcs' ); ?></strong> <input type="text" name="mcs-sections[<?php esc_attr_e( $section->ID ); ?>][css_class]" value="<?php esc_attr_e( $css_class ); ?>" />
 				</label>
 			</div>
 		</div>

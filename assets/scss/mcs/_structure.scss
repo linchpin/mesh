@@ -1,11 +1,51 @@
-#mcs-container .spinner {
-	margin: 0px 10px 0;
+#mcs-container {
+	.spinner {
+		margin: 0px 10px 0;
+	}
+
+	.dashicons-before:before {
+		line-height: inherit;
+	}
+}
+
+.mcs-row {
+	.block {
+		background-color: white;
+	}
+
+	.ui-draggable-dragging {
+		z-index: 10000;
+	}
+
+	.drop-target {
+		&.ui-state-hover {
+			border: 2px dashed $grey;
+		}
+
+		&.ui-state-active {
+			border-color: $dark-grey;
+		}
+	}
+}
+
+.mcs-row-title {
+	background-color: $light-grey;
+	cursor: move;
+	margin: -5px -5px 5px -5px;
+	padding: 5px;
 }
 
 .mcs-section-controls-container,
 .mcs-section-remove-container {
 	.spinner {
 		float: none;
+	}
+
+	.page-title-action {
+		display: inline-block;
+		line-height: 30px;
+		padding-bottom: 0;
+		padding-top: 0;
 	}
 }
 
@@ -56,9 +96,56 @@
 	}
 }
 
-.mcs-section-meta .dashicons {
-	font-size: 17px;
-	text-decoration: none;
+.mcs-section-meta {
+	background-color: $light-grey;
+	border: 1px solid $grey;
+	line-height: 32px;
+	margin: 2px 0;
+	padding: 3px 0;
+
+	.dashicons-before:before {
+		font-size: 17px;
+		text-decoration: none;
+	}
+}
+
+#multiple-content-sections-container {
+	.block {
+		border: 1px dotted $dark-grey;
+
+		.ui-sortable-handle {
+			border-bottom: 1px solid $grey;
+		}
+	}
+
+	.wp-slider {
+		border: none;
+
+		position: absolute;
+		right: 0;
+		bottom: 50%;
+		left: 0;
+		z-index: 1000;
+	}
+}
+
+.block-header,
+.block-content {
+	padding: 5px;
+}
+
+.block-placeholder {
+	border: 1px dotted $grey;
+	margin: 0 1em 1em 0;
+	min-height: 400px;
+}
+
+.text-right {
+	text-align : right;
+}
+
+.text-left {
+	text-align : left;
 }
 
 .mcs-block-click {

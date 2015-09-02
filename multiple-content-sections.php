@@ -111,10 +111,10 @@ class Multiple_Content_Sections {
 			$featured_image_id = get_post_thumbnail_id( $editor_id );
 
 			if ( empty( $featured_image_id ) ) : ?>
-				<button class="button mcs-block-featured-image-choose"><span class="dashicons dashicons-format-image"></span><?php esc_attr_e( 'Add Block Background Image', 'linchpin-mce' ); ?></button>
+				<button class="button mcs-block-featured-image-choose dashicons-before dashicons-format-image"><?php esc_attr_e( 'Add Block Background Image', 'linchpin-mce' ); ?></button>
 			<?php else : ?>
-				<button class="button mcs-block-featured-image-choose" data-mcs-section-featured-image="<?php esc_attr_e( $featured_image_id ); ?>"><?php echo get_the_title( $featured_image_id ); ?> <span class="dashicons dashicons-edit"></span></button>
-				<button class="button mcs-block-featured-image-trash" data-mcs-section-featured-image="<?php esc_attr_e( $featured_image_id ); ?>"><?php esc_html_e( 'Remove', 'linchpin-mcs' ); ?> <span class="dashicons dashicons-trash"></span></button>
+				<button class="button mcs-block-featured-image-choose dashicons-before dashicons-edit" data-mcs-section-featured-image="<?php esc_attr_e( $featured_image_id ); ?>"><?php echo get_the_title( $featured_image_id ); ?></button>
+				<button class="button mcs-block-featured-image-trash dashicons-before dashicons-trash" data-mcs-section-featured-image="<?php esc_attr_e( $featured_image_id ); ?>"><?php esc_html_e( 'Remove', 'linchpin-mcs' ); ?></button>
 			<?php endif; ?>
 		<?php endif;
 	}
@@ -160,7 +160,7 @@ class Multiple_Content_Sections {
 				<?php esc_html_e( 'Multiple Content Sections', 'linchpin-mcs' ); ?>
 				<a href="#" class="page-title-action mcs-section-reorder<?php if ( empty( $content_sections ) ) : ?> disabled<?php endif; ?>"><?php esc_html_e( 'Reorder Sections', 'lincpin-mcs' ); ?></a>
 				<a href="#" class="page-title-action mcs-section-expand<?php if ( empty( $content_sections ) ) : ?> disabled<?php endif; ?>"><?php esc_html_e( 'Expand All', 'lincpin-mcs' ); ?></a>
-				<a href="#" class="page-title-action mcs-section-add"><span class="dashicons dashicons-plus"></span><?php esc_html_e( 'Add Section', 'lincpin-mcs' ); ?></a>
+				<a href="#" class="page-title-action mcs-section-add dashicons-before dashicons-plus"><?php esc_html_e( 'Add Section', 'lincpin-mcs' ); ?></a>
 				<span class="spinner mcs-reorder-spinner"></span>
 			</h2>
 
@@ -168,7 +168,7 @@ class Multiple_Content_Sections {
 				<p>
 				<?php if ( empty( $content_sections ) ) : ?>
 					<?php esc_html_e( 'You haven\'t added any content sections yet! It\'s easy click ', 'linchpin-mcs' ); ?>
-					<a href="#" class="button mcs-section-add"><span class="dashicons dashicons-plus"></span><?php esc_html_e( 'Add Section', 'lincpin-mcs' ); ?></a>
+					<a href="#" class="button mcs-section-add dashicons-before dashicons-plus"><?php esc_html_e( 'Add Section', 'lincpin-mcs' ); ?></a>
 					<?php esc_html_e( ' to get started', 'linchpin-mcs' ); ?>
 				<?php else : ?>
 					<?php esc_html_e( 'Multiple content sections allow you to easily segment your page\'s contents into different blocks of markup.', 'linchpin-mcs' ); ?>
@@ -229,7 +229,7 @@ class Multiple_Content_Sections {
 				continue;
 			}
 
-			$status = sanitize_post_field( 'post_status', $section_data['post_status'], $post_id, 'db' );
+			$status = sanitize_post_field( 'post_status', $section_data['post_status'], $post_id, 'attribute' );
 
 			if ( ! in_array( $status, array( 'publish', 'draft' ) ) ) {
 				$status = 'draft';
