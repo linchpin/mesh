@@ -15,7 +15,6 @@
 			<br/>
 			<?php esc_html_e( 'Don\'t worry! None of your content is not lost', 'linchpin-mcs' ); ?>
 		</p>
-		<button type="button" class="notice-dismiss"><span class="screen-reader-text">Dismiss this notice.</span></button>
 	</div>
 	<p>Unused or hidden blocks :
 		<?php

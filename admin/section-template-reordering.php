@@ -15,11 +15,8 @@ if ( ! $section_blocks = (int) $templates[ $selected_template ]['blocks'] ) {
 }
 
 if ( (int) $section_blocks > 1 ) : ?>
-<div class="description notice notice-warning is-dismissible below-h2">
-	<p>
-		<?php esc_html_e( 'Reorder your content blocks by dragging and dropping.', 'linchpin-mcs' ); ?>
-	</p>
-	<button type="button" class="notice-dismiss"><span class="screen-reader-text"><?php esc_html_e( 'Dismiss this notice.', 'linchpin-mcs' ); ?></span></button>
+<div class="reordering notice notice-warning is-dismissible below-h2">
+	<p><?php esc_html_e( 'Reorder your content blocks by dragging and dropping.', 'linchpin-mcs' ); ?></p>
 </div>
 <?php
 

@@ -174,8 +174,6 @@ class Multiple_Content_Sections {
 					<?php esc_html_e( 'Multiple content sections allow you to easily segment your page\'s contents into different blocks of markup.', 'linchpin-mcs' ); ?>
 				<?php endif; ?>
 				</p>
-
-				<button type="button" class="notice-dismiss"><span class="screen-reader-text">Dismiss this notice.</span></button>
 			</div>
 
 			<div id="multiple-content-sections-container">

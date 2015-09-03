@@ -102,6 +102,34 @@ multiple_content_sections.admin = function ( $ ) {
 
 		},
 
+		/**
+		 * Add notifications to our section
+		 *
+		 * @param $layout
+		 */
+		setup_notifications : function( $layout ) {
+			// Make notices dismissible
+			$layout.find( '.notice.is-dismissible' ).each( function() {
+				var $this = $( this ),
+					$button = $( '<button type="button" class="notice-dismiss"><span class="screen-reader-text"></span></button>' ),
+					btnText = commonL10n.dismiss || '';
+
+				// Ensure plain text
+				$button.find( '.screen-reader-text' ).text( btnText );
+
+				$this.append( $button );
+
+				$button.on( 'click.wp-dismiss-notice', function( event ) {
+					event.preventDefault();
+					$this.fadeTo( 100 , 0, function() {
+						$(this).slideUp( 100, function() {
+							$(this).remove();
+						});
+					});
+				});
+			});
+		},
+
 		change_column_widths : function( event, ui ) {
 			var $tgt          = $( event.target ),
 				$columns      = $tgt.parent().parent().parent().find('.mcs-editor-blocks').find('.columns').addClass('dragging'),
@@ -111,8 +139,8 @@ multiple_content_sections.admin = function ( $ ) {
 				column_start  = column_value,
 				max_width = 12,
 				min_width = 3,
-				slider_0 = ( column_value && 2 > column_length )? column_value : ui.values[0],
-				slider_1 = ui.values[1],
+				slider_0 = 0,
+				slider_1 = 0,
 				column_values = [];
 
 			// cap max column width
@@ -124,9 +152,17 @@ multiple_content_sections.admin = function ( $ ) {
 
 				column_value = Math.max( min_width, column_value );
 				column_value = Math.min( max_width, column_value );
-			}
 
-			if( column_length == 3 ) {
+				column_values = [
+					column_value,
+					column_total - column_value
+				];
+			} else if( column_length == 3 ) {
+
+				if( typeof( ui.value ) != 'undefined' ) {
+					slider_0 = ( column_value && 2 > column_length ) ? column_value : ui.values[0];
+					slider_1 = ui.values[1];
+				}
 
 				max_width = 6;
 				min_width = 3;
@@ -147,8 +183,6 @@ multiple_content_sections.admin = function ( $ ) {
 				column_values[1] = column_value - column_values[0];
 				column_values[2] = column_total - ( column_values[0] + column_values[1] );
 			}
-
-			console.log( column_values );
 
 			// Custom class removal based on regex pattern
 			$columns.removeClass (function (index, css) {
@@ -172,8 +206,8 @@ multiple_content_sections.admin = function ( $ ) {
 						min:0,
 						max:12,
 						step:1,
-						change : multiple_content_sections.admin.save_column_widths
-						//slide : multiple_content_sections.admin.change_column_widths
+						change : multiple_content_sections.admin.save_column_widths,
+						slide : multiple_content_sections.admin.change_column_widths
 					};
 
 				if( blocks === 3 ) {
@@ -326,15 +360,20 @@ multiple_content_sections.admin = function ( $ ) {
 				if ( response ) {
 
 					var $response = $( response ),
-						$editors  = $response.find('.wp-editor-area');
+						$editors  = $response.find('.wp-editor-area'),
+						$layout   = $( '#mcs-sections-editor-' + section_id );
 
-					$( '#mcs-sections-editor-' + section_id ).html('').append( $response );
+					$layout.html('').append( $response );
 
 					// Loop through all of our edits in the response
 
 					multiple_content_sections.admin.reorder_blocks( $editors );
 
 					multiple_content_sections.admin.setup_slider();
+
+					multiple_content_sections.admin.setup_drag_drop();
+
+					multiple_content_sections.admin.setup_notifications( $layout );
 
 					$spinner.removeClass('is-active');
 
