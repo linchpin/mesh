@@ -3,7 +3,7 @@
 * Plugin Name: Multiple Content Sections
 * Plugin URI: http://linchpin.agency
 * Description: Add multiple content sections on a post by post basis.
-* Version: 1.3.7
+* Version: 1.3.8
 * Author: Linchpin
 * Author URI: http://linchpin.agency
 * License: GPLv2 or later
@@ -16,7 +16,7 @@ if ( ! function_exists( 'add_action' ) ) {
 	exit;
 }
 
-define( 'LINCHPIN_MCS_VERSION', '1.3.7' );
+define( 'LINCHPIN_MCS_VERSION', '1.3.8' );
 define( 'LINCHPIN_MCS_PLUGIN_NAME', 'Multiple Content Sections' );
 define( 'LINCHPIN_MCS__MINIMUM_WP_VERSION', '4.0' );
 define( 'LINCHPIN_MCS___PLUGIN_URL', plugin_dir_url( __FILE__ ) );
@@ -35,13 +35,10 @@ class Multiple_Content_Sections {
 	public $templates = array();
 
 	/**
+     * Store all our TinyMCE Editors
 	 * @var array
 	 */
-	public $editors = array();
-
-	/*
-	 * 'mcs-section-editor-' . $blocks[ $block_increment ]->ID
-	 */
+	public $tinymce_editors = array();
 
 	/**
 	 * Store the available blocks per template.
@@ -126,7 +123,29 @@ class Multiple_Content_Sections {
 	 * @return void
 	 */
 	function init() {
+
+		$labels = array(
+			'name'                => _x( 'Content Section', 'Content Section', 'linchpin-mcs' ),
+			'singular_name'       => _x( 'Content Section', 'Content Section', 'linchpin-mcs' ),
+			'menu_name'           => __( 'Content Section', 'linchpin-mcs' ),
+			'name_admin_bar'      => __( 'Content Section', 'linchpin-mcs' ),
+			'parent_item_colon'   => __( 'Parent Content Section:', 'linchpin-mcs' ),
+			'all_items'           => __( 'All Content Sections', 'linchpin-mcs' ),
+			'add_new_item'        => __( 'Add New Content Section', 'linchpin-mcs' ),
+			'add_new'             => __( 'Add New', 'linchpin-mcs' ),
+			'new_item'            => __( 'New Content Section', 'linchpin-mcs' ),
+			'edit_item'           => __( 'Edit Content Section', 'linchpin-mcs' ),
+			'update_item'         => __( 'Update Content Section', 'linchpin-mcs' ),
+			'view_item'           => __( 'View Content Section', 'linchpin-mcs' ),
+			'search_items'        => __( 'Search Content Sections', 'linchpin-mcs' ),
+			'not_found'           => __( 'Not found', 'linchpin-mcs' ),
+			'not_found_in_trash'  => __( 'Not found in Trash', 'linchpin-mcs' ),
+		);
+
 		register_post_type( 'mcs_section', array(
+			'label'               => __( 'Content Section', 'linchpin-mcs' ),
+			'description'         => __( 'Content Section', 'linchpin-mcs' ),
+			'labels'              => $labels,
 			'public' => false,
 			'hierarchical' => true,
 			'supports' => array( 'title','editor','author','thumbnail','excerpt' ),

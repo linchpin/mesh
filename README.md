@@ -4,6 +4,13 @@ Adds the ability to define multiple content areas within pages, posts and custom
 
 ##Change Log
 
+###0.3.8
+Cleaned up Post Type labels used when exporting content using the WordPress export tools
+
+###0.3.7
+
+###0.3.6
+
 ###0.3.5
 
 #### Significant Release. Probably breaks backwards compatibility with internal releases.

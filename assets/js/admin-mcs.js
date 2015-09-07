@@ -279,10 +279,10 @@ multiple_content_sections.admin = function ( $ ) {
 		 *
 		 * @since 1.3.5
 		 *
-		 * @param $editors
+		 * @param $tinymce_editors
 		 */
-		reorder_blocks : function( $editors ) {
-			$editors.each(function() {
+		reorder_blocks : function( $tinymce_editors ) {
+			$tinymce_editors.each(function() {
 				var editor_id   = $(this).prop('id'),
 					editor_data = temp_data_storage;
 
@@ -296,8 +296,6 @@ multiple_content_sections.admin = function ( $ ) {
 				// Setup our editors
 				editor_data.selector = '#' + editor_id;
 				tinymce.init( editor_data );
-
-				//tinyMCE.execCommand('mceRepaint', false, editor_id );
 			});
 		},
 
@@ -359,20 +357,17 @@ multiple_content_sections.admin = function ( $ ) {
 			}, function( response ) {
 				if ( response ) {
 
-					var $response = $( response ),
-						$editors  = $response.find('.wp-editor-area'),
-						$layout   = $( '#mcs-sections-editor-' + section_id );
+					var $response        = $( response ),
+						$tinymce_editors = $response.find('.wp-editor-area'),
+						$layout          = $( '#mcs-sections-editor-' + section_id );
 
 					$layout.html('').append( $response );
 
 					// Loop through all of our edits in the response
 
-					multiple_content_sections.admin.reorder_blocks( $editors );
-
+					multiple_content_sections.admin.reorder_blocks( $tinymce_editors );
 					multiple_content_sections.admin.setup_slider();
-
 					multiple_content_sections.admin.setup_drag_drop();
-
 					multiple_content_sections.admin.setup_notifications( $layout );
 
 					$spinner.removeClass('is-active');
@@ -410,8 +405,8 @@ multiple_content_sections.admin = function ( $ ) {
 				mcs_add_section_nonce: mcs_data.add_section_nonce
 			}, function( response ){
 				if ( response ) {
-					var $response = $( response ),
-						$editors  = $response.find('.wp-editor-area');
+					var $response        = $( response ),
+						$tinymce_editors = $response.find('.wp-editor-area');
 
 					$section_container.append( $response );
 					$spinner.removeClass('is-active');
@@ -422,7 +417,7 @@ multiple_content_sections.admin = function ( $ ) {
 						$reorder_button.removeClass( 'disabled' );
 					}
 
-					multiple_content_sections.admin.reorder_blocks( $editors );
+					multiple_content_sections.admin.reorder_blocks( $tinymce_editors );
 
 				} else {
 					$spinner.removeClass('is-active');
