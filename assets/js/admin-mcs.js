@@ -47,7 +47,7 @@ multiple_content_sections.admin = function ( $ ) {
 			wpeditimage_disable_captions: false,
 			wpeditimage_html5_captions: true,
 			plugins: "charmap,colorpicker,hr,lists,media,paste,tabfocus,textcolor,fullscreen,wordpress,wpeditimage,wpemoji,wpgallery,wplink,wpdialogs,wptextpattern,wpview",
-			content_css: mcs_data.site_uri + "/wp-includes/css/dashicons.css?ver=4.3," + mcs_data.site_uri + "/wp-includes/js/tinymce/skins/wordpress/wp-content.css?ver=4.3,https://fonts.googleapis.com/css?family=Noto+Sans%3A400italic%2C700italic%2C400%2C700%7CNoto+Serif%3A400italic%2C700italic%2C400%2C700%7CInconsolata%3A400%2C700&subset=latin%2Clatin-ext," + mcs_data.site_uri + "/wp-content/themes/twentyfifteen/css/editor-style.css," + mcs_data.site_uri + "/wp-content/themes/twentyfifteen/genericons/genericons.css",
+			content_css: mcs_data.site_uri + "/wp-includes/css/dashicons.css?ver=4.3," + mcs_data.site_uri + "/wp-includes/js/tinymce/skins/wordpress/wp-content.css?ver=4.3,https://fonts.googleapis.com/css?family=Noto+Sans%3A400italic%2C700italic%2C400%2C700%7CNoto+Serif%3A400italic%2C700italic%2C400%2C700%7CInconsolata%3A400%2C700&subset=latin%2Clatin-ext," + mcs_data.content_css,
 			resize: false,
 			menubar: false,
 			wpautop: true,
@@ -206,6 +206,12 @@ multiple_content_sections.admin = function ( $ ) {
 						min:0,
 						max:12,
 						step:1,
+						start : function() {
+							$this.css('z-index', 1000);
+						},
+						stop : function() {
+							$this.css('z-index', '').find('.ui-slider-handle').css('z-index', 1000);
+						},
 						change : multiple_content_sections.admin.save_column_widths,
 						slide : multiple_content_sections.admin.change_column_widths
 					};

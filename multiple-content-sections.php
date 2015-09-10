@@ -3,7 +3,7 @@
 * Plugin Name: Multiple Content Sections
 * Plugin URI: http://linchpin.agency
 * Description: Add multiple content sections on a post by post basis.
-* Version: 1.3.8
+* Version: 1.3.9
 * Author: Linchpin
 * Author URI: http://linchpin.agency
 * License: GPLv2 or later
@@ -295,6 +295,16 @@ class Multiple_Content_Sections {
 				update_post_meta( $section->ID, '_mcs_css_class', $sanitized_css_classes );
 			}
 
+			// Save Column Offset
+
+			$offset = (int) $section_data['offset'];
+
+			if ( empty( $offset ) ) {
+				delete_post_meta( $section->ID, '_mcs_offset' );
+			} else {
+				update_post_meta( $section->ID, '_mcs_offset', $offset );
+			}
+
 			// Process the section's blocks.
 			$blocks = array();
 
@@ -318,6 +328,20 @@ class Multiple_Content_Sections {
 								'style' => true,
 								'id' => true,
 								'class' => true,
+								'name' => true,
+								'allowfullscreen' => true,
+								'msallowfullscreen' => true,
+								'mozallowfullscreen' => true,
+								'webkitallowfullscreen' => true,
+								'oallowfullscreen' => true,
+								'allowtransparency' => true,
+								'frameborder' => true,
+								'scrolling' => true,
+								'width' => true,
+								'height' => true,
+							),
+							'script' => array(
+								'src' => true,
 							),
 						),
 						wp_kses_allowed_html( 'post' )
@@ -455,7 +479,9 @@ class Multiple_Content_Sections {
 
 		wp_enqueue_script( 'admin-mcs', plugins_url( 'assets/js/admin-mcs.js', __FILE__ ), array( 'jquery', 'jquery-ui-draggable', 'jquery-ui-droppable', 'jquery-ui-slider' ), '1.0', true );
 
-		wp_localize_script( 'admin-mcs', 'mcs_data', array(
+		// get_stylesheet_directory_uri() . '/css/editor-style.css'
+
+		$localized_data = array(
 			'post_id' => $post->ID,
 			'site_uri' => site_url(),
 			'choose_layout_nonce'   => wp_create_nonce( 'mcs_choose_layout_nonce' ),
@@ -464,13 +490,18 @@ class Multiple_Content_Sections {
 			'reorder_section_nonce' => wp_create_nonce( 'mcs_reorder_section_nonce' ),
 			'featured_image_nonce'  => wp_create_nonce( 'mcs_featured_image_nonce' ),
 			'reorder_blocks_nonce'  => wp_create_nonce( 'mcs_reorder_blocks_nonce' ),
+			'content_css'           => apply_filters( 'content_css', get_stylesheet_directory_uri() . '/css/editor-style.css' , 'editor_path' ),
 			'labels' => array(
 				'reorder' => __( 'Be sure to save order of your sections once your changes are complete.', 'linchpin-mcs' ),
 				'description' => __( 'Multiple content sections allows you to easily segment your page\'s contents into different blocks of markup.', 'linchpin-mcs' ),
 				'add_image' => __( 'Set Background Image', 'linchpin-mcs' ),
 				'remove_image' => __( 'Remove Background', 'linchpin-mcs' ),
 			),
-		) );
+		);
+
+
+
+		wp_localize_script( 'admin-mcs', 'mcs_data', $localized_data );
 	}
 
 	/**
@@ -633,6 +664,7 @@ function mcs_add_section_admin_markup( $section, $closed = false ) {
 	}
 
 	$css_class = get_post_meta( $section->ID, '_mcs_css_class', true );
+	$offset = get_post_meta( $section->ID, '_mcs_offset', true );
 
 	$featured_image_id = get_post_thumbnail_id( $section->ID );
 

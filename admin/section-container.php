@@ -52,6 +52,11 @@ if ( ! $closed_metaboxes = get_user_option( 'closedpostboxes_page' ) ) {
 						<option value="<?php esc_attr_e( $template ); ?>" <?php selected( $selected_template, $template ); ?>><?php esc_html_e( $templates[ $template ]['file'] ); ?></option>
 					<?php endforeach; ?>
 				</select>
+
+				<label for="mcs-sections[<?php esc_attr_e( $section->ID ); ?>][offset]">
+					<strong><?php esc_html_e( 'Offset', 'linchpin-mcs' ); ?></strong> <input type="text" class="mcs-column-offset" name="mcs-sections[<?php esc_attr_e( $section->ID ); ?>][offset]" value="<?php esc_attr_e( $offset ); ?>" maxlength="1" />
+				</label>
+
 				<label for="mcs-sections[<?php esc_attr_e( $section->ID ); ?>][css-class]">
 					<strong><?php esc_html_e( 'CSS Class', 'linchpin-mcs' ); ?></strong> <input type="text" name="mcs-sections[<?php esc_attr_e( $section->ID ); ?>][css_class]" value="<?php esc_attr_e( $css_class ); ?>" />
 				</label>

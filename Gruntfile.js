@@ -14,7 +14,7 @@ module.exports = function(grunt) {
 				},
 
 				files: {
-					'assets/css/admin-mcs.css': 'assets/scss/admin-mcs.scss',
+					'assets/css/admin-mcs.css': 'assets/scss/admin-mcs.scss'
 				}
 			}
 		},
@@ -22,7 +22,7 @@ module.exports = function(grunt) {
         uglify: {
             plugin: {
                 files: {
-                    'js/admin-mcs.min.js' : ['js/admin-mcs.js']
+                    'assets/js/admin-mcs.min.js' : ['assets/js/admin-mcs.js']
                 }
             }
         },
@@ -32,12 +32,12 @@ module.exports = function(grunt) {
 
             sass: {
 	            files: 'assets/scss/**/*.scss',
-	            tasks: ['sass'],
+	            tasks: ['sass']
             },
 
             javascript: {
                 files: [
-                    'js/admin-mcs.js'
+                    'assets/js/admin-mcs.js'
                 ],
                 tasks: ['uglify']
             }
