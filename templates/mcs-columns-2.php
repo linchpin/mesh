@@ -19,12 +19,13 @@
 
 			<?php
 				$column_width = get_post_meta( $block->ID, '_mcs_column_width', true );
+				$block_css_class = get_post_meta( $block->ID, '_mcs_css_class',  true );
 
 				if ( 2 == $i && $offset ) :
 			?>
-			<div class="small-12 medium-<?php esc_attr_e( $column_width - $offset ); ?> medium-offset-<?php esc_attr_e( $offset ); ?> columns">
+			<div class="small-12 medium-<?php esc_attr_e( $column_width - $offset ); ?> medium-offset-<?php esc_attr_e( $offset ); ?> columns <?php esc_attr_e( $block_css_class ); ?>">
 			<?php else: ?>
-			<div class="small-12 medium-<?php esc_attr_e( $column_width ); ?> columns">
+			<div class="small-12 medium-<?php esc_attr_e( $column_width ); ?> columns <?php esc_attr_e( $block_css_class ); ?>">
 			<?php endif; ?>
 				<h2 class="entry-title"><?php the_title(); ?></h2>
 				<?php echo apply_filters( 'the_content', $block->post_content ); ?>

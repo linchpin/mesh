@@ -13,8 +13,10 @@
 ?>
 
 <section <?php post_class(); ?> <?php mcs_section_background(); ?>>
+
+
 	<div class="row">
-		<div class="small-12 columns">
+		<div class="small-12 columns <?php esc_attr_e( $block_css_class ); ?>">
 			<h2 class="entry-title"><?php the_title(); ?></h2>
 			<?php
 			if ( $blocks = mcs_get_section_blocks( get_the_ID() ) ) {

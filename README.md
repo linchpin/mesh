@@ -23,6 +23,9 @@ function add_multiple_content_sections( $the_content ) {
 
 ##Change Log
 
+###0.4.0
+* Updates to frontend templates for offset and custom css classes
+
 ###0.3.9
 * Added some style cleanup of the column resizer
 * Fixed a zindex issue when resizing columns
