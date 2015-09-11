@@ -14,7 +14,7 @@ multiple_content_sections.admin = function ( $ ) {
 		media_frames        = [],
 
 		// since 1.3.5
-		temp_data_storage   = {
+		default_tinymce_settings  = {
 			theme: "modern",
 			skin: "lightgray",
 			language: "en",
@@ -52,7 +52,7 @@ multiple_content_sections.admin = function ( $ ) {
 			menubar: false,
 			wpautop: true,
 			indent: false,
-			toolbar1: "bold,italic,bullist,numlist,blockquote,hr,alignleft,aligncenter,alignright,link,unlink,spellchecker",
+			toolbar1: "bold,italic,bullist,numlist,blockquote,hr,alignleft,aligncenter,alignright,link,unlink",
 			toolbar2: "",
 			toolbar3: "",
 			toolbar4: "",
@@ -301,7 +301,7 @@ multiple_content_sections.admin = function ( $ ) {
 		reorder_blocks : function( $tinymce_editors ) {
 			$tinymce_editors.each(function() {
 				var editor_id   = $(this).prop('id'),
-					editor_data = temp_data_storage;
+					editor_data = default_tinymce_settings;
 
 				// Reset our editors if we have any
 				if( typeof tinymce.editors !== 'undefined' ) {
@@ -333,9 +333,9 @@ multiple_content_sections.admin = function ( $ ) {
 			$this.toggleClass('expanded');
 
 			if( ! $this.hasClass('expanded') ) {
-				$this.text('Expand All');
+				$this.text( mcs_data.strings.expand_all );
 			} else {
-				$this.text('Collapse All');
+				$this.text( mcs_data.strings.collapse_all );
 			}
 
 			$('#multiple-content-sections-container').find('.hndle').trigger('click');
@@ -594,9 +594,7 @@ multiple_content_sections.admin = function ( $ ) {
 			var $this = $(this),
 				$reorder_spinner = $this.siblings('.spinner'),
 				$sections = $( '.multiple-content-sections-postbox', $section_container),
-				$block_click_span = $( '<span />', {
-					'class' : 'mcs-block-click'
-				});
+				$block_click_span = $( '<span class="mcs-block-click">' );
 
 			$expand_button.addClass('disabled');
 			$add_button.addClass('disabled');
@@ -719,7 +717,7 @@ multiple_content_sections.admin = function ( $ ) {
 			$('.mcs-block-click').remove();
 
 			if( $description.is(':visible') ) {
-				$description.removeClass('notice-warning').addClass('notice-info').find('p').text( mcs_data.labels.description );
+				$description.removeClass('notice-warning').addClass('notice-info').find('p').text( mcs_data.strings.description );
 			}
 
 			multiple_content_sections.admin.save_section_ajax( section_ids, $reorder_spinner );
@@ -744,7 +742,7 @@ multiple_content_sections.admin = function ( $ ) {
 				$postbox = $this.parents('.multiple-content-sections-postbox');
 
 			if ( current_title === '' || current_title == 'undefined' ) {
-				current_title = 'No Title';
+				current_title = mcs_data.strings.default_title;
 			}
 
 			$postbox.find('.handle-title').text( current_title );
@@ -792,9 +790,7 @@ multiple_content_sections.admin = function ( $ ) {
 				$section      = $button.parents('.multiple-content-sections-postbox'),
 				section_id    = parseInt( $section.attr('data-mcs-section-id') ),
 				current_image = $button.attr('data-mcs-section-featured-image'),
-				$edit_icon = $( '<span />' ).attr({
-					'class' : 'dashicons dashicons-format-image'
-				});
+				$edit_icon = $( '<span class="dashicons dashicons-format-image" />');
 
 			$.post( ajaxurl, {
 				'action': 'mcs_update_featured_image',
@@ -802,9 +798,9 @@ multiple_content_sections.admin = function ( $ ) {
 				'mcs_featured_image_nonce' : mcs_data.featured_image_nonce
 			}, function( response ) {
 				if ( response != -1 ) {
-					$button.prev().text( mcs_data.labels.add_image).prepend( $edit_icon );
+					$button.prev().text( mcs_data.strings.add_image).prepend( $edit_icon );
 					$button.remove();
-			//		$button.text( mcs_data.labels.add_image ).attr('data-mcs-section-featured-image', '').prepend( $edit_icon );
+			//		$button.text( mcs_data.strings.add_image ).attr('data-mcs-section-featured-image', '').prepend( $edit_icon );
 				}
 			});
 		},
@@ -833,9 +829,9 @@ multiple_content_sections.admin = function ( $ ) {
 	            className: 'media-frame mcs-media-frame',
 	            frame: 'select',
 	            multiple: false,
-	            title: 'Select Section Background',
+	            title: mcs_data.strings.select_section_bg,
 	            button: {
-	                text: 'Select Background'
+	                text: mcs_data.strings.select_bg
 	            }
 	        });
 
@@ -859,7 +855,7 @@ multiple_content_sections.admin = function ( $ ) {
 						'data-mcs-section-featured-image': '',
 						'href' : '#',
 						'class' : 'mcs-featured-image-trash'
-					}).text( mcs_data.labels.remove_image).prepend( $trash_icon );
+					}).text( mcs_data.strings.remove_image).prepend( $trash_icon );
 
 				$.post( ajaxurl, {
 	                'action': 'mcs_update_featured_image',
@@ -906,9 +902,9 @@ multiple_content_sections.admin = function ( $ ) {
 				className: 'media-frame mcs-media-frame',
 				frame: 'select',
 				multiple: false,
-				title: 'Select Block Background',
+				title: mcs_data.strings.select_block_bg,
 				button: {
-					text: 'Select Block Background'
+					text: mcs_data.strings.select_bg
 				}
 			});
 
@@ -933,7 +929,7 @@ multiple_content_sections.admin = function ( $ ) {
 						'data-mcs-section-featured-image': '',
 						'href' : '#',
 						'class' : 'mcs-featured-image-trash'
-					}).text( mcs_data.labels.remove_image).prepend( $trash_icon );
+					}).text( mcs_data.strings.remove_image).prepend( $trash_icon );
 
 				$.post( ajaxurl, {
 					'action': 'mcs_update_featured_image',
@@ -983,7 +979,7 @@ multiple_content_sections.admin = function ( $ ) {
 				'mcs_featured_image_nonce' : mcs_data.featured_image_nonce
 			}, function( response ) {
 				if ( response != -1 ) {
-					$button.prev().text( mcs_data.labels.add_image ).prepend( $edit_icon );
+					$button.prev().text( mcs_data.strings.add_image ).prepend( $edit_icon );
 					$button.remove();
 				}
 			});
