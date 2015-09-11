@@ -43,7 +43,7 @@
 					<div class="block-header">
 						<div class="mcs-row mcs-row-title">
 							<div class="mcs-columns-12">
-								<?php esc_html_e( $blocks[ $block_increment ]->post_title ); ?> (<?php esc_html_e( $blocks[ $block_increment ]->ID ); ?>) [<?php esc_html_e( $blocks[ $block_increment ]->post_status ); ?>]
+								<?php esc_html_e( $blocks[ $block_increment ]->post_title ); ?> (<?php esc_html_e( $blocks[ $block_increment ]->ID ); ?>) [<?php esc_html_e( $blocks[ $block_increment ]->post_status ); ?>] Columns: <span class="column-width-indicator"><?php esc_attr_e( $block_columns ); ?></span>
 							</div>
 						</div>
 
