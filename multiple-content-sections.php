@@ -266,8 +266,12 @@ class Multiple_Content_Sections {
 				'post_title' => sanitize_text_field( $section_data['post_title'] ),
 				'post_content' => wp_kses( $section_data['post_content'], array_merge(
 					array(
-						'script' => array( 'src' => true, 'type' => true, 'charset' => true ),
-						'iframe' => array( 'src' => true, 'style' => true, 'id' => true, 'class' => true ),
+						'iframe' => array(
+							'src' => true,
+							'style' => true,
+							'id' => true,
+							'class' => true,
+						),
 					),
 					wp_kses_allowed_html( 'post' )
 				) ),
@@ -327,33 +331,7 @@ class Multiple_Content_Sections {
 
 				$updates = array(
 					'ID' => (int) $block_id,
-					'post_content' => wp_kses( $block_data['post_content'], array_merge(
-						array(
-							'iframe' => array(
-								'src' => true,
-								'style' => true,
-								'id' => true,
-								'class' => true,
-								'name' => true,
-								'allowfullscreen' => true,
-								'msallowfullscreen' => true,
-								'mozallowfullscreen' => true,
-								'webkitallowfullscreen' => true,
-								'oallowfullscreen' => true,
-								'allowtransparency' => true,
-								'frameborder' => true,
-								'scrolling' => true,
-								'width' => true,
-								'height' => true,
-							),
-							'script' => array(
-								'src' => true,
-								'charset' => true,
-								'type' => true,
-							),
-						),
-						wp_kses_allowed_html( 'post' )
-					) ),
+					'post_content' => wp_kses( $block_data['post_content'], mcs_get_allowed_html() ),
 					'post_status' => $status,
 				);
 
@@ -500,17 +478,11 @@ class Multiple_Content_Sections {
 			'reorder_blocks_nonce'  => wp_create_nonce( 'mcs_reorder_blocks_nonce' ),
 			'dismiss_nonce'         => wp_create_nonce( 'mcs_dismiss_notification_nonce' ),
 			'content_css'           => apply_filters( 'content_css', get_stylesheet_directory_uri() . '/css/editor-style.css' , 'editor_path' ),
-			'strings' => array(
+			'labels' => array(
 				'reorder' => __( 'Be sure to save order of your sections once your changes are complete.', 'linchpin-mcs' ),
 				'description' => __( 'Multiple content sections allows you to easily segment your page\'s contents into different blocks of markup.', 'linchpin-mcs' ),
 				'add_image' => __( 'Set Background Image', 'linchpin-mcs' ),
 				'remove_image' => __( 'Remove Background', 'linchpin-mcs' ),
-				'expand_all' => __( 'Expand All', 'linchpin-mcs' ),
-				'collapse_all' => __( 'Collapse All', 'linchpin-mcs' ),
-				'default_title' => __( 'No Title', 'linchpin-mcs' ),
-				'select_section_bg' => __( 'Select Section Background', 'linchpin-mcs' ),
-				'select_bg' => __( 'Select Background' , 'linchpin-mcs' ),
-				'select_block_bg' => __( 'Select Block Background', 'linchpin-mcs' ),
 			),
 		);
 
@@ -869,4 +841,38 @@ function mcs_section_background( $post_id = 0, $echo = true ) {
 			echo $style;
 		}
 	}
+}
+
+// Return an array of allowed html for wp_kses functions
+function mcs_get_allowed_html() {
+	$mcs_allowed = apply_filters( 'mcs_default_allowed_html', array(
+		'iframe' => array(
+			'src' => true,
+			'style' => true,
+			'id' => true,
+			'class' => true,
+			'name' => true,
+			'allowfullscreen' => true,
+			'msallowfullscreen' => true,
+			'mozallowfullscreen' => true,
+			'webkitallowfullscreen' => true,
+			'oallowfullscreen' => true,
+			'allowtransparency' => true,
+			'frameborder' => true,
+			'scrolling' => true,
+			'width' => true,
+			'height' => true,
+		),
+		'script' => array(
+			'src' => true,
+		),
+		'div' => array(
+			'data-equalizer' => true,
+			'data-equalizer-watch' => true,
+		)
+	) );
+
+	$post_allowed = wp_kses_allowed_html( 'post' );
+
+	return apply_filters( 'mcs_allowed_html', array_merge_recursive( $post_allowed, $mcs_allowed ) );
 }

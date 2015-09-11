@@ -561,12 +561,14 @@ multiple_content_sections.admin = function ( $ ) {
 			$columns.each( function( index ) {
 				var $this = $(this),
 					block_id = parseInt( $this.find('.block').attr('data-mcs-block-id') ),
-					$column_input = $this.find('.column-width');
+					$column_input = $this.find('.column-width'),
+					$indicator    = $this.find( '.column-width-indicator' );
 
 				$this.addClass( 'mcs-columns-' + column_values[ index ] );
 
 				if( block_id && column_values[ index ] ) {
 					$column_input.val( column_values[ index ] );
+					$indicator.text( column_values[ index ] );
 					post_data.blocks[ block_id.toString() ] = column_values[ index ];
 				}
 			} );
