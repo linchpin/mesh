@@ -266,7 +266,12 @@ class Multiple_Content_Sections {
 				'post_title' => sanitize_text_field( $section_data['post_title'] ),
 				'post_content' => wp_kses( $section_data['post_content'], array_merge(
 					array(
-						'iframe' => array( 'src' => true, 'style' => true, 'id' => true, 'class' => true ),
+						'iframe' => array(
+							'src' => true,
+							'style' => true,
+							'id' => true,
+							'class' => true,
+						),
 					),
 					wp_kses_allowed_html( 'post' )
 				) ),
@@ -326,31 +331,7 @@ class Multiple_Content_Sections {
 
 				$updates = array(
 					'ID' => (int) $block_id,
-					'post_content' => wp_kses( $block_data['post_content'], array_merge(
-						array(
-							'iframe' => array(
-								'src' => true,
-								'style' => true,
-								'id' => true,
-								'class' => true,
-								'name' => true,
-								'allowfullscreen' => true,
-								'msallowfullscreen' => true,
-								'mozallowfullscreen' => true,
-								'webkitallowfullscreen' => true,
-								'oallowfullscreen' => true,
-								'allowtransparency' => true,
-								'frameborder' => true,
-								'scrolling' => true,
-								'width' => true,
-								'height' => true,
-							),
-							'script' => array(
-								'src' => true,
-							),
-						),
-						wp_kses_allowed_html( 'post' )
-					) ),
+					'post_content' => wp_kses( $block_data['post_content'], mcs_get_allowed_html() ),
 					'post_status' => $status,
 				);
 
@@ -860,4 +841,38 @@ function mcs_section_background( $post_id = 0, $echo = true ) {
 			echo $style;
 		}
 	}
+}
+
+// Return an array of allowed html for wp_kses functions
+function mcs_get_allowed_html() {
+	$mcs_allowed = apply_filters( 'mcs_default_allowed_html', array(
+		'iframe' => array(
+			'src' => true,
+			'style' => true,
+			'id' => true,
+			'class' => true,
+			'name' => true,
+			'allowfullscreen' => true,
+			'msallowfullscreen' => true,
+			'mozallowfullscreen' => true,
+			'webkitallowfullscreen' => true,
+			'oallowfullscreen' => true,
+			'allowtransparency' => true,
+			'frameborder' => true,
+			'scrolling' => true,
+			'width' => true,
+			'height' => true,
+		),
+		'script' => array(
+			'src' => true,
+		),
+		'div' => array(
+			'data-equalizer' => true,
+			'data-equalizer-watch' => true,
+		)
+	) );
+
+	$post_allowed = wp_kses_allowed_html( 'post' );
+
+	return apply_filters( 'mcs_allowed_html', array_merge_recursive( $post_allowed, $mcs_allowed ) );
 }
