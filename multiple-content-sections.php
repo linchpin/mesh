@@ -465,8 +465,6 @@ class Multiple_Content_Sections {
 
 		wp_enqueue_script( 'admin-mcs', plugins_url( 'assets/js/admin-mcs.js', __FILE__ ), array( 'jquery', 'jquery-ui-draggable', 'jquery-ui-droppable', 'jquery-ui-slider' ), '1.0', true );
 
-		// get_stylesheet_directory_uri() . '/css/editor-style.css'
-
 		$localized_data = array(
 			'post_id' => $post->ID,
 			'site_uri' => site_url(),
@@ -478,15 +476,19 @@ class Multiple_Content_Sections {
 			'reorder_blocks_nonce'  => wp_create_nonce( 'mcs_reorder_blocks_nonce' ),
 			'dismiss_nonce'         => wp_create_nonce( 'mcs_dismiss_notification_nonce' ),
 			'content_css'           => apply_filters( 'content_css', get_stylesheet_directory_uri() . '/css/editor-style.css' , 'editor_path' ),
-			'labels' => array(
+			'strings' => array(
 				'reorder' => __( 'Be sure to save order of your sections once your changes are complete.', 'linchpin-mcs' ),
 				'description' => __( 'Multiple content sections allows you to easily segment your page\'s contents into different blocks of markup.', 'linchpin-mcs' ),
 				'add_image' => __( 'Set Background Image', 'linchpin-mcs' ),
 				'remove_image' => __( 'Remove Background', 'linchpin-mcs' ),
+				'expand_all' => __( 'Expand All', 'linchpin-mcs' ),
+				'collapse_all' => __( 'Collapse All', 'linchpin-mcs' ),
+				'default_title' => __( 'No Title', 'linchpin-mcs' ),
+				'select_section_bg' => __( 'Select Section Background', 'linchpin-mcs' ),
+				'select_bg' => __( 'Select Background' , 'linchpin-mcs' ),
+				'select_block_bg' => __( 'Select Block Background', 'linchpin-mcs' ),
 			),
 		);
-
-
 
 		wp_localize_script( 'admin-mcs', 'mcs_data', $localized_data );
 	}
