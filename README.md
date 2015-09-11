@@ -25,6 +25,7 @@ function add_multiple_content_sections( $the_content ) {
 
 ###0.4.0
 * Updates to frontend templates for offset and custom css classes
+* Added abillty to disable notification messages
 
 ###0.3.9
 * Added some style cleanup of the column resizer

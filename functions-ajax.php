@@ -26,6 +26,7 @@ class Multiple_Content_Sections_AJAX {
 		add_action( 'wp_ajax_mcs_update_block_order',    array( $this, 'mcs_update_block_order' ) );
 		add_action( 'wp_ajax_mcs_update_block_widths',   array( $this, 'mcs_update_block_widths' ) );
 		add_action( 'wp_ajax_mcs_update_featured_image', array( $this, 'mcs_update_featured_image' ) );
+		add_action( 'wp_ajax_mcs_dismiss_notification',  array( $this, 'mcs_dismiss_notification' ) );
 	}
 
 	/**
@@ -283,6 +284,30 @@ class Multiple_Content_Sections_AJAX {
 		update_post_meta( $post_id, '_thumbnail_id', $image_id );
 
 		wp_die( 1 );
+	}
+
+	/**
+	 * Add the ability to store when notifications are dismissed
+	 */
+	function mcs_dismiss_notification() {
+		check_ajax_referer( 'mcs_dismiss_notification_nonce', 'mcs_dismiss_notification_nonce' );
+
+		$user_id = get_current_user_id();
+
+		$notification_type = sanitize_title( $_POST['mcs_notification_type'] );
+
+		$notifications = maybe_unserialize( get_user_option( 'linchpin_mcs_notifications', $user_id ) );
+
+		if ( empty( $notifications ) ) {
+			$notifications = array();
+		}
+
+		$notifications[ $notification_type ] = '1';
+
+		if ( current_user_can( 'edit_posts' ) ) {
+			update_user_meta( $user_id, 'linchpin_mcs_notifications', $notifications );
+			wp_die(1);
+		}
 	}
 }
 

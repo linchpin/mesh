@@ -15,9 +15,12 @@ if ( ! $section_blocks = (int) $templates[ $selected_template ]['blocks'] ) {
 }
 
 if ( (int) $section_blocks > 1 ) : ?>
-<div class="reordering notice notice-warning is-dismissible below-h2">
-	<p><?php esc_html_e( 'Reorder your content blocks by dragging and dropping.', 'linchpin-mcs' ); ?></p>
-</div>
+
+	<?php if ( empty( $mcs_notifications['reorder'] ) ) : ?>
+		<div class="reordering notice notice-warning is-dismissible below-h2" data-type="reorder">
+			<p><?php esc_html_e( 'Reorder your content blocks by dragging and dropping.', 'linchpin-mcs' ); ?></p>
+		</div>
+	<?php endif; ?>
 <?php
 
 $default_block_columns = 12 / $section_blocks;

@@ -183,17 +183,22 @@ class Multiple_Content_Sections {
 				<span class="spinner mcs-reorder-spinner"></span>
 			</h2>
 
-			<div id="mcs-description" class="description notice notice-info is-dismissible below-h2">
-				<p>
-				<?php if ( empty( $content_sections ) ) : ?>
-					<?php esc_html_e( 'You haven\'t added any content sections yet! It\'s easy click ', 'linchpin-mcs' ); ?>
-					<a href="#" class="button mcs-section-add dashicons-before dashicons-plus"><?php esc_html_e( 'Add Section', 'lincpin-mcs' ); ?></a>
-					<?php esc_html_e( ' to get started', 'linchpin-mcs' ); ?>
-				<?php else : ?>
-					<?php esc_html_e( 'Multiple content sections allow you to easily segment your page\'s contents into different blocks of markup.', 'linchpin-mcs' ); ?>
+
+			<?php if ( empty( $content_sections ) ) : ?>
+				<div id="mcs-description" class="description notice notice-info below-h2">
+					<p>
+						<?php esc_html_e( 'You haven\'t added any content sections yet! It\'s easy click ', 'linchpin-mcs' ); ?>
+						<a href="#" class="button mcs-section-add dashicons-before dashicons-plus"><?php esc_html_e( 'Add Section', 'lincpin-mcs' ); ?></a>
+						<?php esc_html_e( ' to get started', 'linchpin-mcs' ); ?>
+					</p>
+				</div>
+			<?php else : ?>
+				<?php if ( empty( $mcs_notifications['intro'] ) ) : ?>
+					<div id="mcs-description" class="description notice is-dismissible notice-info below-h2" data-type="intro">
+						<p><?php esc_html_e( 'Multiple content sections allow you to easily segment your page\'s contents into different blocks of markup.', 'linchpin-mcs' ); ?></p>
+					</div>
 				<?php endif; ?>
-				</p>
-			</div>
+			<?php endif; ?>
 
 			<div id="multiple-content-sections-container">
 				<?php foreach ( $content_sections as $key => $section ) : ?>
@@ -490,6 +495,7 @@ class Multiple_Content_Sections {
 			'reorder_section_nonce' => wp_create_nonce( 'mcs_reorder_section_nonce' ),
 			'featured_image_nonce'  => wp_create_nonce( 'mcs_featured_image_nonce' ),
 			'reorder_blocks_nonce'  => wp_create_nonce( 'mcs_reorder_blocks_nonce' ),
+			'dismiss_nonce'         => wp_create_nonce( 'mcs_dismiss_notification_nonce' ),
 			'content_css'           => apply_filters( 'content_css', get_stylesheet_directory_uri() . '/css/editor-style.css' , 'editor_path' ),
 			'labels' => array(
 				'reorder' => __( 'Be sure to save order of your sections once your changes are complete.', 'linchpin-mcs' ),

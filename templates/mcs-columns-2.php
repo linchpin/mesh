@@ -16,20 +16,21 @@
 	<div class="row">
 		<?php $blocks = mcs_get_section_blocks( get_the_ID() ); ?>
 		<?php $i = 1; foreach ( $blocks as $block ) : ?>
-
 			<?php
-				$column_width = get_post_meta( $block->ID, '_mcs_column_width', true );
-				$block_css_class = get_post_meta( $block->ID, '_mcs_css_class',  true );
+			$column_width = get_post_meta( $block->ID, '_mcs_column_width', true );
+			$block_css_class = get_post_meta( $block->ID, '_mcs_css_class',  true );
+			$offset_class = 'medium-' . $column_width;
 
-				if ( 2 == $i && $offset ) :
-			?>
-			<div class="small-12 medium-<?php esc_attr_e( $column_width - $offset ); ?> medium-offset-<?php esc_attr_e( $offset ); ?> columns <?php esc_attr_e( $block_css_class ); ?>">
-			<?php else: ?>
-			<div class="small-12 medium-<?php esc_attr_e( $column_width ); ?> columns <?php esc_attr_e( $block_css_class ); ?>">
-			<?php endif; ?>
+			// Change our column width based on our offset
+			if ( 2 === $i && ! empty( $offset ) ) {
+				$offset_class = 'medium-' . ( $column_width - $offset ) . ' medium-offset-' . $offset;
+			} ?>
+
+			<div class="small-12 <?php esc_attr_e( $offset_class ); ?> columns <?php esc_attr_e( $block_css_class ); ?>">
 				<h2 class="entry-title"><?php the_title(); ?></h2>
 				<?php echo apply_filters( 'the_content', $block->post_content ); ?>
 			</div>
-		<?php $i++; endforeach; ?>
+		<?php $i++;
+		endforeach; ?>
 	</div>
 </section>

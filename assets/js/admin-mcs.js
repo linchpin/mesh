@@ -99,6 +99,7 @@ multiple_content_sections.admin = function ( $ ) {
 
 			multiple_content_sections.admin.setup_slider();
 			multiple_content_sections.admin.setup_drag_drop();
+			multiple_content_sections.admin.setup_notifications( $meta_box_container );
 
 		},
 
@@ -121,6 +122,13 @@ multiple_content_sections.admin = function ( $ ) {
 
 				$button.on( 'click.wp-dismiss-notice', function( event ) {
 					event.preventDefault();
+
+					$.post( ajaxurl, {
+						action                : 'mcs_dismiss_notification',
+						mcs_notification_type : $this.attr('data-type'),
+						_wpnonce     : mcs_data.dismiss_nonce
+					}, function( response ) {});
+
 					$this.fadeTo( 100 , 0, function() {
 						$(this).slideUp( 100, function() {
 							$(this).remove();
@@ -201,7 +209,6 @@ multiple_content_sections.admin = function ( $ ) {
 					is_range = ( blocks > 2 )? true : false,
 					vals = $.parseJSON( $this.attr('data-mcs-columns') ),
 					data = {
-						value: vals[0],
 						range: is_range,
 						min:0,
 						max:12,
@@ -215,6 +222,10 @@ multiple_content_sections.admin = function ( $ ) {
 						change : multiple_content_sections.admin.save_column_widths,
 						slide : multiple_content_sections.admin.change_column_widths
 					};
+
+				if ( vals ) {
+					data.value = vals[0];
+				}
 
 				if( blocks === 3 ) {
 					vals[1] = vals[0] + vals[1]; // add the first 2 columns together
