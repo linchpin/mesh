@@ -39,7 +39,7 @@ $mcs_notifications = get_user_option( 'linchpin_mcs_notifications' );
 			</div>
 		</div>
 		<div class="mcs-section-meta mcs-row">
-			<div class="mcs-columns-3">
+			<div class="mcs-columns-4">
 				<?php if ( empty( $featured_image_id ) ) : ?>
 					<a href="#" class="mcs-featured-image-choose button dashicons-before dashicons-format-image"><?php esc_html_e( 'Set Background Image', 'linchpin-mcs' ); ?></a>
 				<?php else : ?>
@@ -47,7 +47,7 @@ $mcs_notifications = get_user_option( 'linchpin_mcs_notifications' );
 					<a href="#" class="mcs-featured-image-trash button dashicons-before dashicons-trash" data-mcs-section-featured-image="<?php esc_attr_e( $featured_image_id ); ?>"><?php esc_html_e( 'Remove', 'linchpin-mcs' ); ?></a>
 				<?php endif; ?>
 			</div>
-			<div class="mcs-columns-9 text-right">
+			<div class="mcs-columns-8 text-right">
 				<label for="mcs-sections[<?php esc_attr_e( $section->ID ); ?>][template]"><strong><?php esc_html_e( 'Template:', 'linchpin-mcs' ); ?></strong></label>
 
 				<select class="mcs-choose-layout" id="mcs-sections-template-<?php esc_attr_e( $section->ID ); ?>" name="mcs-sections[<?php esc_attr_e( $section->ID ); ?>][template]">
@@ -55,10 +55,6 @@ $mcs_notifications = get_user_option( 'linchpin_mcs_notifications' );
 						<option value="<?php esc_attr_e( $template ); ?>" <?php selected( $selected_template, $template ); ?>><?php esc_html_e( $templates[ $template ]['file'] ); ?></option>
 					<?php endforeach; ?>
 				</select>
-
-				<label for="mcs-sections[<?php esc_attr_e( $section->ID ); ?>][offset]">
-					<strong><?php esc_html_e( 'Offset', 'linchpin-mcs' ); ?></strong> <input type="text" class="mcs-column-offset" name="mcs-sections[<?php esc_attr_e( $section->ID ); ?>][offset]" value="<?php esc_attr_e( $offset ); ?>" maxlength="1" />
-				</label>
 
 				<label for="mcs-sections[<?php esc_attr_e( $section->ID ); ?>][css-class]">
 					<strong><?php esc_html_e( 'CSS Class', 'linchpin-mcs' ); ?></strong> <input type="text" name="mcs-sections[<?php esc_attr_e( $section->ID ); ?>][css_class]" value="<?php esc_attr_e( $css_class ); ?>" />

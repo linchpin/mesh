@@ -27,6 +27,23 @@ module.exports = function(grunt) {
             }
         },
 
+        concat: {
+            options: {
+                separator: ';\n',
+                stripBanners: 'line',
+                sourceMap: true
+            },
+
+            dist: {
+                src: [
+                    'assets/js/admin-mcs-blocks.js',
+                    'assets/js/admin-mcs-core.js'
+                ],
+
+                dest: 'assets/js/admin-mcs.js'
+            }
+        },
+
         watch: {
             grunt: { files: ['Gruntfile.js'] },
 
@@ -37,13 +54,14 @@ module.exports = function(grunt) {
 
             javascript: {
                 files: [
-                    'assets/js/admin-mcs.js'
+                    'assets/js/admin-mcs-blocks.js',
+                    'assets/js/admin-mcs-core.js'
                 ],
-                tasks: ['uglify']
+                tasks: ['concat','uglify']
             }
         }
     });
 
 	grunt.registerTask('build', ['sass']);
-    grunt.registerTask('default', ['uglify', 'watch']);
+    grunt.registerTask('default', ['uglify', 'concat', 'watch']);
 }

@@ -17,8 +17,18 @@
 			$blocks = mcs_get_section_blocks( get_the_ID() );
 		?>
 		<?php foreach ( $blocks as $block ) : ?>
-			<?php $block_css_class = get_post_meta( $block->ID, '_mcs_css_class',  true ); ?>
-			<div class="small-12 medium-<?php esc_attr_e( get_post_meta( $block->ID, '_mcs_column_width', true ) ); ?> columns <?php esc_attr_e( $block_css_class ); ?>">
+			<?php
+			$column_width = get_post_meta( $block->ID, '_mcs_column_width', true );
+			$block_css_class = get_post_meta( $block->ID, '_mcs_css_class',  true );
+			$block_offset = get_post_meta( $block->ID, '_mcs_offset',  true );
+			$offset_class = 'medium-' . $column_width;
+
+			// Change our column width based on our offset.
+			if ( ! empty( $block_offset ) ) {
+				$offset_class = 'medium-' . ( $column_width - $block_offset ) . ' medium-offset-' . $block_offset;
+			}
+			?>
+			<div class="small-12 <?php esc_attr_e( $offset_class ); ?> columns <?php esc_attr_e( $block_css_class ); ?>">
 				<h2 class="entry-title"><?php the_title(); ?></h2>
 				<?php echo apply_filters( 'the_content', $block->post_content ); ?>
 			</div>
