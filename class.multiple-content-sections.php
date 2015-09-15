@@ -283,6 +283,16 @@ class Multiple_Content_Sections {
 				update_post_meta( $section->ID, '_mcs_css_class', $sanitized_css_classes );
 			}
 
+			// Save Title Display
+
+			$title_display = $section_data['title_display'];
+
+			if ( empty( $title_display ) ) {
+				delete_post_meta( $section->ID, '_mcs_title_display' );
+			} else {
+				update_post_meta( $section->ID, '_mcs_title_display', $title_display );
+			}
+
 			// Process the section's blocks.
 			$blocks = array();
 

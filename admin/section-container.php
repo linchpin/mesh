@@ -14,6 +14,8 @@ if ( ! $closed_metaboxes = get_user_option( 'closedpostboxes_page' ) ) {
 
 $mcs_notifications = get_user_option( 'linchpin_mcs_notifications' );
 
+$blocks = mcs_maybe_create_section_blocks( $section );
+
 ?>
 <div class="multiple-content-sections-section multiple-content-sections-postbox postbox<?php if ( in_array( 'mcs-section-' . esc_attr( $section->ID ), $closed_metaboxes ) ) : ?> closed<?php endif; ?>" data-mcs-section-id="<?php esc_attr_e( $section->ID ); ?>" id="mcs-section-<?php esc_attr_e( $section->ID ); ?>">
 	<div class="handlediv" title="Click to toggle">
@@ -59,13 +61,27 @@ $mcs_notifications = get_user_option( 'linchpin_mcs_notifications' );
 				<label for="mcs-sections[<?php esc_attr_e( $section->ID ); ?>][css-class]">
 					<strong><?php esc_html_e( 'CSS Class', 'linchpin-mcs' ); ?></strong> <input type="text" name="mcs-sections[<?php esc_attr_e( $section->ID ); ?>][css_class]" value="<?php esc_attr_e( $css_class ); ?>" />
 				</label>
+
+				<label for="mcs-sections[<?php esc_attr_e( $section->ID ); ?>][title-display]">
+					<strong><?php esc_html_e( 'Title Display', 'linchpin-mcs' ); ?></strong>
+					<select name="mcs-sections[<?php esc_attr_e( $section->ID ); ?>][title_display]" value="<?php esc_attr_e( $title_display ); ?>">
+						<option value="" <?php if ( '' == $title_display ) : ?>selected="selected"<?php endif; ?>> - Select - </option>
+						<option value="none" <?php if ( 'none' == $title_display ) : ?>selected="selected"<?php endif; ?>>Hide Title</option>
+						<?php if ( count( $blocks ) > 1 ) : ?>
+						<option value="top" <?php if ( 'top' == $title_display ) : ?>selected="selected"<?php endif; ?>>Top</option>
+						<?php foreach( $blocks as $block ) : ?>
+						<option value="block-<?php echo $block->menu_order; ?>" <?php if ( 'block-' . $block->menu_order == $title_display ) : ?>selected="selected"<?php endif; ?>>In Block <?php echo $block->menu_order; ?></option>
+						<?php endforeach; ?>
+						<?php endif; ?>
+					</select>
+				</label>
 			</div>
 		</div>
 
 		<div class="mcs-editor-blocks" id="mcs-sections-editor-<?php esc_attr_e( $section->ID ); ?>">
 
 		<?php
-		if ( $blocks = mcs_maybe_create_section_blocks( $section ) ) {
+		if ( $blocks ) {
 
 			include LINCHPIN_MCS___PLUGIN_DIR . 'admin/section-template-reordering.php';
 
