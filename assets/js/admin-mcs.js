@@ -787,7 +787,8 @@ multiple_content_sections.admin = function ( $ ) {
 			$add_button.addClass('disabled');
 			$meta_box_container.addClass('mcs-is-ordering');
 
-			multiple_content_sections.admin.update_notifications( 'reorder', 'warning' );
+			/* This was throwing an error, halting reorder function. */
+			// multiple_content_sections.admin.update_notifications( 'reorder', 'warning' );
 
 			$('.hndle', $meta_box_container ).each(function(){
 				$(this).prepend( $block_click_span.clone() );
