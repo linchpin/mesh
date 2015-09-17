@@ -75,6 +75,13 @@ $blocks = mcs_maybe_create_section_blocks( $section );
 						<?php endif; ?>
 					</select>
 				</label>
+
+				<?php if ( 2 == count( $blocks ) ) : ?>
+				<label for="mcs-section[<?php esc_attr_e( $section->ID ); ?>][push-pull]">
+					<strong><?php esc_html_e( 'Push/Pull Columns', 'linchpin-mcs' ); ?></strong>
+					<input type="checkbox" name="mcs-sections[<?php esc_attr_e( $section->ID ); ?>][push_pull]" value="1" <?php if ( get_post_meta( $section->ID, '_mcs_push_pull', true ) ): ?>checked<?php endif; ?> />
+				</label>
+				<?php endif; ?>
 			</div>
 		</div>
 

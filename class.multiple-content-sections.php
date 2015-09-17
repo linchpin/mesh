@@ -293,6 +293,16 @@ class Multiple_Content_Sections {
 				update_post_meta( $section->ID, '_mcs_title_display', $title_display );
 			}
 
+			// Save Push / Pull
+
+			$push_pull = $section_data['push_pull'];
+
+			if ( empty( $push_pull ) ) {
+				delete_post_meta( $section->ID, '_mcs_push_pull' );
+			} else {
+				update_post_meta( $section->ID, '_mcs_push_pull', $push_pull );
+			}
+
 			// Process the section's blocks.
 			$blocks = array();
 

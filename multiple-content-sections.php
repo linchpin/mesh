@@ -130,9 +130,10 @@ function mcs_add_section_admin_markup( $section, $closed = false ) {
 		$selected_template = 'mcs-columns-1.php';
 	}
 
-	$css_class = get_post_meta( $section->ID, '_mcs_css_class', true );
-	$offset = get_post_meta( $section->ID, '_mcs_offset', true );
+	$css_class     = get_post_meta( $section->ID, '_mcs_css_class', true );
+	$offset        = get_post_meta( $section->ID, '_mcs_offset', true );
 	$title_display = get_post_meta( $section->ID, '_mcs_title_display', true );
+	$push_pull     = get_post_meta( $section->ID, '_mcs_push_pull', true );
 
 	$featured_image_id = get_post_thumbnail_id( $section->ID );
 
