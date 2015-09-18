@@ -14,10 +14,26 @@
 
 <section <?php post_class(); ?> <?php mcs_section_background(); ?>>
 
+	<?php
+		$title_display = get_post_meta( get_the_ID(), '_mcs_title_display', true );
+		$title_displayed = false;
+
+		if ( 'none' == $title_display ) {
+			$title_displayed = true;
+		}
+	?>
+
 
 	<div class="row">
 		<div class="small-12 columns <?php esc_attr_e( $block_css_class ); ?>">
-			<h2 class="entry-title"><?php the_title(); ?></h2>
+			<?php if ( ! $title_displayed ) : ?>
+				<?php if ( empty( $title_display ) || 'top' == $title_display ) : ?>
+				<div class="small-12 columns">
+					<h2 class="entry-title"><?php the_title(); ?></h2>
+				</div>
+				<?php $title_displayed = true; endif; ?>
+			<?php endif; ?>
+
 			<?php
 			if ( $blocks = mcs_get_section_blocks( get_the_ID() ) ) {
 				foreach ( $blocks as $block ) {

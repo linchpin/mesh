@@ -88,6 +88,11 @@
 .mcs-editor-blocks {
 	overflow: hidden;
 	position: relative;
+
+	.wp-editor-area {
+		font-family: Consolas, Monaco, monospace;
+		font-size: 13px;
+	}
 }
 
 .mcs-section-meta {
@@ -120,6 +125,17 @@
 		right: 0;
 		bottom: 50%;
 		left: 0;
+
+		.ui-slider-handle {
+			height: 16px;
+			width: 16px;
+			margin-left: -9px;
+
+			&:before {
+				font-size: 16px;
+				line-height: 18px;
+			}
+		}
 	}
 }
 

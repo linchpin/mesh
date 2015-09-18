@@ -353,7 +353,7 @@ multiple_content_sections.admin = function ( $ ) {
 				.removeClass('notice-info notice-warning notice-success')
 				.addClass('notice-' + type )
 				.find('p')
-				.text( mcs_data.labels[ message ] );
+				.text( mcs_data.strings[ message ] );
 
 			if( ! $description.is(':visible') ) {
 				$description.css({'opacity' : 0 }).show();

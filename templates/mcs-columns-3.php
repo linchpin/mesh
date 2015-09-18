@@ -10,11 +10,29 @@
  * @subpackage Templates
  */
 ?>
-
 <section <?php post_class() ?> <?php mcs_section_background(); ?>>
+
+	<?php
+		$title_display = get_post_meta( get_the_ID(), '_mcs_title_display', true );
+		$title_displayed = false;
+
+		if ( 'none' == $title_display ) {
+			$title_displayed = true;
+		}
+	?>
+
 	<div class="row">
+
+		<?php if ( ! $title_displayed ) : ?>
+			<?php if ( empty( $title_display ) || 'top' == $title_display ) : ?>
+			<div class="small-12 columns">
+				<h2 class="entry-title"><?php the_title(); ?></h2>
+			</div>
+			<?php $title_displayed = true; endif; ?>
+		<?php endif; ?>
+
 		<?php $blocks = mcs_get_section_blocks( get_the_ID() ); ?>
-		<?php foreach ( $blocks as $block ) : ?>
+		<?php $i = 0; foreach ( $blocks as $block ) : ?>
 			<?php
 
 			$column_width = get_post_meta( $block->ID, '_mcs_column_width', true );
@@ -28,9 +46,12 @@
 			} ?>
 
 			<div class="small-12 <?php esc_attr_e( $offset_class ); ?> columns <?php esc_attr_e( $block_css_class ); ?>">
-				<h2 class="entry-title"><?php the_title(); ?></h2>
+				<?php if ( ! $title_displayed && 'block-' . $i == $title_display ) : ?>
+					<h2 class="entry-title"><?php the_title(); ?></h2>
+				<?php $title_displayed = true; endif; ?>
+
 				<?php echo apply_filters( 'the_content', $block->post_content ); ?>
 			</div>
-		<?php endforeach; ?>
+		<?php $i++; endforeach; ?>
 	</div>
 </section>
