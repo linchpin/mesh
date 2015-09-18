@@ -472,7 +472,7 @@ class Multiple_Content_Sections {
 			'featured_image_nonce'  => wp_create_nonce( 'mcs_featured_image_nonce' ),
 			'reorder_blocks_nonce'  => wp_create_nonce( 'mcs_reorder_blocks_nonce' ),
 			'dismiss_nonce'         => wp_create_nonce( 'mcs_dismiss_notification_nonce' ),
-			'content_css'           => apply_filters( 'content_css', get_stylesheet_directory_uri() . '/css/editor-style.css' , 'editor_path' ),
+			'content_css'           => apply_filters( 'content_css', get_stylesheet_directory_uri() . '/css/admin-editor.css' , 'editor_path' ),
 			'strings' => array(
 				'reorder' => __( 'Be sure to save order of your sections once your changes are complete.', 'linchpin-mcs' ),
 				'description' => __( 'Multiple content sections allows you to easily segment your page\'s contents into different blocks of markup.', 'linchpin-mcs' ),
