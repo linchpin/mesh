@@ -314,7 +314,7 @@ multiple_content_sections.blocks = function ( $ ) {
         reorder_blocks : function( $tinymce_editors ) {
             $tinymce_editors.each(function() {
                 var editor_id   = $(this).prop('id'),
-                    editor_data = default_tinymce_settings;
+                    editor_data = multiple_content_sections.admin.get_defaut_tinymce_settings();
 
                 // Reset our editors if we have any
                 if( typeof tinymce.editors !== 'undefined' ) {
