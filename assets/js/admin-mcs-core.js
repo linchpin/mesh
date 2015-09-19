@@ -209,8 +209,8 @@ multiple_content_sections.admin = function ( $ ) {
 					// Loop through all of our edits in the response
 
 					multiple_content_sections.blocks.reorder_blocks( $tinymce_editors );
-					multiple_content_sections.admin.setup_slider();
-					multiple_content_sections.admin.setup_drag_drop();
+					multiple_content_sections.blocks.setup_resize_slider();
+					multiple_content_sections.blocks.setup_drag_drop();
 					multiple_content_sections.admin.setup_notifications( $layout );
 
 					$spinner.removeClass('is-active');

@@ -13,9 +13,7 @@
 if ( ! $section_blocks = (int) $templates[ $selected_template ]['blocks'] ) {
 	$section_blocks = 1;
 }
-
 if ( (int) $section_blocks > 1 ) : ?>
-
 	<?php if ( empty( $mcs_notifications['reorder'] ) ) : ?>
 		<div class="reordering notice notice-warning is-dismissible below-h2" data-type="reorder">
 			<p><?php esc_html_e( 'Reorder your content blocks by dragging and dropping.', 'linchpin-mcs' ); ?></p>
@@ -43,9 +41,7 @@ while ( $block_increment < $section_blocks ) {
 
 	$block_increment++;
 }
-
 endif;
-
 if ( (int) $section_blocks > 1 && (int) $section_blocks < 4 ) : ?>
 	<div class="wp-slider column-slider" data-mcs-blocks="<?php esc_attr_e( $section_blocks ); ?>" data-mcs-columns="<?php esc_attr_e( wp_json_encode( $block_sizes ) ); ?>"><span class="ui-slider-handle ui-state-default ui-corner-all" tabindex="0"></span></div>
 <?php endif;

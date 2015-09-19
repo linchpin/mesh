@@ -103,10 +103,16 @@ class Multiple_Content_Sections_AJAX {
 		foreach ( $blocks as $block ) {
 			delete_post_meta( $block->ID, '_mcs_column_width' );
 		}
-
+		ob_start();
 		include( LINCHPIN_MCS___PLUGIN_DIR . '/admin/section-template-reordering.php' );
 		include( LINCHPIN_MCS___PLUGIN_DIR . '/admin/section-blocks.php' );
 		include( LINCHPIN_MCS___PLUGIN_DIR . '/admin/section-template-warnings.php' );
+		$output = ob_get_contents();
+		
+		ob_end_clean();
+
+		// Clean whitespace before output to prevent jQuery ajax warnings.
+		echo trim( $output );
 
 		wp_die();
 	}
