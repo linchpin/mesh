@@ -35,9 +35,22 @@ multiple_content_sections.blocks = function ( $ ) {
 
             $( ".mcs-editor-blocks .block" ).draggable({
                 'appendTo' : 'body',
-                helper : 'original',
+                helper : function( event ) {
+
+                    var $this = $(this),
+                        _width = $this.width()
+                        $clone = $this.clone().width(_width).css('background','#fff');
+                        $clone.find('*').removeAttr('id');
+
+                    return $clone;
+                },
                 revert: true,
-                handle: '.mcs-row-title'
+                zIndex: 1000,
+                handle: '.mcs-row-title',
+                iframeFix:true,
+                start:function( ui, event, helper ){
+
+                }
             });
 
             $( ".block" )
@@ -308,7 +321,7 @@ multiple_content_sections.blocks = function ( $ ) {
         reorder_blocks : function( $tinymce_editors ) {
             $tinymce_editors.each(function() {
                 var editor_id   = $(this).prop('id'),
-                    editor_data = default_tinymce_settings;
+                    editor_data = multiple_content_sections.admin.get_defaut_tinymce_settings();
 
                 // Reset our editors if we have any
                 if( typeof tinymce.editors !== 'undefined' ) {
@@ -541,6 +554,15 @@ multiple_content_sections.admin = function ( $ ) {
 	return {
 
 		/**
+		 * Get the default settings
+		 * 
+		 * @returns {{theme: string, skin: string, language: string, formats: {alignleft: *[], aligncenter: *[], alignright: *[], strikethrough: {inline: string}}, relative_urls: boolean, remove_script_host: boolean, convert_urls: boolean, browser_spellcheck: boolean, fix_list_elements: boolean, entities: string, entity_encoding: string, keep_styles: boolean, cache_suffix: string, preview_styles: string, end_container_on_empty_block: boolean, wpeditimage_disable_captions: boolean, wpeditimage_html5_captions: boolean, plugins: string, content_css: string, resize: boolean, menubar: boolean, wpautop: boolean, indent: boolean, toolbar1: string, toolbar2: string, toolbar3: string, toolbar4: string, tabfocus_elements: string, body_class: string, wp_autoresize_on: boolean, add_unload_trigger: boolean}}
+         */
+		get_defaut_tinymce_settings : function() {
+			return default_tinymce_settings;
+		},
+
+		/**
 		 * Initialize our script
 		 */
 		init : function() {
@@ -675,7 +697,7 @@ multiple_content_sections.admin = function ( $ ) {
 
 					// Loop through all of our edits in the response
 
-					multiple_content_sections.admin.reorder_blocks( $tinymce_editors );
+					multiple_content_sections.blocks.reorder_blocks( $tinymce_editors );
 					multiple_content_sections.admin.setup_slider();
 					multiple_content_sections.admin.setup_drag_drop();
 					multiple_content_sections.admin.setup_notifications( $layout );
@@ -727,7 +749,7 @@ multiple_content_sections.admin = function ( $ ) {
 						$reorder_button.removeClass( 'disabled' );
 					}
 
-					multiple_content_sections.admin.reorder_blocks( $tinymce_editors );
+					multiple_content_sections.blocks.reorder_blocks( $tinymce_editors );
 
 				} else {
 					$spinner.removeClass('is-active');
