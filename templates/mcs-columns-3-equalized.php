@@ -14,6 +14,7 @@
 
 	<?php
 		$title_display = get_post_meta( get_the_ID(), '_mcs_title_display', true );
+		$collapse_column_spacing = get_post_meta( get_the_ID(), '_mcs_collapse', true );
 		$title_displayed = false;
 
 		if ( 'none' == $title_display ) {
@@ -45,7 +46,7 @@
 				$offset_class = 'medium-' . ( $column_width - $block_offset ) . ' medium-offset-' . $block_offset;
 			} ?>
 
-			<div class="small-12 <?php esc_attr_e( $offset_class ); ?> columns <?php esc_attr_e( $block_css_class ); ?>" data-equalizer-watch>
+			<div class="small-12 <?php if ( ! empty( $collapse_column_spacing ) ) : ?>collapse <?php endif; ?><?php esc_attr_e( $offset_class ); ?> columns <?php esc_attr_e( $block_css_class ); ?>" data-equalizer-watch>
 				<?php if ( ! $title_displayed && 'block-' . $i == $title_display ) : ?>
 					<h2 class="entry-title"><?php the_title(); ?></h2>
 				<?php $title_displayed = true; endif; ?>

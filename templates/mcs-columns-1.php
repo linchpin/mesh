@@ -15,15 +15,16 @@
 <section <?php post_class(); ?> <?php mcs_section_background(); ?>>
 
 	<?php
-		$title_display = get_post_meta( get_the_ID(), '_mcs_title_display', true );
+		$title_display           = get_post_meta( get_the_ID(), '_mcs_title_display', true );
+		$collapse_column_spacing = get_post_meta( get_the_ID(), '_mcs_collapse', true );
+
 		$title_displayed = false;
 
 		if ( 'none' == $title_display ) {
 			$title_displayed = true;
 		}
 	?>
-
-	<div class="row">
+	<div class="row <?php if ( ! empty( $collapse_column_spacing ) ) : ?>collapse<?php endif; ?>">
 		<?php if ( ! $title_displayed ) : ?>
 			<?php if ( empty( $title_display ) || 'top' == $title_display ) : ?>
 			<div class="small-12 columns">

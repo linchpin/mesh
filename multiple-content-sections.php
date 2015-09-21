@@ -134,6 +134,7 @@ function mcs_add_section_admin_markup( $section, $closed = false ) {
 	$offset        = get_post_meta( $section->ID, '_mcs_offset', true );
 	$title_display = get_post_meta( $section->ID, '_mcs_title_display', true );
 	$push_pull     = get_post_meta( $section->ID, '_mcs_push_pull', true );
+	$collapse      = get_post_meta( $section->ID, '_mcs_collapse', true ); // Collapse our column spacing.
 
 	$featured_image_id = get_post_thumbnail_id( $section->ID );
 

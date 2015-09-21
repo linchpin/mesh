@@ -284,7 +284,6 @@ class Multiple_Content_Sections {
 			}
 
 			// Save Title Display
-
 			$title_display = $section_data['title_display'];
 
 			if ( empty( $title_display ) ) {
@@ -293,14 +292,22 @@ class Multiple_Content_Sections {
 				update_post_meta( $section->ID, '_mcs_title_display', $title_display );
 			}
 
-			// Save Push / Pull
-
+			// Save Push / Pull.
 			$push_pull = $section_data['push_pull'];
 
 			if ( empty( $push_pull ) ) {
 				delete_post_meta( $section->ID, '_mcs_push_pull' );
 			} else {
 				update_post_meta( $section->ID, '_mcs_push_pull', $push_pull );
+			}
+
+			// Save Push / Pull.
+			$collapse = $section_data['collapse'];
+
+			if ( empty( $collapse ) ) {
+				delete_post_meta( $section->ID, '_mcs_collapse' );
+			} else {
+				update_post_meta( $section->ID, '_mcs_collapse', $collapse );
 			}
 
 			// Process the section's blocks.
@@ -494,7 +501,7 @@ class Multiple_Content_Sections {
 	 * Enqueue admin styles
 	 *
 	 * @access public
-	 * @return void
+	 * @return void$push_pull     = get_post_meta( $section->ID, '_mcs_push_pull', true );
 	 */
 	function admin_enqueue_styles() {
 		wp_enqueue_style( 'admin-mcs', plugins_url( 'assets/css/admin-mcs.css', __FILE__ ), array(), '1.0' );

@@ -35,9 +35,7 @@
 		if ( empty( $block_columns ) || 1 === $templates[ $selected_template ]['blocks'] ) {
 			$block_columns = $default_block_columns;
 		}
-
 		$block_css_class = get_post_meta( $blocks[ $block_increment ]->ID, '_mcs_css_class', true );
-
 		$block_offset = get_post_meta( $blocks[ $block_increment ]->ID, '_mcs_offset', true );
 
 		?>

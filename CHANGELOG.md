@@ -1,5 +1,10 @@
 ##Change Log For Multiple Content Sections
 
+## [0.4.2.2] - 2015-09-21
+
+### Added
+Can now collapse column spacing using an option
+
 ## [0.4.2.1] - 2015-09-21
 
 ### Fixed
