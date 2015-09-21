@@ -1,12 +1,17 @@
 ##Change Log For Multiple Content Sections
 
+## [0.4.2.1] - 2015-09-21
+
+### Fixed
+- Made sure that blocks can not have the same `post_name`
+
 ## [0.4.2] - 2015-09-21
 
 ### Added
 - Checking if a page is private before displaying it to the end user.
 - Created logic to display the title of a section either above the blocks or within a specific block
 
-## Fixed
+### Fixed
 - JavaScript references we're broken after JavaScript was separated.
 
 ## [0.4.1] - 2015-09-12
