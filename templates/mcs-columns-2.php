@@ -45,11 +45,11 @@
 			$block_offset = get_post_meta( $block->ID, '_mcs_offset',  true );
 
 			if ( isset( $push_pull ) ) {
-				if ( 0 == $i ) {
+				if ( 0 === $i ) {
 					$push_pull_class = 'push-' . ( 12 - $column_width );
 				}
 
-				if ( 1 == $i ) {
+				if ( 1 === $i ) {
 					$push_pull_class = 'pull-' . ( 12 - $column_width );
 				}
 			}
@@ -62,14 +62,13 @@
 			} ?>
 
 			<div class="small-12 <?php esc_attr_e( $offset_class ); ?> columns <?php esc_attr_e( $block_css_class ); ?> <?php if ( $push_pull ) { echo $push_pull_class; } ?>">
-				<?php if ( ! $title_displayed && 'block-' . $i == $title_display ) : ?>
+				<?php if ( ! $title_displayed && 'block-' . $i === $title_display ) : ?>
 					<?php if ( ! isset( $push_pull ) ) : ?>
 					<h2 class="entry-title"><?php the_title(); ?></h2>
-					<?php else: ?>
+					<?php else : ?>
 					<h2 class="entry-title hide-for-small"><?php the_title(); ?></h2>
 					<?php endif; ?>
 				<?php $title_displayed = true; endif; ?>
-
 				<?php echo apply_filters( 'the_content', $block->post_content ); ?>
 			</div>
 		<?php $i++;
