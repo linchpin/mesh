@@ -31,6 +31,12 @@
 			endif; ?>
 		<?php endif; ?>
 
+		<?php if ( ! $title_displayed && isset( $push_pull ) ) : ?>
+			<div class="small-12 columns show-for-small">
+				<h2 class="entry-title"><?php the_title(); ?></h2>
+			</div>
+		<?php endif; ?>
+
 		<?php $blocks = mcs_get_section_blocks( get_the_ID() ); ?>
 		<?php $i = 0; foreach ( $blocks as $block ) : ?>
 			<?php
@@ -57,7 +63,11 @@
 
 			<div class="small-12 <?php esc_attr_e( $offset_class ); ?> columns <?php esc_attr_e( $block_css_class ); ?> <?php if ( $push_pull ) { echo $push_pull_class; } ?>">
 				<?php if ( ! $title_displayed && 'block-' . $i == $title_display ) : ?>
+					<?php if ( ! isset( $push_pull ) ) : ?>
 					<h2 class="entry-title"><?php the_title(); ?></h2>
+					<?php else: ?>
+					<h2 class="entry-title hide-for-small"><?php the_title(); ?></h2>
+					<?php endif; ?>
 				<?php $title_displayed = true; endif; ?>
 
 				<?php echo apply_filters( 'the_content', $block->post_content ); ?>
