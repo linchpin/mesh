@@ -16,7 +16,6 @@
 
 	<?php
 		$title_display = get_post_meta( get_the_ID(), '_mcs_title_display', true );
-		$block_css_class = get_post_meta( $block->ID, '_mcs_css_class',  true );
 		$title_displayed = false;
 
 		if ( 'none' == $title_display ) {
@@ -32,15 +31,13 @@
 			</div>
 			<?php $title_displayed = true; endif; ?>
 		<?php endif; ?>
-
-		<div class="small-12 columns <?php esc_attr_e( $block_css_class ); ?>">
-			<?php
-			if ( $blocks = mcs_get_section_blocks( get_the_ID() ) ) {
-				foreach ( $blocks as $block ) {
-					echo apply_filters( 'the_content', $block->post_content );
-				}
-			}
-			?>
-		</div>
+		<?php if ( $blocks = mcs_get_section_blocks( get_the_ID() ) ) :
+			foreach ( $blocks as $block ) : ?>
+				<?php $block_css_class = get_post_meta( $block->ID, '_mcs_css_class', true ); ?>
+				<div class="small-12 columns <?php esc_attr_e( $block_css_class ); ?>">
+					<?php echo apply_filters( 'the_content', $block->post_content ); ?>
+				</div>
+			<?php endforeach;
+		endif; ?>
 	</div>
 </section>
