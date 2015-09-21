@@ -11,7 +11,6 @@
  */
 ?>
 <section <?php post_class() ?> <?php mcs_section_background(); ?>>
-
 	<?php
 		$push_pull       = get_post_meta( get_the_ID(), '_mcs_push_pull', true );
 
@@ -22,15 +21,14 @@
 			$title_displayed = true;
 		}
 	?>
-
 	<div class="row">
-
 		<?php if ( ! $title_displayed ) : ?>
-			<?php if ( empty( $title_display ) || 'top' == $title_display ) : ?>
+			<?php if ( empty( $title_display ) || 'top' === $title_display ) : ?>
 			<div class="small-12 columns">
 				<h2 class="entry-title"><?php the_title(); ?></h2>
 			</div>
-			<?php $title_displayed = true; endif; ?>
+			<?php $title_displayed = true;
+			endif; ?>
 		<?php endif; ?>
 
 		<?php if ( ! $title_displayed && isset( $push_pull ) ) : ?>

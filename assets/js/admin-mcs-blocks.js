@@ -41,9 +41,22 @@ multiple_content_sections.blocks = function ( $ ) {
 
             $( ".mcs-editor-blocks .block" ).draggable({
                 'appendTo' : 'body',
-                helper : 'original',
+                helper : function( event ) {
+
+                    var $this = $(this),
+                        _width = $this.width()
+                        $clone = $this.clone().width(_width).css('background','#fff');
+                        $clone.find('*').removeAttr('id');
+
+                    return $clone;
+                },
                 revert: true,
-                handle: '.mcs-row-title'
+                zIndex: 1000,
+                handle: '.mcs-row-title',
+                iframeFix:true,
+                start:function( ui, event, helper ){
+
+                }
             });
 
             $( ".block" )

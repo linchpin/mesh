@@ -35,9 +35,22 @@ multiple_content_sections.blocks = function ( $ ) {
 
             $( ".mcs-editor-blocks .block" ).draggable({
                 'appendTo' : 'body',
-                helper : 'original',
+                helper : function( event ) {
+
+                    var $this = $(this),
+                        _width = $this.width()
+                        $clone = $this.clone().width(_width).css('background','#fff');
+                        $clone.find('*').removeAttr('id');
+
+                    return $clone;
+                },
                 revert: true,
-                handle: '.mcs-row-title'
+                zIndex: 1000,
+                handle: '.mcs-row-title',
+                iframeFix:true,
+                start:function( ui, event, helper ){
+
+                }
             });
 
             $( ".block" )
@@ -684,9 +697,9 @@ multiple_content_sections.admin = function ( $ ) {
 
 					// Loop through all of our edits in the response
 
-					multiple_content_sections.admin.reorder_blocks( $tinymce_editors );
-					multiple_content_sections.admin.setup_slider();
-					multiple_content_sections.admin.setup_drag_drop();
+					multiple_content_sections.blocks.reorder_blocks( $tinymce_editors );
+					multiple_content_sections.blocks.setup_resize_slider();
+					multiple_content_sections.blocks.setup_drag_drop();
 					multiple_content_sections.admin.setup_notifications( $layout );
 
 					$spinner.removeClass('is-active');
@@ -736,7 +749,7 @@ multiple_content_sections.admin = function ( $ ) {
 						$reorder_button.removeClass( 'disabled' );
 					}
 
-					multiple_content_sections.admin.reorder_blocks( $tinymce_editors );
+					multiple_content_sections.blocks.reorder_blocks( $tinymce_editors );
 
 				} else {
 					$spinner.removeClass('is-active');
