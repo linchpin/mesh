@@ -3,7 +3,7 @@
  * Plugin Name: Multiple Content Sections
  * Plugin URI: http://linchpin.agency
  * Description: Add multiple content sections on a post by post basis.
- * Version: 1.4.1
+ * Version: 1.4.2
  * Author: Linchpin
  * Author URI: http://linchpin.agency
  * License: GPLv2 or later
@@ -16,7 +16,7 @@ if ( ! function_exists( 'add_action' ) ) {
 	exit;
 }
 
-define( 'LINCHPIN_MCS_VERSION', '1.4.1' );
+define( 'LINCHPIN_MCS_VERSION', '1.4.2' );
 define( 'LINCHPIN_MCS_PLUGIN_NAME', 'Multiple Content Sections' );
 define( 'LINCHPIN_MCS__MINIMUM_WP_VERSION', '4.0' );
 define( 'LINCHPIN_MCS___PLUGIN_URL', plugin_dir_url( __FILE__ ) );
@@ -231,6 +231,11 @@ function mcs_display_sections( $post_id = '' ) {
 		$post_id = $post->ID;
 	}
 
+	// Do not show blocks if parent post is private
+	if ( 'private' === get_post_status( $post_id ) && ! current_user_can( 'edit_posts' ) ) {
+		return;
+	}
+
 	if ( ! $mcs_section_query = mcs_get_sections( $post_id, 'query' ) ) {
 		return;
 	}
@@ -320,8 +325,34 @@ function mcs_section_background( $post_id = 0, $echo = true ) {
 	}
 
 	if ( has_post_thumbnail() ) {
-		$image = wp_get_attachment_image_src( get_post_thumbnail_id( get_the_ID() ), 'full' );
-		$style = 'data-interchange="[' . esc_url( $image[0] ) . ', (default)], [' . esc_url( $image[0] ) . ', (large)]" style="background-image: url(' . esc_url( $image[0] ) . ');"';
+
+		$backgrounds = array();
+
+		if ( $default_image_url = wp_get_attachment_image_src( get_post_thumbnail_id( $post_id ), 'large' ) ) {
+			if ( ! empty( $default_image_url[0] ) && '' !==  $default_image_url[0] ) {
+				$backgrounds[] = '[' . $default_image_url[0] . ', (default)]';
+
+				if ( $medium_image_url = wp_get_attachment_image_src( get_post_thumbnail_id( $post_id ), 'medium' ) ) {
+					if ( ! empty( $medium_image_url[0] ) && '' !== $medium_image_url[0] ) {
+						$backgrounds[] = '[' . $medium_image_url[0] . ', (medium)]';
+					}
+				}
+
+				if ( $large_image_url = wp_get_attachment_image_src( get_post_thumbnail_id( $post_id ), 'full' ) ) {
+					if ( ! empty( $large_image_url[0] ) && '' !== $large_image_url[0] ) {
+						$backgrounds[] = '[' . $large_image_url[0] . ', (large)]';
+					}
+				}
+			}
+		}
+
+		if ( empty( $backgrounds ) ) {
+			return array();
+		}
+
+		if ( '' !== $default_image_url[0] ) {
+			$style = 'data-interchange="' . implode( ', ', $backgrounds ) . '" style="background-image: url(' . esc_url( $default_image_url[0] ) . ');"';
+		}
 	}
 
 	if ( empty( $style ) ) {

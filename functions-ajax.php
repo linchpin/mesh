@@ -108,7 +108,7 @@ class Multiple_Content_Sections_AJAX {
 		include( LINCHPIN_MCS___PLUGIN_DIR . '/admin/section-blocks.php' );
 		include( LINCHPIN_MCS___PLUGIN_DIR . '/admin/section-template-warnings.php' );
 		$output = ob_get_contents();
-		
+
 		ob_end_clean();
 
 		// Clean whitespace before output to prevent jQuery ajax warnings.

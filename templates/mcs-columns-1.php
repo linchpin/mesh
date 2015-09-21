@@ -16,13 +16,13 @@
 
 	<?php
 		$title_display = get_post_meta( get_the_ID(), '_mcs_title_display', true );
+		$block_css_class = get_post_meta( $block->ID, '_mcs_css_class',  true );
 		$title_displayed = false;
 
 		if ( 'none' == $title_display ) {
 			$title_displayed = true;
 		}
 	?>
-
 
 	<div class="row">
 		<div class="small-12 columns <?php esc_attr_e( $block_css_class ); ?>">
