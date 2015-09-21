@@ -22,7 +22,7 @@
 		}
 	?>
 
-	<div class="row">
+	<div class="row <?php if ( ! empty( $collapse_column_spacing ) ) : ?>collapse <?php endif; ?>">
 
 		<?php if ( ! $title_displayed ) : ?>
 			<?php if ( empty( $title_display ) || 'top' == $title_display ) : ?>
@@ -46,7 +46,7 @@
 				$offset_class = 'medium-' . ( $column_width - $block_offset ) . ' medium-offset-' . $block_offset;
 			} ?>
 
-			<div class="small-12 <?php if ( ! empty( $collapse_column_spacing ) ) : ?>collapse <?php endif; ?><?php esc_attr_e( $offset_class ); ?> columns <?php esc_attr_e( $block_css_class ); ?>">
+			<div class="small-12 <?php esc_attr_e( $offset_class ); ?> columns <?php esc_attr_e( $block_css_class ); ?>">
 				<?php if ( ! $title_displayed && 'block-' . $i == $title_display ) : ?>
 					<h2 class="entry-title"><?php the_title(); ?></h2>
 				<?php $title_displayed = true; endif; ?>

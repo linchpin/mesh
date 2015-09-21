@@ -22,7 +22,7 @@
 		}
 	?>
 
-	<div class="row" data-equalizer>
+	<div class="row <?php if ( ! empty( $collapse_column_spacing ) ) : ?>collapse<?php endif; ?>" data-equalizer>
 
 		<?php if ( ! $title_displayed ) : ?>
 			<?php if ( empty( $title_display ) || 'top' == $title_display ) : ?>

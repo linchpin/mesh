@@ -22,7 +22,7 @@
 			$title_displayed = true;
 		}
 	?>
-	<div class="row">
+	<div class="row <?php if ( ! empty( $collapse_column_spacing ) ) : ?>collapse<?php endif; ?>">
 		<?php if ( ! $title_displayed ) : ?>
 			<?php if ( empty( $title_display ) || 'top' === $title_display ) : ?>
 			<div class="small-12 columns">
