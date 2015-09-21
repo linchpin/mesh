@@ -308,7 +308,7 @@ multiple_content_sections.blocks = function ( $ ) {
         reorder_blocks : function( $tinymce_editors ) {
             $tinymce_editors.each(function() {
                 var editor_id   = $(this).prop('id'),
-                    editor_data = default_tinymce_settings;
+                    editor_data = multiple_content_sections.admin.get_defaut_tinymce_settings();
 
                 // Reset our editors if we have any
                 if( typeof tinymce.editors !== 'undefined' ) {
@@ -539,6 +539,15 @@ multiple_content_sections.admin = function ( $ ) {
 		};
 
 	return {
+
+		/**
+		 * Get the default settings
+		 * 
+		 * @returns {{theme: string, skin: string, language: string, formats: {alignleft: *[], aligncenter: *[], alignright: *[], strikethrough: {inline: string}}, relative_urls: boolean, remove_script_host: boolean, convert_urls: boolean, browser_spellcheck: boolean, fix_list_elements: boolean, entities: string, entity_encoding: string, keep_styles: boolean, cache_suffix: string, preview_styles: string, end_container_on_empty_block: boolean, wpeditimage_disable_captions: boolean, wpeditimage_html5_captions: boolean, plugins: string, content_css: string, resize: boolean, menubar: boolean, wpautop: boolean, indent: boolean, toolbar1: string, toolbar2: string, toolbar3: string, toolbar4: string, tabfocus_elements: string, body_class: string, wp_autoresize_on: boolean, add_unload_trigger: boolean}}
+         */
+		get_defaut_tinymce_settings : function() {
+			return default_tinymce_settings;
+		},
 
 		/**
 		 * Initialize our script

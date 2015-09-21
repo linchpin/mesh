@@ -25,15 +25,15 @@
 
 
 	<div class="row">
-		<div class="small-12 columns <?php esc_attr_e( $block_css_class ); ?>">
-			<?php if ( ! $title_displayed ) : ?>
-				<?php if ( empty( $title_display ) || 'top' == $title_display ) : ?>
-				<div class="small-12 columns">
-					<h2 class="entry-title"><?php the_title(); ?></h2>
-				</div>
-				<?php $title_displayed = true; endif; ?>
-			<?php endif; ?>
+		<?php if ( ! $title_displayed ) : ?>
+			<?php if ( empty( $title_display ) || 'top' == $title_display ) : ?>
+			<div class="small-12 columns">
+				<h2 class="entry-title"><?php the_title(); ?></h2>
+			</div>
+			<?php $title_displayed = true; endif; ?>
+		<?php endif; ?>
 
+		<div class="small-12 columns <?php esc_attr_e( $block_css_class ); ?>">
 			<?php
 			if ( $blocks = mcs_get_section_blocks( get_the_ID() ) ) {
 				foreach ( $blocks as $block ) {
