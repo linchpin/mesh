@@ -1,9 +1,14 @@
 ##Change Log For Multiple Content Sections
 
+## [0.4.3.1] - 2015-09-21
+
+### Fixed
+- Made sure that a block always matches the parent section when being created (publish|draft) etc
+
 ## [0.4.3] - 2015-09-21
 
 ### Added
-Can now collapse column spacing using an option
+- Can now collapse column spacing using an option
 
 ## [0.4.2.1] - 2015-09-21
 

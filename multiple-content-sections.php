@@ -3,7 +3,7 @@
  * Plugin Name: Multiple Content Sections
  * Plugin URI: http://linchpin.agency
  * Description: Add multiple content sections on a post by post basis.
- * Version: 1.4.3
+ * Version: 1.4.3.1
  * Author: Linchpin
  * Author URI: http://linchpin.agency
  * License: GPLv2 or later
@@ -294,15 +294,17 @@ function mcs_maybe_create_section_blocks( $section, $number_needed = 0 ) {
 
 	$blocks = mcs_get_section_blocks( $section->ID, $section->post_status );
 	$count = count( $blocks );
+	$start = $count;
 
 	// Create enough blocks to fill the section.
 	while ( $count < $number_needed ) {
 		wp_insert_post( array(
 			'post_type'   => 'mcs_section',
-			'post_title'  => 'Block ' . $count,
+			'post_status' => $section->post_status,
+			'post_title'  => 'Block ' . ( $start + $count ),
 			'post_parent' => $section->ID,
-			'menu_order'  => $count,
-			'post_name'   => 'section-' . $section->ID . '-block-' . $count . '-' . uniqid(),
+			'menu_order'  => ( $start + $count ),
+			'post_name'   => 'section-' . $section->ID . '-block-' . ( $start + $count ),
 		) );
 
 		++$count;
