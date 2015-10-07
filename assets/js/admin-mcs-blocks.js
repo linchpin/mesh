@@ -54,9 +54,7 @@ multiple_content_sections.blocks = function ( $ ) {
                 zIndex: 1000,
                 handle: '.mcs-row-title',
                 iframeFix:true,
-                start:function( ui, event, helper ){
-
-                }
+                start:function( ui, event, helper ){}
             });
 
             $( ".block" )
@@ -326,8 +324,7 @@ multiple_content_sections.blocks = function ( $ ) {
          */
         reorder_blocks : function( $tinymce_editors ) {
             $tinymce_editors.each(function() {
-                var editor_id   = $(this).prop('id'),
-                    editor_data = multiple_content_sections.admin.get_defaut_tinymce_settings();
+                var editor_id   = $(this).prop('id');
 
                 // Reset our editors if we have any
                 if( typeof tinymce.editors !== 'undefined' ) {
@@ -336,9 +333,20 @@ multiple_content_sections.blocks = function ( $ ) {
                     }
                 }
 
+                var tempTinyMCE = tinyMCEPreInit;
+                    tempTinyMCE.selector = '#' + editor_id;
+
                 // Setup our editors
-                editor_data.selector = '#' + editor_id;
-                tinymce.init( editor_data );
+                if ( typeof tinymce !== 'undefined' ) {
+                    if ( ! tinyMCEPreInit.qtInit.hasOwnProperty( editor_id ) ) {
+                        tinymce.init( tempTinyMCE );
+                    }
+                }
+
+                if ( typeof quicktags !== 'undefined' ) {
+                    quicktags( tinyMCEPreInit.qtInit['content'] );
+                }
+
             });
         },
 

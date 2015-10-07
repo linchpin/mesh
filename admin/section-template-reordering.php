@@ -32,7 +32,9 @@ while ( $block_increment < $section_blocks ) {
 
 	$block_columns = get_post_meta( $blocks[ $block_increment ]->ID, '_mcs_column_width', true );
 
-	// Get how wide our column is. If no width is defined fall back to the default for that template. If no blocks are defined fall back to a 12 column
+	// Get how wide our column is.
+	// If no width is defined fall back to the default for that template.
+	// If no blocks are defined fall back to a 12 column.
 	if ( empty( $block_columns ) || 1 === $templates[ $selected_template ]['blocks'] ) {
 		$block_columns = $default_block_columns;
 	}

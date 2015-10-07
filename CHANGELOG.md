@@ -1,5 +1,18 @@
 ##Change Log For Multiple Content Sections
 
+## [Unreleased] - 2015-10-7
+
+### Added
+- Allowing the ability to toggle kitchen sink items. @todo Not displaying yet
+
+## [0.4.4] - 2015-10-3
+
+### Fixed
+- Temporary fix for toggling styles between html/text view of blocks
+
+### Updated
+- Separated section controls into a different template for more flexible expansion later on.
+
 ## [0.4.3.1] - 2015-09-21
 
 ### Fixed

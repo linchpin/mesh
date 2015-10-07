@@ -48,9 +48,7 @@ multiple_content_sections.blocks = function ( $ ) {
                 zIndex: 1000,
                 handle: '.mcs-row-title',
                 iframeFix:true,
-                start:function( ui, event, helper ){
-
-                }
+                start:function( ui, event, helper ){}
             });
 
             $( ".block" )
@@ -320,8 +318,7 @@ multiple_content_sections.blocks = function ( $ ) {
          */
         reorder_blocks : function( $tinymce_editors ) {
             $tinymce_editors.each(function() {
-                var editor_id   = $(this).prop('id'),
-                    editor_data = multiple_content_sections.admin.get_defaut_tinymce_settings();
+                var editor_id   = $(this).prop('id');
 
                 // Reset our editors if we have any
                 if( typeof tinymce.editors !== 'undefined' ) {
@@ -330,9 +327,20 @@ multiple_content_sections.blocks = function ( $ ) {
                     }
                 }
 
+                var tempTinyMCE = tinyMCEPreInit;
+                    tempTinyMCE.selector = '#' + editor_id;
+
                 // Setup our editors
-                editor_data.selector = '#' + editor_id;
-                tinymce.init( editor_data );
+                if ( typeof tinymce !== 'undefined' ) {
+                    if ( ! tinyMCEPreInit.qtInit.hasOwnProperty( editor_id ) ) {
+                        tinymce.init( tempTinyMCE );
+                    }
+                }
+
+                if ( typeof quicktags !== 'undefined' ) {
+                    quicktags( tinyMCEPreInit.qtInit['content'] );
+                }
+
             });
         },
 
@@ -502,86 +510,36 @@ multiple_content_sections.admin = function ( $ ) {
 		$description        = $('#mcs-description'),
 		media_frames        = [],
 
-		// since 1.3.5
-		default_tinymce_settings  = {
-			theme: "modern",
-			skin: "lightgray",
-			language: "en",
-			formats: {
-				alignleft: [{
-					selector: "p,h1,h2,h3,h4,h5,h6,td,th,div,ul,ol,li",
-					styles: {textAlign: "left"}
-				}, {selector: "img,table,dl.wp-caption", classes: "alignleft"}],
-				aligncenter: [{
-					selector: "p,h1,h2,h3,h4,h5,h6,td,th,div,ul,ol,li",
-					styles: {textAlign: "center"}
-				}, {selector: "img,table,dl.wp-caption", classes: "aligncenter"}],
-				alignright: [{
-					selector: "p,h1,h2,h3,h4,h5,h6,td,th,div,ul,ol,li",
-					styles: {textAlign: "right"}
-				}, {selector: "img,table,dl.wp-caption", classes: "alignright"}],
-				strikethrough: {inline: "del"}
-			},
-			relative_urls: false,
-			remove_script_host: false,
-			convert_urls: false,
-			browser_spellcheck: true,
-			fix_list_elements: true,
-			entities: "38,amp,60,lt,62,gt",
-			entity_encoding: "raw",
-			keep_styles: false,
-			cache_suffix: "wp-mce-4203-20150730",
-			preview_styles: "font-family font-size font-weight font-style text-decoration text-transform",
-			end_container_on_empty_block: true,
-			wpeditimage_disable_captions: false,
-			wpeditimage_html5_captions: true,
-			plugins: "charmap,colorpicker,hr,lists,media,paste,tabfocus,textcolor,fullscreen,wordpress,wpeditimage,wpemoji,wpgallery,wplink,wpdialogs,wptextpattern,wpview",
-			content_css: mcs_data.site_uri + "/wp-includes/css/dashicons.css?ver=4.3," + mcs_data.site_uri + "/wp-includes/js/tinymce/skins/wordpress/wp-content.css?ver=4.3,https://fonts.googleapis.com/css?family=Noto+Sans%3A400italic%2C700italic%2C400%2C700%7CNoto+Serif%3A400italic%2C700italic%2C400%2C700%7CInconsolata%3A400%2C700&subset=latin%2Clatin-ext," + mcs_data.content_css,
-			resize: false,
-			menubar: false,
-			wpautop: true,
-			indent: false,
-			toolbar1: "bold,italic,bullist,numlist,blockquote,hr,alignleft,aligncenter,alignright,link,unlink",
-			toolbar2: "",
-			toolbar3: "",
-			toolbar4: "",
-			tabfocus_elements: "content-html,save-post",
-			body_class: "content post-type-page post-status-publish locale-en-us",
-			wp_autoresize_on: false,
-			add_unload_trigger: false
-		};
+		// Container References for Admin(self) / Block
+		self,
+		blocks;
 
 	return {
-
-		/**
-		 * Get the default settings
-		 * 
-		 * @returns {{theme: string, skin: string, language: string, formats: {alignleft: *[], aligncenter: *[], alignright: *[], strikethrough: {inline: string}}, relative_urls: boolean, remove_script_host: boolean, convert_urls: boolean, browser_spellcheck: boolean, fix_list_elements: boolean, entities: string, entity_encoding: string, keep_styles: boolean, cache_suffix: string, preview_styles: string, end_container_on_empty_block: boolean, wpeditimage_disable_captions: boolean, wpeditimage_html5_captions: boolean, plugins: string, content_css: string, resize: boolean, menubar: boolean, wpautop: boolean, indent: boolean, toolbar1: string, toolbar2: string, toolbar3: string, toolbar4: string, tabfocus_elements: string, body_class: string, wp_autoresize_on: boolean, add_unload_trigger: boolean}}
-         */
-		get_defaut_tinymce_settings : function() {
-			return default_tinymce_settings;
-		},
 
 		/**
 		 * Initialize our script
 		 */
 		init : function() {
+
+			self = multiple_content_sections.admin;
+			blocks = multiple_content_sections.blocks;
+
 			$body
-				.on('click', '.mcs-section-add', multiple_content_sections.admin.add_section )
-				.on('click', '.mcs-section-remove', multiple_content_sections.admin.remove_section )
-				.on('click', '.mcs-section-reorder', multiple_content_sections.admin.reorder_sections )
-				.on('click', '.mcs-save-order', multiple_content_sections.admin.save_section_order )
+				.on('click', '.mcs-section-add', self.add_section )
+				.on('click', '.mcs-section-remove', self.remove_section )
+				.on('click', '.mcs-section-reorder', self.reorder_sections )
+				.on('click', '.mcs-save-order', self.save_section_order )
 
-				.on('change', '.mcs-choose-layout', multiple_content_sections.admin.choose_layout )
+				.on('change', '.mcs-choose-layout', self.choose_layout )
 
-				.on('click', '.mcs-featured-image-choose', multiple_content_sections.admin.choose_background )
-				.on('click.OpenMediaManager', '.mcs-featured-image-choose', multiple_content_sections.admin.choose_background )
+				.on('click', '.mcs-featured-image-choose', self.choose_background )
+				.on('click.OpenMediaManager', '.mcs-featured-image-choose', self.choose_background )
 
-				.on('click', '.mcs-featured-image-trash', multiple_content_sections.admin.remove_background )
+				.on('click', '.mcs-featured-image-trash', self.remove_background )
 
-				.on('click', '.mcs-section-expand', multiple_content_sections.admin.expand_all_sections )
+				.on('click', '.mcs-section-expand', self.expand_all_sections )
 
-				.on('keyup', '.mcs-section-title', multiple_content_sections.admin.change_section_title );
+				.on('keyup', '.mcs-section-title', self.change_section_title );
 
 			var $sections = $( '.multiple-content-sections-section' );
 
@@ -592,7 +550,7 @@ multiple_content_sections.admin = function ( $ ) {
 			// Setup our controls for Blocks
 			multiple_content_sections.blocks.init();
 
-			multiple_content_sections.admin.setup_notifications( $meta_box_container );
+			self.setup_notifications( $meta_box_container );
 
 		},
 
@@ -700,7 +658,7 @@ multiple_content_sections.admin = function ( $ ) {
 					multiple_content_sections.blocks.reorder_blocks( $tinymce_editors );
 					multiple_content_sections.blocks.setup_resize_slider();
 					multiple_content_sections.blocks.setup_drag_drop();
-					multiple_content_sections.admin.setup_notifications( $layout );
+					self.setup_notifications( $layout );
 
 					$spinner.removeClass('is-active');
 
@@ -738,7 +696,7 @@ multiple_content_sections.admin = function ( $ ) {
 			}, function( response ){
 				if ( response ) {
 					var $response        = $( response ),
-						$tinymce_editors = $response.find('.wp-editor-area');
+						$tinymce_editors = $response.find('.wp-editor-area' );
 
 					$section_container.append( $response );
 					$spinner.removeClass('is-active');
@@ -778,7 +736,8 @@ multiple_content_sections.admin = function ( $ ) {
 					$postbox.fadeOut( 400, function(){
 						$postbox.remove();
 
-						$postboxes = $('.multiple-content-sections-section', $meta_box_container);
+						var $postboxes = $('.multiple-content-sections-section', $meta_box_container);
+
 						if ( $postboxes.length <= 1 ) {
 							$reorder_button.addClass( 'disabled' );
 						}
@@ -809,13 +768,13 @@ multiple_content_sections.admin = function ( $ ) {
 			$add_button.addClass('disabled');
 			$meta_box_container.addClass('mcs-is-ordering');
 
-			multiple_content_sections.admin.update_notifications( 'reorder', 'warning' );
+			self.update_notifications( 'reorder', 'warning' );
 
 			$('.hndle', $meta_box_container ).each(function(){
 				$(this).prepend( $block_click_span.clone() );
 			});
 
-			$('.mcs-block-click').on('click', multiple_content_sections.admin.block_click );
+			$('.mcs-block-click').on('click', self.block_click );
 
 			$this.text('Save Order').addClass('mcs-save-order button-primary').removeClass('mcs-section-reorder');
 
@@ -824,7 +783,7 @@ multiple_content_sections.admin = function ( $ ) {
 			});
 
 			$section_container.sortable({
-				update: multiple_content_sections.admin.save_section_order_sortable
+				update : self.save_section_order_sortable
 			});
 		},
 
@@ -861,7 +820,7 @@ multiple_content_sections.admin = function ( $ ) {
 				section_ids.push( $(this).attr('data-mcs-section-id') );
 			});
 
-			response = multiple_content_sections.admin.save_section_ajax( section_ids, $reorder_spinner );
+			response = self.save_section_ajax( section_ids, $reorder_spinner );
 		},
 
 		save_section_order : function(event) {
@@ -889,7 +848,7 @@ multiple_content_sections.admin = function ( $ ) {
 				$description.removeClass('notice-warning').addClass('notice-info').find('p').text( mcs_data.strings.description );
 			}
 
-			multiple_content_sections.admin.save_section_ajax( section_ids, $reorder_spinner );
+			self.save_section_ajax( section_ids, $reorder_spinner );
 
 			$section_container.sortable('destroy');
 		},
@@ -1009,7 +968,7 @@ multiple_content_sections.admin = function ( $ ) {
 						'data-mcs-section-featured-image': '',
 						'href' : '#',
 						'class' : 'mcs-featured-image-trash'
-					}).text( mcs_data.strings.remove_image).prepend( $trash_icon );
+					}).text( mcs_data.strings.remove_image ).prepend( $trash_icon );
 
 				$.post( ajaxurl, {
 	                'action': 'mcs_update_featured_image',

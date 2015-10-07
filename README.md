@@ -20,3 +20,7 @@ function add_multiple_content_sections( $the_content ) {
     return $the_content;
 } ?>
 `
+
+## Available Filters
+
+* `apply_filters( 'content_css', get_stylesheet_directory_uri() . '/css/admin-editor.css' , 'editor_path' ),`

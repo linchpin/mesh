@@ -51,7 +51,8 @@ class Multiple_Content_Sections {
 
 		add_action( 'init', array( $this, 'init' ) );
 
-		add_action( 'edit_page_form', array( $this, 'edit_page_form' ) );
+		add_action( 'edit_page_form', array( $this, 'edit_page_form' ) );     // Pages
+		add_action( 'edit_form_advanced', array( $this, 'edit_page_form' ) ); // Other Post Types.
 
 		add_action( 'save_post', array( $this, 'save_post' ), 10, 2 );
 
@@ -66,8 +67,95 @@ class Multiple_Content_Sections {
 			include_once( 'functions-ajax.php' );
 		}
 
+		// Adjust TinyMCE and Media Buttons
 		add_action( 'media_buttons', array( $this, 'add_media_buttons' ), 999, 1 );
+		add_filter( 'tiny_mce_before_init', array( $this, 'tiny_mce_before_init' ) );
 
+		// Add Screen Options.
+		add_action( 'admin_menu', array( $this, 'admin_menu' ) );
+	}
+
+	/**
+	 * Add Screen Options to the Plugin
+	 */
+	function admin_menu() {
+		add_action( 'load-post.php', array( $this, 'add_screen_options' ) );
+		add_filter( 'set-screen-option', array( $this, 'set_screen_option' ), 10, 3 );
+	}
+
+	/**
+	 * Save our custom display options
+	 *
+	 * @since 1.4.4
+	 *
+	 * @param $status save status
+	 * @param $option option we're saving
+	 * @param $value  value to save
+	 *
+	 * @return mixed
+	 */
+	function set_screen_option( $status, $option, $value ) {
+		if ( 'linchpin_mcs_section_kitchensink' === $option ) {
+			return $value;
+		}
+	}
+
+	/**
+	 * Add Toggleable Options to show or hide controls
+	 *
+	 * @since 1.4.4
+	 */
+	function add_screen_options() {
+		$screen = get_current_screen();
+
+		if ( ! is_object( $screen ) || $screen->id !== 'page' ) {
+			return;
+		}
+
+		$args = array(
+			'label'   => __( 'Show Extra MCS Section Controls?', LINCHPIN_MCS_PLUGIN_NAME ),
+			'default' => 0,
+			'option'  => 'linchpin_mcs_section_kitchensink',
+		);
+
+		add_screen_option( 'linchpin_mcs_section_kitchensink', $args );
+	}
+
+	/**
+	 * Update our tiny MCE w/ our own settings
+	 * @param $in
+	 */
+	function tiny_mce_before_init( $in ) {
+
+		global $post;
+
+		// Exclude the default editor from our customizations.
+		if ( '#content' === $in['selector'] ) {
+			return $in;
+		}
+
+		$in['remove_linebreaks'] = false;
+		$in['gecko_spellcheck'] = false;
+		$in['keep_styles'] = true;
+		$in['accessibility_focus'] = true;
+		$in['tabfocus_elements'] = 'major-publishing-actions';
+		$in['media_strict'] = false;
+		$in['paste_remove_styles'] = false;
+		$in['paste_remove_spans'] = false;
+		$in['paste_strip_class_attributes'] = 'none';
+		$in['paste_text_use_dialog'] = true;
+		$in['wpeditimage_disable_captions'] = true;
+		$in['plugins'] = 'tabfocus,paste,media,wordpress,wpgallery,wplink';
+		$in['content_css'] = get_template_directory_uri() . '/editor-style.css';
+		$in['wpautop'] = true;
+		$in['apply_source_formatting'] = false;
+		$in['block_formats'] = "Paragraph=p; Heading 3=h3; Heading 4=h4";
+		$in['toolbar1'] = 'bold,italic,strikethrough,bullist,numlist,blockquote,hr,alignleft,aligncenter,alignright,link,unlink,spellchecker ';
+		$in['toolbar2'] = 'formatselect,underline,alignjustify,forecolor,pastetext,removeformat,charmap,outdent,indent,undo,redo,wp_help ';
+		$in['toolbar3'] = '';
+		$in['toolbar4'] = '';
+
+		return $in;
 	}
 
 	/**
@@ -141,6 +229,8 @@ class Multiple_Content_Sections {
 	 *
 	 * @access public
 	 *
+	 * @todo Add the ability to select which post can have Multple Content Sections
+	 *
 	 * @param object $post WordPress Post Object.
 	 *
 	 * @return void
@@ -154,7 +244,7 @@ class Multiple_Content_Sections {
 
 			<h2 class="mcs-section-controls-container">
 				<?php esc_html_e( 'Multiple Content Sections', 'linchpin-mcs' ); ?>
-				<?php include LINCHPIN_MCS___PLUGIN_DIR .'admin/section-controls.php'; ?>
+				<?php include LINCHPIN_MCS___PLUGIN_DIR .'admin/controls.php'; ?>
 				<span class="spinner mcs-reorder-spinner"></span>
 			</h2>
 
@@ -181,7 +271,7 @@ class Multiple_Content_Sections {
 			</div>
 
 			<div id="multiple-content-sections-footer">
-				<?php include LINCHPIN_MCS___PLUGIN_DIR . 'admin/section-controls.php'; ?>
+				<?php include LINCHPIN_MCS___PLUGIN_DIR . 'admin/controls.php'; ?>
 			</div>
 		</div>
 		<?php
