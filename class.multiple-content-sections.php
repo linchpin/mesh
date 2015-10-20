@@ -535,8 +535,6 @@ class Multiple_Content_Sections {
 	 * @return array
 	 */
 	function post_class( $classes ) {
-		$classes[] = 'mcs-section';
-
 		if ( $custom_class = get_post_meta( get_the_ID(), '_mcs_css_class', true ) ) {
 			$classes[] = esc_attr( $custom_class );
 		}
