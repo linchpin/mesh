@@ -270,7 +270,7 @@ class Multiple_Content_Sections_AJAX {
 	function mcs_update_featured_image() {
 		check_ajax_referer( 'mcs_featured_image_nonce', 'mcs_featured_image_nonce' );
 
-		$post_id = (int) $_POST['mcs_section_id'];
+		$post_id  = (int) $_POST['mcs_section_id'];
 		$image_id = (int) $_POST['mcs_image_id'];
 
 		if ( 'mcs_section' !== get_post_type( $post_id ) ) {
