@@ -50,6 +50,10 @@
 			</select>
 		</label>
 
+		<label for="mcs-sections[<?php esc_attr_e( $section->ID ); ?>][lp-equal]">
+			<strong><?php esc_html_e( 'LP Equal', 'linchpin-mcs' ); ?></strong> <input type="text" name="mcs-sections[<?php esc_attr_e( $section->ID ); ?>][lp_equal]" value="<?php esc_attr_e( $lp_equal ); ?>" />
+		</label>
+
 		<label for="mcs-section[<?php esc_attr_e( $section->ID ); ?>][collapse]">
 			<strong><?php esc_html_e( 'Collapse Column Padding', 'linchpin-mcs' ); ?></strong>
 			<input type="checkbox" name="mcs-sections[<?php esc_attr_e( $section->ID ); ?>][collapse]" value="1" <?php if ( get_post_meta( $section->ID, '_mcs_collapse', true ) ): ?>checked<?php endif; ?> />
