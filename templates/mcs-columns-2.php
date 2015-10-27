@@ -14,6 +14,7 @@
 	<?php
 		$push_pull       = get_post_meta( get_the_ID(), '_mcs_push_pull', true );
 		$collapse_column_spacing = get_post_meta( get_the_ID(), '_mcs_collapse', true );
+		$lp_equal = get_post_meta( get_the_ID(), '_mcs_lp_equal', true );
 
 		$title_display   = get_post_meta( get_the_ID(), '_mcs_title_display', true );
 		$title_displayed = false;
@@ -22,7 +23,7 @@
 			$title_displayed = true;
 		}
 	?>
-	<div class="row <?php if ( ! empty( $collapse_column_spacing ) ) : ?>collapse<?php endif; ?>">
+	<div class="row <?php if ( ! empty( $collapse_column_spacing ) ) : ?>collapse<?php endif; ?>"<?php if ( ! empty( $lp_equal ) ) : ?> <?php echo $lp_equal; ?><?php endif; ?>>
 		<?php if ( ! $title_displayed ) : ?>
 			<?php if ( empty( $title_display ) || 'top' === $title_display ) : ?>
 			<div class="small-12 columns">

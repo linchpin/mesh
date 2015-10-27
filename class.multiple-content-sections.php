@@ -373,6 +373,15 @@ class Multiple_Content_Sections {
 				update_post_meta( $section->ID, '_mcs_css_class', $sanitized_css_classes );
 			}
 
+			// Save LP Equal.
+			$lp_equal = sanitize_text_field( $section_data['lp_equal'] );
+
+			if ( empty( $lp_equal ) ) {
+				delete_post_meta( $section->ID, '_mcs_lp_equal' );
+			} else {
+				update_post_meta( $section->ID, '_mcs_lp_equal', $lp_equal );
+			}
+
 			// Save Title Display
 			$title_display = $section_data['title_display'];
 
