@@ -4,15 +4,15 @@
  * @since 1.4.1
  */
 
-if( typeof(multiple_content_sections) == 'undefined' ) {
-    multiple_content_sections = {};
-}
+
+var multiple_content_sections = multiple_content_sections || {};
 
 multiple_content_sections.blocks = function ( $ ) {
 
     var $body = $('body'),
         // Instance of our block controller
-        self;
+        self,
+        admin;
 
     return {
 
@@ -22,6 +22,7 @@ multiple_content_sections.blocks = function ( $ ) {
         init : function() {
 
             self = multiple_content_sections.blocks;
+            admin = multiple_content_sections.admin;
 
             $body
                 .on('click', '.mcs-block-featured-image-trash', self.remove_background )
@@ -44,7 +45,7 @@ multiple_content_sections.blocks = function ( $ ) {
                 helper : function( event ) {
 
                     var $this = $(this),
-                        _width = $this.width()
+                        _width = $this.width();
                         $clone = $this.clone().width(_width).css('background','#fff');
                         $clone.find('*').removeAttr('id');
 
@@ -405,17 +406,19 @@ multiple_content_sections.blocks = function ( $ ) {
                 frame_id      = 'mcs-background-select-' + section_id,
                 current_image = $button.attr('data-mcs-block-featured-image');
 
+            admin.media_frames = admin.media_frames || [];
+
             // If the frame already exists, re-open it.
-            if ( media_frames[ frame_id ] ) {
-                media_frames[ frame_id ].uploader.uploader.param( 'mcs_upload', 'true' );
-                media_frames[ frame_id ].open();
+            if ( admin.media_frames[ frame_id ] ) {
+                admin.media_frames[ frame_id ].uploader.uploader.param( 'mcs_upload', 'true' );
+                admin.media_frames[ frame_id ].open();
                 return;
             }
 
             /**
              * The media frame doesn't exist let, so let's create it with some options.
              */
-            media_frames[ frame_id ] = wp.media.frames.media_frames = wp.media({
+            admin.media_frames[ frame_id ] = wp.media.frames.media_frames = wp.media({
                 className: 'media-frame mcs-media-frame',
                 frame: 'select',
                 multiple: false,
@@ -425,16 +428,16 @@ multiple_content_sections.blocks = function ( $ ) {
                 }
             });
 
-            media_frames[ frame_id ].on('open', function(){
+            admin.media_frames[ frame_id ].on('open', function(){
                 // Grab our attachment selection and construct a JSON representation of the model.
-                var selection = media_frames[ frame_id ].state().get('selection');
+                var selection = admin.media_frames[ frame_id ].state().get('selection');
 
                 selection.add( wp.media.attachment( current_image ) );
             });
 
-            media_frames[ frame_id ].on('select', function(){
+            admin.media_frames[ frame_id ].on('select', function(){
                 // Grab our attachment selection and construct a JSON representation of the model.
-                var media_attachment = media_frames[ frame_id ].state().get('selection').first().toJSON(),
+                var media_attachment = admin.media_frames[ frame_id ].state().get('selection').first().toJSON(),
                     $edit_icon = $( '<span />', {
                         'class' : 'dashicons dashicons-edit'
                     }),
@@ -466,7 +469,7 @@ multiple_content_sections.blocks = function ( $ ) {
             });
 
             // Now that everything has been set, let's open up the frame.
-            media_frames[ frame_id ].open();
+            admin.media_frames[ frame_id ].open();
         },
 
         /**

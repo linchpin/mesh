@@ -51,7 +51,7 @@ multiple_content_sections.admin = function ( $ ) {
 			}
 
 			// Setup our controls for Blocks
-			multiple_content_sections.blocks.init();
+			blocks.init();
 
 			self.setup_notifications( $meta_box_container );
 
@@ -158,9 +158,10 @@ multiple_content_sections.admin = function ( $ ) {
 
 					// Loop through all of our edits in the response
 
-					multiple_content_sections.blocks.reorder_blocks( $tinymce_editors );
-					multiple_content_sections.blocks.setup_resize_slider();
-					multiple_content_sections.blocks.setup_drag_drop();
+					blocks.reorder_blocks( $tinymce_editors );
+					blocks.setup_resize_slider();
+					blocks.setup_drag_drop();
+
 					self.setup_notifications( $layout );
 
 					$spinner.removeClass('is-active');
@@ -210,7 +211,7 @@ multiple_content_sections.admin = function ( $ ) {
 						$reorder_button.removeClass( 'disabled' );
 					}
 
-					multiple_content_sections.blocks.reorder_blocks( $tinymce_editors );
+					blocks.reorder_blocks( $tinymce_editors );
 
 				} else {
 					$spinner.removeClass('is-active');

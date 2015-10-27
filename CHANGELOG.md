@@ -5,6 +5,11 @@
 ### Added
 - Allowing the ability to toggle kitchen sink items. @todo Not displaying yet
 
+## [0.4.5] - 2015-10-27
+
+### Fixed
+- Blocks had issues selecting a background once the blocks code was separated out.
+
 ## [0.4.4] - 2015-10-3
 
 ### Fixed
