@@ -7,6 +7,10 @@
 
 
 // 01. Global View
+#mcs-container {
+	margin-bottom: $base * 2;
+}
+
 .mcs-main-ua-row {
 	padding: {
 		bottom: $base;
