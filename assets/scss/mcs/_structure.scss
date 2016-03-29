@@ -1,4 +1,34 @@
-#mcs-container {
+/**
+ *
+ * 01. Global View
+ * 02. Initial View (No sections added)
+ *
+ **/
+
+
+// 01. Global View
+.mcs-main-ua-row {
+	padding: {
+		bottom: $base;
+		top: $base;
+	};
+
+	.lead {
+		margin: 0;
+	}
+}
+
+
+// 02. Initial View
+#mcs-description {
+	padding: {
+		bottom: $base * 2;
+		top: $base * 2;
+	};
+}
+
+
+/*#mcs-container {
 	.spinner {
 		margin: 0px 10px 0;
 	}
@@ -180,4 +210,4 @@
 
 .mcs-column-offset {
 	width:20px;
-}
+}*/

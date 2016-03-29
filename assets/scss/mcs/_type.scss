@@ -1,0 +1,60 @@
+/**
+ *
+ * 01. Alignment
+ * 02. Buttons
+ * 03. Helper Classes
+ *
+ **/
+
+// We want all styles in the context of the MCS container, as to not overwrite any
+// WordPress Core styles or custom editor styles inserted by theme devs.
+#mcs-container {
+	// 01. Alignment
+	.text-left {
+		text-align: left;
+	}
+
+	.text-center {
+		text-align: center;
+	}
+
+	.text-right {
+		text-align: right;
+	}
+
+	.left {
+		float: left;
+	}
+
+	.right {
+		float: right;
+	}
+
+
+	// 02. Buttons
+	.button {
+		&.primary {
+			background-color: $primary;
+			border-color: $primary-dark;
+			color: $light-grey;
+
+			&:hover {
+				background-color: $primary-light;
+			}
+		}
+
+		&.dashicons-before:before {
+			vertical-align: middle;
+		}
+	}
+
+	// Helper Classes
+	p.lead,
+	.lead > p {
+		font-size: 18px;
+	}
+
+	.clearfix {
+		@include clearfix;
+	}
+}

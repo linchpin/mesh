@@ -1,5 +1,21 @@
-$blue: #009fd4;
+/**
+ *
+ * 01. Dimensions
+ * 02. Colors
+ *
+ **/
 
-$dark-grey: #ccc;
-$grey: #dedede;
+
+// 01. Dimensions
+$base: 16px;
+
+
+// 02. Colors
+$blue:       #009fd4;
+$dark-grey:  #ccc;
+$grey:       #dedede;
 $light-grey: #f5f5f5;
+
+$primary:       $blue;
+$primary-light: scale-color( $primary, $lightness: 8% );
+$primary-dark:  scale-color( $primary, $lightness: -8% );
