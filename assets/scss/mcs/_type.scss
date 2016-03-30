@@ -57,4 +57,27 @@
 	.clearfix {
 		@include clearfix;
 	}
+
+	.inline-block-list {
+		list-style: none;
+		margin: 0;
+
+		&.space-left {
+			> li + li {
+				margin-left: $base * .5;
+			}
+		}
+
+		&.space-right {
+			> li + li {
+				margin-left: $base * .5;
+			}
+		}
+
+		> li {
+			display: inline-block;
+			margin: 0;
+			vertical-align: middle;
+		}
+	}
 }

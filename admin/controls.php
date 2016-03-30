@@ -9,6 +9,9 @@
  */
 ?>
 
-<a href="#" class="page-title-action mcs-section-reorder<?php if ( empty( $content_sections ) ) : ?> disabled<?php endif; ?>"><?php esc_html_e( 'Reorder Sections', 'lincpin-mcs' ); ?></a>
-<a href="#" class="page-title-action mcs-section-expand<?php if ( empty( $content_sections ) ) : ?> disabled<?php endif; ?>"><?php esc_html_e( 'Expand All', 'lincpin-mcs' ); ?></a>
-<a href="#" class="page-title-action mcs-section-add dashicons-before dashicons-plus"><?php esc_html_e( 'Add Section', 'lincpin-mcs' ); ?></a>
+<ul class="inline-block-list space-left">
+	<li><span class="spinner mcs-reorder-spinner"></span></li>
+	<li><a href="#" class="mcs-section-reorder"><?php esc_html_e( 'Reorder Sections', 'lincpin-mcs' ); ?></a></li>
+	<li><a href="#" class="mcs-section-expand"><?php esc_html_e( 'Expand All', 'lincpin-mcs' ); ?></a></li>
+	<li><a href="#" class="button primary mcs-section-add dashicons-before dashicons-plus"><?php esc_html_e( 'Add Section', 'lincpin-mcs' ); ?></a></li>
+</ul>

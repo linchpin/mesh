@@ -244,25 +244,29 @@ class Multiple_Content_Sections {
 
 			<?php if ( empty( $content_sections ) ) : ?>
 				<div class="notice below-h2 mcs-row mcs-main-ua-row">
-					<div class="mcs-columns-6 columns">
-						<p class="lead"><?php esc_html_e( 'Multiple Content Sections', 'linchpin-mcs' ); ?></p>
+					<div class="mcs-columns-3 columns">
+						<p class="title"><?php esc_html_e( 'Multiple Content Sections', 'linchpin-mcs' ); ?></p>
 					</div>
 
-					<div class="mcs-columns-6 columns text-right">
+					<div class="mcs-columns-9 columns text-right">
 						<a href="#" class="button primary mcs-section-add dashicons-before dashicons-plus"><?php esc_html_e( 'Add Section', 'lincpin-mcs' ); ?></a>
 					</div>
 				</div>
 			<?php else : ?>
-				<h2 class="mcs-section-controls-container">
-					<?php esc_html_e( 'Multiple Content Sections', 'linchpin-mcs' ); ?>
-					<?php include LINCHPIN_MCS___PLUGIN_DIR .'admin/controls.php'; ?>
-					<span class="spinner mcs-reorder-spinner"></span>
-				</h2>
+				<div class="notice below-h2 mcs-row mcs-main-ua-row">
+					<div class="mcs-columns-3 columns">
+						<p class="title"><?php esc_html_e( 'Multiple Content Sections', 'linchpin-mcs' ); ?></p>
+					</div>
+
+					<div class="mcs-columns-9 columns text-right">
+						<?php include LINCHPIN_MCS___PLUGIN_DIR .'admin/controls.php'; ?>
+					</div>
+				</div>
 
 			<?php endif; ?>
 
 			<?php if ( empty( $content_sections ) ) : ?>
-				<div id="mcs-description" class="description notice below-h2 text-center lead">
+				<div id="mcs-description" class="description notice below-h2 text-center lead empty-sections-message">
 					<p><?php esc_html_e( 'You have no additional Content Sections yet.', 'linchpin-mcs' ); ?></p>
 					<p><?php esc_html_e( 'Get started by clicking', 'linchpin-mcs' ); ?></p>
 					<p><a href="#" class="button primary mcs-section-add dashicons-before dashicons-plus"><?php esc_html_e( 'Add Section', 'lincpin-mcs' ); ?></a></p>

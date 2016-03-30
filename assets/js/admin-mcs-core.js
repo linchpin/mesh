@@ -11,6 +11,7 @@ multiple_content_sections.admin = function ( $ ) {
 		$meta_box_container = $('#mcs-container'),
 		$section_container  = $('#multiple-content-sections-container'),
 		$description        = $('#mcs-description'),
+		$empty_message      = $('.empty-sections-message'),
 		media_frames        = [],
 
 		// Container References for Admin(self) / Block
@@ -204,6 +205,10 @@ multiple_content_sections.admin = function ( $ ) {
 
 					$section_container.append( $response );
 					$spinner.removeClass('is-active');
+
+					if ( $('.empty-sections-message').length ) {
+						$('.empty-sections-message').fadeOut('fast');
+					}
 
 					var $postboxes = $('.multiple-content-sections-section', $meta_box_container );
 

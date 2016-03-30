@@ -18,13 +18,19 @@ $blocks = mcs_maybe_create_section_blocks( $section );
 
 ?>
 <div class="multiple-content-sections-section multiple-content-sections-postbox postbox<?php if ( in_array( 'mcs-section-' . esc_attr( $section->ID ), $closed_metaboxes ) ) : ?> closed<?php endif; ?>" data-mcs-section-id="<?php esc_attr_e( $section->ID ); ?>" id="mcs-section-<?php esc_attr_e( $section->ID ); ?>">
-	<div class="handlediv" title="Click to toggle">
-		<br>
-	</div>
-	<h3 class="hndle mcs-row">
-		<span class="handle-title"><?php esc_html_e( $section->post_title ); ?></span><span class="spinner"></span>
 
-		<div class="mcs-right">
+	<div class="mcs-row mcs-title-row">
+		<div class="mcs-columns-4">
+			<div class="msc-title-editor left">
+				<input type="text" name="mcs-sections[<?php esc_attr_e( $section->ID ); ?>][post_title]" class="mcs-section-title widefat left" value="<?php esc_attr_e( $section->post_title ); ?>" />
+				<span class="close-title-edit left"><?php _e( 'Done', 'linchpin-mcs' ); ?></span>
+				<span class="handle-title"><?php esc_html_e( $section->post_title ); ?></span>
+			</div>
+
+			<span class="spinner left"></span>
+		</div>
+
+		<div class="mcs-columns-6 text-right right">
 			<div id="section-status-select-<?php esc_attr_e( $section->ID ); ?>-container">
 				<label for="section-status-select-<?php esc_attr_e( $section->ID ); ?>"><strong><?php esc_html_e( 'Status:', 'linchpin-mcs' ); ?></strong></label>
 				<select class="mcs-block-propagation" id="section-status-select-<?php esc_attr_e( $section->ID ); ?>" name="mcs-sections[<?php esc_attr_e( $section->ID ); ?>][post_status]">
@@ -33,7 +39,10 @@ $blocks = mcs_maybe_create_section_blocks( $section );
 				</select>
 			</div>
 		</div>
-	</h3>
+	</div>
+
+	<span class="handlediv text-center"></span>
+
 	<div class="inside">
 
 		<?php include LINCHPIN_MCS___PLUGIN_DIR . 'admin/section-controls.php'; ?>

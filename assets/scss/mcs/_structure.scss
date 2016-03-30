@@ -32,6 +32,94 @@
 }
 
 
+// 03. Admin Blocks
+.multiple-content-sections-section {
+	.handlediv {
+		font-size: 20px;
+		height: $input_height;
+		line-height: $input_height;
+		width: 26px;
+
+		position: absolute;
+		right: 12px;
+		top: 8px;
+
+		@include dashicons( '\f142' );
+	}
+
+	&.closed .handlediv {
+		@include dashicons( '\f140' );
+	}
+}
+
+.mcs-title-row {
+	padding: 8px 50px 8px 12px;
+}
+
+.msc-title-editor {
+	position: relative;
+
+	input {
+		opacity: 0;
+		visibility: hidden;
+		width: auto;
+
+		transition: $global_timing opacity $global_easing;
+	}
+
+	.handle-title {
+		-moz-box-sizing: border-box;
+	    box-sizing: border-box;
+	    height: $input_height;
+	    line-height: $input_height - ($input_padding_y * 2);
+	    padding: $input_padding_y $input_padding_x;
+
+	    opacity: 1;
+	    visibility: visible;
+
+		position: absolute;
+	    top: 0;
+	    left: 0;
+
+	    @include dashicons( '\f464', 'after' );
+
+	    transition: $global_timing opacity $global_easing;
+
+	    &:after {
+		    color: $primary;
+		    margin-left: $input_padding_x;
+	    }
+	}
+
+	.close-title-edit {
+		display: none;
+
+		color: $primary;
+		line-height: $input_height;
+		padding: {
+			left: $input_padding_x;
+			right: $input_padding_x;
+		};
+	}
+
+	&.title-input-visible {
+		input {
+			opacity: 1;
+			visibility: visible;
+		}
+
+		.handle-title {
+			opacity: 0;
+			visibility: hidden;
+		}
+
+		.close-title-edit {
+			display: inline-block;
+		}
+	}
+}
+
+
 /*#mcs-container {
 	.spinner {
 		margin: 0px 10px 0;

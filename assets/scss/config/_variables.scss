@@ -2,12 +2,16 @@
  *
  * 01. Dimensions
  * 02. Colors
+ * 03. Animations
  *
  **/
 
 
 // 01. Dimensions
-$base: 16px;
+$base:          16px;
+$input_height:  28px;
+$input_padding_x: 5px;
+$input_padding_y: 3px;
 
 
 // 02. Colors
@@ -19,3 +23,8 @@ $light-grey: #f5f5f5;
 $primary:       $blue;
 $primary-light: scale-color( $primary, $lightness: 8% );
 $primary-dark:  scale-color( $primary, $lightness: -8% );
+
+
+// 03. Animations
+$global_timing: 300ms;
+$global_easing: ease-out;

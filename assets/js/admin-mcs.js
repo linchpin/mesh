@@ -20,7 +20,10 @@ multiple_content_sections.blocks = function ( $ ) {
             $body
                 .on('click', '.mcs-block-featured-image-trash', self.remove_background )
                 .on('click', '.mcs-block-featured-image-choose', self.choose_background )
-                .on('click.OpenMediaManager', '.mcs-block-featured-image-choose', self.choose_background );
+                .on('click.OpenMediaManager', '.mcs-block-featured-image-choose', self.choose_background )
+                .on('click', '.msc-title-editor:not(.title-input-visible)', self.show_title_input )
+                .on('blur', 'input.mcs-section-title', self.hide_title_input )
+                .on('click', '.close-title-edit', self.hide_title_input );
 
             self.setup_resize_slider();
             self.setup_drag_drop();
@@ -492,7 +495,21 @@ multiple_content_sections.blocks = function ( $ ) {
                     $button.remove();
                 }
             });
-        }
+        },
+
+        show_title_input : function ( event ) {
+	        event.preventDefault();
+	        event.stopPropagation();
+
+	        $(this).addClass('title-input-visible');
+		},
+
+		hide_title_input : function ( event ) {
+	        event.preventDefault();
+	        event.stopPropagation();
+
+	        $('.title-input-visible').removeClass('title-input-visible');
+		}
     };
 
 } ( jQuery );
@@ -510,6 +527,7 @@ multiple_content_sections.admin = function ( $ ) {
 		$meta_box_container = $('#mcs-container'),
 		$section_container  = $('#multiple-content-sections-container'),
 		$description        = $('#mcs-description'),
+		$empty_message      = $('.empty-sections-message'),
 		media_frames        = [],
 
 		// Container References for Admin(self) / Block
@@ -703,6 +721,10 @@ multiple_content_sections.admin = function ( $ ) {
 
 					$section_container.append( $response );
 					$spinner.removeClass('is-active');
+
+					if ( $('.empty-sections-message').length ) {
+						$('.empty-sections-message').fadeOut('fast');
+					}
 
 					var $postboxes = $('.multiple-content-sections-section', $meta_box_container );
 

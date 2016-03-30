@@ -8,11 +8,7 @@
  * @subpackage AdminTemplates
  */
 ?>
-<div class="mcs-row">
-	<div class="mcs-columns-12">
-		<input type="text" name="mcs-sections[<?php esc_attr_e( $section->ID ); ?>][post_title]" class="mcs-section-title widefat" value="<?php esc_attr_e( $section->post_title ); ?>" />
-	</div>
-</div>
+
 <div class="mcs-section-meta mcs-row">
 	<div class="mcs-columns-4">
 		<?php if ( empty( $featured_image_id ) ) : ?>
