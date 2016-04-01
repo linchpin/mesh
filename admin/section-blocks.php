@@ -127,13 +127,13 @@
 					</div>
 
 					<div class="block-background-container text-right mcs-columns-12">
-						<?php $featured_image_id = get_post_thumbnail_id( $editor_id );
+						<?php $featured_image_id = get_post_thumbnail_id( $blocks[ $block_increment ]->ID );
 
 						if ( empty( $featured_image_id ) ) : ?>
 							<a class="mcs-block-featured-image-choose"><?php esc_attr_e( 'Set Background Image', 'linchpin-mce' ); ?></a>
 						<?php else : ?>
-							<a class="mcs-block-featured-image-choose" data-mcs-section-featured-image="<?php esc_attr_e( $featured_image_id ); ?>"><?php echo get_the_title( $featured_image_id ); ?></a>
-							<a class="mcs-block-featured-image-trash" data-mcs-section-featured-image="<?php esc_attr_e( $featured_image_id ); ?>"><?php esc_html_e( 'Remove', 'linchpin-mcs' ); ?></a>
+							<a class="mcs-block-featured-image-choose" data-mcs-block-featured-image="<?php esc_attr_e( $featured_image_id ); ?>"><?php echo get_the_title( $featured_image_id ); ?></a>
+							<a class="mcs-block-featured-image-trash" data-mcs-block-featured-image="<?php esc_attr_e( $featured_image_id ); ?>"><?php esc_html_e( 'Remove', 'linchpin-mcs' ); ?></a>
 						<?php endif; ?>
 					</div>
 
