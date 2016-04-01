@@ -88,8 +88,8 @@ class Multiple_Content_Sections {
 	 *
 	 * @since 1.4.4
 	 *
-	 * @param $status save status
-	 * @param $option option we're saving
+	 * @param string  $status save status
+	 * @param options $option option we're saving
 	 * @param $value  value to save
 	 *
 	 * @return mixed
@@ -149,7 +149,7 @@ class Multiple_Content_Sections {
 		$in['content_css'] = get_template_directory_uri() . '/editor-style.css';
 		$in['wpautop'] = true;
 		$in['apply_source_formatting'] = false;
-		$in['block_formats'] = "Paragraph=p; Heading 3=h3; Heading 4=h4";
+		$in['block_formats'] = 'Paragraph=p; Heading 3=h3; Heading 4=h4';
 		$in['toolbar1'] = 'bold,italic,strikethrough,bullist,numlist,blockquote,hr,alignleft,aligncenter,alignright,link,unlink,spellchecker ';
 		$in['toolbar2'] = 'formatselect,underline,alignjustify,forecolor,pastetext,removeformat,charmap,outdent,indent,undo,redo,wp_help ';
 		$in['toolbar3'] = '';
