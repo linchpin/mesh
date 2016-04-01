@@ -40,7 +40,8 @@ multiple_content_sections.admin = function ( $ ) {
 				.on('click.OpenMediaManager', '.mcs-featured-image-choose', self.choose_background )
 
 				.on('change', '.mcs-choose-layout', self.choose_layout )
-				.on('keydown', '.msc-clean-edit-element', self.change_input_title )
+				.on('keypress', '.msc-clean-edit-element', self.prevent_submit )
+				.on('keyup', '.msc-clean-edit-element', self.change_input_title )
 				.on('change', 'select.msc-clean-edit-element', self.change_select_title );
 
 			$sections = $( '.multiple-content-sections-section' );
@@ -390,8 +391,6 @@ multiple_content_sections.admin = function ( $ ) {
 				current_title = $this.val(),
 				$handle_title = $this.siblings('.handle-title');
 
-			self.prevent_submit( event, $this );
-
 			if ( $this.is('select') ) {
 				return;
 			}
@@ -428,9 +427,9 @@ multiple_content_sections.admin = function ( $ ) {
 		 *
 		 * @param event
 		 */
-		prevent_submit : function( event, $this ) {
+		prevent_submit : function( event ) {
 			if ( 13 == event.keyCode ) {
-				$this.siblings('.close-title-edit').trigger('click');
+				$(this).siblings('.close-title-edit').trigger('click');
 
 				event.preventDefault();
 

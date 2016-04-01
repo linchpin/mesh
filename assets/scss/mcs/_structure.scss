@@ -287,10 +287,6 @@
 		&.ui-state-active {
 			border-color: $dark-grey;
 		}
-
-		.hndle {
-			cursor: default;
-		}
 	}
 }
 
@@ -318,6 +314,45 @@
 
 .block-background-container {
 	margin-top: $base;
+}
+
+.the-mover {
+	background: $light-grey;
+	height: $base * 2;
+	width: $base * 1.5;
+
+	position: relative;
+
+	&:before,
+	&:after {
+		content: '';
+
+		background: mix($dark-grey, $darkest-grey);
+		width: 2px;
+
+		position: absolute;
+		top: 4px;
+		bottom: 4px;
+	}
+
+	&:before {
+		left: 5px;
+	}
+
+	&:after {
+		right: 5px;
+	}
+
+	span {
+		background: mix($dark-grey, $darkest-grey);
+		margin-left: -1px;
+		width: 2px;
+
+		position: absolute;
+		top: 4px;
+		bottom: 4px;
+		left: 50%;
+	}
 }
 
 /*#mcs-container {

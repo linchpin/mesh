@@ -29,7 +29,7 @@ multiple_content_sections.blocks = function ( $ ) {
                 .on('click', '.mcs-block-featured-image-choose', self.choose_background )
                 .on('click.OpenMediaManager', '.mcs-block-featured-image-choose', self.choose_background )
                 .on('click', '.msc-clean-edit:not(.title-input-visible)', self.show_field )
-                .on('blur', '.msc-clean-edit-element', self.hide_field )
+                .on('blur', '.msc-clean-edit-element:not(select)', self.hide_field )
                 .on('click', '.close-title-edit', self.hide_field )
                 .on('click', '.slide-toggle-element', self.slide_toggle_element );
 
@@ -57,7 +57,7 @@ multiple_content_sections.blocks = function ( $ ) {
                 },
                 revert: true,
                 zIndex: 1000,
-                handle: '.mcs-row-title',
+                handle: '.the-mover',
                 iframeFix:true,
                 start:function( ui, event, helper ){}
             });
@@ -544,7 +544,7 @@ multiple_content_sections.blocks = function ( $ ) {
 	        event.preventDefault();
 	        event.stopPropagation();
 
-	        $('.title-input-visible').removeClass('title-input-visible');
+	        $(this).parent().removeClass('title-input-visible');
 		},
 
 		slide_toggle_element : function ( event ) {
