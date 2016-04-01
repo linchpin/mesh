@@ -1,14 +1,21 @@
 /**
  *
- * 01. Global View
- * 02. Initial View (No sections added)
+ * 01. Global
+ * 02. No Sections
+ * 03. Section Header
+ * 04. Section Meta
+ * 05. Blocks
  *
  **/
 
 
-// 01. Global View
+// 01. Global
 #mcs-container {
 	margin-bottom: $base * 2;
+}
+
+#multiple-content-sections-container .postbox .hndle {
+	border: none;
 }
 
 .mcs-main-ua-row {
@@ -22,49 +29,20 @@
 	}
 }
 
-
-// 02. Initial View
-#mcs-description {
-	padding: {
-		bottom: $base * 2;
-		top: $base * 2;
-	};
-}
-
-
-// 03. Admin Blocks
-.multiple-content-sections-section {
-	.handlediv {
-		font-size: 20px;
-		height: $input_height;
-		line-height: $input_height;
-		width: 26px;
-
-		position: absolute;
-		right: 12px;
-		top: 8px;
-
-		@include dashicons( '\f142' );
-	}
-
-	&.closed .handlediv {
-		@include dashicons( '\f140' );
-	}
-}
-
-.mcs-title-row {
-	padding: 8px 50px 8px 12px;
-}
-
-.msc-title-editor {
+.msc-clean-edit {
 	position: relative;
 
+	.msc-clean-edit-element,
 	input {
 		opacity: 0;
 		visibility: hidden;
 		width: auto;
 
 		transition: $global_timing opacity $global_easing;
+	}
+
+	span {
+		cursor: pointer;
 	}
 
 	.handle-title {
@@ -103,9 +81,14 @@
 	}
 
 	&.title-input-visible {
-		input {
+		.msc-clean-edit-element {
 			opacity: 1;
 			visibility: visible;
+		}
+
+		input.msc-clean-edit-element {
+			width: 90%;
+			width: calc(100% - 100px);
 		}
 
 		.handle-title {
@@ -117,8 +100,225 @@
 			display: inline-block;
 		}
 	}
+
+	&.handle-right {
+		.handle-title {
+			left: auto;
+			right: 0;
+		}
+	}
 }
 
+.mcs-columns-12 + .mcs-columns-12 {
+	margin-top: $base;
+}
+
+// 02. No Sections
+#mcs-description {
+	padding: {
+		bottom: $base * 2;
+		top: $base * 2;
+	};
+}
+
+
+// 03. Section Header
+.multiple-content-sections-section {
+	.handlediv {
+		font-size: 20px;
+		height: $input_height;
+		line-height: $input_height;
+		width: 26px;
+
+		position: absolute;
+		right: 12px;
+		top: 8px;
+
+		@include dashicons( '\f142' );
+	}
+
+	&.closed .handlediv {
+		@include dashicons( '\f140' );
+	}
+}
+
+.mcs-row-padding {
+	padding: 8px 50px 8px 12px;
+}
+
+// 04. Section Meta
+.mcs-section-meta,
+.mcs-section-meta-dropdown {
+	margin: {
+		left: -$inside_padding;
+		right: -$inside_padding;
+	};
+}
+
+.mcs-section-meta {
+	border-bottom: 1px solid $grey;
+	position: relative;
+}
+
+.slide-toggle-meta-dropdown {
+	background-color: $light-grey;
+	border: 1px solid $grey;
+	border-bottom: none;
+	color: $darkest-grey;
+	line-height: $base;
+	padding: $base * .5;
+	text-decoration: none;
+
+	position: absolute;
+	right: $base;
+	bottom: -1px;
+
+	@include dashicons( '\f140', 'after' );
+
+	&:after {
+		font-size: 20px;
+	}
+
+	&:active {
+		outline: none;
+	}
+}
+
+.mcs-section-meta-dropdown {
+	background-color: $light-grey;
+	border-bottom: 1px solid $grey;
+	padding: $base;
+
+	.mcs-table {
+		display: table;
+		height: 80px;
+	}
+
+	.mcs-table-footer {
+		display: table-footer-group;
+	}
+}
+
+.mcs-section-background {
+	.choose-image {
+		height: 80px;
+		position: relative;
+
+		img {
+			height: 80px;
+			width: auto;
+		}
+
+		.mcs-featured-image-trash {
+			text-decoration: none;
+
+			position: absolute;
+			right: 0;
+			top: 0;
+		}
+	}
+
+	.mcs-featured-image-choose {
+		height: inherit;
+		line-height: 80px;
+	}
+}
+
+// 05. Blocks
+.mcs-editor-blocks {
+	margin-top: $base;
+	position: relative;
+
+	.column-slider {
+		position: absolute;
+	    left: 0px;
+	    right: 0px;
+	    top: 0px;
+	    height: auto;
+	    bottom: 0px;
+	    border: none;
+	}
+
+	> .mcs-row {
+		margin: 0 (-$base);
+	}
+
+	.columns {
+		padding: 0 $base;
+		position: relative;
+		z-index: 11;
+	}
+
+	.wp-slider .ui-slider-handle {
+		border-radius: 0;
+		box-shadow: none;
+		box-sizing: border-box;
+		height: auto;
+		margin-left: -($base * 2 - 6px)/2;
+		width: $base * 2 - 6px;
+
+		top: 0;
+		bottom: 0;
+		z-index: 12;
+
+		&:before {
+			background-color: $primary;
+			border-radius: 50%;
+			color: white;
+			line-height: $base * 2 - 12px;
+			height: $base * 2 - 12px;
+			width: $base * 2 - 12px;
+			text-align: center;
+
+			top: 50%;
+			margin-top: ( $base * 2 - 12px )/2;
+		}
+	}
+
+	.ui-draggable-dragging {
+		z-index: 10000;
+	}
+
+	.drop-target {
+		&.ui-state-hover {
+			border: 2px dashed $grey;
+		}
+
+		&.ui-state-active {
+			border-color: $dark-grey;
+		}
+
+		.hndle {
+			cursor: default;
+		}
+	}
+}
+
+.mcs-block-title-row {
+	margin-bottom: $base;
+}
+
+.block-content {
+	&.mcs-has-offset {
+		position: relative;
+
+		&:before {
+			content: '';
+
+			background-color: $light-grey;
+			margin-right: 10px;
+
+			position: absolute;
+			left: 0;
+			bottom: 0;
+			top: 0;
+		}
+	}
+}
+
+.block-background-container {
+	margin-top: $base;
+}
 
 /*#mcs-container {
 	.spinner {

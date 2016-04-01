@@ -1,6 +1,6 @@
 <?php
 /*
- * MCS Template: 3 Columns
+ * MCS Template: 3
  *
  * MCS Template Blocks: 3
  *

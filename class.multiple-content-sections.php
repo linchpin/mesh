@@ -68,7 +68,6 @@ class Multiple_Content_Sections {
 		}
 
 		// Adjust TinyMCE and Media Buttons
-		add_action( 'media_buttons', array( $this, 'add_media_buttons' ), 999, 1 );
 		add_filter( 'tiny_mce_before_init', array( $this, 'tiny_mce_before_init' ) );
 
 		// Add Screen Options.
@@ -159,28 +158,6 @@ class Multiple_Content_Sections {
 	}
 
 	/**
-	 * Add media buttons to our block editors
-	 *
-	 * @param int $editor_id The ID of the editor we want to add buttons to.
-	 */
-	function add_media_buttons( $editor_id ) {
-
-		$editor_id = (int) str_replace( 'mcs-section-editor-', '', $editor_id );
-
-		if ( 'mcs_section' === get_post_type( $editor_id ) ) :
-
-			$featured_image_id = get_post_thumbnail_id( $editor_id );
-
-			if ( empty( $featured_image_id ) ) : ?>
-				<button class="button mcs-block-featured-image-choose dashicons-before dashicons-format-image"><?php esc_attr_e( 'Set Background Image', 'linchpin-mce' ); ?></button>
-			<?php else : ?>
-				<button class="button mcs-block-featured-image-choose dashicons-before dashicons-edit" data-mcs-section-featured-image="<?php esc_attr_e( $featured_image_id ); ?>"><?php echo get_the_title( $featured_image_id ); ?></button>
-				<button class="button mcs-block-featured-image-trash dashicons-before dashicons-trash" data-mcs-section-featured-image="<?php esc_attr_e( $featured_image_id ); ?>"><?php esc_html_e( 'Remove', 'linchpin-mcs' ); ?></button>
-			<?php endif; ?>
-		<?php endif;
-	}
-
-	/**
 	 * Init function.
 	 *
 	 * @access public
@@ -242,17 +219,7 @@ class Multiple_Content_Sections {
 		<div id="mcs-container">
 			<?php wp_nonce_field( 'mcs_content_sections_nonce', 'mcs_content_sections_nonce' ); ?>
 
-			<?php if ( empty( $content_sections ) ) : ?>
-				<div class="notice below-h2 mcs-row mcs-main-ua-row">
-					<div class="mcs-columns-3 columns">
-						<p class="title"><?php esc_html_e( 'Multiple Content Sections', 'linchpin-mcs' ); ?></p>
-					</div>
-
-					<div class="mcs-columns-9 columns text-right">
-						<a href="#" class="button primary mcs-section-add dashicons-before dashicons-plus"><?php esc_html_e( 'Add Section', 'lincpin-mcs' ); ?></a>
-					</div>
-				</div>
-			<?php else : ?>
+			<?php if ( ! empty( $content_sections ) ) : ?>
 				<div class="notice below-h2 mcs-row mcs-main-ua-row">
 					<div class="mcs-columns-3 columns">
 						<p class="title"><?php esc_html_e( 'Multiple Content Sections', 'linchpin-mcs' ); ?></p>
@@ -444,6 +411,7 @@ class Multiple_Content_Sections {
 					'ID' => (int) $block_id,
 					'post_content' => wp_kses( $block_data['post_content'], mcs_get_allowed_html() ),
 					'post_status' => $status,
+					'post_title' => sanitize_text_field( $block_data['post_title'] ),
 				);
 
 				wp_update_post( $updates );
@@ -458,7 +426,7 @@ class Multiple_Content_Sections {
 				}
 
 				// Save Column Offset.
-				$offset = (int) (int) $section_data['blocks'][ $block_id ]['offset'];
+				$offset = (int) $section_data['blocks'][ $block_id ]['offset'];
 
 				if ( empty( $offset ) ) {
 					delete_post_meta( $block_id, '_mcs_offset' );
@@ -605,6 +573,8 @@ class Multiple_Content_Sections {
 				'select_section_bg' => __( 'Select Section Background', 'linchpin-mcs' ),
 				'select_bg' => __( 'Select Background' , 'linchpin-mcs' ),
 				'select_block_bg' => __( 'Select Block Background', 'linchpin-mcs' ),
+				'published' => __( 'Published', 'linchpin-mcs' ),
+				'draft' => __( 'Draft', 'linchpin-mcs' ),
 			),
 		);
 

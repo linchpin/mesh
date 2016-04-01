@@ -19,32 +19,34 @@ $blocks = mcs_maybe_create_section_blocks( $section );
 ?>
 <div class="multiple-content-sections-section multiple-content-sections-postbox postbox<?php if ( in_array( 'mcs-section-' . esc_attr( $section->ID ), $closed_metaboxes ) ) : ?> closed<?php endif; ?>" data-mcs-section-id="<?php esc_attr_e( $section->ID ); ?>" id="mcs-section-<?php esc_attr_e( $section->ID ); ?>">
 
-	<div class="mcs-row mcs-title-row">
-		<div class="mcs-columns-4">
-			<div class="msc-title-editor left">
-				<input type="text" name="mcs-sections[<?php esc_attr_e( $section->ID ); ?>][post_title]" class="mcs-section-title widefat left" value="<?php esc_attr_e( $section->post_title ); ?>" />
+	<div class="mcs-row mcs-title-row mcs-row-padding">
+		<div class="mcs-columns-8">
+			<div class="msc-clean-edit">
+				<input type="text" name="mcs-sections[<?php esc_attr_e( $section->ID ); ?>][post_title]" class="msc-clean-edit-element widefat left" value="<?php esc_attr_e( $section->post_title ); ?>" />
 				<span class="close-title-edit left"><?php _e( 'Done', 'linchpin-mcs' ); ?></span>
 				<span class="handle-title"><?php esc_html_e( $section->post_title ); ?></span>
 			</div>
-
-			<span class="spinner left"></span>
 		</div>
 
-		<div class="mcs-columns-6 text-right right">
+		<div class="mcs-columns-4 text-right">
 			<div id="section-status-select-<?php esc_attr_e( $section->ID ); ?>-container">
-				<label for="section-status-select-<?php esc_attr_e( $section->ID ); ?>"><strong><?php esc_html_e( 'Status:', 'linchpin-mcs' ); ?></strong></label>
-				<select class="mcs-block-propagation" id="section-status-select-<?php esc_attr_e( $section->ID ); ?>" name="mcs-sections[<?php esc_attr_e( $section->ID ); ?>][post_status]">
-					<option value="draft" <?php selected( $section->post_status, 'draft' ); ?>><?php esc_html_e( 'Draft', 'linchpin-mcs' ); ?></option>
-					<option value="publish" <?php selected( $section->post_status, 'publish' ); ?>><?php esc_html_e( 'Published', 'linchpin-mcs' ); ?></option>
-				</select>
+				<div class="msc-clean-edit handle-right">
+					<label for="section-status-select-<?php esc_attr_e( $section->ID ); ?>" class="screen-reader-text"><strong><?php esc_html_e( 'Status:', 'linchpin-mcs' ); ?></strong></label>
+					<select class="mcs-block-propagation msc-clean-edit-element" id="section-status-select-<?php esc_attr_e( $section->ID ); ?>" name="mcs-sections[<?php esc_attr_e( $section->ID ); ?>][post_status]">
+						<option value="draft" <?php selected( $section->post_status, 'draft' ); ?>><?php esc_html_e( 'Draft', 'linchpin-mcs' ); ?></option>
+						<option value="publish" <?php selected( $section->post_status, 'publish' ); ?>><?php esc_html_e( 'Published', 'linchpin-mcs' ); ?></option>
+					</select>
+					<span class="close-title-edit right"><?php _e( 'Done', 'linchpin-mcs' ); ?></span>
+					<span class="handle-title"><?php esc_html_e( $section->post_status == 'publish' ? 'Published' : 'Draft' ); ?></span>
+				</div>
 			</div>
 		</div>
 	</div>
 
 	<span class="handlediv text-center"></span>
 
-	<div class="inside">
 
+	<div class="inside">
 		<?php include LINCHPIN_MCS___PLUGIN_DIR . 'admin/section-controls.php'; ?>
 
 		<div class="mcs-editor-blocks" id="mcs-sections-editor-<?php esc_attr_e( $section->ID ); ?>">
