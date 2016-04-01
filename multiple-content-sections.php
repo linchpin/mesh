@@ -1,9 +1,9 @@
 <?php
 /**
- * Plugin Name: Multiple Content Sections
+ * Plugin Name: Mesh for WordPress
  * Plugin URI: http://linchpin.agency
- * Description: Add multiple content sections on a post by post basis.
- * Version: 1.4.5
+ * Description: Adds multiple sections for content on a post by post basis. Mesh also has settings to enable it for
+ * Version: 1.0.0
  * Author: Linchpin
  * Author URI: http://linchpin.agency
  * License: GPLv2 or later
@@ -16,7 +16,7 @@ if ( ! function_exists( 'add_action' ) ) {
 	exit;
 }
 
-define( 'LINCHPIN_MCS_VERSION', '1.4.5' );
+define( 'LINCHPIN_MCS_VERSION', '1.0.0' );
 define( 'LINCHPIN_MCS_PLUGIN_NAME', 'Multiple Content Sections' );
 define( 'LINCHPIN_MCS__MINIMUM_WP_VERSION', '4.0' );
 define( 'LINCHPIN_MCS___PLUGIN_URL', plugin_dir_url( __FILE__ ) );
@@ -27,8 +27,10 @@ include_once 'class.multiple-content-sections.php';
 $multiple_content_sections = new Multiple_Content_Sections();
 
 /**
- * @param null $type
- * @param int $depth
+ * Get templates within our directory
+ *
+ * @param null       $type
+ * @param int        $depth
  * @param bool|false $search_parent
  *
  * @return array
@@ -45,8 +47,6 @@ function mcs_get_files( $type = null, $depth = 0, $search_parent = false, $direc
 
 /**
  * Load a list of template files.
- *
- * @access public
  *
  * @param string $section_templates (default: '') Our list of available templates.
  *
@@ -93,7 +93,7 @@ function mcs_locate_template_files( $section_templates = '' ) {
 	 *
 	 * This filter does not currently allow for page templates to be added.
 	 *
-	 * @since 1.3.5
+	 * @since 0.3.5
 	 *
 	 * @param array        $page_templates Array of page templates. Keys are filenames,
 	 *                                     values are translated names.
@@ -317,6 +317,8 @@ function mcs_maybe_create_section_blocks( $section, $number_needed = 0 ) {
 /**
  * Utility Method to add a sections background
  *
+ * @todo This should be disabled if the user selects to NOT use foundation.
+ *
  * @param int $post_id
  * @param bool|true $echo
  */
@@ -333,7 +335,7 @@ function mcs_section_background( $post_id = 0, $echo = true, $size_large = 'larg
 		$backgrounds = array();
 
 		if ( $default_image_url = wp_get_attachment_image_src( get_post_thumbnail_id( $post_id ), 'full' ) ) {
-			if ( ! empty( $default_image_url[0] ) && '' !==  $default_image_url[0] ) {
+			if ( ! empty( $default_image_url[0] ) && '' !== $default_image_url[0] ) {
 				$backgrounds[] = '[' . $default_image_url[0] . ', (default)]';
 
 				if ( $medium_image_url = wp_get_attachment_image_src( get_post_thumbnail_id( $post_id ), $size_medium ) ) {
