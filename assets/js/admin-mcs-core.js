@@ -27,18 +27,18 @@ multiple_content_sections.admin = function ( $ ) {
 			blocks = multiple_content_sections.blocks;
 
 			$body
-				.on( 'click', '.mcs-section-add',          self.add_section )
-				.on( 'click', '.mcs-section-remove',       self.remove_section )
-				.on( 'click', '.mcs-section-reorder',      self.reorder_sections )
-				.on( 'click', '.mcs-save-order',           self.save_section_order )
-				.on( 'click', '.mcs-featured-image-trash', self.remove_background )
-				.on( 'click', '.mcs-section-expand',       self.expand_all_sections )
+				.on( 'click', '.mcs-section-add',           self.add_section )
+				.on( 'click', '.mcs-section-remove',        self.remove_section )
+				.on( 'click', '.mcs-section-reorder',       self.reorder_sections )
+				.on( 'click', '.mcs-save-order',            self.save_section_order )
+				.on( 'click', '.mcs-featured-image-trash',  self.remove_background )
+				.on( 'click', '.mcs-section-expand',        self.expand_all_sections )
 				.on( 'click', '.mcs-featured-image-choose', self.choose_background )
 				.on( 'click.OpenMediaManager', '.mcs-featured-image-choose', self.choose_background )
 
-				.on( 'change', '.mcs-choose-layout',       self.choose_layout )
+				.on( 'change', '.mcs-choose-layout',        self.choose_layout )
 
-				.on( 'keyup', '.mcs-section-title',        self.change_section_title );
+				.on( 'keyup', '.mcs-section-title',         self.change_section_title );
 
 			$sections = $( '.multiple-content-sections-section' );
 
@@ -50,7 +50,6 @@ multiple_content_sections.admin = function ( $ ) {
 			blocks.init();
 
 			self.setup_notifications( $meta_box_container );
-
 		},
 
 		/**

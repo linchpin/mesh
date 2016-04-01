@@ -316,7 +316,9 @@ multiple_content_sections.blocks = function ( $ ) {
         reorder_blocks : function( $tinymce_editors ) {
             $tinymce_editors.each(function() {
                 var editor_id   = $(this).prop('id'),
-                    proto_id;
+                    proto_id,
+                    mce_options = [],
+                    qt_options  = [];
 
                 // Reset our editors if we have any
                 if( typeof tinymce.editors !== 'undefined' ) {
@@ -365,31 +367,16 @@ multiple_content_sections.blocks = function ( $ ) {
                         }
                     }
 
+                    // @todo This is kinda hacky. See about switching this out @aware
                     $block_content.find('.switch-tmce').trigger('click');
                 }
-
-                /**
-                 * Replacing old selector choice
-                var tempTinyMCE = tinyMCEPreInit;
-                    tempTinyMCE.selector = '#' + editor_id;
-
-                // Setup our editors
-                if ( typeof tinymce !== 'undefined' ) {
-                    if ( ! tinyMCEPreInit.qtInit.hasOwnProperty( editor_id ) ) {
-                        tinymce.init( tempTinyMCE );
-                    }
-                }
-
-                if ( typeof quicktags !== 'undefined' ) {
-                    quicktags( tinyMCEPreInit.qtInit['content'] );
-                }
-                */
-
             });
         },
 
         /**
-         * Save the order of our blocks after drag and drop reorde
+         * Save the order of our blocks after drag and drop reorder
+         * 
+         * @since 0.1.0
          *
          * @param section_id
          * @param event
@@ -512,7 +499,7 @@ multiple_content_sections.blocks = function ( $ ) {
         /**
          * Remove selected background from our block
          *
-         * @since 1.3.6
+         * @since 0.3.6
          *
          * @param event
          */
@@ -538,6 +525,13 @@ multiple_content_sections.blocks = function ( $ ) {
             });
         },
 
+        /**
+         * Display the title input
+         * 
+         * @since 0.2.0
+         * 
+         * @param event
+         */
         show_title_input : function ( event ) {
 	        event.preventDefault();
 	        event.stopPropagation();
@@ -545,6 +539,13 @@ multiple_content_sections.blocks = function ( $ ) {
 	        $(this).addClass('title-input-visible');
 		},
 
+        /**
+         * Hide the title input
+         * 
+         * @since 0.2.0
+         * 
+         * @param event
+         */
 		hide_title_input : function ( event ) {
 	        event.preventDefault();
 	        event.stopPropagation();
@@ -584,18 +585,18 @@ multiple_content_sections.admin = function ( $ ) {
 			blocks = multiple_content_sections.blocks;
 
 			$body
-				.on( 'click', '.mcs-section-add',          self.add_section )
-				.on( 'click', '.mcs-section-remove',       self.remove_section )
-				.on( 'click', '.mcs-section-reorder',      self.reorder_sections )
-				.on( 'click', '.mcs-save-order',           self.save_section_order )
-				.on( 'click', '.mcs-featured-image-trash', self.remove_background )
-				.on( 'click', '.mcs-section-expand',       self.expand_all_sections )
+				.on( 'click', '.mcs-section-add',           self.add_section )
+				.on( 'click', '.mcs-section-remove',        self.remove_section )
+				.on( 'click', '.mcs-section-reorder',       self.reorder_sections )
+				.on( 'click', '.mcs-save-order',            self.save_section_order )
+				.on( 'click', '.mcs-featured-image-trash',  self.remove_background )
+				.on( 'click', '.mcs-section-expand',        self.expand_all_sections )
 				.on( 'click', '.mcs-featured-image-choose', self.choose_background )
 				.on( 'click.OpenMediaManager', '.mcs-featured-image-choose', self.choose_background )
 
-				.on( 'change', '.mcs-choose-layout',       self.choose_layout )
+				.on( 'change', '.mcs-choose-layout',        self.choose_layout )
 
-				.on( 'keyup', '.mcs-section-title',        self.change_section_title );
+				.on( 'keyup', '.mcs-section-title',         self.change_section_title );
 
 			$sections = $( '.multiple-content-sections-section' );
 
@@ -607,7 +608,6 @@ multiple_content_sections.admin = function ( $ ) {
 			blocks.init();
 
 			self.setup_notifications( $meta_box_container );
-
 		},
 
 		/**

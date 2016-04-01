@@ -322,7 +322,9 @@ multiple_content_sections.blocks = function ( $ ) {
         reorder_blocks : function( $tinymce_editors ) {
             $tinymce_editors.each(function() {
                 var editor_id   = $(this).prop('id'),
-                    proto_id;
+                    proto_id,
+                    mce_options = [],
+                    qt_options  = [];
 
                 // Reset our editors if we have any
                 if( typeof tinymce.editors !== 'undefined' ) {
@@ -371,31 +373,16 @@ multiple_content_sections.blocks = function ( $ ) {
                         }
                     }
 
+                    // @todo This is kinda hacky. See about switching this out @aware
                     $block_content.find('.switch-tmce').trigger('click');
                 }
-
-                /**
-                 * Replacing old selector choice
-                var tempTinyMCE = tinyMCEPreInit;
-                    tempTinyMCE.selector = '#' + editor_id;
-
-                // Setup our editors
-                if ( typeof tinymce !== 'undefined' ) {
-                    if ( ! tinyMCEPreInit.qtInit.hasOwnProperty( editor_id ) ) {
-                        tinymce.init( tempTinyMCE );
-                    }
-                }
-
-                if ( typeof quicktags !== 'undefined' ) {
-                    quicktags( tinyMCEPreInit.qtInit['content'] );
-                }
-                */
-
             });
         },
 
         /**
-         * Save the order of our blocks after drag and drop reorde
+         * Save the order of our blocks after drag and drop reorder
+         * 
+         * @since 0.1.0
          *
          * @param section_id
          * @param event
@@ -518,7 +505,7 @@ multiple_content_sections.blocks = function ( $ ) {
         /**
          * Remove selected background from our block
          *
-         * @since 1.3.6
+         * @since 0.3.6
          *
          * @param event
          */
@@ -544,6 +531,13 @@ multiple_content_sections.blocks = function ( $ ) {
             });
         },
 
+        /**
+         * Display the title input
+         * 
+         * @since 0.2.0
+         * 
+         * @param event
+         */
         show_title_input : function ( event ) {
 	        event.preventDefault();
 	        event.stopPropagation();
@@ -551,6 +545,13 @@ multiple_content_sections.blocks = function ( $ ) {
 	        $(this).addClass('title-input-visible');
 		},
 
+        /**
+         * Hide the title input
+         * 
+         * @since 0.2.0
+         * 
+         * @param event
+         */
 		hide_title_input : function ( event ) {
 	        event.preventDefault();
 	        event.stopPropagation();
