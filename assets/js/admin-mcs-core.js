@@ -1,6 +1,4 @@
-if( typeof(multiple_content_sections) == 'undefined' ) {
-	multiple_content_sections = {};
-}
+multiple_content_sections = multiple_content_sections || {};
 
 multiple_content_sections.admin = function ( $ ) {
 
@@ -11,7 +9,7 @@ multiple_content_sections.admin = function ( $ ) {
 		$meta_box_container = $('#mcs-container'),
 		$section_container  = $('#multiple-content-sections-container'),
 		$description        = $('#mcs-description'),
-		$empty_message      = $('.empty-sections-message'),
+		$sections,
 		media_frames        = [],
 
 		// Container References for Admin(self) / Block
@@ -21,31 +19,28 @@ multiple_content_sections.admin = function ( $ ) {
 	return {
 
 		/**
-		 * Initialize our script
+		 * Get the show on the road
 		 */
 		init : function() {
 
-			self = multiple_content_sections.admin;
+			self   = multiple_content_sections.admin;
 			blocks = multiple_content_sections.blocks;
 
 			$body
-				.on('click', '.mcs-section-add', self.add_section )
-				.on('click', '.mcs-section-remove', self.remove_section )
-				.on('click', '.mcs-section-reorder', self.reorder_sections )
-				.on('click', '.mcs-save-order', self.save_section_order )
+				.on( 'click', '.mcs-section-add',          self.add_section )
+				.on( 'click', '.mcs-section-remove',       self.remove_section )
+				.on( 'click', '.mcs-section-reorder',      self.reorder_sections )
+				.on( 'click', '.mcs-save-order',           self.save_section_order )
+				.on( 'click', '.mcs-featured-image-trash', self.remove_background )
+				.on( 'click', '.mcs-section-expand',       self.expand_all_sections )
+				.on( 'click', '.mcs-featured-image-choose', self.choose_background )
+				.on( 'click.OpenMediaManager', '.mcs-featured-image-choose', self.choose_background )
 
-				.on('change', '.mcs-choose-layout', self.choose_layout )
+				.on( 'change', '.mcs-choose-layout',       self.choose_layout )
 
-				.on('click', '.mcs-featured-image-choose', self.choose_background )
-				.on('click.OpenMediaManager', '.mcs-featured-image-choose', self.choose_background )
+				.on( 'keyup', '.mcs-section-title',        self.change_section_title );
 
-				.on('click', '.mcs-featured-image-trash', self.remove_background )
-
-				.on('click', '.mcs-section-expand', self.expand_all_sections )
-
-				.on('keyup', '.mcs-section-title', self.change_section_title );
-
-			var $sections = $( '.multiple-content-sections-section' );
+			$sections = $( '.multiple-content-sections-section' );
 
 			if ( $sections.length <= 1 ) {
 				$reorder_button.addClass( 'disabled' );
@@ -81,7 +76,7 @@ multiple_content_sections.admin = function ( $ ) {
 					$.post( ajaxurl, {
 						action                : 'mcs_dismiss_notification',
 						mcs_notification_type : $this.attr('data-type'),
-						_wpnonce     : mcs_data.dismiss_nonce
+						_wpnonce              : mcs_data.dismiss_nonce
 					}, function( response ) {});
 
 					$this.fadeTo( 100 , 0, function() {
@@ -96,7 +91,7 @@ multiple_content_sections.admin = function ( $ ) {
 		/**
 		 * 1 click to expand or collapse sections
 		 *
-		 * @since 1.3.0
+		 * @since 0.3.0
 		 *
 		 * @param event
 		 */
@@ -121,7 +116,7 @@ multiple_content_sections.admin = function ( $ ) {
 		/**
 		 * Choose what layout is used for the section
 		 *
-		 * @since 1.1.0
+		 * @since 0.1.0
 		 *
 		 * @param event
 		 * @returns {boolean}
@@ -176,7 +171,7 @@ multiple_content_sections.admin = function ( $ ) {
 		/**
 		 * Add a new section to our content
 		 *
-		 * @since 1.0.0
+		 * @since 0.1.0
 		 *
 		 * @param event
 		 * @returns {boolean}
@@ -201,13 +196,14 @@ multiple_content_sections.admin = function ( $ ) {
 			}, function( response ){
 				if ( response ) {
 					var $response        = $( response ),
-						$tinymce_editors = $response.find('.wp-editor-area' );
+						$tinymce_editors = $response.find('.wp-editor-area' ),
+						$empty_msg       = $('.empty-sections-message');
 
 					$section_container.append( $response );
 					$spinner.removeClass('is-active');
 
-					if ( $('.empty-sections-message').length ) {
-						$('.empty-sections-message').fadeOut('fast');
+					if ( $empty_msg.length ) {
+						$empty_msg.fadeOut('fast');
 					}
 
 					var $postboxes = $('.multiple-content-sections-section', $meta_box_container );
@@ -224,6 +220,13 @@ multiple_content_sections.admin = function ( $ ) {
 			});
 		},
 
+		/**
+		 * Remove the section
+		 *
+		 * @since 0.1.0
+		 *
+		 * @param event
+         */
 		remove_section : function(event) {
 			event.preventDefault();
 			event.stopPropagation();
@@ -260,7 +263,7 @@ multiple_content_sections.admin = function ( $ ) {
 		/**
 		 * Save when sections are reordered
 		 *
-		 * @since 1.0
+		 * @since 0.1.0
 		 *
 		 * @param event
 		 */
@@ -299,10 +302,10 @@ multiple_content_sections.admin = function ( $ ) {
 		/**
 		 * Utility method to display notification information
 		 *
-		 * @since 1.3.0
+		 * @since 0.3.0
 		 *
-		 * @param string message The message to display
-		 * @param string type The type of message to display (warning|info|success)
+		 * @param message The message to display
+		 * @param type    The type of message to display (warning|info|success)
 		 */
 		update_notifications : function( message, type ) {
 
@@ -319,6 +322,12 @@ multiple_content_sections.admin = function ( $ ) {
 			$description.fadeIn('fast');
 		},
 
+		/**
+		 * Autosave callback
+		 *
+		 * @param event
+         * @param ui
+         */
 		save_section_order_sortable : function( event, ui ) {
 			var $reorder_spinner = $('.mcs-reorder-spinner'),
 				section_ids = [];
@@ -388,7 +397,7 @@ multiple_content_sections.admin = function ( $ ) {
 		/**
 		 * Block our click event while reordering
 		 *
-		 * @since 1.0.0
+		 * @since 0.1.0
 		 *
 		 * @param event
 		 */
@@ -399,7 +408,7 @@ multiple_content_sections.admin = function ( $ ) {
 		/**
 		 * Remove our selected background
 		 *
-		 * @since 1.3.6
+		 * @since 0.3.6
 		 *
 		 * @param event
 		 */
