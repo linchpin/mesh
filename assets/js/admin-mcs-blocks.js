@@ -40,7 +40,7 @@ multiple_content_sections.blocks = function ( $ ) {
         /**
          * Setup Block Drag and Drop
          *
-         * @since 1.3.0
+         * @since 0.3.0
          */
         setup_drag_drop : function() {
 
@@ -179,7 +179,7 @@ multiple_content_sections.blocks = function ( $ ) {
          *
          * @todo: Add filters for column min, max
          *
-         * @since 1.3.5
+         * @since 0.3.5
          *
          * @param event
          * @param ui
@@ -323,7 +323,7 @@ multiple_content_sections.blocks = function ( $ ) {
         /**
          * Render Block after reorder or change.
          *
-         * @since 1.3.5
+         * @since 0.3.5
          *
          * @param $tinymce_editors
          */
@@ -388,7 +388,9 @@ multiple_content_sections.blocks = function ( $ ) {
         },
 
         /**
-         * Save the order of our blocks after drag and drop reorde
+         * Save the order of our blocks after drag and drop reorder
+         *
+         * @since 0.1.0
          *
          * @param section_id
          * @param event
@@ -409,7 +411,7 @@ multiple_content_sections.blocks = function ( $ ) {
         /**
          * Save when we reorder our blocks within a section
          *
-         * @since 1.3.5
+         * @since 0.3.5
          *
          * @param section_id
          * @param block_ids
@@ -511,7 +513,7 @@ multiple_content_sections.blocks = function ( $ ) {
         /**
          * Remove selected background from our block
          *
-         * @since 1.3.6
+         * @since 0.3.6
          *
          * @param event
          */
