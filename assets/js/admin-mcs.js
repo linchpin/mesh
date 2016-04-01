@@ -60,12 +60,6 @@ multiple_content_sections.blocks = function ( $ ) {
                 .find( ".block-header" )
                 .addClass( "hndle ui-sortable-handle" )
                 .prepend( "<span class='block-toggle' />");
-            /*
-             $( ".block-toggle" ).click(function() {
-             var icon = $( this );
-             icon.toggleClass( "ui-icon-minusthick ui-icon-plusthick" );
-             icon.closest( ".block" ).find( ".block-content" ).toggle();
-             }); */
 
             $( ".drop-target" ).droppable({
                 accept: ".block:not(.ui-sortable-helper)",
@@ -265,8 +259,8 @@ multiple_content_sections.blocks = function ( $ ) {
             } );
 
             $.post( ajaxurl, {
-                'action': 'mcs_update_block_widths',
-                'mcs_post_data' : post_data,
+                'action'                   : 'mcs_update_block_widths',
+                'mcs_post_data'            : post_data,
                 'mcs_reorder_blocks_nonce' : mcs_data.reorder_blocks_nonce
             }, function( response ) {
                 // $current_spinner.removeClass( 'is-active' );
@@ -640,7 +634,7 @@ multiple_content_sections.admin = function ( $ ) {
 					$.post( ajaxurl, {
 						action                : 'mcs_dismiss_notification',
 						mcs_notification_type : $this.attr('data-type'),
-						_wpnonce     : mcs_data.dismiss_nonce
+						_wpnonce              : mcs_data.dismiss_nonce
 					}, function( response ) {});
 
 					$this.fadeTo( 100 , 0, function() {
@@ -760,13 +754,14 @@ multiple_content_sections.admin = function ( $ ) {
 			}, function( response ){
 				if ( response ) {
 					var $response        = $( response ),
-						$tinymce_editors = $response.find('.wp-editor-area' );
+						$tinymce_editors = $response.find('.wp-editor-area' ),
+						$empty_msg       = $('.empty-sections-message');
 
 					$section_container.append( $response );
 					$spinner.removeClass('is-active');
 
-					if ( $('.empty-sections-message').length ) {
-						$('.empty-sections-message').fadeOut('fast');
+					if ( $empty_msg.length ) {
+						$empty_msg.fadeOut('fast');
 					}
 
 					var $postboxes = $('.multiple-content-sections-section', $meta_box_container );

@@ -67,12 +67,6 @@ multiple_content_sections.blocks = function ( $ ) {
                 .find( ".block-header" )
                 .addClass( "hndle ui-sortable-handle" )
                 .prepend( "<span class='block-toggle' />");
-            /*
-             $( ".block-toggle" ).click(function() {
-             var icon = $( this );
-             icon.toggleClass( "ui-icon-minusthick ui-icon-plusthick" );
-             icon.closest( ".block" ).find( ".block-content" ).toggle();
-             }); */
 
             $( ".drop-target" ).droppable({
                 accept: ".block:not(.ui-sortable-helper)",
@@ -272,8 +266,8 @@ multiple_content_sections.blocks = function ( $ ) {
             } );
 
             $.post( ajaxurl, {
-                'action': 'mcs_update_block_widths',
-                'mcs_post_data' : post_data,
+                'action'                   : 'mcs_update_block_widths',
+                'mcs_post_data'            : post_data,
                 'mcs_reorder_blocks_nonce' : mcs_data.reorder_blocks_nonce
             }, function( response ) {
                 // $current_spinner.removeClass( 'is-active' );

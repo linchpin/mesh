@@ -79,7 +79,7 @@ multiple_content_sections.admin = function ( $ ) {
 					$.post( ajaxurl, {
 						action                : 'mcs_dismiss_notification',
 						mcs_notification_type : $this.attr('data-type'),
-						_wpnonce     : mcs_data.dismiss_nonce
+						_wpnonce              : mcs_data.dismiss_nonce
 					}, function( response ) {});
 
 					$this.fadeTo( 100 , 0, function() {
@@ -199,13 +199,14 @@ multiple_content_sections.admin = function ( $ ) {
 			}, function( response ){
 				if ( response ) {
 					var $response        = $( response ),
-						$tinymce_editors = $response.find('.wp-editor-area' );
+						$tinymce_editors = $response.find('.wp-editor-area' ),
+						$empty_msg       = $('.empty-sections-message');
 
 					$section_container.append( $response );
 					$spinner.removeClass('is-active');
 
-					if ( $('.empty-sections-message').length ) {
-						$('.empty-sections-message').fadeOut('fast');
+					if ( $empty_msg.length ) {
+						$empty_msg.fadeOut('fast');
 					}
 
 					var $postboxes = $('.multiple-content-sections-section', $meta_box_container );
