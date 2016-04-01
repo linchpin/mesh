@@ -329,7 +329,10 @@ multiple_content_sections.blocks = function ( $ ) {
          */
         reorder_blocks : function( $tinymce_editors ) {
             $tinymce_editors.each(function() {
-                var editor_id   = $(this).prop('id');
+                var editor_id   = $(this).prop('id'),
+                    proto_id,
+                    mce_options = [],
+                    qt_options  = [];
 
                 // Reset our editors if we have any
                 if( typeof tinymce.editors !== 'undefined' ) {
@@ -338,20 +341,49 @@ multiple_content_sections.blocks = function ( $ ) {
                     }
                 }
 
-                var tempTinyMCE = tinyMCEPreInit;
-                    tempTinyMCE.selector = '#' + editor_id;
-
-                // Setup our editors
                 if ( typeof tinymce !== 'undefined' ) {
-                    if ( ! tinyMCEPreInit.qtInit.hasOwnProperty( editor_id ) ) {
-                        tinymce.init( tempTinyMCE );
+
+                    var $block_content = $(this).closest('.block-content');
+
+                    /**
+                     * Props to @danielbachuber for a shove in the right direction to have movable editors in the wp-admin
+                     *
+                     * https://github.com/alleyinteractive/wordpress-fieldmanager/blob/master/js/richtext.js#L58-L95
+                     */
+
+                    if (typeof tinyMCEPreInit.mceInit[ editor_id ] === 'undefined') {
+                        proto_id = 'content';
+
+                        // Clean up the proto id which appears in some of the wp_editor generated HTML
+                        $block_content.html( $(this).closest('.block-content').html().replace(new RegExp(proto_id, 'g'), editor_id));
+
+                        // This needs to be initialized, so we need to get the options from the proto
+                        if (proto_id && typeof tinyMCEPreInit.mceInit[proto_id] !== 'undefined') {
+                            mce_options = $.extend(true, {}, tinyMCEPreInit.mceInit[proto_id]);
+                            mce_options.body_class = mce_options.body_class.replace(proto_id, editor_id );
+                            mce_options.selector = mce_options.selector.replace(proto_id, editor_id );
+                            mce_options.wp_skip_init = false;
+                            tinyMCEPreInit.mceInit[editor_id] = mce_options;
+                        } else {
+                            // TODO: No data to work with, this should throw some sort of error
+                            return;
+                        }
+
+                        if (proto_id && typeof tinyMCEPreInit.qtInit[proto_id] !== 'undefined') {
+                            qt_options = $.extend(true, {}, tinyMCEPreInit.qtInit[proto_id]);
+                            qt_options.id = qt_options.id.replace(proto_id, editor_id );
+
+                            tinyMCEPreInit.qtInit[editor_id] = qt_options;
+
+                            if ( typeof quicktags !== 'undefined' ) {
+                                quicktags(tinyMCEPreInit.qtInit[editor_id]);
+                            }
+                        }
                     }
-                }
 
-                if ( typeof quicktags !== 'undefined' ) {
-                    quicktags( tinyMCEPreInit.qtInit['content'] );
+                    // @todo This is kinda hacky. See about switching this out @aware
+                    $block_content.find('.switch-tmce').trigger('click');
                 }
-
             });
         },
 

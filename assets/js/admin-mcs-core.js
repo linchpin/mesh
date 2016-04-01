@@ -408,7 +408,7 @@ multiple_content_sections.admin = function ( $ ) {
 			}
 
 			$handle_title.text( current_title );
-		}
+		},
 
 		/**
 		 * Prevent submitting the post/page when hitting enter

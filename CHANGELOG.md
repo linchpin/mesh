@@ -2,9 +2,6 @@
 
 ## [1.0.0] - 2016-04-01
 
-### Added
-- 
-
 ### Updated
 - Change the name of Multiple Content Sections to Mesh for public release.
 
