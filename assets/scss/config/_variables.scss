@@ -8,17 +8,19 @@
 
 
 // 01. Dimensions
-$base:          16px;
-$input_height:  28px;
+$base:            16px;
+$input_height:    28px;
 $input_padding_x: 5px;
 $input_padding_y: 3px;
+$inside_padding:  12px;
 
 
 // 02. Colors
-$blue:       #009fd4;
-$dark-grey:  #ccc;
-$grey:       #dedede;
-$light-grey: #f5f5f5;
+$blue:         #009fd4;
+$darkest-grey: #666;
+$dark-grey:    #ccc;
+$grey:         #dedede;
+$light-grey:   #f5f5f5;
 
 $primary:       $blue;
 $primary-light: scale-color( $primary, $lightness: 8% );

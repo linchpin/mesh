@@ -1,4 +1,6 @@
-multiple_content_sections = multiple_content_sections || {};
+if( typeof(multiple_content_sections) == 'undefined' ) {
+	multiple_content_sections = {};
+}
 
 multiple_content_sections.admin = function ( $ ) {
 
@@ -9,7 +11,7 @@ multiple_content_sections.admin = function ( $ ) {
 		$meta_box_container = $('#mcs-container'),
 		$section_container  = $('#multiple-content-sections-container'),
 		$description        = $('#mcs-description'),
-		$sections,
+		$empty_message      = $('.empty-sections-message'),
 		media_frames        = [],
 
 		// Container References for Admin(self) / Block
@@ -19,28 +21,33 @@ multiple_content_sections.admin = function ( $ ) {
 	return {
 
 		/**
-		 * Get the show on the road
+		 * Initialize our script
 		 */
 		init : function() {
 
-			self   = multiple_content_sections.admin;
+			self = multiple_content_sections.admin;
 			blocks = multiple_content_sections.blocks;
 
 			$body
-				.on( 'click', '.mcs-section-add',           self.add_section )
-				.on( 'click', '.mcs-section-remove',        self.remove_section )
-				.on( 'click', '.mcs-section-reorder',       self.reorder_sections )
-				.on( 'click', '.mcs-save-order',            self.save_section_order )
-				.on( 'click', '.mcs-featured-image-trash',  self.remove_background )
-				.on( 'click', '.mcs-section-expand',        self.expand_all_sections )
-				.on( 'click', '.mcs-featured-image-choose', self.choose_background )
-				.on( 'click.OpenMediaManager', '.mcs-featured-image-choose', self.choose_background )
+				.on('click', '.mcs-section-add', self.add_section )
+				.on('click', '.mcs-section-remove', self.remove_section )
+				.on('click', '.mcs-section-reorder', self.reorder_sections )
+				.on('click', '.mcs-save-order', self.save_section_order )
 
-				.on( 'change', '.mcs-choose-layout',        self.choose_layout )
+				.on('change', '.mcs-choose-layout', self.choose_layout )
 
-				.on( 'keyup', '.mcs-section-title',         self.change_section_title );
+				.on('click', '.mcs-featured-image-choose', self.choose_background )
+				.on('click.OpenMediaManager', '.mcs-featured-image-choose', self.choose_background )
 
-			$sections = $( '.multiple-content-sections-section' );
+				.on('click', '.mcs-featured-image-trash', self.remove_background )
+
+				.on('click', '.mcs-section-expand', self.expand_all_sections )
+
+				.on('keydown', '.msc-clean-edit-element', self.change_input_title )
+
+				.on('change', 'select.msc-clean-edit-element', self.change_select_title );
+
+			var $sections = $( '.multiple-content-sections-section' );
 
 			if ( $sections.length <= 1 ) {
 				$reorder_button.addClass( 'disabled' );
@@ -50,6 +57,7 @@ multiple_content_sections.admin = function ( $ ) {
 			blocks.init();
 
 			self.setup_notifications( $meta_box_container );
+
 		},
 
 		/**
@@ -75,7 +83,7 @@ multiple_content_sections.admin = function ( $ ) {
 					$.post( ajaxurl, {
 						action                : 'mcs_dismiss_notification',
 						mcs_notification_type : $this.attr('data-type'),
-						_wpnonce              : mcs_data.dismiss_nonce
+						_wpnonce     : mcs_data.dismiss_nonce
 					}, function( response ) {});
 
 					$this.fadeTo( 100 , 0, function() {
@@ -90,7 +98,7 @@ multiple_content_sections.admin = function ( $ ) {
 		/**
 		 * 1 click to expand or collapse sections
 		 *
-		 * @since 0.3.0
+		 * @since 1.3.0
 		 *
 		 * @param event
 		 */
@@ -115,7 +123,7 @@ multiple_content_sections.admin = function ( $ ) {
 		/**
 		 * Choose what layout is used for the section
 		 *
-		 * @since 0.1.0
+		 * @since 1.1.0
 		 *
 		 * @param event
 		 * @returns {boolean}
@@ -170,7 +178,7 @@ multiple_content_sections.admin = function ( $ ) {
 		/**
 		 * Add a new section to our content
 		 *
-		 * @since 0.1.0
+		 * @since 1.0.0
 		 *
 		 * @param event
 		 * @returns {boolean}
@@ -195,14 +203,13 @@ multiple_content_sections.admin = function ( $ ) {
 			}, function( response ){
 				if ( response ) {
 					var $response        = $( response ),
-						$tinymce_editors = $response.find('.wp-editor-area' ),
-						$empty_msg       = $('.empty-sections-message');
+						$tinymce_editors = $response.find('.wp-editor-area' );
 
 					$section_container.append( $response );
 					$spinner.removeClass('is-active');
 
-					if ( $empty_msg.length ) {
-						$empty_msg.fadeOut('fast');
+					if ( $('.empty-sections-message').length ) {
+						$('.empty-sections-message').fadeOut('fast');
 					}
 
 					var $postboxes = $('.multiple-content-sections-section', $meta_box_container );
@@ -219,13 +226,6 @@ multiple_content_sections.admin = function ( $ ) {
 			});
 		},
 
-		/**
-		 * Remove the section
-		 *
-		 * @since 0.1.0
-		 *
-		 * @param event
-         */
 		remove_section : function(event) {
 			event.preventDefault();
 			event.stopPropagation();
@@ -262,7 +262,7 @@ multiple_content_sections.admin = function ( $ ) {
 		/**
 		 * Save when sections are reordered
 		 *
-		 * @since 0.1.0
+		 * @since 1.0
 		 *
 		 * @param event
 		 */
@@ -301,10 +301,10 @@ multiple_content_sections.admin = function ( $ ) {
 		/**
 		 * Utility method to display notification information
 		 *
-		 * @since 0.3.0
+		 * @since 1.3.0
 		 *
-		 * @param message The message to display
-		 * @param type    The type of message to display (warning|info|success)
+		 * @param string message The message to display
+		 * @param string type The type of message to display (warning|info|success)
 		 */
 		update_notifications : function( message, type ) {
 
@@ -321,12 +321,6 @@ multiple_content_sections.admin = function ( $ ) {
 			$description.fadeIn('fast');
 		},
 
-		/**
-		 * Autosave callback
-		 *
-		 * @param event
-         * @param ui
-         */
 		save_section_order_sortable : function( event, ui ) {
 			var $reorder_spinner = $('.mcs-reorder-spinner'),
 				section_ids = [];
@@ -381,22 +375,63 @@ multiple_content_sections.admin = function ( $ ) {
             });
 		},
 
-		change_section_title : function(event) {
+		change_input_title : function(event) {
 			var $this = $(this),
 				current_title = $this.val(),
-				$postbox = $this.parents('.multiple-content-sections-postbox');
+				$handle_title = $this.siblings('.handle-title');
+
+			self.prevent_submit( event, $this );
+
+			if ( $this.is('select') ) {
+				return;
+			}
 
 			if ( current_title === '' || current_title == 'undefined' ) {
 				current_title = mcs_data.strings.default_title;
 			}
 
-			$postbox.find('.handle-title').text( current_title );
+			$handle_title.text( current_title );
+		},
+
+		change_select_title : function( event ) {
+			var $this = $(this),
+				current_title = $this.val(),
+				$handle_title = $this.sibling('.handle-title');
+
+			switch ( current_title ) {
+				case 'publish':
+					current_title = mcs_data.strings.published;
+					break;
+
+				case 'draft':
+					current_title = mcs.strings.draft;
+			}
+
+			$handle_title.text( current_title );
+		}
+
+		/**
+		 * Prevent submitting the post/page when hitting enter
+		 * while focused on a section or block form element
+		 *
+		 * @since 1.0.0
+		 *
+		 * @param event
+		 */
+		prevent_submit : function( event, $this ) {
+			if ( 13 == event.keyCode ) {
+				$this.siblings('.close-title-edit').trigger('click');
+
+				event.preventDefault();
+
+				return false;
+			}
 		},
 
 		/**
 		 * Block our click event while reordering
 		 *
-		 * @since 0.1.0
+		 * @since 1.0.0
 		 *
 		 * @param event
 		 */
@@ -407,7 +442,7 @@ multiple_content_sections.admin = function ( $ ) {
 		/**
 		 * Remove our selected background
 		 *
-		 * @since 0.3.6
+		 * @since 1.3.6
 		 *
 		 * @param event
 		 */
@@ -428,9 +463,13 @@ multiple_content_sections.admin = function ( $ ) {
 				'mcs_featured_image_nonce' : mcs_data.featured_image_nonce
 			}, function( response ) {
 				if ( response != -1 ) {
-					$button.prev().text( mcs_data.strings.add_image).prepend( $edit_icon );
+					if ( $button.prev().hasClass('right') && ! $button.prev().hasClass('button') ) {
+						$button.prev().toggleClass( 'button right' );
+					}
+
+					$button.prev().text( mcs_data.strings.add_image );
+
 					$button.remove();
-			//		$button.text( mcs_data.strings.add_image ).attr('data-mcs-section-featured-image', '').prepend( $edit_icon );
 				}
 			});
 		},
@@ -478,14 +517,11 @@ multiple_content_sections.admin = function ( $ ) {
 	            	$edit_icon = $( '<span />', {
 						'class' : 'dashicons dashicons-edit'
 					}),
-					$trash_icon = $( '<span />', {
-						'class' : 'dashicons dashicons-trash'
-					}),
 					$trash = $('<a/>', {
 						'data-mcs-section-featured-image': '',
 						'href' : '#',
-						'class' : 'mcs-featured-image-trash'
-					}).text( mcs_data.strings.remove_image ).prepend( $trash_icon );
+						'class' : 'mcs-featured-image-trash dashicons-before dashicons-dismiss'
+					});
 
 				$.post( ajaxurl, {
 	                'action': 'mcs_update_featured_image',
@@ -496,10 +532,13 @@ multiple_content_sections.admin = function ( $ ) {
 					if ( response != -1 ) {
 						current_image = media_attachment.id;
 						$button
-							.text( media_attachment.title )
+							.html( '<img src="' + media_attachment.url + '" />' )
 							.attr('data-mcs-section-featured-image', parseInt( media_attachment.id ) )
-							.append( $edit_icon )
 							.after( $trash );
+
+						if ( $button.hasClass('button') && ! $button.hasClass('right') ) {
+							$button.toggleClass( 'button right' );
+						}
 					}
 	            });
 	        });

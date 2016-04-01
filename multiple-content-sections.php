@@ -404,6 +404,17 @@ function mcs_get_allowed_html() {
 			'data-lp-equal-items' => true,
 			'data-lp-equal-children' => true,
 		),
+		'span' => array(
+			'class' => true,
+			'style' => true,
+			'id'    => true,
+			'data-equalizer' => true,
+			'data-equalizer-watch' => true,
+			'data-interchange' => true,
+			'data-lp-equal' => true,
+			'data-lp-equal-items' => true,
+			'data-lp-equal-children' => true,
+		),
 	) );
 
 	$post_allowed = wp_kses_allowed_html( 'post' );

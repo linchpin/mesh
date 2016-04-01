@@ -1,8 +1,9 @@
 /**
  * Controls Block Administration
  *
- * @since 0.4.1
+ * @since 1.4.1
  */
+
 
 var multiple_content_sections = multiple_content_sections || {};
 
@@ -27,9 +28,10 @@ multiple_content_sections.blocks = function ( $ ) {
                 .on('click', '.mcs-block-featured-image-trash', self.remove_background )
                 .on('click', '.mcs-block-featured-image-choose', self.choose_background )
                 .on('click.OpenMediaManager', '.mcs-block-featured-image-choose', self.choose_background )
-                .on('click', '.msc-title-editor:not(.title-input-visible)', self.show_title_input )
-                .on('blur', 'input.mcs-section-title', self.hide_title_input )
-                .on('click', '.close-title-edit', self.hide_title_input );
+                .on('click', '.msc-clean-edit:not(.title-input-visible)', self.show_field )
+                .on('blur', '.msc-clean-edit-element', self.hide_field )
+                .on('click', '.close-title-edit', self.hide_field )
+                .on('click', '.slide-toggle-element', self.slide_toggle_element );
 
             self.setup_resize_slider();
             self.setup_drag_drop();
@@ -38,7 +40,7 @@ multiple_content_sections.blocks = function ( $ ) {
         /**
          * Setup Block Drag and Drop
          *
-         * @since 0.3.0
+         * @since 1.3.0
          */
         setup_drag_drop : function() {
 
@@ -65,6 +67,12 @@ multiple_content_sections.blocks = function ( $ ) {
                 .find( ".block-header" )
                 .addClass( "hndle ui-sortable-handle" )
                 .prepend( "<span class='block-toggle' />");
+            /*
+             $( ".block-toggle" ).click(function() {
+             var icon = $( this );
+             icon.toggleClass( "ui-icon-minusthick ui-icon-plusthick" );
+             icon.closest( ".block" ).find( ".block-content" ).toggle();
+             }); */
 
             $( ".drop-target" ).droppable({
                 accept: ".block:not(.ui-sortable-helper)",
@@ -171,7 +179,7 @@ multiple_content_sections.blocks = function ( $ ) {
          *
          * @todo: Add filters for column min, max
          *
-         * @since 0.3.5
+         * @since 1.3.5
          *
          * @param event
          * @param ui
@@ -264,8 +272,8 @@ multiple_content_sections.blocks = function ( $ ) {
             } );
 
             $.post( ajaxurl, {
-                'action'                   : 'mcs_update_block_widths',
-                'mcs_post_data'            : post_data,
+                'action': 'mcs_update_block_widths',
+                'mcs_post_data' : post_data,
                 'mcs_reorder_blocks_nonce' : mcs_data.reorder_blocks_nonce
             }, function( response ) {
                 // $current_spinner.removeClass( 'is-active' );
@@ -315,16 +323,13 @@ multiple_content_sections.blocks = function ( $ ) {
         /**
          * Render Block after reorder or change.
          *
-         * @since 0.3.5
+         * @since 1.3.5
          *
          * @param $tinymce_editors
          */
         reorder_blocks : function( $tinymce_editors ) {
             $tinymce_editors.each(function() {
-                var editor_id   = $(this).prop('id'),
-                    proto_id,
-                    mce_options = [],
-                    qt_options  = [];
+                var editor_id   = $(this).prop('id');
 
                 // Reset our editors if we have any
                 if( typeof tinymce.editors !== 'undefined' ) {
@@ -333,56 +338,25 @@ multiple_content_sections.blocks = function ( $ ) {
                     }
                 }
 
+                var tempTinyMCE = tinyMCEPreInit;
+                    tempTinyMCE.selector = '#' + editor_id;
+
+                // Setup our editors
                 if ( typeof tinymce !== 'undefined' ) {
-
-                    var $block_content = $(this).closest('.block-content');
-
-                    /**
-                     * Props to @danielbachuber for a shove in the right direction to have movable editors in the wp-admin
-                     *
-                     * https://github.com/alleyinteractive/wordpress-fieldmanager/blob/master/js/richtext.js#L58-L95
-                     */
-
-                    if (typeof tinyMCEPreInit.mceInit[ editor_id ] === 'undefined') {
-                        proto_id = 'content';
-
-                        // Clean up the proto id which appears in some of the wp_editor generated HTML
-                        $block_content.html( $(this).closest('.block-content').html().replace(new RegExp(proto_id, 'g'), editor_id));
-
-                        // This needs to be initialized, so we need to get the options from the proto
-                        if (proto_id && typeof tinyMCEPreInit.mceInit[proto_id] !== 'undefined') {
-                            mce_options = $.extend(true, {}, tinyMCEPreInit.mceInit[proto_id]);
-                            mce_options.body_class = mce_options.body_class.replace(proto_id, editor_id );
-                            mce_options.selector = mce_options.selector.replace(proto_id, editor_id );
-                            mce_options.wp_skip_init = false;
-                            tinyMCEPreInit.mceInit[editor_id] = mce_options;
-                        } else {
-                            // TODO: No data to work with, this should throw some sort of error
-                            return;
-                        }
-
-                        if (proto_id && typeof tinyMCEPreInit.qtInit[proto_id] !== 'undefined') {
-                            qt_options = $.extend(true, {}, tinyMCEPreInit.qtInit[proto_id]);
-                            qt_options.id = qt_options.id.replace(proto_id, editor_id );
-
-                            tinyMCEPreInit.qtInit[editor_id] = qt_options;
-
-                            if ( typeof quicktags !== 'undefined' ) {
-                                quicktags(tinyMCEPreInit.qtInit[editor_id]);
-                            }
-                        }
+                    if ( ! tinyMCEPreInit.qtInit.hasOwnProperty( editor_id ) ) {
+                        tinymce.init( tempTinyMCE );
                     }
-
-                    // @todo This is kinda hacky. See about switching this out @aware
-                    $block_content.find('.switch-tmce').trigger('click');
                 }
+
+                if ( typeof quicktags !== 'undefined' ) {
+                    quicktags( tinyMCEPreInit.qtInit['content'] );
+                }
+
             });
         },
 
         /**
-         * Save the order of our blocks after drag and drop reorder
-         * 
-         * @since 0.1.0
+         * Save the order of our blocks after drag and drop reorde
          *
          * @param section_id
          * @param event
@@ -403,7 +377,7 @@ multiple_content_sections.blocks = function ( $ ) {
         /**
          * Save when we reorder our blocks within a section
          *
-         * @since 0.3.5
+         * @since 1.3.5
          *
          * @param section_id
          * @param block_ids
@@ -505,7 +479,7 @@ multiple_content_sections.blocks = function ( $ ) {
         /**
          * Remove selected background from our block
          *
-         * @since 0.3.6
+         * @since 1.3.6
          *
          * @param event
          */
@@ -531,32 +505,28 @@ multiple_content_sections.blocks = function ( $ ) {
             });
         },
 
-        /**
-         * Display the title input
-         * 
-         * @since 0.2.0
-         * 
-         * @param event
-         */
-        show_title_input : function ( event ) {
+        show_field : function ( event ) {
 	        event.preventDefault();
 	        event.stopPropagation();
 
 	        $(this).addClass('title-input-visible');
 		},
 
-        /**
-         * Hide the title input
-         * 
-         * @since 0.2.0
-         * 
-         * @param event
-         */
-		hide_title_input : function ( event ) {
+		hide_field : function ( event ) {
 	        event.preventDefault();
 	        event.stopPropagation();
 
 	        $('.title-input-visible').removeClass('title-input-visible');
+		},
+
+		slide_toggle_element : function ( event ) {
+			event.preventDefault();
+			event.stopPropagation();
+
+			var $this   = $(this),
+				$toggle = $this.data('toggle');
+
+			$($toggle).slideToggle('fast');
 		}
     };
 

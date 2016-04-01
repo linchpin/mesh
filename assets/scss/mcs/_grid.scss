@@ -4,6 +4,20 @@
 	}
 }
 
+@for $i from 1 through 12 {
+	.mcs-columns-#{$i} {
+		@for $j from 1 through $i {
+			.mcs-offset-#{$j} {
+				padding-left: 100% * $j/$i;
+
+				&.block-content:before {
+					right: 100% - (($j/$i) * 100%);
+				}
+			}
+		}
+	}
+}
+
 .mcs-row {
 	@include clearfix;
 }

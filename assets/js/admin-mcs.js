@@ -21,9 +21,10 @@ multiple_content_sections.blocks = function ( $ ) {
                 .on('click', '.mcs-block-featured-image-trash', self.remove_background )
                 .on('click', '.mcs-block-featured-image-choose', self.choose_background )
                 .on('click.OpenMediaManager', '.mcs-block-featured-image-choose', self.choose_background )
-                .on('click', '.msc-title-editor:not(.title-input-visible)', self.show_title_input )
-                .on('blur', 'input.mcs-section-title', self.hide_title_input )
-                .on('click', '.close-title-edit', self.hide_title_input );
+                .on('click', '.msc-clean-edit:not(.title-input-visible)', self.show_field )
+                .on('blur', '.msc-clean-edit-element', self.hide_field )
+                .on('click', '.close-title-edit', self.hide_field )
+                .on('click', '.slide-toggle-element', self.slide_toggle_element );
 
             self.setup_resize_slider();
             self.setup_drag_drop();
@@ -32,7 +33,7 @@ multiple_content_sections.blocks = function ( $ ) {
         /**
          * Setup Block Drag and Drop
          *
-         * @since 0.3.0
+         * @since 1.3.0
          */
         setup_drag_drop : function() {
 
@@ -59,6 +60,12 @@ multiple_content_sections.blocks = function ( $ ) {
                 .find( ".block-header" )
                 .addClass( "hndle ui-sortable-handle" )
                 .prepend( "<span class='block-toggle' />");
+            /*
+             $( ".block-toggle" ).click(function() {
+             var icon = $( this );
+             icon.toggleClass( "ui-icon-minusthick ui-icon-plusthick" );
+             icon.closest( ".block" ).find( ".block-content" ).toggle();
+             }); */
 
             $( ".drop-target" ).droppable({
                 accept: ".block:not(.ui-sortable-helper)",
@@ -165,7 +172,7 @@ multiple_content_sections.blocks = function ( $ ) {
          *
          * @todo: Add filters for column min, max
          *
-         * @since 0.3.5
+         * @since 1.3.5
          *
          * @param event
          * @param ui
@@ -258,8 +265,8 @@ multiple_content_sections.blocks = function ( $ ) {
             } );
 
             $.post( ajaxurl, {
-                'action'                   : 'mcs_update_block_widths',
-                'mcs_post_data'            : post_data,
+                'action': 'mcs_update_block_widths',
+                'mcs_post_data' : post_data,
                 'mcs_reorder_blocks_nonce' : mcs_data.reorder_blocks_nonce
             }, function( response ) {
                 // $current_spinner.removeClass( 'is-active' );
@@ -309,16 +316,13 @@ multiple_content_sections.blocks = function ( $ ) {
         /**
          * Render Block after reorder or change.
          *
-         * @since 0.3.5
+         * @since 1.3.5
          *
          * @param $tinymce_editors
          */
         reorder_blocks : function( $tinymce_editors ) {
             $tinymce_editors.each(function() {
-                var editor_id   = $(this).prop('id'),
-                    proto_id,
-                    mce_options = [],
-                    qt_options  = [];
+                var editor_id   = $(this).prop('id');
 
                 // Reset our editors if we have any
                 if( typeof tinymce.editors !== 'undefined' ) {
@@ -327,56 +331,25 @@ multiple_content_sections.blocks = function ( $ ) {
                     }
                 }
 
+                var tempTinyMCE = tinyMCEPreInit;
+                    tempTinyMCE.selector = '#' + editor_id;
+
+                // Setup our editors
                 if ( typeof tinymce !== 'undefined' ) {
-
-                    var $block_content = $(this).closest('.block-content');
-
-                    /**
-                     * Props to @danielbachuber for a shove in the right direction to have movable editors in the wp-admin
-                     *
-                     * https://github.com/alleyinteractive/wordpress-fieldmanager/blob/master/js/richtext.js#L58-L95
-                     */
-
-                    if (typeof tinyMCEPreInit.mceInit[ editor_id ] === 'undefined') {
-                        proto_id = 'content';
-
-                        // Clean up the proto id which appears in some of the wp_editor generated HTML
-                        $block_content.html( $(this).closest('.block-content').html().replace(new RegExp(proto_id, 'g'), editor_id));
-
-                        // This needs to be initialized, so we need to get the options from the proto
-                        if (proto_id && typeof tinyMCEPreInit.mceInit[proto_id] !== 'undefined') {
-                            mce_options = $.extend(true, {}, tinyMCEPreInit.mceInit[proto_id]);
-                            mce_options.body_class = mce_options.body_class.replace(proto_id, editor_id );
-                            mce_options.selector = mce_options.selector.replace(proto_id, editor_id );
-                            mce_options.wp_skip_init = false;
-                            tinyMCEPreInit.mceInit[editor_id] = mce_options;
-                        } else {
-                            // TODO: No data to work with, this should throw some sort of error
-                            return;
-                        }
-
-                        if (proto_id && typeof tinyMCEPreInit.qtInit[proto_id] !== 'undefined') {
-                            qt_options = $.extend(true, {}, tinyMCEPreInit.qtInit[proto_id]);
-                            qt_options.id = qt_options.id.replace(proto_id, editor_id );
-
-                            tinyMCEPreInit.qtInit[editor_id] = qt_options;
-
-                            if ( typeof quicktags !== 'undefined' ) {
-                                quicktags(tinyMCEPreInit.qtInit[editor_id]);
-                            }
-                        }
+                    if ( ! tinyMCEPreInit.qtInit.hasOwnProperty( editor_id ) ) {
+                        tinymce.init( tempTinyMCE );
                     }
-
-                    // @todo This is kinda hacky. See about switching this out @aware
-                    $block_content.find('.switch-tmce').trigger('click');
                 }
+
+                if ( typeof quicktags !== 'undefined' ) {
+                    quicktags( tinyMCEPreInit.qtInit['content'] );
+                }
+
             });
         },
 
         /**
-         * Save the order of our blocks after drag and drop reorder
-         * 
-         * @since 0.1.0
+         * Save the order of our blocks after drag and drop reorde
          *
          * @param section_id
          * @param event
@@ -397,7 +370,7 @@ multiple_content_sections.blocks = function ( $ ) {
         /**
          * Save when we reorder our blocks within a section
          *
-         * @since 0.3.5
+         * @since 1.3.5
          *
          * @param section_id
          * @param block_ids
@@ -499,7 +472,7 @@ multiple_content_sections.blocks = function ( $ ) {
         /**
          * Remove selected background from our block
          *
-         * @since 0.3.6
+         * @since 1.3.6
          *
          * @param event
          */
@@ -525,38 +498,36 @@ multiple_content_sections.blocks = function ( $ ) {
             });
         },
 
-        /**
-         * Display the title input
-         * 
-         * @since 0.2.0
-         * 
-         * @param event
-         */
-        show_title_input : function ( event ) {
+        show_field : function ( event ) {
 	        event.preventDefault();
 	        event.stopPropagation();
 
 	        $(this).addClass('title-input-visible');
 		},
 
-        /**
-         * Hide the title input
-         * 
-         * @since 0.2.0
-         * 
-         * @param event
-         */
-		hide_title_input : function ( event ) {
+		hide_field : function ( event ) {
 	        event.preventDefault();
 	        event.stopPropagation();
 
 	        $('.title-input-visible').removeClass('title-input-visible');
+		},
+
+		slide_toggle_element : function ( event ) {
+			event.preventDefault();
+			event.stopPropagation();
+
+			var $this   = $(this),
+				$toggle = $this.data('toggle');
+
+			$($toggle).slideToggle('fast');
 		}
     };
 
 } ( jQuery );
 ;
-multiple_content_sections = multiple_content_sections || {};
+if( typeof(multiple_content_sections) == 'undefined' ) {
+	multiple_content_sections = {};
+}
 
 multiple_content_sections.admin = function ( $ ) {
 
@@ -567,7 +538,7 @@ multiple_content_sections.admin = function ( $ ) {
 		$meta_box_container = $('#mcs-container'),
 		$section_container  = $('#multiple-content-sections-container'),
 		$description        = $('#mcs-description'),
-		$sections,
+		$empty_message      = $('.empty-sections-message'),
 		media_frames        = [],
 
 		// Container References for Admin(self) / Block
@@ -577,28 +548,33 @@ multiple_content_sections.admin = function ( $ ) {
 	return {
 
 		/**
-		 * Get the show on the road
+		 * Initialize our script
 		 */
 		init : function() {
 
-			self   = multiple_content_sections.admin;
+			self = multiple_content_sections.admin;
 			blocks = multiple_content_sections.blocks;
 
 			$body
-				.on( 'click', '.mcs-section-add',           self.add_section )
-				.on( 'click', '.mcs-section-remove',        self.remove_section )
-				.on( 'click', '.mcs-section-reorder',       self.reorder_sections )
-				.on( 'click', '.mcs-save-order',            self.save_section_order )
-				.on( 'click', '.mcs-featured-image-trash',  self.remove_background )
-				.on( 'click', '.mcs-section-expand',        self.expand_all_sections )
-				.on( 'click', '.mcs-featured-image-choose', self.choose_background )
-				.on( 'click.OpenMediaManager', '.mcs-featured-image-choose', self.choose_background )
+				.on('click', '.mcs-section-add', self.add_section )
+				.on('click', '.mcs-section-remove', self.remove_section )
+				.on('click', '.mcs-section-reorder', self.reorder_sections )
+				.on('click', '.mcs-save-order', self.save_section_order )
 
-				.on( 'change', '.mcs-choose-layout',        self.choose_layout )
+				.on('change', '.mcs-choose-layout', self.choose_layout )
 
-				.on( 'keyup', '.mcs-section-title',         self.change_section_title );
+				.on('click', '.mcs-featured-image-choose', self.choose_background )
+				.on('click.OpenMediaManager', '.mcs-featured-image-choose', self.choose_background )
 
-			$sections = $( '.multiple-content-sections-section' );
+				.on('click', '.mcs-featured-image-trash', self.remove_background )
+
+				.on('click', '.mcs-section-expand', self.expand_all_sections )
+
+				.on('keydown', '.msc-clean-edit-element', self.change_input_title )
+
+				.on('change', 'select.msc-clean-edit-element', self.change_select_title );
+
+			var $sections = $( '.multiple-content-sections-section' );
 
 			if ( $sections.length <= 1 ) {
 				$reorder_button.addClass( 'disabled' );
@@ -608,6 +584,7 @@ multiple_content_sections.admin = function ( $ ) {
 			blocks.init();
 
 			self.setup_notifications( $meta_box_container );
+
 		},
 
 		/**
@@ -633,7 +610,7 @@ multiple_content_sections.admin = function ( $ ) {
 					$.post( ajaxurl, {
 						action                : 'mcs_dismiss_notification',
 						mcs_notification_type : $this.attr('data-type'),
-						_wpnonce              : mcs_data.dismiss_nonce
+						_wpnonce     : mcs_data.dismiss_nonce
 					}, function( response ) {});
 
 					$this.fadeTo( 100 , 0, function() {
@@ -648,7 +625,7 @@ multiple_content_sections.admin = function ( $ ) {
 		/**
 		 * 1 click to expand or collapse sections
 		 *
-		 * @since 0.3.0
+		 * @since 1.3.0
 		 *
 		 * @param event
 		 */
@@ -673,7 +650,7 @@ multiple_content_sections.admin = function ( $ ) {
 		/**
 		 * Choose what layout is used for the section
 		 *
-		 * @since 0.1.0
+		 * @since 1.1.0
 		 *
 		 * @param event
 		 * @returns {boolean}
@@ -728,7 +705,7 @@ multiple_content_sections.admin = function ( $ ) {
 		/**
 		 * Add a new section to our content
 		 *
-		 * @since 0.1.0
+		 * @since 1.0.0
 		 *
 		 * @param event
 		 * @returns {boolean}
@@ -753,14 +730,13 @@ multiple_content_sections.admin = function ( $ ) {
 			}, function( response ){
 				if ( response ) {
 					var $response        = $( response ),
-						$tinymce_editors = $response.find('.wp-editor-area' ),
-						$empty_msg       = $('.empty-sections-message');
+						$tinymce_editors = $response.find('.wp-editor-area' );
 
 					$section_container.append( $response );
 					$spinner.removeClass('is-active');
 
-					if ( $empty_msg.length ) {
-						$empty_msg.fadeOut('fast');
+					if ( $('.empty-sections-message').length ) {
+						$('.empty-sections-message').fadeOut('fast');
 					}
 
 					var $postboxes = $('.multiple-content-sections-section', $meta_box_container );
@@ -777,13 +753,6 @@ multiple_content_sections.admin = function ( $ ) {
 			});
 		},
 
-		/**
-		 * Remove the section
-		 *
-		 * @since 0.1.0
-		 *
-		 * @param event
-         */
 		remove_section : function(event) {
 			event.preventDefault();
 			event.stopPropagation();
@@ -820,7 +789,7 @@ multiple_content_sections.admin = function ( $ ) {
 		/**
 		 * Save when sections are reordered
 		 *
-		 * @since 0.1.0
+		 * @since 1.0
 		 *
 		 * @param event
 		 */
@@ -859,10 +828,10 @@ multiple_content_sections.admin = function ( $ ) {
 		/**
 		 * Utility method to display notification information
 		 *
-		 * @since 0.3.0
+		 * @since 1.3.0
 		 *
-		 * @param message The message to display
-		 * @param type    The type of message to display (warning|info|success)
+		 * @param string message The message to display
+		 * @param string type The type of message to display (warning|info|success)
 		 */
 		update_notifications : function( message, type ) {
 
@@ -879,12 +848,6 @@ multiple_content_sections.admin = function ( $ ) {
 			$description.fadeIn('fast');
 		},
 
-		/**
-		 * Autosave callback
-		 *
-		 * @param event
-         * @param ui
-         */
 		save_section_order_sortable : function( event, ui ) {
 			var $reorder_spinner = $('.mcs-reorder-spinner'),
 				section_ids = [];
@@ -939,22 +902,63 @@ multiple_content_sections.admin = function ( $ ) {
             });
 		},
 
-		change_section_title : function(event) {
+		change_input_title : function(event) {
 			var $this = $(this),
 				current_title = $this.val(),
-				$postbox = $this.parents('.multiple-content-sections-postbox');
+				$handle_title = $this.siblings('.handle-title');
+
+			self.prevent_submit( event, $this );
+
+			if ( $this.is('select') ) {
+				return;
+			}
 
 			if ( current_title === '' || current_title == 'undefined' ) {
 				current_title = mcs_data.strings.default_title;
 			}
 
-			$postbox.find('.handle-title').text( current_title );
+			$handle_title.text( current_title );
+		},
+
+		change_select_title : function( event ) {
+			var $this = $(this),
+				current_title = $this.val(),
+				$handle_title = $this.sibling('.handle-title');
+
+			switch ( current_title ) {
+				case 'publish':
+					current_title = mcs_data.strings.published;
+					break;
+
+				case 'draft':
+					current_title = mcs.strings.draft;
+			}
+
+			$handle_title.text( current_title );
+		}
+
+		/**
+		 * Prevent submitting the post/page when hitting enter
+		 * while focused on a section or block form element
+		 *
+		 * @since 1.0.0
+		 *
+		 * @param event
+		 */
+		prevent_submit : function( event, $this ) {
+			if ( 13 == event.keyCode ) {
+				$this.siblings('.close-title-edit').trigger('click');
+
+				event.preventDefault();
+
+				return false;
+			}
 		},
 
 		/**
 		 * Block our click event while reordering
 		 *
-		 * @since 0.1.0
+		 * @since 1.0.0
 		 *
 		 * @param event
 		 */
@@ -965,7 +969,7 @@ multiple_content_sections.admin = function ( $ ) {
 		/**
 		 * Remove our selected background
 		 *
-		 * @since 0.3.6
+		 * @since 1.3.6
 		 *
 		 * @param event
 		 */
@@ -986,9 +990,13 @@ multiple_content_sections.admin = function ( $ ) {
 				'mcs_featured_image_nonce' : mcs_data.featured_image_nonce
 			}, function( response ) {
 				if ( response != -1 ) {
-					$button.prev().text( mcs_data.strings.add_image).prepend( $edit_icon );
+					if ( $button.prev().hasClass('right') && ! $button.prev().hasClass('button') ) {
+						$button.prev().toggleClass( 'button right' );
+					}
+
+					$button.prev().text( mcs_data.strings.add_image );
+
 					$button.remove();
-			//		$button.text( mcs_data.strings.add_image ).attr('data-mcs-section-featured-image', '').prepend( $edit_icon );
 				}
 			});
 		},
@@ -1036,14 +1044,11 @@ multiple_content_sections.admin = function ( $ ) {
 	            	$edit_icon = $( '<span />', {
 						'class' : 'dashicons dashicons-edit'
 					}),
-					$trash_icon = $( '<span />', {
-						'class' : 'dashicons dashicons-trash'
-					}),
 					$trash = $('<a/>', {
 						'data-mcs-section-featured-image': '',
 						'href' : '#',
-						'class' : 'mcs-featured-image-trash'
-					}).text( mcs_data.strings.remove_image ).prepend( $trash_icon );
+						'class' : 'mcs-featured-image-trash dashicons-before dashicons-dismiss'
+					});
 
 				$.post( ajaxurl, {
 	                'action': 'mcs_update_featured_image',
@@ -1054,10 +1059,13 @@ multiple_content_sections.admin = function ( $ ) {
 					if ( response != -1 ) {
 						current_image = media_attachment.id;
 						$button
-							.text( media_attachment.title )
+							.html( '<img src="' + media_attachment.url + '" />' )
 							.attr('data-mcs-section-featured-image', parseInt( media_attachment.id ) )
-							.append( $edit_icon )
 							.after( $trash );
+
+						if ( $button.hasClass('button') && ! $button.hasClass('right') ) {
+							$button.toggleClass( 'button right' );
+						}
 					}
 	            });
 	        });
