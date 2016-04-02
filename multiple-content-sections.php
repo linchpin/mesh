@@ -22,6 +22,7 @@ define( 'LINCHPIN_MCS__MINIMUM_WP_VERSION', '4.0' );
 define( 'LINCHPIN_MCS___PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 define( 'LINCHPIN_MCS___PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 
+include_once 'class.mesh-settings.php';
 include_once 'class.multiple-content-sections.php';
 
 $multiple_content_sections = new Multiple_Content_Sections();
@@ -218,7 +219,7 @@ function the_mcs_content( $post_id = '' ) {
 }
 
 /**
- * mcs_display_sections function.
+ * Display all published "Sections"
  *
  * @access public
  *
@@ -233,7 +234,7 @@ function mcs_display_sections( $post_id = '' ) {
 		$post_id = $post->ID;
 	}
 
-	// Do not show blocks if parent post is private
+	// Do not show blocks if parent post is private.
 	if ( 'private' === get_post_status( $post_id ) && ! current_user_can( 'edit_posts' ) ) {
 		return;
 	}
@@ -254,7 +255,7 @@ function mcs_display_sections( $post_id = '' ) {
 }
 
 /**
- * Get a section's blocks.
+ * Get a specified Section's Blocks.
  *
  * @access public
  *
@@ -286,8 +287,8 @@ function mcs_get_section_blocks( $section_id, $post_status = 'publish' ) {
  *
  * @access public
  *
- * @param  mixed $section
- * @param  int   $number_needed
+ * @param  mixed $section       Post Object for the defined Section
+ * @param  int   $number_needed Number of Blocks that need to be created.
  *
  * @return array
  */
@@ -315,12 +316,21 @@ function mcs_maybe_create_section_blocks( $section, $number_needed = 0 ) {
 }
 
 /**
- * Utility Method to add a sections background
+ * Utility Method to add a background to a section
  *
  * @todo This should be disabled if the user selects to NOT use foundation.
  *
  * @param int $post_id
  * @param bool|true $echo
+ */
+
+/**
+ * @param int    $post_id
+ * @param bool   $echo
+ * @param string $size_large
+ * @param string $size_medium
+ *
+ * @return array|string|void
  */
 function mcs_section_background( $post_id = 0, $echo = true, $size_large = 'large', $size_medium = 'large' ) {
 
