@@ -60,12 +60,6 @@ multiple_content_sections.blocks = function ( $ ) {
                 .find( ".block-header" )
                 .addClass( "hndle ui-sortable-handle" )
                 .prepend( "<span class='block-toggle' />");
-            /*
-             $( ".block-toggle" ).click(function() {
-             var icon = $( this );
-             icon.toggleClass( "ui-icon-minusthick ui-icon-plusthick" );
-             icon.closest( ".block" ).find( ".block-content" ).toggle();
-             }); */
 
             $( ".drop-target" ).droppable({
                 accept: ".block:not(.ui-sortable-helper)",
@@ -356,6 +350,13 @@ multiple_content_sections.blocks = function ( $ ) {
                             mce_options.body_class = mce_options.body_class.replace(proto_id, editor_id );
                             mce_options.selector = mce_options.selector.replace(proto_id, editor_id );
                             mce_options.wp_skip_init = false;
+                            mce_options.plugins = 'tabfocus,paste,media,wordpress,wpgallery,wplink';
+                            mce_options.block_formats = 'Paragraph=p; Heading 3=h3; Heading 4=h4';
+                            mce_options.toolbar1 = 'bold,italic,bullist,numlist,hr,alignleft,aligncenter,alignright,alignjustify,link,wp_adv ';
+                            mce_options.toolbar2 = 'formatselect,strikethrough,spellchecker,underline,forecolor,pastetext,removeformat ';
+                            mce_options.toolbar3 = '';
+                            mce_options.toolbar4 = '';
+
                             tinyMCEPreInit.mceInit[editor_id] = mce_options;
                         } else {
                             // TODO: No data to work with, this should throw some sort of error

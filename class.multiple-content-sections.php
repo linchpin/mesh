@@ -121,7 +121,8 @@ class Multiple_Content_Sections {
 	}
 
 	/**
-	 * Update our tiny MCE w/ our own settings
+	 * Update our tiny MCE w/ our own settings.
+	 *
 	 * @param $in
 	 */
 	function tiny_mce_before_init( $in ) {
@@ -133,14 +134,14 @@ class Multiple_Content_Sections {
 			return $in;
 		}
 
-		$in['remove_linebreaks'] = false;
-		$in['gecko_spellcheck'] = false;
-		$in['keep_styles'] = true;
+		$in['remove_linebreaks']   = false;
+		$in['gecko_spellcheck']    = false;
+		$in['keep_styles']         = true;
 		$in['accessibility_focus'] = true;
-		$in['tabfocus_elements'] = 'major-publishing-actions';
-		$in['media_strict'] = false;
+		$in['tabfocus_elements']   = 'major-publishing-actions';
+		$in['media_strict']        = false;
 		$in['paste_remove_styles'] = false;
-		$in['paste_remove_spans'] = false;
+		$in['paste_remove_spans']  = false;
 		$in['paste_strip_class_attributes'] = 'none';
 		$in['paste_text_use_dialog'] = true;
 		$in['wpeditimage_disable_captions'] = true;
@@ -149,8 +150,8 @@ class Multiple_Content_Sections {
 		$in['wpautop'] = true;
 		$in['apply_source_formatting'] = false;
 		$in['block_formats'] = 'Paragraph=p; Heading 3=h3; Heading 4=h4';
-		$in['toolbar1'] = 'bold,italic,strikethrough,bullist,numlist,blockquote,hr,alignleft,aligncenter,alignright,link,unlink,spellchecker ';
-		$in['toolbar2'] = 'formatselect,underline,alignjustify,forecolor,pastetext,removeformat,charmap,outdent,indent,undo,redo,wp_help ';
+		$in['toolbar1'] = 'bold,italic,bullist,numlist,blockquote,hr,alignleft,aligncenter,alignright,alignjustify,link,wp_adv ';
+		$in['toolbar2'] = 'formatselect,underline,strikethrough,forecolor,pastetext,removeformat ';
 		$in['toolbar3'] = '';
 		$in['toolbar4'] = '';
 
@@ -585,7 +586,8 @@ class Multiple_Content_Sections {
 	 * Enqueue admin styles
 	 *
 	 * @access public
-	 * @return void$push_pull     = get_post_meta( $section->ID, '_mcs_push_pull', true );
+	 * @return void
+	 *
 	 */
 	function admin_enqueue_styles() {
 		wp_enqueue_style( 'admin-mcs', plugins_url( 'assets/css/admin-mcs.css', __FILE__ ), array(), '1.0' );
