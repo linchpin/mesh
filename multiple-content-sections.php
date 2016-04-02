@@ -27,6 +27,8 @@ include_once 'class.multiple-content-sections.php';
 
 $multiple_content_sections = new Multiple_Content_Sections();
 
+add_action( 'init', array( 'MeshSettings', 'init' ) );
+
 /**
  * Get files within our directory
  *
@@ -175,7 +177,7 @@ function mcs_get_sections( $post_id, $return_type = 'array' ) {
  *
  * @access public
  *
- * @param string $post_id (default: '')
+ * @param string $post_id Post ID of the target Section.
  *
  * @return void
  */
@@ -206,6 +208,9 @@ function the_mcs_content( $post_id = '' ) {
 		if ( file_exists( $file ) ) {
 			include $file;
 		} else {
+			/*
+			 * Add in a default template just in case one the default templates have been deleted.
+			 */
 			?>
 			<div <?php post_class(); ?>>
 				<h3 title="<?php the_title_attribute(); ?>"><?php the_title(); ?></h3>
@@ -223,7 +228,7 @@ function the_mcs_content( $post_id = '' ) {
  *
  * @access public
  *
- * @param string $post_id (default: '')
+ * @param string $post_id Target Post ID used to query child Sections.
  *
  * @return void
  */
@@ -259,8 +264,8 @@ function mcs_display_sections( $post_id = '' ) {
  *
  * @access public
  *
- * @param  int    $section_id
- * @param  string $post_status
+ * @param  int    $section_id  Post ID of the target Section.
+ * @param  string $post_status Post Status of the target Section.
  *
  * @return array
  */
@@ -320,15 +325,10 @@ function mcs_maybe_create_section_blocks( $section, $number_needed = 0 ) {
  *
  * @todo This should be disabled if the user selects to NOT use foundation.
  *
- * @param int $post_id
- * @param bool|true $echo
- */
-
-/**
- * @param int    $post_id
- * @param bool   $echo
- * @param string $size_large
- * @param string $size_medium
+ * @param int    $post_id     PostID of the Section.
+ * @param bool   $echo        Echo the output or not.
+ * @param string $size_large  The name of the Thumbnail for our Large image used by Interchange.
+ * @param string $size_medium The name of the Thumbnail for our Medium image used by Interchange.
  *
  * @return array|string|void
  */
@@ -367,23 +367,24 @@ function mcs_section_background( $post_id = 0, $echo = true, $size_large = 'larg
 		}
 
 		if ( '' !== $default_image_url[0] ) {
-			$style = 'data-interchange="' . implode( ', ', $backgrounds ) . '" style="background-image: url(' . esc_url( $default_image_url[0] ) . ');"';
+			$style = 'data-interchange="' . implode( ', ', esc_attr( $backgrounds ) ) . '" style="background-image: url(' . esc_url( $default_image_url[0] ) . ');"';
 		}
 	}
 
 	if ( empty( $style ) ) {
-		return;
+		return '';
 	} else {
 		if ( false === $echo ) {
 			return $style;
 		} else {
-			echo $style; // @todo sanitization
+			echo $style; // WPCS: XSS ok.
 		}
 	}
 }
 
 /**
  * Return an array of allowed html for wp_kses functions
+ *
  * @return mixed|void
  */
 function mcs_get_allowed_html() {

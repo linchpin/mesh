@@ -2,9 +2,9 @@
 /**
  * Container Controls for editors
  *
- * @since 1.4.1
+ * @since 0.4.1
  *
- * @package MultipleContentSection
+ * @package    MultipleContentSection
  * @subpackage Admin
  */
 ?>

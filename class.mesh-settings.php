@@ -219,8 +219,9 @@ class MeshSettings {
 	static public function get_tabs() {
 
 		$tabs                 = array();
-		$tabs['settings'] = __( 'Settings', self::$plugin_name );
-		$tabs['faq']      = __( 'FAQ', self::$plugin_name );
+		$tabs['settings']  = __( 'Settings', 'linchpin-mcs' );
+		$tabs['faq']       = __( 'FAQ', 'linchpin-mcs' );
+		$tabs['changelog'] = __( 'Change Log', 'linchpin-mcs' );
 
 		return apply_filters( 'mesh_tabs', $tabs );
 	}

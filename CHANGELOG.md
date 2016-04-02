@@ -1,15 +1,19 @@
-##Change Log For Multiple Content Sections
+##Change Log For Mesh
 
 ## [1.0.0] - 2016-04-01
 
 ### Updated
 - Change the name of Multiple Content Sections to Mesh for public release.
+- Massive overhaul of admin CSS for public release.
 
 ### Fixed
 - TinyMCE now works better. Using a fix seen here https://github.com/alleyinteractive/wordpress-fieldmanager/blob/master/js/richtext.js#L58-L95
 
 ### Added
 - Allowing the ability to toggle kitchen sink items. @todo Not displaying yet
+- Admins can now control some plugin settings. Settings -> Mesh
+- Admins can disable or enable CSS as needed
+- Admins can now enable Mesh on individual post types.
 
 ## [0.4.5] - 2015-10-27
 

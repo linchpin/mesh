@@ -57,6 +57,7 @@ We're working on the ability to tie in extra controls to blocks and sections.
 * `apply_filters( 'mcs_section_templates', $section_templates );`
 * `apply_filters( 'mesh_tabs', $tabs );`
 * `apply_filters( 'css_mode', $css_mode );` Allow filtering of available css_mode options
+* `apply_filters( 'mcs_allowed_html', array_merge_recursive( $post_allowed, $mcs_allowed );` Filter allowed HTML within MCS
 		
 ```$css_mode = array(
     array( 'label' => __( 'Use Mesh CSS', 'linchpin-mcs' ), 'value' => '' ),
@@ -64,4 +65,3 @@ We're working on the ability to tie in extra controls to blocks and sections.
     array( 'label' => __( 'Use Foundation w/ my theme', 'linchpin-mcs' ), 'value' => 1 ),
     array( 'label' => __( 'Use Bootstrap (coming soon)', 'linchpin-mcs' ), 'value' => 2 ),
 );```
-   		`
