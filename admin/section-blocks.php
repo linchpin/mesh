@@ -65,23 +65,12 @@
 								</div>
 
 								<div class="mcs-columns-6 text-right">
-									<div class="msc-clean-edit handle-right">
-										<label for="<?php esc_attr_e( 'mcs-sections-' . $section->ID . '-' . $blocks[ $block_increment ]->ID . '-offset]' ); ?>"><?php esc_html_e( 'Offset:', 'linchpin-mcs' ); ?></label>
-										<select id="<?php esc_attr_e( 'mcs-sections-' . $section->ID . '-' . $blocks[ $block_increment ]->ID . '-offset]' ); ?>" class="mcs-column-offset msc-clean-edit-element" name="mcs-sections[<?php esc_attr_e( $section->ID ); ?>][blocks][<?php esc_attr_e( $blocks[ $block_increment ]->ID ); ?>][offset]">
-											<?php for ( $i = 0; $i <= $offsets_available; $i++ ) : ?>
-												<option value="<?php echo $i; ?>"<?php if ( $i == $block_offset ) { echo ' selected'; } ?>><?php echo $i; ?></option>
-											<?php endfor; ?>
-										</select>
-										<span class="close-title-edit right"><?php _e( 'Done', 'linchpin-mcs' ); ?></span>
-
-										<?php
-											if ( ! $block_offset ) {
-												$block_offset = 0;
-											}
-										?>
-
-										<span class="handle-title"><?php esc_html_e( $block_offset ); ?></span>
-									</div>
+									<label for="<?php esc_attr_e( 'mcs-sections-' . $section->ID . '-' . $blocks[ $block_increment ]->ID . '-offset]' ); ?>"><?php esc_html_e( 'Offset:', 'linchpin-mcs' ); ?></label>
+									<select id="<?php esc_attr_e( 'mcs-sections-' . $section->ID . '-' . $blocks[ $block_increment ]->ID . '-offset]' ); ?>" class="mcs-column-offset msc-clean-edit-element" name="mcs-sections[<?php esc_attr_e( $section->ID ); ?>][blocks][<?php esc_attr_e( $blocks[ $block_increment ]->ID ); ?>][offset]">
+										<?php for ( $i = 0; $i <= $offsets_available; $i++ ) : ?>
+											<option value="<?php echo $i; ?>"<?php if ( $i == $block_offset ) { echo ' selected'; } ?>><?php echo $i; ?></option>
+										<?php endfor; ?>
+									</select>
 
 									<label for="mcs-sections-<?php esc_attr_e( $blocks[ $block_increment ]->ID ); ?>-css-class">
 										<?php esc_html_e( 'CSS Class', 'linchpin-mcs' ); ?> <input type="text" id="mcs-sections-<?php esc_attr_e( $blocks[ $block_increment ]->ID ); ?>-css-class" name="mcs-sections[<?php esc_attr_e( $section->ID ); ?>][blocks][<?php esc_attr_e( $blocks[ $block_increment ]->ID ); ?>][css_class]" value="<?php esc_attr_e( $block_css_class ); ?>" />
@@ -89,10 +78,12 @@
 								</div>
 							<?php else : ?>
 								<div class="mcs-columns-12">
-									<span class="the-mover dashicons dashicons-grid-view hndle ui-sortable-handle"></span>
-									<label for="<?php esc_attr_e( 'mcs-sections-' . $section->ID . '-' . $blocks[ $block_increment ]->ID . '-title]' ); ?>"><?php esc_html_e( 'Title:', 'linchpin-mcs' ); ?>
-										<input id="<?php esc_attr_e( 'mcs-sections-' . $section->ID . '-' . $blocks[ $block_increment ]->ID . '-title]' ); ?>" type="text" class="mcs-column-title" name="mcs-sections[<?php esc_attr_e( $section->ID ); ?>][blocks][<?php esc_attr_e( $blocks[ $block_increment ]->ID ); ?>][post_title]" value="<?php esc_attr_e( $blocks[ $block_increment ]->post_title ); ?>"/>
-									</label>
+									<span class="the-mover hndle ui-sortable-handle left"><span></span></span>
+									<div class="msc-clean-edit left">
+										<input id="<?php esc_attr_e( 'mcs-sections-' . $section->ID . '-' . $blocks[ $block_increment ]->ID . '-title]' ); ?>" type="text" class="mcs-column-title msc-clean-edit-element widefat left" name="mcs-sections[<?php esc_attr_e( $section->ID ); ?>][blocks][<?php esc_attr_e( $blocks[ $block_increment ]->ID ); ?>][post_title]" value="<?php esc_attr_e( $blocks[ $block_increment ]->post_title ); ?>"/>
+										<span class="close-title-edit left"><?php _e( 'Done', 'linchpin-mcs' ); ?></span>
+										<span class="handle-title"><?php esc_attr_e( $blocks[ $block_increment ]->post_title ); ?></span>
+									</div>
 								</div>
 
 								<div class="mcs-columns-12">
@@ -136,13 +127,13 @@
 					</div>
 
 					<div class="block-background-container text-right mcs-columns-12">
-						<?php $featured_image_id = get_post_thumbnail_id( $editor_id );
+						<?php $featured_image_id = get_post_thumbnail_id( $blocks[ $block_increment ]->ID );
 
 						if ( empty( $featured_image_id ) ) : ?>
 							<a class="mcs-block-featured-image-choose"><?php esc_attr_e( 'Set Background Image', 'linchpin-mce' ); ?></a>
 						<?php else : ?>
-							<a class="mcs-block-featured-image-choose" data-mcs-section-featured-image="<?php esc_attr_e( $featured_image_id ); ?>"><?php echo get_the_title( $featured_image_id ); ?></a>
-							<a class="mcs-block-featured-image-trash" data-mcs-section-featured-image="<?php esc_attr_e( $featured_image_id ); ?>"><?php esc_html_e( 'Remove', 'linchpin-mcs' ); ?></a>
+							<a class="mcs-block-featured-image-choose" data-mcs-block-featured-image="<?php esc_attr_e( $featured_image_id ); ?>"><?php echo get_the_title( $featured_image_id ); ?></a>
+							<a class="mcs-block-featured-image-trash" data-mcs-block-featured-image="<?php esc_attr_e( $featured_image_id ); ?>"><?php esc_html_e( 'Remove', 'linchpin-mcs' ); ?></a>
 						<?php endif; ?>
 					</div>
 

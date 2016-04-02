@@ -22,7 +22,7 @@ multiple_content_sections.blocks = function ( $ ) {
                 .on('click', '.mcs-block-featured-image-choose', self.choose_background )
                 .on('click.OpenMediaManager', '.mcs-block-featured-image-choose', self.choose_background )
                 .on('click', '.msc-clean-edit:not(.title-input-visible)', self.show_field )
-                .on('blur', '.msc-clean-edit-element', self.hide_field )
+                .on('blur', '.msc-clean-edit-element:not(select)', self.hide_field )
                 .on('click', '.close-title-edit', self.hide_field )
                 .on('click', '.slide-toggle-element', self.slide_toggle_element );
 
@@ -50,7 +50,7 @@ multiple_content_sections.blocks = function ( $ ) {
                 },
                 revert: true,
                 zIndex: 1000,
-                handle: '.mcs-row-title',
+                handle: '.the-mover',
                 iframeFix:true,
                 start:function( ui, event, helper ){}
             });
@@ -259,8 +259,8 @@ multiple_content_sections.blocks = function ( $ ) {
             } );
 
             $.post( ajaxurl, {
-                'action': 'mcs_update_block_widths',
-                'mcs_post_data' : post_data,
+                'action'                   : 'mcs_update_block_widths',
+                'mcs_post_data'            : post_data,
                 'mcs_reorder_blocks_nonce' : mcs_data.reorder_blocks_nonce
             }, function( response ) {
                 // $current_spinner.removeClass( 'is-active' );
@@ -544,7 +544,7 @@ multiple_content_sections.blocks = function ( $ ) {
 	        event.preventDefault();
 	        event.stopPropagation();
 
-	        $('.title-input-visible').removeClass('title-input-visible');
+	        $(this).parent().removeClass('title-input-visible');
 		},
 
 		slide_toggle_element : function ( event ) {
@@ -602,7 +602,8 @@ multiple_content_sections.admin = function ( $ ) {
 				.on('click.OpenMediaManager', '.mcs-featured-image-choose', self.choose_background )
 
 				.on('change', '.mcs-choose-layout', self.choose_layout )
-				.on('keydown', '.msc-clean-edit-element', self.change_input_title )
+				.on('keypress', '.msc-clean-edit-element', self.prevent_submit )
+				.on('keyup', '.msc-clean-edit-element', self.change_input_title )
 				.on('change', 'select.msc-clean-edit-element', self.change_select_title );
 
 			$sections = $( '.multiple-content-sections-section' );
@@ -641,7 +642,7 @@ multiple_content_sections.admin = function ( $ ) {
 					$.post( ajaxurl, {
 						action                : 'mcs_dismiss_notification',
 						mcs_notification_type : $this.attr('data-type'),
-						_wpnonce     : mcs_data.dismiss_nonce
+						_wpnonce              : mcs_data.dismiss_nonce
 					}, function( response ) {});
 
 					$this.fadeTo( 100 , 0, function() {
@@ -761,13 +762,14 @@ multiple_content_sections.admin = function ( $ ) {
 			}, function( response ){
 				if ( response ) {
 					var $response        = $( response ),
-						$tinymce_editors = $response.find('.wp-editor-area' );
+						$tinymce_editors = $response.find('.wp-editor-area' ),
+						$empty_msg       = $('.empty-sections-message');
 
 					$section_container.append( $response );
 					$spinner.removeClass('is-active');
 
-					if ( $('.empty-sections-message').length ) {
-						$('.empty-sections-message').fadeOut('fast');
+					if ( $empty_msg.length ) {
+						$empty_msg.fadeOut('fast');
 					}
 
 					var $postboxes = $('.multiple-content-sections-section', $meta_box_container );
@@ -951,8 +953,6 @@ multiple_content_sections.admin = function ( $ ) {
 				current_title = $this.val(),
 				$handle_title = $this.siblings('.handle-title');
 
-			self.prevent_submit( event, $this );
-
 			if ( $this.is('select') ) {
 				return;
 			}
@@ -989,9 +989,9 @@ multiple_content_sections.admin = function ( $ ) {
 		 *
 		 * @param event
 		 */
-		prevent_submit : function( event, $this ) {
+		prevent_submit : function( event ) {
 			if ( 13 == event.keyCode ) {
-				$this.siblings('.close-title-edit').trigger('click');
+				$(this).siblings('.close-title-edit').trigger('click');
 
 				event.preventDefault();
 
