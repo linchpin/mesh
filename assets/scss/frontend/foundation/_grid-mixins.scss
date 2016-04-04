@@ -1,0 +1,429 @@
+// Mixins for the grid
+@mixin -zf-each-breakpoint($small: true) {
+  $map: $breakpoint-classes;
+
+  @if not $small {
+    $map: map-remove($map, small);
+  }
+
+  @each $size in $map {
+    $-zf-size: $size !global;
+
+    @include breakpoint($size) {
+      @content;
+    }
+  }
+}
+
+@mixin clearfix {
+	&:before,
+	&:after {
+		content: ' ';
+		display: table;
+	}
+
+	&:after {
+		clear: both;
+	}
+}
+
+@mixin breakpoint($value) {
+  $str: breakpoint($value);
+
+  // If $str is still an empty string, no media query is needed
+  @if $str == '' {
+    @content;
+  }
+
+  // Otherwise, wrap the content in a media query
+  @else {
+    @media screen and #{$str} {
+      @content;
+    }
+  }
+}
+
+@mixin grid-context(
+  $columns,
+  $root: false
+) {
+  // Store the current column count so it can be re-set later
+  $old-grid-column-count: $grid-column-count;
+  $grid-column-count: $columns !global;
+
+  @if $root {
+    @at-root { @content; }
+  }
+  @else {
+    @content;
+  }
+
+  // Restore the old column count
+  $grid-column-count: $old-grid-column-count;
+}
+
+@mixin grid-row(
+  $columns: null,
+  $behavior: null,
+  $width: $grid-row-width,
+  $cf: true,
+  $gutter: $grid-column-gutter
+) {
+  $behavior: -zf-get-options($behavior, nest collapse);
+  $margin: auto;
+
+  @if map-get($behavior, nest) {
+    @include grid-row-nest($gutter);
+
+    @if map-get($behavior, collapse) {
+      margin-left: 0;
+      margin-right: 0;
+    }
+  }
+  @else {
+    max-width: $width;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  @if $cf {
+    @include clearfix;
+  }
+
+  @if $columns != null {
+    @include grid-context($columns) {
+      @content;
+    }
+  }
+}
+
+@mixin grid-row-nest($gutter: null) {
+  @if $gutter != null {
+    $margin: rem-calc($gutter) / 2 * -1;
+    margin-left: $margin;
+    margin-right: $margin;
+  }
+  @else {
+    @each $breakpoint, $value in $grid-column-responsive-gutter {
+      $margin: rem-calc($value) / 2 * -1;
+
+      @include breakpoint($breakpoint) {
+        margin-left: $margin;
+        margin-right: $margin;
+      }
+    }
+  }
+}
+
+@mixin grid-column(
+  $columns: $grid-column-count,
+  $gutter: $grid-column-gutter
+) {
+  @if $gutter != null {
+    $gutter: rem-calc($gutter) / 2;
+  }
+  @else {
+    @each $breakpoint, $gutter in $grid-column-responsive-gutter {
+      $padding: rem-calc($gutter) / 2;
+
+      @include breakpoint($breakpoint) {
+        padding-left: $padding;
+        padding-right: $padding;
+      }
+    }
+  }
+
+  @include grid-column-size($columns);
+  float: $global-left;
+  padding-left: $gutter;
+  padding-right: $gutter;
+
+  @if $grid-column-align-edge {
+    &:last-child:not(:first-child) {
+      float: $global-right;
+    }
+  }
+}
+
+@mixin grid-column-row(
+  $gutter: $grid-column-gutter
+) {
+  @include grid-row;
+  @include grid-column($gutter: $gutter);
+
+  &,
+  &:last-child {
+    float: none;
+  }
+}
+
+@mixin grid-col(
+  $columns: $grid-column-count,
+  $gutter: $grid-column-gutter
+) {
+  @include grid-column($columns, $gutter);
+}
+
+@mixin grid-col-row(
+  $gutter: $grid-column-gutter
+) {
+  @include grid-column-row($gutter);
+}
+
+@mixin grid-column-size(
+  $columns: $grid-column-count
+) {
+  width: grid-column($columns);
+}
+
+@mixin grid-col-size(
+  $columns: $grid-column-count
+) {
+  @include grid-column-size($columns);
+}
+
+@mixin grid-column-position($position) {
+  @if type-of($position) == 'number' {
+    $offset: percentage($position / $grid-column-count);
+
+    position: relative;
+    #{$global-left}: $offset;
+  }
+  @else if $position == center {
+    float: none;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  @else {
+    @warn 'Wrong syntax for grid-column-position(). Enter a positive or negative number, or center.';
+  }
+}
+
+@mixin grid-column-unposition {
+  position: static;
+  margin-left: 0;
+  margin-right: 0;
+  float: left;
+}
+
+@mixin grid-column-offset($n) {
+  margin-#{$global-left}: grid-column($n);
+}
+
+@mixin grid-column-end {
+  // This extra specificity is required for the property to be applied
+  &:last-child:last-child {
+    float: $global-left;
+  }
+}
+
+@mixin grid-col-pos($position) {
+  @include grid-column-position($position);
+}
+
+@mixin grid-col-unpos {
+  @include grid-column-unposition;
+}
+
+@mixin grid-col-off($n) {
+  @include grid-column-offset($n);
+}
+
+@mixin grid-col-end {
+  @include grid-column-end;
+}
+
+@mixin grid-column-collapse {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+@mixin grid-column-uncollapse($gutter: $grid-column-gutter) {
+  $gutter: rem-calc($gutter) / 2;
+  padding-left: $gutter;
+  padding-right: $gutter;
+}
+
+@mixin grid-col-collapse {
+  @include grid-column-collapse;
+}
+
+@mixin grid-col-uncollapse($gutter: $grid-column-gutter) {
+  @include grid-column-uncollapse($gutter);
+}
+
+@mixin foundation-grid(
+  $row: 'row',
+  $column: 'column',
+  $column-row: 'column-row',
+  $push: 'push',
+  $pull: 'pull',
+  $center: 'centered',
+  $uncenter: 'uncentered',
+  $collapse: 'collapse',
+  $uncollapse: 'uncollapse',
+  $offset: 'offset',
+  $end: 'end',
+  $expanded: 'expanded'
+) {
+  // Row
+  .#{$row} {
+    @include grid-row;
+
+    // Collapsing
+    &.#{$collapse} {
+      > .#{$column} { @include grid-col-collapse; }
+    }
+
+    // Nesting
+    & & {
+      @if $grid-column-gutter == null {
+        @each $breakpoint, $gutter in $grid-column-responsive-gutter {
+          @include breakpoint($breakpoint) {
+            @include grid-row-nest($gutter);
+          }
+        }
+      }
+      @else {
+        @include grid-row-nest($grid-column-gutter);
+      }
+
+      &.#{$collapse} {
+        margin-left: 0;
+        margin-right: 0;
+      }
+    }
+
+    // Expanded (full-width) row
+    &.#{$expanded} {
+      max-width: none;
+
+      .#{$row} {
+        margin-left: auto;
+        margin-right: auto;
+      }
+    }
+  }
+
+  // Column
+  .#{$column} {
+    @include grid-col;
+
+    @if $grid-column-align-edge {
+      &.#{$end} {
+        @include grid-col-end;
+      }
+    }
+  }
+
+  // Column row
+  // The double .row class is needed to bump up the specificity
+  .#{$column}.#{$row}.#{$row} {
+    float: none;
+
+    // To properly nest a column row, padding and margin is removed
+    .#{$row} & {
+      padding-left: 0;
+      padding-right: 0;
+      margin-left: 0;
+      margin-right: 0;
+    }
+  }
+
+  @include -zf-each-breakpoint {
+    @for $i from 1 through $grid-column-count {
+      // Column width
+      .#{$-zf-size}-#{$i} {
+        @include grid-col-size($i);
+      }
+
+      // Source ordering
+      @if $i < $grid-column-count {
+        .#{$-zf-size}-#{$push}-#{$i} {
+          @include grid-col-pos($i);
+        }
+
+        .#{$-zf-size}-#{$pull}-#{$i} {
+          @include grid-col-pos(-$i);
+        }
+      }
+
+      // Offsets
+      $o: $i - 1;
+
+      .#{$-zf-size}-#{$offset}-#{$o} {
+        @include grid-col-off($o);
+      }
+    }
+
+    // Block grid
+    @for $i from 1 through $block-grid-max {
+      .#{$-zf-size}-up-#{$i} {
+        @include grid-layout($i, ".#{$column}");
+      }
+    }
+
+    // Responsive collapsing
+    .#{$-zf-size}-#{$collapse} {
+      > .#{$column} { @include grid-col-collapse; }
+
+      .#{$row} {
+        margin-left: 0;
+        margin-right: 0;
+      }
+    }
+
+    .#{$-zf-size}-#{$uncollapse} {
+      $gutter: null;
+
+      @if $grid-column-gutter {
+        $gutter: $grid-column-gutter;
+      }
+      @else {
+        $gutter: -zf-get-bp-val($grid-column-responsive-gutter, $-zf-size);
+      }
+      > .#{$column} { @include grid-col-uncollapse($gutter); }
+    }
+
+    // Positioning
+    .#{$-zf-size}-#{$center} {
+      @include grid-col-pos(center);
+    }
+
+    // Gutter adjustment
+    .#{$-zf-size}-#{$uncenter},
+    .#{$-zf-size}-#{$push}-0,
+    .#{$-zf-size}-#{$pull}-0 {
+      @include grid-col-unpos;
+    }
+  }
+
+  @if $column == 'column' {
+    .columns {
+      // scss-lint:disable PlaceholderInExtend
+      @extend .column;
+    }
+  }
+}
+
+@mixin grid-layout(
+  $n,
+  $selector: '.column'
+) {
+  & > #{$selector} {
+    width: percentage(1/$n);
+    float: $global-left;
+
+    &:nth-of-type(1n) {
+      clear: none;
+    }
+
+    &:nth-of-type(#{$n}n+1) {
+      clear: both;
+    }
+
+    &:last-child {
+      float: left;
+    }
+  }
+}

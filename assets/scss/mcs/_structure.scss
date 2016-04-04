@@ -339,7 +339,10 @@
 		&:before {
 			content: '';
 
-			background-color: $light-grey;
+			background: {
+				color: $light-grey;
+				image: url('../images/offset-pattern.png');
+			};
 			margin-right: 10px;
 
 			position: absolute;

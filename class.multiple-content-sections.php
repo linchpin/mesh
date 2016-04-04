@@ -63,6 +63,8 @@ class Multiple_Content_Sections {
 		add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_styles' ) );
 
+		add_action( 'wp_enqueue_scripts',    array( $this, 'wp_enqueue_styles' ) );
+
 		if ( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
 			include_once( 'functions-ajax.php' );
 		}
@@ -592,6 +594,10 @@ class Multiple_Content_Sections {
 	 */
 	function admin_enqueue_styles() {
 		wp_enqueue_style( 'admin-mcs', plugins_url( 'assets/css/admin-mcs.css', __FILE__ ), array(), '1.0' );
+	}
+
+	function wp_enqueue_styles() {
+		wp_enqueue_style( 'mesh-grid-foundation', plugins_url( 'assets/css/mesh-grid-foundation.css', __FILE__ ), array(), '1.0' );
 	}
 
 	/**
