@@ -235,6 +235,12 @@ multiple_content_sections.admin = function ( $ ) {
 			event.preventDefault();
 			event.stopPropagation();
 
+			var confirm_remove = confirm( mcs_data.strings.confirm_remove );
+
+			if ( ! confirm_remove ) {
+				return;
+			}
+
 			var $this = $(this),
 				$postbox = $this.parents('.multiple-content-sections-postbox'),
 				$spinner = $('.mcs-add-spinner', $postbox),
@@ -405,7 +411,7 @@ multiple_content_sections.admin = function ( $ ) {
 		change_select_title : function( event ) {
 			var $this = $(this),
 				current_title = $this.val(),
-				$handle_title = $this.sibling('.handle-title');
+				$handle_title = $this.siblings('.handle-title');
 
 			switch ( current_title ) {
 				case 'publish':

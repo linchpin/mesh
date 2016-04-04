@@ -576,6 +576,7 @@ class Multiple_Content_Sections {
 				'select_block_bg' => __( 'Select Block Background', 'linchpin-mcs' ),
 				'published' => __( 'Published', 'linchpin-mcs' ),
 				'draft' => __( 'Draft', 'linchpin-mcs' ),
+				'confirm_remove' => __( 'Are you sure you want to remove this section?', 'linchpin-mcs' ),
 			),
 		);
 
