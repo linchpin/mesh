@@ -148,6 +148,11 @@
 		border: 2px dashed $dark-grey;
 		visibility: visible !important;
 	}
+
+	.notice {
+		background-color: $light-grey;
+		box-shadow: none;
+	}
 }
 
 .mcs-row-padding {
@@ -255,7 +260,10 @@
 
 // 06. Blocks
 .mcs-editor-blocks {
-	margin-top: $base;
+	margin: {
+		bottom: $base;
+		top: $base;
+	};
 	position: relative;
 
 	.column-slider {
