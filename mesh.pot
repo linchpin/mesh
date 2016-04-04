@@ -1,0 +1,389 @@
+# Copyright (C) 2016 Linchpin
+# This file is distributed under the GPLv2 or later.
+msgid ""
+msgstr ""
+"Project-Id-Version: Mesh for WordPress 1.0.0\n"
+"Report-Msgid-Bugs-To: "
+"https://wordpress.org/support/plugin/multiple-content-sections\n"
+"POT-Creation-Date: 2016-04-04 01:13:00+00:00\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2016-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"X-Generator: grunt-wp-i18n 0.5.4\n"
+
+#: admin/controls.php:14
+msgid "Reorder Sections"
+msgstr ""
+
+#: admin/controls.php:15 class.multiple-content-sections.php:571
+msgid "Expand All"
+msgstr ""
+
+#: admin/controls.php:16 class.multiple-content-sections.php:240
+msgid "Add Section"
+msgstr ""
+
+#: admin/section-blocks.php:62 admin/section-blocks.php:84
+#: admin/section-container.php:26 admin/section-container.php:39
+msgid "Done"
+msgstr ""
+
+#: admin/section-blocks.php:68 admin/section-blocks.php:91
+msgid "Offset:"
+msgstr ""
+
+#: admin/section-blocks.php:76 admin/section-blocks.php:100
+#: admin/section-controls.php:48
+msgid "CSS Class"
+msgstr ""
+
+#: admin/section-blocks.php:133 admin/section-controls.php:72
+#: class.multiple-content-sections.php:569
+msgid "Set Background Image"
+msgstr ""
+
+#: admin/section-blocks.php:136
+msgid "Remove"
+msgstr ""
+
+#: admin/section-container.php:34
+msgid "Status:"
+msgstr ""
+
+#: admin/section-container.php:36 class.multiple-content-sections.php:578
+msgid "Draft"
+msgstr ""
+
+#: admin/section-container.php:37 class.multiple-content-sections.php:577
+msgid "Published"
+msgstr ""
+
+#: admin/section-container.php:68
+msgid "Remove Section"
+msgstr ""
+
+#: admin/section-controls.php:15
+msgid "Columns:"
+msgstr ""
+
+#: admin/section-controls.php:26
+msgid "Title Display"
+msgstr ""
+
+#: admin/section-controls.php:41
+msgid "More Options"
+msgstr ""
+
+#: admin/section-controls.php:54
+msgid "Collapse Padding"
+msgstr ""
+
+#: admin/section-controls.php:59
+msgid "Push/Pull"
+msgstr ""
+
+#: admin/section-controls.php:64
+msgid "Equalize"
+msgstr ""
+
+#: admin/section-template-reordering.php:19
+msgid "Reorder your content blocks by dragging and dropping."
+msgstr ""
+
+#: admin/section-template-warnings.php:16
+msgid ""
+"Your sections template selection does not have enough spots to display all "
+"of your blocks"
+msgstr ""
+
+#: admin/section-template-warnings.php:18
+msgid "Don't worry! None of your content is not lost"
+msgstr ""
+
+#: class.mesh-settings.php:50
+msgid "Below are your settings for Mesh."
+msgstr ""
+
+#: class.mesh-settings.php:63
+msgid "Mesh Configurations"
+msgstr ""
+
+#: class.mesh-settings.php:70
+msgid "Use Mesh CSS"
+msgstr ""
+
+#: class.mesh-settings.php:71
+msgid "Disable Mesh CSS"
+msgstr ""
+
+#: class.mesh-settings.php:72
+msgid "Use Foundation w/ my theme"
+msgstr ""
+
+#: class.mesh-settings.php:73
+msgid "Use Bootstrap (coming soon)"
+msgstr ""
+
+#: class.mesh-settings.php:83
+msgid "CSS Settings"
+msgstr ""
+
+#: class.mesh-settings.php:89
+msgid "CSS"
+msgstr ""
+
+#: class.mesh-settings.php:90
+msgid "Choose whether or not to enqueue CSS with Mesh."
+msgstr ""
+
+#: class.mesh-settings.php:225
+msgid "Settings"
+msgstr ""
+
+#: class.mesh-settings.php:226
+msgid "About Mesh"
+msgstr ""
+
+#: class.mesh-settings.php:227
+msgid "Change Log"
+msgstr ""
+
+#: class.multiple-content-sections.php:115
+msgid "Show Extra MCS Section Controls?"
+msgstr ""
+
+#: class.multiple-content-sections.php:172
+#: class.multiple-content-sections.php:173
+#: class.multiple-content-sections.php:188
+#: class.multiple-content-sections.php:189
+msgid "Content Section"
+msgstr ""
+
+#: class.multiple-content-sections.php:174
+msgid "Parent Content Section:"
+msgstr ""
+
+#: class.multiple-content-sections.php:175
+msgid "All Content Sections"
+msgstr ""
+
+#: class.multiple-content-sections.php:176
+msgid "Add New Content Section"
+msgstr ""
+
+#: class.multiple-content-sections.php:177
+msgid "Add New"
+msgstr ""
+
+#: class.multiple-content-sections.php:178
+msgid "New Content Section"
+msgstr ""
+
+#: class.multiple-content-sections.php:179
+msgid "Edit Content Section"
+msgstr ""
+
+#: class.multiple-content-sections.php:180
+msgid "Update Content Section"
+msgstr ""
+
+#: class.multiple-content-sections.php:181
+msgid "View Content Section"
+msgstr ""
+
+#: class.multiple-content-sections.php:182
+msgid "Search Content Sections"
+msgstr ""
+
+#: class.multiple-content-sections.php:183
+msgid "Not found"
+msgstr ""
+
+#: class.multiple-content-sections.php:184
+msgid "Not found in Trash"
+msgstr ""
+
+#: class.multiple-content-sections.php:226
+msgid "Multiple Content Sections"
+msgstr ""
+
+#: class.multiple-content-sections.php:238
+msgid "You have no additional Content Sections yet."
+msgstr ""
+
+#: class.multiple-content-sections.php:239
+msgid "Get started by clicking"
+msgstr ""
+
+#: class.multiple-content-sections.php:245
+msgid ""
+"Multiple content sections allow you to easily segment your page's contents "
+"into different blocks of markup."
+msgstr ""
+
+#: class.multiple-content-sections.php:567
+msgid "Be sure to save order of your sections once your changes are complete."
+msgstr ""
+
+#: class.multiple-content-sections.php:568
+msgid ""
+"Multiple content sections allows you to easily segment your page's contents "
+"into different blocks of markup."
+msgstr ""
+
+#: class.multiple-content-sections.php:570
+msgid "Remove Background"
+msgstr ""
+
+#: class.multiple-content-sections.php:572
+msgid "Collapse All"
+msgstr ""
+
+#: class.multiple-content-sections.php:573
+msgid "No Title"
+msgstr ""
+
+#: class.multiple-content-sections.php:574
+msgid "Select Section Background"
+msgstr ""
+
+#: class.multiple-content-sections.php:575
+msgid "Select Background"
+msgstr ""
+
+#: class.multiple-content-sections.php:576
+msgid "Select Block Background"
+msgstr ""
+
+#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:102
+msgid "PPCPP-DESCRIPTION"
+msgstr ""
+
+#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:103
+msgid "PPCPP-HELPTEXT"
+msgstr ""
+
+#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:104
+msgid "PPCPP:OPT-FILENAME"
+msgstr ""
+
+#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:105
+msgid "PPCPP:OPT-DIRECTORY"
+msgstr ""
+
+#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:106
+msgid "PPCPP:OPT-TARGET"
+msgstr ""
+
+#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:107
+msgid "PPCPP:OPT-ENCODING"
+msgstr ""
+
+#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:108
+msgid "PPCPP:OPT-EXTENSIONS"
+msgstr ""
+
+#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:109
+msgid "PPCPP:OPT-IGNORE"
+msgstr ""
+
+#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:110
+msgid "PPCPP:OPT-IGNORETAGS"
+msgstr ""
+
+#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:111
+msgid "PPCPP:OPT-HIDDEN"
+msgstr ""
+
+#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:112
+msgid "PPCPP:OPT-IGNORESYMLINKS"
+msgstr ""
+
+#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:113
+msgid "PPCPP:OPT-MARKERS"
+msgstr ""
+
+#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:114
+msgid "PPCPP:OPT-TITLE"
+msgstr ""
+
+#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:115
+msgid "PPCPP:OPT-FORCE"
+msgstr ""
+
+#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:116
+msgid "PPCPP:OPT-VALIDATE"
+msgstr ""
+
+#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:117
+msgid "PPCPP:OPT-VISIBILITY"
+msgstr ""
+
+#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:118
+msgid "PPCPP:OPT-SOURCECODE"
+msgstr ""
+
+#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:119
+msgid "PPCPP:OPT-PROGRESSBAR"
+msgstr ""
+
+#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:125
+msgid "PPCPP:OPT-DEFAULTPACKAGENAME"
+msgstr ""
+
+#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:159
+msgid "PPCPP:EXC-BADTARGET"
+msgstr ""
+
+#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:167
+msgid "PPCPP:LOG-COLLECTING"
+msgstr ""
+
+#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:174
+#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:190
+#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:241
+msgid "PPCPP:LOG-OK"
+msgstr ""
+
+#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:182
+msgid "PPCPP:LOG-INITIALIZING"
+msgstr ""
+
+#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:191
+msgid "PPCPP:LOG-PARSING"
+msgstr ""
+
+#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:226
+msgid "PPCPP:EXC-NOFILES"
+msgstr ""
+
+#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:237
+msgid "PPCPP:LOG-STORECACHE"
+msgstr ""
+
+#. Plugin Name of the plugin/theme
+msgid "Mesh for WordPress"
+msgstr ""
+
+#. Author URI of the plugin/theme
+msgid "http://linchpin.agency"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid ""
+"Adds multiple sections for content on a post by post basis. Mesh also has "
+"settings to enable it for specific post types"
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "Linchpin"
+msgstr ""
+
+#: class.multiple-content-sections.php:170
+#: class.multiple-content-sections.php:171
+msgctxt "Content Section"
+msgid "Content Section"
+msgstr ""

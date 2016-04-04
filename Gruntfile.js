@@ -44,6 +44,14 @@ module.exports = function(grunt) {
             }
         },
 
+        makepot: {
+            target: {
+                options: {
+                    type: 'wp-plugin'
+                }
+            }
+        },
+
         watch: {
             grunt: { files: ['Gruntfile.js'] },
 
@@ -62,6 +70,7 @@ module.exports = function(grunt) {
         }
     });
 
+    grunt.loadNpmTasks( 'grunt-wp-i18n' );
 	grunt.registerTask('build', ['sass']);
-    grunt.registerTask('default', ['uglify', 'concat', 'watch']);
+    grunt.registerTask('default', [ 'makepot','uglify', 'concat', 'watch']);
 }

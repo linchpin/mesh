@@ -27,9 +27,7 @@ use \Michelf\MarkdownExtra;
 ?>
 <div class="wrap">
 	<h2><?php esc_html_e( get_admin_page_title() ); ?> </h2>
-
 	<?php settings_errors( self::$plugin_name . '-notices' ); ?>
-
 	<h2 class="nav-tab-wrapper">
 		<?php
 		foreach ( $tabs as $tab_slug => $tab_name ) :

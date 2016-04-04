@@ -6,9 +6,9 @@
  */
 
 /**
- * Class MeshSettings
+ * Class Mesh_Settings
  */
-class MeshSettings {
+class Mesh_Settings {
 
 	/**
 	 * Define our settings page
@@ -30,15 +30,15 @@ class MeshSettings {
 	 * @since 1.0.0
 	 */
 	public static function init() {
-		add_action( 'admin_menu', array( 'MeshSettings', 'add_admin_menu' ) );
-		add_action( 'admin_init', array( 'MeshSettings', 'settings_init' ) );
+		add_action( 'admin_menu', array( 'Mesh_Settings', 'add_admin_menu' ) );
+		add_action( 'admin_init', array( 'Mesh_Settings', 'settings_init' ) );
 	}
 
 	/**
 	 * Add the options page to our settings menu
 	 */
 	public static function add_admin_menu() {
-		add_options_page( LINCHPIN_MCS_PLUGIN_NAME, LINCHPIN_MCS_PLUGIN_NAME, 'manage_options', self::$settings_page, array( 'MeshSettings', 'add_options_page' ) );
+		add_options_page( LINCHPIN_MCS_PLUGIN_NAME, LINCHPIN_MCS_PLUGIN_NAME, 'manage_options', self::$settings_page, array( 'Mesh_Settings', 'add_options_page' ) );
 	}
 
 	/**
@@ -59,9 +59,9 @@ class MeshSettings {
 
 		// Default Settings Section.
 		add_settings_section(
-			'mesh_settings',
-			__( 'Mesh Configurations', 'linchpin-mcss' ),
-			array( 'MeshSettings', 'create_section' ),
+			'mesh_sections',
+			__( 'Mesh Configurations', 'linchpin-mcs' ),
+			array( 'Mesh_Settings', 'create_section' ),
 			self::$settings_page
 		);
 
@@ -74,17 +74,20 @@ class MeshSettings {
 		);
 
 		// Allow filtering of available css_mode options.
-		apply_filters( 'css_mode', $css_mode );
+		$css_mode = apply_filters( 'css_mode', $css_mode );
+
+		echo 'add settings field';
 
 		add_settings_field(
 			'css_mode',
 			__( 'CSS Settings', 'linchpin-mcs' ),
-			array( 'MeshSettings', 'add_select' ),
+			array( 'Mesh_Settings', 'add_select' ),
 			self::$settings_page,
-			'mesh_settings',
+			'mesh_sections',
 			array(
 				'field' => 'css_mode',
-				'description' => 'Choose whether or not to enqueue CSS with Mesh.',
+				'label' => __( 'CSS', 'linchpin-mcs' ),
+				'description' => __( 'Choose whether or not to enqueue CSS with Mesh.', 'linchpin-mcs' ),
 				'options' => $css_mode,
 			)
 		);
@@ -113,10 +116,10 @@ class MeshSettings {
 	/**
 	 * Build out our settings fields as needed.
 	 *
-	 * @since 1.1
-	 * @param object $args An Object of our field customizations
+	 * @since 1.0.0
+	 * @param object $args An Object of our field customizations.
 	 *
-	 * @return void Echos our field html
+	 * @return void Echos our field html.
 	 */
 	public static function add_textfield( $args ) {
 
@@ -146,23 +149,24 @@ class MeshSettings {
 	/**
 	 * Used any time we need to add in a select field
 	 *
-	 * @param $args
+	 * @param array $args Args for Customization.
 	 */
 	public static function add_select( $args ) {
-			/**
-			 * Define our field defaults
-			 */
-			$defaults = array(
-				'class'   => '',
-				'options' => array(),
-			);
 
-			// Parse incoming $args into an array and merge it with $defaults.
-			$args = wp_parse_args( $args, $defaults );
+		/**
+		 * Define our field defaults
+		 */
+		$defaults = array(
+			'class'   => '',
+			'options' => array(),
+		);
 
-			$options = get_option( 'mesh_settings' );
+		// Parse incoming $args into an array and merge it with $defaults.
+		$args = wp_parse_args( $args, $defaults );
 
-			$select_options = $args['options'];
+		$options = get_option( 'mesh_settings' );
+
+		$select_options = $args['options'];
 
 		?>
 
@@ -170,7 +174,8 @@ class MeshSettings {
 			<p class="description"><?php esc_html_e( $args['description'] ); ?></p>
 		<?php endif; ?>
 
-		<select name="mesh_settings[<?php esc_attr_e( $args['field'] ); ?>]">
+		<label for="mesh-<?php esc_attr_e( $args['field'] ); ?>"></label>
+		<select id="mesh-<?php esc_attr_e( $args['field'] ); ?>" name="mesh_settings[<?php esc_attr_e( $args['field'] ); ?>]">
 			<?php foreach ( $select_options as $option ) : ?>
 				<option value="<?php esc_attr_e( $option['value'] ); ?>" <?php selected( $options[ $args['field'] ], $option['value'] ); ?>><?php esc_html_e( $option['label'] ); ?></option>
 			<?php endforeach; ?>
@@ -178,13 +183,10 @@ class MeshSettings {
 		<?php
 	}
 
-
 	/**
-	 * [apply_tab_slug_filters description]
+	 * @param $default_settings
 	 *
-	 * @param  array $default_settings [description]
-	 *
-	 * @return array                   [description]
+	 * @return array
 	 */
 	static private function apply_tab_slug_filters( $default_settings ) {
 
@@ -202,8 +204,9 @@ class MeshSettings {
 	}
 
 	/**
-	 * [get_default_tab_slug description]
-	 * @return [type] [description]
+	 * Get the default tab slug
+	 *
+	 * @return mixed
 	 */
 	static public function get_default_tab_slug() {
 
@@ -220,7 +223,7 @@ class MeshSettings {
 
 		$tabs                 = array();
 		$tabs['settings']  = __( 'Settings', 'linchpin-mcs' );
-		$tabs['faq']       = __( 'FAQ', 'linchpin-mcs' );
+		$tabs['faq']       = __( 'About Mesh', 'linchpin-mcs' );
 		$tabs['changelog'] = __( 'Change Log', 'linchpin-mcs' );
 
 		return apply_filters( 'mesh_tabs', $tabs );

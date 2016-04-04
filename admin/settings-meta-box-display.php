@@ -17,7 +17,7 @@
 <form action="options.php" method="POST">
 	<h2><?php esc_html_e( LINCHPIN_MCS_PLUGIN_NAME, 'linchpin-mcs' ); ?></h2>
 	<?php settings_fields( 'mesh_settings' ); ?>
-	<?php do_settings_sections( 'mesh_settings' ); ?>
+	<?php do_settings_sections( 'mesh_sections' ); ?>
 	<?php submit_button(); ?>
 </form>
 <br class="clear" />
