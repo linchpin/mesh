@@ -24,7 +24,8 @@ multiple_content_sections.blocks = function ( $ ) {
                 .on('click', '.msc-clean-edit:not(.title-input-visible)', self.show_field )
                 .on('blur', '.msc-clean-edit-element:not(select)', self.hide_field )
                 .on('click', '.close-title-edit', self.hide_field )
-                .on('click', '.slide-toggle-element', self.slide_toggle_element );
+                .on('click', '.slide-toggle-element', self.slide_toggle_element )
+                .on('change', '.mcs-column-offset', self.display_offset );
 
             self.setup_resize_slider();
             self.setup_drag_drop();
@@ -473,15 +474,11 @@ multiple_content_sections.blocks = function ( $ ) {
                     $edit_icon = $( '<span />', {
                         'class' : 'dashicons dashicons-edit'
                     }),
-                    $trash_icon = $( '<span />', {
-                        'class' : 'dashicons dashicons-trash'
-                    }),
-                    $trash = $('<button/>', {
-                        'type' : 'button',
+                    $trash = $('<a/>', {
                         'data-mcs-section-featured-image': '',
                         'href' : '#',
-                        'class' : 'mcs-featured-image-trash'
-                    }).text( mcs_data.strings.remove_image).prepend( $trash_icon );
+                        'class' : 'mcs-block-featured-image-trash dashicons-before dashicons-dismiss'
+                    });
 
                 $.post( ajaxurl, {
                     'action': 'mcs_update_featured_image',
@@ -492,9 +489,8 @@ multiple_content_sections.blocks = function ( $ ) {
                     if ( response != -1 ) {
                         current_image = media_attachment.id;
                         $button
-                            .text( media_attachment.title )
-                            .attr('data-mcs-section-featured-image', parseInt( media_attachment.id ) )
-                            .append( $edit_icon )
+                            .html( '<img src="' + media_attachment.url + '" />' )
+                            .attr('data-mcs-block-featured-image', parseInt( media_attachment.id ) )
                             .after( $trash );
                     }
                 });
@@ -518,8 +514,7 @@ multiple_content_sections.blocks = function ( $ ) {
 
             var $button       = $(this),
                 $section      = $button.parents('.block'),
-                section_id    = parseInt( $section.attr('data-mcs-block-id') ),
-                $edit_icon    = $( '<span class="dashicons dashicons-format-image" />' );
+                section_id    = parseInt( $section.attr('data-mcs-block-id') );
 
             $.post( ajaxurl, {
                 'action': 'mcs_update_featured_image',
@@ -527,7 +522,7 @@ multiple_content_sections.blocks = function ( $ ) {
                 'mcs_featured_image_nonce' : mcs_data.featured_image_nonce
             }, function( response ) {
                 if ( response != -1 ) {
-                    $button.prev().text( mcs_data.strings.add_image ).prepend( $edit_icon );
+                    $button.prev().text( mcs_data.strings.add_image );
                     $button.remove();
                 }
             });
@@ -555,6 +550,17 @@ multiple_content_sections.blocks = function ( $ ) {
 				$toggle = $this.data('toggle');
 
 			$($toggle).slideToggle('fast');
+		},
+
+		display_offset : function ( event ) {
+			var offset = $(this).val(),
+				$block = $(this).parents('.block-header').next('.block-content');
+
+			$block.removeClass('mcs-has-offset mcs-offset-1 mcs-offset-2 mcs-offset-3 mcs-offset-4 mcs-offset-5 mcs-offset-6');
+
+			if ( parseInt( offset ) ) {
+				$block.addClass('mcs-has-offset mcs-offset-' + offset );
+			}
 		}
     };
 
@@ -1035,7 +1041,11 @@ multiple_content_sections.admin = function ( $ ) {
 			}, function( response ) {
 				if ( response != -1 ) {
 					if ( $button.prev().hasClass('right') && ! $button.prev().hasClass('button') ) {
-						$button.prev().toggleClass( 'button right' );
+						if ( ! $button.parents('.block-background-container') ) {
+							$button.prev().toggleClass( 'button right' );
+						} else {
+							$button.prev().toggleClass( 'right' ).attr('data-mcs-block-featured-image', '' );
+						}
 					}
 
 					$button.prev().text( mcs_data.strings.add_image );

@@ -473,7 +473,11 @@ multiple_content_sections.admin = function ( $ ) {
 			}, function( response ) {
 				if ( response != -1 ) {
 					if ( $button.prev().hasClass('right') && ! $button.prev().hasClass('button') ) {
-						$button.prev().toggleClass( 'button right' );
+						if ( ! $button.parents('.block-background-container') ) {
+							$button.prev().toggleClass( 'button right' );
+						} else {
+							$button.prev().toggleClass( 'right' ).attr('data-mcs-block-featured-image', '' );
+						}
 					}
 
 					$button.prev().text( mcs_data.strings.add_image );

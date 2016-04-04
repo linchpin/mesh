@@ -125,6 +125,7 @@
 // 03. Section Header
 .multiple-content-sections-section {
 	.handlediv {
+		cursor: pointer;
 		font-size: 20px;
 		height: $input_height;
 		line-height: $input_height;
@@ -139,6 +140,12 @@
 
 	&.closed .handlediv {
 		@include dashicons( '\f140' );
+	}
+
+	&.ui-sortable-placeholder {
+		background-color: transparent;
+		border: 2px dashed $dark-grey;
+		visibility: visible !important;
 	}
 }
 
@@ -209,7 +216,8 @@
 			width: auto;
 		}
 
-		.mcs-featured-image-trash {
+		.mcs-featured-image-trash,
+		.mcs-block-featured-image-trash {
 			text-decoration: none;
 
 			position: absolute;
