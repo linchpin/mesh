@@ -19,6 +19,8 @@
 }
 
 .mcs-row {
+	position: relative;
+
 	@include clearfix;
 }
 

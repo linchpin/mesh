@@ -9,6 +9,8 @@
 
 ?>
 <div class="mcs-row">
+	<?php include LINCHPIN_MCS___PLUGIN_DIR . 'admin/section-column-resize.php'; ?>
+
 	<?php
 	// If the template doesn't have any blocks make sure it has 1.
 	if ( ! $section_blocks = (int) $templates[ $selected_template ]['blocks'] ) {
