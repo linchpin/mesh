@@ -387,7 +387,7 @@ class Multiple_Content_Sections {
 				update_post_meta( $section->ID, '_mcs_push_pull', $push_pull );
 			}
 
-			// Save Push / Pull.
+			// Save Collapse.
 			$collapse = $section_data['collapse'];
 
 			if ( empty( $collapse ) ) {

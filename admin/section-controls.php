@@ -22,18 +22,8 @@
 		</div>
 
 		<div class="left">
-			<label for="mcs-sections[<?php esc_attr_e( $section->ID ); ?>][title-display]">
-				<strong><?php esc_html_e( 'Title Display', 'linchpin-mcs' ); ?></strong>
-				<select name="mcs-sections[<?php esc_attr_e( $section->ID ); ?>][title_display]" value="<?php esc_attr_e( $title_display ); ?>">
-					<option value="" <?php if ( '' == $title_display ) : ?>selected="selected"<?php endif; ?>> - Select - </option>
-					<option value="none" <?php if ( 'none' == $title_display ) : ?>selected="selected"<?php endif; ?>>Hide Title</option>
-					<?php if ( count( $blocks ) > 1 ) : ?>
-						<option value="top" <?php if ( 'top' == $title_display ) : ?>selected="selected"<?php endif; ?>>Top</option>
-						<?php foreach( $blocks as $block ) : ?>
-							<option value="block-<?php echo $block->menu_order; ?>" <?php if ( 'block-' . $block->menu_order == $title_display ) : ?>selected="selected"<?php endif; ?>>In Block <?php echo $block->menu_order; ?></option>
-						<?php endforeach; ?>
-					<?php endif; ?>
-				</select>
+			<label for="mcs-section[<?php esc_attr_e( $section->ID ); ?>][title_display]">
+				<?php esc_html_e( 'Display Title', 'linchpin-mcs' ); ?> <input type="checkbox" name="mcs-sections[<?php esc_attr_e( $section->ID ); ?>][title_display]" value="1" <?php if ( get_post_meta( $section->ID, '_mcs_title_display', true ) ): ?>checked<?php endif; ?> />
 			</label>
 		</div>
 	</div>
