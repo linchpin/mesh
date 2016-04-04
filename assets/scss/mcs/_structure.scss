@@ -4,7 +4,8 @@
  * 02. No Sections
  * 03. Section Header
  * 04. Section Meta
- * 05. Blocks
+ * 05. Section Footer
+ * 06. Blocks
  *
  **/
 
@@ -232,7 +233,27 @@
 	}
 }
 
-// 05. Blocks
+// 05. Section Footer
+.mcs-section-footer {
+	background-color: $light-grey;
+	border-top: 1px solid $grey;
+	margin: {
+		left: -$inside_padding;
+		right: -$inside_padding;
+		bottom: -$inside_padding;
+	};
+	padding: $inside_padding;
+
+	.mcs-section-remove {
+		line-height: $input_height;
+
+		&:before {
+			line-height: $input_height;
+		}
+	}
+}
+
+// 06. Blocks
 .mcs-editor-blocks {
 	margin-top: $base;
 	position: relative;
