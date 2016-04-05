@@ -294,6 +294,8 @@ class Multiple_Content_Sections {
 
 		remove_action( 'save_post', array( $this, 'save_post' ), 10 );
 
+		$count = 0;
+
 		foreach ( $_POST['mcs-sections'] as $section_id => $section_data ) {
 			$section = get_post( (int) $section_id );
 
@@ -330,9 +332,12 @@ class Multiple_Content_Sections {
 					wp_kses_allowed_html( 'post' )
 				) ),
 				'post_status' => $status,
+				'menu_order' => $count,
 			);
 
 			wp_update_post( $updates );
+
+			$count++;
 
 			// Save Template.
 			$template = sanitize_text_field( $section_data['template'] );
