@@ -31,7 +31,11 @@
 	}
 
 
-	// 02. Buttons
+	// 02. Buttons/Links
+	a {
+		cursor: pointer;
+	}
+
 	.button {
 		&.primary {
 			background-color: $primary;
