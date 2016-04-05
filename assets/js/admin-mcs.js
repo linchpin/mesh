@@ -586,7 +586,8 @@ multiple_content_sections.admin = function ( $ ) {
 
 		// Container References for Admin(self) / Block
 		self,
-		blocks;
+		blocks,
+		section_count;
 
 	return {
 
@@ -597,7 +598,7 @@ multiple_content_sections.admin = function ( $ ) {
 
 			self = multiple_content_sections.admin;
 			blocks = multiple_content_sections.blocks;
-
+			
 			$body
 				.on('click', '.mcs-section-add',           self.add_section )
 				.on('click', '.mcs-section-remove',        self.remove_section )
@@ -767,6 +768,8 @@ multiple_content_sections.admin = function ( $ ) {
 			event.preventDefault();
 			event.stopPropagation();
 
+			section_count = $sections.length;
+
 			var $this = $(this),
 				$spinner = $this.siblings('.spinner');
 
@@ -779,6 +782,7 @@ multiple_content_sections.admin = function ( $ ) {
 			$.post( ajaxurl, {
 				action: 'mcs_add_section',
 				mcs_post_id: mcs_data.post_id,
+				mcs_section_count: section_count,
 				mcs_add_section_nonce: mcs_data.add_section_nonce
 			}, function( response ){
 				if ( response ) {
@@ -802,6 +806,9 @@ multiple_content_sections.admin = function ( $ ) {
 					}
 
 					blocks.reorder_blocks( $tinymce_editors );
+
+					// Repopulate the sections cache so that the new section is included going forward.
+					$sections = $('.multiple-content-sections-section', $section_container);
 
 				} else {
 					$spinner.removeClass('is-active');

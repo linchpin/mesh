@@ -10,7 +10,6 @@ multiple_content_sections.admin = function ( $ ) {
 		$expand_button      = $('.mcs-section-expand'),
 		$meta_box_container = $('#mcs-container'),
 		$section_container  = $('#multiple-content-sections-container'),
-		$sections           = $('.multiple-content-sections-section', $section_container),
 		$description        = $('#mcs-description'),
 		$empty_message      = $('.empty-sections-message'),
 		$equalize           = $('.mcs_section [data-equalizer]'),
@@ -31,7 +30,7 @@ multiple_content_sections.admin = function ( $ ) {
 
 			self = multiple_content_sections.admin;
 			blocks = multiple_content_sections.blocks;
-
+			
 			$body
 				.on('click', '.mcs-section-add',           self.add_section )
 				.on('click', '.mcs-section-remove',        self.remove_section )
@@ -240,6 +239,7 @@ multiple_content_sections.admin = function ( $ ) {
 
 					blocks.reorder_blocks( $tinymce_editors );
 
+					// Repopulate the sections cache so that the new section is included going forward.
 					$sections = $('.multiple-content-sections-section', $section_container);
 
 				} else {
