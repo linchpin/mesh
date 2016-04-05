@@ -47,7 +47,7 @@ class Multiple_Content_Sections_AJAX {
 
 		$args = array(
 			'post_type' => 'mcs_section',
-			'post_title' => 'No Title',
+			'post_title' => 'No Section Title',
 			'post_status' => 'draft',
 			'post_parent' => $post_id,
 			'menu_order' => $menu_order,

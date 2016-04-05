@@ -77,6 +77,10 @@ class Multiple_Content_Sections {
 
 		// Add Screen Options.
 		add_action( 'admin_menu', array( $this, 'admin_menu' ) );
+
+		// Admin Pointers
+		add_action( 'admin_enqueue_scripts', array( $this, 'wptuts_pointer_load' ), 1000 );
+		add_filter( 'wptuts_admin_pointers-page', array( $this, 'wptuts_register_pointer_testing' ) );
 	}
 
 	/**
@@ -238,8 +242,8 @@ class Multiple_Content_Sections {
 
 			<?php if ( empty( $content_sections ) ) : ?>
 				<div id="mcs-description" class="description notice below-h2 text-center lead empty-sections-message">
-					<p><?php esc_html_e( 'You have no additional Content Sections yet.', 'linchpin-mcs' ); ?></p>
-					<p><?php esc_html_e( 'Get started by clicking', 'linchpin-mcs' ); ?></p>
+					<p><?php esc_html_e( 'You have no additional Content Sections.', 'linchpin-mcs' ); ?></p>
+					<p><?php esc_html_e( 'Get started by adding a Mesh section now', 'linchpin-mcs' ); ?></p>
 					<p><a href="#" class="button primary mcs-section-add dashicons-before dashicons-plus"><?php esc_html_e( 'Add Section', 'lincpin-mcs' ); ?></a></p>
 				</div>
 			<?php else : ?>
@@ -597,7 +601,7 @@ class Multiple_Content_Sections {
 				'remove_image' => __( 'Remove Background', 'linchpin-mcs' ),
 				'expand_all' => __( 'Expand All', 'linchpin-mcs' ),
 				'collapse_all' => __( 'Collapse All', 'linchpin-mcs' ),
-				'default_title' => __( 'No Title', 'linchpin-mcs' ),
+				'default_title' => __( 'No Section Title', 'linchpin-mcs' ),
 				'select_section_bg' => __( 'Select Section Background', 'linchpin-mcs' ),
 				'select_bg' => __( 'Select Background' , 'linchpin-mcs' ),
 				'select_block_bg' => __( 'Select Block Background', 'linchpin-mcs' ),
@@ -687,5 +691,91 @@ class Multiple_Content_Sections {
 		}
 
 		return $files;
+	}
+
+	function wptuts_pointer_load( $hook_suffix ) {
+
+	    // Don't run on WP < 3.3
+	    if ( get_bloginfo( 'version' ) < '3.3' )
+	        return;
+
+	    $screen = get_current_screen();
+	    $screen_id = $screen->id;
+
+	    // Get pointers for this screen
+	    $pointers = apply_filters( 'wptuts_admin_pointers-' . $screen_id, array() );
+
+	    if ( ! $pointers || ! is_array( $pointers ) )
+	        return;
+
+	    // Get dismissed pointers
+	    $dismissed = explode( ',', (string) get_user_meta( get_current_user_id(), 'dismissed_wp_pointers', true ) );
+	    $valid_pointers =array();
+
+	    // Check pointers and remove dismissed ones.
+	    foreach ( $pointers as $pointer_id => $pointer ) {
+
+	        // Sanity check
+	        if ( in_array( $pointer_id, $dismissed ) || empty( $pointer )  || empty( $pointer_id ) || empty( $pointer['target'] ) || empty( $pointer['options'] ) )
+	            continue;
+
+	        $pointer['pointer_id'] = $pointer_id;
+
+	        // Add the pointer to $valid_pointers array
+	        $valid_pointers['pointers'][] =  $pointer;
+	    }
+
+	    // No valid pointers? Stop here.
+	    if ( empty( $valid_pointers ) )
+	        return;
+
+	    // Add pointers style to queue.
+	    wp_enqueue_style( 'wp-pointer' );
+
+	    // Add pointers script to queue. Add custom script.
+	    wp_enqueue_script( 'wptuts-pointer', plugins_url( 'assets/js/admin-pointer.js', __FILE__ ), array( 'wp-pointer' ) );
+
+	    // Add pointer options to script.
+	    wp_localize_script( 'wptuts-pointer', 'wptutsPointer', $valid_pointers );
+	}
+
+	function wptuts_register_pointer_testing( $p ) {
+	    $p['all_section_options'] = array(
+	        'target' => '.mcs-more-section-options',
+	        'options' => array(
+	            'content' => sprintf( '<h3> %s </h3> <p> %s </p>',
+	                __( 'Section Options' ,'linchpin-mcs'),
+	                __( 'View all section options by click the "More Options" toggle.','linchpin-mcs')
+	            ),
+	            'position' => array( 'edge' => 'bottom', 'align' => 'left' )
+	        )
+	    );
+
+	    $p['offset'] = array(
+	        'target' => '.mcs-column-offset:first',
+	        'options' => array(
+	            'content' => sprintf( '<h3> %s </h3> <p> %s </p>',
+	                __( 'What is an offset?' ,'linchpin-mcs'),
+	                __( 'If using Foundation, an offset will indent your column by the amount of columns selected in the dropdown menu.','linchpin-mcs')
+	            ),
+	            'position' => array( 'edge' => 'bottom', 'align' => 'left' )
+	        )
+	    );
+
+	    $p['column_slider'] = array(
+		    'target' => '.mcs-editor-blocks .the-mover:first',
+		    'options' => array(
+			    'content' => sprintf( '<h3> %s </h3> <p> %s </p>',
+				    __( 'Rearrange Columns', 'linchpin-mcs' ),
+				    __( 'Use this handle to click and drag this column, giving you the ability to swap columns on the fly.', 'linchpin-mcs' )
+			    ),
+			    'position' => array(
+				    'edge' => 'bottom',
+				    'align' => 'left',
+			    )
+		    )
+	    );
+
+	    return $p;
 	}
 }

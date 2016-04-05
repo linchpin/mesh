@@ -316,7 +316,7 @@ function mcs_maybe_create_section_blocks( $section, $number_needed = 0 ) {
 		wp_insert_post( array(
 			'post_type'   => 'mcs_section',
 			'post_status' => $section->post_status,
-			'post_title'  => 'Block ' . ( $start + $count ),
+			'post_title'  => __( 'No Column Title', 'linchpin-mcs' ),
 			'post_parent' => $section->ID,
 			'menu_order'  => ( $start + $count ),
 			'post_name'   => 'section-' . $section->ID . '-block-' . ( $start + $count ),
