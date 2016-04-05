@@ -164,6 +164,10 @@ multiple_content_sections.blocks = function ( $ ) {
                 return (css.match (/\mcs-columns-\d+/g) || []).join(' ');
             }).each( function( index ) {
                 $(this).addClass( 'mcs-columns-' + column_values[ index ] );
+
+                if ( column_values[ index ] <= 3 ) {
+	                $(this).find('.mcs-column-offset').val(0).trigger('change');
+                }
             } );
 
         },
@@ -557,6 +561,7 @@ multiple_content_sections.blocks = function ( $ ) {
 				$toggle = $this.data('toggle');
 
 			$($toggle).slideToggle('fast');
+			$this.toggleClass('toggled');
 		},
 
 		display_offset : function ( event ) {

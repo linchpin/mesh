@@ -8,6 +8,7 @@ multiple_content_sections.admin = function ( $ ) {
 		$reorder_button     = $('.mcs-section-reorder'),
 		$add_button         = $('.mcs-section-add'),
 		$expand_button      = $('.mcs-section-expand'),
+		$collapse_button    = $('.mcs-section-collapse'),
 		$meta_box_container = $('#mcs-container'),
 		$section_container  = $('#multiple-content-sections-container'),
 		$description        = $('#mcs-description'),
@@ -30,7 +31,7 @@ multiple_content_sections.admin = function ( $ ) {
 
 			self = multiple_content_sections.admin;
 			blocks = multiple_content_sections.blocks;
-			
+
 			$body
 				.on('click', '.mcs-section-add',           self.add_section )
 				.on('click', '.mcs-section-remove',        self.remove_section )
@@ -38,6 +39,7 @@ multiple_content_sections.admin = function ( $ ) {
 				.on('click', '.mcs-save-order',            self.save_section_order )
 				.on('click', '.mcs-featured-image-trash',  self.remove_background )
 				.on('click', '.mcs-section-expand',        self.expand_all_sections )
+				.on('click', '.mcs-section-collapse',      self.collapse_all_sections )
 				.on('click', '.mcs-featured-image-choose', self.choose_background )
 				.on('click.OpenMediaManager', '.mcs-featured-image-choose', self.choose_background )
 
@@ -99,7 +101,7 @@ multiple_content_sections.admin = function ( $ ) {
 		},
 
 		/**
-		 * 1 click to expand or collapse sections
+		 * 1 click to expand sections
 		 *
 		 * @since 0.3.0
 		 *
@@ -112,21 +114,32 @@ multiple_content_sections.admin = function ( $ ) {
 
 			var $this = $(this);
 
-			$this.toggleClass('expanded');
-
-			if( ! $this.hasClass('expanded') ) {
-				$this.text( mcs_data.strings.expand_all );
-			} else {
-				$this.text( mcs_data.strings.collapse_all );
-			}
-
-//			$('#multiple-content-sections-container').find('.handlediv').trigger('click');
+			$this.addClass('expanded');
 
 			$('#multiple-content-sections-container').find('.handlediv').each(function () {
 				if ( $this.hasClass('expanded') && 'true' != $(this).attr('aria-expanded') ) {
 					$(this).trigger('click');
 				}
+			} );
+		},
 
+		/**
+		 * 1 click to collapse sections
+		 *
+		 * @since 1.0.0
+		 *
+		 * @param event
+		 */
+		collapse_all_sections : function( event ) {
+
+			event.preventDefault();
+			event.stopPropagation();
+
+			var $this = $(this);
+
+			$this.removeClass('expanded');
+
+			$('#multiple-content-sections-container').find('.handlediv').each(function () {
 				if ( ! $this.hasClass('expanded') && 'true' == $(this).attr('aria-expanded') ) {
 					$(this).trigger('click');
 				}

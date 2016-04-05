@@ -11,9 +11,9 @@
 
 <div class="mcs-section-meta mcs-row mcs-row-padding">
 	<div class="mcs-columns-12">
-		<ul class="inline-block-list">
+		<ul class="inline-block-list space-left">
 			<li>
-				<label for="mcs-sections[<?php esc_attr_e( $section->ID ); ?>][template]"><strong><?php esc_html_e( 'Columns:', 'linchpin-mcs' ); ?></strong></label>
+				<label for="mcs-sections[<?php esc_attr_e( $section->ID ); ?>][template]"><?php esc_html_e( 'Columns:', 'linchpin-mcs' ); ?></label>
 
 				<select class="mcs-choose-layout" id="mcs-sections-template-<?php esc_attr_e( $section->ID ); ?>" name="mcs-sections[<?php esc_attr_e( $section->ID ); ?>][template]">
 					<?php foreach ( array_keys( $templates ) as $template ) : ?>
@@ -30,7 +30,7 @@
 		</ul>
 	</div>
 
-	<a href="#" class="slide-toggle-element slide-toggle-meta-dropdown" data-toggle=".mcs-section-meta-dropdown-<?php esc_attr_e( $section->ID ); ?>"><?php _e( 'More Options' ); ?></a>
+	<a href="#" class="slide-toggle-element slide-toggle-meta-dropdown mcs-more-section-options" data-toggle=".mcs-section-meta-dropdown-<?php esc_attr_e( $section->ID ); ?>"><?php _e( 'More Options' ); ?></a>
 </div>
 
 <div class="mcs-section-meta-dropdown mcs-section-meta-dropdown-<?php esc_attr_e( $section->ID ); ?> mcs-row hide">
@@ -42,7 +42,7 @@
 		</div>
 
 		<div class="mcs-row mcs-table-footer">
-			<ul class="inline-block-list">
+			<ul class="inline-block-list space-left">
 				<li>
 					<label for="mcs-section[<?php esc_attr_e( $section->ID ); ?>][collapse]">
 						<?php esc_html_e( 'Collapse Padding', 'linchpin-mcs' ); ?> <input type="checkbox" name="mcs-sections[<?php esc_attr_e( $section->ID ); ?>][collapse]" value="1" <?php if ( get_post_meta( $section->ID, '_mcs_collapse', true ) ): ?>checked<?php endif; ?> />

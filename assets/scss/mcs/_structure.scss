@@ -21,16 +21,26 @@
 
 .mcs-main-ua-row {
 	padding: {
-		bottom: $base;
-		top: $base;
+		bottom: $base * .25;
+		top: $base * .25;
 	};
 
 	.lead {
 		margin: 0;
 	}
+
+	&.notice {
+		p {
+			height: $input_height;
+			line-height: $input_height;
+			margin: 0;
+			padding: 0;
+		}
+	}
 }
 
 .msc-clean-edit {
+	margin-left: 5px;
 	position: relative;
 
 	.msc-clean-edit-element,
@@ -103,6 +113,11 @@
 	}
 
 	&.handle-right {
+		margin: {
+			left: 0;
+			right: 5px;
+		};
+
 		.handle-title {
 			left: auto;
 			right: 0;
@@ -115,11 +130,11 @@
 }
 
 .mcs-section-expand {
-	@include dashicons( '\f211' );
+	@include dashicons( '\f164' );
+}
 
-	&.expanded {
-		@include dashicons( '\f506' );
-	}
+.mcs-section-collapse {
+	@include dashicons( '\f163' );
 }
 
 .mcs-section-reorder {
@@ -127,6 +142,7 @@
 }
 
 .mcs-section-expand,
+.mcs-section-collapse,
 .mcs-section-reorder {
 	&:before {
 		font-size: 18px;
@@ -157,6 +173,10 @@
 		top: 8px;
 
 		@include dashicons( '\f142' );
+	}
+
+	&.ui-sortable-handle {
+		cursor: move;
 	}
 
 	&.closed .handlediv {
@@ -214,6 +234,10 @@
 
 	&:active {
 		outline: none;
+	}
+
+	&.toggled {
+		@include dashicons( '\f142', 'after' );
 	}
 }
 
