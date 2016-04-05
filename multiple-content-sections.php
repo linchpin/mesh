@@ -262,8 +262,8 @@ function mcs_display_sections( $post_id = '' ) {
 				$mcs_section_query->the_post();
 				the_mcs_content();
 			}
+			wp_reset_postdata();
 		}
-		wp_reset_postdata();
 	}
 }
 

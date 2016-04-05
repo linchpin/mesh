@@ -60,6 +60,8 @@ class Multiple_Content_Sections {
 		add_filter( 'the_content', array( $this, 'the_content' ), 5 );
 		add_filter( 'post_class', array( $this, 'post_class' ) );
 
+		add_action( 'loop_end', array( $this, 'loop_end' ) );
+
 		add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_styles' ) );
 
@@ -541,6 +543,25 @@ class Multiple_Content_Sections {
 		}
 
 		return $classes;
+	}
+
+	/**
+	 * At the end of a page, let's show sections.
+	 *
+	 * @todo: When we add support for other post types, this will need to change.
+	 *
+	 * @param $wp_query
+	 */
+	function loop_end( $wp_query ) {
+		if ( ! $wp_query->is_main_query() ) {
+			return;
+		}
+
+		if ( ! is_page() ) {
+			return;
+		}
+
+		mcs_display_sections( $wp_query->post->ID );
 	}
 
 	/**
