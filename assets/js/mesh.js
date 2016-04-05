@@ -29,7 +29,7 @@ multiple_content_sections.frontend = function ( $ ) {
 		init : function() {
 			self = multiple_content_sections.frontend;
 
-			if ( 'undefined' == typeof Foundation ) {
+			if ( 'function' != typeof Foundation.libs.equalizer.equalize && 'function' != typeof Foundation.Equalizer ) {
 				$window
 					.load( self.mesh_equalize_init )
 					.resize( self.mesh_equalize_init );

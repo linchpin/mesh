@@ -30,10 +30,10 @@
 		</ul>
 	</div>
 
-	<a href="#" class="slide-toggle-element slide-toggle-meta-dropdown" data-toggle=".mcs-section-meta-dropdown"><?php _e( 'More Options' ); ?></a>
+	<a href="#" class="slide-toggle-element slide-toggle-meta-dropdown" data-toggle=".mcs-section-meta-dropdown-<?php esc_attr_e( $section->ID ); ?>"><?php _e( 'More Options' ); ?></a>
 </div>
 
-<div class="mcs-section-meta-dropdown mcs-row hide">
+<div class="mcs-section-meta-dropdown mcs-section-meta-dropdown-<?php esc_attr_e( $section->ID ); ?> mcs-row hide">
 	<div class="mcs-columns-9 mcs-table">
 		<div class="mcs-row">
 			<label for="mcs-sections[<?php esc_attr_e( $section->ID ); ?>][css-class]">
