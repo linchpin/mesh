@@ -443,7 +443,7 @@ multiple_content_sections.admin = function ( $ ) {
 					break;
 
 				case 'draft':
-					current_title = mcs.strings.draft;
+					current_title = mcs_data.strings.draft;
 			}
 
 			$handle_title.text( current_title );

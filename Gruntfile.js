@@ -45,7 +45,7 @@ module.exports = function(grunt) {
                 dest: 'assets/js/admin-mcs.js'
             },
 
-            dist: {
+            frontend: {
 	            src: [
 		            'assets/js/mesh-frontend.js'
 	            ],
