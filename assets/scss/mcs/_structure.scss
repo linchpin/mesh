@@ -114,6 +114,26 @@
 	margin-top: $base;
 }
 
+.mcs-section-expand {
+	@include dashicons( '\f211' );
+
+	&.expanded {
+		@include dashicons( '\f506' );
+	}
+}
+
+.mcs-section-reorder {
+	@include dashicons( '\f156' );
+}
+
+.mcs-section-expand,
+.mcs-section-reorder {
+	&:before {
+		font-size: 18px;
+		margin-right: 4px;
+	}
+}
+
 // 02. No Sections
 #mcs-description {
 	padding: {

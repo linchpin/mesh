@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: Mesh for WordPress 1.0.0\n"
 "Report-Msgid-Bugs-To: "
 "https://wordpress.org/support/plugin/multiple-content-sections\n"
-"POT-Creation-Date: 2016-04-04 18:15:55+00:00\n"
+"POT-Creation-Date: 2016-04-05 13:40:41+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -36,11 +36,11 @@ msgid "Offset:"
 msgstr ""
 
 #: admin/section-blocks.php:78 admin/section-blocks.php:102
-#: admin/section-controls.php:48
+#: admin/section-controls.php:38
 msgid "CSS Class"
 msgstr ""
 
-#: admin/section-blocks.php:136 admin/section-controls.php:72
+#: admin/section-blocks.php:136 admin/section-controls.php:62
 #: class.multiple-content-sections.php:569
 msgid "Set Background Image"
 msgstr ""
@@ -78,22 +78,22 @@ msgid "Columns:"
 msgstr ""
 
 #: admin/section-controls.php:26
-msgid "Title Display"
+msgid "Display Title"
 msgstr ""
 
-#: admin/section-controls.php:41
+#: admin/section-controls.php:31
 msgid "More Options"
 msgstr ""
 
-#: admin/section-controls.php:54
+#: admin/section-controls.php:44
 msgid "Collapse Padding"
 msgstr ""
 
-#: admin/section-controls.php:59
+#: admin/section-controls.php:49
 msgid "Push/Pull"
 msgstr ""
 
-#: admin/section-controls.php:64
+#: admin/section-controls.php:54
 msgid "Equalize"
 msgstr ""
 
@@ -160,62 +160,62 @@ msgstr ""
 msgid "Change Log"
 msgstr ""
 
-#: class.multiple-content-sections.php:115
+#: class.multiple-content-sections.php:117
 msgid "Show Extra MCS Section Controls?"
 msgstr ""
 
-#: class.multiple-content-sections.php:172
-#: class.multiple-content-sections.php:173
-#: class.multiple-content-sections.php:188
-#: class.multiple-content-sections.php:189
+#: class.multiple-content-sections.php:174
+#: class.multiple-content-sections.php:175
+#: class.multiple-content-sections.php:190
+#: class.multiple-content-sections.php:191
 msgid "Content Section"
 msgstr ""
 
-#: class.multiple-content-sections.php:174
+#: class.multiple-content-sections.php:176
 msgid "Parent Content Section:"
 msgstr ""
 
-#: class.multiple-content-sections.php:175
+#: class.multiple-content-sections.php:177
 msgid "All Content Sections"
 msgstr ""
 
-#: class.multiple-content-sections.php:176
+#: class.multiple-content-sections.php:178
 msgid "Add New Content Section"
 msgstr ""
 
-#: class.multiple-content-sections.php:177
+#: class.multiple-content-sections.php:179
 msgid "Add New"
 msgstr ""
 
-#: class.multiple-content-sections.php:178
+#: class.multiple-content-sections.php:180
 msgid "New Content Section"
 msgstr ""
 
-#: class.multiple-content-sections.php:179
+#: class.multiple-content-sections.php:181
 msgid "Edit Content Section"
 msgstr ""
 
-#: class.multiple-content-sections.php:180
+#: class.multiple-content-sections.php:182
 msgid "Update Content Section"
 msgstr ""
 
-#: class.multiple-content-sections.php:181
+#: class.multiple-content-sections.php:183
 msgid "View Content Section"
 msgstr ""
 
-#: class.multiple-content-sections.php:182
+#: class.multiple-content-sections.php:184
 msgid "Search Content Sections"
 msgstr ""
 
-#: class.multiple-content-sections.php:183
+#: class.multiple-content-sections.php:185
 msgid "Not found"
 msgstr ""
 
-#: class.multiple-content-sections.php:184
+#: class.multiple-content-sections.php:186
 msgid "Not found in Trash"
 msgstr ""
 
-#: class.multiple-content-sections.php:226
+#: class.multiple-content-sections.php:228
 msgid "Multiple Content Sections"
 msgstr ""
 
@@ -289,8 +289,8 @@ msgstr ""
 msgid "Linchpin"
 msgstr ""
 
-#: class.multiple-content-sections.php:170
-#: class.multiple-content-sections.php:171
+#: class.multiple-content-sections.php:172
+#: class.multiple-content-sections.php:173
 msgctxt "Content Section"
 msgid "Content Section"
 msgstr ""

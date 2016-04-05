@@ -18,7 +18,7 @@
 		$lp_equal = get_post_meta( get_the_ID(), '_mcs_lp_equal', true );
 	?>
 
-	<div class="row <?php if ( ! empty( $collapse_column_spacing ) ) : ?>collapse <?php endif; ?>"<?php if ( ! empty( $lp_equal ) ) : ?> <?php echo $lp_equal; ?><?php endif; ?>>
+	<div class="row <?php if ( ! empty( $collapse_column_spacing ) ) : ?>collapse <?php endif; ?>"<?php if ( ! empty( $lp_equal ) ) : ?> data-equalizer<?php endif; ?>>
 		<?php if ( ! empty( $title_display ) ) : ?>
 			<div class="small-12 columns">
 				<h2 class="entry-title"><?php the_title(); ?></h2>
@@ -39,7 +39,7 @@
 				$offset_class = 'medium-' . ( $column_width - $block_offset ) . ' medium-offset-' . $block_offset;
 			} ?>
 
-			<div class="small-12 <?php esc_attr_e( $offset_class ); ?> columns <?php esc_attr_e( $block_css_class ); ?>">
+			<div class="small-12 <?php esc_attr_e( $offset_class ); ?> columns <?php esc_attr_e( $block_css_class ); ?>"<?php if ( ! empty( $lp_equal ) ) : ?> data-equalizer-watch<?php endif; ?>>
 				<?php if ( ! empty( $block->post_title ) ) : ?>
 					<h3><?php echo apply_filters( 'the_title', $block->post_title ); ?></h3>
 				<?php endif; ?>

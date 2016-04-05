@@ -18,7 +18,7 @@
 
 		$title_display = get_post_meta( get_the_ID(), '_mcs_title_display', true );
 	?>
-	<div class="row <?php if ( ! empty( $collapse_column_spacing ) ) : ?>collapse<?php endif; ?>"<?php if ( ! empty( $lp_equal ) ) : ?> <?php echo $lp_equal; ?><?php endif; ?>>
+	<div class="row <?php if ( ! empty( $collapse_column_spacing ) ) : ?>collapse<?php endif; ?>"<?php if ( ! empty( $lp_equal ) ) : ?> data-equalizer<?php endif; ?>>
 		<?php if ( ! empty( $title_display ) ) : ?>
 			<div class="small-12 columns">
 				<h2 class="entry-title"><?php the_title(); ?></h2>
@@ -34,11 +34,11 @@
 
 			if ( isset( $push_pull ) ) {
 				if ( 0 == $i ) {
-					$push_pull_class = 'push-' . ( 12 - $column_width );
+					$push_pull_class = 'medium-push-' . ( 12 - $column_width );
 				}
 
 				if ( 1 == $i ) {
-					$push_pull_class = 'pull-' . ( 12 - $column_width );
+					$push_pull_class = 'medium-pull-' . ( 12 - $column_width );
 				}
 			}
 
@@ -49,7 +49,7 @@
 				$offset_class = 'medium-' . ( $column_width - $block_offset ) . ' medium-offset-' . $block_offset;
 			} ?>
 
-			<div class="small-12 <?php if ( ! empty( $collapse_column_spacing ) ) : ?>collapse <?php endif; ?><?php esc_attr_e( $offset_class ); ?> columns <?php esc_attr_e( $block_css_class ); ?> <?php if ( $push_pull ) { echo $push_pull_class; } ?>">
+			<div class="small-12 <?php if ( ! empty( $collapse_column_spacing ) ) : ?>collapse <?php endif; ?><?php esc_attr_e( $offset_class ); ?> columns <?php esc_attr_e( $block_css_class ); ?> <?php if ( $push_pull ) { echo $push_pull_class; } ?>"<?php if ( ! empty( $lp_equal ) ) : ?> data-equalizer-watch<?php endif; ?>>
 				<?php if ( ! empty( $block->post_title ) ) : ?>
 					<h3><?php echo apply_filters( 'the_title', $block->post_title ); ?></h3>
 				<?php endif; ?>

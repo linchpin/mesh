@@ -151,14 +151,22 @@ function mcs_add_section_admin_markup( $section, $closed = false ) {
  *
  * @return array|WP_Query
  */
-function mcs_get_sections( $post_id, $return_type = 'array' ) {
-	$content_sections = new WP_Query( array(
+function mcs_get_sections( $post_id, $return_type = 'array', $include_drafts = false ) {
+	$args = array(
 		'post_type' => 'mcs_section',
 		'posts_per_page' => 50,
 		'orderby' => 'menu_order',
 		'order' => 'ASC',
 		'post_parent' => (int) $post_id,
-	) );
+	);
+
+	if ( $include_drafts ) {
+		$args['post_status'] = array(
+			'publish', 'draft'
+		);
+	}
+
+	$content_sections = new WP_Query( $args );
 
 	switch ( $return_type ) {
 		case 'query' :

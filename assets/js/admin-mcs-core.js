@@ -10,14 +10,17 @@ multiple_content_sections.admin = function ( $ ) {
 		$expand_button      = $('.mcs-section-expand'),
 		$meta_box_container = $('#mcs-container'),
 		$section_container  = $('#multiple-content-sections-container'),
+		$sections           = $('.multiple-content-sections-section', $section_container),
 		$description        = $('#mcs-description'),
 		$empty_message      = $('.empty-sections-message'),
+		$equalize           = $('.mcs_section [data-equalizer]'),
 		$sections,
 		media_frames        = [],
 
 		// Container References for Admin(self) / Block
 		self,
-		blocks;
+		blocks,
+		section_count;
 
 	return {
 
@@ -48,6 +51,10 @@ multiple_content_sections.admin = function ( $ ) {
 
 			if ( $sections.length <= 1 ) {
 				$reorder_button.addClass( 'disabled' );
+			}
+
+			if ( 'undefined' == typeof Foundation ) {
+				$equalize.each( self.mesh_equalize );
 			}
 
 			// Setup our controls for Blocks
@@ -114,7 +121,17 @@ multiple_content_sections.admin = function ( $ ) {
 				$this.text( mcs_data.strings.collapse_all );
 			}
 
-			$('#multiple-content-sections-container').find('.hndle').trigger('click');
+//			$('#multiple-content-sections-container').find('.handlediv').trigger('click');
+
+			$('#multiple-content-sections-container').find('.handlediv').each(function () {
+				if ( $this.hasClass('expanded') && 'true' != $(this).attr('aria-expanded') ) {
+					$(this).trigger('click');
+				}
+
+				if ( ! $this.hasClass('expanded') && 'true' == $(this).attr('aria-expanded') ) {
+					$(this).trigger('click');
+				}
+			} );
 		},
 
 		/**
@@ -184,6 +201,8 @@ multiple_content_sections.admin = function ( $ ) {
 			event.preventDefault();
 			event.stopPropagation();
 
+			section_count = $sections.length;
+
 			var $this = $(this),
 				$spinner = $this.siblings('.spinner');
 
@@ -196,18 +215,21 @@ multiple_content_sections.admin = function ( $ ) {
 			$.post( ajaxurl, {
 				action: 'mcs_add_section',
 				mcs_post_id: mcs_data.post_id,
+				mcs_section_count: section_count,
 				mcs_add_section_nonce: mcs_data.add_section_nonce
 			}, function( response ){
 				if ( response ) {
 					var $response        = $( response ),
 						$tinymce_editors = $response.find('.wp-editor-area' ),
-						$empty_msg       = $('.empty-sections-message');
+						$empty_msg       = $('.empty-sections-message'),
+						$controls        = $('.mcs-main-ua-row');
 
 					$section_container.append( $response );
 					$spinner.removeClass('is-active');
 
 					if ( $empty_msg.length ) {
 						$empty_msg.fadeOut('fast');
+						$controls.fadeIn('fast');
 					}
 
 					var $postboxes = $('.multiple-content-sections-section', $meta_box_container );
@@ -217,6 +239,8 @@ multiple_content_sections.admin = function ( $ ) {
 					}
 
 					blocks.reorder_blocks( $tinymce_editors );
+
+					$sections = $('.multiple-content-sections-section', $section_container);
 
 				} else {
 					$spinner.removeClass('is-active');
@@ -564,6 +588,20 @@ multiple_content_sections.admin = function ( $ ) {
 
 	        // Now that everything has been set, let's open up the frame.
 	        media_frames[ frame_id ].open();
+		},
+
+		mesh_equalize : function() {
+
+			var $this     = $(this),
+				$childs   = $('[data-equalizer-watch]', $this),
+				eq_height = 0;
+
+			$childs.each( function() {
+				var this_height = $(this).height();
+
+				eq_height = this_height > eq_height ? this_height : eq_height;
+			}).height(eq_height);
+
 		}
 	};
 } ( jQuery );

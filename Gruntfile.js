@@ -23,7 +23,8 @@ module.exports = function(grunt) {
         uglify: {
             plugin: {
                 files: {
-                    'assets/js/admin-mcs.min.js' : ['assets/js/admin-mcs.js']
+                    'assets/js/admin-mcs.min.js' : ['assets/js/admin-mcs.js'],
+                    'assets/js/mesh.min.js' : ['assets/js/mesh.js']
                 }
             }
         },
@@ -42,6 +43,14 @@ module.exports = function(grunt) {
                 ],
 
                 dest: 'assets/js/admin-mcs.js'
+            },
+
+            dist: {
+	            src: [
+		            'assets/js/mesh-frontend.js'
+	            ],
+
+	            dest: 'assets/js/mesh.js'
             }
         },
 
@@ -64,7 +73,8 @@ module.exports = function(grunt) {
             javascript: {
                 files: [
                     'assets/js/admin-mcs-blocks.js',
-                    'assets/js/admin-mcs-core.js'
+                    'assets/js/admin-mcs-core.js',
+                    'assets/js/mesh-frontend.js'
                 ],
                 tasks: ['concat','uglify']
             }

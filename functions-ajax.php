@@ -39,6 +39,7 @@ class Multiple_Content_Sections_AJAX {
 		check_ajax_referer( 'mcs_add_section_nonce', 'mcs_add_section_nonce' );
 
 		$post_id = (int) $_POST['mcs_post_id'];
+		$menu_order = (int) $_POST['mcs_section_count'];
 
 		if ( empty( $post_id ) ) {
 			wp_die( -1 );
@@ -49,6 +50,7 @@ class Multiple_Content_Sections_AJAX {
 			'post_title' => 'No Title',
 			'post_status' => 'draft',
 			'post_parent' => $post_id,
+			'menu_order' => $menu_order,
 		);
 
 		if ( $new_section = wp_insert_post( $args ) ) {
@@ -232,7 +234,7 @@ class Multiple_Content_Sections_AJAX {
 		check_ajax_referer( 'mcs_reorder_section_nonce', 'mcs_reorder_section_nonce' );
 
 		$post_id     = (int) $_POST['mcs_post_id'];
-		$section_ids = array_map( 'intval', $_POST['mcs_section_ids'] );
+		$section_ids = array_values( array_map( 'intval', $_POST['mcs_section_ids'] ) );
 
 		if ( empty( $post_id ) || empty( $section_ids ) ) {
 			wp_die( -1 );

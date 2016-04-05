@@ -66,7 +66,7 @@ $blocks = mcs_maybe_create_section_blocks( $section );
 		<div class="mcs-row mcs-section-footer">
 			<div class="mcs-section-remove-container mcs-columns-4">
 				<span class="spinner"></span>
-				<a href="#" class="mcs-section-remove dashicons-before dashicons-no plain-link"><?php esc_html_e( 'Move to Trash', 'linchpin-mcs' ); ?></a>
+				<a href="#" class="mcs-section-remove dashicons-before dashicons-no plain-link grey-link"><?php esc_html_e( 'Move to Trash', 'linchpin-mcs' ); ?></a>
 			</div>
 
 			<div class="mcs-columns-8 text-right">

@@ -16,26 +16,16 @@
 		$title_display = get_post_meta( get_the_ID(), '_mcs_title_display', true );
 		$collapse_column_spacing = get_post_meta( get_the_ID(), '_mcs_collapse', true );
 		$lp_equal = get_post_meta( get_the_ID(), '_mcs_lp_equal', true );
-		$title_displayed = false;
-
-		if ( 'none' == $title_display ) {
-			$title_displayed = true;
-		}
 	?>
 
-	<div class="row <?php if ( ! empty( $collapse_column_spacing ) ) : ?>collapse <?php endif; ?>"<?php if ( ! empty( $lp_equal ) ) : ?> <?php echo $lp_equal; ?><?php endif; ?>>
-
-		<?php if ( ! $title_displayed ) : ?>
-			<?php if ( empty( $title_display ) || 'top' == $title_display ) : ?>
+	<div class="row <?php if ( ! empty( $collapse_column_spacing ) ) : ?>collapse <?php endif; ?>"<?php if ( ! empty( $lp_equal ) ) : ?> data-equalizer<?php endif; ?>>
+		<?php if ( ! empty( $title_display ) ) : ?>
 			<div class="small-12 columns">
 				<h2 class="entry-title"><?php the_title(); ?></h2>
 			</div>
-			<?php $title_displayed = true; endif; ?>
 		<?php endif; ?>
 
-		<?php
-			$blocks = mcs_get_section_blocks( get_the_ID() );
-		?>
+		<?php $blocks = mcs_get_section_blocks( get_the_ID() ); ?>
 		<?php $i = 0; foreach ( $blocks as $block ) : ?>
 			<?php
 			$column_width = get_post_meta( $block->ID, '_mcs_column_width', true );
@@ -48,7 +38,7 @@
 				$offset_class = 'medium-' . ( $column_width - $block_offset ) . ' medium-offset-' . $block_offset;
 			}
 			?>
-			<div class="small-12 <?php esc_attr_e( $offset_class ); ?> columns <?php esc_attr_e( $block_css_class ); ?>">
+			<div class="small-12 <?php esc_attr_e( $offset_class ); ?> columns <?php esc_attr_e( $block_css_class ); ?>"<?php if ( ! empty( $lp_equal ) ) : ?> data-equalizer-watch<?php endif; ?>>
 				<?php if ( ! $title_displayed && 'block-' . $i == $title_display ) : ?>
 					<h2 class="entry-title"><?php the_title(); ?></h2>
 				<?php $title_displayed = true; endif; ?>

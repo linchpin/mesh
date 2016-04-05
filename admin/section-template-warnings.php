@@ -15,7 +15,7 @@
 			<p>
 				<?php esc_html_e( 'The number of columns selected is causing some content to be hidden.', 'linchpin-mcs' ); ?>
 				<br/>
-				<?php _e( 'Increase the column number to access that content, or if it is no longer needed you can <a href="#" class="mcs-trash-unused-section-blocks">clear it</a>.', 'linchpin-mcs' ); ?>
+				<?php esc_html_e( 'Increase the column number to access that content.', 'linchpin-mcs' ); ?>
 			</p>
 		</div>
 	<?php endif; ?>

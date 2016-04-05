@@ -63,6 +63,7 @@ class Multiple_Content_Sections {
 		add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_styles' ) );
 
+		add_action( 'wp_enqueue_scripts',    array( $this, 'wp_enqueue_scripts' ) );
 		add_action( 'wp_enqueue_scripts',    array( $this, 'wp_enqueue_styles' ) );
 
 		if ( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
@@ -216,24 +217,22 @@ class Multiple_Content_Sections {
 	 * @return void
 	 */
 	function edit_page_form( $post ) {
-		$content_sections = mcs_get_sections( $post->ID );
+		$content_sections = mcs_get_sections( $post->ID, 'array', true );
 		$mcs_notifications = get_user_option( 'linchpin_mcs_notifications', get_current_user_id() );
 	?>
 		<div id="mcs-container">
 			<?php wp_nonce_field( 'mcs_content_sections_nonce', 'mcs_content_sections_nonce' ); ?>
 
-			<?php if ( ! empty( $content_sections ) ) : ?>
-				<div class="notice below-h2 mcs-row mcs-main-ua-row">
-					<div class="mcs-columns-3 columns">
-						<p class="title"><?php esc_html_e( 'Multiple Content Sections', 'linchpin-mcs' ); ?></p>
-					</div>
 
-					<div class="mcs-columns-9 columns text-right">
-						<?php include LINCHPIN_MCS___PLUGIN_DIR .'admin/controls.php'; ?>
-					</div>
+			<div class="notice below-h2 mcs-row mcs-main-ua-row<?php if ( empty( $content_sections ) ) { echo ' hide'; } ?>">
+				<div class="mcs-columns-3 columns">
+					<p class="title"><?php esc_html_e( 'Multiple Content Sections', 'linchpin-mcs' ); ?></p>
 				</div>
 
-			<?php endif; ?>
+				<div class="mcs-columns-9 columns text-right">
+					<?php include LINCHPIN_MCS___PLUGIN_DIR .'admin/controls.php'; ?>
+				</div>
+			</div>
 
 			<?php if ( empty( $content_sections ) ) : ?>
 				<div id="mcs-description" class="description notice below-h2 text-center lead empty-sections-message">
@@ -255,11 +254,11 @@ class Multiple_Content_Sections {
 				<?php endforeach; ?>
 			</div>
 
-			<?php if ( ! empty( $content_sections ) ) : ?>
-				<div id="multiple-content-sections-footer">
-					<?php include LINCHPIN_MCS___PLUGIN_DIR . 'admin/controls.php'; ?>
+			<div class="notice below-h2 mcs-row mcs-main-ua-row<?php if ( empty( $content_sections ) ) { echo ' hide'; } ?>">
+				<div class="mcs-columns-12 columns text-right">
+					<?php include LINCHPIN_MCS___PLUGIN_DIR .'admin/controls.php'; ?>
 				</div>
-			<?php endif; ?>
+			</div>
 		</div>
 		<?php
 	}
@@ -596,6 +595,23 @@ class Multiple_Content_Sections {
 		wp_enqueue_style( 'admin-mcs', plugins_url( 'assets/css/admin-mcs.css', __FILE__ ), array(), '1.0' );
 	}
 
+	/**
+	 * Enqueue frontend scripts
+	 *
+	 * @access public
+	 * @return void
+	 */
+	function wp_enqueue_scripts() {
+		wp_enqueue_script( 'mesh-frontend', plugins_url( 'assets/js/mesh.js', __FILE__ ), array( 'jquery' ), '1.0.0', true );
+	}
+
+	/**
+	 * Enqueue frontend styles
+	 *
+	 * @access public
+	 * @return void
+	 *
+	 */
 	function wp_enqueue_styles() {
 		wp_enqueue_style( 'mesh-grid-foundation', plugins_url( 'assets/css/mesh-grid-foundation.css', __FILE__ ), array(), '1.0' );
 	}
