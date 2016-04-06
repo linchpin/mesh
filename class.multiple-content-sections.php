@@ -20,27 +20,11 @@ class Multiple_Content_Sections {
 	/**
 	 * Store the available blocks per template.
 	 *
-	 * @since 1.3.5
+	 * @since 0.3.5
 	 *
 	 * @var array
 	 */
-	public static $template_data = array(
-		'mcs-columns-1.php' => array(
-			'label' => '1 Columns',
-			'blocks' => 1,
-			'widths' => array( 12 ),
-		),
-		'mcs-columns-2.php' => array(
-			'label' => '2 Columns',
-			'blocks' => 2,
-			'widths' => array( 6, 6 ),
-		),
-		'mcs-columns-3.php' => array(
-			'label' => '3 Columns',
-			'blocks' => 3,
-			'widths' => array( 4, 4, 4 ),
-		),
-	) ;
+	public $template_data = array();
 
 	/**
 	 * __construct function.
@@ -49,18 +33,32 @@ class Multiple_Content_Sections {
 	 */
 	function __construct() {
 
-		add_action( 'init', array( $this, 'init' ) );
+		$this->template_data = array(
+			'mcs-columns-1.php' => array(
+				'label' => __( '1 Columns', 'linchpin-mcs' ),
+				'blocks' => 1,
+				'widths' => array( 12 ),
+			),
+			'mcs-columns-2.php' => array(
+				'label' => __( '2 Columns', 'linchpin-mcs' ),
+				'blocks' => 2,
+				'widths' => array( 6, 6 ),
+			),
+			'mcs-columns-3.php' => array(
+				'label' => __( '3 Columns', 'linchpin-mcs' ),
+				'blocks' => 3,
+				'widths' => array( 4, 4, 4 ),
+			),
+		);
 
-		add_action( 'edit_page_form', array( $this, 'edit_page_form' ) );     // Pages
-		add_action( 'edit_form_advanced', array( $this, 'edit_page_form' ) ); // Other Post Types.
+		add_action( 'init',                  array( $this, 'init' ) );
 
-		add_action( 'save_post', array( $this, 'save_post' ), 10, 2 );
+		add_action( 'edit_page_form',        array( $this, 'edit_page_form' ) ); // Pages.
+		add_action( 'edit_form_advanced',    array( $this, 'edit_page_form' ) ); // Other Post Types.
 
-		add_filter( 'content_edit_pre', array( $this, 'the_content' ) );
-		add_filter( 'the_content', array( $this, 'the_content' ), 5 );
-		add_filter( 'post_class', array( $this, 'post_class' ) );
+		add_action( 'save_post',             array( $this, 'save_post' ), 10, 2 );
 
-		add_action( 'loop_end', array( $this, 'loop_end' ) );
+		add_action( 'loop_end',              array( $this, 'loop_end' ) );
 
 		add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_styles' ) );
@@ -68,19 +66,23 @@ class Multiple_Content_Sections {
 		add_action( 'wp_enqueue_scripts',    array( $this, 'wp_enqueue_scripts' ) );
 		add_action( 'wp_enqueue_scripts',    array( $this, 'wp_enqueue_styles' ) );
 
+		add_filter( 'content_edit_pre',      array( $this, 'the_content' ) );
+		add_filter( 'the_content',           array( $this, 'the_content' ), 5 );
+		add_filter( 'post_class',            array( $this, 'post_class' ) );
+
 		if ( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
 			include_once( 'functions-ajax.php' );
 		}
 
-		// Adjust TinyMCE and Media Buttons
+		// Adjust TinyMCE and Media buttons.
 		add_filter( 'tiny_mce_before_init', array( $this, 'tiny_mce_before_init' ) );
 
 		// Add Screen Options.
-		add_action( 'admin_menu', array( $this, 'admin_menu' ) );
+		add_action( 'admin_menu',           array( $this, 'admin_menu' ) );
 
-		// Admin Pointers
-		add_action( 'admin_enqueue_scripts', array( $this, 'wptuts_pointer_load' ), 1000 );
-		add_filter( 'wptuts_admin_pointers-page', array( $this, 'wptuts_register_pointer_testing' ) );
+		// Admin Pointers.
+		add_action( 'admin_enqueue_scripts',      array( $this, 'pointer_load' ), 1000 );
+		add_filter( 'wptuts_admin_pointers-page', array( $this, 'register_pointer_testing' ) );
 	}
 
 	/**
@@ -94,11 +96,11 @@ class Multiple_Content_Sections {
 	/**
 	 * Save our custom display options
 	 *
-	 * @since 1.4.4
+	 * @since 0.4.4
 	 *
-	 * @param string  $status save status
-	 * @param options $option option we're saving
-	 * @param $value  value to save
+	 * @param string  $status Save status
+	 * @param array   $option Option we're saving
+	 * @param mixed   $value  Value to save
 	 *
 	 * @return mixed
 	 */
@@ -111,17 +113,17 @@ class Multiple_Content_Sections {
 	/**
 	 * Add Toggleable Options to show or hide controls
 	 *
-	 * @since 1.4.4
+	 * @since 0.4.4
 	 */
 	function add_screen_options() {
 		$screen = get_current_screen();
 
-		if ( ! is_object( $screen ) || $screen->id !== 'page' ) {
+		if ( ! is_object( $screen ) || 'page' !== $screen->id ) {
 			return;
 		}
 
 		$args = array(
-			'label'   => __( 'Show Extra MCS Section Controls?', LINCHPIN_MCS_PLUGIN_NAME ),
+			'label'   => __( 'Show Extra MCS Section Controls?', 'linchpin-mcs' ),
 			'default' => 0,
 			'option'  => 'linchpin_mcs_section_kitchensink',
 		);
@@ -242,8 +244,8 @@ class Multiple_Content_Sections {
 
 			<?php if ( empty( $content_sections ) ) : ?>
 				<div id="mcs-description" class="description notice below-h2 text-center lead empty-sections-message">
-					<p><?php esc_html_e( 'You have no additional Content Sections.', 'linchpin-mcs' ); ?></p>
-					<p><?php esc_html_e( 'Get started by adding a Mesh section now', 'linchpin-mcs' ); ?></p>
+					<p><?php esc_html_e( 'You do not have any Content Sections.', 'linchpin-mcs' ); ?></p>
+					<p><?php esc_html_e( 'Get started using Mesh by adding a Content Section now.', 'linchpin-mcs' ); ?></p>
 					<p><a href="#" class="button primary mcs-section-add dashicons-before dashicons-plus"><?php esc_html_e( 'Add Section', 'lincpin-mcs' ); ?></a></p>
 				</div>
 			<?php else : ?>
@@ -421,10 +423,10 @@ class Multiple_Content_Sections {
 				}
 
 				$updates = array(
-					'ID' => (int) $block_id,
+					'ID'           => (int) $block_id,
 					'post_content' => wp_kses( $block_data['post_content'], mcs_get_allowed_html() ),
-					'post_status' => $status,
-					'post_title' => sanitize_text_field( $block_data['post_title'] ),
+					'post_status'  => $status,
+					'post_title'   => sanitize_text_field( $block_data['post_title'] ),
 				);
 
 				wp_update_post( $updates );
@@ -485,7 +487,7 @@ class Multiple_Content_Sections {
 				}
 
 				wp_update_post( array(
-					'ID' => $p->ID,
+					'ID'           => $p->ID,
 					'post_content' => implode( ' ', $section_content ),
 				) );
 			}
@@ -595,19 +597,19 @@ class Multiple_Content_Sections {
 			'dismiss_nonce'         => wp_create_nonce( 'mcs_dismiss_notification_nonce' ),
 			'content_css'           => apply_filters( 'content_css', get_stylesheet_directory_uri() . '/css/admin-editor.css' , 'editor_path' ),
 			'strings' => array(
-				'reorder' => __( 'Be sure to save order of your sections once your changes are complete.', 'linchpin-mcs' ),
-				'description' => __( 'Multiple content sections allows you to easily segment your page\'s contents into different blocks of markup.', 'linchpin-mcs' ),
-				'add_image' => __( 'Set Background Image', 'linchpin-mcs' ),
-				'remove_image' => __( 'Remove Background', 'linchpin-mcs' ),
-				'expand_all' => __( 'Expand All', 'linchpin-mcs' ),
-				'collapse_all' => __( 'Collapse All', 'linchpin-mcs' ),
-				'default_title' => __( 'No Section Title', 'linchpin-mcs' ),
+				'reorder' =>           __( 'Be sure to save the order of your sections once your changes are complete.', 'linchpin-mcs' ),
+				'description' =>       __( 'Multiple content sections allows you to easily segment your page\'s contents into different blocks of markup.', 'linchpin-mcs' ),
+				'add_image' =>         __( 'Set Background Image', 'linchpin-mcs' ),
+				'remove_image' =>      __( 'Remove Background', 'linchpin-mcs' ),
+				'expand_all' =>        __( 'Expand All', 'linchpin-mcs' ),
+				'collapse_all' =>      __( 'Collapse All', 'linchpin-mcs' ),
+				'default_title' =>     __( 'No Section Title', 'linchpin-mcs' ),
 				'select_section_bg' => __( 'Select Section Background', 'linchpin-mcs' ),
-				'select_bg' => __( 'Select Background' , 'linchpin-mcs' ),
-				'select_block_bg' => __( 'Select Block Background', 'linchpin-mcs' ),
-				'published' => __( 'Published', 'linchpin-mcs' ),
-				'draft' => __( 'Draft', 'linchpin-mcs' ),
-				'confirm_remove' => __( 'Are you sure you want to remove this section?', 'linchpin-mcs' ),
+				'select_bg' =>         __( 'Select Background' , 'linchpin-mcs' ),
+				'select_block_bg' =>   __( 'Select Column Background', 'linchpin-mcs' ),
+				'published' =>         __( 'Published', 'linchpin-mcs' ),
+				'draft' =>             __( 'Draft', 'linchpin-mcs' ),
+				'confirm_remove' =>    __( 'Are you sure you want to remove this section?', 'linchpin-mcs' ),
 			),
 		);
 
@@ -619,7 +621,6 @@ class Multiple_Content_Sections {
 	 *
 	 * @access public
 	 * @return void
-	 *
 	 */
 	function admin_enqueue_styles() {
 		wp_enqueue_style( 'admin-mcs', plugins_url( 'assets/css/admin-mcs.css', __FILE__ ), array(), '1.0' );
@@ -640,7 +641,6 @@ class Multiple_Content_Sections {
 	 *
 	 * @access public
 	 * @return void
-	 *
 	 */
 	function wp_enqueue_styles() {
 		wp_enqueue_style( 'mesh-grid-foundation', plugins_url( 'assets/css/mesh-grid-foundation.css', __FILE__ ), array(), '1.0' );
@@ -649,9 +649,9 @@ class Multiple_Content_Sections {
 	/**
 	 * Scan directory for files.
 	 *
-	 * @param $path
-	 * @param null $extensions
-	 * @param int $depth
+	 * @param string $path
+	 * @param null   $extensions
+	 * @param int    $depth
 	 * @param string $relative_path
 	 *
 	 * @return array|bool
@@ -668,7 +668,7 @@ class Multiple_Content_Sections {
 
 		$relative_path = trailingslashit( $relative_path );
 
-		if ( '/' == $relative_path ) {
+		if ( '/' === $relative_path ) {
 			$relative_path = '';
 		}
 
@@ -676,11 +676,11 @@ class Multiple_Content_Sections {
 		$files = array();
 
 		foreach ( $results as $result ) {
-			if ( '.' == $result[0] ) {
+			if ( '.' === $result[0] ) {
 				continue;
 			}
 			if ( is_dir( $path . '/' . $result ) ) {
-				if ( ! $depth || 'CVS' == $result ) {
+				if ( ! $depth || 'CVS' === $result ) {
 					continue;
 				}
 				$found = self::scandir( $path . '/' . $result, $extensions, $depth - 1 , $relative_path . $result );
@@ -693,7 +693,7 @@ class Multiple_Content_Sections {
 		return $files;
 	}
 
-	function wptuts_pointer_load( $hook_suffix ) {
+	function pointer_load( $hook_suffix ) {
 
 	    // Don't run on WP < 3.3
 	    if ( get_bloginfo( 'version' ) < '3.3' )
@@ -739,13 +739,13 @@ class Multiple_Content_Sections {
 	    wp_localize_script( 'wptuts-pointer', 'wptutsPointer', $valid_pointers );
 	}
 
-	function wptuts_register_pointer_testing( $p ) {
+	function register_pointer_testing( $p ) {
 	    $p['all_section_options'] = array(
 	        'target' => '.mcs-more-section-options',
 	        'options' => array(
 	            'content' => sprintf( '<h3> %s </h3> <p> %s </p>',
-	                __( 'Section Options' ,'linchpin-mcs'),
-	                __( 'View all section options by click the "More Options" toggle.','linchpin-mcs')
+	                __( 'Section Options' ,'linchpin-mcs' ),
+	                __( 'View all section options by click the "More Options" toggle.','linchpin-mcs' )
 	            ),
 	            'position' => array( 'edge' => 'bottom', 'align' => 'left' )
 	        )

@@ -57,6 +57,14 @@ module.exports = function(grunt) {
         makepot: {
             target: {
                 options: {
+                    mainFile: 'multiple-content-sections.php',
+                    potFilename: 'multiple-content-sections.pot',
+                    domainPath: '/languages',
+                    exclude:[
+                        '/vendor',
+                        '/node_modules',
+                        '/lib'
+                    ],
                     type: 'wp-plugin'
                 }
             }
