@@ -4,7 +4,7 @@
  * Plugin URI: http://linchpin.agency/wordpress-plugins/mesh
  * Description: Adds multiple sections for content on a post by post basis. Mesh also has settings to enable it for specific post types
  * Version: 1.0.0
- * Author: Linchpin
+ * Author: linchpin_agency, maxinacube, desrosj, aware
  * Author URI: http://linchpin.agency
  * License: GPLv2 or later
  *
@@ -23,9 +23,11 @@ define( 'LINCHPIN_MCS___PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 define( 'LINCHPIN_MCS___PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 
 include_once 'class.mesh-settings.php';
+include_once 'class.mesh-pointers.php';
 include_once 'class.multiple-content-sections.php';
 
 $multiple_content_sections = new Multiple_Content_Sections();
+$mesh_pointers = new Mesh_Admin_Pointers();
 
 add_action( 'init', array( 'Mesh_Settings', 'init' ) );
 
@@ -162,7 +164,7 @@ function mcs_get_sections( $post_id, $return_type = 'array', $include_drafts = f
 
 	if ( $include_drafts ) {
 		$args['post_status'] = array(
-			'publish', 'draft'
+			'publish', 'draft',
 		);
 	}
 

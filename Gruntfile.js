@@ -38,6 +38,7 @@ module.exports = function(grunt) {
 
             dist: {
                 src: [
+                    'assets/js/admin-mcs-pointers.js',
                     'assets/js/admin-mcs-blocks.js',
                     'assets/js/admin-mcs-core.js'
                 ],
@@ -80,6 +81,7 @@ module.exports = function(grunt) {
 
             javascript: {
                 files: [
+                    'assets/js/admin-mcs-pointers.js',
                     'assets/js/admin-mcs-blocks.js',
                     'assets/js/admin-mcs-core.js',
                     'assets/js/mesh-frontend.js'

@@ -1,6 +1,4 @@
-if( typeof(multiple_content_sections) == 'undefined' ) {
-	multiple_content_sections = {};
-}
+var multiple_content_sections = multiple_content_sections || {};
 
 multiple_content_sections.admin = function ( $ ) {
 
@@ -20,6 +18,7 @@ multiple_content_sections.admin = function ( $ ) {
 		// Container References for Admin(self) / Block
 		self,
 		blocks,
+		pointers,
 		section_count;
 
 	return {
@@ -31,6 +30,7 @@ multiple_content_sections.admin = function ( $ ) {
 
 			self = multiple_content_sections.admin;
 			blocks = multiple_content_sections.blocks;
+			pointers = multiple_content_sections.pointers;
 
 			$body
 				.on('click', '.mcs-section-add',           self.add_section )
@@ -60,6 +60,9 @@ multiple_content_sections.admin = function ( $ ) {
 
 			// Setup our controls for Blocks
 			blocks.init();
+
+			// Seupt our Pointers
+			pointers.show_pointer(0);
 
 			self.setup_notifications( $meta_box_container );
 

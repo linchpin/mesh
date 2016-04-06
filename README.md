@@ -58,7 +58,8 @@ We're working on the ability to tie in extra controls to blocks and sections.
 * `apply_filters( 'mesh_tabs', $tabs );`
 * `apply_filters( 'css_mode', $css_mode );` Allow filtering of available css_mode options
 * `apply_filters( 'mcs_allowed_html', array_merge_recursive( $post_allowed, $mcs_allowed );` Filter allowed HTML within MCS
-		
+* `apply_filters( 'mesh_admin_pointers-' . $screen_id, array() );`
+
 ```$css_mode = array(
     array( 'label' => __( 'Use Mesh CSS', 'linchpin-mcs' ), 'value' => '' ),
     array( 'label' => __( 'Disable Mesh CSS', 'linchpin-mcs' ), 'value' => 0 ),

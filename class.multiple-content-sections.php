@@ -79,10 +79,6 @@ class Multiple_Content_Sections {
 
 		// Add Screen Options.
 		add_action( 'admin_menu',           array( $this, 'admin_menu' ) );
-
-		// Admin Pointers.
-		add_action( 'admin_enqueue_scripts',      array( $this, 'pointer_load' ), 1000 );
-		add_filter( 'wptuts_admin_pointers-page', array( $this, 'register_pointer_testing' ) );
 	}
 
 	/**
@@ -227,7 +223,7 @@ class Multiple_Content_Sections {
 	function edit_page_form( $post ) {
 		$content_sections = mcs_get_sections( $post->ID, 'array', true );
 		$mcs_notifications = get_user_option( 'linchpin_mcs_notifications', get_current_user_id() );
-	?>
+		?>
 		<div id="mcs-container">
 			<?php wp_nonce_field( 'mcs_content_sections_nonce', 'mcs_content_sections_nonce' ); ?>
 
@@ -583,7 +579,25 @@ class Multiple_Content_Sections {
 			return;
 		}
 
-		wp_enqueue_script( 'admin-mcs', plugins_url( 'assets/js/admin-mcs.js', __FILE__ ), array( 'jquery', 'jquery-ui-draggable', 'jquery-ui-droppable', 'jquery-ui-slider' ), '1.0', true );
+		wp_enqueue_script( 'admin-mcs', plugins_url( 'assets/js/admin-mcs.js', __FILE__ ), array( 'jquery', 'jquery-ui-draggable', 'jquery-ui-droppable', 'jquery-ui-slider', 'wp-pointer' ), '1.0', true );
+
+		$strings = array(
+			'reorder' =>           __( 'Be sure to save the order of your sections once your changes are complete.', 'linchpin-mcs' ),
+			'description' =>       __( 'Multiple content sections allows you to easily segment your page\'s contents into different blocks of markup.', 'linchpin-mcs' ),
+			'add_image' =>         __( 'Set Background Image', 'linchpin-mcs' ),
+			'remove_image' =>      __( 'Remove Background', 'linchpin-mcs' ),
+			'expand_all' =>        __( 'Expand All', 'linchpin-mcs' ),
+			'collapse_all' =>      __( 'Collapse All', 'linchpin-mcs' ),
+			'default_title' =>     __( 'No Section Title', 'linchpin-mcs' ),
+			'select_section_bg' => __( 'Select Section Background', 'linchpin-mcs' ),
+			'select_bg' =>         __( 'Select Background' , 'linchpin-mcs' ),
+			'select_block_bg' =>   __( 'Select Column Background', 'linchpin-mcs' ),
+			'published' =>         __( 'Published', 'linchpin-mcs' ),
+			'draft' =>             __( 'Draft', 'linchpin-mcs' ),
+			'confirm_remove' =>    __( 'Are you sure you want to remove this section?', 'linchpin-mcs' ),
+		);
+
+		$strings = apply_filters( 'mcs_strings', $strings ); // Allow filtering of localization strings.
 
 		$localized_data = array(
 			'post_id' => $post->ID,
@@ -596,22 +610,10 @@ class Multiple_Content_Sections {
 			'reorder_blocks_nonce'  => wp_create_nonce( 'mcs_reorder_blocks_nonce' ),
 			'dismiss_nonce'         => wp_create_nonce( 'mcs_dismiss_notification_nonce' ),
 			'content_css'           => apply_filters( 'content_css', get_stylesheet_directory_uri() . '/css/admin-editor.css' , 'editor_path' ),
-			'strings' => array(
-				'reorder' =>           __( 'Be sure to save the order of your sections once your changes are complete.', 'linchpin-mcs' ),
-				'description' =>       __( 'Multiple content sections allows you to easily segment your page\'s contents into different blocks of markup.', 'linchpin-mcs' ),
-				'add_image' =>         __( 'Set Background Image', 'linchpin-mcs' ),
-				'remove_image' =>      __( 'Remove Background', 'linchpin-mcs' ),
-				'expand_all' =>        __( 'Expand All', 'linchpin-mcs' ),
-				'collapse_all' =>      __( 'Collapse All', 'linchpin-mcs' ),
-				'default_title' =>     __( 'No Section Title', 'linchpin-mcs' ),
-				'select_section_bg' => __( 'Select Section Background', 'linchpin-mcs' ),
-				'select_bg' =>         __( 'Select Background' , 'linchpin-mcs' ),
-				'select_block_bg' =>   __( 'Select Column Background', 'linchpin-mcs' ),
-				'published' =>         __( 'Published', 'linchpin-mcs' ),
-				'draft' =>             __( 'Draft', 'linchpin-mcs' ),
-				'confirm_remove' =>    __( 'Are you sure you want to remove this section?', 'linchpin-mcs' ),
-			),
+			'strings'               => $strings,
 		);
+
+		$localized_data = apply_filters( 'mcs_data', $localized_data ); // Allow filtering of the entire localized dataset.
 
 		wp_localize_script( 'admin-mcs', 'mcs_data', $localized_data );
 	}
@@ -691,91 +693,5 @@ class Multiple_Content_Sections {
 		}
 
 		return $files;
-	}
-
-	function pointer_load( $hook_suffix ) {
-
-	    // Don't run on WP < 3.3
-	    if ( get_bloginfo( 'version' ) < '3.3' )
-	        return;
-
-	    $screen = get_current_screen();
-	    $screen_id = $screen->id;
-
-	    // Get pointers for this screen
-	    $pointers = apply_filters( 'wptuts_admin_pointers-' . $screen_id, array() );
-
-	    if ( ! $pointers || ! is_array( $pointers ) )
-	        return;
-
-	    // Get dismissed pointers
-	    $dismissed = explode( ',', (string) get_user_meta( get_current_user_id(), 'dismissed_wp_pointers', true ) );
-	    $valid_pointers =array();
-
-	    // Check pointers and remove dismissed ones.
-	    foreach ( $pointers as $pointer_id => $pointer ) {
-
-	        // Sanity check
-	        if ( in_array( $pointer_id, $dismissed ) || empty( $pointer )  || empty( $pointer_id ) || empty( $pointer['target'] ) || empty( $pointer['options'] ) )
-	            continue;
-
-	        $pointer['pointer_id'] = $pointer_id;
-
-	        // Add the pointer to $valid_pointers array
-	        $valid_pointers['pointers'][] =  $pointer;
-	    }
-
-	    // No valid pointers? Stop here.
-	    if ( empty( $valid_pointers ) )
-	        return;
-
-	    // Add pointers style to queue.
-	    wp_enqueue_style( 'wp-pointer' );
-
-	    // Add pointers script to queue. Add custom script.
-	    wp_enqueue_script( 'wptuts-pointer', plugins_url( 'assets/js/admin-pointer.js', __FILE__ ), array( 'wp-pointer' ) );
-
-	    // Add pointer options to script.
-	    wp_localize_script( 'wptuts-pointer', 'wptutsPointer', $valid_pointers );
-	}
-
-	function register_pointer_testing( $p ) {
-	    $p['all_section_options'] = array(
-	        'target' => '.mcs-more-section-options',
-	        'options' => array(
-	            'content' => sprintf( '<h3> %s </h3> <p> %s </p>',
-	                __( 'Section Options' ,'linchpin-mcs' ),
-	                __( 'View all section options by click the "More Options" toggle.','linchpin-mcs' )
-	            ),
-	            'position' => array( 'edge' => 'bottom', 'align' => 'left' )
-	        )
-	    );
-
-	    $p['offset'] = array(
-	        'target' => '.mcs-column-offset:first',
-	        'options' => array(
-	            'content' => sprintf( '<h3> %s </h3> <p> %s </p>',
-	                __( 'What is an offset?' ,'linchpin-mcs'),
-	                __( 'If using Foundation, an offset will indent your column by the amount of columns selected in the dropdown menu.','linchpin-mcs')
-	            ),
-	            'position' => array( 'edge' => 'bottom', 'align' => 'left' )
-	        )
-	    );
-
-	    $p['column_slider'] = array(
-		    'target' => '.mcs-editor-blocks .the-mover:first',
-		    'options' => array(
-			    'content' => sprintf( '<h3> %s </h3> <p> %s </p>',
-				    __( 'Rearrange Columns', 'linchpin-mcs' ),
-				    __( 'Use this handle to click and drag this column, giving you the ability to swap columns on the fly.', 'linchpin-mcs' )
-			    ),
-			    'position' => array(
-				    'edge' => 'bottom',
-				    'align' => 'left',
-			    )
-		    )
-	    );
-
-	    return $p;
 	}
 }

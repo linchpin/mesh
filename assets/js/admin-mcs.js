@@ -1,5 +1,32 @@
 var multiple_content_sections = multiple_content_sections || {};
 
+multiple_content_sections.pointers = function ( $ ) {
+
+	return {
+
+		/**
+		 * Initialize our script
+		 *
+		 * @param int index
+		 */
+		show_pointer: function ( index ) {
+			var pointer = mcs_data.wp_pointers.pointers[index],
+				options = $.extend( pointer.options, {
+					close: function() {
+						$.post( ajaxurl, {
+							pointer: pointer.pointer_id,
+							action: 'dismiss-wp-pointer'
+						});
+					}
+				});
+			
+			$(pointer.target).pointer( options ).pointer('open');
+		}
+	};
+
+} ( jQuery );;
+var multiple_content_sections = multiple_content_sections || {};
+
 multiple_content_sections.blocks = function ( $ ) {
 
     var $body = $('body'),
@@ -571,9 +598,7 @@ multiple_content_sections.blocks = function ( $ ) {
 
 } ( jQuery );
 ;
-if( typeof(multiple_content_sections) == 'undefined' ) {
-	multiple_content_sections = {};
-}
+var multiple_content_sections = multiple_content_sections || {};
 
 multiple_content_sections.admin = function ( $ ) {
 
@@ -593,6 +618,7 @@ multiple_content_sections.admin = function ( $ ) {
 		// Container References for Admin(self) / Block
 		self,
 		blocks,
+		pointers,
 		section_count;
 
 	return {
@@ -604,6 +630,7 @@ multiple_content_sections.admin = function ( $ ) {
 
 			self = multiple_content_sections.admin;
 			blocks = multiple_content_sections.blocks;
+			pointers = multiple_content_sections.pointers;
 
 			$body
 				.on('click', '.mcs-section-add',           self.add_section )
@@ -633,6 +660,9 @@ multiple_content_sections.admin = function ( $ ) {
 
 			// Setup our controls for Blocks
 			blocks.init();
+
+			// Seupt our Pointers
+			pointers.show_pointer(0);
 
 			self.setup_notifications( $meta_box_container );
 

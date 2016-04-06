@@ -1,9 +1,8 @@
 /**
  * Controls Block Administration
  *
- * @since 1.4.1
+ * @since 0.4.1
  */
-
 
 var multiple_content_sections = multiple_content_sections || {};
 
