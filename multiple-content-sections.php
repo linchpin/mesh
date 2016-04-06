@@ -1,14 +1,14 @@
 <?php
 /**
  * Plugin Name: Mesh for WordPress
- * Plugin URI: http://linchpin.agency
+ * Plugin URI: http://linchpin.agency/wordpress-plugins/mesh
  * Description: Adds multiple sections for content on a post by post basis. Mesh also has settings to enable it for specific post types
  * Version: 1.0.0
  * Author: Linchpin
  * Author URI: http://linchpin.agency
  * License: GPLv2 or later
  *
- * @package MultipleContentSections
+ * @package Mesh
  */
 
 // Make sure we don't expose any info if called directly.
@@ -27,7 +27,7 @@ include_once 'class.multiple-content-sections.php';
 
 $multiple_content_sections = new Multiple_Content_Sections();
 
-add_action( 'init', array( 'MeshSettings', 'init' ) );
+add_action( 'init', array( 'Mesh_Settings', 'init' ) );
 
 /**
  * Get files within our directory

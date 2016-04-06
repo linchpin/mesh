@@ -2,8 +2,8 @@
 /**
  * Class to handle all ajax related class within the admin
  *
- * @since 1.0
- * @package LinchpinMultipleContentSections
+ * @since 1.0.0
+ * @package    Mesh
  * @subpackage AJAX
  */
 
@@ -45,8 +45,8 @@ class Multiple_Content_Sections_AJAX {
 		}
 
 		$args = array(
-			'post_type' => 'mcs_section',
-			'post_title' => 'No Title',
+			'post_type'   => 'mcs_section',
+			'post_title'  => __( 'No Title', 'linchpin-mcs' ),
 			'post_status' => 'draft',
 			'post_parent' => $post_id,
 		);

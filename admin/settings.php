@@ -16,8 +16,21 @@
  * Renders the settings page contents.
  *
  * @since       1.0.0
-*/
+ */
 
+/*
+ * Including PHP Markdown Library
+ *
+ * PHP Markdown Lib
+ * Copyright (c) 2004-2015 Michel Fortin
+ * <https://michelf.ca/>
+ * All rights reserved.
+ *
+ * Based on Markdown
+ * Copyright (c) 2003-2006 John Gruber
+ * <https://daringfireball.net/>
+ * All rights reserved.
+ */
 require_once LINCHPIN_MCS___PLUGIN_DIR . '/lib/Michelf/MarkdownInterface.php';
 require_once LINCHPIN_MCS___PLUGIN_DIR . '/lib/Michelf/Markdown.php';
 require_once LINCHPIN_MCS___PLUGIN_DIR . '/lib/Michelf/MarkdownExtra.php';

@@ -2,7 +2,9 @@
 /**
  * Control all of our plugin Settings
  *
- * @since 1.0.0
+ * @since      1.0.0
+ * @package    Mesh
+ * @subpackage Settings
  */
 
 /**
@@ -22,7 +24,7 @@ class Mesh_Settings {
 	 *
 	 * @var string
 	 */
-	public static $plugin_name = 'mesh';
+	public static $plugin_name = LINCHPIN_MCS_PLUGIN_NAME;
 
 	/**
 	 * Initialize our plugin settings.
@@ -47,7 +49,7 @@ class Mesh_Settings {
 	 * @since 1.0.0
 	 */
 	public static function create_section() {
-		esc_html_e( 'Below are your settings for Mesh.', 'linchpin-mcs' );
+		esc_html_e( 'Below are your settings for Mesh', 'linchpin-mcs' );
 	}
 
 	/**
@@ -75,8 +77,6 @@ class Mesh_Settings {
 
 		// Allow filtering of available css_mode options.
 		$css_mode = apply_filters( 'css_mode', $css_mode );
-
-		echo 'add settings field';
 
 		add_settings_field(
 			'css_mode',
@@ -127,15 +127,16 @@ class Mesh_Settings {
 		 * Define our field defaults
 		 */
 		$defaults = array(
-			'type' => 'text',
-			'class' => '',
-			'description', '',
+			'type'        => 'text',
+			'class'       => '',
+			'description' => '',
+			'label'       => '',
 		);
 
 		// Parse incoming $args into an array and merge it with $defaults.
 		$args = wp_parse_args( $args, $defaults );
 
-		$options = get_option( 'clapi_settings' ); ?>
+		$options = get_option( 'mesh_settings' ); ?>
 
 		<?php if ( ! empty( $args['description'] ) ) : ?>
 			<p class="description"><?php esc_html_e( $args['description'] ); ?></p>
@@ -152,6 +153,8 @@ class Mesh_Settings {
 	 * @param array $args Args for Customization.
 	 */
 	public static function add_select( $args ) {
+
+		echo 'this is something htat sadsad adsa';
 
 		/**
 		 * Define our field defaults
@@ -174,7 +177,8 @@ class Mesh_Settings {
 			<p class="description"><?php esc_html_e( $args['description'] ); ?></p>
 		<?php endif; ?>
 
-		<label for="mesh-<?php esc_attr_e( $args['field'] ); ?>"></label>
+		<label for="mesh-<?php esc_attr_e( $args['field'] ); ?>"><?php esc_html_e( $args['label'] ); ?></label>
+
 		<select id="mesh-<?php esc_attr_e( $args['field'] ); ?>" name="mesh_settings[<?php esc_attr_e( $args['field'] ); ?>]">
 			<?php foreach ( $select_options as $option ) : ?>
 				<option value="<?php esc_attr_e( $option['value'] ); ?>" <?php selected( $options[ $args['field'] ], $option['value'] ); ?>><?php esc_html_e( $option['label'] ); ?></option>
