@@ -31,7 +31,11 @@
 	}
 
 
-	// 02. Buttons
+	// 02. Buttons/Links
+	a {
+		cursor: pointer;
+	}
+
 	.button {
 		&.primary {
 			background-color: $primary;
@@ -79,5 +83,13 @@
 			margin: 0;
 			vertical-align: middle;
 		}
+	}
+
+	.plain-link {
+		text-decoration: none;
+	}
+
+	.grey-link {
+		color: $darkest-grey;
 	}
 }

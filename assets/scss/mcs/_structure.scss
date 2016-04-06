@@ -4,7 +4,8 @@
  * 02. No Sections
  * 03. Section Header
  * 04. Section Meta
- * 05. Blocks
+ * 05. Section Footer
+ * 06. Blocks
  *
  **/
 
@@ -20,16 +21,26 @@
 
 .mcs-main-ua-row {
 	padding: {
-		bottom: $base;
-		top: $base;
+		bottom: $base * .25;
+		top: $base * .25;
 	};
 
 	.lead {
 		margin: 0;
 	}
+
+	&.notice {
+		p {
+			height: $input_height;
+			line-height: $input_height;
+			margin: 0;
+			padding: 0;
+		}
+	}
 }
 
 .msc-clean-edit {
+	margin-left: 5px;
 	position: relative;
 
 	.msc-clean-edit-element,
@@ -102,6 +113,11 @@
 	}
 
 	&.handle-right {
+		margin: {
+			left: 0;
+			right: 5px;
+		};
+
 		.handle-title {
 			left: auto;
 			right: 0;
@@ -111,6 +127,27 @@
 
 .mcs-columns-12 + .mcs-columns-12 {
 	margin-top: $base;
+}
+
+.mcs-section-expand {
+	@include dashicons( '\f164' );
+}
+
+.mcs-section-collapse {
+	@include dashicons( '\f163' );
+}
+
+.mcs-section-reorder {
+	@include dashicons( '\f156' );
+}
+
+.mcs-section-expand,
+.mcs-section-collapse,
+.mcs-section-reorder {
+	&:before {
+		font-size: 18px;
+		margin-right: 4px;
+	}
 }
 
 // 02. No Sections
@@ -125,6 +162,7 @@
 // 03. Section Header
 .multiple-content-sections-section {
 	.handlediv {
+		cursor: pointer;
 		font-size: 20px;
 		height: $input_height;
 		line-height: $input_height;
@@ -137,8 +175,23 @@
 		@include dashicons( '\f142' );
 	}
 
+	&.ui-sortable-handle {
+		cursor: move;
+	}
+
 	&.closed .handlediv {
 		@include dashicons( '\f140' );
+	}
+
+	&.ui-sortable-placeholder {
+		background-color: transparent;
+		border: 2px dashed $dark-grey;
+		visibility: visible !important;
+	}
+
+	.notice {
+		background-color: $light-grey;
+		box-shadow: none;
 	}
 }
 
@@ -182,6 +235,10 @@
 	&:active {
 		outline: none;
 	}
+
+	&.toggled {
+		@include dashicons( '\f142', 'after' );
+	}
 }
 
 .mcs-section-meta-dropdown {
@@ -209,7 +266,8 @@
 			width: auto;
 		}
 
-		.mcs-featured-image-trash {
+		.mcs-featured-image-trash,
+		.mcs-block-featured-image-trash {
 			text-decoration: none;
 
 			position: absolute;
@@ -224,9 +282,32 @@
 	}
 }
 
-// 05. Blocks
+// 05. Section Footer
+.mcs-section-footer {
+	background-color: $light-grey;
+	border-top: 1px solid $grey;
+	margin: {
+		left: -$inside_padding;
+		right: -$inside_padding;
+		bottom: -$inside_padding;
+	};
+	padding: $inside_padding;
+
+	.mcs-section-remove {
+		line-height: $input_height;
+
+		&:before {
+			line-height: $input_height;
+		}
+	}
+}
+
+// 06. Blocks
 .mcs-editor-blocks {
-	margin-top: $base;
+	margin: {
+		bottom: $base;
+		top: $base;
+	};
 	position: relative;
 
 	.column-slider {
@@ -253,6 +334,7 @@
 		border-radius: 0;
 		box-shadow: none;
 		box-sizing: border-box;
+		cursor: ew-resize;
 		height: auto;
 		margin-left: -($base * 2 - 6px)/2;
 		width: $base * 2 - 6px;
@@ -301,7 +383,10 @@
 		&:before {
 			content: '';
 
-			background-color: $light-grey;
+			background: {
+				color: $light-grey;
+				image: url('../images/offset-pattern.png');
+			};
 			margin-right: 10px;
 
 			position: absolute;

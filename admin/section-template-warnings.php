@@ -13,12 +13,13 @@
 	<?php if ( empty( $mcs_notifications['moreblocks'] ) ) : ?>
 		<div id="mcs-warnings-<?php esc_attr_e( $section->ID ); ?>" class="description notice notice-info is-dismissible below-h2" data-type="moreblocks">
 			<p>
-				<?php esc_html_e( 'Your sections template selection does not have enough spots to display all of your blocks', 'linchpin-mcs' ); ?>
+				<?php esc_html_e( 'The number of columns selected is causing some content to be hidden.', 'linchpin-mcs' ); ?>
 				<br/>
-				<?php esc_html_e( 'Don\'t worry! None of your content is not lost', 'linchpin-mcs' ); ?>
+				<?php esc_html_e( 'Increase the column number to access that content.', 'linchpin-mcs' ); ?>
 			</p>
 		</div>
 	<?php endif; ?>
+	<?php /*
 	<p>Unused or hidden blocks :
 		<?php
 		$i = $templates[ $selected_template ]['blocks'];
@@ -32,5 +33,6 @@
 		}
 		?>
 	</p>
+	*/ ?>
 	<?php
 endif;

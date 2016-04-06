@@ -151,14 +151,22 @@ function mcs_add_section_admin_markup( $section, $closed = false ) {
  *
  * @return array|WP_Query
  */
-function mcs_get_sections( $post_id, $return_type = 'array' ) {
-	$content_sections = new WP_Query( array(
+function mcs_get_sections( $post_id, $return_type = 'array', $include_drafts = false ) {
+	$args = array(
 		'post_type' => 'mcs_section',
 		'posts_per_page' => 50,
 		'orderby' => 'menu_order',
 		'order' => 'ASC',
 		'post_parent' => (int) $post_id,
-	) );
+	);
+
+	if ( $include_drafts ) {
+		$args['post_status'] = array(
+			'publish', 'draft'
+		);
+	}
+
+	$content_sections = new WP_Query( $args );
 
 	switch ( $return_type ) {
 		case 'query' :
@@ -254,8 +262,8 @@ function mcs_display_sections( $post_id = '' ) {
 				$mcs_section_query->the_post();
 				the_mcs_content();
 			}
+			wp_reset_postdata();
 		}
-		wp_reset_postdata();
 	}
 }
 
@@ -308,7 +316,7 @@ function mcs_maybe_create_section_blocks( $section, $number_needed = 0 ) {
 		wp_insert_post( array(
 			'post_type'   => 'mcs_section',
 			'post_status' => $section->post_status,
-			'post_title'  => 'Block ' . ( $start + $count ),
+			'post_title'  => __( 'No Column Title', 'linchpin-mcs' ),
 			'post_parent' => $section->ID,
 			'menu_order'  => ( $start + $count ),
 			'post_name'   => 'section-' . $section->ID . '-block-' . ( $start + $count ),

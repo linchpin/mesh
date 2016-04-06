@@ -16,25 +16,11 @@
 		$collapse_column_spacing = get_post_meta( get_the_ID(), '_mcs_collapse', true );
 		$lp_equal = get_post_meta( get_the_ID(), '_mcs_lp_equal', true );
 
-		$title_display   = get_post_meta( get_the_ID(), '_mcs_title_display', true );
-		$title_displayed = false;
-
-		if ( 'none' == $title_display ) {
-			$title_displayed = true;
-		}
+		$title_display = get_post_meta( get_the_ID(), '_mcs_title_display', true );
 	?>
-	<div class="row <?php if ( ! empty( $collapse_column_spacing ) ) : ?>collapse<?php endif; ?>"<?php if ( ! empty( $lp_equal ) ) : ?> <?php echo $lp_equal; ?><?php endif; ?>>
-		<?php if ( ! $title_displayed ) : ?>
-			<?php if ( empty( $title_display ) || 'top' === $title_display ) : ?>
+	<div class="row <?php if ( ! empty( $collapse_column_spacing ) ) : ?>collapse<?php endif; ?>"<?php if ( ! empty( $lp_equal ) ) : ?> data-equalizer<?php endif; ?>>
+		<?php if ( ! empty( $title_display ) && 'no block title' != strtolower( get_the_title() ) ) : ?>
 			<div class="small-12 columns">
-				<h2 class="entry-title"><?php the_title(); ?></h2>
-			</div>
-			<?php $title_displayed = true;
-			endif; ?>
-		<?php endif; ?>
-
-		<?php if ( ! $title_displayed && isset( $push_pull ) ) : ?>
-			<div class="small-12 columns show-for-small">
 				<h2 class="entry-title"><?php the_title(); ?></h2>
 			</div>
 		<?php endif; ?>
@@ -47,12 +33,12 @@
 			$block_offset = get_post_meta( $block->ID, '_mcs_offset',  true );
 
 			if ( isset( $push_pull ) ) {
-				if ( 0 === $i ) {
-					$push_pull_class = 'push-' . ( 12 - $column_width );
+				if ( 0 == $i ) {
+					$push_pull_class = 'medium-push-' . ( 12 - $column_width );
 				}
 
-				if ( 1 === $i ) {
-					$push_pull_class = 'pull-' . ( 12 - $column_width );
+				if ( 1 == $i ) {
+					$push_pull_class = 'medium-pull-' . ( 12 - $column_width );
 				}
 			}
 
@@ -63,14 +49,11 @@
 				$offset_class = 'medium-' . ( $column_width - $block_offset ) . ' medium-offset-' . $block_offset;
 			} ?>
 
-			<div class="small-12 <?php if ( ! empty( $collapse_column_spacing ) ) : ?>collapse <?php endif; ?><?php esc_attr_e( $offset_class ); ?> columns <?php esc_attr_e( $block_css_class ); ?> <?php if ( $push_pull ) { echo $push_pull_class; } ?>">
-				<?php if ( ! $title_displayed && 'block-' . $i === $title_display ) : ?>
-					<?php if ( ! isset( $push_pull ) ) : ?>
-					<h2 class="entry-title"><?php the_title(); ?></h2>
-					<?php else : ?>
-					<h2 class="entry-title hide-for-small"><?php the_title(); ?></h2>
-					<?php endif; ?>
-				<?php $title_displayed = true; endif; ?>
+			<div class="small-12 <?php if ( ! empty( $collapse_column_spacing ) ) : ?>collapse <?php endif; ?><?php esc_attr_e( $offset_class ); ?> columns <?php esc_attr_e( $block_css_class ); ?> <?php if ( $push_pull ) { echo $push_pull_class; } ?>"<?php if ( ! empty( $lp_equal ) ) : ?> data-equalizer-watch<?php endif; ?>>
+				<?php if ( ! empty( $block->post_title ) && 'no column title' != strtolower( $block->post_title ) ) : ?>
+					<h3 class="entry-subtitle"><?php echo apply_filters( 'the_title', $block->post_title ); ?></h3>
+				<?php endif; ?>
+
 				<?php echo apply_filters( 'the_content', $block->post_content ); ?>
 			</div>
 		<?php $i++;

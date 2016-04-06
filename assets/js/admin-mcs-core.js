@@ -8,16 +8,19 @@ multiple_content_sections.admin = function ( $ ) {
 		$reorder_button     = $('.mcs-section-reorder'),
 		$add_button         = $('.mcs-section-add'),
 		$expand_button      = $('.mcs-section-expand'),
+		$collapse_button    = $('.mcs-section-collapse'),
 		$meta_box_container = $('#mcs-container'),
 		$section_container  = $('#multiple-content-sections-container'),
 		$description        = $('#mcs-description'),
 		$empty_message      = $('.empty-sections-message'),
+		$equalize           = $('.mcs_section [data-equalizer]'),
 		$sections,
 		media_frames        = [],
 
 		// Container References for Admin(self) / Block
 		self,
-		blocks;
+		blocks,
+		section_count;
 
 	return {
 
@@ -36,6 +39,7 @@ multiple_content_sections.admin = function ( $ ) {
 				.on('click', '.mcs-save-order',            self.save_section_order )
 				.on('click', '.mcs-featured-image-trash',  self.remove_background )
 				.on('click', '.mcs-section-expand',        self.expand_all_sections )
+				.on('click', '.mcs-section-collapse',      self.collapse_all_sections )
 				.on('click', '.mcs-featured-image-choose', self.choose_background )
 				.on('click.OpenMediaManager', '.mcs-featured-image-choose', self.choose_background )
 
@@ -48,6 +52,10 @@ multiple_content_sections.admin = function ( $ ) {
 
 			if ( $sections.length <= 1 ) {
 				$reorder_button.addClass( 'disabled' );
+			}
+
+			if ( 'undefined' == typeof Foundation ) {
+				$equalize.each( self.mesh_equalize );
 			}
 
 			// Setup our controls for Blocks
@@ -93,7 +101,7 @@ multiple_content_sections.admin = function ( $ ) {
 		},
 
 		/**
-		 * 1 click to expand or collapse sections
+		 * 1 click to expand sections
 		 *
 		 * @since 0.3.0
 		 *
@@ -106,15 +114,36 @@ multiple_content_sections.admin = function ( $ ) {
 
 			var $this = $(this);
 
-			$this.toggleClass('expanded');
+			$this.addClass('expanded');
 
-			if( ! $this.hasClass('expanded') ) {
-				$this.text( mcs_data.strings.expand_all );
-			} else {
-				$this.text( mcs_data.strings.collapse_all );
-			}
+			$('#multiple-content-sections-container').find('.handlediv').each(function () {
+				if ( $this.hasClass('expanded') && 'true' != $(this).attr('aria-expanded') ) {
+					$(this).trigger('click');
+				}
+			} );
+		},
 
-			$('#multiple-content-sections-container').find('.hndle').trigger('click');
+		/**
+		 * 1 click to collapse sections
+		 *
+		 * @since 1.0.0
+		 *
+		 * @param event
+		 */
+		collapse_all_sections : function( event ) {
+
+			event.preventDefault();
+			event.stopPropagation();
+
+			var $this = $(this);
+
+			$this.removeClass('expanded');
+
+			$('#multiple-content-sections-container').find('.handlediv').each(function () {
+				if ( ! $this.hasClass('expanded') && 'true' == $(this).attr('aria-expanded') ) {
+					$(this).trigger('click');
+				}
+			} );
 		},
 
 		/**
@@ -184,6 +213,8 @@ multiple_content_sections.admin = function ( $ ) {
 			event.preventDefault();
 			event.stopPropagation();
 
+			section_count = $sections.length;
+
 			var $this = $(this),
 				$spinner = $this.siblings('.spinner');
 
@@ -196,18 +227,21 @@ multiple_content_sections.admin = function ( $ ) {
 			$.post( ajaxurl, {
 				action: 'mcs_add_section',
 				mcs_post_id: mcs_data.post_id,
+				mcs_section_count: section_count,
 				mcs_add_section_nonce: mcs_data.add_section_nonce
 			}, function( response ){
 				if ( response ) {
 					var $response        = $( response ),
 						$tinymce_editors = $response.find('.wp-editor-area' ),
-						$empty_msg       = $('.empty-sections-message');
+						$empty_msg       = $('.empty-sections-message'),
+						$controls        = $('.mcs-main-ua-row');
 
 					$section_container.append( $response );
 					$spinner.removeClass('is-active');
 
 					if ( $empty_msg.length ) {
 						$empty_msg.fadeOut('fast');
+						$controls.fadeIn('fast');
 					}
 
 					var $postboxes = $('.multiple-content-sections-section', $meta_box_container );
@@ -217,6 +251,9 @@ multiple_content_sections.admin = function ( $ ) {
 					}
 
 					blocks.reorder_blocks( $tinymce_editors );
+
+					// Repopulate the sections cache so that the new section is included going forward.
+					$sections = $('.multiple-content-sections-section', $section_container);
 
 				} else {
 					$spinner.removeClass('is-active');
@@ -234,6 +271,12 @@ multiple_content_sections.admin = function ( $ ) {
 		remove_section : function(event) {
 			event.preventDefault();
 			event.stopPropagation();
+
+			var confirm_remove = confirm( mcs_data.strings.confirm_remove );
+
+			if ( ! confirm_remove ) {
+				return;
+			}
 
 			var $this = $(this),
 				$postbox = $this.parents('.multiple-content-sections-postbox'),
@@ -405,7 +448,7 @@ multiple_content_sections.admin = function ( $ ) {
 		change_select_title : function( event ) {
 			var $this = $(this),
 				current_title = $this.val(),
-				$handle_title = $this.sibling('.handle-title');
+				$handle_title = $this.siblings('.handle-title');
 
 			switch ( current_title ) {
 				case 'publish':
@@ -413,7 +456,7 @@ multiple_content_sections.admin = function ( $ ) {
 					break;
 
 				case 'draft':
-					current_title = mcs.strings.draft;
+					current_title = mcs_data.strings.draft;
 			}
 
 			$handle_title.text( current_title );
@@ -473,7 +516,11 @@ multiple_content_sections.admin = function ( $ ) {
 			}, function( response ) {
 				if ( response != -1 ) {
 					if ( $button.prev().hasClass('right') && ! $button.prev().hasClass('button') ) {
-						$button.prev().toggleClass( 'button right' );
+						if ( ! $button.parents('.block-background-container') ) {
+							$button.prev().toggleClass( 'button right' );
+						} else {
+							$button.prev().toggleClass( 'right' ).attr('data-mcs-block-featured-image', '' );
+						}
 					}
 
 					$button.prev().text( mcs_data.strings.add_image );
@@ -554,6 +601,20 @@ multiple_content_sections.admin = function ( $ ) {
 
 	        // Now that everything has been set, let's open up the frame.
 	        media_frames[ frame_id ].open();
+		},
+
+		mesh_equalize : function() {
+
+			var $this     = $(this),
+				$childs   = $('[data-equalizer-watch]', $this),
+				eq_height = 0;
+
+			$childs.each( function() {
+				var this_height = $(this).height();
+
+				eq_height = this_height > eq_height ? this_height : eq_height;
+			}).height(eq_height);
+
 		}
 	};
 } ( jQuery );

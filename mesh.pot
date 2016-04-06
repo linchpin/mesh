@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: Mesh for WordPress 1.0.0\n"
 "Report-Msgid-Bugs-To: "
 "https://wordpress.org/support/plugin/multiple-content-sections\n"
-"POT-Creation-Date: 2016-04-04 01:13:00+00:00\n"
+"POT-Creation-Date: 2016-04-05 18:13:17+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -18,89 +18,95 @@ msgstr ""
 msgid "Reorder Sections"
 msgstr ""
 
-#: admin/controls.php:15 class.multiple-content-sections.php:571
+#: admin/controls.php:15 class.multiple-content-sections.php:572
 msgid "Expand All"
 msgstr ""
 
-#: admin/controls.php:16 class.multiple-content-sections.php:240
+#: admin/controls.php:16 class.multiple-content-sections.php:241
 msgid "Add Section"
 msgstr ""
 
-#: admin/section-blocks.php:62 admin/section-blocks.php:84
+#: admin/section-blocks.php:64 admin/section-blocks.php:86
 #: admin/section-container.php:26 admin/section-container.php:39
 msgid "Done"
 msgstr ""
 
-#: admin/section-blocks.php:68 admin/section-blocks.php:91
+#: admin/section-blocks.php:70 admin/section-blocks.php:93
 msgid "Offset:"
 msgstr ""
 
-#: admin/section-blocks.php:76 admin/section-blocks.php:100
-#: admin/section-controls.php:48
+#: admin/section-blocks.php:78 admin/section-blocks.php:102
+#: admin/section-controls.php:40
 msgid "CSS Class"
 msgstr ""
 
-#: admin/section-blocks.php:133 admin/section-controls.php:72
-#: class.multiple-content-sections.php:569
+#: admin/section-blocks.php:136 admin/section-controls.php:71
+#: class.multiple-content-sections.php:570
 msgid "Set Background Image"
-msgstr ""
-
-#: admin/section-blocks.php:136
-msgid "Remove"
 msgstr ""
 
 #: admin/section-container.php:34
 msgid "Status:"
 msgstr ""
 
-#: admin/section-container.php:36 class.multiple-content-sections.php:578
+#: admin/section-container.php:36 class.multiple-content-sections.php:579
 msgid "Draft"
 msgstr ""
 
-#: admin/section-container.php:37 class.multiple-content-sections.php:577
+#: admin/section-container.php:37 class.multiple-content-sections.php:578
 msgid "Published"
 msgstr ""
 
-#: admin/section-container.php:68
-msgid "Remove Section"
+#: admin/section-container.php:69
+msgid "Move to Trash"
 msgstr ""
 
-#: admin/section-controls.php:15
+#: admin/section-container.php:74
+msgid "Save Draft"
+msgstr ""
+
+#: admin/section-container.php:75
+msgid "Publish"
+msgstr ""
+
+#: admin/section-container.php:77
+msgid "Update"
+msgstr ""
+
+#: admin/section-controls.php:16
 msgid "Columns:"
 msgstr ""
 
-#: admin/section-controls.php:26
-msgid "Title Display"
+#: admin/section-controls.php:27
+msgid "Display Title"
 msgstr ""
 
-#: admin/section-controls.php:41
+#: admin/section-controls.php:33
 msgid "More Options"
 msgstr ""
 
-#: admin/section-controls.php:54
+#: admin/section-controls.php:48
 msgid "Collapse Padding"
 msgstr ""
 
-#: admin/section-controls.php:59
+#: admin/section-controls.php:55
 msgid "Push/Pull"
 msgstr ""
 
-#: admin/section-controls.php:64
+#: admin/section-controls.php:62
 msgid "Equalize"
 msgstr ""
 
-#: admin/section-template-reordering.php:19
+#: admin/section-template-reordering.php:20
 msgid "Reorder your content blocks by dragging and dropping."
 msgstr ""
 
 #: admin/section-template-warnings.php:16
-msgid ""
-"Your sections template selection does not have enough spots to display all "
-"of your blocks"
+msgid "The number of columns selected is causing some content to be hidden."
 msgstr ""
 
 #: admin/section-template-warnings.php:18
-msgid "Don't worry! None of your content is not lost"
+msgid "Increase the column number to access that content."
 msgstr ""
 
 #: class.mesh-settings.php:50
@@ -151,217 +157,115 @@ msgstr ""
 msgid "Change Log"
 msgstr ""
 
-#: class.multiple-content-sections.php:115
+#: class.multiple-content-sections.php:118
 msgid "Show Extra MCS Section Controls?"
 msgstr ""
 
-#: class.multiple-content-sections.php:172
-#: class.multiple-content-sections.php:173
-#: class.multiple-content-sections.php:188
-#: class.multiple-content-sections.php:189
+#: class.multiple-content-sections.php:175
+#: class.multiple-content-sections.php:176
+#: class.multiple-content-sections.php:191
+#: class.multiple-content-sections.php:192
 msgid "Content Section"
 msgstr ""
 
-#: class.multiple-content-sections.php:174
+#: class.multiple-content-sections.php:177
 msgid "Parent Content Section:"
 msgstr ""
 
-#: class.multiple-content-sections.php:175
+#: class.multiple-content-sections.php:178
 msgid "All Content Sections"
 msgstr ""
 
-#: class.multiple-content-sections.php:176
+#: class.multiple-content-sections.php:179
 msgid "Add New Content Section"
 msgstr ""
 
-#: class.multiple-content-sections.php:177
+#: class.multiple-content-sections.php:180
 msgid "Add New"
 msgstr ""
 
-#: class.multiple-content-sections.php:178
+#: class.multiple-content-sections.php:181
 msgid "New Content Section"
 msgstr ""
 
-#: class.multiple-content-sections.php:179
+#: class.multiple-content-sections.php:182
 msgid "Edit Content Section"
 msgstr ""
 
-#: class.multiple-content-sections.php:180
+#: class.multiple-content-sections.php:183
 msgid "Update Content Section"
 msgstr ""
 
-#: class.multiple-content-sections.php:181
+#: class.multiple-content-sections.php:184
 msgid "View Content Section"
 msgstr ""
 
-#: class.multiple-content-sections.php:182
+#: class.multiple-content-sections.php:185
 msgid "Search Content Sections"
 msgstr ""
 
-#: class.multiple-content-sections.php:183
+#: class.multiple-content-sections.php:186
 msgid "Not found"
 msgstr ""
 
-#: class.multiple-content-sections.php:184
+#: class.multiple-content-sections.php:187
 msgid "Not found in Trash"
 msgstr ""
 
-#: class.multiple-content-sections.php:226
+#: class.multiple-content-sections.php:229
 msgid "Multiple Content Sections"
 msgstr ""
 
-#: class.multiple-content-sections.php:238
+#: class.multiple-content-sections.php:239
 msgid "You have no additional Content Sections yet."
 msgstr ""
 
-#: class.multiple-content-sections.php:239
+#: class.multiple-content-sections.php:240
 msgid "Get started by clicking"
 msgstr ""
 
-#: class.multiple-content-sections.php:245
+#: class.multiple-content-sections.php:246
 msgid ""
 "Multiple content sections allow you to easily segment your page's contents "
 "into different blocks of markup."
 msgstr ""
 
-#: class.multiple-content-sections.php:567
+#: class.multiple-content-sections.php:568
 msgid "Be sure to save order of your sections once your changes are complete."
 msgstr ""
 
-#: class.multiple-content-sections.php:568
+#: class.multiple-content-sections.php:569
 msgid ""
 "Multiple content sections allows you to easily segment your page's contents "
 "into different blocks of markup."
 msgstr ""
 
-#: class.multiple-content-sections.php:570
+#: class.multiple-content-sections.php:571
 msgid "Remove Background"
 msgstr ""
 
-#: class.multiple-content-sections.php:572
+#: class.multiple-content-sections.php:573
 msgid "Collapse All"
 msgstr ""
 
-#: class.multiple-content-sections.php:573
+#: class.multiple-content-sections.php:574
 msgid "No Title"
 msgstr ""
 
-#: class.multiple-content-sections.php:574
+#: class.multiple-content-sections.php:575
 msgid "Select Section Background"
 msgstr ""
 
-#: class.multiple-content-sections.php:575
+#: class.multiple-content-sections.php:576
 msgid "Select Background"
 msgstr ""
 
-#: class.multiple-content-sections.php:576
+#: class.multiple-content-sections.php:577
 msgid "Select Block Background"
 msgstr ""
 
-#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:102
-msgid "PPCPP-DESCRIPTION"
-msgstr ""
-
-#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:103
-msgid "PPCPP-HELPTEXT"
-msgstr ""
-
-#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:104
-msgid "PPCPP:OPT-FILENAME"
-msgstr ""
-
-#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:105
-msgid "PPCPP:OPT-DIRECTORY"
-msgstr ""
-
-#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:106
-msgid "PPCPP:OPT-TARGET"
-msgstr ""
-
-#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:107
-msgid "PPCPP:OPT-ENCODING"
-msgstr ""
-
-#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:108
-msgid "PPCPP:OPT-EXTENSIONS"
-msgstr ""
-
-#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:109
-msgid "PPCPP:OPT-IGNORE"
-msgstr ""
-
-#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:110
-msgid "PPCPP:OPT-IGNORETAGS"
-msgstr ""
-
-#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:111
-msgid "PPCPP:OPT-HIDDEN"
-msgstr ""
-
-#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:112
-msgid "PPCPP:OPT-IGNORESYMLINKS"
-msgstr ""
-
-#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:113
-msgid "PPCPP:OPT-MARKERS"
-msgstr ""
-
-#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:114
-msgid "PPCPP:OPT-TITLE"
-msgstr ""
-
-#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:115
-msgid "PPCPP:OPT-FORCE"
-msgstr ""
-
-#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:116
-msgid "PPCPP:OPT-VALIDATE"
-msgstr ""
-
-#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:117
-msgid "PPCPP:OPT-VISIBILITY"
-msgstr ""
-
-#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:118
-msgid "PPCPP:OPT-SOURCECODE"
-msgstr ""
-
-#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:119
-msgid "PPCPP:OPT-PROGRESSBAR"
-msgstr ""
-
-#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:125
-msgid "PPCPP:OPT-DEFAULTPACKAGENAME"
-msgstr ""
-
-#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:159
-msgid "PPCPP:EXC-BADTARGET"
-msgstr ""
-
-#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:167
-msgid "PPCPP:LOG-COLLECTING"
-msgstr ""
-
-#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:174
-#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:190
-#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:241
-msgid "PPCPP:LOG-OK"
-msgstr ""
-
-#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:182
-msgid "PPCPP:LOG-INITIALIZING"
-msgstr ""
-
-#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:191
-msgid "PPCPP:LOG-PARSING"
-msgstr ""
-
-#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:226
-msgid "PPCPP:EXC-NOFILES"
-msgstr ""
-
-#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:237
-msgid "PPCPP:LOG-STORECACHE"
+#: class.multiple-content-sections.php:580
+msgid "Are you sure you want to remove this section?"
 msgstr ""
 
 #. Plugin Name of the plugin/theme
@@ -382,8 +286,8 @@ msgstr ""
 msgid "Linchpin"
 msgstr ""
 
-#: class.multiple-content-sections.php:170
-#: class.multiple-content-sections.php:171
+#: class.multiple-content-sections.php:173
+#: class.multiple-content-sections.php:174
 msgctxt "Content Section"
 msgid "Content Section"
 msgstr ""

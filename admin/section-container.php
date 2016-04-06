@@ -62,10 +62,20 @@ $blocks = mcs_maybe_create_section_blocks( $section );
 		}
 		?>
 		</div>
-		<div class="mcs-row">
-			<div class="mcs-section-remove-container mcs-right">
+
+		<div class="mcs-row mcs-section-footer">
+			<div class="mcs-section-remove-container mcs-columns-4">
 				<span class="spinner"></span>
-				<a href="#" class="button mcs-section-remove"><?php esc_html_e( 'Remove Section', 'linchpin-mcs' ); ?></a>
+				<a href="#" class="mcs-section-remove dashicons-before dashicons-no plain-link grey-link"><?php esc_html_e( 'Move to Trash', 'linchpin-mcs' ); ?></a>
+			</div>
+
+			<div class="mcs-columns-8 text-right">
+				<?php if ( 'draft' == get_post_status( $section->ID ) ) : ?>
+					<a href="#" class="button mcs-section-save-draft"><?php esc_html_e( 'Save Draft', 'linchpin-mcs' ); ?></a>
+					<a href="#" class="button primary mcs-section-publish"><?php esc_html_e( 'Publish', 'linchpin-mcs' ); ?></a>
+				<?php else : ?>
+					<a href="#" class="button primary mcs-section-update"><?php esc_html_e( 'Update', 'linchpin-mcs' ); ?></a>
+				<?php endif; ?>
 			</div>
 		</div>
 	</div>
