@@ -410,6 +410,8 @@ class Multiple_Content_Sections {
 				$blocks = $section_data['blocks'];
 			}
 
+			wp_die( print_r( $blocks, true ) );
+
 			foreach ( $blocks as $block_id => $block_data ) {
 				$block = get_post( (int) $block_id );
 

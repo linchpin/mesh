@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: Mesh for WordPress 1.0.0\n"
 "Report-Msgid-Bugs-To: "
 "https://wordpress.org/support/plugin/multiple-content-sections\n"
-"POT-Creation-Date: 2016-04-07 18:03:35+00:00\n"
+"POT-Creation-Date: 2016-04-07 18:05:41+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -288,7 +288,7 @@ msgstr ""
 msgid "Remove Background"
 msgstr ""
 
-#: class.multiple-content-sections.php:602 functions-ajax.php:50
+#: class.multiple-content-sections.php:602 functions-ajax.php:51
 msgid "No Section Title"
 msgstr ""
 
@@ -310,6 +310,112 @@ msgstr ""
 
 #: multiple-content-sections.php:321
 msgid "No Column Title"
+msgstr ""
+
+#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:102
+msgid "PPCPP-DESCRIPTION"
+msgstr ""
+
+#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:103
+msgid "PPCPP-HELPTEXT"
+msgstr ""
+
+#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:104
+msgid "PPCPP:OPT-FILENAME"
+msgstr ""
+
+#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:105
+msgid "PPCPP:OPT-DIRECTORY"
+msgstr ""
+
+#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:106
+msgid "PPCPP:OPT-TARGET"
+msgstr ""
+
+#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:107
+msgid "PPCPP:OPT-ENCODING"
+msgstr ""
+
+#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:108
+msgid "PPCPP:OPT-EXTENSIONS"
+msgstr ""
+
+#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:109
+msgid "PPCPP:OPT-IGNORE"
+msgstr ""
+
+#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:110
+msgid "PPCPP:OPT-IGNORETAGS"
+msgstr ""
+
+#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:111
+msgid "PPCPP:OPT-HIDDEN"
+msgstr ""
+
+#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:112
+msgid "PPCPP:OPT-IGNORESYMLINKS"
+msgstr ""
+
+#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:113
+msgid "PPCPP:OPT-MARKERS"
+msgstr ""
+
+#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:114
+msgid "PPCPP:OPT-TITLE"
+msgstr ""
+
+#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:115
+msgid "PPCPP:OPT-FORCE"
+msgstr ""
+
+#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:116
+msgid "PPCPP:OPT-VALIDATE"
+msgstr ""
+
+#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:117
+msgid "PPCPP:OPT-VISIBILITY"
+msgstr ""
+
+#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:118
+msgid "PPCPP:OPT-SOURCECODE"
+msgstr ""
+
+#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:119
+msgid "PPCPP:OPT-PROGRESSBAR"
+msgstr ""
+
+#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:125
+msgid "PPCPP:OPT-DEFAULTPACKAGENAME"
+msgstr ""
+
+#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:159
+msgid "PPCPP:EXC-BADTARGET"
+msgstr ""
+
+#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:167
+msgid "PPCPP:LOG-COLLECTING"
+msgstr ""
+
+#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:174
+#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:190
+#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:241
+msgid "PPCPP:LOG-OK"
+msgstr ""
+
+#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:182
+msgid "PPCPP:LOG-INITIALIZING"
+msgstr ""
+
+#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:191
+msgid "PPCPP:LOG-PARSING"
+msgstr ""
+
+#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:226
+msgid "PPCPP:EXC-NOFILES"
+msgstr ""
+
+#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:237
+msgid "PPCPP:LOG-STORECACHE"
 msgstr ""
 
 #. Plugin Name of the plugin/theme

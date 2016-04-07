@@ -6,11 +6,11 @@ multiple_content_sections.admin = function ( $ ) {
 		$reorder_button     = $('.mcs-section-reorder'),
 		$add_button         = $('.mcs-section-add'),
 		$expand_button      = $('.mcs-section-expand'),
-		$collapse_button    = $('.mcs-section-collapse'),
+//		$collapse_button    = $('.mcs-section-collapse'),
 		$meta_box_container = $('#mcs-container'),
 		$section_container  = $('#multiple-content-sections-container'),
 		$description        = $('#mcs-description'),
-		$empty_message      = $('.empty-sections-message'),
+//		$empty_message      = $('.empty-sections-message'),
 		$equalize           = $('.mcs_section [data-equalizer]'),
 		$sections,
 		media_frames        = [],
@@ -47,9 +47,9 @@ multiple_content_sections.admin = function ( $ ) {
 				.on('click', '.mcs-section-save-draft',    self.section_save_draft )
 				.on('click', '.mcs-section-publish',       self.section_publish )
 
-				.on('change', '.mcs-choose-layout', self.choose_layout )
-				.on('keypress', '.msc-clean-edit-element', self.prevent_submit )
-				.on('keyup', '.msc-clean-edit-element', self.change_input_title )
+				.on('change', '.mcs-choose-layout',            self.choose_layout )
+				.on('keypress', '.msc-clean-edit-element',     self.prevent_submit )
+				.on('keyup', '.msc-clean-edit-element',        self.change_input_title )
 				.on('change', 'select.msc-clean-edit-element', self.change_select_title );
 
 			$sections = $( '.multiple-content-sections-section' );
@@ -444,6 +444,8 @@ multiple_content_sections.admin = function ( $ ) {
 		/**
 		 * Autosave callback
 		 *
+		 * @since 1.0.0
+		 *
 		 * @param event
 		 * @param ui
 		 */
@@ -465,7 +467,7 @@ multiple_content_sections.admin = function ( $ ) {
 			event.stopPropagation();
 
 			var $this = $(this),
-				$sections = $( '.multiple-content-sections-postbox', $section_container ),
+			// @todo confirm this is needed : $sections = $( '.multiple-content-sections-postbox', $section_container ),
 				$reorder_spinner = $('.mcs-reorder-spinner'),
 				section_ids = [];
 
@@ -517,6 +519,12 @@ multiple_content_sections.admin = function ( $ ) {
 			$handle_title.text( current_title );
 		},
 
+
+		/**
+		 * Change the title on our select field
+		 *
+		 * @param event
+         */
 		change_select_title : function( event ) {
 			var $this = $(this),
 				current_title = $this.val(),
@@ -577,9 +585,9 @@ multiple_content_sections.admin = function ( $ ) {
 
 			var $button       = $(this),
 				$section      = $button.parents('.multiple-content-sections-postbox'),
-				section_id    = parseInt( $section.attr('data-mcs-section-id') ),
-				current_image = $button.attr('data-mcs-section-featured-image'),
-				$edit_icon = $( '<span class="dashicons dashicons-format-image" />');
+				section_id    = parseInt( $section.attr('data-mcs-section-id') );
+				// current_image = $button.attr('data-mcs-section-featured-image'),
+				// $edit_icon = $( '<span class="dashicons dashicons-format-image" />');
 
 			$.post( ajaxurl, {
 				'action': 'mcs_update_featured_image',
@@ -602,6 +610,11 @@ multiple_content_sections.admin = function ( $ ) {
 			});
 		},
 
+		/**
+		 * Choose the background for our section
+		 *
+		 * @param event
+         */
 		choose_background : function(event) {
 			event.preventDefault();
 			event.stopPropagation();
@@ -680,6 +693,11 @@ multiple_content_sections.admin = function ( $ ) {
 	        media_frames[ frame_id ].open();
 		},
 
+		/**
+		 * Add ability to equalize blocks
+		 *
+		 * @since 0.4.0
+		 */
 		mesh_equalize : function() {
 
 			var $this     = $(this),
