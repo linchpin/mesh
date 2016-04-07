@@ -901,7 +901,7 @@ multiple_content_sections.admin = function ( $ ) {
 
 			$( '.button', $button_container ).addClass( 'disabled' );
 			$spinner.addClass( 'is-active' );
-
+			
 			$.post( ajaxurl, {
 				action: 'mcs_save_section',
 				mcs_section_id: section_id,
