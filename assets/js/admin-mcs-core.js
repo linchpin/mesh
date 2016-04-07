@@ -260,6 +260,10 @@ multiple_content_sections.admin = function ( $ ) {
 					// Repopulate the sections cache so that the new section is included going forward.
 					$sections = $('.multiple-content-sections-section', $section_container);
 
+					setTimeout(function () {
+						multiple_content_sections.pointers.show_pointer();
+					}, 250);
+
 				} else {
 					$spinner.removeClass('is-active');
 				}

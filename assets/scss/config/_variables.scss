@@ -26,6 +26,9 @@ $primary:       $blue;
 $primary-light: scale-color( $primary, $lightness: 8% );
 $primary-dark:  scale-color( $primary, $lightness: -8% );
 
+$pointer-title-bg: #00a0d2;
+$pointer-border:   #3592b6;
+
 
 // 03. Animations
 $global_timing: 300ms;
