@@ -358,7 +358,6 @@ class Multiple_Content_Sections {
 			$css_classes = explode( ' ', $section_data['css_class'] );
 			$sanitized_css_classes = array();
 
-
 			foreach ( $css_classes as $css ) {
 				$sanitized_css_classes[] = sanitize_html_class( $css );
 			}
@@ -372,7 +371,10 @@ class Multiple_Content_Sections {
 			}
 
 			// Save LP Equal.
-			$lp_equal = sanitize_text_field( $section_data['lp_equal'] );
+			$lp_equal = '';
+			if ( ! empty( $section_data['lp_equal'] ) ) {
+				$lp_equal = sanitize_text_field( $section_data['lp_equal'] );
+			}
 
 			if ( empty( $lp_equal ) ) {
 				delete_post_meta( $section->ID, '_mcs_lp_equal' );
@@ -381,30 +383,24 @@ class Multiple_Content_Sections {
 			}
 
 			// Save Title Display
-			$title_display = $section_data['title_display'];
-
-			if ( empty( $title_display ) ) {
+			if ( empty( $section_data['title_display'] ) ) {
 				delete_post_meta( $section->ID, '_mcs_title_display' );
 			} else {
-				update_post_meta( $section->ID, '_mcs_title_display', $title_display );
+				update_post_meta( $section->ID, '_mcs_title_display', $section_data['title_display'] );
 			}
 
 			// Save Push / Pull.
-			$push_pull = $section_data['push_pull'];
-
-			if ( empty( $push_pull ) ) {
+			if ( empty( $section_data['push_pull'] ) ) {
 				delete_post_meta( $section->ID, '_mcs_push_pull' );
 			} else {
-				update_post_meta( $section->ID, '_mcs_push_pull', $push_pull );
+				update_post_meta( $section->ID, '_mcs_push_pull', $section_data['push_pull'] );
 			}
 
 			// Save Collapse.
-			$collapse = $section_data['collapse'];
-
-			if ( empty( $collapse ) ) {
+			if ( empty( $section_data['collapse'] ) ) {
 				delete_post_meta( $section->ID, '_mcs_collapse' );
 			} else {
-				update_post_meta( $section->ID, '_mcs_collapse', $collapse );
+				update_post_meta( $section->ID, '_mcs_collapse', $section_data['collapse'] );
 			}
 
 			// Process the section's blocks.
