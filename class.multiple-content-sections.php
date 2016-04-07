@@ -358,7 +358,6 @@ class Multiple_Content_Sections {
 			$css_classes = explode( ' ', $section_data['css_class'] );
 			$sanitized_css_classes = array();
 
-
 			foreach ( $css_classes as $css ) {
 				$sanitized_css_classes[] = sanitize_html_class( $css );
 			}
@@ -413,6 +412,8 @@ class Multiple_Content_Sections {
 			if ( ! empty( $section_data['blocks'] ) ) {
 				$blocks = $section_data['blocks'];
 			}
+
+			wp_die( print_r( $blocks, true ) );
 
 			foreach ( $blocks as $block_id => $block_data ) {
 				$block = get_post( (int) $block_id );

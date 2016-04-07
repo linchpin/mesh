@@ -106,7 +106,7 @@
 						</div>
 					</div>
 
-					<div class="block-content<?php if ( 4 != $section_blocks && $block_offset ) { echo " mcs-has-offset mcs-offset-" . $block_offset; } ?>">
+					<div class="block-content<?php if ( 4 !== $section_blocks && $block_offset ) { esc_attr_e( ' mcs-has-offset mcs-offset-' . $block_offset ); } ?>">
 						<?php
 						wp_editor( apply_filters( 'content_edit_pre', $blocks[ $block_increment ]->post_content ), 'mcs-section-editor-' . $blocks[ $block_increment ]->ID, array(
 							'textarea_name' => 'mcs-sections[' . $section->ID . '][blocks][' . $blocks[ $block_increment ]->ID . '][post_content]',

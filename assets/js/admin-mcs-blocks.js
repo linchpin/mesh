@@ -353,7 +353,14 @@ multiple_content_sections.blocks = function ( $ ) {
                         proto_id = 'content';
 
                         // Clean up the proto id which appears in some of the wp_editor generated HTML
-                        $block_content.html( $(this).closest('.block-content').html().replace(new RegExp(proto_id, 'g'), editor_id));
+
+                        var block_html = $(this).closest('.block-content').html(),
+                            pattern    = /\[post_mcs\-section\-editor\-[0-9]+\]/;
+                            block_html = block_html.replace( new RegExp(proto_id, 'g'), editor_id );
+
+//                        block_html = block_html.replace( new RegExp( pattern, 'g' ), '[post_content]' );
+
+                        $block_content.html( block_html );
 
                         // This needs to be initialized, so we need to get the options from the proto
                         if (proto_id && typeof tinyMCEPreInit.mceInit[proto_id] !== 'undefined') {
