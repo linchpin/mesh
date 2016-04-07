@@ -482,7 +482,7 @@ class Multiple_Content_Sections {
 					if ( $saving_section_via_ajax ) {
 						$current_section_page = $p->post_parent;
 					} else {
-						$current_section_page = $ajax_section_id;
+						$current_section_page = $post_id;
 					}
 				}
 
