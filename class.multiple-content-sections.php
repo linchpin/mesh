@@ -300,48 +300,50 @@ class Multiple_Content_Sections {
 
 		$count = 0;
 
+		// Check if we are doing a section update via AJAX
+		$saving_section_via_ajax = false;
+		$ajax_section_id = 0;
+		if ( ! empty( $_POST['action'] ) && 'mcs_save_section' == $_POST['action'] ) {
+			$saving_section_via_ajax = true;
+			$ajax_section_id = (int) $_POST['mcs_section_id'];
+		}
+
 		foreach ( $_POST['mcs-sections'] as $section_id => $section_data ) {
+
+			// Sections that we don't want to update
+			if ( $saving_section_via_ajax && $ajax_section_id != $section_id ) {
+				continue;
+			}
+
 			$section = get_post( (int) $section_id );
 
 			if ( 'mcs_section' != $section->post_type ) {
 				continue;
 			}
 
-			if ( $post_id != $section->post_parent ) {
+			if ( ! $saving_section_via_ajax && $post_id == $section->post_parent ) {
 				continue;
 			}
 
-			$status = sanitize_post_field( 'post_status', $section_data['post_status'], $post_id, 'attribute' );
+			if ( ! $saving_section_via_ajax ) {
+				$status = sanitize_post_field( 'post_status', $section_data['post_status'], $post_id, 'attribute' );
 
-			if ( ! in_array( $status, array( 'publish', 'draft' ) ) ) {
-				$status = 'draft';
+				if ( ! in_array( $status, array( 'publish', 'draft' ) ) ) {
+					$status = 'draft';
+				}
+
+				$updates = array(
+					'ID'           => (int) $section_id,
+					'post_title'   => sanitize_text_field( $section_data['post_title'] ),
+					'post_content' => '',
+					'post_status'  => $status,
+					'menu_order'   => $count,
+				);
+
+				wp_update_post( $updates );
+
+				$count ++;
 			}
-
-			if ( empty( $section_data['post_content'] ) ) {
-				$section_data['post_content'] = '';
-			}
-
-			$updates = array(
-				'ID' => (int) $section_id,
-				'post_title' => sanitize_text_field( $section_data['post_title'] ),
-				'post_content' => wp_kses( $section_data['post_content'], array_merge(
-					array(
-						'iframe' => array(
-							'src' => true,
-							'style' => true,
-							'id' => true,
-							'class' => true,
-						),
-					),
-					wp_kses_allowed_html( 'post' )
-				) ),
-				'post_status' => $status,
-				'menu_order' => $count,
-			);
-
-			wp_update_post( $updates );
-
-			$count++;
 
 			// Save Template.
 			$template = sanitize_text_field( $section_data['template'] );
@@ -355,6 +357,7 @@ class Multiple_Content_Sections {
 			// Save CSS Classes.
 			$css_classes = explode( ' ', $section_data['css_class'] );
 			$sanitized_css_classes = array();
+
 
 			foreach ( $css_classes as $css ) {
 				$sanitized_css_classes[] = sanitize_html_class( $css );
@@ -474,6 +477,14 @@ class Multiple_Content_Sections {
 
 		if ( ! empty( $section_posts ) ) {
 			foreach ( $section_posts as $p ) {
+				if ( empty( $current_section_page ) ) {
+					if ( $saving_section_via_ajax ) {
+						$current_section_page = $p->post_parent;
+					} else {
+						$current_section_page = $ajax_section_id;
+					}
+				}
+
 				$section_content = array();
 
 				$blocks = mcs_get_section_blocks( $p->ID );
@@ -505,7 +516,7 @@ class Multiple_Content_Sections {
 			$page_content_sections[] = '</div>';
 
 			wp_update_post( array(
-				'ID' => $post_id,
+				'ID' => $current_section_page,
 				'post_content' => $post->post_content . implode( ' ' , $page_content_sections ),
 			) );
 		}
@@ -605,6 +616,7 @@ class Multiple_Content_Sections {
 			'choose_layout_nonce'   => wp_create_nonce( 'mcs_choose_layout_nonce' ),
 			'remove_section_nonce'  => wp_create_nonce( 'mcs_remove_section_nonce' ),
 			'add_section_nonce'     => wp_create_nonce( 'mcs_add_section_nonce' ),
+			'save_section_nonce'    => wp_create_nonce( 'mcs_save_section_nonce' ),
 			'reorder_section_nonce' => wp_create_nonce( 'mcs_reorder_section_nonce' ),
 			'featured_image_nonce'  => wp_create_nonce( 'mcs_featured_image_nonce' ),
 			'reorder_blocks_nonce'  => wp_create_nonce( 'mcs_reorder_blocks_nonce' ),

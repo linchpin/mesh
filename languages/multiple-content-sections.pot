@@ -1,11 +1,11 @@
-# Copyright (C) 2016 Linchpin
+# Copyright (C) 2016 linchpin_agency, maxinacube, desrosj, aware
 # This file is distributed under the GPLv2 or later.
 msgid ""
 msgstr ""
 "Project-Id-Version: Mesh for WordPress 1.0.0\n"
 "Report-Msgid-Bugs-To: "
 "https://wordpress.org/support/plugin/multiple-content-sections\n"
-"POT-Creation-Date: 2016-04-06 01:31:28+00:00\n"
+"POT-Creation-Date: 2016-04-06 15:27:28+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -18,15 +18,15 @@ msgstr ""
 msgid "Reorder Sections"
 msgstr ""
 
-#: admin/controls.php:15 class.multiple-content-sections.php:602
+#: admin/controls.php:15 class.multiple-content-sections.php:589
 msgid "Expand All"
 msgstr ""
 
-#: admin/controls.php:16 class.multiple-content-sections.php:603
+#: admin/controls.php:16 class.multiple-content-sections.php:590
 msgid "Collapse All"
 msgstr ""
 
-#: admin/controls.php:17 class.multiple-content-sections.php:247
+#: admin/controls.php:17 class.multiple-content-sections.php:245
 msgid "Add Section"
 msgstr ""
 
@@ -45,7 +45,7 @@ msgid "CSS Class"
 msgstr ""
 
 #: admin/section-blocks.php:136 admin/section-controls.php:71
-#: class.multiple-content-sections.php:600
+#: class.multiple-content-sections.php:587
 msgid "Set Background Image"
 msgstr ""
 
@@ -53,11 +53,11 @@ msgstr ""
 msgid "Status:"
 msgstr ""
 
-#: admin/section-container.php:36 class.multiple-content-sections.php:609
+#: admin/section-container.php:36 class.multiple-content-sections.php:596
 msgid "Draft"
 msgstr ""
 
-#: admin/section-container.php:37 class.multiple-content-sections.php:608
+#: admin/section-container.php:37 class.multiple-content-sections.php:595
 msgid "Published"
 msgstr ""
 
@@ -113,6 +113,34 @@ msgstr ""
 msgid "Increase the column number to access that content."
 msgstr ""
 
+#: class.mesh-pointers.php:98
+msgid "Section Options"
+msgstr ""
+
+#: class.mesh-pointers.php:99
+msgid "View all section options by click the \"More Options\" toggle."
+msgstr ""
+
+#: class.mesh-pointers.php:109
+msgid "What is an offset?"
+msgstr ""
+
+#: class.mesh-pointers.php:110
+msgid ""
+"If using Foundation, an offset will indent your column by the amount of "
+"columns selected in the dropdown menu."
+msgstr ""
+
+#: class.mesh-pointers.php:120
+msgid "Rearrange Columns"
+msgstr ""
+
+#: class.mesh-pointers.php:121
+msgid ""
+"Use this handle to click and drag this column, giving you the ability to "
+"swap columns on the fly."
+msgstr ""
+
 #: class.mesh-settings.php:52
 msgid "Below are your settings for Mesh"
 msgstr ""
@@ -161,249 +189,127 @@ msgstr ""
 msgid "Change Log"
 msgstr ""
 
-#: class.multiple-content-sections.php:124
+#: class.multiple-content-sections.php:38
+msgid "1 Columns"
+msgstr ""
+
+#: class.multiple-content-sections.php:43
+msgid "2 Columns"
+msgstr ""
+
+#: class.multiple-content-sections.php:48
+msgid "3 Columns"
+msgstr ""
+
+#: class.multiple-content-sections.php:122
 msgid "Show Extra MCS Section Controls?"
 msgstr ""
 
-#: class.multiple-content-sections.php:181
-#: class.multiple-content-sections.php:182
-#: class.multiple-content-sections.php:197
-#: class.multiple-content-sections.php:198
+#: class.multiple-content-sections.php:179
+#: class.multiple-content-sections.php:180
+#: class.multiple-content-sections.php:195
+#: class.multiple-content-sections.php:196
 msgid "Content Section"
 msgstr ""
 
-#: class.multiple-content-sections.php:183
+#: class.multiple-content-sections.php:181
 msgid "Parent Content Section:"
 msgstr ""
 
-#: class.multiple-content-sections.php:184
+#: class.multiple-content-sections.php:182
 msgid "All Content Sections"
 msgstr ""
 
-#: class.multiple-content-sections.php:185
+#: class.multiple-content-sections.php:183
 msgid "Add New Content Section"
 msgstr ""
 
-#: class.multiple-content-sections.php:186
+#: class.multiple-content-sections.php:184
 msgid "Add New"
 msgstr ""
 
-#: class.multiple-content-sections.php:187
+#: class.multiple-content-sections.php:185
 msgid "New Content Section"
 msgstr ""
 
-#: class.multiple-content-sections.php:188
+#: class.multiple-content-sections.php:186
 msgid "Edit Content Section"
 msgstr ""
 
-#: class.multiple-content-sections.php:189
+#: class.multiple-content-sections.php:187
 msgid "Update Content Section"
 msgstr ""
 
-#: class.multiple-content-sections.php:190
+#: class.multiple-content-sections.php:188
 msgid "View Content Section"
 msgstr ""
 
-#: class.multiple-content-sections.php:191
+#: class.multiple-content-sections.php:189
 msgid "Search Content Sections"
 msgstr ""
 
-#: class.multiple-content-sections.php:192
+#: class.multiple-content-sections.php:190
 msgid "Not found"
 msgstr ""
 
-#: class.multiple-content-sections.php:193
+#: class.multiple-content-sections.php:191
 msgid "Not found in Trash"
 msgstr ""
 
-#: class.multiple-content-sections.php:235
+#: class.multiple-content-sections.php:233
 msgid "Multiple Content Sections"
 msgstr ""
 
-#: class.multiple-content-sections.php:245
-msgid "You have no additional Content Sections."
+#: class.multiple-content-sections.php:243
+msgid "You do not have any Content Sections."
 msgstr ""
 
-#: class.multiple-content-sections.php:246
-msgid "Get started by adding a Mesh section now"
+#: class.multiple-content-sections.php:244
+msgid "Get started using Mesh by adding a Content Section now."
 msgstr ""
 
-#: class.multiple-content-sections.php:252
+#: class.multiple-content-sections.php:250
 msgid ""
 "Multiple content sections allow you to easily segment your page's contents "
 "into different blocks of markup."
 msgstr ""
 
-#: class.multiple-content-sections.php:598
-msgid "Be sure to save order of your sections once your changes are complete."
+#: class.multiple-content-sections.php:585
+msgid "Be sure to save the order of your sections once your changes are complete."
 msgstr ""
 
-#: class.multiple-content-sections.php:599
+#: class.multiple-content-sections.php:586
 msgid ""
 "Multiple content sections allows you to easily segment your page's contents "
 "into different blocks of markup."
 msgstr ""
 
-#: class.multiple-content-sections.php:601
+#: class.multiple-content-sections.php:588
 msgid "Remove Background"
 msgstr ""
 
-#: class.multiple-content-sections.php:604 functions-ajax.php:50
+#: class.multiple-content-sections.php:591 functions-ajax.php:50
 msgid "No Section Title"
 msgstr ""
 
-#: class.multiple-content-sections.php:605
+#: class.multiple-content-sections.php:592
 msgid "Select Section Background"
 msgstr ""
 
-#: class.multiple-content-sections.php:606
+#: class.multiple-content-sections.php:593
 msgid "Select Background"
 msgstr ""
 
-#: class.multiple-content-sections.php:607
-msgid "Select Block Background"
+#: class.multiple-content-sections.php:594
+msgid "Select Column Background"
 msgstr ""
 
-#: class.multiple-content-sections.php:610
+#: class.multiple-content-sections.php:597
 msgid "Are you sure you want to remove this section?"
 msgstr ""
 
-#: class.multiple-content-sections.php:747
-msgid "Section Options"
-msgstr ""
-
-#: class.multiple-content-sections.php:748
-msgid "View all section options by click the \"More Options\" toggle."
-msgstr ""
-
-#: class.multiple-content-sections.php:758
-msgid "What is an offset?"
-msgstr ""
-
-#: class.multiple-content-sections.php:759
-msgid ""
-"If using Foundation, an offset will indent your column by the amount of "
-"columns selected in the dropdown menu."
-msgstr ""
-
-#: class.multiple-content-sections.php:769
-msgid "Rearrange Columns"
-msgstr ""
-
-#: class.multiple-content-sections.php:770
-msgid ""
-"Use this handle to click and drag this column, giving you the ability to "
-"swap columns on the fly."
-msgstr ""
-
-#: multiple-content-sections.php:319
+#: multiple-content-sections.php:321
 msgid "No Column Title"
-msgstr ""
-
-#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:102
-msgid "PPCPP-DESCRIPTION"
-msgstr ""
-
-#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:103
-msgid "PPCPP-HELPTEXT"
-msgstr ""
-
-#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:104
-msgid "PPCPP:OPT-FILENAME"
-msgstr ""
-
-#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:105
-msgid "PPCPP:OPT-DIRECTORY"
-msgstr ""
-
-#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:106
-msgid "PPCPP:OPT-TARGET"
-msgstr ""
-
-#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:107
-msgid "PPCPP:OPT-ENCODING"
-msgstr ""
-
-#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:108
-msgid "PPCPP:OPT-EXTENSIONS"
-msgstr ""
-
-#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:109
-msgid "PPCPP:OPT-IGNORE"
-msgstr ""
-
-#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:110
-msgid "PPCPP:OPT-IGNORETAGS"
-msgstr ""
-
-#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:111
-msgid "PPCPP:OPT-HIDDEN"
-msgstr ""
-
-#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:112
-msgid "PPCPP:OPT-IGNORESYMLINKS"
-msgstr ""
-
-#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:113
-msgid "PPCPP:OPT-MARKERS"
-msgstr ""
-
-#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:114
-msgid "PPCPP:OPT-TITLE"
-msgstr ""
-
-#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:115
-msgid "PPCPP:OPT-FORCE"
-msgstr ""
-
-#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:116
-msgid "PPCPP:OPT-VALIDATE"
-msgstr ""
-
-#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:117
-msgid "PPCPP:OPT-VISIBILITY"
-msgstr ""
-
-#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:118
-msgid "PPCPP:OPT-SOURCECODE"
-msgstr ""
-
-#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:119
-msgid "PPCPP:OPT-PROGRESSBAR"
-msgstr ""
-
-#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:125
-msgid "PPCPP:OPT-DEFAULTPACKAGENAME"
-msgstr ""
-
-#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:159
-msgid "PPCPP:EXC-BADTARGET"
-msgstr ""
-
-#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:167
-msgid "PPCPP:LOG-COLLECTING"
-msgstr ""
-
-#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:174
-#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:190
-#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:241
-msgid "PPCPP:LOG-OK"
-msgstr ""
-
-#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:182
-msgid "PPCPP:LOG-INITIALIZING"
-msgstr ""
-
-#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:191
-msgid "PPCPP:LOG-PARSING"
-msgstr ""
-
-#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:226
-msgid "PPCPP:EXC-NOFILES"
-msgstr ""
-
-#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:237
-msgid "PPCPP:LOG-STORECACHE"
 msgstr ""
 
 #. Plugin Name of the plugin/theme
@@ -421,15 +327,15 @@ msgid ""
 msgstr ""
 
 #. Author of the plugin/theme
-msgid "Linchpin"
+msgid "linchpin_agency, maxinacube, desrosj, aware"
 msgstr ""
 
 #. Author URI of the plugin/theme
 msgid "http://linchpin.agency"
 msgstr ""
 
-#: class.multiple-content-sections.php:179
-#: class.multiple-content-sections.php:180
+#: class.multiple-content-sections.php:177
+#: class.multiple-content-sections.php:178
 msgctxt "Content Section"
 msgid "Content Section"
 msgstr ""

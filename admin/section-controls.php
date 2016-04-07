@@ -37,7 +37,7 @@
 	<div class="mcs-columns-9 mcs-table">
 		<div class="mcs-row">
 			<label for="mcs-sections[<?php esc_attr_e( $section->ID ); ?>][css-class]">
-				<?php esc_html_e( 'CSS Class', 'linchpin-mcs' ); ?> <input type="text" name="mcs-sections[<?php esc_attr_e( $section->ID ); ?>][css_class]" value="<?php esc_attr_e( $css_class ); ?>" />
+				<?php esc_html_e( 'CSS Class', 'linchpin-mcs' ); ?> <input type="text" name="mcs-sections[<?php esc_attr_e( $section->ID ); ?>][css_class]" class="mcs-section-class" value="<?php esc_attr_e( $css_class ); ?>" />
 			</label>
 		</div>
 
@@ -45,21 +45,21 @@
 			<ul class="inline-block-list space-left">
 				<li>
 					<label for="mcs-section[<?php esc_attr_e( $section->ID ); ?>][collapse]">
-						<?php esc_html_e( 'Collapse Padding', 'linchpin-mcs' ); ?> <input type="checkbox" name="mcs-sections[<?php esc_attr_e( $section->ID ); ?>][collapse]" value="1" <?php if ( get_post_meta( $section->ID, '_mcs_collapse', true ) ): ?>checked<?php endif; ?> />
+						<?php esc_html_e( 'Collapse Padding', 'linchpin-mcs' ); ?> <input type="checkbox" name="mcs-sections[<?php esc_attr_e( $section->ID ); ?>][collapse]" class="mcs-section-collapse" value="1" <?php if ( get_post_meta( $section->ID, '_mcs_collapse', true ) ): ?>checked<?php endif; ?> />
 					</label>
 				</li>
 
 				<?php if ( 2 == count( $blocks ) ) : ?>
 					<li>
 						<label for="mcs-section[<?php esc_attr_e( $section->ID ); ?>][push-pull]">
-							<?php esc_html_e( 'Push/Pull', 'linchpin-mcs' ); ?> <input type="checkbox" name="mcs-sections[<?php esc_attr_e( $section->ID ); ?>][push_pull]" value="1" <?php if ( get_post_meta( $section->ID, '_mcs_push_pull', true ) ): ?>checked<?php endif; ?> />
+							<?php esc_html_e( 'Push/Pull', 'linchpin-mcs' ); ?> <input type="checkbox" name="mcs-sections[<?php esc_attr_e( $section->ID ); ?>][push_pull]" class="mcs-section-push" value="1" <?php if ( get_post_meta( $section->ID, '_mcs_push_pull', true ) ): ?>checked<?php endif; ?> />
 						</label>
 					</li>
 				<?php endif; ?>
 
 				<li>
 					<label for="mcs-sections[<?php esc_attr_e( $section->ID ); ?>][lp-equal]">
-						<?php esc_html_e( 'Equalize', 'linchpin-mcs' ); ?> <input type="checkbox" name="mcs-sections[<?php esc_attr_e( $section->ID ); ?>][lp_equal]" value="1" <?php if ( get_post_meta( $section->ID, '_mcs_lp_equal', true ) ): ?>checked<?php endif; ?> />
+						<?php esc_html_e( 'Equalize', 'linchpin-mcs' ); ?> <input type="checkbox" name="mcs-sections[<?php esc_attr_e( $section->ID ); ?>][lp_equal]" class="mcs-section-equalize" value="1" <?php if ( get_post_meta( $section->ID, '_mcs_lp_equal', true ) ): ?>checked<?php endif; ?> />
 					</label>
 				</li>
 		</div>
