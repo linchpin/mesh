@@ -279,16 +279,6 @@ multiple_content_sections.admin = function ( $ ) {
 				form_data = $current_section.parents( 'form' ).serialize(),
 				form_submit_data = [];
 
-			// Put all related fields into an array.
-			// $.each( form_data, function( key, value ){
-			// 	if ( 'undefined' !== typeof value && -1 < value.name.indexOf( 'mcs-sections[' + section_id + ']' ) ) {
-			// 		form_submit_data[value.name] = value.value;
-			// 		console.log( form_submit_data );
-			// 	}
-			// });
-            //
-			// console.log( form_submit_data );
-
 			$.post( ajaxurl, {
 				action: 'mcs_save_section',
 				mcs_section_id: section_id,
