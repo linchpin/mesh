@@ -20,6 +20,7 @@ class Multiple_Content_Sections_AJAX {
 	 */
 	function __construct() {
 		add_action( 'wp_ajax_mcs_add_section',           array( $this, 'mcs_add_section' ) );
+		add_action( 'wp_ajax_mcs_save_section',          array( $this, 'mcs_save_section' ) );
 		add_action( 'wp_ajax_mcs_choose_layout',         array( $this, 'mcs_choose_layout' ) );
 		add_action( 'wp_ajax_mcs_remove_section',        array( $this, 'mcs_remove_section' ) );
 		add_action( 'wp_ajax_mcs_update_order',          array( $this, 'mcs_update_order' ) );
@@ -68,6 +69,39 @@ class Multiple_Content_Sections_AJAX {
 		wp_die();
 	}
 
+	/**
+	 * Save a block via AJAX
+	 */
+	function mcs_save_section() {
+		check_ajax_referer( 'mcs_save_section_nonce', 'mcs_save_section_nonce' );
+
+		$section_id = (int) $_POST['mcs_section_id'];
+
+		if ( ! $section = get_post( $section_id ) ) {
+			wp_die( -1 );
+		}
+
+		parse_str( $_POST['mcs_section_data'], $passed_args );
+
+		// Only need certain arguments to be passed on.
+		$new_data = array(
+			'action' => $passed_args['action'],
+			'mcs_content_sections_nonce' => $passed_args['mcs_content_sections_nonce'],
+			'mcs-sections' => array(
+				$section->ID => $passed_args['mcs-sections'][ $section->ID ],
+			),
+		);
+
+		$_POST = array_merge( $_POST, $new_data );
+
+		$section_args = array(
+			'ID' => $section->ID,
+			'post_title' => $_POST['mcs-sections'][ $section->ID ]['post_title'],
+		);
+
+		wp_update_post( $section_args );
+	}
+	
 	/**
 	 * Select a section. Return the template using AJAX
 	 *

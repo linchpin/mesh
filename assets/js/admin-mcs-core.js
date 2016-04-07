@@ -43,6 +43,8 @@ multiple_content_sections.admin = function ( $ ) {
 				.on('click', '.mcs-featured-image-choose', self.choose_background )
 				.on('click.OpenMediaManager', '.mcs-featured-image-choose', self.choose_background )
 
+				.on('click', '.mcs-section-update',        self.section_save )
+
 				.on('change', '.mcs-choose-layout', self.choose_layout )
 				.on('keypress', '.msc-clean-edit-element', self.prevent_submit )
 				.on('keyup', '.msc-clean-edit-element', self.change_input_title )
@@ -264,6 +266,37 @@ multiple_content_sections.admin = function ( $ ) {
 
 				} else {
 					$spinner.removeClass('is-active');
+				}
+			});
+		},
+
+		section_save : function(event) {
+			event.preventDefault();
+			event.stopPropagation();
+
+			var $current_section = $(this).closest( '.multiple-content-sections-section' ),
+				section_id = $current_section.attr( 'data-mcs-section-id' ),
+				form_data = $current_section.parents( 'form' ).serialize(),
+				form_submit_data = [];
+
+			// Put all related fields into an array.
+			// $.each( form_data, function( key, value ){
+			// 	if ( 'undefined' !== typeof value && -1 < value.name.indexOf( 'mcs-sections[' + section_id + ']' ) ) {
+			// 		form_submit_data[value.name] = value.value;
+			// 		console.log( form_submit_data );
+			// 	}
+			// });
+            //
+			// console.log( form_submit_data );
+
+			$.post( ajaxurl, {
+				action: 'mcs_save_section',
+				mcs_section_id: section_id,
+				mcs_section_data: form_data,
+				mcs_save_section_nonce: mcs_data.save_section_nonce
+			}, function( response ) {
+				if (response) {
+					
 				}
 			});
 		},

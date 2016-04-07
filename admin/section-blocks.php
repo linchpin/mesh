@@ -52,7 +52,7 @@
 
 		?>
 
-		<div class="mcs-columns-<?php esc_attr_e( $block_columns ); ?> columns">
+		<div class="mcs-section-block mcs-columns-<?php esc_attr_e( $block_columns ); ?> columns" data-mcs-block-id="<?php esc_attr_e( $blocks[ $block_increment ]->ID ); ?>">
 			<div class="drop-target">
 				<div class="block" id="mcs-block-editor-<?php esc_attr_e( $blocks[ $block_increment ]->ID ); ?>" data-mcs-block-id="<?php esc_attr_e( $blocks[ $block_increment ]->ID ); ?>">
 					<div class="block-header">
@@ -75,7 +75,7 @@
 									</select>
 
 									<label for="mcs-sections-<?php esc_attr_e( $blocks[ $block_increment ]->ID ); ?>-css-class">
-										<?php esc_html_e( 'CSS Class', 'linchpin-mcs' ); ?> <input type="text" id="mcs-sections-<?php esc_attr_e( $blocks[ $block_increment ]->ID ); ?>-css-class" name="mcs-sections[<?php esc_attr_e( $section->ID ); ?>][blocks][<?php esc_attr_e( $blocks[ $block_increment ]->ID ); ?>][css_class]" value="<?php esc_attr_e( $block_css_class ); ?>" />
+										<?php esc_html_e( 'CSS Class', 'linchpin-mcs' ); ?> <input type="text" id="mcs-sections-<?php esc_attr_e( $blocks[ $block_increment ]->ID ); ?>-css-class" name="mcs-sections[<?php esc_attr_e( $section->ID ); ?>][blocks][<?php esc_attr_e( $blocks[ $block_increment ]->ID ); ?>][css_class]" class="mcs-block-css-class" value="<?php esc_attr_e( $block_css_class ); ?>" />
 									</label>
 								</div>
 							<?php else : ?>
