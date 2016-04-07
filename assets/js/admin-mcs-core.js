@@ -44,6 +44,8 @@ multiple_content_sections.admin = function ( $ ) {
 				.on('click.OpenMediaManager', '.mcs-featured-image-choose', self.choose_background )
 
 				.on('click', '.mcs-section-update',        self.section_save )
+				.on('click', '.mcs-section-save-draft',    self.section_save_draft )
+				.on('click', '.mcs-section-publish',       self.section_publish )
 
 				.on('change', '.mcs-choose-layout', self.choose_layout )
 				.on('keypress', '.msc-clean-edit-element', self.prevent_submit )
@@ -270,14 +272,45 @@ multiple_content_sections.admin = function ( $ ) {
 			});
 		},
 
+		section_publish : function(event) {
+			event.preventDefault();
+			event.stopPropagation();
+
+			var $section = $(this).closest( '.multiple-content-sections-section' ),
+				$post_status_field = $( '.mcs-section-status', $section ),
+				$post_status_label = $( '.mcs-section-status-text', $section ),
+				$update_button     = $( '.mcs-section-update', $section );
+
+			$post_status_field.val( 'publish' );
+			$post_status_label.text( 'Published' );
+			$update_button.trigger( 'click' );
+		},
+
+		section_save_draft : function(event) {
+			event.preventDefault();
+			event.stopPropagation();
+
+			var $section       = $(this).closest( '.multiple-content-sections-section' ),
+				$update_button = $( '.mcs-section-update', $section );
+
+			$update_button.trigger( 'click' );
+		},
+
 		section_save : function(event) {
 			event.preventDefault();
 			event.stopPropagation();
 
-			var $current_section = $(this).closest( '.multiple-content-sections-section' ),
+			var $button = $(this),
+				$button_container = $button.parent(),
+				$spinner = $( '.spinner', $button.parent() ),
+				$current_section = $(this).closest( '.multiple-content-sections-section' ),
+				$post_status_field = $( '.mcs-section-status', $current_section ),
 				section_id = $current_section.attr( 'data-mcs-section-id' ),
 				form_data = $current_section.parents( 'form' ).serialize(),
 				form_submit_data = [];
+
+			$( '.button', $button_container ).addClass( 'disabled' );
+			$spinner.addClass( 'is-active' );
 
 			$.post( ajaxurl, {
 				action: 'mcs_save_section',
@@ -285,8 +318,17 @@ multiple_content_sections.admin = function ( $ ) {
 				mcs_section_data: form_data,
 				mcs_save_section_nonce: mcs_data.save_section_nonce
 			}, function( response ) {
+				$( '.button', $button_container ).removeClass( 'disabled' );
+				$spinner.removeClass( 'is-active' );
+
 				if (response) {
-					
+					if ( 'publish' == $post_status_field.val() ) {
+						$( '.mcs-section-publish,.mcs-section-save-draft' ).addClass( 'hidden' );
+						$button.removeClass( 'hidden' );
+					} else {
+						$( '.mcs-section-publish,.mcs-section-save-draft' ).removeClass( 'hidden' );
+						$button.addClass( 'hidden' );
+					}
 				}
 			});
 		},

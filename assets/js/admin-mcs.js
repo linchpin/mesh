@@ -301,14 +301,6 @@ multiple_content_sections.blocks = function ( $ ) {
                     post_data.blocks[ block_id.toString() ] = column_values[ index ];
                 }
             } );
-
-            $.post( ajaxurl, {
-                'action'                   : 'mcs_update_block_widths',
-                'mcs_post_data'            : post_data,
-                'mcs_reorder_blocks_nonce' : mcs_data.reorder_blocks_nonce
-            }, function( response ) {
-                // $current_spinner.removeClass( 'is-active' );
-            });
         },
 
         /**
@@ -444,27 +436,6 @@ multiple_content_sections.blocks = function ( $ ) {
             });
 
             var response = self.save_ajax( section_id, block_ids, $reorder_spinner );
-        },
-
-        /**
-         * Save when we reorder our blocks within a section
-         *
-         * @since 0.3.5
-         *
-         * @param section_id
-         * @param block_ids
-         * @param $reorder_spinner
-         */
-        save_ajax : function( section_id, block_ids, $reorder_spinner ) {
-
-            $.post( ajaxurl, {
-                'action': 'mcs_update_block_order',
-                'mcs_section_id'    : section_id,
-                'mcs_blocks_ids' : block_ids,
-                'mcs_reorder_blocks_nonce' : mcs_data.reorder_blocks_nonce
-            }, function( response ) {
-                // $current_spinner.removeClass( 'is-active' );
-            });
         },
 
         /**
@@ -656,6 +627,8 @@ multiple_content_sections.admin = function ( $ ) {
 				.on('click.OpenMediaManager', '.mcs-featured-image-choose', self.choose_background )
 
 				.on('click', '.mcs-section-update',        self.section_save )
+				.on('click', '.mcs-section-save-draft',    self.section_save_draft )
+				.on('click', '.mcs-section-publish',       self.section_publish )
 
 				.on('change', '.mcs-choose-layout', self.choose_layout )
 				.on('keypress', '.msc-clean-edit-element', self.prevent_submit )
@@ -882,24 +855,45 @@ multiple_content_sections.admin = function ( $ ) {
 			});
 		},
 
+		section_publish : function(event) {
+			event.preventDefault();
+			event.stopPropagation();
+
+			var $section = $(this).closest( '.multiple-content-sections-section' ),
+				$post_status_field = $( '.mcs-section-status', $section ),
+				$post_status_label = $( '.mcs-section-status-text', $section ),
+				$update_button     = $( '.mcs-section-update', $section );
+
+			$post_status_field.val( 'publish' );
+			$post_status_label.text( 'Published' );
+			$update_button.trigger( 'click' );
+		},
+
+		section_save_draft : function(event) {
+			event.preventDefault();
+			event.stopPropagation();
+
+			var $section       = $(this).closest( '.multiple-content-sections-section' ),
+				$update_button = $( '.mcs-section-update', $section );
+
+			$update_button.trigger( 'click' );
+		},
+
 		section_save : function(event) {
 			event.preventDefault();
 			event.stopPropagation();
 
-			var $current_section = $(this).closest( '.multiple-content-sections-section' ),
+			var $button = $(this),
+				$button_container = $button.parent(),
+				$spinner = $( '.spinner', $button.parent() ),
+				$current_section = $(this).closest( '.multiple-content-sections-section' ),
+				$post_status_field = $( '.mcs-section-status', $current_section ),
 				section_id = $current_section.attr( 'data-mcs-section-id' ),
 				form_data = $current_section.parents( 'form' ).serialize(),
 				form_submit_data = [];
 
-			// Put all related fields into an array.
-			// $.each( form_data, function( key, value ){
-			// 	if ( 'undefined' !== typeof value && -1 < value.name.indexOf( 'mcs-sections[' + section_id + ']' ) ) {
-			// 		form_submit_data[value.name] = value.value;
-			// 		console.log( form_submit_data );
-			// 	}
-			// });
-            //
-			// console.log( form_submit_data );
+			$( '.button', $button_container ).addClass( 'disabled' );
+			$spinner.addClass( 'is-active' );
 
 			$.post( ajaxurl, {
 				action: 'mcs_save_section',
@@ -907,8 +901,17 @@ multiple_content_sections.admin = function ( $ ) {
 				mcs_section_data: form_data,
 				mcs_save_section_nonce: mcs_data.save_section_nonce
 			}, function( response ) {
+				$( '.button', $button_container ).removeClass( 'disabled' );
+				$spinner.removeClass( 'is-active' );
+
 				if (response) {
-					
+					if ( 'publish' == $post_status_field.val() ) {
+						$( '.mcs-section-publish,.mcs-section-save-draft' ).addClass( 'hidden' );
+						$button.removeClass( 'hidden' );
+					} else {
+						$( '.mcs-section-publish,.mcs-section-save-draft' ).removeClass( 'hidden' );
+						$button.addClass( 'hidden' );
+					}
 				}
 			});
 		},
@@ -1239,8 +1242,13 @@ multiple_content_sections.admin = function ( $ ) {
 	            }, function( response ) {
 					if ( response != -1 ) {
 						current_image = media_attachment.id;
+
+						var $img = $('<img />', {
+							src : media_attachment.url
+						});
+
 						$button
-							.html( '<img src="' + media_attachment.url + '" />' )
+							.html( $img.html() )
 							.attr('data-mcs-section-featured-image', parseInt( media_attachment.id ) )
 							.after( $trash );
 

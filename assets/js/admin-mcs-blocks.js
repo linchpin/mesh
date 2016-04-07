@@ -268,14 +268,6 @@ multiple_content_sections.blocks = function ( $ ) {
                     post_data.blocks[ block_id.toString() ] = column_values[ index ];
                 }
             } );
-
-            $.post( ajaxurl, {
-                'action'                   : 'mcs_update_block_widths',
-                'mcs_post_data'            : post_data,
-                'mcs_reorder_blocks_nonce' : mcs_data.reorder_blocks_nonce
-            }, function( response ) {
-                // $current_spinner.removeClass( 'is-active' );
-            });
         },
 
         /**
@@ -411,27 +403,6 @@ multiple_content_sections.blocks = function ( $ ) {
             });
 
             var response = self.save_ajax( section_id, block_ids, $reorder_spinner );
-        },
-
-        /**
-         * Save when we reorder our blocks within a section
-         *
-         * @since 0.3.5
-         *
-         * @param section_id
-         * @param block_ids
-         * @param $reorder_spinner
-         */
-        save_ajax : function( section_id, block_ids, $reorder_spinner ) {
-
-            $.post( ajaxurl, {
-                'action': 'mcs_update_block_order',
-                'mcs_section_id'    : section_id,
-                'mcs_blocks_ids' : block_ids,
-                'mcs_reorder_blocks_nonce' : mcs_data.reorder_blocks_nonce
-            }, function( response ) {
-                // $current_spinner.removeClass( 'is-active' );
-            });
         },
 
         /**

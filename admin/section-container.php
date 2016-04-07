@@ -37,7 +37,7 @@ $blocks = mcs_maybe_create_section_blocks( $section );
 						<option value="publish" <?php selected( $section->post_status, 'publish' ); ?>><?php esc_html_e( 'Published', 'linchpin-mcs' ); ?></option>
 					</select>
 					<span class="close-title-edit right"><?php _e( 'Done', 'linchpin-mcs' ); ?></span>
-					<span class="handle-title"><?php esc_html_e( $section->post_status == 'publish' ? 'Published' : 'Draft' ); ?></span>
+					<span class="handle-title mcs-section-status-text"><?php esc_html_e( $section->post_status == 'publish' ? 'Published' : 'Draft' ); ?></span>
 				</div>
 			</div>
 		</div>
@@ -65,16 +65,20 @@ $blocks = mcs_maybe_create_section_blocks( $section );
 
 		<div class="mcs-row mcs-section-footer">
 			<div class="mcs-section-remove-container mcs-columns-4">
-				<span class="spinner"></span>
 				<a href="#" class="mcs-section-remove dashicons-before dashicons-no plain-link grey-link"><?php esc_html_e( 'Move to Trash', 'linchpin-mcs' ); ?></a>
+				<span class="spinner"></span>
 			</div>
 
 			<div class="mcs-columns-8 text-right">
+				<span class="spinner" style="float:none;"></span>
 				<?php if ( 'draft' == get_post_status( $section->ID ) ) : ?>
 					<a href="#" class="button mcs-section-save-draft"><?php esc_html_e( 'Save Draft', 'linchpin-mcs' ); ?></a>
 					<a href="#" class="button primary mcs-section-publish"><?php esc_html_e( 'Publish', 'linchpin-mcs' ); ?></a>
+					<a href="#" class="button primary mcs-section-update hidden"><?php esc_html_e( 'Update', 'linchpin-mcs' ); ?></a>
 				<?php else : ?>
-					<a href="#" class="button primary mcs-section-update"><?php esc_html_e( 'Update', 'linchpin-mcs' ); ?></a>
+					<a href="#" class="button mcs-section-save-draft hidden"><?php esc_html_e( 'Save Draft', 'linchpin-mcs' ); ?></a>
+					<a href="#" class="button primary mcs-section-publish hidden"><?php esc_html_e( 'Publish', 'linchpin-mcs' ); ?></a>
+					<a href="#" class="button primary mcs-section-update "><?php esc_html_e( 'Update', 'linchpin-mcs' ); ?></a>
 				<?php endif; ?>
 			</div>
 		</div>
