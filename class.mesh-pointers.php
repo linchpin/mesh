@@ -92,7 +92,7 @@ class Mesh_Admin_Pointers {
 	 */
 	function register_pointers( $p ) {
 	    $p['all_section_options'] = array(
-	        'target' => '.mcs-more-section-options',
+	        'target' => '.mcs-more-section-options:first',
 	        'options' => array(
 	            'content' => sprintf( '<h3> %s </h3> <p> %s </p>',
 	                __( 'Section Options' ,'linchpin-mcs' ),
@@ -121,9 +121,10 @@ class Mesh_Admin_Pointers {
 				    __( 'Use this handle to click and drag this column, giving you the ability to swap columns on the fly.', 'linchpin-mcs' )
 			    ),
 			    'position' => array(
-				    'edge' => 'bottom',
-				    'align' => 'left',
+				    'edge' => 'left',
+				    'align' => 'top',
 			    ),
+			    'pointerClass' => 'wp-pointer mesh-pointer-top-left',
 		    ),
 	    );
 
