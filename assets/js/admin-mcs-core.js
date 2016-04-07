@@ -617,8 +617,13 @@ multiple_content_sections.admin = function ( $ ) {
 	            }, function( response ) {
 					if ( response != -1 ) {
 						current_image = media_attachment.id;
+
+						var $img = $('<img />', {
+							src : media_attachment.url
+						});
+
 						$button
-							.html( '<img src="' + media_attachment.url + '" />' )
+							.html( $img.html() )
 							.attr('data-mcs-section-featured-image', parseInt( media_attachment.id ) )
 							.after( $trash );
 
