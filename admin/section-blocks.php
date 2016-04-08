@@ -47,6 +47,7 @@
 		if ( empty( $block_columns ) || 1 === $templates[ $selected_template ]['blocks'] ) {
 			$block_columns = $default_block_columns;
 		}
+
 		$block_css_class = get_post_meta( $blocks[ $block_increment ]->ID, '_mesh_css_class', true );
 		$block_offset = get_post_meta( $blocks[ $block_increment ]->ID, '_mesh_offset', true );
 
@@ -143,6 +144,8 @@
 						</div>
 					</div>
 					<input type="hidden" class="column-width" name="mesh-sections[<?php esc_attr_e( $section->ID ); ?>][blocks][<?php esc_attr_e( $blocks[ $block_increment ]->ID ); ?>][columns]" value="<?php esc_attr_e( $block_columns ); ?>"/>
+
+					<input type="hidden" class="block-menu-order" name="mesh-sections[<?php esc_attr_e( $section->ID ); ?>][blocks][<?php esc_attr_e( $blocks[ $block_increment ]->ID ); ?>][menu_order]" value="<?php esc_attr_e( $blocks[ $block_increment ]->menu_order ); ?>"/>
 				</div>
 			</div>
 		</div>

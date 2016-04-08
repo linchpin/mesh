@@ -67,7 +67,50 @@ mesh.blocks = function ( $ ) {
                 .on('change', '.mesh-column-offset', self.display_offset );
 
             self.setup_resize_slider();
-            self.setup_drag_drop();
+            self.setup_sortable();
+        },
+
+        /**
+	     * Setup sorting of blocks in the admin
+	     *
+	     * @since 1.0.0
+	     */
+        setup_sortable : function () {
+	        var column_order = [];
+
+			$('.mesh-editor-blocks .mesh-row').sortable({
+				axis      : 'x',
+				cursor    : 'move',
+				distance  : 20,
+				handle    : '.the-mover',
+				items     : '.mesh-section-block',
+				tolerance : 'pointer',
+
+				start     : function ( event, ui ) {
+					$('.mesh-section-block:not(.ui-sortable-placeholder)', this).each(function () {
+						column_order.push( $(this).attr('class') );
+					} );
+				},
+
+				update    : function ( event, ui ) {
+					var $this      = $(this),
+                        $tgt       = $( event.target),
+                        $section   = $tgt.parents('.mesh-section'),
+                        section_id = $section.attr('data-mesh-section-id'),
+                        $blocks    = $this.find('.mesh-section-block');
+
+					$blocks.each(function ( i ) {
+						var $this = $(this);
+
+						$this.removeAttr('class').addClass(column_order[i]);
+						$this.find('.block-menu-order').val(i);
+					} );
+
+					self.reorder_blocks( $section.find('.wp-editor-area') );
+					self.save_order( section_id, event, ui );
+					self.setup_sortable();
+				}
+			});
         },
 
         /**
@@ -434,15 +477,12 @@ mesh.blocks = function ( $ ) {
          * @param ui
          */
         save_order : function( section_id, event, ui ) {
-
             var $reorder_spinner = $('.mesh-reorder-spinner'),
                 block_ids = [];
 
             $( '#mesh-sections-editor-' + section_id ).find( '.block' ).each( function() {
                 block_ids.push( $(this).attr('data-mesh-block-id') );
             });
-
-            var response = self.save_ajax( section_id, block_ids, $reorder_spinner );
         },
 
         /**
@@ -784,7 +824,7 @@ mesh.admin = function ( $ ) {
 
 					blocks.reorder_blocks( $tinymce_editors );
 					blocks.setup_resize_slider();
-					blocks.setup_drag_drop();
+					blocks.setup_sortable();
 
 					self.setup_notifications( $layout );
 

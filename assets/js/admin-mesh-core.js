@@ -194,7 +194,7 @@ mesh.admin = function ( $ ) {
 
 					blocks.reorder_blocks( $tinymce_editors );
 					blocks.setup_resize_slider();
-					blocks.setup_drag_drop();
+					blocks.setup_sortable();
 
 					self.setup_notifications( $layout );
 
