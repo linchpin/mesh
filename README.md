@@ -16,7 +16,7 @@ Mesh is also compatible with another useful WordPress plugin [Toggle wpautop](ht
 
 ## Recognizable and easy to use.
 
-The UI/UX goals of Mesh it to try to stay as close to the core usability of the WordPress dashboard and only veer from that when absolutely necessary.
+The UI/UX goals of Mesh is to stay as close to the core usability of the WordPress dashboard and only veer from that when absolutely necessary.
 
 It should be easy to use and quickly recognizable to the user that this is still the dashboard they are used to.
 

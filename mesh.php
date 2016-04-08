@@ -1,13 +1,13 @@
 <?php
-/**
+/*
  * Plugin Name: Mesh
  * Plugin URI: http://linchpin.agency/wordpress-plugins/mesh
  * Description: Adds multiple sections for content on a post by post basis. Mesh also has settings to enable it for specific post types
  * Version: 1.0.0
  * Text Domain: linchpin-mesh
  * Domain Path: /languages
- * Author: linchpin_agency, maxinacube, desrosj, aware
- * Author URI: http://linchpin.agency
+ * Author: Linchpin Agency (Aaron Ware, Max Morgan & Jonathan Desrosiers)
+ * Author URI: http://linchpin.agency/?utm_source=simple-subtitles-for-wordpress&utm_medium=plugin-admin-page&utm_campaign=wp-plugin
  * License: GPLv2 or later
  *
  * @package Mesh
