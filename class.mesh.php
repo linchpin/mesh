@@ -1,8 +1,8 @@
 <?php
 /**
- * Class Multiple_Content_Sections
+ * Class Mesh
  */
-class Multiple_Content_Sections {
+class Mesh {
 
 	/**
 	 * Store available templates.
@@ -34,18 +34,18 @@ class Multiple_Content_Sections {
 	function __construct() {
 
 		$this->template_data = array(
-			'mcs-columns-1.php' => array(
-				'label' => __( '1 Columns', 'linchpin-mcs' ),
+			'mesh-columns-1.php' => array(
+				'label' => __( '1 Columns', 'linchpin-mesh' ),
 				'blocks' => 1,
 				'widths' => array( 12 ),
 			),
-			'mcs-columns-2.php' => array(
-				'label' => __( '2 Columns', 'linchpin-mcs' ),
+			'mesh-columns-2.php' => array(
+				'label' => __( '2 Columns', 'linchpin-mesh' ),
 				'blocks' => 2,
 				'widths' => array( 6, 6 ),
 			),
-			'mcs-columns-3.php' => array(
-				'label' => __( '3 Columns', 'linchpin-mcs' ),
+			'mesh-columns-3.php' => array(
+				'label' => __( '3 Columns', 'linchpin-mesh' ),
 				'blocks' => 3,
 				'widths' => array( 4, 4, 4 ),
 			),
@@ -71,7 +71,7 @@ class Multiple_Content_Sections {
 		add_filter( 'post_class',            array( $this, 'post_class' ) );
 
 		if ( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
-			include_once( 'functions-ajax.php' );
+			include_once( 'class.mesh-ajax.php' );
 		}
 
 		// Adjust TinyMCE and Media buttons.
@@ -98,12 +98,14 @@ class Multiple_Content_Sections {
 	 * @param array   $option Option we're saving
 	 * @param mixed   $value  Value to save
 	 *
-	 * @return mixed
+	 * @return void|mixed
 	 */
 	function set_screen_option( $status, $option, $value ) {
-		if ( 'linchpin_mcs_section_kitchensink' === $option ) {
+		if ( 'linchpin_mesh_section_kitchensink' === $option ) {
 			return $value;
 		}
+
+		return;
 	}
 
 	/**
@@ -119,18 +121,20 @@ class Multiple_Content_Sections {
 		}
 
 		$args = array(
-			'label'   => __( 'Show Extra MCS Section Controls?', 'linchpin-mcs' ),
+			'label'   => __( 'Show Extra MCS Section Controls?', 'linchpin-mesh' ),
 			'default' => 0,
-			'option'  => 'linchpin_mcs_section_kitchensink',
+			'option'  => 'linchpin_mesh_section_kitchensink',
 		);
 
-		add_screen_option( 'linchpin_mcs_section_kitchensink', $args );
+		add_screen_option( 'linchpin_mesh_section_kitchensink', $args );
 	}
 
 	/**
 	 * Update our tiny MCE w/ our own settings.
 	 *
-	 * @param $in
+	 * @param array $in
+	 *
+	 * @return array $in Input Object
 	 */
 	function tiny_mce_before_init( $in ) {
 
@@ -174,26 +178,26 @@ class Multiple_Content_Sections {
 	function init() {
 
 		$labels = array(
-			'name'                => _x( 'Content Section', 'Content Section', 'linchpin-mcs' ),
-			'singular_name'       => _x( 'Content Section', 'Content Section', 'linchpin-mcs' ),
-			'menu_name'           => __( 'Content Section', 'linchpin-mcs' ),
-			'name_admin_bar'      => __( 'Content Section', 'linchpin-mcs' ),
-			'parent_item_colon'   => __( 'Parent Content Section:', 'linchpin-mcs' ),
-			'all_items'           => __( 'All Content Sections', 'linchpin-mcs' ),
-			'add_new_item'        => __( 'Add New Content Section', 'linchpin-mcs' ),
-			'add_new'             => __( 'Add New', 'linchpin-mcs' ),
-			'new_item'            => __( 'New Content Section', 'linchpin-mcs' ),
-			'edit_item'           => __( 'Edit Content Section', 'linchpin-mcs' ),
-			'update_item'         => __( 'Update Content Section', 'linchpin-mcs' ),
-			'view_item'           => __( 'View Content Section', 'linchpin-mcs' ),
-			'search_items'        => __( 'Search Content Sections', 'linchpin-mcs' ),
-			'not_found'           => __( 'Not found', 'linchpin-mcs' ),
-			'not_found_in_trash'  => __( 'Not found in Trash', 'linchpin-mcs' ),
+			'name'                => _x( 'Content Section', 'Content Section', 'linchpin-mesh' ),
+			'singular_name'       => _x( 'Content Section', 'Content Section', 'linchpin-mesh' ),
+			'menu_name'           => __( 'Content Section', 'linchpin-mesh' ),
+			'name_admin_bar'      => __( 'Content Section', 'linchpin-mesh' ),
+			'parent_item_colon'   => __( 'Parent Content Section:', 'linchpin-mesh' ),
+			'all_items'           => __( 'All Content Sections', 'linchpin-mesh' ),
+			'add_new_item'        => __( 'Add New Content Section', 'linchpin-mesh' ),
+			'add_new'             => __( 'Add New', 'linchpin-mesh' ),
+			'new_item'            => __( 'New Content Section', 'linchpin-mesh' ),
+			'edit_item'           => __( 'Edit Content Section', 'linchpin-mesh' ),
+			'update_item'         => __( 'Update Content Section', 'linchpin-mesh' ),
+			'view_item'           => __( 'View Content Section', 'linchpin-mesh' ),
+			'search_items'        => __( 'Search Content Sections', 'linchpin-mesh' ),
+			'not_found'           => __( 'Not found', 'linchpin-mesh' ),
+			'not_found_in_trash'  => __( 'Not found in Trash', 'linchpin-mesh' ),
 		);
 
-		register_post_type( 'mcs_section', array(
-			'label'               => __( 'Content Section', 'linchpin-mcs' ),
-			'description'         => __( 'Content Section', 'linchpin-mcs' ),
+		register_post_type( 'mesh_section', array(
+			'label'               => __( 'Content Section', 'linchpin-mesh' ),
+			'description'         => __( 'Content Section', 'linchpin-mesh' ),
 			'labels'              => $labels,
 			'public' => false,
 			'hierarchical' => true,
@@ -221,46 +225,46 @@ class Multiple_Content_Sections {
 	 * @return void
 	 */
 	function edit_page_form( $post ) {
-		$content_sections = mcs_get_sections( $post->ID, 'array', true );
-		$mcs_notifications = get_user_option( 'linchpin_mcs_notifications', get_current_user_id() );
+		$content_sections = mesh_get_sections( $post->ID, 'array', true );
+		$mesh_notifications = get_user_option( 'linchpin_mesh_notifications', get_current_user_id() );
 		?>
-		<div id="mcs-container">
-			<?php wp_nonce_field( 'mcs_content_sections_nonce', 'mcs_content_sections_nonce' ); ?>
+		<div id="mesh-container">
+			<?php wp_nonce_field( 'mesh_content_sections_nonce', 'mesh_content_sections_nonce' ); ?>
 
 
-			<div class="notice below-h2 mcs-row mcs-main-ua-row<?php if ( empty( $content_sections ) ) { echo ' hide'; } ?>">
-				<div class="mcs-columns-3 columns">
-					<p class="title"><?php esc_html_e( 'Multiple Content Sections', 'linchpin-mcs' ); ?></p>
+			<div class="notice below-h2 mesh-row mesh-main-ua-row<?php if ( empty( $content_sections ) ) { echo ' hide'; } ?>">
+				<div class="mesh-columns-3 columns">
+					<p class="title"><?php esc_html_e( 'Multiple Content Sections', 'linchpin-mesh' ); ?></p>
 				</div>
 
-				<div class="mcs-columns-9 columns text-right">
-					<?php include LINCHPIN_MCS___PLUGIN_DIR .'admin/controls.php'; ?>
+				<div class="mesh-columns-9 columns text-right">
+					<?php include LINCHPIN_MESH___PLUGIN_DIR .'admin/controls.php'; ?>
 				</div>
 			</div>
 
 			<?php if ( empty( $content_sections ) ) : ?>
-				<div id="mcs-description" class="description notice below-h2 text-center lead empty-sections-message">
-					<p><?php esc_html_e( 'You do not have any Content Sections.', 'linchpin-mcs' ); ?></p>
-					<p><?php esc_html_e( 'Get started using Mesh by adding a Content Section now.', 'linchpin-mcs' ); ?></p>
-					<p><a href="#" class="button primary mcs-section-add dashicons-before dashicons-plus"><?php esc_html_e( 'Add Section', 'lincpin-mcs' ); ?></a></p>
+				<div id="mesh-description" class="description notice below-h2 text-center lead empty-sections-message">
+					<p><?php esc_html_e( 'You do not have any Content Sections.', 'linchpin-mesh' ); ?></p>
+					<p><?php esc_html_e( 'Get started using Mesh by adding a Content Section now.', 'linchpin-mesh' ); ?></p>
+					<p><a href="#" class="button primary mesh-section-add dashicons-before dashicons-plus"><?php esc_html_e( 'Add Section', 'linchpin-mesh' ); ?></a></p>
 				</div>
 			<?php else : ?>
-				<?php if ( empty( $mcs_notifications['intro'] ) ) : ?>
-					<div id="mcs-description" class="description notice is-dismissible notice-info below-h2" data-type="intro">
-						<p><?php esc_html_e( 'Multiple content sections allow you to easily segment your page\'s contents into different blocks of markup.', 'linchpin-mcs' ); ?></p>
+				<?php if ( empty( $mesh_notifications['intro'] ) ) : ?>
+					<div id="mesh-description" class="description notice is-dismissible notice-info below-h2" data-type="intro">
+						<p><?php esc_html_e( 'Multiple content sections allow you to easily segment your page\'s contents into different blocks of markup.', 'linchpin-mesh' ); ?></p>
 					</div>
 				<?php endif; ?>
 			<?php endif; ?>
 
-			<div id="multiple-content-sections-container">
+			<div id="mesh-container">
 				<?php foreach ( $content_sections as $key => $section ) : ?>
-					<?php mcs_add_section_admin_markup( $section, true ); ?>
+					<?php mesh_add_section_admin_markup( $section, true ); ?>
 				<?php endforeach; ?>
 			</div>
 
-			<div class="notice below-h2 mcs-row mcs-main-ua-row<?php if ( empty( $content_sections ) ) { echo ' hide'; } ?>">
-				<div class="mcs-columns-12 columns text-right">
-					<?php include LINCHPIN_MCS___PLUGIN_DIR .'admin/controls.php'; ?>
+			<div class="notice below-h2 mesh-row mesh-main-ua-row<?php if ( empty( $content_sections ) ) { echo ' hide'; } ?>">
+				<div class="mesh-columns-12 columns text-right">
+					<?php include LINCHPIN_MESH___PLUGIN_DIR .'admin/controls.php'; ?>
 				</div>
 			</div>
 		</div>
@@ -288,11 +292,11 @@ class Multiple_Content_Sections {
 			return;
 		}
 
-		if ( ! isset( $_POST['mcs_content_sections_nonce'] ) || ! wp_verify_nonce( $_POST['mcs_content_sections_nonce'], 'mcs_content_sections_nonce' )  ) {
+		if ( ! isset( $_POST['mesh_content_sections_nonce'] ) || ! wp_verify_nonce( $_POST['mesh_content_sections_nonce'], 'mesh_content_sections_nonce' )  ) {
 			return;
 		}
 
-		if ( empty( $_POST['mcs-sections'] ) ) {
+		if ( empty( $_POST['mesh-sections'] ) ) {
 			return;
 		}
 
@@ -303,39 +307,47 @@ class Multiple_Content_Sections {
 		// Check if we are doing a section update via AJAX
 		$saving_section_via_ajax = false;
 		$ajax_section_id = 0;
-		if ( ! empty( $_POST['action'] ) && 'mcs_save_section' == $_POST['action'] ) {
+
+		if ( ! empty( $_POST['action'] ) && 'mesh_save_section' == $_POST['action'] ) {
 			$saving_section_via_ajax = true;
-			$ajax_section_id = (int) $_POST['mcs_section_id'];
+			$ajax_section_id = (int) $_POST['mesh_section_id'];
 		}
 
-		foreach ( $_POST['mcs-sections'] as $section_id => $section_data ) {
+		foreach ( $_POST['mesh-sections'] as $section_id => $section_data ) {
 
 			// Sections that we don't want to update
-			if ( $saving_section_via_ajax && $ajax_section_id != $section_id ) {
+			if ( $saving_section_via_ajax && $ajax_section_id !== $section_id ) {
 				continue;
 			}
 
 			$section = get_post( (int) $section_id );
 
-			if ( 'mcs_section' != $section->post_type ) {
+			if ( 'mesh_section' !== $section->post_type ) {
 				continue;
 			}
 
-			if ( ! $saving_section_via_ajax && $post_id == $section->post_parent ) {
+			/**
+			 * @todo needs review. Breaking page saving
+
+			if ( ! $saving_section_via_ajax && $post_id === $section->post_parent ) {
 				continue;
 			}
+
+			 *
+			 */
+
 
 			if ( ! $saving_section_via_ajax ) {
 				$status = sanitize_post_field( 'post_status', $section_data['post_status'], $post_id, 'attribute' );
 
-				if ( ! in_array( $status, array( 'publish', 'draft' ) ) ) {
+				if ( ! in_array( $status, array( 'publish', 'draft' ), true ) ) {
 					$status = 'draft';
 				}
 
 				$updates = array(
 					'ID'           => (int) $section_id,
 					'post_title'   => sanitize_text_field( $section_data['post_title'] ),
-					'post_content' => '',
+					'post_content' => '', // Sections don't have content
 					'post_status'  => $status,
 					'menu_order'   => $count,
 				);
@@ -349,9 +361,9 @@ class Multiple_Content_Sections {
 			$template = sanitize_text_field( $section_data['template'] );
 
 			if ( empty( $template ) ) {
-				delete_post_meta( $section->ID, '_mcs_template' );
+				delete_post_meta( $section->ID, '_mesh_template' );
 			} else {
-				update_post_meta( $section->ID, '_mcs_template', $template );
+				update_post_meta( $section->ID, '_mesh_template', $template );
 			}
 
 			// Save CSS Classes.
@@ -365,9 +377,9 @@ class Multiple_Content_Sections {
 			$sanitized_css_classes = implode( ' ', $sanitized_css_classes );
 
 			if ( empty( $sanitized_css_classes ) ) {
-				delete_post_meta( $section->ID, '_mcs_css_class' );
+				delete_post_meta( $section->ID, '_mesh_css_class' );
 			} else {
-				update_post_meta( $section->ID, '_mcs_css_class', $sanitized_css_classes );
+				update_post_meta( $section->ID, '_mesh_css_class', $sanitized_css_classes );
 			}
 
 			// Save LP Equal.
@@ -377,30 +389,30 @@ class Multiple_Content_Sections {
 			}
 
 			if ( empty( $lp_equal ) ) {
-				delete_post_meta( $section->ID, '_mcs_lp_equal' );
+				delete_post_meta( $section->ID, '_mesh_lp_equal' );
 			} else {
-				update_post_meta( $section->ID, '_mcs_lp_equal', $lp_equal );
+				update_post_meta( $section->ID, '_mesh_lp_equal', $lp_equal );
 			}
 
 			// Save Title Display
 			if ( empty( $section_data['title_display'] ) ) {
-				delete_post_meta( $section->ID, '_mcs_title_display' );
+				delete_post_meta( $section->ID, '_mesh_title_display' );
 			} else {
-				update_post_meta( $section->ID, '_mcs_title_display', $section_data['title_display'] );
+				update_post_meta( $section->ID, '_mesh_title_display', $section_data['title_display'] );
 			}
 
 			// Save Push / Pull.
 			if ( empty( $section_data['push_pull'] ) ) {
-				delete_post_meta( $section->ID, '_mcs_push_pull' );
+				delete_post_meta( $section->ID, '_mesh_push_pull' );
 			} else {
-				update_post_meta( $section->ID, '_mcs_push_pull', $section_data['push_pull'] );
+				update_post_meta( $section->ID, '_mesh_push_pull', $section_data['push_pull'] );
 			}
 
 			// Save Collapse.
 			if ( empty( $section_data['collapse'] ) ) {
-				delete_post_meta( $section->ID, '_mcs_collapse' );
+				delete_post_meta( $section->ID, '_mesh_collapse' );
 			} else {
-				update_post_meta( $section->ID, '_mcs_collapse', $section_data['collapse'] );
+				update_post_meta( $section->ID, '_mesh_collapse', $section_data['collapse'] );
 			}
 
 			// Process the section's blocks.
@@ -413,13 +425,17 @@ class Multiple_Content_Sections {
 			foreach ( $blocks as $block_id => $block_data ) {
 				$block = get_post( (int) $block_id );
 
-				if ( empty( $block ) || 'mcs_section' !== $block->post_type || $section->ID !== $block->post_parent ) {
+				if ( empty( $block ) || 'mesh_section' !== $block->post_type || $section->ID !== $block->post_parent ) {
 					continue;
+				}
+
+				if ( empty( $status ) ) {
+					$status = 'draft';
 				}
 
 				$updates = array(
 					'ID'           => (int) $block_id,
-					'post_content' => wp_kses( $block_data['post_content'], mcs_get_allowed_html() ),
+					'post_content' => wp_kses( $block_data['post_content'], mesh_get_allowed_html() ),
 					'post_status'  => $status,
 					'post_title'   => sanitize_text_field( $block_data['post_title'] ),
 				);
@@ -429,19 +445,19 @@ class Multiple_Content_Sections {
 				$block_column_width = (int) $section_data['blocks'][ $block_id ]['columns'];
 
 				// If we don't have a column width defined or we are using a 1 column layout clear our saved widths.
-				if ( empty( $block_column_width ) || 'mcs-columns-1.php' === $template ) {
-					delete_post_meta( $block_id, '_mcs_column_width' );
+				if ( empty( $block_column_width ) || 'mesh-columns-1.php' === $template ) {
+					delete_post_meta( $block_id, '_mesh_column_width' );
 				} else {
-					update_post_meta( $block_id, '_mcs_column_width', $block_column_width );
+					update_post_meta( $block_id, '_mesh_column_width', $block_column_width );
 				}
 
 				// Save Column Offset.
 				$offset = (int) $section_data['blocks'][ $block_id ]['offset'];
 
 				if ( empty( $offset ) ) {
-					delete_post_meta( $block_id, '_mcs_offset' );
+					delete_post_meta( $block_id, '_mesh_offset' );
 				} else {
-					update_post_meta( $block_id, '_mcs_offset', $offset );
+					update_post_meta( $block_id, '_mesh_offset', $offset );
 				}
 
 				/**
@@ -461,15 +477,15 @@ class Multiple_Content_Sections {
 				$sanitized_css_classes = implode( ' ', $sanitized_css_classes );
 
 				if ( empty( $sanitized_css_classes ) ) {
-					delete_post_meta( $block_id, '_mcs_css_class' );
+					delete_post_meta( $block_id, '_mesh_css_class' );
 				} else {
-					update_post_meta( $block_id, '_mcs_css_class', $sanitized_css_classes );
+					update_post_meta( $block_id, '_mesh_css_class', $sanitized_css_classes );
 				}
 			}
 		}
 
 		// Save a block's content into its section, and then into it's page.
-		$section_posts = mcs_get_sections( $post_id );
+		$section_posts = mesh_get_sections( $post_id );
 
 		if ( ! empty( $section_posts ) ) {
 			foreach ( $section_posts as $p ) {
@@ -483,7 +499,7 @@ class Multiple_Content_Sections {
 
 				$section_content = array();
 
-				$blocks = mcs_get_section_blocks( $p->ID );
+				$blocks = mesh_get_section_blocks( $p->ID );
 
 				foreach ( $blocks as $b ) {
 					$section_content[] = strip_tags( $b->post_content );
@@ -496,9 +512,9 @@ class Multiple_Content_Sections {
 			}
 
 			// Get the sections again.
-			$section_posts = mcs_get_sections( $post_id );
+			$section_posts = mesh_get_sections( $post_id );
 			$page_content_sections = array();
-			$page_content_sections[] = '<div id="mcs-section-content">';
+			$page_content_sections[] = '<div id="mesh-section-content">';
 
 			foreach ( $section_posts as $p ) {
 				if ( 'publish' !== $p->post_status ) {
@@ -528,7 +544,7 @@ class Multiple_Content_Sections {
 	 * @return string
 	 */
 	function the_content( $content ) {
-		$pos = strpos( $content, '<div id="mcs-section-content">' );
+		$pos = strpos( $content, '<div id="mesh-section-content">' );
 
 		if ( false !== $pos ) {
 			$content = substr( $content, 0, ( strlen( $content ) - $pos ) * -1 );
@@ -547,7 +563,7 @@ class Multiple_Content_Sections {
 	 * @return array
 	 */
 	function post_class( $classes ) {
-		if ( $custom_class = get_post_meta( get_the_ID(), '_mcs_css_class', true ) ) {
+		if ( $custom_class = get_post_meta( get_the_ID(), '_mesh_css_class', true ) ) {
 			$classes[] = esc_attr( $custom_class );
 		}
 
@@ -570,7 +586,7 @@ class Multiple_Content_Sections {
 			return;
 		}
 
-		mcs_display_sections( $wp_query->post->ID );
+		mesh_display_sections( $wp_query->post->ID );
 	}
 
 	/**
@@ -586,44 +602,44 @@ class Multiple_Content_Sections {
 			return;
 		}
 
-		wp_enqueue_script( 'admin-mcs', plugins_url( 'assets/js/admin-mcs.js', __FILE__ ), array( 'jquery', 'jquery-ui-draggable', 'jquery-ui-droppable', 'jquery-ui-slider', 'wp-pointer' ), '1.0', true );
+		wp_enqueue_script( 'admin-mesh', plugins_url( 'assets/js/admin-mesh.js', __FILE__ ), array( 'jquery', 'jquery-ui-draggable', 'jquery-ui-droppable', 'jquery-ui-slider', 'wp-pointer' ), '1.0', true );
 
 		$strings = array(
-			'reorder' =>           __( 'Be sure to save the order of your sections once your changes are complete.', 'linchpin-mcs' ),
-			'description' =>       __( 'Multiple content sections allows you to easily segment your page\'s contents into different blocks of markup.', 'linchpin-mcs' ),
-			'add_image' =>         __( 'Set Background Image', 'linchpin-mcs' ),
-			'remove_image' =>      __( 'Remove Background', 'linchpin-mcs' ),
-			'expand_all' =>        __( 'Expand All', 'linchpin-mcs' ),
-			'collapse_all' =>      __( 'Collapse All', 'linchpin-mcs' ),
-			'default_title' =>     __( 'No Section Title', 'linchpin-mcs' ),
-			'select_section_bg' => __( 'Select Section Background', 'linchpin-mcs' ),
-			'select_bg' =>         __( 'Select Background' , 'linchpin-mcs' ),
-			'select_block_bg' =>   __( 'Select Column Background', 'linchpin-mcs' ),
-			'published' =>         __( 'Published', 'linchpin-mcs' ),
-			'draft' =>             __( 'Draft', 'linchpin-mcs' ),
-			'confirm_remove' =>    __( 'Are you sure you want to remove this section?', 'linchpin-mcs' ),
+			'reorder' =>           __( 'Be sure to save the order of your sections once your changes are complete.', 'linchpin-mesh' ),
+			'description' =>       __( 'Multiple content sections allows you to easily segment your page\'s contents into different blocks of markup.', 'linchpin-mesh' ),
+			'add_image' =>         __( 'Set Background Image', 'linchpin-mesh' ),
+			'remove_image' =>      __( 'Remove Background', 'linchpin-mesh' ),
+			'expand_all' =>        __( 'Expand All', 'linchpin-mesh' ),
+			'collapse_all' =>      __( 'Collapse All', 'linchpin-mesh' ),
+			'default_title' =>     __( 'No Section Title', 'linchpin-mesh' ),
+			'select_section_bg' => __( 'Select Section Background', 'linchpin-mesh' ),
+			'select_bg' =>         __( 'Select Background' , 'linchpin-mesh' ),
+			'select_block_bg' =>   __( 'Select Column Background', 'linchpin-mesh' ),
+			'published' =>         __( 'Published', 'linchpin-mesh' ),
+			'draft' =>             __( 'Draft', 'linchpin-mesh' ),
+			'confirm_remove' =>    __( 'Are you sure you want to remove this section?', 'linchpin-mesh' ),
 		);
 
-		$strings = apply_filters( 'mcs_strings', $strings ); // Allow filtering of localization strings.
+		$strings = apply_filters( 'mesh_strings', $strings ); // Allow filtering of localization strings.
 
 		$localized_data = array(
 			'post_id' => $post->ID,
 			'site_uri' => site_url(),
-			'choose_layout_nonce'   => wp_create_nonce( 'mcs_choose_layout_nonce' ),
-			'remove_section_nonce'  => wp_create_nonce( 'mcs_remove_section_nonce' ),
-			'add_section_nonce'     => wp_create_nonce( 'mcs_add_section_nonce' ),
-			'save_section_nonce'    => wp_create_nonce( 'mcs_save_section_nonce' ),
-			'reorder_section_nonce' => wp_create_nonce( 'mcs_reorder_section_nonce' ),
-			'featured_image_nonce'  => wp_create_nonce( 'mcs_featured_image_nonce' ),
-			'reorder_blocks_nonce'  => wp_create_nonce( 'mcs_reorder_blocks_nonce' ),
-			'dismiss_nonce'         => wp_create_nonce( 'mcs_dismiss_notification_nonce' ),
-			'content_css'           => apply_filters( 'content_css', get_stylesheet_directory_uri() . '/css/admin-editor.css' , 'editor_path' ),
+			'choose_layout_nonce'   => wp_create_nonce( 'mesh_choose_layout_nonce' ),
+			'remove_section_nonce'  => wp_create_nonce( 'mesh_remove_section_nonce' ),
+			'add_section_nonce'     => wp_create_nonce( 'mesh_add_section_nonce' ),
+			'save_section_nonce'    => wp_create_nonce( 'mesh_save_section_nonce' ),
+			'reorder_section_nonce' => wp_create_nonce( 'mesh_reorder_section_nonce' ),
+			'featured_image_nonce'  => wp_create_nonce( 'mesh_featured_image_nonce' ),
+			'reorder_blocks_nonce'  => wp_create_nonce( 'mesh_reorder_blocks_nonce' ),
+			'dismiss_nonce'         => wp_create_nonce( 'mesh_dismiss_notification_nonce' ),
+			'content_css'           => apply_filters( 'mesh_content_css', get_stylesheet_directory_uri() . '/css/admin-editor.css' , 'editor_path' ),
 			'strings'               => $strings,
 		);
 
-		$localized_data = apply_filters( 'mcs_data', $localized_data ); // Allow filtering of the entire localized dataset.
+		$localized_data = apply_filters( 'mesh_data', $localized_data ); // Allow filtering of the entire localized dataset.
 
-		wp_localize_script( 'admin-mcs', 'mcs_data', $localized_data );
+		wp_localize_script( 'admin-mesh', 'mesh_data', $localized_data );
 	}
 
 	/**
@@ -633,7 +649,7 @@ class Multiple_Content_Sections {
 	 * @return void
 	 */
 	function admin_enqueue_styles() {
-		wp_enqueue_style( 'admin-mcs', plugins_url( 'assets/css/admin-mcs.css', __FILE__ ), array(), '1.0' );
+		wp_enqueue_style( 'admin-mesh', plugins_url( 'assets/css/admin-mesh.css', __FILE__ ), array(), LINCHPIN_MESH_VERSION );
 	}
 
 	/**
@@ -643,7 +659,7 @@ class Multiple_Content_Sections {
 	 * @return void
 	 */
 	function wp_enqueue_scripts() {
-		wp_enqueue_script( 'mesh-frontend', plugins_url( 'assets/js/mesh.js', __FILE__ ), array( 'jquery' ), '1.0.0', true );
+		wp_enqueue_script( 'mesh-frontend', plugins_url( 'assets/js/mesh.js', __FILE__ ), array( 'jquery' ), LINCHPIN_MESH_VERSION, true );
 	}
 
 	/**
@@ -653,7 +669,7 @@ class Multiple_Content_Sections {
 	 * @return void
 	 */
 	function wp_enqueue_styles() {
-		wp_enqueue_style( 'mesh-grid-foundation', plugins_url( 'assets/css/mesh-grid-foundation.css', __FILE__ ), array(), '1.0' );
+		wp_enqueue_style( 'mesh-grid-foundation', plugins_url( 'assets/css/mesh-grid-foundation.css', __FILE__ ), array(), LINCHPIN_MESH_VERSION );
 	}
 
 	/**

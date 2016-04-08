@@ -1,21 +1,14 @@
 <?php
 /**
  * Provide a meta box view for the settings page
- *
- * @package    Mesh
- * @subpackage Mesh/admin
- */
-
-/**
- * Meta Box
- *
  * Renders a single meta box.
  *
- * @since       1.0.0
+ * @package    Mesh
+ * @subpackage MeshAdmin
  */
 ?>
 <form action="options.php" method="POST">
-	<h2><?php esc_html_e( LINCHPIN_MCS_PLUGIN_NAME, 'linchpin-mcs' ); ?></h2>
+	<h2><?php esc_html_e( LINCHPIN_MESH_PLUGIN_NAME, 'linchpin-mesh' ); ?></h2>
 	<?php settings_fields( 'mesh' ); ?>
 	<?php do_settings_sections( 'mesh' ); ?>
 	<?php submit_button(); ?>

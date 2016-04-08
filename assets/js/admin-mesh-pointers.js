@@ -1,6 +1,6 @@
-var multiple_content_sections = multiple_content_sections || {};
+var mesh = mesh || {};
 
-multiple_content_sections.pointers = function ( $ ) {
+mesh.pointers = function ( $ ) {
 
     var current_index = 0;
 
@@ -12,11 +12,11 @@ multiple_content_sections.pointers = function ( $ ) {
         show_pointer: function() {
 
             // Make sure we have pointers available.
-            if( typeof( mcs_data.wp_pointers ) === 'undefined') {
+            if( typeof( mesh_data.wp_pointers ) === 'undefined') {
                 return;
             }
 
-            var pointer = mcs_data.wp_pointers.pointers[current_index],
+            var pointer = mesh_data.wp_pointers.pointers[current_index],
                 options = $.extend( pointer.options, {
                     close: function() {
                         $.post( ajaxurl, {
@@ -26,8 +26,8 @@ multiple_content_sections.pointers = function ( $ ) {
 
                         current_index++;
 
-						if ( current_index < mcs_data.wp_pointers.pointers.length ) {
-	                        multiple_content_sections.pointers.show_pointer();
+						if ( current_index < mesh_data.wp_pointers.pointers.length ) {
+	                        mesh.pointers.show_pointer();
 						}
                     }
                 });

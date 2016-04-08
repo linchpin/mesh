@@ -1,9 +1,9 @@
 {
-  "name": "linchpin-multiple-content-sections",
-  "version": "1.4.5",
+  "name": "mesh",
+  "version": "1.0.0",
   "author": {
     "name": "Linchpin",
-    "email": "team@linchpinagency.com",
+    "email": "sayhi@linchpinagency.com",
     "url": "http://linchpin.agency"
   },
   "devDependencies": {

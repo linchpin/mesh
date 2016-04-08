@@ -2,10 +2,10 @@
 # This file is distributed under the GPLv2 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Mesh for WordPress 1.0.0\n"
+"Project-Id-Version: Mesh 1.0.0\n"
 "Report-Msgid-Bugs-To: "
 "https://wordpress.org/support/plugin/multiple-content-sections\n"
-"POT-Creation-Date: 2016-04-07 18:05:41+00:00\n"
+"POT-Creation-Date: 2016-04-08 02:41:21+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -18,15 +18,15 @@ msgstr ""
 msgid "Reorder Sections"
 msgstr ""
 
-#: admin/controls.php:15 class.multiple-content-sections.php:600
+#: admin/controls.php:15 class.mesh.php:598
 msgid "Expand All"
 msgstr ""
 
-#: admin/controls.php:16 class.multiple-content-sections.php:601
+#: admin/controls.php:16 class.mesh.php:599
 msgid "Collapse All"
 msgstr ""
 
-#: admin/controls.php:17 class.multiple-content-sections.php:245
+#: admin/controls.php:17 class.mesh.php:247
 msgid "Add Section"
 msgstr ""
 
@@ -45,7 +45,7 @@ msgid "CSS Class"
 msgstr ""
 
 #: admin/section-blocks.php:136 admin/section-controls.php:71
-#: class.multiple-content-sections.php:598
+#: class.mesh.php:596
 msgid "Set Background Image"
 msgstr ""
 
@@ -53,27 +53,27 @@ msgstr ""
 msgid "Status:"
 msgstr ""
 
-#: admin/section-container.php:36 class.multiple-content-sections.php:607
+#: admin/section-container.php:36 class.mesh.php:605
 msgid "Draft"
 msgstr ""
 
-#: admin/section-container.php:37 class.multiple-content-sections.php:606
+#: admin/section-container.php:37 class.mesh.php:604
 msgid "Published"
 msgstr ""
 
-#: admin/section-container.php:69
+#: admin/section-container.php:64
 msgid "Move to Trash"
 msgstr ""
 
-#: admin/section-container.php:74
+#: admin/section-container.php:71 admin/section-container.php:75
 msgid "Save Draft"
 msgstr ""
 
-#: admin/section-container.php:75
+#: admin/section-container.php:72 admin/section-container.php:76
 msgid "Publish"
 msgstr ""
 
-#: admin/section-container.php:77
+#: admin/section-container.php:73 admin/section-container.php:77
 msgid "Update"
 msgstr ""
 
@@ -105,12 +105,16 @@ msgstr ""
 msgid "Reorder your content blocks by dragging and dropping."
 msgstr ""
 
-#: admin/section-template-warnings.php:16
+#: admin/section-template-warnings.php:17
 msgid "The number of columns selected is causing some content to be hidden."
 msgstr ""
 
-#: admin/section-template-warnings.php:18
+#: admin/section-template-warnings.php:19
 msgid "Increase the column number to access that content."
+msgstr ""
+
+#: class.mesh-ajax.php:49 class.mesh.php:600
+msgid "No Section Title"
 msgstr ""
 
 #: class.mesh-pointers.php:98
@@ -189,126 +193,119 @@ msgstr ""
 msgid "Change Log"
 msgstr ""
 
-#: class.multiple-content-sections.php:38
+#: class.mesh.php:38
 msgid "1 Columns"
 msgstr ""
 
-#: class.multiple-content-sections.php:43
+#: class.mesh.php:43
 msgid "2 Columns"
 msgstr ""
 
-#: class.multiple-content-sections.php:48
+#: class.mesh.php:48
 msgid "3 Columns"
 msgstr ""
 
-#: class.multiple-content-sections.php:122
+#: class.mesh.php:124
 msgid "Show Extra MCS Section Controls?"
 msgstr ""
 
-#: class.multiple-content-sections.php:179
-#: class.multiple-content-sections.php:180
-#: class.multiple-content-sections.php:195
-#: class.multiple-content-sections.php:196
+#: class.mesh.php:181 class.mesh.php:182 class.mesh.php:197 class.mesh.php:198
 msgid "Content Section"
 msgstr ""
 
-#: class.multiple-content-sections.php:181
+#: class.mesh.php:183
 msgid "Parent Content Section:"
 msgstr ""
 
-#: class.multiple-content-sections.php:182
+#: class.mesh.php:184
 msgid "All Content Sections"
 msgstr ""
 
-#: class.multiple-content-sections.php:183
+#: class.mesh.php:185
 msgid "Add New Content Section"
 msgstr ""
 
-#: class.multiple-content-sections.php:184
+#: class.mesh.php:186
 msgid "Add New"
 msgstr ""
 
-#: class.multiple-content-sections.php:185
+#: class.mesh.php:187
 msgid "New Content Section"
 msgstr ""
 
-#: class.multiple-content-sections.php:186
+#: class.mesh.php:188
 msgid "Edit Content Section"
 msgstr ""
 
-#: class.multiple-content-sections.php:187
+#: class.mesh.php:189
 msgid "Update Content Section"
 msgstr ""
 
-#: class.multiple-content-sections.php:188
+#: class.mesh.php:190
 msgid "View Content Section"
 msgstr ""
 
-#: class.multiple-content-sections.php:189
+#: class.mesh.php:191
 msgid "Search Content Sections"
 msgstr ""
 
-#: class.multiple-content-sections.php:190
+#: class.mesh.php:192
 msgid "Not found"
 msgstr ""
 
-#: class.multiple-content-sections.php:191
+#: class.mesh.php:193
 msgid "Not found in Trash"
 msgstr ""
 
-#: class.multiple-content-sections.php:233
+#: class.mesh.php:235
 msgid "Multiple Content Sections"
 msgstr ""
 
-#: class.multiple-content-sections.php:243
+#: class.mesh.php:245
 msgid "You do not have any Content Sections."
 msgstr ""
 
-#: class.multiple-content-sections.php:244
+#: class.mesh.php:246
 msgid "Get started using Mesh by adding a Content Section now."
 msgstr ""
 
-#: class.multiple-content-sections.php:250
+#: class.mesh.php:252
 msgid ""
 "Multiple content sections allow you to easily segment your page's contents "
 "into different blocks of markup."
 msgstr ""
 
-#: class.multiple-content-sections.php:596
+#: class.mesh.php:594
 msgid "Be sure to save the order of your sections once your changes are complete."
 msgstr ""
 
-#: class.multiple-content-sections.php:597
+#: class.mesh.php:595
 msgid ""
 "Multiple content sections allows you to easily segment your page's contents "
 "into different blocks of markup."
 msgstr ""
 
-#: class.multiple-content-sections.php:599
+#: class.mesh.php:597
 msgid "Remove Background"
 msgstr ""
 
-#: class.multiple-content-sections.php:602 functions-ajax.php:51
-msgid "No Section Title"
-msgstr ""
-
-#: class.multiple-content-sections.php:603
+#: class.mesh.php:601
 msgid "Select Section Background"
 msgstr ""
 
-#: class.multiple-content-sections.php:604
+#: class.mesh.php:602
 msgid "Select Background"
 msgstr ""
 
-#: class.multiple-content-sections.php:605
+#: class.mesh.php:603
 msgid "Select Column Background"
 msgstr ""
 
-#: class.multiple-content-sections.php:608
+#: class.mesh.php:606
 msgid "Are you sure you want to remove this section?"
 msgstr ""
 
-#: multiple-content-sections.php:321
+#: multiple-content-sections.php:328
 msgid "No Column Title"
 msgstr ""
 
@@ -419,7 +416,7 @@ msgid "PPCPP:LOG-STORECACHE"
 msgstr ""
 
 #. Plugin Name of the plugin/theme
-msgid "Mesh for WordPress"
+msgid "Mesh"
 msgstr ""
 
 #. Plugin URI of the plugin/theme
@@ -440,8 +437,7 @@ msgstr ""
 msgid "http://linchpin.agency"
 msgstr ""
 
-#: class.multiple-content-sections.php:177
-#: class.multiple-content-sections.php:178
+#: class.mesh.php:179 class.mesh.php:180
 msgctxt "Content Section"
 msgid "Content Section"
 msgstr ""

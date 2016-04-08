@@ -4,9 +4,9 @@
  *
  * Column resizing should only be done if we have more than 1 block but less than 4
  *
- * @since 1.0.0
- * @package MultipleContentSections
+ * @package    Mesh
  * @subpackage AdminTemplates
+ * @since      1.0.0
  */
 
 // If the template doesn't have any blocks make sure it has 1.
@@ -24,7 +24,7 @@ if ( (int) $section_blocks > 1 ) :
 
 	while ( $block_increment < $section_blocks ) {
 
-		$block_columns = get_post_meta( $blocks[ $block_increment ]->ID, '_mcs_column_width', true );
+		$block_columns = get_post_meta( $blocks[ $block_increment ]->ID, '_mesh_column_width', true );
 
 		// Get how wide our column is.
 		// If no width is defined fall back to the default for that template.
@@ -39,5 +39,5 @@ if ( (int) $section_blocks > 1 ) :
 	}
 	endif;
 	if ( (int) $section_blocks > 1 && (int) $section_blocks < 4 ) : ?>
-		<div class="wp-slider column-slider" data-mcs-blocks="<?php esc_attr_e( $section_blocks ); ?>" data-mcs-columns="<?php esc_attr_e( wp_json_encode( $block_sizes ) ); ?>"><span class="ui-slider-handle ui-state-default ui-corner-all" tabindex="0"></span></div>
+		<div class="wp-slider column-slider" data-mesh-blocks="<?php esc_attr_e( $section_blocks ); ?>" data-mesh-columns="<?php esc_attr_e( wp_json_encode( $block_sizes ) ); ?>"><span class="ui-slider-handle ui-state-default ui-corner-all" tabindex="0"></span></div>
 <?php endif;

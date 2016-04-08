@@ -11,15 +11,15 @@
 
 
 // 01. Global
-#mcs-container {
+#mesh-container {
 	margin-bottom: $base * 2;
 }
 
-#multiple-content-sections-container .postbox .hndle {
+#mesh-container .postbox .hndle {
 	border: none;
 }
 
-.mcs-main-ua-row {
+.mesh-main-ua-row {
 	padding: {
 		bottom: 10px;
 		top: 10px;
@@ -125,25 +125,25 @@
 	}
 }
 
-.mcs-columns-12 + .mcs-columns-12 {
+.mesh-columns-12 + .mesh-columns-12 {
 	margin-top: $base;
 }
 
-.mcs-section-expand {
+.mesh-section-expand {
 	@include dashicons( '\f164' );
 }
 
-.mcs-section-collapse {
+.mesh-section-collapse {
 	@include dashicons( '\f163' );
 }
 
-.mcs-section-reorder {
+.mesh-section-reorder {
 	@include dashicons( '\f156' );
 }
 
-.mcs-section-expand,
-.mcs-section-collapse,
-.mcs-section-reorder {
+.mesh-section-expand,
+.mesh-section-collapse,
+.mesh-section-reorder {
 	&:before {
 		font-size: 18px;
 		margin-right: 4px;
@@ -151,7 +151,7 @@
 }
 
 // 02. No Sections
-#mcs-description {
+#mesh-description {
 	padding: {
 		bottom: $base * 2;
 		top: $base * 2;
@@ -160,7 +160,7 @@
 
 
 // 03. Section Header
-.multiple-content-sections-section {
+.mesh-section {
 	.handlediv {
 		cursor: pointer;
 		font-size: 20px;
@@ -195,20 +195,20 @@
 	}
 }
 
-.mcs-row-padding {
+.mesh-row-padding {
 	padding: 8px 50px 8px 12px;
 }
 
 // 04. Section Meta
-.mcs-section-meta,
-.mcs-section-meta-dropdown {
+.mesh-section-meta,
+.mesh-section-meta-dropdown {
 	margin: {
 		left: -$inside_padding;
 		right: -$inside_padding;
 	};
 }
 
-.mcs-section-meta {
+.mesh-section-meta {
 	border-bottom: 1px solid $grey;
 	position: relative;
 }
@@ -241,22 +241,22 @@
 	}
 }
 
-.mcs-section-meta-dropdown {
+.mesh-section-meta-dropdown {
 	background-color: $light-grey;
 	border-bottom: 1px solid $grey;
 	padding: $base;
 
-	.mcs-table {
+	.mesh-table {
 		display: table;
 		height: 80px;
 	}
 
-	.mcs-table-footer {
+	.mesh-table-footer {
 		display: table-footer-group;
 	}
 }
 
-.mcs-section-background {
+.mesh-section-background {
 	.choose-image {
 		height: 80px;
 		position: relative;
@@ -266,8 +266,8 @@
 			width: auto;
 		}
 
-		.mcs-featured-image-trash,
-		.mcs-block-featured-image-trash {
+		.mesh-featured-image-trash,
+		.mesh-block-featured-image-trash {
 			text-decoration: none;
 
 			position: absolute;
@@ -276,14 +276,14 @@
 		}
 	}
 
-	.mcs-featured-image-choose {
+	.mesh-featured-image-choose {
 		height: inherit;
 		line-height: 80px;
 	}
 }
 
 // 05. Section Footer
-.mcs-section-footer {
+.mesh-section-footer {
 	background-color: $light-grey;
 	border-top: 1px solid $grey;
 	margin: {
@@ -293,7 +293,7 @@
 	};
 	padding: $inside_padding;
 
-	.mcs-section-remove {
+	.mesh-section-remove {
 		line-height: $input_height;
 
 		&:before {
@@ -303,7 +303,7 @@
 }
 
 // 06. Blocks
-.mcs-editor-blocks {
+.mesh-editor-blocks {
 	margin: {
 		bottom: $base;
 		top: $base;
@@ -320,7 +320,7 @@
 	    border: none;
 	}
 
-	> .mcs-row {
+	> .mesh-row {
 		margin: 0 (-$base);
 	}
 
@@ -372,12 +372,12 @@
 	}
 }
 
-.mcs-block-title-row {
+.mesh-block-title-row {
 	margin-bottom: $base;
 }
 
 .block-content {
-	&.mcs-has-offset {
+	&.mesh-has-offset {
 		position: relative;
 
 		&:before {
@@ -440,7 +440,7 @@
 	}
 }
 
-/*#mcs-container {
+/*#mesh-container {
 	.spinner {
 		margin: 0px 10px 0;
 	}
@@ -450,7 +450,7 @@
 	}
 }
 
-.mcs-row {
+.mesh-row {
 	.block {
 		background-color: white;
 	}
@@ -474,15 +474,15 @@
 	}
 }
 
-.mcs-row-title {
+.mesh-row-title {
 	background-color: $light-grey;
 	cursor: move;
 	margin: -5px -5px 5px -5px;
 	padding: 5px;
 }
 
-.mcs-section-controls-container,
-.mcs-section-remove-container {
+.mesh-section-controls-container,
+.mesh-section-remove-container {
 	.spinner {
 		float: none;
 	}
@@ -495,7 +495,7 @@
 	}
 }
 
-#multiple-content-sections-container {
+#mesh-container {
 	.ui-sortable-handle {
 		border-color: $blue;
 	}
@@ -527,7 +527,7 @@
 	}
 }
 
-.mcs-editor-blocks {
+.mesh-editor-blocks {
 	overflow: hidden;
 	position: relative;
 
@@ -537,7 +537,7 @@
 	}
 }
 
-.mcs-section-meta {
+.mesh-section-meta {
 	background-color: $light-grey;
 	border: 1px solid $grey;
 	line-height: 32px;
@@ -551,7 +551,7 @@
 	}
 }
 
-#multiple-content-sections-container {
+#mesh-container {
 	.block {
 		border: 1px dotted $dark-grey;
 
@@ -600,7 +600,7 @@
 	text-align : left;
 }
 
-.mcs-block-click {
+.mesh-block-click {
 	background: transparent;
 	display: block;
 
@@ -612,14 +612,14 @@
 	z-index: 100;
 }
 
-.mcs-left {
+.mesh-left {
 	float: left;
 }
 
-.mcs-right {
+.mesh-right {
 	float: right;
 }
 
-.mcs-column-offset {
+.mesh-column-offset {
 	width:20px;
 }*/

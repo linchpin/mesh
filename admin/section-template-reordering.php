@@ -1,11 +1,11 @@
 <?php
 /**
  * Template used to display helpful block reorder messaging.
- *
  * Template sizing should only be done if we have more than 1 block but less than 4
  *
- * @since 1.3.5
- * @package MultipleContentSections
+ * @since      0.3.5
+ *
+ * @package    Mesh
  * @subpackage AdminTemplates
  */
 
@@ -15,9 +15,9 @@ if ( ! $section_blocks = (int) $templates[ $selected_template ]['blocks'] ) {
 }
 
 if ( (int) $section_blocks > 1 ) : ?>
-	<?php if ( empty( $mcs_notifications['reorder'] ) ) : ?>
+	<?php if ( empty( $mesh_notifications['reorder'] ) ) : ?>
 		<div class="reordering notice notice-warning is-dismissible below-h2" data-type="reorder">
-			<p><?php esc_html_e( 'Reorder your content blocks by dragging and dropping.', 'linchpin-mcs' ); ?></p>
+			<p><?php esc_html_e( 'Reorder your content blocks by dragging and dropping.', 'linchpin-mesh' ); ?></p>
 		</div>
 	<?php endif; ?>
 <?php endif;

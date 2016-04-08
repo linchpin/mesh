@@ -8,7 +8,7 @@
 
 // We want all styles in the context of the MCS container, as to not overwrite any
 // WordPress Core styles or custom editor styles inserted by theme devs.
-#mcs-container {
+#mesh-container {
 	// 01. Alignment
 	.text-left {
 		text-align: left;

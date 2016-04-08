@@ -7,7 +7,7 @@
  * @since      1.0.0
  *
  * @package    Mesh
- * @subpackage Mesh/admin
+ * @subpackage Admin
  */
 
 /**
@@ -31,9 +31,9 @@
  * <https://daringfireball.net/>
  * All rights reserved.
  */
-require_once LINCHPIN_MCS___PLUGIN_DIR . '/lib/Michelf/MarkdownInterface.php';
-require_once LINCHPIN_MCS___PLUGIN_DIR . '/lib/Michelf/Markdown.php';
-require_once LINCHPIN_MCS___PLUGIN_DIR . '/lib/Michelf/MarkdownExtra.php';
+require_once LINCHPIN_MESH___PLUGIN_DIR . '/lib/Michelf/MarkdownInterface.php';
+require_once LINCHPIN_MESH___PLUGIN_DIR . '/lib/Michelf/Markdown.php';
+require_once LINCHPIN_MESH___PLUGIN_DIR . '/lib/Michelf/MarkdownExtra.php';
 
 use \Michelf\MarkdownExtra;
 
@@ -63,15 +63,15 @@ use \Michelf\MarkdownExtra;
 		<div id="post-body" class="metabox-holder">
 			<div id="postbox-container" class="postbox-container">
 				<?php if ( 'settings' === $active_tab ) : ?>
-					<?php include_once( LINCHPIN_MCS___PLUGIN_DIR . '/admin/settings-meta-box-display.php' ); ?>
+					<?php include_once( LINCHPIN_MESH___PLUGIN_DIR . '/admin/settings-meta-box-display.php' ); ?>
 				<?php elseif ( 'changelog' === $active_tab ) : ?>
 					<?php
-						$readme = file_get_contents( LINCHPIN_MCS___PLUGIN_DIR . '/CHANGELOG.md', true );
+						$readme = file_get_contents( LINCHPIN_MESH___PLUGIN_DIR . '/CHANGELOG.md', true );
 						echo MarkdownExtra::defaultTransform( $readme ); // WPCS: ok.
 					?>
 				<?php elseif ( 'faq' === $active_tab ) : ?>
 					<?php
-						$readme = file_get_contents( LINCHPIN_MCS___PLUGIN_DIR . '/README.md', true );
+						$readme = file_get_contents( LINCHPIN_MESH___PLUGIN_DIR . '/README.md', true );
 						echo MarkdownExtra::defaultTransform( $readme ); // WPCS: ok.
 					?>
 				<?php endif; ?>

@@ -2,14 +2,14 @@
 /**
  * Editor template
  *
- * @package MultipleContentSection
+ * @package    Mesh
  * @subpackage AdminTemplates
- * @since 1.2.0
+ * @since      0.2.0
  */
 
 ?>
-<div class="mcs-row">
-	<?php include LINCHPIN_MCS___PLUGIN_DIR . 'admin/section-column-resize.php'; ?>
+<div class="mesh-row">
+	<?php include LINCHPIN_MESH___PLUGIN_DIR . 'admin/section-column-resize.php'; ?>
 
 	<?php
 	// If the template doesn't have any blocks make sure it has 1.
@@ -38,7 +38,7 @@
 			continue;
 		}
 
-		$block_columns = get_post_meta( $blocks[ $block_increment ]->ID, '_mcs_column_width', true );
+		$block_columns = get_post_meta( $blocks[ $block_increment ]->ID, '_mesh_column_width', true );
 
 		/**
 		 * Get how wide our column is. If no width is defined fall back to the default for that template.
@@ -47,69 +47,69 @@
 		if ( empty( $block_columns ) || 1 === $templates[ $selected_template ]['blocks'] ) {
 			$block_columns = $default_block_columns;
 		}
-		$block_css_class = get_post_meta( $blocks[ $block_increment ]->ID, '_mcs_css_class', true );
-		$block_offset = get_post_meta( $blocks[ $block_increment ]->ID, '_mcs_offset', true );
+		$block_css_class = get_post_meta( $blocks[ $block_increment ]->ID, '_mesh_css_class', true );
+		$block_offset = get_post_meta( $blocks[ $block_increment ]->ID, '_mesh_offset', true );
 
 		?>
 
-		<div class="mcs-section-block mcs-columns-<?php esc_attr_e( $block_columns ); ?> columns" data-mcs-block-id="<?php esc_attr_e( $blocks[ $block_increment ]->ID ); ?>">
+		<div class="mesh-section-block mesh-columns-<?php esc_attr_e( $block_columns ); ?> columns" data-mesh-block-id="<?php esc_attr_e( $blocks[ $block_increment ]->ID ); ?>">
 			<div class="drop-target">
-				<div class="block" id="mcs-block-editor-<?php esc_attr_e( $blocks[ $block_increment ]->ID ); ?>" data-mcs-block-id="<?php esc_attr_e( $blocks[ $block_increment ]->ID ); ?>">
+				<div class="block" id="mesh-block-editor-<?php esc_attr_e( $blocks[ $block_increment ]->ID ); ?>" data-mesh-block-id="<?php esc_attr_e( $blocks[ $block_increment ]->ID ); ?>">
 					<div class="block-header">
-						<div class="mcs-row mcs-row-title mcs-block-title-row">
+						<div class="mesh-row mesh-row-title mesh-block-title-row">
 							<?php if ( 1 == $section_blocks ) : ?>
-								<div class="mcs-columns-6">
+								<div class="mesh-columns-6">
 									<div class="msc-clean-edit">
-										<input id="<?php esc_attr_e( 'mcs-sections-' . $section->ID . '-' . $blocks[ $block_increment ]->ID . '-title]' ); ?>" type="text" class="mcs-column-title msc-clean-edit-element widefat left" name="mcs-sections[<?php esc_attr_e( $section->ID ); ?>][blocks][<?php esc_attr_e( $blocks[ $block_increment ]->ID ); ?>][post_title]" value="<?php esc_attr_e( $blocks[ $block_increment ]->post_title ); ?>"/>
-										<span class="close-title-edit left"><?php _e( 'Done', 'linchpin-mcs' ); ?></span>
+										<input id="<?php esc_attr_e( 'mesh-sections-' . $section->ID . '-' . $blocks[ $block_increment ]->ID . '-title]' ); ?>" type="text" class="mesh-column-title msc-clean-edit-element widefat left" name="mesh-sections[<?php esc_attr_e( $section->ID ); ?>][blocks][<?php esc_attr_e( $blocks[ $block_increment ]->ID ); ?>][post_title]" value="<?php esc_attr_e( $blocks[ $block_increment ]->post_title ); ?>"/>
+										<span class="close-title-edit left"><?php esc_html_e( 'Done', 'linchpin-mesh' ); ?></span>
 										<span class="handle-title"><?php esc_attr_e( $blocks[ $block_increment ]->post_title ); ?></span>
 									</div>
 								</div>
 
-								<div class="mcs-columns-6 text-right">
-									<label for="<?php esc_attr_e( 'mcs-sections-' . $section->ID . '-' . $blocks[ $block_increment ]->ID . '-offset]' ); ?>"><?php esc_html_e( 'Offset:', 'linchpin-mcs' ); ?></label>
-									<select id="<?php esc_attr_e( 'mcs-sections-' . $section->ID . '-' . $blocks[ $block_increment ]->ID . '-offset]' ); ?>" class="mcs-column-offset msc-clean-edit-element" name="mcs-sections[<?php esc_attr_e( $section->ID ); ?>][blocks][<?php esc_attr_e( $blocks[ $block_increment ]->ID ); ?>][offset]">
+								<div class="mesh-columns-6 text-right">
+									<label for="<?php esc_attr_e( 'mesh-sections-' . $section->ID . '-' . $blocks[ $block_increment ]->ID . '-offset]' ); ?>"><?php esc_html_e( 'Offset:', 'linchpin-mesh' ); ?></label>
+									<select id="<?php esc_attr_e( 'mesh-sections-' . $section->ID . '-' . $blocks[ $block_increment ]->ID . '-offset]' ); ?>" class="mesh-column-offset msc-clean-edit-element" name="mesh-sections[<?php esc_attr_e( $section->ID ); ?>][blocks][<?php esc_attr_e( $blocks[ $block_increment ]->ID ); ?>][offset]">
 										<?php for ( $i = 0; $i <= $offsets_available; $i++ ) : ?>
 											<option value="<?php echo $i; ?>"<?php if ( $i == $block_offset ) { echo ' selected'; } ?>><?php echo $i; ?></option>
 										<?php endfor; ?>
 									</select>
 
-									<label for="mcs-sections-<?php esc_attr_e( $blocks[ $block_increment ]->ID ); ?>-css-class">
-										<?php esc_html_e( 'CSS Class', 'linchpin-mcs' ); ?> <input type="text" id="mcs-sections-<?php esc_attr_e( $blocks[ $block_increment ]->ID ); ?>-css-class" name="mcs-sections[<?php esc_attr_e( $section->ID ); ?>][blocks][<?php esc_attr_e( $blocks[ $block_increment ]->ID ); ?>][css_class]" class="mcs-block-css-class" value="<?php esc_attr_e( $block_css_class ); ?>" />
+									<label for="mesh-sections-<?php esc_attr_e( $blocks[ $block_increment ]->ID ); ?>-css-class">
+										<?php esc_html_e( 'CSS Class', 'linchpin-mesh' ); ?> <input type="text" id="mesh-sections-<?php esc_attr_e( $blocks[ $block_increment ]->ID ); ?>-css-class" name="mesh-sections[<?php esc_attr_e( $section->ID ); ?>][blocks][<?php esc_attr_e( $blocks[ $block_increment ]->ID ); ?>][css_class]" class="mesh-block-css-class" value="<?php esc_attr_e( $block_css_class ); ?>" />
 									</label>
 								</div>
 							<?php else : ?>
-								<div class="mcs-columns-12">
+								<div class="mesh-columns-12">
 									<span class="the-mover hndle ui-sortable-handle left"><span></span></span>
 									<div class="msc-clean-edit left">
-										<input id="<?php esc_attr_e( 'mcs-sections-' . $section->ID . '-' . $blocks[ $block_increment ]->ID . '-title]' ); ?>" type="text" class="mcs-column-title msc-clean-edit-element widefat left" name="mcs-sections[<?php esc_attr_e( $section->ID ); ?>][blocks][<?php esc_attr_e( $blocks[ $block_increment ]->ID ); ?>][post_title]" value="<?php esc_attr_e( $blocks[ $block_increment ]->post_title ); ?>"/>
-										<span class="close-title-edit left"><?php _e( 'Done', 'linchpin-mcs' ); ?></span>
+										<input id="<?php esc_attr_e( 'mesh-sections-' . $section->ID . '-' . $blocks[ $block_increment ]->ID . '-title]' ); ?>" type="text" class="mesh-column-title msc-clean-edit-element widefat left" name="mesh-sections[<?php esc_attr_e( $section->ID ); ?>][blocks][<?php esc_attr_e( $blocks[ $block_increment ]->ID ); ?>][post_title]" value="<?php esc_attr_e( $blocks[ $block_increment ]->post_title ); ?>"/>
+										<span class="close-title-edit left"><?php esc_html_e( 'Done', 'linchpin-mesh' ); ?></span>
 										<span class="handle-title"><?php esc_attr_e( $blocks[ $block_increment ]->post_title ); ?></span>
 									</div>
 								</div>
 
-								<div class="mcs-columns-12">
-									<?php if ( 4 != $section_blocks ) : ?>
-										<label for="<?php esc_attr_e( 'mcs-sections-' . $section->ID . '-' . $blocks[ $block_increment ]->ID . '-offset]' ); ?>"><?php esc_html_e( 'Offset:', 'linchpin-mcs' ); ?></label>
-										<select id="<?php esc_attr_e( 'mcs-sections-' . $section->ID . '-' . $blocks[ $block_increment ]->ID . '-offset]' ); ?>" class="mcs-column-offset" name="mcs-sections[<?php esc_attr_e( $section->ID ); ?>][blocks][<?php esc_attr_e( $blocks[ $block_increment ]->ID ); ?>][offset]">
+								<div class="mesh-columns-12">
+									<?php if ( 4 !== $section_blocks ) : ?>
+										<label for="<?php esc_attr_e( 'mesh-sections-' . $section->ID . '-' . $blocks[ $block_increment ]->ID . '-offset]' ); ?>"><?php esc_html_e( 'Offset:', 'linchpin-mesh' ); ?></label>
+										<select id="<?php esc_attr_e( 'mesh-sections-' . $section->ID . '-' . $blocks[ $block_increment ]->ID . '-offset]' ); ?>" class="mesh-column-offset" name="mesh-sections[<?php esc_attr_e( $section->ID ); ?>][blocks][<?php esc_attr_e( $blocks[ $block_increment ]->ID ); ?>][offset]">
 											<?php for ( $i = 0; $i <= $offsets_available; $i++ ) : ?>
-												<option value="<?php echo $i; ?>"<?php if ( $i == $block_offset ) { echo ' selected'; } ?>><?php echo $i; ?></option>
+												<option value="<?php esc_attr_e( $i ); ?>"<?php if ( $i === $block_offset ) { esc_attr_e( ' selected' ); } ?>><?php esc_html_e( $i ); ?></option>
 											<?php endfor; ?>
 										</select>
 									<?php endif; ?>
 
-									<label for="mcs-sections-<?php esc_attr_e( $blocks[ $block_increment ]->ID ); ?>-css-class">
-										<?php esc_html_e( 'CSS Class', 'linchpin-mcs' ); ?> <input type="text" id="mcs-sections-<?php esc_attr_e( $blocks[ $block_increment ]->ID ); ?>-css-class" name="mcs-sections[<?php esc_attr_e( $section->ID ); ?>][blocks][<?php esc_attr_e( $blocks[ $block_increment ]->ID ); ?>][css_class]" value="<?php esc_attr_e( $block_css_class ); ?>" />
+									<label for="mesh-sections-<?php esc_attr_e( $blocks[ $block_increment ]->ID ); ?>-css-class">
+										<?php esc_html_e( 'CSS Class', 'linchpin-mesh' ); ?> <input type="text" id="mesh-sections-<?php esc_attr_e( $blocks[ $block_increment ]->ID ); ?>-css-class" name="mesh-sections[<?php esc_attr_e( $section->ID ); ?>][blocks][<?php esc_attr_e( $blocks[ $block_increment ]->ID ); ?>][css_class]" value="<?php esc_attr_e( $block_css_class ); ?>" />
 									</label>
 								</div>
 							<?php endif; ?>
 						</div>
 					</div>
 
-					<div class="block-content<?php if ( 4 !== $section_blocks && $block_offset ) { esc_attr_e( ' mcs-has-offset mcs-offset-' . $block_offset ); } ?>">
+					<div class="block-content<?php if ( 4 !== $section_blocks && $block_offset ) { esc_attr_e( ' mesh-has-offset mesh-offset-' . $block_offset ); } ?>">
 						<?php
-						wp_editor( apply_filters( 'content_edit_pre', $blocks[ $block_increment ]->post_content ), 'mcs-section-editor-' . $blocks[ $block_increment ]->ID, array(
-							'textarea_name' => 'mcs-sections[' . $section->ID . '][blocks][' . $blocks[ $block_increment ]->ID . '][post_content]',
+						wp_editor( apply_filters( 'content_edit_pre', $blocks[ $block_increment ]->post_content ), 'mesh-section-editor-' . $blocks[ $block_increment ]->ID, array(
+							'textarea_name' => 'mesh-sections[' . $section->ID . '][blocks][' . $blocks[ $block_increment ]->ID . '][post_content]',
 							'teeny' => true,
 							'tinymce'          => array(
 								'resize'                => false,
@@ -128,23 +128,21 @@
 						?>
 					</div>
 
-					<div class="block-background-container text-right mcs-columns-12 mcs-section-background">
+					<div class="block-background-container text-right mesh-columns-12 mesh-section-background">
 						<div class="choose-image">
 							<?php $featured_image_id = get_post_thumbnail_id( $blocks[ $block_increment ]->ID );
 
 							if ( empty( $featured_image_id ) ) : ?>
-								<a class="mcs-block-featured-image-choose"><?php esc_attr_e( 'Set Background Image', 'linchpin-mce' ); ?></a>
+								<a class="mesh-block-featured-image-choose"><?php esc_attr_e( 'Set Background Image', 'linchpin-mce' ); ?></a>
 							<?php else : ?>
 								<?php $featured_image = wp_get_attachment_image_src( $featured_image_id, array( 160, 60 ) ); ?>
 
-								<a class="mcs-block-featured-image-choose right" data-mcs-block-featured-image="<?php esc_attr_e( $featured_image_id ); ?>"><img src="<?php echo $featured_image[0]; ?>" /></a>
-								<a class="mcs-block-featured-image-trash dashicons-before dashicons-dismiss" data-mcs-block-featured-image="<?php esc_attr_e( $featured_image_id ); ?>"></a>
+								<a class="mesh-block-featured-image-choose right" data-mesh-block-featured-image="<?php esc_attr_e( $featured_image_id ); ?>"><img src="<?php esc_attr_e( $featured_image[0] ); ?>" /></a>
+								<a class="mesh-block-featured-image-trash dashicons-before dashicons-dismiss" data-mesh-block-featured-image="<?php esc_attr_e( $featured_image_id ); ?>"></a>
 							<?php endif; ?>
 						</div>
 					</div>
-
-					<input type="hidden" class="column-width" name="mcs-sections[<?php esc_attr_e( $section->ID ); ?>][blocks][<?php esc_attr_e( $blocks[ $block_increment ]->ID ); ?>][columns]" value="<?php esc_attr_e( $block_columns ); ?>"/>
-
+					<input type="hidden" class="column-width" name="mesh-sections[<?php esc_attr_e( $section->ID ); ?>][blocks][<?php esc_attr_e( $blocks[ $block_increment ]->ID ); ?>][columns]" value="<?php esc_attr_e( $block_columns ); ?>"/>
 				</div>
 			</div>
 		</div>

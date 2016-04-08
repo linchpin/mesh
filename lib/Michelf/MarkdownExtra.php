@@ -109,7 +109,7 @@ class MarkdownExtra extends \Michelf\Markdown {
 		$this->abbr_desciptions = array();
 		$this->abbr_word_re = '';
 		$this->footnote_counter = 1;
-		
+
 		foreach ($this->predef_abbr as $abbr_word => $abbr_desc) {
 			if ($this->abbr_word_re)
 				$this->abbr_word_re .= '|';

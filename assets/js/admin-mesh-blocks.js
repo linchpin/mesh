@@ -4,9 +4,9 @@
  * @since 0.4.1
  */
 
-var multiple_content_sections = multiple_content_sections || {};
+var mesh = mesh || {};
 
-multiple_content_sections.blocks = function ( $ ) {
+mesh.blocks = function ( $ ) {
 
     var $body = $('body'),
         // Instance of our block controller
@@ -20,18 +20,18 @@ multiple_content_sections.blocks = function ( $ ) {
          */
         init : function() {
 
-            self = multiple_content_sections.blocks;
-            admin = multiple_content_sections.admin;
+            self = mesh.blocks;
+            admin = mesh.admin;
 
             $body
-                .on('click', '.mcs-block-featured-image-trash', self.remove_background )
-                .on('click', '.mcs-block-featured-image-choose', self.choose_background )
-                .on('click.OpenMediaManager', '.mcs-block-featured-image-choose', self.choose_background )
+                .on('click', '.mesh-block-featured-image-trash', self.remove_background )
+                .on('click', '.mesh-block-featured-image-choose', self.choose_background )
+                .on('click.OpenMediaManager', '.mesh-block-featured-image-choose', self.choose_background )
                 .on('click', '.msc-clean-edit:not(.title-input-visible)', self.show_field )
                 .on('blur', '.msc-clean-edit-element:not(select)', self.hide_field )
                 .on('click', '.close-title-edit', self.hide_field )
                 .on('click', '.slide-toggle-element', self.slide_toggle_element )
-                .on('change', '.mcs-column-offset', self.display_offset );
+                .on('change', '.mesh-column-offset', self.display_offset );
 
             self.setup_resize_slider();
             self.setup_drag_drop();
@@ -44,7 +44,7 @@ multiple_content_sections.blocks = function ( $ ) {
          */
         setup_drag_drop : function() {
 
-            $( ".mcs-editor-blocks .block" ).draggable({
+            $( ".mesh-editor-blocks .block" ).draggable({
                 'appendTo' : 'body',
                 helper : function( event ) {
 
@@ -81,8 +81,8 @@ multiple_content_sections.blocks = function ( $ ) {
                         $swap_parent = ui.draggable.parent(),
                         $tgt         = $( event.target),
                         $tgt_clone   = $tgt.find('.block'),
-                        $section     = $tgt.parents('.multiple-content-sections-section'),
-                        section_id   = $section.attr('data-mcs-section-id');
+                        $section     = $tgt.parents('.mesh-section'),
+                        section_id   = $section.attr('data-mesh-section-id');
 
                     $swap_clone.css( { 'top':'','left':'' } );
 
@@ -106,7 +106,7 @@ multiple_content_sections.blocks = function ( $ ) {
          */
         change_block_widths : function( event, ui ) {
             var $tgt          = $( event.target ),
-                $columns      = $tgt.parent().parent().parent().find('.mcs-editor-blocks').find('.columns').addClass('dragging'),
+                $columns      = $tgt.parent().parent().parent().find('.mesh-editor-blocks').find('.columns').addClass('dragging'),
                 column_length = $columns.length,
                 column_total  = 12,
                 column_value  = ui.value,
@@ -160,12 +160,12 @@ multiple_content_sections.blocks = function ( $ ) {
 
             // Custom class removal based on regex pattern
             $columns.removeClass (function (index, css) {
-                return (css.match (/\mcs-columns-\d+/g) || []).join(' ');
+                return (css.match (/\mesh-columns-\d+/g) || []).join(' ');
             }).each( function( index ) {
-                $(this).addClass( 'mcs-columns-' + column_values[ index ] );
+                $(this).addClass( 'mesh-columns-' + column_values[ index ] );
 
                 if ( column_values[ index ] <= 3 ) {
-	                $(this).find('.mcs-column-offset').val(0).trigger('change');
+	                $(this).find('.mesh-column-offset').val(0).trigger('change');
                 }
             } );
 
@@ -185,14 +185,14 @@ multiple_content_sections.blocks = function ( $ ) {
         save_block_widths : function( event, ui ) {
 
             var $tgt          = $( event.target ),
-                $columns      = $tgt.parent().parent().parent().find('.mcs-editor-blocks').find('.columns'),
+                $columns      = $tgt.parent().parent().parent().find('.mesh-editor-blocks').find('.columns'),
                 column_length = $columns.length,
                 column_total  = 12,
                 column_value  = $tgt.slider( "value" ),
                 column_start  = column_value,
                 post_data     = {
-                    post_id : parseInt( mcs_data.post_id ),
-                    section_id : parseInt( $tgt.closest('.multiple-content-sections-section').attr('data-mcs-section-id') ),
+                    post_id : parseInt( mesh_data.post_id ),
+                    section_id : parseInt( $tgt.closest('.mesh-section').attr('data-mesh-section-id') ),
                     blocks : {}
                 },
                 max_width = 12,
@@ -251,16 +251,16 @@ multiple_content_sections.blocks = function ( $ ) {
 
             // Custom class removal based on regex pattern
             $columns.removeClass (function (index, css) {
-                return (css.match (/\mcs-columns-\d+/g) || []).join(' ');
+                return (css.match (/\mesh-columns-\d+/g) || []).join(' ');
             });
 
             $columns.each( function( index ) {
                 var $this = $(this),
-                    block_id = parseInt( $this.find('.block').attr('data-mcs-block-id') ),
+                    block_id = parseInt( $this.find('.block').attr('data-mesh-block-id') ),
                     $column_input = $this.find('.column-width'),
                     $indicator    = $this.find( '.column-width-indicator' );
 
-                $this.addClass( 'mcs-columns-' + column_values[ index ] );
+                $this.addClass( 'mesh-columns-' + column_values[ index ] );
 
                 if( block_id && column_values[ index ] ) {
                     $column_input.val( column_values[ index ] );
@@ -277,9 +277,9 @@ multiple_content_sections.blocks = function ( $ ) {
             $('.column-slider').addClass('ui-slider-horizontal').each(function() {
 
                 var $this    = $(this),
-                    blocks   = parseInt( $this.attr('data-mcs-blocks') ),
+                    blocks   = parseInt( $this.attr('data-mesh-blocks') ),
                     is_range = ( blocks > 2 ),
-                    vals     = $.parseJSON( $this.attr('data-mcs-columns') ),
+                    vals     = $.parseJSON( $this.attr('data-mesh-columns') ),
                     data     = {
                         range: is_range,
                         min:0,
@@ -347,10 +347,10 @@ multiple_content_sections.blocks = function ( $ ) {
                         // Clean up the proto id which appears in some of the wp_editor generated HTML
 
                         var block_html = $(this).closest('.block-content').html(),
-                            pattern    = /\[post_mcs\-section\-editor\-[0-9]+\]/;
+                            pattern    = /\[post_mesh\-section\-editor\-[0-9]+\]/;
                             block_html = block_html.replace( new RegExp(proto_id, 'g'), editor_id );
 
-//                        block_html = block_html.replace( new RegExp( pattern, 'g' ), '[post_content]' );
+                        block_html = block_html.replace( new RegExp( pattern, 'g' ), '[post_content]' );
 
                         $block_content.html( block_html );
 
@@ -402,11 +402,11 @@ multiple_content_sections.blocks = function ( $ ) {
          */
         save_order : function( section_id, event, ui ) {
 
-            var $reorder_spinner = $('.mcs-reorder-spinner'),
+            var $reorder_spinner = $('.mesh-reorder-spinner'),
                 block_ids = [];
 
-            $( '#mcs-sections-editor-' + section_id ).find( '.block' ).each( function() {
-                block_ids.push( $(this).attr('data-mcs-block-id') );
+            $( '#mesh-sections-editor-' + section_id ).find( '.block' ).each( function() {
+                block_ids.push( $(this).attr('data-mesh-block-id') );
             });
 
             var response = self.save_ajax( section_id, block_ids, $reorder_spinner );
@@ -423,15 +423,15 @@ multiple_content_sections.blocks = function ( $ ) {
 
             var $button       = $(this),
                 $section      = $button.parents('.block'),
-                section_id    = parseInt( $section.attr('data-mcs-block-id') ),
-                frame_id      = 'mcs-background-select-' + section_id,
-                current_image = $button.attr('data-mcs-block-featured-image');
+                section_id    = parseInt( $section.attr('data-mesh-block-id') ),
+                frame_id      = 'mesh-background-select-' + section_id,
+                current_image = $button.attr('data-mesh-block-featured-image');
 
             admin.media_frames = admin.media_frames || [];
 
             // If the frame already exists, re-open it.
             if ( admin.media_frames[ frame_id ] ) {
-                admin.media_frames[ frame_id ].uploader.uploader.param( 'mcs_upload', 'true' );
+                admin.media_frames[ frame_id ].uploader.uploader.param( 'mesh_upload', 'true' );
                 admin.media_frames[ frame_id ].open();
                 return;
             }
@@ -440,12 +440,12 @@ multiple_content_sections.blocks = function ( $ ) {
              * The media frame doesn't exist let, so let's create it with some options.
              */
             admin.media_frames[ frame_id ] = wp.media.frames.media_frames = wp.media({
-                className: 'media-frame mcs-media-frame',
+                className: 'media-frame mesh-media-frame',
                 frame: 'select',
                 multiple: false,
-                title: mcs_data.strings.select_block_bg,
+                title: mesh_data.strings.select_block_bg,
                 button: {
-                    text: mcs_data.strings.select_bg
+                    text: mesh_data.strings.select_bg
                 }
             });
 
@@ -463,22 +463,22 @@ multiple_content_sections.blocks = function ( $ ) {
                         'class' : 'dashicons dashicons-edit'
                     }),
                     $trash = $('<a/>', {
-                        'data-mcs-section-featured-image': '',
+                        'data-mesh-section-featured-image': '',
                         'href' : '#',
-                        'class' : 'mcs-block-featured-image-trash dashicons-before dashicons-dismiss'
+                        'class' : 'mesh-block-featured-image-trash dashicons-before dashicons-dismiss'
                     });
 
                 $.post( ajaxurl, {
-                    'action': 'mcs_update_featured_image',
-                    'mcs_section_id'  : parseInt( section_id ),
-                    'mcs_image_id' : parseInt( media_attachment.id ),
-                    'mcs_featured_image_nonce' : mcs_data.featured_image_nonce
+                    'action': 'mesh_update_featured_image',
+                    'mesh_section_id'  : parseInt( section_id ),
+                    'mesh_image_id' : parseInt( media_attachment.id ),
+                    'mesh_featured_image_nonce' : mesh_data.featured_image_nonce
                 }, function( response ) {
                     if ( response != -1 ) {
                         current_image = media_attachment.id;
                         $button
                             .html( '<img src="' + media_attachment.url + '" />' )
-                            .attr('data-mcs-block-featured-image', parseInt( media_attachment.id ) )
+                            .attr('data-mesh-block-featured-image', parseInt( media_attachment.id ) )
                             .after( $trash );
                     }
                 });
@@ -502,15 +502,15 @@ multiple_content_sections.blocks = function ( $ ) {
 
             var $button       = $(this),
                 $section      = $button.parents('.block'),
-                section_id    = parseInt( $section.attr('data-mcs-block-id') );
+                section_id    = parseInt( $section.attr('data-mesh-block-id') );
 
             $.post( ajaxurl, {
-                'action': 'mcs_update_featured_image',
-                'mcs_section_id'  : parseInt( section_id ),
-                'mcs_featured_image_nonce' : mcs_data.featured_image_nonce
+                'action': 'mesh_update_featured_image',
+                'mesh_section_id'  : parseInt( section_id ),
+                'mesh_featured_image_nonce' : mesh_data.featured_image_nonce
             }, function( response ) {
                 if ( response != -1 ) {
-                    $button.prev().text( mcs_data.strings.add_image );
+                    $button.prev().text( mesh_data.strings.add_image );
                     $button.remove();
                 }
             });
@@ -545,10 +545,10 @@ multiple_content_sections.blocks = function ( $ ) {
 			var offset = $(this).val(),
 				$block = $(this).parents('.block-header').next('.block-content');
 
-			$block.removeClass('mcs-has-offset mcs-offset-1 mcs-offset-2 mcs-offset-3 mcs-offset-4 mcs-offset-5 mcs-offset-6');
+			$block.removeClass('mesh-has-offset mesh-offset-1 mesh-offset-2 mesh-offset-3 mesh-offset-4 mesh-offset-5 mesh-offset-6');
 
 			if ( parseInt( offset ) ) {
-				$block.addClass('mcs-has-offset mcs-offset-' + offset );
+				$block.addClass('mesh-has-offset mesh-offset-' + offset );
 			}
 		}
     };

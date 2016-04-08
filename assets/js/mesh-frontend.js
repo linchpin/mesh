@@ -1,12 +1,15 @@
-if( typeof(multiple_content_sections) == 'undefined' ) {
-	multiple_content_sections = {};
-}
+/**
+ * Build out all of our frontend business
+ * @since 1.0.0
+ */
 
-multiple_content_sections.frontend = function ( $ ) {
+var mesh = mesh || {};
+
+mesh.frontend = function ( $ ) {
 
 	var $body     = $('body'),
 		$window   = $(window),
-		$equalize = $('.mcs_section [data-equalizer]'),
+		$equalize = $('.mesh_section [data-equalizer]'),
 
 		self;
 
@@ -27,7 +30,7 @@ multiple_content_sections.frontend = function ( $ ) {
 		 * Initialize our script
 		 */
 		init : function() {
-			self = multiple_content_sections.frontend;
+			self = mesh.frontend;
 
 			if ( 'function' != typeof Foundation.libs.equalizer.equalize && 'function' != typeof Foundation.Equalizer ) {
 				$window
@@ -61,5 +64,5 @@ multiple_content_sections.frontend = function ( $ ) {
 } ( jQuery );
 
 jQuery(function( $ ) {
-    multiple_content_sections.frontend.init();
+    mesh.frontend.init();
 });

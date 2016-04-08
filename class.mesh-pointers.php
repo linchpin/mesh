@@ -21,7 +21,7 @@ class Mesh_Admin_Pointers {
 		add_filter( 'mesh_admin_pointers-page', array( $this, 'register_pointers' ) );
 
 		// Output our pointer data.
-		add_filter( 'mcs_data',               array( $this, 'add_pointers' ), 1000, 1 );
+		add_filter( 'mesh_data',               array( $this, 'add_pointers' ), 1000, 1 );
 	}
 
 	/**
@@ -33,7 +33,7 @@ class Mesh_Admin_Pointers {
 	}
 
 	/**
-	 * Add pointer data to mcs_data->strings
+	 * Add pointer data to mesh_data->strings
 	 *
 	 * @param array $strings Array of our l10n strings
 	 *
@@ -92,33 +92,33 @@ class Mesh_Admin_Pointers {
 	 */
 	function register_pointers( $p ) {
 	    $p['all_section_options'] = array(
-	        'target' => '.mcs-more-section-options:first',
+	        'target' => '.mesh-more-section-options:first',
 	        'options' => array(
 	            'content' => sprintf( '<h3> %s </h3> <p> %s </p>',
-	                __( 'Section Options' ,'linchpin-mcs' ),
-	                __( 'View all section options by click the "More Options" toggle.','linchpin-mcs' )
+	                __( 'Section Options' ,'linchpin-mesh' ),
+	                __( 'View all section options by click the "More Options" toggle.','linchpin-mesh' )
 	            ),
 	            'position' => array( 'edge' => 'bottom', 'align' => 'left' ),
 	        ),
 	    );
 
 	    $p['offset'] = array(
-	        'target' => '.mcs-column-offset:first',
+	        'target' => '.mesh-column-offset:first',
 	        'options' => array(
 	            'content' => sprintf( '<h3> %s </h3> <p> %s </p>',
-	                __( 'What is an offset?' ,'linchpin-mcs' ),
-	                __( 'If using Foundation, an offset will indent your column by the amount of columns selected in the dropdown menu.', 'linchpin-mcs' )
+	                __( 'What is an offset?' ,'linchpin-mesh' ),
+	                __( 'If using Foundation, an offset will indent your column by the amount of columns selected in the dropdown menu.', 'linchpin-mesh' )
 	            ),
 	            'position' => array( 'edge' => 'bottom', 'align' => 'left' ),
 	        ),
 	    );
 
 	    $p['column_slider'] = array(
-		    'target' => '.mcs-editor-blocks .the-mover:first',
+		    'target' => '.mesh-editor-blocks .the-mover:first',
 		    'options' => array(
 			    'content' => sprintf( '<h3> %s </h3> <p> %s </p>',
-				    __( 'Rearrange Columns', 'linchpin-mcs' ),
-				    __( 'Use this handle to click and drag this column, giving you the ability to swap columns on the fly.', 'linchpin-mcs' )
+				    __( 'Rearrange Columns', 'linchpin-mesh' ),
+				    __( 'Use this handle to click and drag this column, giving you the ability to swap columns on the fly.', 'linchpin-mesh' )
 			    ),
 			    'position' => array(
 				    'edge' => 'left',

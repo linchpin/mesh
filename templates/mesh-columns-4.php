@@ -1,21 +1,20 @@
 <?php
 /*
- * MCS Template: 4
+ * Mesh Template: 4
+ * Mesh Template Blocks: 4
  *
- * MCS Template Blocks: 4
+ * @since      0.3.6
  *
- * @since 1.3.6
- *
- * @package MultipleContentSections
+ * @package    Mesh
  * @subpackage Templates
  */
 ?>
-<section <?php post_class() ?> <?php mcs_section_background(); ?>>
+<section <?php post_class() ?> <?php mesh_section_background(); ?>>
 
 	<?php
-		$title_display = get_post_meta( get_the_ID(), '_mcs_title_display', true );
-		$collapse_column_spacing = get_post_meta( get_the_ID(), '_mcs_collapse', true );
-		$lp_equal = get_post_meta( get_the_ID(), '_mcs_lp_equal', true );
+		$title_display = get_post_meta( get_the_ID(), '_mesh_title_display', true );
+		$collapse_column_spacing = get_post_meta( get_the_ID(), '_mesh_collapse', true );
+		$lp_equal = get_post_meta( get_the_ID(), '_mesh_lp_equal', true );
 	?>
 
 	<div class="row <?php if ( ! empty( $collapse_column_spacing ) ) : ?>collapse <?php endif; ?>"<?php if ( ! empty( $lp_equal ) ) : ?> data-equalizer<?php endif; ?>>
@@ -25,12 +24,12 @@
 			</div>
 		<?php endif; ?>
 
-		<?php $blocks = mcs_get_section_blocks( get_the_ID() ); ?>
+		<?php $blocks = mesh_get_section_blocks( get_the_ID() ); ?>
 		<?php $i = 0; foreach ( $blocks as $block ) : ?>
 			<?php
-			$column_width = get_post_meta( $block->ID, '_mcs_column_width', true );
-			$block_css_class = get_post_meta( $block->ID, '_mcs_css_class',  true );
-			$block_offset = get_post_meta( $block->ID, '_mcs_offset',  true );
+			$column_width = get_post_meta( $block->ID, '_mesh_column_width', true );
+			$block_css_class = get_post_meta( $block->ID, '_mesh_css_class',  true );
+			$block_offset = get_post_meta( $block->ID, '_mesh_offset',  true );
 			$offset_class = 'medium-' . $column_width;
 
 			// Change our column width based on our offset.

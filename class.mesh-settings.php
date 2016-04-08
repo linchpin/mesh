@@ -24,7 +24,7 @@ class Mesh_Settings {
 	 *
 	 * @var string
 	 */
-	public static $plugin_name = LINCHPIN_MCS_PLUGIN_NAME;
+	public static $plugin_name = LINCHPIN_MESH_PLUGIN_NAME;
 
 	/**
 	 * Initialize our plugin settings.
@@ -40,7 +40,7 @@ class Mesh_Settings {
 	 * Add the options page to our settings menu
 	 */
 	public static function add_admin_menu() {
-		add_options_page( LINCHPIN_MCS_PLUGIN_NAME, LINCHPIN_MCS_PLUGIN_NAME, 'manage_options', self::$settings_page, array( 'Mesh_Settings', 'add_options_page' ) );
+		add_options_page( LINCHPIN_MESH_PLUGIN_NAME, LINCHPIN_MESH_PLUGIN_NAME, 'manage_options', self::$settings_page, array( 'Mesh_Settings', 'add_options_page' ) );
 	}
 
 	/**
@@ -49,7 +49,7 @@ class Mesh_Settings {
 	 * @since 1.0.0
 	 */
 	public static function create_section() {
-		esc_html_e( 'Below are your settings for Mesh', 'linchpin-mcs' );
+		esc_html_e( 'Below are your settings for Mesh', 'linchpin-mesh' );
 	}
 
 	/**
@@ -62,32 +62,32 @@ class Mesh_Settings {
 		// Default Settings Section.
 		add_settings_section(
 			'mesh_sections',
-			__( 'Mesh Configurations', 'linchpin-mcs' ),
+			__( 'Mesh Configurations', 'linchpin-mesh' ),
 			array( 'Mesh_Settings', 'create_section' ),
 			self::$settings_page
 		);
 
 		// Option : CSS Mode.
 		$css_mode = array(
-			array( 'label' => __( 'Use Mesh CSS', 'linchpin-mcs' ), 'value' => '' ),
-			array( 'label' => __( 'Disable Mesh CSS', 'linchpin-mcs' ), 'value' => 0 ),
-			array( 'label' => __( 'Use Foundation w/ my theme', 'linchpin-mcs' ), 'value' => 1 ),
-			array( 'label' => __( 'Use Bootstrap (coming soon)', 'linchpin-mcs' ), 'value' => 2 ),
+			array( 'label' => __( 'Use Mesh CSS', 'linchpin-mesh' ), 'value' => '' ),
+			array( 'label' => __( 'Disable Mesh CSS', 'linchpin-mesh' ), 'value' => 0 ),
+			array( 'label' => __( 'Use Foundation w/ my theme', 'linchpin-mesh' ), 'value' => 1 ),
+			array( 'label' => __( 'Use Bootstrap (coming soon)', 'linchpin-mesh' ), 'value' => 2 ),
 		);
 
 		// Allow filtering of available css_mode options.
-		$css_mode = apply_filters( 'css_mode', $css_mode );
+		$css_mode = apply_filters( 'mesh_css_mode', $css_mode );
 
 		add_settings_field(
 			'css_mode',
-			__( 'CSS Settings', 'linchpin-mcs' ),
+			__( 'CSS Settings', 'linchpin-mesh' ),
 			array( 'Mesh_Settings', 'add_select' ),
 			self::$settings_page,
 			'mesh_sections',
 			array(
 				'field' => 'css_mode',
-				'label' => __( 'CSS', 'linchpin-mcs' ),
-				'description' => __( 'Choose whether or not to enqueue CSS with Mesh.', 'linchpin-mcs' ),
+				'label' => __( 'CSS', 'linchpin-mesh' ),
+				'description' => __( 'Choose whether or not to enqueue CSS with Mesh.', 'linchpin-mesh' ),
 				'options' => $css_mode,
 			)
 		);
@@ -104,7 +104,7 @@ class Mesh_Settings {
 
 		$active_tab = isset( $_GET[ 'tab' ] ) && array_key_exists( $_GET['tab'], $tabs ) ? $_GET[ 'tab' ] : $default_tab;
 
-		include_once( LINCHPIN_MCS___PLUGIN_DIR . '/admin/settings.php' );
+		include_once( LINCHPIN_MESH___PLUGIN_DIR . '/admin/settings.php' );
 	}
 
 	/**
@@ -176,9 +176,7 @@ class Mesh_Settings {
 		<?php if ( ! empty( $args['description'] ) ) : ?>
 			<p class="description"><?php esc_html_e( $args['description'] ); ?></p>
 		<?php endif; ?>
-
 		<label for="mesh-<?php esc_attr_e( $args['field'] ); ?>"><?php esc_html_e( $args['label'] ); ?></label>
-
 		<select id="mesh-<?php esc_attr_e( $args['field'] ); ?>" name="mesh_settings[<?php esc_attr_e( $args['field'] ); ?>]">
 			<?php foreach ( $select_options as $option ) : ?>
 				<option value="<?php esc_attr_e( $option['value'] ); ?>" <?php selected( $options[ $args['field'] ], $option['value'] ); ?>><?php esc_html_e( $option['label'] ); ?></option>
@@ -188,6 +186,8 @@ class Mesh_Settings {
 	}
 
 	/**
+	 * Allow filtering of the settings tabs
+	 *
 	 * @param $default_settings
 	 *
 	 * @return array
@@ -213,7 +213,6 @@ class Mesh_Settings {
 	 * @return mixed
 	 */
 	static public function get_default_tab_slug() {
-
 		return key( self::get_tabs() );
 	}
 
@@ -221,14 +220,14 @@ class Mesh_Settings {
 	 * Retrieve settings tabs
 	 *
 	 * @since    1.0.0
-	 * @return    array    $tabs    Settings tabs
+	 * @return   array $tabs Settings tabs
 	 */
 	static public function get_tabs() {
 
 		$tabs                 = array();
-		$tabs['settings']  = __( 'Settings', 'linchpin-mcs' );
-		$tabs['faq']       = __( 'About Mesh', 'linchpin-mcs' );
-		$tabs['changelog'] = __( 'Change Log', 'linchpin-mcs' );
+		$tabs['settings']  = __( 'Settings',   'linchpin-mesh' );
+		$tabs['faq']       = __( 'About Mesh', 'linchpin-mesh' );
+		$tabs['changelog'] = __( 'Change Log', 'linchpin-mesh' );
 
 		return apply_filters( 'mesh_tabs', $tabs );
 	}

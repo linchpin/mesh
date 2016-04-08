@@ -1,13 +1,13 @@
 @for $i from 1 through 12  {
-	.mcs-columns-#{$i} {
+	.mesh-columns-#{$i} {
 		width: ($i/12) * 100%;
 	}
 }
 
 @for $i from 1 through 12 {
-	.mcs-columns-#{$i} {
+	.mesh-columns-#{$i} {
 		@for $j from 1 through $i {
-			.mcs-offset-#{$j} {
+			.mesh-offset-#{$j} {
 				padding-left: 100% * $j/$i;
 
 				&.block-content:before {
@@ -18,13 +18,13 @@
 	}
 }
 
-.mcs-row {
+.mesh-row {
 	position: relative;
 
 	@include clearfix;
 }
 
-[class*="mcs-columns"] {
+[class*="mesh-columns"] {
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;
 	float: left;

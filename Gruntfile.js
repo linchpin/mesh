@@ -14,7 +14,7 @@ module.exports = function(grunt) {
 				},
 
 				files: {
-					'assets/css/admin-mcs.css': 'assets/scss/admin-mcs.scss',
+					'assets/css/admin-mesh.css': 'assets/scss/admin-mesh.scss',
 					'assets/css/mesh-grid-foundation.css': 'assets/scss/mesh-grid-foundation.scss'
 				}
 			}
@@ -23,7 +23,7 @@ module.exports = function(grunt) {
         uglify: {
             plugin: {
                 files: {
-                    'assets/js/admin-mcs.min.js' : ['assets/js/admin-mcs.js'],
+                    'assets/js/admin-mesh.min.js' : ['assets/js/admin-mesh.js'],
                     'assets/js/mesh.min.js' : ['assets/js/mesh.js']
                 }
             }
@@ -38,12 +38,12 @@ module.exports = function(grunt) {
 
             dist: {
                 src: [
-                    'assets/js/admin-mcs-pointers.js',
-                    'assets/js/admin-mcs-blocks.js',
-                    'assets/js/admin-mcs-core.js'
+                    'assets/js/admin-mesh-pointers.js',
+                    'assets/js/admin-mesh-blocks.js',
+                    'assets/js/admin-mesh-core.js'
                 ],
 
-                dest: 'assets/js/admin-mcs.js'
+                dest: 'assets/js/admin-mesh.js'
             },
 
             frontend: {
@@ -59,7 +59,7 @@ module.exports = function(grunt) {
             target: {
                 options: {
                     mainFile: 'multiple-content-sections.php',
-                    potFilename: 'multiple-content-sections.pot',
+                    potFilename: 'mesh.pot',
                     domainPath: '/languages',
                     exclude:[
                         '/vendor',
@@ -81,9 +81,9 @@ module.exports = function(grunt) {
 
             javascript: {
                 files: [
-                    'assets/js/admin-mcs-pointers.js',
-                    'assets/js/admin-mcs-blocks.js',
-                    'assets/js/admin-mcs-core.js',
+                    'assets/js/admin-mesh-pointers.js',
+                    'assets/js/admin-mesh-blocks.js',
+                    'assets/js/admin-mesh-core.js',
                     'assets/js/mesh-frontend.js'
                 ],
                 tasks: ['concat','uglify']

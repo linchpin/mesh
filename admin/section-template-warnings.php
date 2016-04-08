@@ -2,20 +2,21 @@
 /**
  * Template used to display warnings when the block count is higher than the available areas within a template
  *
- * @since 1.3.5
- * @package MultipleContentSections
+ * @since      0.3.5
+ *
+ * @package    Mesh
  * @subpackage AdminTemplates
  */
 
 ?>
 <?php if ( ! empty( $selected_template ) && count( $blocks ) > $templates[ $selected_template ]['blocks'] ) : ?>
 
-	<?php if ( empty( $mcs_notifications['moreblocks'] ) ) : ?>
-		<div id="mcs-warnings-<?php esc_attr_e( $section->ID ); ?>" class="description notice notice-info is-dismissible below-h2" data-type="moreblocks">
+	<?php if ( empty( $mesh_notifications['moreblocks'] ) ) : ?>
+		<div id="mesh-warnings-<?php esc_attr_e( $section->ID ); ?>" class="description notice notice-info is-dismissible below-h2" data-type="moreblocks">
 			<p>
-				<?php esc_html_e( 'The number of columns selected is causing some content to be hidden.', 'linchpin-mcs' ); ?>
+				<?php esc_html_e( 'The number of columns selected is causing some content to be hidden.', 'linchpin-mesh' ); ?>
 				<br/>
-				<?php esc_html_e( 'Increase the column number to access that content.', 'linchpin-mcs' ); ?>
+				<?php esc_html_e( 'Increase the column number to access that content.', 'linchpin-mesh' ); ?>
 			</p>
 		</div>
 	<?php endif; ?>
