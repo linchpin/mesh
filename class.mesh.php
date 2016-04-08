@@ -574,8 +574,6 @@ class Mesh {
 	/**
 	 * At the end of a page, let's show sections.
 	 *
-	 * @todo: When we add support for other post types, this will need to change.
-	 *
 	 * @param $wp_query
 	 */
 	function loop_end( $wp_query ) {
