@@ -326,17 +326,6 @@ class Mesh {
 				continue;
 			}
 
-			/**
-			 * @todo needs review. Breaking page saving
-
-			if ( ! $saving_section_via_ajax && $post_id === $section->post_parent ) {
-				continue;
-			}
-
-			 *
-			 */
-
-
 			if ( ! $saving_section_via_ajax ) {
 				$status = sanitize_post_field( 'post_status', $section_data['post_status'], $post_id, 'attribute' );
 
