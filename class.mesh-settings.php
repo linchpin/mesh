@@ -49,7 +49,18 @@ class Mesh_Settings {
 	 * @since 1.0.0
 	 */
 	public static function create_section() {
-		esc_html_e( 'Below are your settings for Mesh', 'linchpin-mesh' );
+		?>
+		<p><?php esc_html_e( 'Below are your settings for Mesh', 'linchpin-mesh' ); ?></p>
+		<?php
+	}
+
+	/**
+	 * Create a post type settings section.
+	 */
+	public static function create_post_type_section() {
+		?>
+		<p><?php esc_html_e( 'Select the post types that allow Mesh.', 'linchpin-mesh' ); ?></p>
+		<?php
 	}
 
 	/**
@@ -58,6 +69,7 @@ class Mesh_Settings {
 	public static function settings_init() {
 
 		register_setting( self::$settings_page, 'mesh_settings' );
+		register_setting( self::$settings_page, 'mesh_post_types' );
 
 		// Default Settings Section.
 		add_settings_section(
@@ -91,6 +103,36 @@ class Mesh_Settings {
 				'options' => $css_mode,
 			)
 		);
+
+		// Add an option for each post type.
+		if ( $post_types = get_post_types() ) {
+			add_settings_section(
+				'mesh_post_type_section',
+				__( 'Post Types', 'linchpin-mesh' ),
+				array( 'Mesh_Settings', 'create_post_type_section' ),
+				self::$settings_page
+			);
+
+			foreach ( $post_types as $post_type ) {
+				$post_type_object = get_post_type_object( $post_type );
+
+				if ( in_array( $post_type, array( 'revision', 'nav_menu_item', 'attachment' ) ) || ! $post_type_object->public ) {
+					continue;
+				}
+
+				add_settings_field(
+					'mesh_post_types_' . $post_type,
+					$post_type_object->labels->name,
+					array( 'Mesh_Settings', 'add_checkbox' ),
+					self::$settings_page,
+					'mesh_post_type_section',
+					array(
+						'post_type' => $post_type_object->name,
+						'name' => $post_type_object->labels->name
+					)
+				);
+			}
+		}
 	}
 
 	/**
@@ -142,7 +184,7 @@ class Mesh_Settings {
 			<p class="description"><?php esc_html_e( $args['description'] ); ?></p>
 		<?php endif; ?>
 
-		<input type="<?php esc_attr_e( $args['type'] ); ?>" class="<?php esc_attr_e( $args['class'] ); ?>" name="clapi_settings[<?php esc_attr_e( $args['field'] ); ?>]" value='<?php esc_attr_e( $options[ $args['field'] ] ); ?>'>
+		<input type="<?php esc_attr_e( $args['type'] ); ?>" class="<?php esc_attr_e( $args['class'] ); ?>" name="clapi_settings[<?php esc_attr_e( $args['field'] ); ?>]" value="<?php esc_attr_e( $options[ $args['field'] ] ); ?>">
 
 		<?php
 	}
@@ -182,6 +224,42 @@ class Mesh_Settings {
 				<option value="<?php esc_attr_e( $option['value'] ); ?>" <?php selected( $options[ $args['field'] ], $option['value'] ); ?>><?php esc_html_e( $option['label'] ); ?></option>
 			<?php endforeach; ?>
 		</select>
+		<?php
+	}
+
+	/**
+	 * Create a checkbox field.
+	 *
+	 * @param $args
+	 */
+	public static function add_checkbox( $args ) {
+
+		/**
+		 * Define our field defaults
+		 */
+		$defaults = array(
+			'class'       => '',
+			'description' => '',
+			'label'       => '',
+		);
+
+		// Parse incoming $args into an array and merge it with $defaults.
+		$args = wp_parse_args( $args, $defaults );
+
+		$options = get_option( 'mesh_post_types' );
+
+		$checked = false;
+		if ( ! empty( $options[ $args['post_type'] ] ) ) {
+			$checked = true;
+		}
+		?>
+
+		<?php if ( ! empty( $args['description'] ) ) : ?>
+			<p class="description"><?php esc_html_e( $args['description'] ); ?></p>
+		<?php endif; ?>
+
+		<input type="checkbox" class="<?php esc_attr_e( $args['class'] ); ?>" name="mesh_post_types[<?php esc_attr_e( $args['post_type'] ); ?>]" value="1" <?php checked( $checked ); ?>>
+
 		<?php
 	}
 
