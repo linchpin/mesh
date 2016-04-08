@@ -37,6 +37,22 @@ $mesh_pointers = new Mesh_Admin_Pointers();
 add_action( 'init', array( 'Mesh_Settings', 'init' ) );
 
 /**
+ * Flush rewrite rules when the plugin is activated.
+ */
+function mesh_activation_hook() {
+	flush_rewrite_rules();
+}
+register_activation_hook( __FILE__, 'mesh_activation_hook' );
+
+/**
+ * Flush rewrite rules when the plugin is deactivated.
+ */
+function mesh_deactivation_hook() {
+	flush_rewrite_rules();
+}
+register_deactivation_hook( __FILE__, 'mesh_deactivation_hook' );
+
+/**
  * Get files within our directory
  *
  * @param null   $type          File Type.
