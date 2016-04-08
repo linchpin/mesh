@@ -1,11 +1,11 @@
-# Copyright (C) 2016 linchpin_agency, maxinacube, desrosj, aware
-# This file is distributed under the GPLv2 or later.
+# Copyright (C) 2016 
+# This file is distributed under the same license as the  package.
 msgid ""
 msgstr ""
-"Project-Id-Version: Mesh 1.0.0\n"
+"Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: "
 "https://wordpress.org/support/plugin/multiple-content-sections\n"
-"POT-Creation-Date: 2016-04-08 02:41:21+00:00\n"
+"POT-Creation-Date: 2016-04-08 13:51:40+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -18,15 +18,15 @@ msgstr ""
 msgid "Reorder Sections"
 msgstr ""
 
-#: admin/controls.php:15 class.mesh.php:598
+#: admin/controls.php:15 class.mesh.php:601
 msgid "Expand All"
 msgstr ""
 
-#: admin/controls.php:16 class.mesh.php:599
+#: admin/controls.php:16 class.mesh.php:602
 msgid "Collapse All"
 msgstr ""
 
-#: admin/controls.php:17 class.mesh.php:247
+#: admin/controls.php:17 class.mesh.php:249
 msgid "Add Section"
 msgstr ""
 
@@ -44,8 +44,12 @@ msgstr ""
 msgid "CSS Class"
 msgstr ""
 
+#: admin/section-blocks.php:96
+msgid " selected"
+msgstr ""
+
 #: admin/section-blocks.php:136 admin/section-controls.php:71
-#: class.mesh.php:596
+#: class.mesh.php:599
 msgid "Set Background Image"
 msgstr ""
 
@@ -53,11 +57,11 @@ msgstr ""
 msgid "Status:"
 msgstr ""
 
-#: admin/section-container.php:36 class.mesh.php:605
+#: admin/section-container.php:36 class.mesh.php:608
 msgid "Draft"
 msgstr ""
 
-#: admin/section-container.php:37 class.mesh.php:604
+#: admin/section-container.php:37 class.mesh.php:607
 msgid "Published"
 msgstr ""
 
@@ -113,7 +117,7 @@ msgstr ""
 msgid "Increase the column number to access that content."
 msgstr ""
 
-#: class.mesh-ajax.php:49 class.mesh.php:600
+#: class.mesh-ajax.php:49 class.mesh.php:603
 msgid "No Section Title"
 msgstr ""
 
@@ -181,15 +185,15 @@ msgstr ""
 msgid "Choose whether or not to enqueue CSS with Mesh."
 msgstr ""
 
-#: class.mesh-settings.php:229
+#: class.mesh-settings.php:228
 msgid "Settings"
 msgstr ""
 
-#: class.mesh-settings.php:230
+#: class.mesh-settings.php:229
 msgid "About Mesh"
 msgstr ""
 
-#: class.mesh-settings.php:231
+#: class.mesh-settings.php:230
 msgid "Change Log"
 msgstr ""
 
@@ -209,235 +213,107 @@ msgstr ""
 msgid "Show Extra MCS Section Controls?"
 msgstr ""
 
-#: class.mesh.php:181 class.mesh.php:182 class.mesh.php:197 class.mesh.php:198
+#: class.mesh.php:183 class.mesh.php:184 class.mesh.php:199 class.mesh.php:200
 msgid "Content Section"
 msgstr ""
 
-#: class.mesh.php:183
+#: class.mesh.php:185
 msgid "Parent Content Section:"
 msgstr ""
 
-#: class.mesh.php:184
+#: class.mesh.php:186
 msgid "All Content Sections"
 msgstr ""
 
-#: class.mesh.php:185
+#: class.mesh.php:187
 msgid "Add New Content Section"
 msgstr ""
 
-#: class.mesh.php:186
+#: class.mesh.php:188
 msgid "Add New"
 msgstr ""
 
-#: class.mesh.php:187
+#: class.mesh.php:189
 msgid "New Content Section"
 msgstr ""
 
-#: class.mesh.php:188
+#: class.mesh.php:190
 msgid "Edit Content Section"
 msgstr ""
 
-#: class.mesh.php:189
+#: class.mesh.php:191
 msgid "Update Content Section"
 msgstr ""
 
-#: class.mesh.php:190
+#: class.mesh.php:192
 msgid "View Content Section"
 msgstr ""
 
-#: class.mesh.php:191
+#: class.mesh.php:193
 msgid "Search Content Sections"
 msgstr ""
 
-#: class.mesh.php:192
+#: class.mesh.php:194
 msgid "Not found"
 msgstr ""
 
-#: class.mesh.php:193
+#: class.mesh.php:195
 msgid "Not found in Trash"
 msgstr ""
 
-#: class.mesh.php:235
+#: class.mesh.php:237
 msgid "Multiple Content Sections"
 msgstr ""
 
-#: class.mesh.php:245
+#: class.mesh.php:247
 msgid "You do not have any Content Sections."
 msgstr ""
 
-#: class.mesh.php:246
+#: class.mesh.php:248
 msgid "Get started using Mesh by adding a Content Section now."
 msgstr ""
 
-#: class.mesh.php:252
+#: class.mesh.php:254
 msgid ""
 "Multiple content sections allow you to easily segment your page's contents "
 "into different blocks of markup."
 msgstr ""
 
-#: class.mesh.php:594
+#: class.mesh.php:597
 msgid "Be sure to save the order of your sections once your changes are complete."
 msgstr ""
 
-#: class.mesh.php:595
+#: class.mesh.php:598
 msgid ""
 "Multiple content sections allows you to easily segment your page's contents "
 "into different blocks of markup."
 msgstr ""
 
-#: class.mesh.php:597
+#: class.mesh.php:600
 msgid "Remove Background"
 msgstr ""
 
-#: class.mesh.php:601
+#: class.mesh.php:604
 msgid "Select Section Background"
 msgstr ""
 
-#: class.mesh.php:602
+#: class.mesh.php:605
 msgid "Select Background"
 msgstr ""
 
-#: class.mesh.php:603
+#: class.mesh.php:606
 msgid "Select Column Background"
 msgstr ""
 
-#: class.mesh.php:606
+#: class.mesh.php:609
 msgid "Are you sure you want to remove this section?"
 msgstr ""
 
-#: multiple-content-sections.php:328
+#: mesh.php:328
 msgid "No Column Title"
 msgstr ""
 
-#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:102
-msgid "PPCPP-DESCRIPTION"
-msgstr ""
-
-#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:103
-msgid "PPCPP-HELPTEXT"
-msgstr ""
-
-#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:104
-msgid "PPCPP:OPT-FILENAME"
-msgstr ""
-
-#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:105
-msgid "PPCPP:OPT-DIRECTORY"
-msgstr ""
-
-#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:106
-msgid "PPCPP:OPT-TARGET"
-msgstr ""
-
-#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:107
-msgid "PPCPP:OPT-ENCODING"
-msgstr ""
-
-#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:108
-msgid "PPCPP:OPT-EXTENSIONS"
-msgstr ""
-
-#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:109
-msgid "PPCPP:OPT-IGNORE"
-msgstr ""
-
-#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:110
-msgid "PPCPP:OPT-IGNORETAGS"
-msgstr ""
-
-#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:111
-msgid "PPCPP:OPT-HIDDEN"
-msgstr ""
-
-#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:112
-msgid "PPCPP:OPT-IGNORESYMLINKS"
-msgstr ""
-
-#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:113
-msgid "PPCPP:OPT-MARKERS"
-msgstr ""
-
-#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:114
-msgid "PPCPP:OPT-TITLE"
-msgstr ""
-
-#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:115
-msgid "PPCPP:OPT-FORCE"
-msgstr ""
-
-#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:116
-msgid "PPCPP:OPT-VALIDATE"
-msgstr ""
-
-#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:117
-msgid "PPCPP:OPT-VISIBILITY"
-msgstr ""
-
-#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:118
-msgid "PPCPP:OPT-SOURCECODE"
-msgstr ""
-
-#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:119
-msgid "PPCPP:OPT-PROGRESSBAR"
-msgstr ""
-
-#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:125
-msgid "PPCPP:OPT-DEFAULTPACKAGENAME"
-msgstr ""
-
-#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:159
-msgid "PPCPP:EXC-BADTARGET"
-msgstr ""
-
-#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:167
-msgid "PPCPP:LOG-COLLECTING"
-msgstr ""
-
-#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:174
-#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:190
-#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:241
-msgid "PPCPP:LOG-OK"
-msgstr ""
-
-#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:182
-msgid "PPCPP:LOG-INITIALIZING"
-msgstr ""
-
-#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:191
-msgid "PPCPP:LOG-PARSING"
-msgstr ""
-
-#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:226
-msgid "PPCPP:EXC-NOFILES"
-msgstr ""
-
-#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:237
-msgid "PPCPP:LOG-STORECACHE"
-msgstr ""
-
-#. Plugin Name of the plugin/theme
-msgid "Mesh"
-msgstr ""
-
-#. Plugin URI of the plugin/theme
-msgid "http://linchpin.agency/wordpress-plugins/mesh"
-msgstr ""
-
-#. Description of the plugin/theme
-msgid ""
-"Adds multiple sections for content on a post by post basis. Mesh also has "
-"settings to enable it for specific post types"
-msgstr ""
-
-#. Author of the plugin/theme
-msgid "linchpin_agency, maxinacube, desrosj, aware"
-msgstr ""
-
-#. Author URI of the plugin/theme
-msgid "http://linchpin.agency"
-msgstr ""
-
-#: class.mesh.php:179 class.mesh.php:180
+#: class.mesh.php:181 class.mesh.php:182
 msgctxt "Content Section"
 msgid "Content Section"
 msgstr ""
