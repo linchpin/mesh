@@ -52,6 +52,7 @@ class Mesh {
 		);
 
 		add_action( 'init',                  array( $this, 'init' ) );
+		add_action( 'admin_init',            array( $this, 'admin_init' ) );
 
 		add_action( 'edit_page_form',        array( $this, 'edit_page_form' ) ); // Pages.
 		add_action( 'edit_form_advanced',    array( $this, 'edit_page_form' ) ); // Other Post Types.
@@ -211,6 +212,16 @@ class Mesh {
 			'show_ui' => false,
 			'rewrite' => false,
 		) );
+	}
+
+	/**
+	 * The first time the plugin is activated, we need to add some default options.
+	 */
+	function admin_init() {
+		if ( false === get_option( 'mesh_version' ) ) {
+			update_option( 'mesh_post_types', array( 'page' => 1 ) );
+			update_option( 'mesh_version', LINCHPIN_MESH_VERSION );
+		}
 	}
 
 	/**
