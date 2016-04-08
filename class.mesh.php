@@ -209,7 +209,7 @@ class Mesh {
 			'exclude_from_search' => true,
 			'publicly_queryable' => false,
 			'show_ui' => false,
-			'rewrite' => null,
+			'rewrite' => false,
 		) );
 	}
 
