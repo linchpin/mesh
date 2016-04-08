@@ -438,6 +438,7 @@ class Mesh {
 					'post_content' => wp_kses( $block_data['post_content'], mesh_get_allowed_html() ),
 					'post_status'  => $status,
 					'post_title'   => sanitize_text_field( $block_data['post_title'] ),
+					'menu_order'   => (int) $block_data['menu_order'],
 				);
 
 				wp_update_post( $updates );

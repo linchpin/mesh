@@ -357,17 +357,30 @@
 		}
 	}
 
-	.ui-draggable-dragging {
-		z-index: 10000;
-	}
-
-	.drop-target {
-		&.ui-state-hover {
-			border: 2px dashed $grey;
+	// Sortable Columns
+	.ui-sortable {
+		.ui-sortable-helper .drop-target {
+			background-color: white;
 		}
 
-		&.ui-state-active {
-			border-color: $dark-grey;
+		.ui-sortable-placeholder {
+			padding: {
+				left: 16px;
+				right: 16px;
+			};
+			visibility: visible !important;
+
+			&:before {
+				content: '';
+
+				border: 2px dashed $grey;
+
+				position: absolute;
+				left: 16px;
+				right: 16px;
+				top: 0;
+				bottom: 0;
+			}
 		}
 	}
 }
