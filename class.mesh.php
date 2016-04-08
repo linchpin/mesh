@@ -583,7 +583,7 @@ class Mesh {
 			return;
 		}
 
-		if ( ! is_page() ) {
+		if ( ! is_singular() ) {
 			return;
 		}
 
