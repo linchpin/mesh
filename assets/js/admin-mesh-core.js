@@ -270,6 +270,13 @@ mesh.admin = function ( $ ) {
 			});
 		},
 
+		/**
+		 * Publish the current section
+		 *
+		 * @since 1.0.0
+		 *
+		 * @param event
+         */
 		section_publish : function(event) {
 			event.preventDefault();
 			event.stopPropagation();
@@ -284,6 +291,13 @@ mesh.admin = function ( $ ) {
 			$update_button.trigger( 'click' );
 		},
 
+		/**
+		 * Save a draft of the current section
+		 *
+		 * @since 1.0.0
+		 *
+		 * @param event
+         */
 		section_save_draft : function(event) {
 			event.preventDefault();
 			event.stopPropagation();
@@ -294,6 +308,13 @@ mesh.admin = function ( $ ) {
 			$update_button.trigger( 'click' );
 		},
 
+		/**
+		 * Save the current section through an ajax call
+		 *
+		 * @since 1.0.0
+		 *
+		 * @param event
+         */
 		section_save : function(event) {
 			event.preventDefault();
 			event.stopPropagation();
@@ -316,15 +337,18 @@ mesh.admin = function ( $ ) {
 				mesh_section_data: form_data,
 				mesh_save_section_nonce: mesh_data.save_section_nonce
 			}, function( response ) {
-				$( '.button', $button_container ).removeClass( 'disabled' );
+				$button_container.find( '.button' ).removeClass( 'disabled' );
 				$spinner.removeClass( 'is-active' );
 
 				if (response) {
+
+					var $publish_draft = $( '.mesh-section-publish,.mesh-section-save-draft' );
+
 					if ( 'publish' == $post_status_field.val() ) {
-						$( '.mesh-section-publish,.mesh-section-save-draft' ).addClass( 'hidden' );
+						$publish_draft.addClass( 'hidden' );
 						$button.removeClass( 'hidden' );
 					} else {
-						$( '.mesh-section-publish,.mesh-section-save-draft' ).removeClass( 'hidden' );
+						$publish_draft.removeClass( 'hidden' );
 						$button.addClass( 'hidden' );
 					}
 				}
