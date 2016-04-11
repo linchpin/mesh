@@ -1,42 +1,3 @@
-var mesh = mesh || {};
-
-mesh.pointers = function ( $ ) {
-
-    var current_index = 0;
-
-    return {
-
-        /**
-         * Show our current pointer based on index.
-         */
-        show_pointer: function() {
-
-            // Make sure we have pointers available.
-            if( typeof( mesh_data.wp_pointers ) === 'undefined') {
-                return;
-            }
-
-            var pointer = mesh_data.wp_pointers.pointers[current_index],
-                options = $.extend( pointer.options, {
-                    close: function() {
-                        $.post( ajaxurl, {
-                            pointer: pointer.pointer_id,
-                            action: 'dismiss-wp-pointer'
-                        });
-
-                        current_index++;
-
-						if ( current_index < mesh_data.wp_pointers.pointers.length ) {
-	                        mesh.pointers.show_pointer();
-						}
-                    }
-                });
-
-            $(pointer.target).pointer( options ).pointer('open');
-        }
-    };
-
-} ( jQuery );;
 /*!
  * LimitSlider
  * https://github.com/vanderlee/limitslider
@@ -266,14 +227,46 @@ mesh.pointers = function ( $ ) {
 			return this;
 		}
 	});
-}(jQuery));
+}(jQuery));;
+var mesh = mesh || {};
 
-/**
- * Controls Block Administration
- *
- * @since 0.4.1
- */
+mesh.pointers = function ( $ ) {
 
+    var current_index = 0;
+
+    return {
+
+        /**
+         * Show our current pointer based on index.
+         */
+        show_pointer: function() {
+
+            // Make sure we have pointers available.
+            if( typeof( mesh_data.wp_pointers ) === 'undefined') {
+                return;
+            }
+
+            var pointer = mesh_data.wp_pointers.pointers[current_index],
+                options = $.extend( pointer.options, {
+                    close: function() {
+                        $.post( ajaxurl, {
+                            pointer: pointer.pointer_id,
+                            action: 'dismiss-wp-pointer'
+                        });
+
+                        current_index++;
+
+						if ( current_index < mesh_data.wp_pointers.pointers.length ) {
+	                        mesh.pointers.show_pointer();
+						}
+                    }
+                });
+
+            $(pointer.target).pointer( options ).pointer('open');
+        }
+    };
+
+} ( jQuery );;
 var mesh = mesh || {};
 
 mesh.blocks = function ( $ ) {
@@ -316,6 +309,7 @@ mesh.blocks = function ( $ ) {
 	        var column_order = [];
 
 			$('.mesh-editor-blocks .mesh-row').sortable({
+				// OPTIONS
 				axis      : 'x',
 				cursor    : 'move',
 				distance  : 20,
@@ -323,13 +317,28 @@ mesh.blocks = function ( $ ) {
 				items     : '.mesh-section-block',
 				tolerance : 'pointer',
 
-				start     : function ( event, ui ) {
+				// EVENTS
+				start : function ( event, ui ) {
+					var $tgt           = $( event.target ),
+						$column_slider = $tgt.find( '.column-slider' );
+
+					// Fade out column resizer to avoid odd UI
+					$column_slider.fadeOut('fast');
+
 					$('.mesh-section-block:not(.ui-sortable-placeholder)', this).each(function () {
 						column_order.push( $(this).attr('class') );
 					} );
 				},
 
-				update    : function ( event, ui ) {
+				stop : function ( event, ui ) {
+					var $tgt           = $( event.target ),
+						$column_slider = $tgt.find( '.column-slider' );
+
+					// Fade back in column resizer
+					$column_slider.fadeIn('slow');
+				},
+
+				update : function ( event, ui ) {
 					var $this      = $(this),
                         $tgt       = $( event.target),
                         $section   = $tgt.parents('.mesh-section'),
@@ -351,71 +360,11 @@ mesh.blocks = function ( $ ) {
         },
 
         /**
-         * Setup Block Drag and Drop
-         *
-         * @since 0.3.0
-         */
-        setup_drag_drop : function() {
-
-            $( ".mesh-editor-blocks .block" ).draggable({
-                'appendTo' : 'body',
-                helper : function( event ) {
-
-                    var $this = $(this),
-                        _width = $this.width();
-                        $clone = $this.clone().width(_width).css('background','#fff');
-                        $clone.find('*').removeAttr('id');
-
-                    return $clone;
-                },
-                revert: true,
-                zIndex: 1000,
-                handle: '.the-mover',
-                iframeFix:true,
-                start:function( ui, event, helper ){}
-            });
-
-            $( ".block" )
-                .addClass( "ui-widget ui-widget-content ui-helper-clearfix" )
-                .find( ".block-header" )
-                .addClass( "hndle ui-sortable-handle" )
-                .prepend( "<span class='block-toggle' />");
-
-            $( ".drop-target" ).droppable({
-                accept: ".block:not(.ui-sortable-helper)",
-                activeClass: "ui-state-hover",
-                hoverClass: "ui-state-active",
-                handle: ".block-header",
-                revert: true,
-                drop: function( event, ui ) {
-
-                    var $this = $(this),
-                        $swap_clone  = ui.draggable,
-                        $swap_parent = ui.draggable.parent(),
-                        $tgt         = $( event.target),
-                        $tgt_clone   = $tgt.find('.block'),
-                        $section     = $tgt.parents('.mesh-section'),
-                        section_id   = $section.attr('data-mesh-section-id');
-
-                    $swap_clone.css( { 'top':'','left':'' } );
-
-                    $this.append( $swap_clone );
-                    $swap_parent.append( $tgt_clone );
-
-                    self.reorder_blocks( $section.find('.wp-editor-area') );
-                    self.save_order( section_id, event, ui );
-                    self.setup_drag_drop();
-
-                    return false;
-                }
-            });
-        },
-
-        /**
          * Change Block Widths based on Column Resizing
          *
          * @param event
          * @param ui
+         * @since 1.0.0
          */
         change_block_widths : function( event, ui ) {
             var $tgt          = $( event.target ),
@@ -430,6 +379,11 @@ mesh.blocks = function ( $ ) {
                     blocks : {}
                 };
 
+			// Set array to store columns widths
+			// If returned values are [3, 9]
+			// -> col 1 = val1 = 3
+			// -> col 2 = (val2 - val1) = (9 - 3) = 6
+			// -> col 3 = (avail - val2) = (12 - 9) = 3
 			if ( 3 == column_length ) {
 				for ( var i = 0; i <= column_length; i++ ) {
 					switch ( i ) {
@@ -448,6 +402,10 @@ mesh.blocks = function ( $ ) {
 				}
 			}
 
+			// Set array to store columns widths
+			// If returned value is [4]
+			// -> col 1 = val1 = 4
+			// -> col 2 = (avail - val1) = (12 - 4) = 8
 			if ( 2 == column_length ) {
 				column_values.push( slider_values[0] );
 				column_values.push( column_total - slider_values[0] );
@@ -461,6 +419,7 @@ mesh.blocks = function ( $ ) {
                     block_id = parseInt( $this.find('.block').attr('data-mesh-block-id') ),
                     $column_input = $this.find('.column-width');
 
+				// Reset column width classes and save post data
                 $this.addClass( 'mesh-columns-' + column_values[ index ] );
 
                 if( block_id && column_values[ index ] ) {
@@ -749,7 +708,69 @@ mesh.blocks = function ( $ ) {
 			if ( parseInt( offset ) ) {
 				$block.addClass('mesh-has-offset mesh-offset-' + offset );
 			}
-		}
+		},
+
+		/**
+         * Setup Block Drag and Drop
+         *
+         * @since 0.3.0
+         * @deprecated - Keep for fallback if sortable doesn't work out.
+         */
+        setup_drag_drop : function() {
+
+            $( ".mesh-editor-blocks .block" ).draggable({
+                'appendTo' : 'body',
+                helper : function( event ) {
+
+                    var $this = $(this),
+                        _width = $this.width();
+                        $clone = $this.clone().width(_width).css('background','#fff');
+                        $clone.find('*').removeAttr('id');
+
+                    return $clone;
+                },
+                revert: true,
+                zIndex: 1000,
+                handle: '.the-mover',
+                iframeFix:true,
+                start:function( ui, event, helper ){}
+            });
+
+            $( ".block" )
+                .addClass( "ui-widget ui-widget-content ui-helper-clearfix" )
+                .find( ".block-header" )
+                .addClass( "hndle ui-sortable-handle" )
+                .prepend( "<span class='block-toggle' />");
+
+            $( ".drop-target" ).droppable({
+                accept: ".block:not(.ui-sortable-helper)",
+                activeClass: "ui-state-hover",
+                hoverClass: "ui-state-active",
+                handle: ".block-header",
+                revert: true,
+                drop: function( event, ui ) {
+
+                    var $this = $(this),
+                        $swap_clone  = ui.draggable,
+                        $swap_parent = ui.draggable.parent(),
+                        $tgt         = $( event.target),
+                        $tgt_clone   = $tgt.find('.block'),
+                        $section     = $tgt.parents('.mesh-section'),
+                        section_id   = $section.attr('data-mesh-section-id');
+
+                    $swap_clone.css( { 'top':'','left':'' } );
+
+                    $this.append( $swap_clone );
+                    $swap_parent.append( $tgt_clone );
+
+                    self.reorder_blocks( $section.find('.wp-editor-area') );
+                    self.save_order( section_id, event, ui );
+                    self.setup_drag_drop();
+
+                    return false;
+                }
+            });
+        }
     };
 
 } ( jQuery );
