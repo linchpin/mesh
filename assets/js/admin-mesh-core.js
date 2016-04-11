@@ -7,7 +7,7 @@ mesh.admin = function ( $ ) {
 		$add_button         = $('.mesh-section-add'),
 		$expand_button      = $('.mesh-section-expand'),
 		$meta_box_container = $('#mesh-container'),
-		$section_container  = $('#mesh-container'),
+		$section_container  = $('#mesh-sections-container'),
 		$description        = $('#mesh-description'),
 		$equalize           = $('.mesh_section [data-equalizer]'),
 		$sections,
@@ -280,7 +280,7 @@ mesh.admin = function ( $ ) {
 				$update_button     = $( '.mesh-section-update', $section );
 
 			$post_status_field.val( 'publish' );
-			$post_status_label.text( 'Published' );
+			$post_status_label.text( mesh_data.strings.published );
 			$update_button.trigger( 'click' );
 		},
 
@@ -405,7 +405,7 @@ mesh.admin = function ( $ ) {
 
 			$('.mesh-block-click').on('click', self.block_click );
 
-			$this.text('Save Order').addClass('mesh-save-order button-primary').removeClass('mesh-section-reorder');
+			$reorder_button.text( mesh_data.strings.save_order ).addClass('mesh-save-order button-primary').removeClass('mesh-section-reorder');
 
 			$sections.each(function(){
 				$(this).addClass('closed');
@@ -473,7 +473,7 @@ mesh.admin = function ( $ ) {
 
 			$expand_button.removeClass('disabled');
 			$add_button.removeClass('disabled');
-			$this.text('Reorder').addClass('mesh-section-reorder').removeClass('mesh-save-order button-primary');
+			$reorder_button.text( mesh_data.strings.reorder ).addClass('mesh-section-reorder').removeClass('mesh-save-order button-primary');
 
 			$('.mesh-postbox', $section_container).each(function(){
 				section_ids.push( $(this).attr('data-mesh-section-id') );

@@ -267,7 +267,7 @@ class Mesh {
 				<?php endif; ?>
 			<?php endif; ?>
 
-			<div id="mesh-container">
+			<div id="mesh-sections-container">
 				<?php foreach ( $content_sections as $key => $section ) : ?>
 					<?php mesh_add_section_admin_markup( $section, true ); ?>
 				<?php endforeach; ?>
@@ -614,9 +614,11 @@ class Mesh {
 			'select_section_bg' => __( 'Select Section Background', 'linchpin-mesh' ),
 			'select_bg' =>         __( 'Select Background' , 'linchpin-mesh' ),
 			'select_block_bg' =>   __( 'Select Column Background', 'linchpin-mesh' ),
-			'published' =>         __( 'Published', 'linchpin-mesh' ),
-			'draft' =>             __( 'Draft', 'linchpin-mesh' ),
+			'published' =>         __( 'Status: Published', 'linchpin-mesh' ),
+			'draft' =>             __( 'Status: Draft', 'linchpin-mesh' ),
 			'confirm_remove' =>    __( 'Are you sure you want to remove this section?', 'linchpin-mesh' ),
+			'save_order'     =>    __( 'Save Order', 'linchpin-mesh' ),
+			'reorder'        =>    __( 'Reorder Sections', 'linchpin-mesh' ),
 		);
 
 		$strings = apply_filters( 'mesh_strings', $strings ); // Allow filtering of localization strings.

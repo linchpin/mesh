@@ -46,20 +46,37 @@ mesh.blocks = function ( $ ) {
 	        var column_order = [];
 
 			$('.mesh-editor-blocks .mesh-row').sortable({
+				// OPTIONS
 				axis      : 'x',
 				cursor    : 'move',
+				cursorAt  : { left: 0 },
 				distance  : 20,
 				handle    : '.the-mover',
 				items     : '.mesh-section-block',
 				tolerance : 'pointer',
 
-				start     : function ( event, ui ) {
+				// EVENTS
+				start : function ( event, ui ) {
+					var $tgt           = $( event.target ),
+						$column_slider = $tgt.find( '.column-slider' );
+
+					// Fade out column resizer to avoid odd UI
+					$column_slider.fadeOut('fast');
+
 					$('.mesh-section-block:not(.ui-sortable-placeholder)', this).each(function () {
 						column_order.push( $(this).attr('class') );
 					} );
 				},
 
-				update    : function ( event, ui ) {
+				stop : function ( event, ui ) {
+					var $tgt           = $( event.target ),
+						$column_slider = $tgt.find( '.column-slider' );
+
+					// Fade back in column resizer
+					$column_slider.fadeIn('slow');
+				},
+
+				update : function ( event, ui ) {
 					var $this      = $(this),
                         $tgt       = $( event.target),
                         $section   = $tgt.parents('.mesh-section'),
@@ -81,233 +98,70 @@ mesh.blocks = function ( $ ) {
         },
 
         /**
-         * Setup Block Drag and Drop
-         *
-         * @since 0.3.0
-         */
-        setup_drag_drop : function() {
-
-            $( ".mesh-editor-blocks .block" ).draggable({
-                'appendTo' : 'body',
-                helper : function( event ) {
-
-                    var $this = $(this),
-                        _width = $this.width();
-                        $clone = $this.clone().width(_width).css('background','#fff');
-                        $clone.find('*').removeAttr('id');
-
-                    return $clone;
-                },
-                revert: true,
-                zIndex: 1000,
-                handle: '.the-mover',
-                iframeFix:true,
-                start:function( ui, event, helper ){}
-            });
-
-            $( ".block" )
-                .addClass( "ui-widget ui-widget-content ui-helper-clearfix" )
-                .find( ".block-header" )
-                .addClass( "hndle ui-sortable-handle" )
-                .prepend( "<span class='block-toggle' />");
-
-            $( ".drop-target" ).droppable({
-                accept: ".block:not(.ui-sortable-helper)",
-                activeClass: "ui-state-hover",
-                hoverClass: "ui-state-active",
-                handle: ".block-header",
-                revert: true,
-                drop: function( event, ui ) {
-
-                    var $this = $(this),
-                        $swap_clone  = ui.draggable,
-                        $swap_parent = ui.draggable.parent(),
-                        $tgt         = $( event.target),
-                        $tgt_clone   = $tgt.find('.block'),
-                        $section     = $tgt.parents('.mesh-section'),
-                        section_id   = $section.attr('data-mesh-section-id');
-
-                    $swap_clone.css( { 'top':'','left':'' } );
-
-                    $this.append( $swap_clone );
-                    $swap_parent.append( $tgt_clone );
-
-                    self.reorder_blocks( $section.find('.wp-editor-area') );
-                    self.save_order( section_id, event, ui );
-                    self.setup_drag_drop();
-
-                    return false;
-                }
-            });
-        },
-
-        /**
          * Change Block Widths based on Column Resizing
          *
          * @param event
          * @param ui
+         * @since 1.0.0
          */
         change_block_widths : function( event, ui ) {
             var $tgt          = $( event.target ),
                 $columns      = $tgt.parent().parent().parent().find('.mesh-editor-blocks').find('.columns').addClass('dragging'),
                 column_length = $columns.length,
                 column_total  = 12,
-                column_value  = ui.value,
-                column_start  = column_value,
-                max_width = 12,
-                min_width = 3,
-                slider_0 = 0,
-                slider_1 = 0,
-                column_values = [];
+                column_values = [],
+                slider_values = ui.values,
+                post_data     = {
+                    post_id : parseInt( mesh_data.post_id ),
+                    section_id : parseInt( $tgt.closest('.mesh-section').attr('data-mesh-section-id') ),
+                    blocks : {}
+                };
 
-            // cap max column width
+			// Set array to store columns widths
+			// If returned values are [3, 9]
+			// -> col 1 = val1 = 3
+			// -> col 2 = (val2 - val1) = (9 - 3) = 6
+			// -> col 3 = (avail - val2) = (12 - 9) = 3
+			if ( 3 == column_length ) {
+				for ( var i = 0; i <= column_length; i++ ) {
+					switch ( i ) {
+						case 0:
+							column_values.push( slider_values[i] );
+							break;
 
-            if( column_length == 2 ) {
+						case 1:
+							column_values.push(slider_values[i] - slider_values[0]);
+							break;
 
-                max_width = 9;
-                min_width = 3;
+						case 2:
+							column_values.push( column_total - slider_values[1] );
+							break;
+					}
+				}
+			}
 
-                column_value = Math.max( min_width, column_value );
-                column_value = Math.min( max_width, column_value );
-
-                column_values = [
-                    column_value,
-                    column_total - column_value
-                ];
-            } else if( column_length == 3 ) {
-
-                if( typeof( ui.value ) != 'undefined' ) {
-                    slider_0 = ( column_value && 2 > column_length ) ? column_value : ui.values[0];
-                    slider_1 = ui.values[1];
-                }
-
-                max_width = 6;
-                min_width = 3;
-
-                column_values = [];
-
-                column_value = Math.max(min_width, slider_0);
-                column_value = Math.min(max_width, column_value);
-
-                column_values[0] = column_value;
-
-                min_width = slider_0 + 3;
-                max_width = 9;
-
-                column_value = Math.max(min_width, slider_1);
-                column_value = Math.min(max_width, column_value);
-
-                column_values[1] = column_value - column_values[0];
-                column_values[2] = column_total - ( column_values[0] + column_values[1] );
-            }
+			// Set array to store columns widths
+			// If returned value is [4]
+			// -> col 1 = val1 = 4
+			// -> col 2 = (avail - val1) = (12 - 4) = 8
+			if ( 2 == column_length ) {
+				column_values.push( slider_values[0] );
+				column_values.push( column_total - slider_values[0] );
+			}
 
             // Custom class removal based on regex pattern
             $columns.removeClass (function (index, css) {
                 return (css.match (/\mesh-columns-\d+/g) || []).join(' ');
             }).each( function( index ) {
-                $(this).addClass( 'mesh-columns-' + column_values[ index ] );
-
-                if ( column_values[ index ] <= 3 ) {
-	                $(this).find('.mesh-column-offset').val(0).trigger('change');
-                }
-            } );
-
-        },
-
-        /**
-         * Save when a user adjust column widths still allow 12 columns min max
-         * but cap the limits to 3 and 9 based on common usage.
-         *
-         * @todo: Add filters for column min, max
-         *
-         * @since 0.3.5
-         *
-         * @param event
-         * @param ui
-         */
-        save_block_widths : function( event, ui ) {
-
-            var $tgt          = $( event.target ),
-                $columns      = $tgt.parent().parent().parent().find('.mesh-editor-blocks').find('.columns'),
-                column_length = $columns.length,
-                column_total  = 12,
-                column_value  = $tgt.slider( "value" ),
-                column_start  = column_value,
-                post_data     = {
-                    post_id : parseInt( mesh_data.post_id ),
-                    section_id : parseInt( $tgt.closest('.mesh-section').attr('data-mesh-section-id') ),
-                    blocks : {}
-                },
-                max_width = 12,
-                min_width = 3,
-                slider_0 = ( column_value && 2 > column_length ) ? column_value : $tgt.slider( "values", 0 ),
-                slider_1 = $tgt.slider( "values", 1 ),
-                column_values = [];
-
-            // Cap max column width
-            if( column_length == 2 ) {
-
-                max_width = 9;
-                min_width = 3;
-
-                column_value = Math.max( min_width, column_value );
-                column_value = Math.min( max_width, column_value );
-
-                // cap min column width
-                if( column_value != $tgt.slider( "value" ) ) {
-                    $tgt.slider( "value", column_value );
-                }
-
-                column_values = [
-                    column_value,
-                    column_total - column_value
-                ];
-            }
-
-            if( column_length == 3 ) {
-
-                max_width = 6;
-                min_width = 3;
-
-                column_values = [];
-
-                column_value = Math.max( min_width, slider_0 );
-                column_value = Math.min( max_width, column_value );
-
-                column_values[0] = column_value;
-
-                min_width = slider_0 + 3;
-                max_width = 9;
-
-                column_value = Math.max( min_width, slider_1 );
-                column_value = Math.min( max_width, column_value );
-
-                column_values[1] = column_value - column_values[0];
-
-                column_values[2] = column_total - ( column_values[0] + column_values[1] );
-
-                if( column_values[0] != $tgt.slider( 'option', "values" )[0] || column_value != $tgt.slider( 'option', "values")[1] ) {
-                    $tgt.slider( "option", "values", [ column_value[0], column_value ]).refresh();
-                    return;
-                }
-            }
-
-            // Custom class removal based on regex pattern
-            $columns.removeClass (function (index, css) {
-                return (css.match (/\mesh-columns-\d+/g) || []).join(' ');
-            });
-
-            $columns.each( function( index ) {
                 var $this = $(this),
                     block_id = parseInt( $this.find('.block').attr('data-mesh-block-id') ),
-                    $column_input = $this.find('.column-width'),
-                    $indicator    = $this.find( '.column-width-indicator' );
+                    $column_input = $this.find('.column-width');
 
+				// Reset column width classes and save post data
                 $this.addClass( 'mesh-columns-' + column_values[ index ] );
 
                 if( block_id && column_values[ index ] ) {
                     $column_input.val( column_values[ index ] );
-                    $indicator.text( column_values[ index ] );
                     post_data.blocks[ block_id.toString() ] = column_values[ index ];
                 }
             } );
@@ -330,13 +184,15 @@ mesh.blocks = function ( $ ) {
                         min:0,
                         max:12,
                         step:1,
+                        left: 3,
+                        right: 9,
+                        gap: 3,
                         start : function() {
                             $this.css('z-index', 1000);
                         },
                         stop : function() {
                             $this.css('z-index', '').find('.ui-slider-handle').css('z-index', 1000);
                         },
-                        change : self.save_block_widths,
                         slide : self.change_block_widths
                     };
 
@@ -351,7 +207,7 @@ mesh.blocks = function ( $ ) {
                     data.value = null;
                 }
 
-                $this.slider( data );
+                $this.limitslider( data );
             });
         },
 
@@ -592,7 +448,69 @@ mesh.blocks = function ( $ ) {
 			if ( parseInt( offset ) ) {
 				$block.addClass('mesh-has-offset mesh-offset-' + offset );
 			}
-		}
+		},
+
+		/**
+         * Setup Block Drag and Drop
+         *
+         * @since 0.3.0
+         * @deprecated - Keep for fallback if sortable doesn't work out.
+         */
+        setup_drag_drop : function() {
+
+            $( ".mesh-editor-blocks .block" ).draggable({
+                'appendTo' : 'body',
+                helper : function( event ) {
+
+                    var $this = $(this),
+                        _width = $this.width();
+                        $clone = $this.clone().width(_width).css('background','#fff');
+                        $clone.find('*').removeAttr('id');
+
+                    return $clone;
+                },
+                revert: true,
+                zIndex: 1000,
+                handle: '.the-mover',
+                iframeFix:true,
+                start:function( ui, event, helper ){}
+            });
+
+            $( ".block" )
+                .addClass( "ui-widget ui-widget-content ui-helper-clearfix" )
+                .find( ".block-header" )
+                .addClass( "hndle ui-sortable-handle" )
+                .prepend( "<span class='block-toggle' />");
+
+            $( ".drop-target" ).droppable({
+                accept: ".block:not(.ui-sortable-helper)",
+                activeClass: "ui-state-hover",
+                hoverClass: "ui-state-active",
+                handle: ".block-header",
+                revert: true,
+                drop: function( event, ui ) {
+
+                    var $this = $(this),
+                        $swap_clone  = ui.draggable,
+                        $swap_parent = ui.draggable.parent(),
+                        $tgt         = $( event.target),
+                        $tgt_clone   = $tgt.find('.block'),
+                        $section     = $tgt.parents('.mesh-section'),
+                        section_id   = $section.attr('data-mesh-section-id');
+
+                    $swap_clone.css( { 'top':'','left':'' } );
+
+                    $this.append( $swap_clone );
+                    $swap_parent.append( $tgt_clone );
+
+                    self.reorder_blocks( $section.find('.wp-editor-area') );
+                    self.save_order( section_id, event, ui );
+                    self.setup_drag_drop();
+
+                    return false;
+                }
+            });
+        }
     };
 
 } ( jQuery );

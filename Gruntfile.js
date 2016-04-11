@@ -38,6 +38,7 @@ module.exports = function(grunt) {
 
             dist: {
                 src: [
+	                'assets/js/admin-mesh-limitslider.js',
                     'assets/js/admin-mesh-pointers.js',
                     'assets/js/admin-mesh-blocks.js',
                     'assets/js/admin-mesh-core.js'

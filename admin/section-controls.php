@@ -45,7 +45,7 @@
 			<ul class="inline-block-list space-left">
 				<li>
 					<label for="mesh-section[<?php esc_attr_e( $section->ID ); ?>][collapse]">
-						<?php esc_html_e( 'Collapse Padding', 'linchpin-mesh' ); ?> <input type="checkbox" name="mesh-sections[<?php esc_attr_e( $section->ID ); ?>][collapse]" class="mesh-section-collapse" value="1" <?php if ( get_post_meta( $section->ID, '_mesh_collapse', true ) ): ?>checked<?php endif; ?> />
+						<?php esc_html_e( 'Collapse Padding', 'linchpin-mesh' ); ?> <input type="checkbox" name="mesh-sections[<?php esc_attr_e( $section->ID ); ?>][collapse]" class="mesh-section-collapse-input" value="1" <?php if ( get_post_meta( $section->ID, '_mesh_collapse', true ) ): ?>checked<?php endif; ?> />
 					</label>
 				</li>
 

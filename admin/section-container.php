@@ -31,13 +31,13 @@ $blocks = mesh_maybe_create_section_blocks( $section );
 		<div class="mesh-columns-4 text-right">
 			<div id="section-status-select-<?php esc_attr_e( $section->ID ); ?>-container">
 				<div class="msc-clean-edit handle-right">
-					<label for="section-status-select-<?php esc_attr_e( $section->ID ); ?>" class="screen-reader-text"><strong><?php esc_html_e( 'Status:', 'linchpin-mesh' ); ?></strong></label>
+					<label for="section-status-select-<?php esc_attr_e( $section->ID ); ?>" class="screen-reader-text"><?php esc_html_e( 'Status:', 'linchpin-mesh' ); ?></label>
 					<select class="mesh-block-propagation msc-clean-edit-element mesh-section-status" id="section-status-select-<?php esc_attr_e( $section->ID ); ?>" name="mesh-sections[<?php esc_attr_e( $section->ID ); ?>][post_status]">
 						<option value="draft" <?php selected( $section->post_status, 'draft' ); ?>><?php esc_html_e( 'Draft', 'linchpin-mesh' ); ?></option>
 						<option value="publish" <?php selected( $section->post_status, 'publish' ); ?>><?php esc_html_e( 'Published', 'linchpin-mesh' ); ?></option>
 					</select>
 					<span class="close-title-edit right"><?php esc_html_e( 'Done', 'linchpin-mesh' ); ?></span>
-					<span class="handle-title mesh-section-status-text"><?php esc_html_e( 'publish' === $section->post_status ? 'Published' : 'Draft' ); ?></span>
+					<span class="handle-title mesh-section-status-text"><?php esc_html_e( 'publish' === $section->post_status ? 'Status: Published' : 'Status: Draft' ); ?></span>
 				</div>
 			</div>
 		</div>
