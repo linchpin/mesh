@@ -37,6 +37,243 @@ mesh.pointers = function ( $ ) {
     };
 
 } ( jQuery );;
+/*!
+ * LimitSlider
+ * https://github.com/vanderlee/limitslider
+ *
+ * Copyright (c) 2011-2015 Martijn W. van der Lee
+ * Licensed under the MIT.
+ */
+/* Slider extension with forced limits and gaps.
+ * Optional ranges, titles and labels.
+ */
+
+;(function ($, undefined) {
+	"use strict";
+
+	$.widget('vanderlee.limitslider', $.ui.slider, {
+		options: $.extend({
+			'classEven':	'ui-slider-handle-even',
+			'classOdd':		'ui-slider-handle-odd',
+			'gap':			undefined,
+			'left':			undefined,
+			'right':		undefined,
+			'limit':		undefined,
+			'limits':		undefined,
+			'ranges':		[],
+			'title':		false,
+			'label':		false
+		}, $.ui.slider.prototype.options),
+
+		_create: function() {
+			if (!this.options.values) {
+				this.options.values = [this.options.value];
+			}
+
+			$.ui.slider.prototype._create.call(this);
+
+			$(this.element).addClass('ui-limitslider');
+
+			this._renderRanges();
+			this._renderLabels();
+			this._renderTitles();
+		},
+
+		_renderTitle: function(index) {
+			if (this.options.title) {
+				var value = this.options.values[index];
+				$(this.handles[index])
+						.attr('title', $.isFunction(this.options.title) ? this.options.title(value, index) : value)
+						.addClass(this.options[index % 2 ? 'classEven' : 'classOdd']);
+			}
+		},
+
+		_renderTitles: function(index) {
+			if (this.options.title) {
+				var that = this;
+				$.each(this.options.values, function(v) {
+					that._renderTitle(v);
+				});
+			}
+		},
+
+		_renderLabel: function(index) {
+			if (this.options.label) {
+				var value = this.options.values[index],
+					html = $('<div>').css({
+					'text-align':		'center'
+				,	'font-size':		'75%'
+				,	'display':			'table-cell'
+				,	'vertical-align':	'middle'
+				}).html($.isFunction(this.options.label) ? this.options.label(value, index) : value);
+
+				$(this.handles[index]).html(html).css({
+					'text-decoration':	'none'
+				,	'display':			'table'
+				});
+			}
+		},
+
+		_renderLabels: function() {
+			if (this.options.label) {
+				var that = this;
+				$.each(this.options.values, function(v) {
+					that._renderLabel(v);
+				});
+			}
+		},
+
+		_renderRanges: function() {
+			var options	= this.options,
+				values  = options.values,
+				scale   = function(value) {
+							return (value - options.min) * 100 / (options.max - options.min);
+						},
+				index,
+				left,
+				right,
+				range;
+
+			$('.ui-slider-range', this.element).remove();
+
+			for (index = 0; index <= values.length; ++index) {
+				var range = options.ranges[index],
+					sliderRange;
+				if (range) {
+					left = scale(index == 0? options.min : values[index - 1]);
+					right = scale(index < values.length? values[index] : options.max);
+
+					sliderRange = $('<div/>')
+						.addClass('ui-slider-range ui-widget-header')
+						.css('width', (right - left) + '%');
+
+					if (range.styleClass) {
+						sliderRange.addClass(range.styleClass);
+					}
+
+					if (left == 0) {
+						sliderRange.addClass('ui-slider-range-min');
+					} else if (right == 100) {
+						sliderRange.addClass('ui-slider-range-max');
+					} else {
+						sliderRange.css('left', left+'%');
+					}
+
+					$(this.element).prepend(sliderRange);
+//					sliderRange.prependTo(this.element);
+				}
+			}
+		},
+
+		_slide: function(event, index, newVal) {
+			// Left limit
+			if (this.options.left) {
+				newVal = Math.max(newVal, this.options.left);
+			}
+
+			// Right limit
+			if (this.options.right) {
+				newVal = Math.min(newVal, this.options.right);
+			}
+
+			// Limit
+			if (this.options.limit) {
+				newVal = Math.max(newVal, this.options.limit[0]);
+				newVal = Math.min(newVal, this.options.limit[1]);
+			}
+
+			// Per-slider limit
+			if (this.options.limits && this.options.limits[index]) {
+				newVal = Math.max(newVal, this.options.limits[index][0]);
+				newVal = Math.min(newVal, this.options.limits[index][1]);
+			}
+
+			if (this.options.gap || this.options.gap === 0) {
+				// Gap to previous
+				if (index > 0) {
+					 newVal = Math.max(newVal, this.options.values[index - 1] + this.options.gap);
+				}
+
+				// Gap to next
+				if (index < this.options.values.length - 1) {
+					 newVal = Math.min(newVal, this.options.values[index + 1] - this.options.gap);
+				}
+			}
+
+			// Call parent
+			$.ui.slider.prototype._slide.call(this, event, index, newVal);
+		},
+
+		_change: function(event, index) {
+			// Call parent
+			$.ui.slider.prototype._change.call(this, event, index);
+
+			// Apply visuals
+			this._renderRanges();
+			this._renderLabel(index);
+			this._renderTitle(index);
+		},
+
+		insert: function(index, value, range, limit) {
+			var max = this.options.values.length,
+				prev,
+				next;
+
+			index = (index === null || typeof index === 'undefined')
+					? max
+					: Math.max(0, Math.min(index, max));
+
+			if (typeof value === 'undefined') {
+				prev = index <= 0 ? this.options.min : this.options.values[index - 1],
+				next = index >= max ? this.options.max : this.options.values[index];
+				value = Math.round((prev + next) * .5);
+			}
+
+			this.options.values.splice(index, 0, value);
+			if (this.options.ranges) {
+				this.options.ranges.splice(index, 0, range || false);
+			}
+			if (this.options.limits) {
+				this.options.limits.splice(index, 0, range || undefined);
+			}
+
+			this._create();
+			this.element.trigger('slide', [index, value]);
+
+			return this;
+		},
+
+		remove: function(index, length) {
+			var max = this.options.values.length - 1;
+			length = Math.max(1, length || 1);
+
+			if (max > length - 1) {
+				index = (index === null || typeof index === 'undefined')
+						? max + 1 - length
+						: Math.max(0, Math.min(index, max));
+
+				this.options.values.splice(index, length);
+				if (this.options.ranges) {
+					this.options.ranges.splice(index, length);
+				}
+				if (this.options.limits) {
+					this.options.limits.splice(index, length);
+				}
+
+				this._create();
+			}
+
+			return this;
+		}
+	});
+}(jQuery));
+
+/**
+ * Controls Block Administration
+ *
+ * @since 0.4.1
+ */
+
 var mesh = mesh || {};
 
 mesh.blocks = function ( $ ) {
@@ -185,162 +422,49 @@ mesh.blocks = function ( $ ) {
                 $columns      = $tgt.parent().parent().parent().find('.mesh-editor-blocks').find('.columns').addClass('dragging'),
                 column_length = $columns.length,
                 column_total  = 12,
-                column_value  = ui.value,
-                column_start  = column_value,
-                max_width = 12,
-                min_width = 3,
-                slider_0 = 0,
-                slider_1 = 0,
-                column_values = [];
+                column_values = [],
+                slider_values = ui.values,
+                post_data     = {
+                    post_id : parseInt( mesh_data.post_id ),
+                    section_id : parseInt( $tgt.closest('.mesh-section').attr('data-mesh-section-id') ),
+                    blocks : {}
+                };
 
-            // cap max column width
+			if ( 3 == column_length ) {
+				for ( var i = 0; i <= column_length; i++ ) {
+					switch ( i ) {
+						case 0:
+							column_values.push( slider_values[i] );
+							break;
 
-            if( column_length == 2 ) {
+						case 1:
+							column_values.push(slider_values[i] - slider_values[0]);
+							break;
 
-                max_width = 9;
-                min_width = 3;
+						case 2:
+							column_values.push( column_total - slider_values[1] );
+							break;
+					}
+				}
+			}
 
-                column_value = Math.max( min_width, column_value );
-                column_value = Math.min( max_width, column_value );
-
-                column_values = [
-                    column_value,
-                    column_total - column_value
-                ];
-            } else if( column_length == 3 ) {
-
-                if( typeof( ui.value ) != 'undefined' ) {
-                    slider_0 = ( column_value && 2 > column_length ) ? column_value : ui.values[0];
-                    slider_1 = ui.values[1];
-                }
-
-                max_width = 6;
-                min_width = 3;
-
-                column_values = [];
-
-                column_value = Math.max(min_width, slider_0);
-                column_value = Math.min(max_width, column_value);
-
-                column_values[0] = column_value;
-
-                min_width = slider_0 + 3;
-                max_width = 9;
-
-                column_value = Math.max(min_width, slider_1);
-                column_value = Math.min(max_width, column_value);
-
-                column_values[1] = column_value - column_values[0];
-                column_values[2] = column_total - ( column_values[0] + column_values[1] );
-            }
+			if ( 2 == column_length ) {
+				column_values.push( slider_values[0] );
+				column_values.push( column_total - slider_values[0] );
+			}
 
             // Custom class removal based on regex pattern
             $columns.removeClass (function (index, css) {
                 return (css.match (/\mesh-columns-\d+/g) || []).join(' ');
             }).each( function( index ) {
-                $(this).addClass( 'mesh-columns-' + column_values[ index ] );
-
-                if ( column_values[ index ] <= 3 ) {
-	                $(this).find('.mesh-column-offset').val(0).trigger('change');
-                }
-            } );
-
-        },
-
-        /**
-         * Save when a user adjust column widths still allow 12 columns min max
-         * but cap the limits to 3 and 9 based on common usage.
-         *
-         * @todo: Add filters for column min, max
-         *
-         * @since 0.3.5
-         *
-         * @param event
-         * @param ui
-         */
-        save_block_widths : function( event, ui ) {
-
-            var $tgt          = $( event.target ),
-                $columns      = $tgt.parent().parent().parent().find('.mesh-editor-blocks').find('.columns'),
-                column_length = $columns.length,
-                column_total  = 12,
-                column_value  = $tgt.slider( "value" ),
-                column_start  = column_value,
-                post_data     = {
-                    post_id : parseInt( mesh_data.post_id ),
-                    section_id : parseInt( $tgt.closest('.mesh-section').attr('data-mesh-section-id') ),
-                    blocks : {}
-                },
-                max_width = 12,
-                min_width = 3,
-                slider_0 = ( column_value && 2 > column_length ) ? column_value : $tgt.slider( "values", 0 ),
-                slider_1 = $tgt.slider( "values", 1 ),
-                column_values = [];
-
-            // Cap max column width
-            if( column_length == 2 ) {
-
-                max_width = 9;
-                min_width = 3;
-
-                column_value = Math.max( min_width, column_value );
-                column_value = Math.min( max_width, column_value );
-
-                // cap min column width
-                if( column_value != $tgt.slider( "value" ) ) {
-                    $tgt.slider( "value", column_value );
-                }
-
-                column_values = [
-                    column_value,
-                    column_total - column_value
-                ];
-            }
-
-            if( column_length == 3 ) {
-
-                max_width = 6;
-                min_width = 3;
-
-                column_values = [];
-
-                column_value = Math.max( min_width, slider_0 );
-                column_value = Math.min( max_width, column_value );
-
-                column_values[0] = column_value;
-
-                min_width = slider_0 + 3;
-                max_width = 9;
-
-                column_value = Math.max( min_width, slider_1 );
-                column_value = Math.min( max_width, column_value );
-
-                column_values[1] = column_value - column_values[0];
-
-                column_values[2] = column_total - ( column_values[0] + column_values[1] );
-
-                if( column_values[0] != $tgt.slider( 'option', "values" )[0] || column_value != $tgt.slider( 'option', "values")[1] ) {
-                    $tgt.slider( "option", "values", [ column_value[0], column_value ]).refresh();
-                    return;
-                }
-            }
-
-            // Custom class removal based on regex pattern
-            $columns.removeClass (function (index, css) {
-                return (css.match (/\mesh-columns-\d+/g) || []).join(' ');
-            });
-
-            $columns.each( function( index ) {
                 var $this = $(this),
                     block_id = parseInt( $this.find('.block').attr('data-mesh-block-id') ),
-                    $column_input = $this.find('.column-width'),
-                    $indicator    = $this.find( '.column-width-indicator' );
+                    $column_input = $this.find('.column-width');
 
                 $this.addClass( 'mesh-columns-' + column_values[ index ] );
 
                 if( block_id && column_values[ index ] ) {
                     $column_input.val( column_values[ index ] );
-                    $indicator.text( column_values[ index ] );
                     post_data.blocks[ block_id.toString() ] = column_values[ index ];
                 }
             } );
@@ -361,13 +485,15 @@ mesh.blocks = function ( $ ) {
                         min:0,
                         max:12,
                         step:1,
+                        left: 3,
+                        right: 9,
+                        gap: 3,
                         start : function() {
                             $this.css('z-index', 1000);
                         },
                         stop : function() {
                             $this.css('z-index', '').find('.ui-slider-handle').css('z-index', 1000);
                         },
-                        change : self.save_block_widths,
                         slide : self.change_block_widths
                     };
 
@@ -382,7 +508,7 @@ mesh.blocks = function ( $ ) {
                     data.value = null;
                 }
 
-                $this.slider( data );
+                $this.limitslider( data );
             });
         },
 
