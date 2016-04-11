@@ -312,6 +312,7 @@ mesh.blocks = function ( $ ) {
 				// OPTIONS
 				axis      : 'x',
 				cursor    : 'move',
+				cursorAt  : { left: 0 },
 				distance  : 20,
 				handle    : '.the-mover',
 				items     : '.mesh-section-block',
