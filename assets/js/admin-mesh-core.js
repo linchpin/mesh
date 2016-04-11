@@ -7,7 +7,7 @@ mesh.admin = function ( $ ) {
 		$add_button         = $('.mesh-section-add'),
 		$expand_button      = $('.mesh-section-expand'),
 		$meta_box_container = $('#mesh-container'),
-		$section_container  = $('#mesh-container'),
+		$section_container  = $('#mesh-sections-container'),
 		$description        = $('#mesh-description'),
 		$equalize           = $('.mesh_section [data-equalizer]'),
 		$sections,

@@ -267,7 +267,7 @@ class Mesh {
 				<?php endif; ?>
 			<?php endif; ?>
 
-			<div id="mesh-container">
+			<div id="mesh-sections-container">
 				<?php foreach ( $content_sections as $key => $section ) : ?>
 					<?php mesh_add_section_admin_markup( $section, true ); ?>
 				<?php endforeach; ?>
