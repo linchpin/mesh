@@ -314,8 +314,10 @@ mesh.blocks = function ( $ ) {
         },
 
         /**
-         *
+         * Setup Resize Slider
          */
+        
+        
         setup_resize_slider : function() {
             $('.column-slider').addClass('ui-slider-horizontal').each(function() {
 
