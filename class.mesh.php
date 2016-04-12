@@ -54,8 +54,7 @@ class Mesh {
 		add_action( 'init',                  array( $this, 'init' ) );
 		add_action( 'admin_init',            array( $this, 'admin_init' ) );
 
-		add_action( 'edit_page_form',        array( $this, 'edit_page_form' ) ); // Pages.
-		add_action( 'edit_form_advanced',    array( $this, 'edit_page_form' ) ); // Other Post Types.
+		add_action( 'edit_form_after_editor', array( $this, 'edit_page_form' ) );
 
 		add_action( 'save_post',             array( $this, 'save_post' ), 10, 2 );
 
@@ -245,7 +244,7 @@ class Mesh {
 
 			<div class="notice below-h2 mesh-row mesh-main-ua-row<?php if ( empty( $content_sections ) ) { echo ' hide'; } ?>">
 				<div class="mesh-columns-3 columns">
-					<p class="title"><?php esc_html_e( 'Multiple Content Sections', 'linchpin-mesh' ); ?></p>
+					<p class="title mesh-admin-title"><?php esc_html_e( 'Mesh', 'linchpin-mesh' ); ?></p>
 				</div>
 
 				<div class="mesh-columns-9 columns text-right">

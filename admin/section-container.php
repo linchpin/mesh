@@ -61,7 +61,7 @@ $blocks = mesh_maybe_create_section_blocks( $section );
 
 		<div class="mesh-row mesh-section-footer">
 			<div class="mesh-section-remove-container mesh-columns-4">
-				<a href="#" class="mesh-section-remove dashicons-before dashicons-no plain-link grey-link"><?php esc_html_e( 'Move to Trash', 'linchpin-mesh' ); ?></a>
+				<a href="#" class="mesh-section-remove dashicons-before dashicons-no plain-link grey-link"><?php esc_html_e( 'Remove', 'linchpin-mesh' ); ?></a>
 				<span class="spinner"></span>
 			</div>
 

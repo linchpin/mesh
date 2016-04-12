@@ -75,7 +75,7 @@
 										<?php endfor; ?>
 									</select>
 
-									<label for="mesh-sections-<?php esc_attr_e( $blocks[ $block_increment ]->ID ); ?>-css-class">
+									<label for="mesh-sections-<?php esc_attr_e( $blocks[ $block_increment ]->ID ); ?>-css-class" class="nowrap">
 										<?php esc_html_e( 'CSS Class', 'linchpin-mesh' ); ?> <input type="text" id="mesh-sections-<?php esc_attr_e( $blocks[ $block_increment ]->ID ); ?>-css-class" name="mesh-sections[<?php esc_attr_e( $section->ID ); ?>][blocks][<?php esc_attr_e( $blocks[ $block_increment ]->ID ); ?>][css_class]" class="mesh-block-css-class" value="<?php esc_attr_e( $block_css_class ); ?>" />
 									</label>
 								</div>
@@ -99,7 +99,7 @@
 										</select>
 									<?php endif; ?>
 
-									<label for="mesh-sections-<?php esc_attr_e( $blocks[ $block_increment ]->ID ); ?>-css-class">
+									<label for="mesh-sections-<?php esc_attr_e( $blocks[ $block_increment ]->ID ); ?>-css-class" class="nowrap">
 										<?php esc_html_e( 'CSS Class', 'linchpin-mesh' ); ?> <input type="text" id="mesh-sections-<?php esc_attr_e( $blocks[ $block_increment ]->ID ); ?>-css-class" name="mesh-sections[<?php esc_attr_e( $section->ID ); ?>][blocks][<?php esc_attr_e( $blocks[ $block_increment ]->ID ); ?>][css_class]" value="<?php esc_attr_e( $block_css_class ); ?>" />
 									</label>
 								</div>
