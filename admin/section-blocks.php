@@ -17,15 +17,7 @@
 		$section_blocks = 1;
 	}
 
-	$offsets_available = 6;
-
-	if ( 2 == $section_blocks ) {
-		$offsets_available = 3;
-	}
-
-	if ( 3 == $section_blocks ) {
-		$offsets_available = 2;
-	}
+	$offsets_available = 9;
 
 	$default_block_columns = 12 / $section_blocks;
 
@@ -80,6 +72,14 @@
 									</label>
 								</div>
 							<?php else : ?>
+								<?php
+									$offsets_available = $block_columns - 3;
+
+									if ( $block_offset > $offsets_available ) {
+										$block_offset = 0;
+									}
+								?>
+
 								<div class="mesh-columns-12">
 									<span class="the-mover hndle ui-sortable-handle left"><span></span></span>
 									<div class="msc-clean-edit left">
@@ -94,7 +94,7 @@
 										<label for="<?php esc_attr_e( 'mesh-sections-' . $section->ID . '-' . $blocks[ $block_increment ]->ID . '-offset]' ); ?>"><?php esc_html_e( 'Offset:', 'linchpin-mesh' ); ?></label>
 										<select id="<?php esc_attr_e( 'mesh-sections-' . $section->ID . '-' . $blocks[ $block_increment ]->ID . '-offset]' ); ?>" class="mesh-column-offset" name="mesh-sections[<?php esc_attr_e( $section->ID ); ?>][blocks][<?php esc_attr_e( $blocks[ $block_increment ]->ID ); ?>][offset]">
 											<?php for ( $i = 0; $i <= $offsets_available; $i++ ) : ?>
-												<option value="<?php esc_attr_e( $i ); ?>"<?php if ( $i === $block_offset ) { esc_attr_e( ' selected' ); } ?>><?php esc_html_e( $i ); ?></option>
+												<option value="<?php esc_attr_e( $i ); ?>"<?php if ( (int) $i === (int) $block_offset ) { esc_attr_e( ' selected' ); } ?>><?php esc_html_e( $i ); ?></option>
 											<?php endfor; ?>
 										</select>
 									<?php endif; ?>

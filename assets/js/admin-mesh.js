@@ -418,14 +418,30 @@ mesh.blocks = function ( $ ) {
             }).each( function( index ) {
                 var $this = $(this),
                     block_id = parseInt( $this.find('.block').attr('data-mesh-block-id') ),
-                    $column_input = $this.find('.column-width');
+                    $column_input = $this.find('.column-width'),
+                    $offset_select = $this.find('.mesh-column-offset'),
+                    selected_offset = $offset_select.val(),
+                    column_value = parseInt( column_values[ index ] ),
+                    max_offset   = column_value - 3;
+
+                $offset_select.children('option').remove();
+
+                for ( var i = 0; i <= max_offset; i++ ) {
+	                $offset_select.append( $('<option></option>').attr( 'value', i ).text( i ) );
+                }
+
+                if ( selected_offset > max_offset ) {
+	                $offset_select.val( 0 ).trigger('change');
+                } else {
+	                $offset_select.val( selected_offset ).trigger('change');
+                }
 
 				// Reset column width classes and save post data
-                $this.addClass( 'mesh-columns-' + column_values[ index ] );
+                $this.addClass( 'mesh-columns-' + column_value );
 
                 if( block_id && column_values[ index ] ) {
-                    $column_input.val( column_values[ index ] );
-                    post_data.blocks[ block_id.toString() ] = column_values[ index ];
+                    $column_input.val( column_value );
+                    post_data.blocks[ block_id.toString() ] = column_value;
                 }
             } );
         },
@@ -433,11 +449,10 @@ mesh.blocks = function ( $ ) {
         /**
          * Setup Resize Slider
          */
-        
-        
+
+
         setup_resize_slider : function() {
             $('.column-slider').addClass('ui-slider-horizontal').each(function() {
-
                 var $this    = $(this),
                     blocks   = parseInt( $this.attr('data-mesh-blocks') ),
                     is_range = ( blocks > 2 ),
