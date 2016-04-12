@@ -1104,8 +1104,14 @@ mesh.admin = function ( $ ) {
 				$spinner = $( '.spinner', $button.parent() ),
 				$current_section = $(this).closest( '.mesh-section' ),
 				$post_status_field = $( '.mesh-section-status', $current_section ),
-				section_id = $current_section.attr( 'data-mesh-section-id' ),
-				form_data = $current_section.parents( 'form' ).serialize(),
+				section_id = $current_section.attr( 'data-mesh-section-id' );
+
+			$current_section.find('.mesh-editor-blocks .wp-editor-area').each( function() {
+				var content = tinymce.get( $(this).attr('ID') ).getContent();
+				$('#' + $(this).attr('ID') ).val( content );
+			});
+
+			var	form_data = $current_section.parents( 'form' ).serialize(),
 				form_submit_data = [];
 
 			$( '.button', $button_container ).addClass( 'disabled' );
@@ -1169,7 +1175,7 @@ mesh.admin = function ( $ ) {
 					$postbox.fadeOut( 400, function(){
 						$postbox.remove();
 
-						var $postboxes = $('.mesh-section', $meta_box_container);
+						var $postboxes = $meta_box_container.find( '.mesh-section' );
 
 						if ( $postboxes.length <= 1 ) {
 							$reorder_button.addClass( 'disabled' );
@@ -1264,6 +1270,11 @@ mesh.admin = function ( $ ) {
 			response = self.save_section_ajax( section_ids, $reorder_spinner );
 		},
 
+		/**
+		 * Initiate saving the section order
+		 *
+		 * @param event
+         */
 		save_section_order : function(event) {
 			event.preventDefault();
 			event.stopPropagation();
@@ -1294,6 +1305,12 @@ mesh.admin = function ( $ ) {
 			$section_container.sortable('destroy');
 		},
 
+		/**
+		 * AJAX call to save section.
+		 *
+		 * @param section_ids
+		 * @param $current_spinner
+         */
 		save_section_ajax : function( section_ids, $current_spinner ) {
 			$.post( ajaxurl, {
                 'action': 'mesh_update_order',
@@ -1305,6 +1322,11 @@ mesh.admin = function ( $ ) {
             });
 		},
 
+		/**
+		 * @todo needs description @mmorgan?
+		 *
+		 * @param event
+         */
 		change_input_title : function(event) {
 			var $this = $(this),
 				current_title = $this.val(),
@@ -1388,8 +1410,6 @@ mesh.admin = function ( $ ) {
 			var $button       = $(this),
 				$section      = $button.parents('.mesh-postbox'),
 				section_id    = parseInt( $section.attr('data-mesh-section-id') );
-				// current_image = $button.attr('data-mesh-section-featured-image'),
-				// $edit_icon = $( '<span class="dashicons dashicons-format-image" />');
 
 			$.post( ajaxurl, {
 				'action': 'mesh_update_featured_image',
@@ -1397,6 +1417,7 @@ mesh.admin = function ( $ ) {
 				'mesh_featured_image_nonce' : mesh_data.featured_image_nonce
 			}, function( response ) {
 				if ( response != -1 ) {
+
 					if ( $button.prev().hasClass('right') && ! $button.prev().hasClass('button') ) {
 						if ( ! $button.parents('.block-background-container') ) {
 							$button.prev().toggleClass( 'button right' );
@@ -1406,7 +1427,6 @@ mesh.admin = function ( $ ) {
 					}
 
 					$button.prev().text( mesh_data.strings.add_image );
-
 					$button.remove();
 				}
 			});
