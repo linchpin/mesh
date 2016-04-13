@@ -502,9 +502,16 @@ class Mesh {
 				$blocks = mesh_get_section_blocks( $p->ID );
 
 				foreach ( $blocks as $b ) {
-					$section_content[] = strip_tags( $b->post_content );
+					if ( ! empty( $b->post_title ) && 'No Column Title' != $b->post_title ) {
+						$page_content_sections[] = strip_tags( $b->post_title );
+					}
+
+					if ( ! empty( $b->post_content ) ) {
+						$section_content[] = strip_tags( $b->post_content );
+					}
 				}
 
+				// Update section to include its block's content.
 				wp_update_post( array(
 					'ID'           => $p->ID,
 					'post_content' => implode( ' ', $section_content ),
@@ -521,8 +528,13 @@ class Mesh {
 					continue;
 				}
 
-				$page_content_sections[] = strip_tags( $p->post_title );
-				$page_content_sections[] = strip_tags( $p->post_content );
+				if ( ! empty( $p->post_title ) && 'No Column Title' != $p->post_title ) {
+					$page_content_sections[] = strip_tags( $p->post_title );
+				}
+
+				if ( ! empty( $p->post_content ) ) {
+					$page_content_sections[] = strip_tags( $p->post_content );
+				}
 			}
 
 			$page_content_sections[] = '</div>';
