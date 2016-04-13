@@ -57,6 +57,9 @@ class Mesh {
 		add_action( 'edit_form_after_editor', array( $this, 'edit_page_form' ) );
 
 		add_action( 'save_post',             array( $this, 'save_post' ), 10, 2 );
+		add_action( 'wp_trash_post',         array( $this, 'wp_trash_post' ) );
+		add_action( 'before_delete_post',    array( $this, 'before_delete_post' ) );
+		add_action( 'untrash_post',          array( $this, 'untrash_post'  ) );
 
 		add_action( 'loop_end',              array( $this, 'loop_end' ) );
 
@@ -235,7 +238,7 @@ class Mesh {
 	 * @return void
 	 */
 	function edit_page_form( $post ) {
-		$content_sections = mesh_get_sections( $post->ID, 'array', true );
+		$content_sections = mesh_get_sections( $post->ID, 'array', array( 'publish', 'draft' ) );
 		$mesh_notifications = get_user_option( 'linchpin_mesh_notifications', get_current_user_id() );
 		?>
 		<div id="mesh-container">
@@ -550,6 +553,96 @@ class Mesh {
 		}
 
 		add_action( 'save_post', array( $this, 'save_post' ), 10, 2 );
+	}
+
+	/**
+	 * When supported post type is trashed, trash its sections and blocks.
+	 *
+	 * @param $post_id
+	 */
+	function wp_trash_post( $post_id ) {
+		$post = get_post( $post_id );
+
+		$supported_post_types = get_option( 'mesh_post_types', array() );
+
+		if ( empty( $supported_post_types[ $post->post_type ] ) ) {
+			return;
+		}
+
+		$sections = mesh_get_sections( $post_id, 'array', array( 'any' ) );
+
+		if ( empty( $sections ) ) {
+			return;
+		}
+
+		foreach ( $sections as $section ) {
+			if ( $blocks = mesh_get_sections( $section->ID, 'array', array( 'any' ) ) ) {
+				foreach ( $blocks as $block ) {
+					wp_trash_post( $block->ID );
+				}
+			}
+			wp_trash_post( $section->ID );
+		}
+	}
+
+	/**
+	 * When a supported post type is deleted, delete its sections and blocks.
+	 *
+	 * @param $post_id
+	 */
+	function before_delete_post( $post_id ) {
+		$post = get_post( $post_id );
+
+		$supported_post_types = get_option( 'mesh_post_types', array() );
+
+		if ( empty( $supported_post_types[ $post->post_type ] ) ) {
+			return;
+		}
+
+		$sections = mesh_get_sections( $post_id, 'array', array( 'publish', 'draft', 'trash' ) );
+
+		if ( empty( $sections ) ) {
+			return;
+		}
+
+		foreach ( $sections as $section ) {
+			if ( $blocks = mesh_get_sections( $section->ID, 'array', array( 'publish', 'draft', 'trash' ) ) ) {
+				foreach ( $blocks as $block ) {
+					wp_delete_post( $block->ID );
+				}
+			}
+			wp_delete_post( $section->ID );
+		}
+	}
+
+	/**
+	 * When a post is untrashed, untrash any sections or blocks that belong to it.
+	 *
+	 * @param $post_id
+	 */
+	function untrash_post( $post_id ) {
+		$post = get_post( $post_id );
+
+		$supported_post_types = get_option( 'mesh_post_types', array() );
+
+		if ( empty( $supported_post_types[ $post->post_type ] ) ) {
+			return;
+		}
+
+		$sections = mesh_get_sections( $post_id, 'array', array( 'trash' ) );
+
+		if ( empty( $sections ) ) {
+			return;
+		}
+
+		foreach ( $sections as $section ) {
+			if ( $blocks = mesh_get_sections( $section->ID, 'array', array( 'trash' ) ) ) {
+				foreach ( $blocks as $block ) {
+					wp_untrash_post( $block->ID );
+				}
+			}
+			wp_untrash_post( $section->ID );
+		}
 	}
 
 	/**
