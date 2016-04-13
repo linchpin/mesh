@@ -84,6 +84,7 @@ class Mesh_AJAX {
 		// Only need certain arguments to be passed on.
 		$new_data = array(
 			'action' => $passed_args['action'],
+			'mesh_action' => 'mesh_save_section',
 			'mesh_content_sections_nonce' => $passed_args['mesh_content_sections_nonce'],
 			'mesh-sections' => array(
 				$section->ID => $passed_args['mesh-sections'][ $section->ID ],
