@@ -276,10 +276,10 @@ mesh.blocks = function ( $ ) {
                             mce_options.body_class = mce_options.body_class.replace(proto_id, editor_id );
                             mce_options.selector = mce_options.selector.replace(proto_id, editor_id );
                             mce_options.wp_skip_init = false;
-                            mce_options.plugins = 'tabfocus,paste,media,wordpress,wpgallery,wplink';
+                            mce_options.plugins = 'lists,media,paste,tabfocus,wordpress,wpautoresize,wpeditimage,wpgallery,wplink,wptextpattern,wpview';
                             mce_options.block_formats = 'Paragraph=p; Heading 3=h3; Heading 4=h4';
                             mce_options.toolbar1 = 'bold,italic,bullist,numlist,hr,alignleft,aligncenter,alignright,alignjustify,link,wp_adv ';
-                            mce_options.toolbar2 = 'formatselect,strikethrough,spellchecker,underline,forecolor,pastetext,removeformat ';
+                            mce_options.toolbar2 = 'formatselect,underline,strikethrough,forecolor,pastetext,removeformat ';
                             mce_options.toolbar3 = '';
                             mce_options.toolbar4 = '';
 
@@ -291,6 +291,7 @@ mesh.blocks = function ( $ ) {
 
                         if (proto_id && typeof tinyMCEPreInit.qtInit[proto_id] !== 'undefined') {
                             qt_options = $.extend(true, {}, tinyMCEPreInit.qtInit[proto_id]);
+
                             qt_options.id = qt_options.id.replace(proto_id, editor_id );
 
                             tinyMCEPreInit.qtInit[editor_id] = qt_options;
