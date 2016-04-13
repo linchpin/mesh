@@ -119,8 +119,9 @@
 								'statusbar'             => false,
 								'autoresize_min_height' => 150,
 								'wp_autoresize_on'      => false,
-								'plugins'               => 'lists,media,paste,tabfocus,fullscreen,wordpress,wpautoresize,wpeditimage,wpgallery,wplink,wptextpattern,wpview',
-								'toolbar1'              => 'bold,italic,bullist,numlist,blockquote,link,unlink',
+								'plugins'               => 'lists,media,paste,tabfocus,wordpress,wpautoresize,wpeditimage,wpgallery,wplink,wptextpattern,wpview',
+								'toolbar1'              => 'bold,italic,bullist,numlist,hr,alignleft,aligncenter,alignright,alignjustify,link,wp_adv',
+								'toolbar2'              => 'formatselect,underline,strikethrough,forecolor,pastetext,removeformat',
 							),
 							'quicktags' => array(
 								'buttons' => 'strong,em,link,block,img,ul,ol,li',

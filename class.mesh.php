@@ -161,7 +161,7 @@ class Mesh {
 		$in['wpautop'] = true;
 		$in['apply_source_formatting'] = false;
 		$in['block_formats'] = 'Paragraph=p; Heading 3=h3; Heading 4=h4';
-		$in['toolbar1'] = 'bold,italic,bullist,numlist,blockquote,hr,alignleft,aligncenter,alignright,alignjustify,link,wp_adv ';
+		$in['toolbar1'] = 'bold,italic,bullist,numlist,hr,alignleft,aligncenter,alignright,alignjustify,link,wp_adv ';
 		$in['toolbar2'] = 'formatselect,underline,strikethrough,forecolor,pastetext,removeformat ';
 		$in['toolbar3'] = '';
 		$in['toolbar4'] = '';

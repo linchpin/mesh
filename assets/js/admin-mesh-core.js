@@ -327,7 +327,7 @@ mesh.admin = function ( $ ) {
 				section_id = $current_section.attr( 'data-mesh-section-id' );
 
 			$current_section.find('.mesh-editor-blocks .wp-editor-area').each( function() {
-				var content = tinymce.get( $(this).attr('ID') ).getContent();
+				var content = tinymce.get( $(this).attr('ID') ).getContent({format : 'raw'});
 				$('#' + $(this).attr('ID') ).val( content );
 			});
 
