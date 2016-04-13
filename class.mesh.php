@@ -527,9 +527,15 @@ class Mesh {
 
 			$page_content_sections[] = '</div>';
 
+			$content = $post->post_content;
+			$pos = strpos( $content, '<div id="mesh-section-content">' );
+			if ( false !== $pos ) {
+				$content = substr( $content, 0, ( strlen( $content ) - $pos ) * -1 );
+			}
+
 			wp_update_post( array(
 				'ID' => $current_section_page,
-				'post_content' => $post->post_content . implode( ' ' , $page_content_sections ),
+				'post_content' => $content . implode( ' ' , $page_content_sections ),
 			) );
 		}
 
