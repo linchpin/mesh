@@ -325,7 +325,7 @@ class Mesh {
 
 		foreach ( $_POST['mesh-sections'] as $section_id => $section_data ) {
 
-			// Sections that we don't want to update
+			// If using AJAX, make sure we only update the section we want to save.
 			if ( $saving_section_via_ajax && $ajax_section_id !== $section_id ) {
 				continue;
 			}
@@ -336,25 +336,23 @@ class Mesh {
 				continue;
 			}
 
-			if ( ! $saving_section_via_ajax ) {
-				$status = sanitize_post_field( 'post_status', $section_data['post_status'], $post_id, 'attribute' );
+			$status = sanitize_post_field( 'post_status', $section_data['post_status'], $post_id, 'attribute' );
 
-				if ( ! in_array( $status, array( 'publish', 'draft' ), true ) ) {
-					$status = 'draft';
-				}
-
-				$updates = array(
-					'ID'           => (int) $section_id,
-					'post_title'   => sanitize_text_field( $section_data['post_title'] ),
-					'post_content' => '', // Sections don't have content
-					'post_status'  => $status,
-					'menu_order'   => $count,
-				);
-
-				wp_update_post( $updates );
-
-				$count ++;
+			if ( ! in_array( $status, array( 'publish', 'draft' ), true ) ) {
+				$status = 'draft';
 			}
+
+			$updates = array(
+				'ID'           => (int) $section_id,
+				'post_title'   => sanitize_text_field( $section_data['post_title'] ),
+				'post_content' => '', // Sections don't have content
+				'post_status'  => $status,
+				'menu_order'   => $count,
+			);
+
+			wp_update_post( $updates );
+
+			$count ++;
 
 			// Save Template.
 			$template = sanitize_text_field( $section_data['template'] );
@@ -484,26 +482,25 @@ class Mesh {
 			}
 		}
 
+		//If this is an AJAX request, and we are saving a section, we need to make sure we process the sections based on the parent.
+		if ( 'mesh_section' == $post->post_type ) {
+			$page_id = $post->post_parent;
+		} else {
+			$page_id = $post_id;
+		}
+
 		// Save a block's content into its section, and then into it's page.
-		$section_posts = mesh_get_sections( $post_id );
+		$section_posts = mesh_get_sections( $page_id );
 
 		if ( ! empty( $section_posts ) ) {
 			foreach ( $section_posts as $p ) {
-				if ( empty( $current_section_page ) ) {
-					if ( $saving_section_via_ajax ) {
-						$current_section_page = $p->post_parent;
-					} else {
-						$current_section_page = $post_id;
-					}
-				}
-
 				$section_content = array();
 
 				$blocks = mesh_get_section_blocks( $p->ID );
 
 				foreach ( $blocks as $b ) {
 					if ( ! empty( $b->post_title ) && 'No Column Title' != $b->post_title ) {
-						$page_content_sections[] = strip_tags( $b->post_title );
+						$section_content[] = strip_tags( $b->post_title );
 					}
 
 					if ( ! empty( $b->post_content ) ) {
@@ -519,7 +516,7 @@ class Mesh {
 			}
 
 			// Get the sections again.
-			$section_posts = mesh_get_sections( $post_id );
+			$section_posts = mesh_get_sections( $page_id );
 			$page_content_sections = array();
 			$page_content_sections[] = '<div id="mesh-section-content">';
 
@@ -528,7 +525,7 @@ class Mesh {
 					continue;
 				}
 
-				if ( ! empty( $p->post_title ) && 'No Column Title' != $p->post_title ) {
+				if ( ! empty( $p->post_title ) && 'No Section Title' != $p->post_title ) {
 					$page_content_sections[] = strip_tags( $p->post_title );
 				}
 
@@ -539,14 +536,15 @@ class Mesh {
 
 			$page_content_sections[] = '</div>';
 
-			$content = $post->post_content;
+			$current_page = get_post( $page_id );
+			$content = $current_page->post_content;
 			$pos = strpos( $content, '<div id="mesh-section-content">' );
 			if ( false !== $pos ) {
 				$content = substr( $content, 0, ( strlen( $content ) - $pos ) * -1 );
 			}
 
 			wp_update_post( array(
-				'ID' => $current_section_page,
+				'ID' => $page_id,
 				'post_content' => $content . implode( ' ' , $page_content_sections ),
 			) );
 		}
