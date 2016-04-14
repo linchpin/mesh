@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: "
 "https://wordpress.org/support/plugin/multiple-content-sections\n"
-"POT-Creation-Date: 2016-04-12 18:28:56+00:00\n"
+"POT-Creation-Date: 2016-04-14 16:00:38+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -14,32 +14,32 @@ msgstr ""
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "X-Generator: grunt-wp-i18n 0.5.4\n"
 
-#: admin/controls.php:14 class.mesh.php:620
+#: admin/controls.php:14 class.mesh.php:729
 msgid "Reorder Sections"
 msgstr ""
 
-#: admin/controls.php:15 class.mesh.php:610
+#: admin/controls.php:15 class.mesh.php:719
 msgid "Expand All"
 msgstr ""
 
-#: admin/controls.php:16 class.mesh.php:611
+#: admin/controls.php:16 class.mesh.php:720
 msgid "Collapse All"
 msgstr ""
 
-#: admin/controls.php:17 class.mesh.php:259
+#: admin/controls.php:17 class.mesh.php:262
 msgid "Add Section"
 msgstr ""
 
-#: admin/section-blocks.php:65 admin/section-blocks.php:87
+#: admin/section-blocks.php:57 admin/section-blocks.php:87
 #: admin/section-container.php:26 admin/section-container.php:39
 msgid "Done"
 msgstr ""
 
-#: admin/section-blocks.php:71 admin/section-blocks.php:94
+#: admin/section-blocks.php:63 admin/section-blocks.php:94
 msgid "Offset:"
 msgstr ""
 
-#: admin/section-blocks.php:79 admin/section-blocks.php:103
+#: admin/section-blocks.php:71 admin/section-blocks.php:103
 #: admin/section-controls.php:40
 msgid "CSS Class"
 msgstr ""
@@ -48,8 +48,8 @@ msgstr ""
 msgid " selected"
 msgstr ""
 
-#: admin/section-blocks.php:137 admin/section-controls.php:71
-#: class.mesh.php:608
+#: admin/section-blocks.php:138 admin/section-controls.php:71
+#: class.mesh.php:717
 msgid "Set Background Image"
 msgstr ""
 
@@ -117,7 +117,7 @@ msgstr ""
 msgid "Increase the column number to access that content."
 msgstr ""
 
-#: class.mesh-ajax.php:49 class.mesh.php:612
+#: class.mesh-ajax.php:49 class.mesh.php:721
 msgid "No Section Title"
 msgstr ""
 
@@ -217,123 +217,123 @@ msgstr ""
 msgid "3 Columns"
 msgstr ""
 
-#: class.mesh.php:124
+#: class.mesh.php:127
 msgid "Show Extra MCS Section Controls?"
 msgstr ""
 
-#: class.mesh.php:183 class.mesh.php:184 class.mesh.php:199 class.mesh.php:200
+#: class.mesh.php:186 class.mesh.php:187 class.mesh.php:202 class.mesh.php:203
 msgid "Content Section"
 msgstr ""
 
-#: class.mesh.php:185
+#: class.mesh.php:188
 msgid "Parent Content Section:"
 msgstr ""
 
-#: class.mesh.php:186
+#: class.mesh.php:189
 msgid "All Content Sections"
 msgstr ""
 
-#: class.mesh.php:187
+#: class.mesh.php:190
 msgid "Add New Content Section"
 msgstr ""
 
-#: class.mesh.php:188
+#: class.mesh.php:191
 msgid "Add New"
 msgstr ""
 
-#: class.mesh.php:189
+#: class.mesh.php:192
 msgid "New Content Section"
 msgstr ""
 
-#: class.mesh.php:190
+#: class.mesh.php:193
 msgid "Edit Content Section"
 msgstr ""
 
-#: class.mesh.php:191
+#: class.mesh.php:194
 msgid "Update Content Section"
 msgstr ""
 
-#: class.mesh.php:192
+#: class.mesh.php:195
 msgid "View Content Section"
 msgstr ""
 
-#: class.mesh.php:193
+#: class.mesh.php:196
 msgid "Search Content Sections"
 msgstr ""
 
-#: class.mesh.php:194
+#: class.mesh.php:197
 msgid "Not found"
 msgstr ""
 
-#: class.mesh.php:195
+#: class.mesh.php:198
 msgid "Not found in Trash"
 msgstr ""
 
-#: class.mesh.php:247
+#: class.mesh.php:250
 msgid "Mesh"
 msgstr ""
 
-#: class.mesh.php:257
+#: class.mesh.php:260
 msgid "You do not have any Content Sections."
 msgstr ""
 
-#: class.mesh.php:258
+#: class.mesh.php:261
 msgid "Get started using Mesh by adding a Content Section now."
 msgstr ""
 
-#: class.mesh.php:264
+#: class.mesh.php:267
 msgid ""
 "Multiple content sections allow you to easily segment your page's contents "
 "into different blocks of markup."
 msgstr ""
 
-#: class.mesh.php:606
+#: class.mesh.php:715
 msgid "Be sure to save the order of your sections once your changes are complete."
 msgstr ""
 
-#: class.mesh.php:607
+#: class.mesh.php:716
 msgid ""
 "Multiple content sections allows you to easily segment your page's contents "
 "into different blocks of markup."
 msgstr ""
 
-#: class.mesh.php:609
+#: class.mesh.php:718
 msgid "Remove Background"
 msgstr ""
 
-#: class.mesh.php:613
+#: class.mesh.php:722
 msgid "Select Section Background"
 msgstr ""
 
-#: class.mesh.php:614
+#: class.mesh.php:723
 msgid "Select Background"
 msgstr ""
 
-#: class.mesh.php:615
+#: class.mesh.php:724
 msgid "Select Column Background"
 msgstr ""
 
-#: class.mesh.php:616
+#: class.mesh.php:725
 msgid "Status: Published"
 msgstr ""
 
-#: class.mesh.php:617
+#: class.mesh.php:726
 msgid "Status: Draft"
 msgstr ""
 
-#: class.mesh.php:618
+#: class.mesh.php:727
 msgid "Are you sure you want to remove this section?"
 msgstr ""
 
-#: class.mesh.php:619
+#: class.mesh.php:728
 msgid "Save Order"
 msgstr ""
 
-#: mesh.php:344
+#: mesh.php:342
 msgid "No Column Title"
 msgstr ""
 
-#: class.mesh.php:181 class.mesh.php:182
+#: class.mesh.php:184 class.mesh.php:185
 msgctxt "Content Section"
 msgid "Content Section"
 msgstr ""

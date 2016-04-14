@@ -27,11 +27,18 @@ mesh.frontend = function ( $ ) {
 		init : function() {
 			self = mesh.frontend;
 
-			if ( 'function' != typeof Foundation.libs.equalizer.equalize && 'function' != typeof Foundation.Equalizer ) {
+			if ( 'object' != typeof( Foundation ) ) {
 				$window
 					.load( self.mesh_equalize_init )
 					.resize( self.mesh_equalize_init );
+			} else if ( 'object' == typeof( Foundation ) ) {
+				if ( 'function' != typeof Foundation.libs.equalizer.equalize && 'function' != typeof Foundation.Equalizer ) {
+					$window
+						.load( self.mesh_equalize_init )
+						.resize( self.mesh_equalize_init );
+				}
 			}
+
 		},
 
 		mesh_equalize_init : function() {
