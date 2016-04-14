@@ -114,9 +114,9 @@
 							'teeny' => true,
 							'tinymce'          => array(
 								'resize'                => false,
-								'wordpress_adv_hidden'  => false,
+								'wordpress_adv_hidden'  => true,
 								'add_unload_trigger'    => false,
-								'statusbar'             => false,
+								'statusbar'             => true,
 								'autoresize_min_height' => 150,
 								'wp_autoresize_on'      => false,
 								'plugins'               => 'lists,media,paste,tabfocus,wordpress,wpautoresize,wpeditimage,wpgallery,wplink,wptextpattern,wpview',
@@ -138,7 +138,6 @@
 								<a class="mesh-block-featured-image-choose"><?php esc_attr_e( 'Set Background Image', 'linchpin-mce' ); ?></a>
 							<?php else : ?>
 								<?php $featured_image = wp_get_attachment_image_src( $featured_image_id, array( 160, 60 ) ); ?>
-
 								<a class="mesh-block-featured-image-choose right" data-mesh-block-featured-image="<?php esc_attr_e( $featured_image_id ); ?>"><img src="<?php esc_attr_e( $featured_image[0] ); ?>" /></a>
 								<a class="mesh-block-featured-image-trash dashicons-before dashicons-dismiss" data-mesh-block-featured-image="<?php esc_attr_e( $featured_image_id ); ?>"></a>
 							<?php endif; ?>

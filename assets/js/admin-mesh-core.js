@@ -185,16 +185,18 @@ mesh.admin = function ( $ ) {
 				if ( response ) {
 
 					var $response        = $( response ),
-						$tinymce_editors = $response.find('.wp-editor-area'),
+						$tinymce_editors,
 						$layout          = $( '#mesh-sections-editor-' + section_id );
 
 					$layout.html('').append( $response );
 
 					// Loop through all of our edits in the response
 
-					blocks.reorder_blocks( $tinymce_editors );
+					$tinymce_editors = $section.find('.wp-editor-area');
+
 					blocks.setup_resize_slider();
 					blocks.setup_sortable();
+					blocks.rerender_blocks( $tinymce_editors );
 
 					self.setup_notifications( $layout );
 
