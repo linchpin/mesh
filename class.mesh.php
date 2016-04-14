@@ -57,6 +57,9 @@ class Mesh {
 		add_action( 'edit_form_after_editor', array( $this, 'edit_page_form' ) );
 
 		add_action( 'save_post',             array( $this, 'save_post' ), 10, 2 );
+		add_action( 'wp_trash_post',         array( $this, 'wp_trash_post' ) );
+		add_action( 'before_delete_post',    array( $this, 'before_delete_post' ) );
+		add_action( 'untrash_post',          array( $this, 'untrash_post'  ) );
 
 		add_action( 'loop_end',              array( $this, 'loop_end' ) );
 
@@ -235,7 +238,7 @@ class Mesh {
 	 * @return void
 	 */
 	function edit_page_form( $post ) {
-		$content_sections = mesh_get_sections( $post->ID, 'array', true );
+		$content_sections = mesh_get_sections( $post->ID, 'array', array( 'publish', 'draft' ) );
 		$mesh_notifications = get_user_option( 'linchpin_mesh_notifications', get_current_user_id() );
 		?>
 		<div id="mesh-container">
@@ -325,7 +328,7 @@ class Mesh {
 
 		foreach ( $_POST['mesh-sections'] as $section_id => $section_data ) {
 
-			// Sections that we don't want to update
+			// If using AJAX, make sure we only update the section we want to save.
 			if ( $saving_section_via_ajax && $ajax_section_id !== $section_id ) {
 				continue;
 			}
@@ -336,25 +339,23 @@ class Mesh {
 				continue;
 			}
 
-			if ( ! $saving_section_via_ajax ) {
-				$status = sanitize_post_field( 'post_status', $section_data['post_status'], $post_id, 'attribute' );
+			$status = sanitize_post_field( 'post_status', $section_data['post_status'], $post_id, 'attribute' );
 
-				if ( ! in_array( $status, array( 'publish', 'draft' ), true ) ) {
-					$status = 'draft';
-				}
-
-				$updates = array(
-					'ID'           => (int) $section_id,
-					'post_title'   => sanitize_text_field( $section_data['post_title'] ),
-					'post_content' => '', // Sections don't have content
-					'post_status'  => $status,
-					'menu_order'   => $count,
-				);
-
-				wp_update_post( $updates );
-
-				$count ++;
+			if ( ! in_array( $status, array( 'publish', 'draft' ), true ) ) {
+				$status = 'draft';
 			}
+
+			$updates = array(
+				'ID'           => (int) $section_id,
+				'post_title'   => sanitize_text_field( $section_data['post_title'] ),
+				'post_content' => '', // Sections don't have content
+				'post_status'  => $status,
+				'menu_order'   => $count,
+			);
+
+			wp_update_post( $updates );
+
+			$count ++;
 
 			// Save Template.
 			$template = sanitize_text_field( $section_data['template'] );
@@ -484,27 +485,33 @@ class Mesh {
 			}
 		}
 
+		//If this is an AJAX request, and we are saving a section, we need to make sure we process the sections based on the parent.
+		if ( 'mesh_section' == $post->post_type ) {
+			$page_id = $post->post_parent;
+		} else {
+			$page_id = $post_id;
+		}
+
 		// Save a block's content into its section, and then into it's page.
-		$section_posts = mesh_get_sections( $post_id );
+		$section_posts = mesh_get_sections( $page_id );
 
 		if ( ! empty( $section_posts ) ) {
 			foreach ( $section_posts as $p ) {
-				if ( empty( $current_section_page ) ) {
-					if ( $saving_section_via_ajax ) {
-						$current_section_page = $p->post_parent;
-					} else {
-						$current_section_page = $post_id;
-					}
-				}
-
 				$section_content = array();
 
 				$blocks = mesh_get_section_blocks( $p->ID );
 
 				foreach ( $blocks as $b ) {
-					$section_content[] = strip_tags( $b->post_content );
+					if ( ! empty( $b->post_title ) && 'No Column Title' != $b->post_title ) {
+						$section_content[] = strip_tags( $b->post_title );
+					}
+
+					if ( ! empty( $b->post_content ) ) {
+						$section_content[] = strip_tags( $b->post_content );
+					}
 				}
 
+				// Update section to include its block's content.
 				wp_update_post( array(
 					'ID'           => $p->ID,
 					'post_content' => implode( ' ', $section_content ),
@@ -512,7 +519,7 @@ class Mesh {
 			}
 
 			// Get the sections again.
-			$section_posts = mesh_get_sections( $post_id );
+			$section_posts = mesh_get_sections( $page_id );
 			$page_content_sections = array();
 			$page_content_sections[] = '<div id="mesh-section-content">';
 
@@ -521,19 +528,121 @@ class Mesh {
 					continue;
 				}
 
-				$page_content_sections[] = strip_tags( $p->post_title );
-				$page_content_sections[] = strip_tags( $p->post_content );
+				if ( ! empty( $p->post_title ) && 'No Section Title' != $p->post_title ) {
+					$page_content_sections[] = strip_tags( $p->post_title );
+				}
+
+				if ( ! empty( $p->post_content ) ) {
+					$page_content_sections[] = strip_tags( $p->post_content );
+				}
 			}
 
 			$page_content_sections[] = '</div>';
 
+			$current_page = get_post( $page_id );
+			$content = $current_page->post_content;
+			$pos = strpos( $content, '<div id="mesh-section-content">' );
+			if ( false !== $pos ) {
+				$content = substr( $content, 0, ( strlen( $content ) - $pos ) * -1 );
+			}
+
 			wp_update_post( array(
-				'ID' => $current_section_page,
-				'post_content' => $post->post_content . implode( ' ' , $page_content_sections ),
+				'ID' => $page_id,
+				'post_content' => $content . implode( ' ' , $page_content_sections ),
 			) );
 		}
 
 		add_action( 'save_post', array( $this, 'save_post' ), 10, 2 );
+	}
+
+	/**
+	 * When supported post type is trashed, trash its sections and blocks.
+	 *
+	 * @param $post_id
+	 */
+	function wp_trash_post( $post_id ) {
+		$post = get_post( $post_id );
+
+		$supported_post_types = get_option( 'mesh_post_types', array() );
+
+		if ( empty( $supported_post_types[ $post->post_type ] ) ) {
+			return;
+		}
+
+		$sections = mesh_get_sections( $post_id, 'array', array( 'any' ) );
+
+		if ( empty( $sections ) ) {
+			return;
+		}
+
+		foreach ( $sections as $section ) {
+			if ( $blocks = mesh_get_sections( $section->ID, 'array', array( 'any' ) ) ) {
+				foreach ( $blocks as $block ) {
+					wp_trash_post( $block->ID );
+				}
+			}
+			wp_trash_post( $section->ID );
+		}
+	}
+
+	/**
+	 * When a supported post type is deleted, delete its sections and blocks.
+	 *
+	 * @param $post_id
+	 */
+	function before_delete_post( $post_id ) {
+		$post = get_post( $post_id );
+
+		$supported_post_types = get_option( 'mesh_post_types', array() );
+
+		if ( empty( $supported_post_types[ $post->post_type ] ) ) {
+			return;
+		}
+
+		$sections = mesh_get_sections( $post_id, 'array', array( 'publish', 'draft', 'trash' ) );
+
+		if ( empty( $sections ) ) {
+			return;
+		}
+
+		foreach ( $sections as $section ) {
+			if ( $blocks = mesh_get_sections( $section->ID, 'array', array( 'publish', 'draft', 'trash' ) ) ) {
+				foreach ( $blocks as $block ) {
+					wp_delete_post( $block->ID );
+				}
+			}
+			wp_delete_post( $section->ID );
+		}
+	}
+
+	/**
+	 * When a post is untrashed, untrash any sections or blocks that belong to it.
+	 *
+	 * @param $post_id
+	 */
+	function untrash_post( $post_id ) {
+		$post = get_post( $post_id );
+
+		$supported_post_types = get_option( 'mesh_post_types', array() );
+
+		if ( empty( $supported_post_types[ $post->post_type ] ) ) {
+			return;
+		}
+
+		$sections = mesh_get_sections( $post_id, 'array', array( 'trash' ) );
+
+		if ( empty( $sections ) ) {
+			return;
+		}
+
+		foreach ( $sections as $section ) {
+			if ( $blocks = mesh_get_sections( $section->ID, 'array', array( 'trash' ) ) ) {
+				foreach ( $blocks as $block ) {
+					wp_untrash_post( $block->ID );
+				}
+			}
+			wp_untrash_post( $section->ID );
+		}
 	}
 
 	/**

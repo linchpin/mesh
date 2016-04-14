@@ -169,30 +169,28 @@ function mesh_add_section_admin_markup( $section, $closed = false ) {
 }
 
 /**
+ * Retrieve Mesh sections.
+ *
  * @param int    $post_id        Post ID.
  * @param string $return_type    Object Return Type.
- * @param bool   $include_drafts Include Posts with the status of Draft.
+ * @param array  $statuses       Statuses to query.
  *
  * @return array|WP_Query
  */
-function mesh_get_sections( $post_id, $return_type = 'array', $include_drafts = false ) {
+function mesh_get_sections( $post_id, $return_type = 'array', $statuses = array( 'publish' ) ) {
 	$args = array(
 		'post_type' => 'mesh_section',
 		'posts_per_page' => 50,
 		'orderby' => 'menu_order',
 		'order' => 'ASC',
 		'post_parent' => (int) $post_id,
+		'post_status' => $statuses,
 	);
-
-	if ( true === $include_drafts ) {
-		$args['post_status'] = array(
-			'publish',
-			'draft',
-		);
-	}
 
 	$content_sections = new WP_Query( $args );
 
+	error_log( print_r( $content_sections, true ) );
+	
 	switch ( $return_type ) {
 		case 'query' :
 			return $content_sections;
