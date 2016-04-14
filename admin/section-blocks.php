@@ -80,28 +80,46 @@
 									}
 								?>
 
-								<div class="mesh-columns-12">
-									<span class="the-mover hndle ui-sortable-handle left"><span></span></span>
+								<div class="mesh-columns-12 mesh-block-options-toggle-container">
+									<span class="the-mover hndle ui-sortable-handle left mesh-hide-for-small"><span></span></span>
 									<div class="msc-clean-edit left">
 										<input id="<?php esc_attr_e( 'mesh-sections-' . $section->ID . '-' . $blocks[ $block_increment ]->ID . '-title]' ); ?>" type="text" class="mesh-column-title msc-clean-edit-element widefat left" name="mesh-sections[<?php esc_attr_e( $section->ID ); ?>][blocks][<?php esc_attr_e( $blocks[ $block_increment ]->ID ); ?>][post_title]" value="<?php esc_attr_e( $blocks[ $block_increment ]->post_title ); ?>"/>
 										<span class="close-title-edit left"><?php esc_html_e( 'Done', 'linchpin-mesh' ); ?></span>
 										<span class="handle-title"><?php esc_attr_e( $blocks[ $block_increment ]->post_title ); ?></span>
 									</div>
+
+									<a href="#" class="slide-toggle-element mesh-more-section-options right slide-toggle-meta-dropdown mesh-hide-for-small" data-toggle=".mesh-block-meta-dropdown-<?php esc_attr_e( $blocks[ $block_increment ]->ID ); ?>"><?php _e( 'More' ); ?></a>
 								</div>
 
-								<div class="mesh-columns-12">
-									<?php if ( 4 !== $section_blocks ) : ?>
-										<label for="<?php esc_attr_e( 'mesh-sections-' . $section->ID . '-' . $blocks[ $block_increment ]->ID . '-offset]' ); ?>"><?php esc_html_e( 'Offset:', 'linchpin-mesh' ); ?></label>
-										<select id="<?php esc_attr_e( 'mesh-sections-' . $section->ID . '-' . $blocks[ $block_increment ]->ID . '-offset]' ); ?>" class="mesh-column-offset" name="mesh-sections[<?php esc_attr_e( $section->ID ); ?>][blocks][<?php esc_attr_e( $blocks[ $block_increment ]->ID ); ?>][offset]">
-											<?php for ( $i = 0; $i <= $offsets_available; $i++ ) : ?>
-												<option value="<?php esc_attr_e( $i ); ?>"<?php if ( (int) $i === (int) $block_offset ) { esc_attr_e( ' selected' ); } ?>><?php esc_html_e( $i ); ?></option>
-											<?php endfor; ?>
-										</select>
-									<?php endif; ?>
+								<div class="mesh-columns-12 mesh-block-meta-dropdown mesh-block-meta-dropdown-<?php esc_attr_e( $blocks[ $block_increment ]->ID ); ?> hide">
+									<div class="left mesh-columns-8">
+										<?php if ( 4 !== $section_blocks ) : ?>
+											<label for="<?php esc_attr_e( 'mesh-sections-' . $section->ID . '-' . $blocks[ $block_increment ]->ID . '-offset]' ); ?>"><?php esc_html_e( 'Offset:', 'linchpin-mesh' ); ?></label>
+											<select id="<?php esc_attr_e( 'mesh-sections-' . $section->ID . '-' . $blocks[ $block_increment ]->ID . '-offset]' ); ?>" class="mesh-column-offset" name="mesh-sections[<?php esc_attr_e( $section->ID ); ?>][blocks][<?php esc_attr_e( $blocks[ $block_increment ]->ID ); ?>][offset]">
+												<?php for ( $i = 0; $i <= $offsets_available; $i++ ) : ?>
+													<option value="<?php esc_attr_e( $i ); ?>"<?php if ( (int) $i === (int) $block_offset ) { esc_attr_e( ' selected' ); } ?>><?php esc_html_e( $i ); ?></option>
+												<?php endfor; ?>
+											</select>
+										<?php endif; ?>
 
-									<label for="mesh-sections-<?php esc_attr_e( $blocks[ $block_increment ]->ID ); ?>-css-class" class="nowrap">
-										<?php esc_html_e( 'CSS Class', 'linchpin-mesh' ); ?> <input type="text" id="mesh-sections-<?php esc_attr_e( $blocks[ $block_increment ]->ID ); ?>-css-class" name="mesh-sections[<?php esc_attr_e( $section->ID ); ?>][blocks][<?php esc_attr_e( $blocks[ $block_increment ]->ID ); ?>][css_class]" value="<?php esc_attr_e( $block_css_class ); ?>" />
-									</label>
+										<label for="mesh-sections-<?php esc_attr_e( $blocks[ $block_increment ]->ID ); ?>-css-class" class="nowrap">
+											<?php esc_html_e( 'CSS Class', 'linchpin-mesh' ); ?> <input type="text" id="mesh-sections-<?php esc_attr_e( $blocks[ $block_increment ]->ID ); ?>-css-class" name="mesh-sections[<?php esc_attr_e( $section->ID ); ?>][blocks][<?php esc_attr_e( $blocks[ $block_increment ]->ID ); ?>][css_class]" value="<?php esc_attr_e( $block_css_class ); ?>" />
+										</label>
+									</div>
+
+									<div class="block-background-container right text-right mesh-columns-4 mesh-section-background">
+										<div class="choose-image">
+											<?php $featured_image_id = get_post_thumbnail_id( $blocks[ $block_increment ]->ID );
+
+											if ( empty( $featured_image_id ) ) : ?>
+												<a class="mesh-block-featured-image-choose"><?php esc_attr_e( 'Set Background Image', 'linchpin-mce' ); ?></a>
+											<?php else : ?>
+												<?php $featured_image = wp_get_attachment_image_src( $featured_image_id, array( 160, 60 ) ); ?>
+												<a class="mesh-block-featured-image-choose right" data-mesh-block-featured-image="<?php esc_attr_e( $featured_image_id ); ?>"><img src="<?php esc_attr_e( $featured_image[0] ); ?>" /></a>
+												<a class="mesh-block-featured-image-trash dashicons-before dashicons-dismiss" data-mesh-block-featured-image="<?php esc_attr_e( $featured_image_id ); ?>"></a>
+											<?php endif; ?>
+										</div>
+									</div>
 								</div>
 							<?php endif; ?>
 						</div>
@@ -130,19 +148,6 @@
 						?>
 					</div>
 
-					<div class="block-background-container text-right mesh-columns-12 mesh-section-background">
-						<div class="choose-image">
-							<?php $featured_image_id = get_post_thumbnail_id( $blocks[ $block_increment ]->ID );
-
-							if ( empty( $featured_image_id ) ) : ?>
-								<a class="mesh-block-featured-image-choose"><?php esc_attr_e( 'Set Background Image', 'linchpin-mce' ); ?></a>
-							<?php else : ?>
-								<?php $featured_image = wp_get_attachment_image_src( $featured_image_id, array( 160, 60 ) ); ?>
-								<a class="mesh-block-featured-image-choose right" data-mesh-block-featured-image="<?php esc_attr_e( $featured_image_id ); ?>"><img src="<?php esc_attr_e( $featured_image[0] ); ?>" /></a>
-								<a class="mesh-block-featured-image-trash dashicons-before dashicons-dismiss" data-mesh-block-featured-image="<?php esc_attr_e( $featured_image_id ); ?>"></a>
-							<?php endif; ?>
-						</div>
-					</div>
 					<input type="hidden" class="column-width" name="mesh-sections[<?php esc_attr_e( $section->ID ); ?>][blocks][<?php esc_attr_e( $blocks[ $block_increment ]->ID ); ?>][columns]" value="<?php esc_attr_e( $block_columns ); ?>"/>
 
 					<input type="hidden" class="block-menu-order" name="mesh-sections[<?php esc_attr_e( $section->ID ); ?>][blocks][<?php esc_attr_e( $blocks[ $block_increment ]->ID ); ?>][menu_order]" value="<?php esc_attr_e( $blocks[ $block_increment ]->menu_order ); ?>"/>
