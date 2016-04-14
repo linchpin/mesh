@@ -190,7 +190,7 @@ function mesh_get_sections( $post_id, $return_type = 'array', $statuses = array(
 	$content_sections = new WP_Query( $args );
 
 	error_log( print_r( $content_sections, true ) );
-	
+
 	switch ( $return_type ) {
 		case 'query' :
 			return $content_sections;
@@ -371,7 +371,7 @@ function mesh_section_background( $post_id = 0, $echo = true, $size_large = 'lar
 		$post_id  = $post->ID;
 	}
 
-	if ( has_post_thumbnail() ) {
+	if ( has_post_thumbnail( $post_id ) ) {
 
 		$backgrounds = array();
 
