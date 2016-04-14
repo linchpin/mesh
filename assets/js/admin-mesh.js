@@ -319,6 +319,10 @@ mesh.blocks = function ( $ ) {
 				tolerance : 'pointer',
 
 				// EVENTS
+				create : function ( event, ui ) {
+					$('.mesh-editor-blocks .fade-in-on-create').fadeIn('slow');
+				},
+
 				start : function ( event, ui ) {
 					var $tgt           = $( event.target ),
 						$column_slider = $tgt.find( '.column-slider' );
@@ -497,9 +501,6 @@ mesh.blocks = function ( $ ) {
          * @param $tinymce_editors
          */
         rerender_blocks : function( $tinymce_editors ) {
-
-            console.log( $tinymce_editors );
-
             $tinymce_editors.each(function() {
                 var editor_id   = $(this).prop('id'),
                     proto_id,
@@ -1081,7 +1082,7 @@ mesh.admin = function ( $ ) {
 						$reorder_button.removeClass( 'disabled' );
 					}
 
-					blocks.reorder_blocks( $tinymce_editors );
+					blocks.rerender_blocks( $tinymce_editors );
 
 					// Repopulate the sections cache so that the new section is included going forward.
 					$sections = $('.mesh-section', $section_container);
