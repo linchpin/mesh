@@ -235,24 +235,20 @@ mesh.blocks = function ( $ ) {
          */
         rerender_blocks : function( $tinymce_editors ) {
 
-            console.log( $tinymce_editors );
-
             $tinymce_editors.each(function() {
-                var editor_id   = $(this).prop('id'),
+
+                var editor_id   = $(this).attr('id'),
                     proto_id,
                     mce_options = [],
                     qt_options  = [];
 
-                // Reset our editors if we have any
-                if( typeof tinymce.editors !== 'undefined' ) {
-                    if ( tinymce.editors[ editor_id ] ) {
-                        tinymce.get( editor_id ).remove();
-                    }
-                }
-
                 if ( typeof tinymce !== 'undefined' ) {
 
                     var $block_content = $(this).closest('.block-content');
+
+                    if( 'html' === mesh.blocks.mode_enabled( this ) ) {
+                        $block_content.find('.switch-tmce').trigger('click');
+                    }
 
                     /**
                      * Props to @danielbachuber for a shove in the right direction to have movable editors in the wp-admin
@@ -267,8 +263,8 @@ mesh.blocks = function ( $ ) {
 
                         var block_html = $(this).closest('.block-content').html(),
                             pattern = /\[post_mesh\-section\-editor\-[0-9]+\]/;
-                        block_html = block_html.replace(new RegExp(proto_id, 'g'), editor_id);
-                        block_html = block_html.replace(new RegExp(pattern, 'g'), '[post_content]');
+                            block_html = block_html.replace(new RegExp(proto_id, 'g'), editor_id);
+                            block_html = block_html.replace(new RegExp(pattern, 'g'), '[post_content]');
 
                         $block_content.html(block_html);
 
@@ -294,7 +290,14 @@ mesh.blocks = function ( $ ) {
 
                     try {
                         if ( 'html' !== mesh.blocks.mode_enabled( this ) ) {
+
+                            // Reset our editors if we have any
+                            if ( parseInt( tinymce.majorVersion ) >= 4 ) {
+                                tinymce.execCommand( 'mceRemoveEditor', false, editor_id );
+                            }
+
                             tinymce.init( tinyMCEPreInit.mceInit[ editor_id ] );
+
                             $( this ).closest( '.wp-editor-wrap' ).on( 'click.wp-editor', function() {
                                 if ( this.id ) {
                                     window.wpActiveEditor = this.id.slice( 3, -5 );
@@ -325,9 +328,6 @@ mesh.blocks = function ( $ ) {
                             }
                         }
                     } catch(e) {}
-
-                    // @todo This is kinda hacky. See about switching this out @aware
-                    $block_content.find('.switch-tmce').trigger('click');
                 }
             });
         },
