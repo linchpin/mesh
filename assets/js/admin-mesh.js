@@ -319,6 +319,10 @@ mesh.blocks = function ( $ ) {
 				tolerance : 'pointer',
 
 				// EVENTS
+				create : function ( event, ui ) {
+					$('.mesh-editor-blocks .fade-in-on-create').fadeIn('slow');
+				},
+
 				start : function ( event, ui ) {
 					var $tgt           = $( event.target ),
 						$column_slider = $tgt.find( '.column-slider' );
@@ -497,21 +501,22 @@ mesh.blocks = function ( $ ) {
          * @param $tinymce_editors
          */
         rerender_blocks : function( $tinymce_editors ) {
-
             $tinymce_editors.each(function() {
-
-                var editor_id   = $(this).attr('id'),
+                var editor_id   = $(this).prop('id'),
                     proto_id,
                     mce_options = [],
                     qt_options  = [];
 
+                // Reset our editors if we have any
+                if( typeof tinymce.editors !== 'undefined' ) {
+                    if ( tinymce.editors[ editor_id ] ) {
+                        tinymce.get( editor_id ).remove();
+                    }
+                }
+
                 if ( typeof tinymce !== 'undefined' ) {
 
                     var $block_content = $(this).closest('.block-content');
-
-                    if( 'html' === mesh.blocks.mode_enabled( this ) ) {
-                        $block_content.find('.switch-tmce').trigger('click');
-                    }
 
                     /**
                      * Props to @danielbachuber for a shove in the right direction to have movable editors in the wp-admin
@@ -526,8 +531,8 @@ mesh.blocks = function ( $ ) {
 
                         var block_html = $(this).closest('.block-content').html(),
                             pattern = /\[post_mesh\-section\-editor\-[0-9]+\]/;
-                            block_html = block_html.replace(new RegExp(proto_id, 'g'), editor_id);
-                            block_html = block_html.replace(new RegExp(pattern, 'g'), '[post_content]');
+                        block_html = block_html.replace(new RegExp(proto_id, 'g'), editor_id);
+                        block_html = block_html.replace(new RegExp(pattern, 'g'), '[post_content]');
 
                         $block_content.html(block_html);
 
@@ -553,14 +558,7 @@ mesh.blocks = function ( $ ) {
 
                     try {
                         if ( 'html' !== mesh.blocks.mode_enabled( this ) ) {
-
-                            // Reset our editors if we have any
-                            if ( parseInt( tinymce.majorVersion ) >= 4 ) {
-                                tinymce.execCommand( 'mceRemoveEditor', false, editor_id );
-                            }
-
                             tinymce.init( tinyMCEPreInit.mceInit[ editor_id ] );
-
                             $( this ).closest( '.wp-editor-wrap' ).on( 'click.wp-editor', function() {
                                 if ( this.id ) {
                                     window.wpActiveEditor = this.id.slice( 3, -5 );
@@ -591,6 +589,9 @@ mesh.blocks = function ( $ ) {
                             }
                         }
                     } catch(e) {}
+
+                    // @todo This is kinda hacky. See about switching this out @aware
+                    $block_content.find('.switch-tmce').trigger('click');
                 }
             });
         },
@@ -1081,7 +1082,7 @@ mesh.admin = function ( $ ) {
 						$reorder_button.removeClass( 'disabled' );
 					}
 
-					blocks.reorder_blocks( $tinymce_editors );
+					blocks.rerender_blocks( $tinymce_editors );
 
 					// Repopulate the sections cache so that the new section is included going forward.
 					$sections = $('.mesh-section', $section_container);

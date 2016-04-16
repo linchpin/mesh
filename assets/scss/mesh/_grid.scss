@@ -28,5 +28,21 @@
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;
 	float: left;
-	padding: 0 1px;
+
+	@media #{$mesh-small} {
+		clear: both;
+		width: 100% !important;
+	}
+}
+
+.mesh-hide-for-small {
+	@media #{$mesh-small} {
+		display: none !important;
+	}
+}
+
+.mesh-show-for-small {
+	@media #{$mesh-medium-up} {
+		display: none !important;
+	}
 }

@@ -52,6 +52,13 @@
 		transition: $global_timing opacity $global_easing;
 	}
 
+	input {
+		margin: {
+			bottom: $base * .25;
+			top: $base * .25;
+		};
+	}
+
 	span {
 		cursor: pointer;
 	}
@@ -59,8 +66,8 @@
 	.handle-title {
 		-moz-box-sizing: border-box;
 	    box-sizing: border-box;
-	    height: $input_height;
-	    line-height: $input_height - ($input_padding_y * 2);
+	    height: 32px;
+	    line-height: 32px - ($input_padding_y * 2);
 	    padding: $input_padding_y $input_padding_x;
 
 	    opacity: 1;
@@ -84,7 +91,8 @@
 		display: none;
 
 		color: $primary;
-		line-height: $input_height;
+		height: 32px;
+	    line-height: 32px;
 		padding: {
 			left: $input_padding_x;
 			right: $input_padding_x;
@@ -230,7 +238,7 @@
 	text-decoration: none;
 
 	position: absolute;
-	right: $base;
+	right: $base * .75;
 	bottom: -1px;
 
 	@include dashicons( '\f140', 'after' );
@@ -312,10 +320,48 @@
 // 06. Blocks
 .mesh-editor-blocks {
 	margin: {
-		bottom: $base;
-		top: $base;
+		bottom: 6px;
+		top: 6px;
 	};
 	position: relative;
+
+	.mesh-block-options-toggle-container {
+		background-color: $light-grey;
+		border-bottom: 1px solid $grey;
+		position: relative;
+	}
+
+	.block {
+		border: 1px solid $grey;
+
+		.wp-editor-container {
+			border: {
+				left: none;
+				right: none;
+				bottom: none;
+			};
+		}
+
+		.slide-toggle-meta-dropdown {
+			border: {
+				right: none;
+				top: none;
+			};
+
+			right: 0;
+			top: 0;
+		}
+
+		.wp-media-buttons {
+			margin-left: $base * .25;
+		}
+	}
+
+	.mesh-block-meta-dropdown {
+		background-color: $light-grey;
+		margin-top: 0;
+		padding: .75rem;
+	}
 
 	.column-slider {
 		position: absolute;
@@ -325,6 +371,45 @@
 	    height: auto;
 	    bottom: 0px;
 	    border: none;
+
+	    &[data-mesh-blocks="2"] {
+		    ~ .mesh-section-block {
+			    &:nth-of-type(2) {
+				    padding-right: $base * 1.5;
+			    }
+
+			    &:nth-of-type(3) {
+				    padding-left: $base * 1.5;
+			    }
+		    }
+	    }
+
+	    &[data-mesh-blocks="3"] {
+		    .ui-slider-handle {
+			    &:nth-of-type(1) {
+				    margin-left: -15px;
+			    }
+
+			    &:nth-of-type(2) {
+				    margin-left: -11px;
+			    }
+		    }
+
+		    ~ .mesh-section-block {
+			    &:nth-of-type(2) {
+				    padding-right: 26px;
+			    }
+
+			    &:nth-of-type(3) {
+				    padding-left: 22px;
+				    padding-right: 22px
+			    }
+
+			    &:nth-of-type(4) {
+				    padding-left: 26px;
+			    }
+		    }
+	    }
 	}
 
 	> .mesh-row {
@@ -346,7 +431,7 @@
 		margin-left: -($base * 2 - 6px)/2;
 		width: $base * 2 - 6px;
 
-		top: 0;
+		top: 5px;
 		bottom: 0;
 		z-index: 12;
 
@@ -415,10 +500,6 @@
 			top: 0;
 		}
 	}
-}
-
-.block-background-container {
-	margin-top: $base;
 }
 
 .the-mover {

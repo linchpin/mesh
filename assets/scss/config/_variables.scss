@@ -3,6 +3,7 @@
  * 01. Dimensions
  * 02. Colors
  * 03. Animations
+ * 04. Breakpoints
  *
  **/
 
@@ -33,3 +34,8 @@ $pointer-border:   #3592b6;
 // 03. Animations
 $global_timing: 300ms;
 $global_easing: ease-out;
+
+
+// 04. Breakpoints
+$mesh-small: 'screen and (max-width: 1023px)';
+$mesh-medium-up: 'screen and (min-width: 1024px)';

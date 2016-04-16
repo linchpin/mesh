@@ -257,7 +257,7 @@ mesh.admin = function ( $ ) {
 						$reorder_button.removeClass( 'disabled' );
 					}
 
-					blocks.reorder_blocks( $tinymce_editors );
+					blocks.rerender_blocks( $tinymce_editors );
 
 					// Repopulate the sections cache so that the new section is included going forward.
 					$sections = $('.mesh-section', $section_container);
