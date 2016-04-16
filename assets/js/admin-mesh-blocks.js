@@ -190,8 +190,6 @@ mesh.blocks = function ( $ ) {
         /**
          * Setup Resize Slider
          */
-
-
         setup_resize_slider : function() {
             $('.column-slider').addClass('ui-slider-horizontal').each(function() {
                 var $this    = $(this),
@@ -244,14 +242,12 @@ mesh.blocks = function ( $ ) {
                     mce_options = [],
                     qt_options  = [];
 
-                // Reset our editors if we have any
-                if( typeof tinymce.editors !== 'undefined' ) {
-                    if ( tinymce.editors[ editor_id ] ) {
-                        tinymce.get( editor_id ).remove();
-                    }
-                }
-
                 if ( typeof tinymce !== 'undefined' ) {
+
+                    // Reset our editors if we have any
+                    if ( parseInt( tinymce.majorVersion ) >= 4 ) {
+                        tinymce.execCommand( 'mceRemoveEditor', false, editor_id );
+                    }
 
                     var $block_content = $(this).closest('.block-content');
 
@@ -260,7 +256,6 @@ mesh.blocks = function ( $ ) {
                      *
                      * https://github.com/alleyinteractive/wordpress-fieldmanager/blob/master/js/richtext.js#L58-L95
                      */
-
                     if ( typeof tinyMCEPreInit.mceInit[ editor_id ] === 'undefined' ) {
                         proto_id = 'content';
 
@@ -295,7 +290,12 @@ mesh.blocks = function ( $ ) {
 
                     try {
                         if ( 'html' !== mesh.blocks.mode_enabled( this ) ) {
-                            tinymce.init( tinyMCEPreInit.mceInit[ editor_id ] );
+                            if ( parseInt( tinymce.majorVersion ) >= 4 ) {
+                                tinymce.execCommand( 'mceRemoveEditor', false, editor_id );
+                            }
+                            
+                            // tinymce.init( tinyMCEPreInit.mceInit[ editor_id ] );
+
                             $( this ).closest( '.wp-editor-wrap' ).on( 'click.wp-editor', function() {
                                 if ( this.id ) {
                                     window.wpActiveEditor = this.id.slice( 3, -5 );

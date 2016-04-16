@@ -188,10 +188,18 @@ mesh.admin = function ( $ ) {
 						$tinymce_editors,
 						$layout          = $( '#mesh-sections-editor-' + section_id );
 
+					$tinymce_editors = $section.find('.wp-editor-area');
+
+					$tinymce_editors.each( function() {
+						if ( parseInt( tinymce.majorVersion ) >= 4 ) {
+							tinymce.execCommand( 'mceRemoveEditor', false, $(this).prop('id') );
+						}
+					});
+
 					$layout.html('').append( $response );
-
+					
 					// Loop through all of our edits in the response
-
+					// reset our editors after clearing
 					$tinymce_editors = $section.find('.wp-editor-area');
 
 					blocks.setup_resize_slider();
