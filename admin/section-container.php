@@ -52,7 +52,6 @@ $blocks = mesh_maybe_create_section_blocks( $section );
 
 		<?php
 		if ( $blocks ) {
-			include LINCHPIN_MESH___PLUGIN_DIR . 'admin/section-template-reordering.php';
 			include LINCHPIN_MESH___PLUGIN_DIR . 'admin/section-blocks.php';
 			include LINCHPIN_MESH___PLUGIN_DIR . 'admin/section-template-warnings.php';
 		}

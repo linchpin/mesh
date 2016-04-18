@@ -139,7 +139,6 @@ class Mesh_AJAX {
 			delete_post_meta( $block->ID, '_mesh_column_width' );
 		}
 		ob_start();
-		include( LINCHPIN_MESH___PLUGIN_DIR . '/admin/section-template-reordering.php' );
 		include( LINCHPIN_MESH___PLUGIN_DIR . '/admin/section-blocks.php' );
 		include( LINCHPIN_MESH___PLUGIN_DIR . '/admin/section-template-warnings.php' );
 		$output = ob_get_contents();

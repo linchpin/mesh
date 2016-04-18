@@ -45,7 +45,7 @@ mesh.admin = function ( $ ) {
 				.on('click', '.mesh-section-save-draft',    self.section_save_draft )
 				.on('click', '.mesh-section-publish',       self.section_publish )
 
-				.on('change', '.mesh-choose-layout',            self.choose_layout )
+				.on('change', '.mesh-choose-layout',           self.choose_layout )
 				.on('keypress', '.msc-clean-edit-element',     self.prevent_submit )
 				.on('keyup', '.msc-clean-edit-element',        self.change_input_title )
 				.on('change', 'select.msc-clean-edit-element', self.change_select_title );
@@ -190,6 +190,8 @@ mesh.admin = function ( $ ) {
 
 					$tinymce_editors = $section.find('.wp-editor-area');
 
+                    // @todo this should be done more efficiently later: Needed to Firefox but will be fixed
+                    // once consolidated. Can't clear html before removing or tinymce throws an error
 					$tinymce_editors.each( function() {
 						if ( parseInt( tinymce.majorVersion ) >= 4 ) {
 							tinymce.execCommand( 'mceRemoveEditor', false, $(this).prop('id') );
@@ -206,7 +208,7 @@ mesh.admin = function ( $ ) {
 					blocks.setup_sortable();
 					blocks.rerender_blocks( $tinymce_editors );
 
-					self.setup_notifications( $layout );
+					// self.setup_notifications( $layout );
 
 					$spinner.removeClass('is-active');
 
