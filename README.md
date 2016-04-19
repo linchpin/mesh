@@ -34,12 +34,14 @@ We have started to add hooks to extend the functionality of Mesh. This list will
  
 ## Using add_filter to append content to "the_content"
 
-```<?php
+```
+<?php
 add_action('the_content', 'add_multiple_content_sections');
 function add_multiple_content_sections( $the_content ) {
     $the_content .= get_mesh_sections();
     return $the_content;
-} ?>```
+} ?>
+```
 
 ## FAQs
 
@@ -60,9 +62,11 @@ We're working on the ability to tie in extra controls to blocks and sections.
 * `apply_filters( 'mesh_allowed_html', array_merge_recursive( $post_allowed, $mesh_allowed );` Filter allowed HTML within MCS
 * `apply_filters( 'mesh_admin_pointers-' . $screen_id, array() );`
 
-```$css_mode = array(
+```
+$css_mode = array(
     array( 'label' => __( 'Use Mesh CSS', 'linchpin-mesh' ), 'value' => '' ),
     array( 'label' => __( 'Disable Mesh CSS', 'linchpin-mesh' ), 'value' => 0 ),
     array( 'label' => __( 'Use Foundation w/ my theme', 'linchpin-mesh' ), 'value' => 1 ),
     array( 'label' => __( 'Use Bootstrap (coming soon)', 'linchpin-mesh' ), 'value' => 2 ),
-);```
+);
+```
