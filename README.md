@@ -28,15 +28,19 @@ We have started to add hooks to extend the functionality of Mesh. This list will
 
 ## Adding a function to your page template(s)
 
-`<?php if ( function_exists( 'mesh_display_sections' ) ) : ?>
- 	<?php mesh_display_sections(); ?>
- <?php endif; ?>`
+```php
+<?php
+if ( function_exists( 'mesh_display_sections' ) ) {
+    mesh_display_sections();
+}
+?>
+ ```
  
 ## Using add_filter to append content to "the_content"
 
-```
+```php
 <?php
-add_action('the_content', 'add_multiple_content_sections');
+add_action( 'the_content', 'add_multiple_content_sections' );
 function add_multiple_content_sections( $the_content ) {
     $the_content .= get_mesh_sections();
     return $the_content;
@@ -45,13 +49,13 @@ function add_multiple_content_sections( $the_content ) {
 
 ## FAQs
 
-= Can I use Mesh on other post types? =
+#### Can I use Mesh on other post types?
 
 Any post type that is publicly available within your WordPress install can enable Mesh support. Simply visit Settings -> Mesh to enable it.  Only *Pages* have Mesh enabled by default.
 
-= Can I add my own controls to blocks? =
+#### Can I add my own controls to columns/blocks?
 
-We're working on the ability to tie in extra controls to blocks and sections.
+We're working on the ability to tie in extra controls to blocks and sections through filters
 
 ### Available Filters
 
@@ -61,12 +65,3 @@ We're working on the ability to tie in extra controls to blocks and sections.
 * `apply_filters( 'mesh_css_mode', $css_mode );` Allow filtering of available css_mode options
 * `apply_filters( 'mesh_allowed_html', array_merge_recursive( $post_allowed, $mesh_allowed );` Filter allowed HTML within MCS
 * `apply_filters( 'mesh_admin_pointers-' . $screen_id, array() );`
-
-```
-$css_mode = array(
-    array( 'label' => __( 'Use Mesh CSS', 'linchpin-mesh' ), 'value' => '' ),
-    array( 'label' => __( 'Disable Mesh CSS', 'linchpin-mesh' ), 'value' => 0 ),
-    array( 'label' => __( 'Use Foundation w/ my theme', 'linchpin-mesh' ), 'value' => 1 ),
-    array( 'label' => __( 'Use Bootstrap (coming soon)', 'linchpin-mesh' ), 'value' => 2 ),
-);
-```
