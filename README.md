@@ -65,3 +65,8 @@ We're working on the ability to tie in extra controls to blocks and sections thr
 * `apply_filters( 'mesh_css_mode', $css_mode );` Allow filtering of available css_mode options
 * `apply_filters( 'mesh_allowed_html', array_merge_recursive( $post_allowed, $mesh_allowed );` Filter allowed HTML within MCS
 * `apply_filters( 'mesh_admin_pointers-' . $screen_id, array() );`
+
+### Recognition
+
+* We're utilizing the [PHP Markdown Lib](https://github.com/michelf/php-markdown) by Michel Fortin @michelf
+* Found some help along the way from regarding [draggable editors](https://github.com/alleyinteractive/wordpress-fieldmanager/blob/master/js/richtext.js#L58-L95) by @danielbachhuber
