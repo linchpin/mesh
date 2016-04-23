@@ -1,6 +1,6 @@
 ##Change Log For Mesh
 
-## [1.0.0] - 2016-04-01
+## [1.0.0] - 2016-04-21
 
 ### Updated
 - Change the name of Multiple Content Sections to Mesh for public release.
@@ -158,4 +158,4 @@
 - Added ability to upload media to sections
 
 ## [0.1.0]
-- Initial Release
+- Initial Internal Release
