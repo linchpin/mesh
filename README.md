@@ -1,32 +1,39 @@
-# Mesh for WordPress
+# Mesh - Multiple Content Sections
 
-Adds the ability to create multiple areas for content within pages, posts and custom post types.
+A page builder, simplified. Get the most flexibility to display content by adding multiple content sections within Pages, Posts, or Custom Post Types.
 
-## Description
+## What is Mesh - Multiple Content Sections?
 
-Adds the ability to create multiple areas for content within pages, posts and custom post types within WordPress.
+Mesh is the easiest way to add additional content to your Page, Post, or Custom Post Type in a responsive grid system. Adding a Mesh Section creates a new row on your page below the default WordPress content. Each Section can be divided into 1 to 4 Columns, providing Visual/Text editors for each Column. Give your Sections and Columns titles, drag to rearrange, add background images to Columns or an entire Section, then Publish your Section or save it as a Draft until your content is just right.
 
-## Goals
+Efficient and unobtrusive, Mesh was designed to simply extend the functionality of the normal page editor within WordPress to provide the flexibility of building pages in a responsive grid without adding code or editing page templates.
 
-### Responsive out of the box.
+#### Responsive Out-of-the-Box
 
-Mesh provides a basic responsive grid system build similarly to [Foundation](http://foundation.zurb.com) though you can easily disable styles if you need to.
+Mesh is currently built off of [Foundation](http://foundation.zurb.com)'s grid but will soon have support for Bootstrap and custom frameworks as well. All grid styles can also be easily disabled.
 
-Mesh is also compatible with another useful WordPress plugin [Toggle wpautop](https://wordpress.org/plugins/toggle-wpautop/) by [Linchpin](https://linchpin.agency)
+#### Familiar and Easy to Use
 
-## Recognizable and easy to use.
+Our goal is to stay as close to the core usability of WordPress as possible. Mesh Content editing is recognizable and simple to use. As you create new Sections for your content you will be presented with an interface similar to that utilized on default Pages and Posts.
 
-The UI/UX goals of Mesh is to stay as close to the core usability of the WordPress dashboard and only veer from that when absolutely necessary.
+#### Extensible and Plays Well with Others
 
-It should be easy to use and quickly recognizable to the user that this is still the dashboard they are used to.
+We have added a few hooks to extend the functionality of Mesh and will continue to expand these over time. For a full list of currently available hooks and filters check out the FAQ.
 
-By default Mesh is only enabled for *Pages*. Please visit Settings -> Mesh to enable it for more sections.
+Mesh is also compatible with [Linchpin](https://linchpin.agency)'s [Toggle wpautop](https://wordpress.org/plugins/toggle-wpautop/) WordPress plugin.
 
-### Extensibility
 
-We have started to add hooks to extend the functionality of Mesh. This list will grow over time.
+## FAQs
 
-## Adding a function to your page template(s)
+#### Can I use Mesh on other post types?
+
+Any post type that is publicly available within your WordPress install can be enabled to support Mesh. Under *Settings* > *Mesh* you can see all post types available to you. Only Pages are Mesh enabled by default.
+
+#### Can I add my own controls to columns/blocks?
+
+We’re working on the ability to tie in extra controls to Columns and Sections.
+
+#### Adding a function to your page template(s)
 
 ```php
 <?php
@@ -36,7 +43,7 @@ if ( function_exists( 'mesh_display_sections' ) ) {
 ?>
  ```
  
-## Using add_filter to append content to "the_content"
+#### Using add_filter to append content to "the_content"
 
 ```php
 <?php
@@ -47,17 +54,7 @@ function add_multiple_content_sections( $the_content ) {
 } ?>
 ```
 
-## FAQs
-
-#### Can I use Mesh on other post types?
-
-Any post type that is publicly available within your WordPress install can enable Mesh support. Simply visit Settings -> Mesh to enable it.  Only *Pages* have Mesh enabled by default.
-
-#### Can I add my own controls to columns/blocks?
-
-We're working on the ability to tie in extra controls to blocks and sections through filters
-
-### Available Filters
+#### Available Filters
 
 * `apply_filters( 'mesh_content_css', get_stylesheet_directory_uri() . '/css/admin-editor.css' , 'editor_path' ),`
 * `apply_filters( 'mesh_section_templates', $section_templates );`
