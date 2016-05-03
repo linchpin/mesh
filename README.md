@@ -1,6 +1,6 @@
 # Mesh - Multiple Content Sections
 
-A page builder, simplified. Get the most flexibility to display content by adding multiple content sections within Pages, Posts, or Custom Post Types.
+A WordPress page builder, simplified. Get the most flexibility to display content by adding multiple content sections within Pages, Posts, or Custom Post Types.
 
 ## What is Mesh - Multiple Content Sections?
 
@@ -14,7 +14,7 @@ Mesh is currently built off of [Foundation](http://foundation.zurb.com)'s grid b
 
 #### Familiar and Easy to Use
 
-Our goal is to stay as close to the core usability of WordPress as possible. Mesh Content editing is recognizable and simple to use. As you create new Sections for your content you will be presented with an interface similar to that utilized on default Pages and Posts.
+Our goal is to stay as close to the core usability of WordPress as possible. Mesh content editing is recognizable and simple to use. As you create new Sections for your content you will be presented with an interface similar to that utilized on default Pages and Posts.
 
 #### Extensible and Plays Well with Others
 
@@ -27,9 +27,9 @@ Mesh is also compatible with [Linchpin](https://linchpin.agency)'s [Toggle wpaut
 
 #### Can I use Mesh on other post types?
 
-Any post type that is publicly available within your WordPress install can be enabled to support Mesh. Under *Settings* > *Mesh* you can see all post types available to you. Only Pages are Mesh enabled by default.
+Any post type that is publicly available within your WordPress install can be enabled to support Mesh. Under _**Settings**_ > _**Mesh**_ you can see all post types available to you. Only Pages are Mesh enabled by default.
 
-#### Can I add my own controls to columns/blocks?
+#### Can I add my own controls?
 
 We’re working on the ability to tie in extra controls to Columns and Sections.
 
