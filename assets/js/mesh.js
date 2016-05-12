@@ -5,6 +5,7 @@ mesh.frontend = function ( $ ) {
 	var $body     = $('body'),
 		$window   = $(window),
 		$equalize = $('.mesh_section [data-equalizer]'),
+		do_lp_equal = false,
 
 		self;
 
@@ -27,18 +28,33 @@ mesh.frontend = function ( $ ) {
 		init : function() {
 			self = mesh.frontend;
 
+			// Foundation does not exist
 			if ( 'object' != typeof( Foundation ) ) {
-				$window
-					.load( self.mesh_equalize_init )
-					.resize( self.mesh_equalize_init );
+				do_lp_equal = true;
+
+			// Foundation exists
 			} else if ( 'object' == typeof( Foundation ) ) {
-				if ( 'function' != typeof Foundation.libs.equalizer.equalize && 'function' != typeof Foundation.Equalizer ) {
-					$window
-						.load( self.mesh_equalize_init )
-						.resize( self.mesh_equalize_init );
+
+				// Foundation's equalize is not turned on
+				if ( 'function' != typeof( Foundation.Equalizer ) && undefined == typeof( Foundation.libs ) ) {
+					do_lp_equal = true;
+				} else {
+					// Not Foundation 6 and has Foundation 5 equalizer object
+					if ( 'function' != typeof ( Foundation.Equalizer ) && 'object' == typeof( Foundation.libs.equalizer ) ) {
+
+						// Foundation 5 equalize function is not available
+						if ( 'function' != typeof( Foundation.libs.equalizer.equalize ) ) {
+							do_lp_equal = true;
+						}
+					}
 				}
 			}
 
+			if ( do_lp_equal ) {
+				$window
+					.load( self.mesh_equalize_init )
+					.resize( self.mesh_equalize_init );
+			}
 		},
 
 		mesh_equalize_init : function() {
