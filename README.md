@@ -1,3 +1,4 @@
+![Mesh Banner Image](https://linchpin.agency/wp-content/uploads/2016/05/mesh-banner-github.jpg)
 # Mesh - Multiple Content Sections
 
 A WordPress page builder, simplified. Get the most flexibility to display content by adding multiple content sections within Pages, Posts, or Custom Post Types.
@@ -19,8 +20,6 @@ Our goal is to stay as close to the core usability of WordPress as possible. Mes
 #### Extensible and Plays Well with Others
 
 We have added a few hooks to extend the functionality of Mesh and will continue to expand these over time. For a full list of currently available hooks and filters check out the FAQ.
-
-Mesh is also compatible with [Linchpin](https://linchpin.agency)'s [Toggle wpautop](https://wordpress.org/plugins/toggle-wpautop/) WordPress plugin.
 
 
 ## FAQs
