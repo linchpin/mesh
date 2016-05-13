@@ -103,5 +103,9 @@ function add_multiple_content_sections( $the_content ) {
 
 == Changelog ==
 
+= 1.0.1 =
+* Added clarity to readme file.
+* Better checks for pre-existing Foundation elements.
+
 = 1.0 =
 * Hello World!
