@@ -1,9 +1,9 @@
 {
   "name": "mesh",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "author": {
     "name": "Linchpin",
-    "email": "sayhi@linchpinagency.com",
+    "email": "sayhi@linchpin.agency",
     "url": "http://linchpin.agency"
   },
   "devDependencies": {

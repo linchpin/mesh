@@ -1,5 +1,19 @@
 ##Change Log For Mesh
 
+## [1.0.2] - 2016-05-13
+
+### Fixed
+- Missing Domain Path: /languages
+
+## [1.0.1] - 2016-05-13
+
+### Updated
+- Readme has more information
+- Setting up localization
+
+### Fixed
+- Checks for Foundation
+
 ## [1.0.0] - 2016-04-21
 
 ### Updated

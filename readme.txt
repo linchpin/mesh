@@ -3,10 +3,11 @@ Contributors: linchpin_agency, aware, maxinacube, desrosj, ebeltram, lulu5588
 Tags: linchpin, sections, content, page builder, page builder plugin, design, wysiwyg, home page builder, template builder, layout builder, landing page builder, website builder, site builder, drag and drop builder, editor, page layout, visual editor
 Requires at least: 4.0
 Tested up to: 4.5
-Stable tag: 1.0.1
+Stable tag: 1.0.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: mesh
+Domain Path: /languages
 
 A page builder, simplified. Get the most flexibility to display content by adding multiple content sections within Pages, Posts, or Custom Post Types.
 
