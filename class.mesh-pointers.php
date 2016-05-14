@@ -95,8 +95,8 @@ class Mesh_Admin_Pointers {
 	        'target' => '.mesh-more-section-options:first',
 	        'options' => array(
 	            'content' => sprintf( '<h3> %s </h3> <p> %s </p>',
-	                __( 'Section Options' ,'linchpin-mesh' ),
-	                __( 'View all section options by click the "More Options" toggle.','linchpin-mesh' )
+	                __( 'Section Options' ,'mesh' ),
+	                __( 'View all section options by click the "More Options" toggle.','mesh' )
 	            ),
 	            'position' => array( 'edge' => 'bottom', 'align' => 'left' ),
 	        ),
@@ -106,8 +106,8 @@ class Mesh_Admin_Pointers {
 	        'target' => '.mesh-column-offset:first',
 	        'options' => array(
 	            'content' => sprintf( '<h3> %s </h3> <p> %s </p>',
-	                __( 'What is an offset?' ,'linchpin-mesh' ),
-	                __( 'If using Foundation, an offset will indent your column by the amount of columns selected in the dropdown menu.', 'linchpin-mesh' )
+	                __( 'What is an offset?' ,'mesh' ),
+	                __( 'If using Foundation, an offset will indent your column by the amount of columns selected in the dropdown menu.', 'mesh' )
 	            ),
 	            'position' => array( 'edge' => 'bottom', 'align' => 'left' ),
 	        ),
@@ -117,8 +117,8 @@ class Mesh_Admin_Pointers {
 		    'target' => '.mesh-editor-blocks .the-mover:first',
 		    'options' => array(
 			    'content' => sprintf( '<h3> %s </h3> <p> %s </p>',
-				    __( 'Rearrange Columns', 'linchpin-mesh' ),
-				    __( 'Use this handle to click and drag this column, giving you the ability to swap columns on the fly.', 'linchpin-mesh' )
+				    __( 'Rearrange Columns', 'mesh' ),
+				    __( 'Use this handle to click and drag this column, giving you the ability to swap columns on the fly.', 'mesh' )
 			    ),
 			    'position' => array(
 				    'edge' => 'left',

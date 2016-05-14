@@ -35,17 +35,17 @@ class Mesh {
 
 		$this->template_data = array(
 			'mesh-columns-1.php' => array(
-				'label' => __( '1 Columns', 'linchpin-mesh' ),
+				'label' => __( '1 Columns', 'mesh' ),
 				'blocks' => 1,
 				'widths' => array( 12 ),
 			),
 			'mesh-columns-2.php' => array(
-				'label' => __( '2 Columns', 'linchpin-mesh' ),
+				'label' => __( '2 Columns', 'mesh' ),
 				'blocks' => 2,
 				'widths' => array( 6, 6 ),
 			),
 			'mesh-columns-3.php' => array(
-				'label' => __( '3 Columns', 'linchpin-mesh' ),
+				'label' => __( '3 Columns', 'mesh' ),
 				'blocks' => 3,
 				'widths' => array( 4, 4, 4 ),
 			),
@@ -59,7 +59,7 @@ class Mesh {
 		add_action( 'save_post',             array( $this, 'save_post' ), 10, 2 );
 		add_action( 'wp_trash_post',         array( $this, 'wp_trash_post' ) );
 		add_action( 'before_delete_post',    array( $this, 'before_delete_post' ) );
-		add_action( 'untrash_post',          array( $this, 'untrash_post'  ) );
+		add_action( 'untrash_post',          array( $this, 'untrash_post' ) );
 
 		add_action( 'loop_end',              array( $this, 'loop_end' ) );
 
@@ -124,7 +124,7 @@ class Mesh {
 		}
 
 		$args = array(
-			'label'   => __( 'Show Extra MCS Section Controls?', 'linchpin-mesh' ),
+			'label'   => __( 'Show Extra MCS Section Controls?', 'mesh' ),
 			'default' => 0,
 			'option'  => 'linchpin_mesh_section_kitchensink',
 		);
@@ -180,27 +180,29 @@ class Mesh {
 	 */
 	function init() {
 
+		load_plugin_textdomain( 'mesh', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
+
 		$labels = array(
-			'name'                => _x( 'Content Section', 'Content Section', 'linchpin-mesh' ),
-			'singular_name'       => _x( 'Content Section', 'Content Section', 'linchpin-mesh' ),
-			'menu_name'           => __( 'Content Section', 'linchpin-mesh' ),
-			'name_admin_bar'      => __( 'Content Section', 'linchpin-mesh' ),
-			'parent_item_colon'   => __( 'Parent Content Section:', 'linchpin-mesh' ),
-			'all_items'           => __( 'All Content Sections', 'linchpin-mesh' ),
-			'add_new_item'        => __( 'Add New Content Section', 'linchpin-mesh' ),
-			'add_new'             => __( 'Add New', 'linchpin-mesh' ),
-			'new_item'            => __( 'New Content Section', 'linchpin-mesh' ),
-			'edit_item'           => __( 'Edit Content Section', 'linchpin-mesh' ),
-			'update_item'         => __( 'Update Content Section', 'linchpin-mesh' ),
-			'view_item'           => __( 'View Content Section', 'linchpin-mesh' ),
-			'search_items'        => __( 'Search Content Sections', 'linchpin-mesh' ),
-			'not_found'           => __( 'Not found', 'linchpin-mesh' ),
-			'not_found_in_trash'  => __( 'Not found in Trash', 'linchpin-mesh' ),
+			'name'                => _x( 'Content Section', 'Content Section', 'mesh' ),
+			'singular_name'       => _x( 'Content Section', 'Content Section', 'mesh' ),
+			'menu_name'           => __( 'Content Section', 'mesh' ),
+			'name_admin_bar'      => __( 'Content Section', 'mesh' ),
+			'parent_item_colon'   => __( 'Parent Content Section:', 'mesh' ),
+			'all_items'           => __( 'All Content Sections', 'mesh' ),
+			'add_new_item'        => __( 'Add New Content Section', 'mesh' ),
+			'add_new'             => __( 'Add New', 'mesh' ),
+			'new_item'            => __( 'New Content Section', 'mesh' ),
+			'edit_item'           => __( 'Edit Content Section', 'mesh' ),
+			'update_item'         => __( 'Update Content Section', 'mesh' ),
+			'view_item'           => __( 'View Content Section', 'mesh' ),
+			'search_items'        => __( 'Search Content Sections', 'mesh' ),
+			'not_found'           => __( 'Not found', 'mesh' ),
+			'not_found_in_trash'  => __( 'Not found in Trash', 'mesh' ),
 		);
 
 		register_post_type( 'mesh_section', array(
-			'label'               => __( 'Content Section', 'linchpin-mesh' ),
-			'description'         => __( 'Content Section', 'linchpin-mesh' ),
+			'label'               => __( 'Content Section', 'mesh' ),
+			'description'         => __( 'Content Section', 'mesh' ),
 			'labels'              => $labels,
 			'public' => false,
 			'hierarchical' => true,
@@ -247,7 +249,7 @@ class Mesh {
 
 			<div class="notice below-h2 mesh-row mesh-main-ua-row<?php if ( empty( $content_sections ) ) { echo ' hide'; } ?>">
 				<div class="mesh-columns-3 columns">
-					<p class="title mesh-admin-title"><?php esc_html_e( 'Mesh', 'linchpin-mesh' ); ?></p>
+					<p class="title mesh-admin-title"><?php esc_html_e( 'Mesh', 'mesh' ); ?></p>
 				</div>
 
 				<div class="mesh-columns-9 columns text-right">
@@ -257,14 +259,14 @@ class Mesh {
 
 			<?php if ( empty( $content_sections ) ) : ?>
 				<div id="mesh-description" class="description notice below-h2 text-center lead empty-sections-message">
-					<p><?php esc_html_e( 'You do not have any Content Sections.', 'linchpin-mesh' ); ?></p>
-					<p><?php esc_html_e( 'Get started using Mesh by adding a Content Section now.', 'linchpin-mesh' ); ?></p>
-					<p><a href="#" class="button primary mesh-section-add dashicons-before dashicons-plus"><?php esc_html_e( 'Add Section', 'linchpin-mesh' ); ?></a></p>
+					<p><?php esc_html_e( 'You do not have any Content Sections.', 'mesh' ); ?></p>
+					<p><?php esc_html_e( 'Get started using Mesh by adding a Content Section now.', 'mesh' ); ?></p>
+					<p><a href="#" class="button primary mesh-section-add dashicons-before dashicons-plus"><?php esc_html_e( 'Add Section', 'mesh' ); ?></a></p>
 				</div>
 			<?php else : ?>
 				<?php if ( empty( $mesh_notifications['intro'] ) ) : ?>
 					<div id="mesh-description" class="description notice is-dismissible notice-info below-h2" data-type="intro">
-						<p><?php esc_html_e( 'Multiple content sections allow you to easily segment your page\'s contents into different blocks of markup.', 'linchpin-mesh' ); ?></p>
+						<p><?php esc_html_e( 'Multiple content sections allow you to easily segment your page\'s contents into different blocks of markup.', 'mesh' ); ?></p>
 					</div>
 				<?php endif; ?>
 			<?php endif; ?>
@@ -712,21 +714,21 @@ class Mesh {
 		wp_enqueue_script( 'admin-mesh', plugins_url( 'assets/js/admin-mesh.js', __FILE__ ), array( 'jquery', 'jquery-ui-draggable', 'jquery-ui-droppable', 'jquery-ui-slider', 'wp-pointer' ), '1.0', true );
 
 		$strings = array(
-			'reorder' =>           __( 'Be sure to save the order of your sections once your changes are complete.', 'linchpin-mesh' ),
-			'description' =>       __( 'Multiple content sections allows you to easily segment your page\'s contents into different blocks of markup.', 'linchpin-mesh' ),
-			'add_image' =>         __( 'Set Background Image', 'linchpin-mesh' ),
-			'remove_image' =>      __( 'Remove Background', 'linchpin-mesh' ),
-			'expand_all' =>        __( 'Expand All', 'linchpin-mesh' ),
-			'collapse_all' =>      __( 'Collapse All', 'linchpin-mesh' ),
-			'default_title' =>     __( 'No Section Title', 'linchpin-mesh' ),
-			'select_section_bg' => __( 'Select Section Background', 'linchpin-mesh' ),
-			'select_bg' =>         __( 'Select Background' , 'linchpin-mesh' ),
-			'select_block_bg' =>   __( 'Select Column Background', 'linchpin-mesh' ),
-			'published' =>         __( 'Status: Published', 'linchpin-mesh' ),
-			'draft' =>             __( 'Status: Draft', 'linchpin-mesh' ),
-			'confirm_remove' =>    __( 'Are you sure you want to remove this section?', 'linchpin-mesh' ),
-			'save_order'     =>    __( 'Save Order', 'linchpin-mesh' ),
-			'reorder'        =>    __( 'Reorder Sections', 'linchpin-mesh' ),
+			'reorder' =>           __( 'Be sure to save the order of your sections once your changes are complete.', 'mesh' ),
+			'description' =>       __( 'Multiple content sections allows you to easily segment your page\'s contents into different blocks of markup.', 'mesh' ),
+			'add_image' =>         __( 'Set Background Image', 'mesh' ),
+			'remove_image' =>      __( 'Remove Background', 'mesh' ),
+			'expand_all' =>        __( 'Expand All', 'mesh' ),
+			'collapse_all' =>      __( 'Collapse All', 'mesh' ),
+			'default_title' =>     __( 'No Section Title', 'mesh' ),
+			'select_section_bg' => __( 'Select Section Background', 'mesh' ),
+			'select_bg' =>         __( 'Select Background' , 'mesh' ),
+			'select_block_bg' =>   __( 'Select Column Background', 'mesh' ),
+			'published' =>         __( 'Status: Published', 'mesh' ),
+			'draft' =>             __( 'Status: Draft', 'mesh' ),
+			'confirm_remove' =>    __( 'Are you sure you want to remove this section?', 'mesh' ),
+			'save_order'     =>    __( 'Save Order', 'mesh' ),
+			'reorder'        =>    __( 'Reorder Sections', 'mesh' ),
 		);
 
 		$strings = apply_filters( 'mesh_strings', $strings ); // Allow filtering of localization strings.

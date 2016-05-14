@@ -50,7 +50,7 @@ class Mesh_Settings {
 	 */
 	public static function create_section() {
 		?>
-		<p><?php esc_html_e( 'Below are your settings for Mesh', 'linchpin-mesh' ); ?></p>
+		<p><?php esc_html_e( 'Below are your settings for Mesh', 'mesh' ); ?></p>
 		<?php
 	}
 
@@ -59,7 +59,7 @@ class Mesh_Settings {
 	 */
 	public static function create_post_type_section() {
 		?>
-		<p><?php esc_html_e( 'Select the post types that allow Mesh.', 'linchpin-mesh' ); ?></p>
+		<p><?php esc_html_e( 'Select the post types that allow Mesh.', 'mesh' ); ?></p>
 		<?php
 	}
 
@@ -74,17 +74,17 @@ class Mesh_Settings {
 		// Default Settings Section.
 		add_settings_section(
 			'mesh_sections',
-			__( 'Mesh Configurations', 'linchpin-mesh' ),
+			__( 'Mesh Configurations', 'mesh' ),
 			array( 'Mesh_Settings', 'create_section' ),
 			self::$settings_page
 		);
 
 		// Option : CSS Mode.
 		$css_mode = array(
-			array( 'label' => __( 'Use Mesh CSS', 'linchpin-mesh' ), 'value' => '' ),
-			array( 'label' => __( 'Disable Mesh CSS', 'linchpin-mesh' ), 'value' => 0 ),
-			array( 'label' => __( 'Use Foundation w/ my theme', 'linchpin-mesh' ), 'value' => 1 ),
-			array( 'label' => __( 'Use Bootstrap (coming soon)', 'linchpin-mesh' ), 'value' => 2 ),
+			array( 'label' => __( 'Use Mesh CSS', 'mesh' ), 'value' => '' ),
+			array( 'label' => __( 'Disable Mesh CSS', 'mesh' ), 'value' => 0 ),
+			array( 'label' => __( 'Use Foundation w/ my theme', 'mesh' ), 'value' => 1 ),
+			array( 'label' => __( 'Use Bootstrap (coming soon)', 'mesh' ), 'value' => 2 ),
 		);
 
 		// Allow filtering of available css_mode options.
@@ -92,14 +92,14 @@ class Mesh_Settings {
 
 		add_settings_field(
 			'css_mode',
-			__( 'CSS Settings', 'linchpin-mesh' ),
+			__( 'CSS Settings', 'mesh' ),
 			array( 'Mesh_Settings', 'add_select' ),
 			self::$settings_page,
 			'mesh_sections',
 			array(
 				'field' => 'css_mode',
-				'label' => __( 'CSS', 'linchpin-mesh' ),
-				'description' => __( 'Choose whether or not to enqueue CSS with Mesh.', 'linchpin-mesh' ),
+				'label' => __( 'CSS', 'mesh' ),
+				'description' => __( 'Choose whether or not to enqueue CSS with Mesh.', 'mesh' ),
 				'options' => $css_mode,
 			)
 		);
@@ -108,7 +108,7 @@ class Mesh_Settings {
 		if ( $post_types = get_post_types() ) {
 			add_settings_section(
 				'mesh_post_type_section',
-				__( 'Post Types', 'linchpin-mesh' ),
+				__( 'Post Types', 'mesh' ),
 				array( 'Mesh_Settings', 'create_post_type_section' ),
 				self::$settings_page
 			);
@@ -303,9 +303,9 @@ class Mesh_Settings {
 	static public function get_tabs() {
 
 		$tabs                 = array();
-		$tabs['settings']  = __( 'Settings',   'linchpin-mesh' );
-		$tabs['faq']       = __( 'About Mesh', 'linchpin-mesh' );
-		$tabs['changelog'] = __( 'Change Log', 'linchpin-mesh' );
+		$tabs['settings']  = __( 'Settings',   'mesh' );
+		$tabs['faq']       = __( 'About Mesh', 'mesh' );
+		$tabs['changelog'] = __( 'Change Log', 'mesh' );
 
 		return apply_filters( 'mesh_tabs', $tabs );
 	}

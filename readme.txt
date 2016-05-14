@@ -6,8 +6,6 @@ Tested up to: 4.5
 Stable tag: 1.0.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
-Text Domain: mesh
-Domain Path: /languages
 
 A page builder, simplified. Get the most flexibility to display content by adding multiple content sections within Pages, Posts, or Custom Post Types.
 
@@ -103,6 +101,9 @@ function add_multiple_content_sections( $the_content ) {
 2. Mesh front end output.
 
 == Changelog ==
+
+= 1.0.2 =
+* Added localization support
 
 = 1.0.1 =
 * Added clarity to readme file.

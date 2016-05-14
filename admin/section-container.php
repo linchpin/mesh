@@ -23,7 +23,7 @@ $blocks = mesh_maybe_create_section_blocks( $section );
 		<div class="mesh-columns-8">
 			<div class="msc-clean-edit">
 				<input type="text" name="mesh-sections[<?php esc_attr_e( $section->ID ); ?>][post_title]" class="msc-clean-edit-element widefat mesh-section-title left" value="<?php esc_attr_e( $section->post_title ); ?>" />
-				<span class="close-title-edit left"><?php esc_html_e( 'Done', 'linchpin-mesh' ); ?></span>
+				<span class="close-title-edit left"><?php esc_html_e( 'Done', 'mesh' ); ?></span>
 				<span class="handle-title"><?php esc_html_e( $section->post_title ); ?></span>
 			</div>
 		</div>
@@ -31,12 +31,12 @@ $blocks = mesh_maybe_create_section_blocks( $section );
 		<div class="mesh-columns-4 text-right">
 			<div id="section-status-select-<?php esc_attr_e( $section->ID ); ?>-container">
 				<div class="msc-clean-edit handle-right">
-					<label for="section-status-select-<?php esc_attr_e( $section->ID ); ?>" class="screen-reader-text"><?php esc_html_e( 'Status:', 'linchpin-mesh' ); ?></label>
+					<label for="section-status-select-<?php esc_attr_e( $section->ID ); ?>" class="screen-reader-text"><?php esc_html_e( 'Status:', 'mesh' ); ?></label>
 					<select class="mesh-block-propagation msc-clean-edit-element mesh-section-status" id="section-status-select-<?php esc_attr_e( $section->ID ); ?>" name="mesh-sections[<?php esc_attr_e( $section->ID ); ?>][post_status]">
-						<option value="draft" <?php selected( $section->post_status, 'draft' ); ?>><?php esc_html_e( 'Draft', 'linchpin-mesh' ); ?></option>
-						<option value="publish" <?php selected( $section->post_status, 'publish' ); ?>><?php esc_html_e( 'Published', 'linchpin-mesh' ); ?></option>
+						<option value="draft" <?php selected( $section->post_status, 'draft' ); ?>><?php esc_html_e( 'Draft', 'mesh' ); ?></option>
+						<option value="publish" <?php selected( $section->post_status, 'publish' ); ?>><?php esc_html_e( 'Published', 'mesh' ); ?></option>
 					</select>
-					<span class="close-title-edit right"><?php esc_html_e( 'Done', 'linchpin-mesh' ); ?></span>
+					<span class="close-title-edit right"><?php esc_html_e( 'Done', 'mesh' ); ?></span>
 					<span class="handle-title mesh-section-status-text"><?php esc_html_e( 'publish' === $section->post_status ? 'Status: Published' : 'Status: Draft' ); ?></span>
 				</div>
 			</div>
@@ -60,20 +60,20 @@ $blocks = mesh_maybe_create_section_blocks( $section );
 
 		<div class="mesh-row mesh-section-footer">
 			<div class="mesh-section-remove-container mesh-columns-4">
-				<a href="#" class="mesh-section-remove dashicons-before dashicons-no plain-link grey-link"><?php esc_html_e( 'Remove', 'linchpin-mesh' ); ?></a>
+				<a href="#" class="mesh-section-remove dashicons-before dashicons-no plain-link grey-link"><?php esc_html_e( 'Remove', 'mesh' ); ?></a>
 				<span class="spinner"></span>
 			</div>
 
 			<div class="mesh-columns-8 text-right">
 				<span class="spinner" style="float:none;"></span>
 				<?php if ( 'draft' === get_post_status( $section->ID ) ) : ?>
-					<a href="#" class="button mesh-section-save-draft"><?php esc_html_e( 'Save Draft', 'linchpin-mesh' ); ?></a>
-					<a href="#" class="button primary mesh-section-publish"><?php esc_html_e( 'Publish', 'linchpin-mesh' ); ?></a>
-					<a href="#" class="button primary mesh-section-update hidden"><?php esc_html_e( 'Update', 'linchpin-mesh' ); ?></a>
+					<a href="#" class="button mesh-section-save-draft"><?php esc_html_e( 'Save Draft', 'mesh' ); ?></a>
+					<a href="#" class="button primary mesh-section-publish"><?php esc_html_e( 'Publish', 'mesh' ); ?></a>
+					<a href="#" class="button primary mesh-section-update hidden"><?php esc_html_e( 'Update', 'mesh' ); ?></a>
 				<?php else : ?>
-					<a href="#" class="button mesh-section-save-draft hidden"><?php esc_html_e( 'Save Draft', 'linchpin-mesh' ); ?></a>
-					<a href="#" class="button primary mesh-section-publish hidden"><?php esc_html_e( 'Publish', 'linchpin-mesh' ); ?></a>
-					<a href="#" class="button primary mesh-section-update "><?php esc_html_e( 'Update', 'linchpin-mesh' ); ?></a>
+					<a href="#" class="button mesh-section-save-draft hidden"><?php esc_html_e( 'Save Draft', 'mesh' ); ?></a>
+					<a href="#" class="button primary mesh-section-publish hidden"><?php esc_html_e( 'Publish', 'mesh' ); ?></a>
+					<a href="#" class="button primary mesh-section-update "><?php esc_html_e( 'Update', 'mesh' ); ?></a>
 				<?php endif; ?>
 			</div>
 		</div>

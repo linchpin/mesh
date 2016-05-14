@@ -14,9 +14,9 @@
 	<?php if ( empty( $mesh_notifications['moreblocks'] ) ) : ?>
 		<div id="mesh-warnings-<?php esc_attr_e( $section->ID ); ?>" class="description notice notice-info is-dismissible below-h2" data-type="moreblocks">
 			<p>
-				<?php esc_html_e( 'The number of columns selected is causing some content to be hidden.', 'linchpin-mesh' ); ?>
+				<?php esc_html_e( 'The number of columns selected is causing some content to be hidden.', 'mesh' ); ?>
 				<br/>
-				<?php esc_html_e( 'Increase the column number to access that content.', 'linchpin-mesh' ); ?>
+				<?php esc_html_e( 'Increase the column number to access that content.', 'mesh' ); ?>
 			</p>
 		</div>
 	<?php endif; ?>
