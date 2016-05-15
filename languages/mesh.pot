@@ -1,11 +1,10 @@
-# Copyright (C) 2016 
-# This file is distributed under the same license as the  package.
+# Copyright (C) 2016 Linchpin
+# This file is distributed under the GPLv2 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: \n"
-"Report-Msgid-Bugs-To: "
-"https://wordpress.org/support/plugin/multiple-content-sections\n"
-"POT-Creation-Date: 2016-05-12 19:31:36+00:00\n"
+"Project-Id-Version: Mesh 1.0.3\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/mesh\n"
+"POT-Creation-Date: 2016-05-15 14:03:01+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -14,326 +13,470 @@ msgstr ""
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "X-Generator: grunt-wp-i18n 0.5.4\n"
 
-#: admin/controls.php:14 class.mesh.php:729
+#: admin/controls.php:14 build/admin/controls.php:14 build/class.mesh.php:731
+#: class.mesh.php:731
 msgid "Reorder Sections"
 msgstr ""
 
-#: admin/controls.php:15 class.mesh.php:719
+#: admin/controls.php:15 build/admin/controls.php:15 build/class.mesh.php:721
+#: class.mesh.php:721
 msgid "Expand All"
 msgstr ""
 
-#: admin/controls.php:16 class.mesh.php:720
+#: admin/controls.php:16 build/admin/controls.php:16 build/class.mesh.php:722
+#: class.mesh.php:722
 msgid "Collapse All"
 msgstr ""
 
-#: admin/controls.php:17 class.mesh.php:262
+#: admin/controls.php:17 build/admin/controls.php:17 build/class.mesh.php:264
+#: class.mesh.php:264
 msgid "Add Section"
 msgstr ""
 
 #: admin/section-blocks.php:57 admin/section-blocks.php:87
 #: admin/section-container.php:26 admin/section-container.php:39
+#: build/admin/section-blocks.php:57 build/admin/section-blocks.php:87
+#: build/admin/section-container.php:26 build/admin/section-container.php:39
 msgid "Done"
 msgstr ""
 
 #: admin/section-blocks.php:63 admin/section-blocks.php:97
+#: build/admin/section-blocks.php:63 build/admin/section-blocks.php:97
 msgid "Offset:"
 msgstr ""
 
 #: admin/section-blocks.php:71 admin/section-blocks.php:106
-#: admin/section-controls.php:40
+#: admin/section-controls.php:40 build/admin/section-blocks.php:71
+#: build/admin/section-blocks.php:106 build/admin/section-controls.php:40
 msgid "CSS Class"
 msgstr ""
 
-#: admin/section-blocks.php:91
+#: admin/section-blocks.php:91 build/admin/section-blocks.php:91
 msgid "More"
 msgstr ""
 
-#: admin/section-blocks.php:100
+#: admin/section-blocks.php:100 build/admin/section-blocks.php:100
 msgid " selected"
 msgstr ""
 
 #: admin/section-blocks.php:115 admin/section-controls.php:71
-#: class.mesh.php:717
+#: build/admin/section-blocks.php:115 build/admin/section-controls.php:71
+#: build/class.mesh.php:719 class.mesh.php:719
 msgid "Set Background Image"
 msgstr ""
 
-#: admin/section-container.php:34
+#: admin/section-container.php:34 build/admin/section-container.php:34
 msgid "Status:"
 msgstr ""
 
-#: admin/section-container.php:36
+#: admin/section-container.php:36 build/admin/section-container.php:36
 msgid "Draft"
 msgstr ""
 
-#: admin/section-container.php:37
+#: admin/section-container.php:37 build/admin/section-container.php:37
 msgid "Published"
 msgstr ""
 
-#: admin/section-container.php:63
+#: admin/section-container.php:63 build/admin/section-container.php:63
 msgid "Remove"
 msgstr ""
 
 #: admin/section-container.php:70 admin/section-container.php:74
+#: build/admin/section-container.php:70 build/admin/section-container.php:74
 msgid "Save Draft"
 msgstr ""
 
 #: admin/section-container.php:71 admin/section-container.php:75
+#: build/admin/section-container.php:71 build/admin/section-container.php:75
 msgid "Publish"
 msgstr ""
 
 #: admin/section-container.php:72 admin/section-container.php:76
+#: build/admin/section-container.php:72 build/admin/section-container.php:76
 msgid "Update"
 msgstr ""
 
-#: admin/section-controls.php:16
+#: admin/section-controls.php:16 build/admin/section-controls.php:16
 msgid "Columns:"
 msgstr ""
 
-#: admin/section-controls.php:27
+#: admin/section-controls.php:27 build/admin/section-controls.php:27
 msgid "Display Title"
 msgstr ""
 
-#: admin/section-controls.php:33
+#: admin/section-controls.php:33 build/admin/section-controls.php:33
 msgid "More Options"
 msgstr ""
 
-#: admin/section-controls.php:48
+#: admin/section-controls.php:48 build/admin/section-controls.php:48
 msgid "Collapse Padding"
 msgstr ""
 
-#: admin/section-controls.php:55
+#: admin/section-controls.php:55 build/admin/section-controls.php:55
 msgid "Push/Pull"
 msgstr ""
 
-#: admin/section-controls.php:62
+#: admin/section-controls.php:62 build/admin/section-controls.php:62
 msgid "Equalize"
 msgstr ""
 
 #: admin/section-template-warnings.php:17
+#: build/admin/section-template-warnings.php:17
 msgid "The number of columns selected is causing some content to be hidden."
 msgstr ""
 
 #: admin/section-template-warnings.php:19
+#: build/admin/section-template-warnings.php:19
 msgid "Increase the column number to access that content."
 msgstr ""
 
-#: class.mesh-ajax.php:49 class.mesh.php:721
+#: build/class.mesh-ajax.php:49 build/class.mesh.php:723 class.mesh-ajax.php:49
+#: class.mesh.php:723
 msgid "No Section Title"
 msgstr ""
 
-#: class.mesh-pointers.php:98
+#: build/class.mesh-pointers.php:98 class.mesh-pointers.php:98
 msgid "Section Options"
 msgstr ""
 
-#: class.mesh-pointers.php:99
+#: build/class.mesh-pointers.php:99 class.mesh-pointers.php:99
 msgid "View all section options by click the \"More Options\" toggle."
 msgstr ""
 
-#: class.mesh-pointers.php:109
+#: build/class.mesh-pointers.php:109 class.mesh-pointers.php:109
 msgid "What is an offset?"
 msgstr ""
 
-#: class.mesh-pointers.php:110
+#: build/class.mesh-pointers.php:110 class.mesh-pointers.php:110
 msgid ""
 "If using Foundation, an offset will indent your column by the amount of "
 "columns selected in the dropdown menu."
 msgstr ""
 
-#: class.mesh-pointers.php:120
+#: build/class.mesh-pointers.php:120 class.mesh-pointers.php:120
 msgid "Rearrange Columns"
 msgstr ""
 
-#: class.mesh-pointers.php:121
+#: build/class.mesh-pointers.php:121 class.mesh-pointers.php:121
 msgid ""
 "Use this handle to click and drag this column, giving you the ability to "
 "swap columns on the fly."
 msgstr ""
 
-#: class.mesh-settings.php:53
+#: build/class.mesh-settings.php:53 class.mesh-settings.php:53
 msgid "Below are your settings for Mesh"
 msgstr ""
 
-#: class.mesh-settings.php:62
+#: build/class.mesh-settings.php:62 class.mesh-settings.php:62
 msgid "Select the post types that allow Mesh."
 msgstr ""
 
-#: class.mesh-settings.php:77
+#: build/class.mesh-settings.php:77 class.mesh-settings.php:77
 msgid "Mesh Configurations"
 msgstr ""
 
-#: class.mesh-settings.php:84
+#: build/class.mesh-settings.php:84 class.mesh-settings.php:84
 msgid "Use Mesh CSS"
 msgstr ""
 
-#: class.mesh-settings.php:85
+#: build/class.mesh-settings.php:85 class.mesh-settings.php:85
 msgid "Disable Mesh CSS"
 msgstr ""
 
-#: class.mesh-settings.php:86
+#: build/class.mesh-settings.php:86 class.mesh-settings.php:86
 msgid "Use Foundation w/ my theme"
 msgstr ""
 
-#: class.mesh-settings.php:87
+#: build/class.mesh-settings.php:87 class.mesh-settings.php:87
 msgid "Use Bootstrap (coming soon)"
 msgstr ""
 
-#: class.mesh-settings.php:95
+#: build/class.mesh-settings.php:95 class.mesh-settings.php:95
 msgid "CSS Settings"
 msgstr ""
 
-#: class.mesh-settings.php:101
+#: build/class.mesh-settings.php:101 class.mesh-settings.php:101
 msgid "CSS"
 msgstr ""
 
-#: class.mesh-settings.php:102
+#: build/class.mesh-settings.php:102 class.mesh-settings.php:102
 msgid "Choose whether or not to enqueue CSS with Mesh."
 msgstr ""
 
-#: class.mesh-settings.php:111
+#: build/class.mesh-settings.php:111 class.mesh-settings.php:111
 msgid "Post Types"
 msgstr ""
 
-#: class.mesh-settings.php:306
+#: build/class.mesh-settings.php:306 class.mesh-settings.php:306
 msgid "Settings"
 msgstr ""
 
-#: class.mesh-settings.php:307
+#: build/class.mesh-settings.php:307 class.mesh-settings.php:307
 msgid "About Mesh"
 msgstr ""
 
-#: class.mesh-settings.php:308
+#: build/class.mesh-settings.php:308 class.mesh-settings.php:308
 msgid "Change Log"
 msgstr ""
 
-#: class.mesh.php:38
+#: build/class.mesh.php:38 class.mesh.php:38
 msgid "1 Columns"
 msgstr ""
 
-#: class.mesh.php:43
+#: build/class.mesh.php:43 class.mesh.php:43
 msgid "2 Columns"
 msgstr ""
 
-#: class.mesh.php:48
+#: build/class.mesh.php:48 class.mesh.php:48
 msgid "3 Columns"
 msgstr ""
 
-#: class.mesh.php:127
+#: build/class.mesh.php:127 class.mesh.php:127
 msgid "Show Extra MCS Section Controls?"
 msgstr ""
 
-#: class.mesh.php:186 class.mesh.php:187 class.mesh.php:202 class.mesh.php:203
+#: build/class.mesh.php:188 build/class.mesh.php:189 build/class.mesh.php:204
+#: build/class.mesh.php:205 class.mesh.php:188 class.mesh.php:189
+#: class.mesh.php:204 class.mesh.php:205
 msgid "Content Section"
 msgstr ""
 
-#: class.mesh.php:188
+#: build/class.mesh.php:190 class.mesh.php:190
 msgid "Parent Content Section:"
 msgstr ""
 
-#: class.mesh.php:189
+#: build/class.mesh.php:191 class.mesh.php:191
 msgid "All Content Sections"
 msgstr ""
 
-#: class.mesh.php:190
+#: build/class.mesh.php:192 class.mesh.php:192
 msgid "Add New Content Section"
 msgstr ""
 
-#: class.mesh.php:191
+#: build/class.mesh.php:193 class.mesh.php:193
 msgid "Add New"
 msgstr ""
 
-#: class.mesh.php:192
+#: build/class.mesh.php:194 class.mesh.php:194
 msgid "New Content Section"
 msgstr ""
 
-#: class.mesh.php:193
+#: build/class.mesh.php:195 class.mesh.php:195
 msgid "Edit Content Section"
 msgstr ""
 
-#: class.mesh.php:194
+#: build/class.mesh.php:196 class.mesh.php:196
 msgid "Update Content Section"
 msgstr ""
 
-#: class.mesh.php:195
+#: build/class.mesh.php:197 class.mesh.php:197
 msgid "View Content Section"
 msgstr ""
 
-#: class.mesh.php:196
+#: build/class.mesh.php:198 class.mesh.php:198
 msgid "Search Content Sections"
 msgstr ""
 
-#: class.mesh.php:197
+#: build/class.mesh.php:199 class.mesh.php:199
 msgid "Not found"
 msgstr ""
 
-#: class.mesh.php:198
+#: build/class.mesh.php:200 class.mesh.php:200
 msgid "Not found in Trash"
 msgstr ""
 
-#: class.mesh.php:250
+#. Plugin Name of the plugin/theme
 msgid "Mesh"
 msgstr ""
 
-#: class.mesh.php:260
+#: build/class.mesh.php:262 class.mesh.php:262
 msgid "You do not have any Content Sections."
 msgstr ""
 
-#: class.mesh.php:261
+#: build/class.mesh.php:263 class.mesh.php:263
 msgid "Get started using Mesh by adding a Content Section now."
 msgstr ""
 
-#: class.mesh.php:267
+#: build/class.mesh.php:269 class.mesh.php:269
 msgid ""
 "Multiple content sections allow you to easily segment your page's contents "
 "into different blocks of markup."
 msgstr ""
 
-#: class.mesh.php:715
+#: build/class.mesh.php:717 class.mesh.php:717
 msgid "Be sure to save the order of your sections once your changes are complete."
 msgstr ""
 
-#: class.mesh.php:716
+#: build/class.mesh.php:718 class.mesh.php:718
 msgid ""
 "Multiple content sections allows you to easily segment your page's contents "
 "into different blocks of markup."
 msgstr ""
 
-#: class.mesh.php:718
+#: build/class.mesh.php:720 class.mesh.php:720
 msgid "Remove Background"
 msgstr ""
 
-#: class.mesh.php:722
+#: build/class.mesh.php:724 class.mesh.php:724
 msgid "Select Section Background"
 msgstr ""
 
-#: class.mesh.php:723
+#: build/class.mesh.php:725 class.mesh.php:725
 msgid "Select Background"
 msgstr ""
 
-#: class.mesh.php:724
+#: build/class.mesh.php:726 class.mesh.php:726
 msgid "Select Column Background"
 msgstr ""
 
-#: class.mesh.php:725
+#: build/class.mesh.php:727 class.mesh.php:727
 msgid "Status: Published"
 msgstr ""
 
-#: class.mesh.php:726
+#: build/class.mesh.php:728 class.mesh.php:728
 msgid "Status: Draft"
 msgstr ""
 
-#: class.mesh.php:727
+#: build/class.mesh.php:729 class.mesh.php:729
 msgid "Are you sure you want to remove this section?"
 msgstr ""
 
-#: class.mesh.php:728
+#: build/class.mesh.php:730 class.mesh.php:730
 msgid "Save Order"
 msgstr ""
 
-#: mesh.php:342
+#: build/mesh.php:340 mesh.php:340
 msgid "No Column Title"
 msgstr ""
 
-#: class.mesh.php:184 class.mesh.php:185
+#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:102
+msgid "PPCPP-DESCRIPTION"
+msgstr ""
+
+#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:103
+msgid "PPCPP-HELPTEXT"
+msgstr ""
+
+#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:104
+msgid "PPCPP:OPT-FILENAME"
+msgstr ""
+
+#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:105
+msgid "PPCPP:OPT-DIRECTORY"
+msgstr ""
+
+#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:106
+msgid "PPCPP:OPT-TARGET"
+msgstr ""
+
+#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:107
+msgid "PPCPP:OPT-ENCODING"
+msgstr ""
+
+#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:108
+msgid "PPCPP:OPT-EXTENSIONS"
+msgstr ""
+
+#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:109
+msgid "PPCPP:OPT-IGNORE"
+msgstr ""
+
+#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:110
+msgid "PPCPP:OPT-IGNORETAGS"
+msgstr ""
+
+#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:111
+msgid "PPCPP:OPT-HIDDEN"
+msgstr ""
+
+#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:112
+msgid "PPCPP:OPT-IGNORESYMLINKS"
+msgstr ""
+
+#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:113
+msgid "PPCPP:OPT-MARKERS"
+msgstr ""
+
+#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:114
+msgid "PPCPP:OPT-TITLE"
+msgstr ""
+
+#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:115
+msgid "PPCPP:OPT-FORCE"
+msgstr ""
+
+#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:116
+msgid "PPCPP:OPT-VALIDATE"
+msgstr ""
+
+#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:117
+msgid "PPCPP:OPT-VISIBILITY"
+msgstr ""
+
+#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:118
+msgid "PPCPP:OPT-SOURCECODE"
+msgstr ""
+
+#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:119
+msgid "PPCPP:OPT-PROGRESSBAR"
+msgstr ""
+
+#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:125
+msgid "PPCPP:OPT-DEFAULTPACKAGENAME"
+msgstr ""
+
+#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:159
+msgid "PPCPP:EXC-BADTARGET"
+msgstr ""
+
+#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:167
+msgid "PPCPP:LOG-COLLECTING"
+msgstr ""
+
+#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:174
+#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:190
+#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:241
+msgid "PPCPP:LOG-OK"
+msgstr ""
+
+#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:182
+msgid "PPCPP:LOG-INITIALIZING"
+msgstr ""
+
+#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:191
+msgid "PPCPP:LOG-PARSING"
+msgstr ""
+
+#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:226
+msgid "PPCPP:EXC-NOFILES"
+msgstr ""
+
+#: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:237
+msgid "PPCPP:LOG-STORECACHE"
+msgstr ""
+
+#. Plugin URI of the plugin/theme
+msgid "http://linchpin.agency/wordpress-plugins/mesh"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid ""
+"Adds multiple sections for content on a post by post basis. Mesh also has "
+"settings to enable it for specific post types"
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "Linchpin"
+msgstr ""
+
+#. Author URI of the plugin/theme
+msgid ""
+"http://linchpin.agency/?utm_source=mesh&utm_medium=plugin-admin-page&utm_"
+"campaign=wp-plugin"
+msgstr ""
+
+#: build/class.mesh.php:186 build/class.mesh.php:187 class.mesh.php:186
+#: class.mesh.php:187
 msgctxt "Content Section"
 msgid "Content Section"
 msgstr ""

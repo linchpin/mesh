@@ -331,12 +331,12 @@ mesh.admin = function ( $ ) {
 			event.preventDefault();
 			event.stopPropagation();
 
-			var $button = $(this),
-				$button_container = $button.parent(),
-				$spinner = $( '.spinner', $button.parent() ),
-				$current_section = $(this).closest( '.mesh-section' ),
-				$post_status_field = $( '.mesh-section-status', $current_section ),
-				section_id = $current_section.attr( 'data-mesh-section-id' );
+			var $button            = $(this),
+				$button_container  = $button.parent(),
+				$spinner           = $button_container.find( '.spinner' ),
+				$current_section   = $button.closest( '.mesh-section' ),
+				$post_status_field = $current_section.find( '.mesh-section-status' ),
+				section_id         = $current_section.attr( 'data-mesh-section-id' );
 
 			$current_section.find('.mesh-editor-blocks .wp-editor-area').each( function() {
 				var content = tinymce.get( $(this).attr('ID') ).getContent({format : 'raw'});
@@ -346,7 +346,7 @@ mesh.admin = function ( $ ) {
 			var	form_data = $current_section.parents( 'form' ).serialize(),
 				form_submit_data = [];
 
-			$( '.button', $button_container ).addClass( 'disabled' );
+			$button_container.find( '.button' ).addClass( 'disabled' );
 			$spinner.addClass( 'is-active' );
 
 			$.post( ajaxurl, {
@@ -355,19 +355,22 @@ mesh.admin = function ( $ ) {
 				mesh_section_data: form_data,
 				mesh_save_section_nonce: mesh_data.save_section_nonce
 			}, function( response ) {
-				$button_container.find( '.button' ).removeClass( 'disabled' );
+
+				var $button = $button_container.find( '.button' );
+
+				$button.removeClass( 'disabled' );
 				$spinner.removeClass( 'is-active' );
 
-				if (response) {
+				if ( response ) {
 
-					var $publish_draft = $( '.mesh-section-publish,.mesh-section-save-draft' );
+					var $publish_draft = $current_section.find( '.mesh-section-publish, .mesh-section-save-draft' );
 
 					if ( 'publish' == $post_status_field.val() ) {
-						$publish_draft.addClass( 'hidden' );
 						$button.removeClass( 'hidden' );
+						$publish_draft.addClass( 'hidden' );
 					} else {
-						$publish_draft.removeClass( 'hidden' );
 						$button.addClass( 'hidden' );
+						$publish_draft.removeClass( 'hidden' );
 					}
 				}
 			});

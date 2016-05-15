@@ -1,5 +1,14 @@
 ##Change Log For Mesh
 
+## [1.0.3] - 2016-05-15
+
+### Added
+- Updated build process for easier deployment to wordpress.org
+
+### Fixed
+- Minor code formatting updates
+- Fixed publish / update button display issue [mesh-11]
+
 ## [1.0.2] - 2016-05-13
 
 ### Fixed

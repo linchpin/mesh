@@ -3,11 +3,11 @@
  * Plugin Name: Mesh
  * Plugin URI: http://linchpin.agency/wordpress-plugins/mesh
  * Description: Adds multiple sections for content on a post by post basis. Mesh also has settings to enable it for specific post types
- * Version: 1.0.1
+ * Version: 1.0.3
  * Text Domain: mesh
  * Domain Path: /languages
- * Author: Linchpin Agency (Aaron Ware, Max Morgan & Jonathan Desrosiers)
- * Author URI: http://linchpin.agency/?utm_source=simple-subtitles-for-wordpress&utm_medium=plugin-admin-page&utm_campaign=wp-plugin
+ * Author: Linchpin
+ * Author URI: http://linchpin.agency/?utm_source=mesh&utm_medium=plugin-admin-page&utm_campaign=wp-plugin
  * License: GPLv2 or later
  *
  * @package Mesh
@@ -21,7 +21,7 @@ if ( ! function_exists( 'add_action' ) ) {
 /**
  * Define all globals.
  */
-define( 'LINCHPIN_MESH_VERSION', '1.0.1' );
+define( 'LINCHPIN_MESH_VERSION', '1.0.3' );
 define( 'LINCHPIN_MESH_PLUGIN_NAME', 'Mesh' );
 define( 'LINCHPIN_MESH__MINIMUM_WP_VERSION', '4.0' );
 define( 'LINCHPIN_MESH___PLUGIN_URL', plugin_dir_url( __FILE__ ) );
@@ -188,8 +188,6 @@ function mesh_get_sections( $post_id, $return_type = 'array', $statuses = array(
 	);
 
 	$content_sections = new WP_Query( $args );
-
-	error_log( print_r( $content_sections, true ) );
 
 	switch ( $return_type ) {
 		case 'query' :
