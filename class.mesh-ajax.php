@@ -16,7 +16,6 @@ class Mesh_AJAX {
 	 * __construct function.
 	 *
 	 * @access public
-	 * @return void
 	 */
 	function __construct() {
 		add_action( 'wp_ajax_mesh_add_section',           array( $this, 'mesh_add_section' ) );
@@ -104,7 +103,7 @@ class Mesh_AJAX {
 	/**
 	 * Select a section. Return the template using AJAX
 	 *
-	 * @since 1.2.0
+	 * @since 0.2.0
 	 */
 	function mesh_choose_layout() {
 		check_ajax_referer( 'mesh_choose_layout_nonce', 'mesh_choose_layout_nonce' );
