@@ -395,8 +395,8 @@ function mesh_section_background( $post_id = 0, $echo = true, $size_large = 'lar
 			return array();
 		}
 
-		if ( '' !== $default_image_url[0] ) {
-			$style = 'data-interchange="' . implode( ', ', esc_attr( $backgrounds ) ) . '" style="background-image: url(' . esc_url( $default_image_url[0] ) . ');"';
+		if ( is_array( $default_image_url ) && '' !== $default_image_url[0] ) {
+			$style = 'data-interchange="' . esc_attr( implode( ', ', $backgrounds ) ) . '" style="background-image: url(' . esc_url( $default_image_url[0] ) . ');"';
 		}
 	}
 
