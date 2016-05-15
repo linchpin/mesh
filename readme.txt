@@ -102,6 +102,11 @@ function add_multiple_content_sections( $the_content ) {
 
 == Changelog ==
 
+= 1.0.3 =
+* Updated build process for easier deployment to wordpress.org
+* Some minor code formatting cleanup
+* Fixed publish / update button display issue [mesh-11]
+
 = 1.0.2 =
 * Added localization support
 

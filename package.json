@@ -1,14 +1,17 @@
 {
   "name": "mesh",
-  "version": "1.0.2",
+  "version": "1.0.3",
+  "license": "GPLv2",
+  "respository": "https://github.com/linchpinagency/mesh",
   "author": {
     "name": "Linchpin",
     "email": "sayhi@linchpin.agency",
-    "url": "http://linchpin.agency"
+    "url": "https://linchpin.agency"
   },
   "devDependencies": {
     "grunt": "~0.4.1",
     "grunt-contrib-concat": "~0.5.1",
+    "grunt-contrib-copy": "^1.0.0",
     "grunt-contrib-cssmin": "~0.6.0",
     "grunt-contrib-uglify": "~0.2.7",
     "grunt-contrib-watch": "^0.6.1",
@@ -18,5 +21,23 @@
     "matchdep": "^0.3.0",
     "node-sass": "^2.0.0"
   },
-  "keywords": []
+  "keywords": [
+    "linchpin",
+    "sections",
+    "content",
+    "page builder",
+    "page builder plugin",
+    "design",
+    "wysiwyg",
+    "home page builder",
+    "template builder",
+    "layout builder",
+    "landing page builder",
+    "website builder",
+    "site builder",
+    "drag and drop builder",
+    "editor",
+    "page layout",
+    "visual editor"
+  ]
 }

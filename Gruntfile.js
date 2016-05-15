@@ -59,7 +59,7 @@ module.exports = function(grunt) {
         makepot: {
             target: {
                 options: {
-                    mainFile: 'multiple-content-sections.php',
+                    mainFile: 'mesh.php',
                     potFilename: 'mesh.pot',
                     domainPath: '/languages',
                     exclude:[
@@ -89,10 +89,27 @@ module.exports = function(grunt) {
                 ],
                 tasks: ['concat','uglify']
             }
+        },
+
+        // copy all the files needed for a build within wordpress.org
+
+        copy: {
+            main: {
+                files: [
+                    {expand: true, src: ['admin/*'], dest: 'build/'},
+                    {expand: true, src: ['assets/**, !assets/scss/', '!assets/*.scss'], dest: 'build/'},
+                    {expand: true, src: ['languages/*.pot'], dest: 'build/'},
+                    {expand: true, src: ['lib/**'], dest: 'build/'},
+                    {expand: true, src: ['templates/**'], dest: 'build/'},
+                    {expand: true, src: ['./readme.txt'], dest: 'build/', isFile:true},
+                    {expand: true, src: ['./*.php'], dest: 'build/'}
+                ]
+            }
         }
     });
 
     grunt.loadNpmTasks( 'grunt-wp-i18n' );
-	grunt.registerTask('build', ['sass']);
-    grunt.registerTask('default', [ 'makepot','uglify', 'concat', 'watch']);
+    grunt.loadNpmTasks( 'grunt-contrib-copy' );
+	grunt.registerTask( 'build', ['sass'] );
+    grunt.registerTask( 'default', [ 'copy', 'makepot','uglify', 'concat', 'watch'] );
 }
