@@ -96,13 +96,13 @@ module.exports = function(grunt) {
         copy: {
             main: {
                 files: [
-                    {expand: true, src: ['admin/*'], dest: 'build/'},
-                    {expand: true, src: ['assets/**, !assets/scss/', '!assets/*.scss'], dest: 'build/'},
-                    {expand: true, src: ['languages/*.pot'], dest: 'build/'},
-                    {expand: true, src: ['lib/**'], dest: 'build/'},
-                    {expand: true, src: ['templates/**'], dest: 'build/'},
-                    {expand: true, src: ['./readme.txt'], dest: 'build/', isFile:true},
-                    {expand: true, src: ['./*.php'], dest: 'build/'}
+                    {expand: true, src: ['admin/*'], dest: 'build/mesh/trunk/'},
+                    {expand: true, src: ['assets/**', '!assets/scss/**'], dest: 'build/mesh/trunk/'},
+                    {expand: true, src: ['languages/*.pot'], dest: 'build/mesh/trunk/'},
+                    {expand: true, src: ['lib/**'], dest: 'build/mesh/trunk/'},
+                    {expand: true, src: ['templates/**'], dest: 'build/mesh/trunk/'},
+                    {expand: true, src: ['./readme.txt'], dest: 'build/mesh/trunk/', isFile:true},
+                    {expand: true, src: ['./*.php'], dest: 'build/mesh/trunk/'}
                 ]
             }
         }
@@ -111,5 +111,5 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks( 'grunt-wp-i18n' );
     grunt.loadNpmTasks( 'grunt-contrib-copy' );
 	grunt.registerTask( 'build', ['sass'] );
-    grunt.registerTask( 'default', [ 'copy', 'makepot','uglify', 'concat', 'watch'] );
+    grunt.registerTask( 'default', [ 'copy', 'makepot','uglify', 'concat', 'watch' ] );
 }
