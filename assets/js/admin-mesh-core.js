@@ -340,10 +340,15 @@ mesh.admin = function ( $ ) {
 
 			$current_section.find('.mesh-editor-blocks .wp-editor-area').each( function() {
 
-				var editorID = $(this).attr('ID'),
-					content = tinymce.get( editorID ).getContent({format : 'raw'});
+				var content = '',
+					editorID = $(this).attr('id'),
+					editor = tinymce.get( editorID );
 
-				$( '#' + editorID ).val( content );
+					// Make sure we have an editor and we aren't in text view.
+					if( editor ) {
+						content = editor.getContent({format: 'raw'});
+						$('#' + editorID).val(content);
+					}
 			});
 
 			var	form_data = $current_section.parents( 'form' ).serialize(),

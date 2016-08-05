@@ -1,5 +1,12 @@
 ##Change Log For Mesh
 
+## [1.0.4] - 2016-08-04
+
+### Fixed
+- Javascript error was thrown if the user had any columns within text view when saving. [mesh-21]
+- Templates were missing the ability for the first column to have an offset. [mesh-5]
+- Post Type enabling wasn't working properly. [mesh-19]
+
 ## [1.0.3] - 2016-05-15
 
 ### Added

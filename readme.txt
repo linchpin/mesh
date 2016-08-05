@@ -1,6 +1,6 @@
 === Mesh - Multiple Content Sections ===
 Contributors: linchpin_agency, aware, maxinacube, desrosj, ebeltram, lulu5588
-Tags: linchpin, sections, content, page builder, page builder plugin, design, wysiwyg, home page builder, template builder, layout builder, landing page builder, website builder, site builder, drag and drop builder, editor, page layout, visual editor
+Tags: linchpin, sections, content, page builder, page builder plugin, design, wysiwyg, home page builder, template builder, layout builder, responsive, landing page builder, website builder, site builder, drag and drop builder, editor, page layout, visual editor, foundation, bootstrap
 Requires at least: 4.0
 Tested up to: 4.5
 Stable tag: 1.0.2
@@ -101,6 +101,11 @@ function add_multiple_content_sections( $the_content ) {
 2. Mesh front end output.
 
 == Changelog ==
+
+= 1.0.4 =
+* Fixed Javascript error was thrown if the user had any columns within text view when saving. [mesh-21]
+* Fixed Templates were missing the ability for the first column to have an offset. [mesh-5]
+* Fixed Post Type enabling wasn't working properly. [mesh-19]
 
 = 1.0.3 =
 * Updated build process for easier deployment to wordpress.org
