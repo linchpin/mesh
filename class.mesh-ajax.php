@@ -124,8 +124,6 @@ class Mesh_AJAX {
 			wp_die();
 		}
 
-		update_post_meta( $section_id, '_mesh_template', $selected_template );
-
 		$block_template = mesh_locate_template_files();
 
 		$templates = apply_filters( 'mesh_section_data', $block_template );
