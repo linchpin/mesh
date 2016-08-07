@@ -240,6 +240,12 @@ class Mesh {
 	 * @return void
 	 */
 	function edit_page_form( $post ) {
+		$allowed_post_types = get_option( 'mesh_post_types' );
+
+		if ( ! array_key_exists( $post->post_type, $allowed_post_types ) ) {
+			return;
+		}
+
 		$content_sections = mesh_get_sections( $post->ID, 'array', array( 'publish', 'draft' ) );
 		$mesh_notifications = get_user_option( 'linchpin_mesh_notifications', get_current_user_id() );
 		?>

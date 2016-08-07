@@ -24,8 +24,18 @@
 
 		<?php if ( $blocks = mesh_get_section_blocks( get_the_ID() ) ) :
 			foreach ( $blocks as $block ) : ?>
-				<?php $block_css_class = get_post_meta( $block->ID, '_mesh_css_class', true ); ?>
-				<div class="small-12 columns <?php esc_attr_e( $block_css_class ); ?>" <?php mesh_section_background( $block->ID ); ?>>
+
+				<?php
+					$block_css_class = get_post_meta( $block->ID, '_mesh_css_class', true );
+					$block_offset    = get_post_meta( $block->ID, '_mesh_offset',  true );
+					$block_column_class = 'columns small-12';
+
+					if ( $block_offset ) {
+						$block_column_class .= ' medium-' . ( 12 - $block_offset ) . ' medium-offset-' . $block_offset;
+					}
+				?>
+
+				<div class="<?php esc_attr_e( $block_column_class ); ?> <?php esc_attr_e( $block_css_class ); ?>" <?php mesh_section_background( $block->ID ); ?>>
 					<?php if ( ! empty( $block->post_title ) && 'no column title' !== strtolower( $block->post_title ) ) : ?>
 						<h3 class="entry-subtitle"><?php esc_html_e( apply_filters( 'the_title', $block->post_title ) ); ?></h3>
 					<?php endif; ?>
