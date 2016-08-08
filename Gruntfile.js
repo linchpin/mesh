@@ -102,6 +102,8 @@ module.exports = function(grunt) {
                     {expand: true, src: ['lib/**'], dest: 'build/mesh/trunk/'},
                     {expand: true, src: ['templates/**'], dest: 'build/mesh/trunk/'},
                     {expand: true, src: ['./readme.txt'], dest: 'build/mesh/trunk/', isFile:true},
+                    {expand: true, src: ['./CHANGELOG.md'], dest: 'build/mesh/trunk/', isFile:true},
+                    {expand: true, src: ['./README.md'], dest: 'build/mesh/trunk/', isFile:true},
                     {expand: true, src: ['./*.php'], dest: 'build/mesh/trunk/'}
                 ]
             }
