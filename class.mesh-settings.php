@@ -196,8 +196,6 @@ class Mesh_Settings {
 	 */
 	public static function add_select( $args ) {
 
-		echo 'this is something htat sadsad adsa';
-
 		/**
 		 * Define our field defaults
 		 */
