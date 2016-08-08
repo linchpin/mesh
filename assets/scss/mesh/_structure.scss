@@ -363,6 +363,29 @@
 		padding: .75rem;
 	}
 
+	.mesh-columns-3,
+	.mesh-columns-4 {
+		.mesh-block-meta-dropdown{
+			.left {
+				width: 100%;
+				margin-bottom: 1em;
+
+				label {
+					display: block;
+
+					input {
+						display: block;
+						max-width: 100%;
+					}
+				}
+			}
+
+			.right {
+				width: 100%;
+			}
+		}
+	}
+
 	.column-slider {
 		position: absolute;
 	    left: 0px;
@@ -408,7 +431,7 @@
 			    &:nth-of-type(4) {
 				    padding-left: 26px;
 			    }
-		    }
+			}
 	    }
 	}
 
