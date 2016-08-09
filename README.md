@@ -48,7 +48,7 @@ if ( function_exists( 'mesh_display_sections' ) ) {
 <?php
 add_action( 'the_content', 'add_multiple_content_sections' );
 function add_multiple_content_sections( $the_content ) {
-    $the_content .= get_mesh_sections();
+    $the_content .= mesh_get_sections();
     return $the_content;
 } ?>
 ```
