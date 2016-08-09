@@ -1,5 +1,11 @@
 ##Change Log For Mesh
 
+## [1.0.5] - 2016-08-08
+
+### Fixed
+- README.md and CHANGELOG.md not pulling into settings page. Thanks @nate-allen [mesh-25]
+- Column "More" Options UI is very tight and overlaps. Thanks @nate-allen [mesh-18]
+
 ## [1.0.4] - 2016-08-04
 
 ### Fixed
