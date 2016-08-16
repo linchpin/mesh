@@ -128,7 +128,7 @@ class Mesh_Settings {
 					'mesh_post_type_section',
 					array(
 						'post_type' => $post_type_object->name,
-						'name' => $post_type_object->labels->name
+						'name' => $post_type_object->labels->name,
 					)
 				);
 			}
