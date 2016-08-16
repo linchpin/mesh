@@ -1,9 +1,40 @@
 <?php
 /**
- * Update class for Simple Subtitles
+ * Update class for Mesh
+ *
+ * @since      1.1.0
+ * @package    Mesh
+ * @subpackage Upgrades
  */
-class Simple_Subtitle_Upgrades {
 
+// Make sure we don't expose any info if called directly.
+if ( ! function_exists( 'add_action' ) ) {
+	exit;
+}
+
+/**
+ * Class Mesh_Upgrades
+ */
+class Mesh_Upgrades {
+
+	/**
+	 * Store our available post types.
+	 *
+	 * @since 1.1.0
+	 * @var $post_types;
+	 */
+	private $post_types;
+
+	/**
+	 * Get all of our available post types
+	 */
+	private function get_post_types() {
+
+	}
+
+	/**
+	 * Mesh_Upgrades constructor.
+	 */
 	function __construct() {
 		add_action( 'admin_init', array( $this, 'admin_init' ) );
 	}
@@ -12,16 +43,23 @@ class Simple_Subtitle_Upgrades {
 	 * Perform any upgrades needed.
 	 */
 	function admin_init() {
-		if ( 0 > version_compare( $GLOBALS['simple_subtitles_database_version'], '1.0' ) ) {
+
+		echo '[' . version_compare( $GLOBALS['mesh_current_version'], '1.0' , '<' ) . ']';
+
+		if ( version_compare( $GLOBALS['mesh_current_version'], '1.0' , '<' ) ) {
 			$this->version_1_0();
 		}
 
-		if ( 0 > version_compare( $GLOBALS['simple_subtitles_database_version'], '2.0' ) ) {
-			$this->version_2_0();
+		echo '[' . version_compare( $GLOBALS['mesh_current_version'], '1.0.5', '<' ) . ']';
+
+		if ( version_compare( $GLOBALS['mesh_current_version'], '1.0.5', '<' ) ) {
+			$this->version_1_0_5();
 		}
 
-		if ( 0 > version_compare( $GLOBALS['simple_subtitles_database_version'], '2.1.1' ) ) {
-			$this->version_2_1_1();
+		echo '[' . version_compare( $GLOBALS['mesh_current_version'], '1.1.0', '<' ) . ']';
+
+		if ( version_compare( $GLOBALS['mesh_current_version'], '1.1.0', '<' ) ) {
+			$this->version_1_1();
 		}
 	}
 
@@ -29,19 +67,19 @@ class Simple_Subtitle_Upgrades {
 	 * Upgrade to version 1.0 by ensuring the default post types are selected.
 	 */
 	function version_1_0() {
-		if ( $settings = get_option( 'simple_subtitle_settings' ) ) {
+		if ( $settings = get_option( 'mesh_post_types' ) ) {
 			return;
 		}
 
-		$post_types = get_post_types();
+		$this->post_types = get_post_types();
 
-		if ( empty( $post_types ) ) {
+		if ( empty( $this->post_types ) ) {
 			return;
 		}
 
 		$default_post_types = array();
 
-		foreach ( $post_types as $post_type ) {
+		foreach ( $this->post_types as $post_type ) {
 			$post_type_object = get_post_type_object( $post_type );
 
 			if ( in_array( $post_type, array( 'revision', 'nav_menu_item', 'attachment' ) ) || ! $post_type_object->public ) {
@@ -52,58 +90,52 @@ class Simple_Subtitle_Upgrades {
 		}
 
 		if ( ! empty( $default_post_types ) ) {
-			update_option( 'simple_subtitle_settings', $default_post_types );
+			update_option( 'mesh_post_types', $default_post_types );
 		}
 
-		update_option( 'simple_subtitles_version', '1.0' );
-		$GLOBALS['simple_subtitles_database_version'] = '1.0';
-	}
-
-	/**
-	 * Upgrade meta keys to reflect the new namespacing.
-	 */
-	function version_2_0() {
-		$args = array(
-			'posts_per_page' => 100,
-			'offset' => 0,
-			'post_type' => 'any',
-			'post_status' => apply_filters( 'simple_subtitle_2_0_upgrade_statuses', array(
-				'any',
-				'trash',
-			) ),
-			'meta_query' => array(
-				array(
-					'key' => '_lp_simple_subtitle',
-					'compare' => 'EXISTS',
-				),
-			),
-		);
-
-		$subtitle_posts = new WP_Query( $args );
-
-		while ( $subtitle_posts->have_posts() ) {
-			foreach ( $subtitle_posts->posts as $post ) {
-				$subtitle = get_post_meta( $post->ID, '_lp_simple_subtitle', true );
-				error_log( $subtitle );
-
-				update_post_meta( $post->ID, '_simple_subtitle', $subtitle );
-				delete_post_meta( $post->ID, '_lp_simple_subtitle' );
-			}
-
-			$args['offset'] = $args['posts_per_page'] + $args['offset'];
-			$subtitle_posts = new WP_Query( $args );
-		}
-
-		update_option( 'simple_subtitles_version', '2.0' );
-		$GLOBALS['simple_subtitles_database_version'] = '2.0';
+		update_option( 'mesh_version', '1.0' );
+		$GLOBALS['mesh_current_version'] = '1.0';
 	}
 
 	/**
 	 * Nothing to update here, just the version.
 	 */
-	function version_2_1_1() {
-		update_option( 'simple_subtitles_version', '2.1.1' );
-		$GLOBALS['simple_subtitles_database_version'] = '2.1.1';
+	function version_1_0_5() {
+		update_option( 'mesh_version', '1.0.5' );
+		$GLOBALS['mesh_current_version'] = '1.0.5';
+	}
+
+	/**
+	 * Upgrade to version 1.1
+	 *
+	 * Add mesh_templates to available post types that allow mesh_section
+	 */
+	function version_1_1() {
+
+		if ( empty( $this->post_types ) ) {
+
+			$this->post_types = get_post_types();
+
+			if ( empty( $this->post_types ) ) {
+				return;
+			}
+		}
+
+		$available_post_types = get_option( 'mesh_post_types', array() );
+
+		// If for some reason we do not have default templates make sure we have pages at minimum.
+		if ( empty( $available_post_types ) ) {
+			$available_post_types['pages'] = 1;
+		}
+
+		$available_post_types['mesh_template'] = 1;
+
+		update_option( 'mesh_post_types', $available_post_types );
+
+		update_option( 'mesh_version', '1.1' );
+		$GLOBALS['mesh_current_version'] = '1.1';
+
 	}
 }
-$simple_subtitle_upgrades = new Simple_Subtitle_Upgrades();
+
+$mesh_upgrades = new Mesh_Upgrades();

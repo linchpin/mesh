@@ -7,6 +7,11 @@
  * @subpackage Settings
  */
 
+// Make sure we don't expose any info if called directly.
+if ( ! function_exists( 'add_action' ) ) {
+	exit;
+}
+
 /**
  * Class Mesh_Settings
  */
@@ -41,6 +46,9 @@ class Mesh_Settings {
 	 */
 	public static function add_admin_menu() {
 		add_options_page( LINCHPIN_MESH_PLUGIN_NAME, LINCHPIN_MESH_PLUGIN_NAME, 'manage_options', self::$settings_page, array( 'Mesh_Settings', 'add_options_page' ) );
+
+		add_menu_page( LINCHPIN_MESH_PLUGIN_NAME, LINCHPIN_MESH_PLUGIN_NAME, 'manage_options', self::$settings_page, array( 'Mesh_Settings', 'add_options_page' ) );
+		add_submenu_page( 'mesh', __( 'Settings', 'mesh' ), __( 'Settings', 'mesh' ), 'manage_options', 'mesh' );
 	}
 
 	/**
@@ -65,6 +73,8 @@ class Mesh_Settings {
 
 	/**
 	 * Add all of our settings from the API
+	 *
+	 *
 	 */
 	public static function settings_init() {
 
@@ -116,7 +126,8 @@ class Mesh_Settings {
 			foreach ( $post_types as $post_type ) {
 				$post_type_object = get_post_type_object( $post_type );
 
-				if ( in_array( $post_type, array( 'revision', 'nav_menu_item', 'attachment' ) ) || ! $post_type_object->public ) {
+				// Skip any of the following post types and post types that ARE NOT public.
+				if ( in_array( $post_type, array( 'revision', 'nav_menu_item', 'attachment', 'mesh_template' ) ) || ! $post_type_object->public ) {
 					continue;
 				}
 
@@ -184,7 +195,7 @@ class Mesh_Settings {
 			<p class="description"><?php esc_html_e( $args['description'] ); ?></p>
 		<?php endif; ?>
 
-		<input type="<?php esc_attr_e( $args['type'] ); ?>" class="<?php esc_attr_e( $args['class'] ); ?>" name="clapi_settings[<?php esc_attr_e( $args['field'] ); ?>]" value="<?php esc_attr_e( $options[ $args['field'] ] ); ?>">
+		<input type="<?php esc_attr_e( $args['type'] ); ?>" class="<?php esc_attr_e( $args['class'] ); ?>" name="mesh_settings[<?php esc_attr_e( $args['field'] ); ?>]" value="<?php esc_attr_e( $options[ $args['field'] ] ); ?>">
 
 		<?php
 	}
@@ -247,6 +258,7 @@ class Mesh_Settings {
 		$options = get_option( 'mesh_post_types' );
 
 		$checked = false;
+
 		if ( ! empty( $options[ $args['post_type'] ] ) ) {
 			$checked = true;
 		}
@@ -304,6 +316,7 @@ class Mesh_Settings {
 		$tabs['settings']  = __( 'Settings',   'mesh' );
 		$tabs['faq']       = __( 'About Mesh', 'mesh' );
 		$tabs['changelog'] = __( 'Change Log', 'mesh' );
+		$tabs['linchpin']  = __( 'About Linchpin', 'mesh' );
 
 		return apply_filters( 'mesh_tabs', $tabs );
 	}

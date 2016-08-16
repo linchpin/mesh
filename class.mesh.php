@@ -1,5 +1,12 @@
 <?php
 /**
+ * Meat of most of Mesh Functionality
+ *
+ * @since   1.0
+ * @package Mesh
+ */
+
+/**
  * Class Mesh
  */
 class Mesh {
@@ -223,7 +230,7 @@ class Mesh {
 	 */
 	function admin_init() {
 		if ( false === get_option( 'mesh_version' ) ) {
-			update_option( 'mesh_post_types', array( 'page' => 1 ) );
+			update_option( 'mesh_post_types', array( 'page' => 1, 'mesh_template' => 1 ) );
 			update_option( 'mesh_version', LINCHPIN_MESH_VERSION );
 		}
 	}
