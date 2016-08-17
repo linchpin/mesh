@@ -44,19 +44,13 @@ class Mesh_Upgrades {
 	 */
 	function admin_init() {
 
-		echo '[' . version_compare( $GLOBALS['mesh_current_version'], '1.0' , '<' ) . ']';
-
 		if ( version_compare( $GLOBALS['mesh_current_version'], '1.0' , '<' ) ) {
 			$this->version_1_0();
 		}
 
-		echo '[' . version_compare( $GLOBALS['mesh_current_version'], '1.0.5', '<' ) . ']';
-
 		if ( version_compare( $GLOBALS['mesh_current_version'], '1.0.5', '<' ) ) {
 			$this->version_1_0_5();
 		}
-
-		echo '[' . version_compare( $GLOBALS['mesh_current_version'], '1.1.0', '<' ) . ']';
 
 		if ( version_compare( $GLOBALS['mesh_current_version'], '1.1.0', '<' ) ) {
 			$this->version_1_1();
