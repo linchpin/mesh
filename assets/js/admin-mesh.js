@@ -499,6 +499,7 @@ mesh.blocks = function ( $ ) {
          * @param $tinymce_editors
          */
         rerender_blocks : function( $tinymce_editors ) {
+
             $tinymce_editors.each(function() {
                 var editor_id   = $(this).prop('id'),
                     proto_id,
@@ -565,7 +566,9 @@ mesh.blocks = function ( $ ) {
                                 }
                             } );
                         }
-                    } catch(e){}
+                    } catch(e){
+                        console.log( e );
+                    }
 
                     try {
 
@@ -588,7 +591,9 @@ mesh.blocks = function ( $ ) {
                                 QTags._buttonsInit();
                             }
                         }
-                    } catch(e) {}
+                    } catch(e) {
+                        console.log( e );
+                    }
 
                     // @todo This is kinda hacky. See about switching this out @aware
                     $block_content.find('.switch-tmce').trigger('click');
@@ -751,7 +756,7 @@ mesh.blocks = function ( $ ) {
 			var offset = $(this).val(),
 				$block = $(this).parents('.block-header').next('.block-content');
 
-			$block.removeClass('mesh-has-offset mesh-offset-1 mesh-offset-2 mesh-offset-3 mesh-offset-4 mesh-offset-5 mesh-offset-6');
+			$block.removeClass('mesh-has-offset mesh-offset-1 mesh-offset-2 mesh-offset-3 mesh-offset-4 mesh-offset-5 mesh-offset-6 mesh-offset-7 mesh-offset-8 mesh-offset-9');
 
 			if ( parseInt( offset ) ) {
 				$block.addClass('mesh-has-offset mesh-offset-' + offset );

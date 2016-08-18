@@ -2,9 +2,9 @@
 # This file is distributed under the GPLv2 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Mesh 1.0.5\n"
+"Project-Id-Version: Mesh 1.1.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/mesh\n"
-"POT-Creation-Date: 2016-08-09 02:20:01+00:00\n"
+"POT-Creation-Date: 2016-08-17 18:03:35+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -19,8 +19,10 @@ msgstr ""
 #: build/mesh/tags/1.0.3/class.mesh.php:731
 #: build/mesh/tags/1.0.4/admin/controls.php:14
 #: build/mesh/tags/1.0.4/class.mesh.php:731
-#: build/mesh/trunk/admin/controls.php:14 build/mesh/trunk/class.mesh.php:737
-#: class.mesh.php:737
+#: build/mesh/tags/1.0.5/admin/controls.php:14
+#: build/mesh/tags/1.0.5/class.mesh.php:737
+#: build/mesh/trunk/admin/controls.php:14 build/mesh/trunk/class.mesh.php:750
+#: class.mesh.php:750
 msgid "Reorder Sections"
 msgstr ""
 
@@ -30,8 +32,10 @@ msgstr ""
 #: build/mesh/tags/1.0.3/class.mesh.php:721
 #: build/mesh/tags/1.0.4/admin/controls.php:15
 #: build/mesh/tags/1.0.4/class.mesh.php:721
-#: build/mesh/trunk/admin/controls.php:15 build/mesh/trunk/class.mesh.php:727
-#: class.mesh.php:727
+#: build/mesh/tags/1.0.5/admin/controls.php:15
+#: build/mesh/tags/1.0.5/class.mesh.php:727
+#: build/mesh/trunk/admin/controls.php:15 build/mesh/trunk/class.mesh.php:740
+#: class.mesh.php:740
 msgid "Expand All"
 msgstr ""
 
@@ -41,8 +45,10 @@ msgstr ""
 #: build/mesh/tags/1.0.3/class.mesh.php:722
 #: build/mesh/tags/1.0.4/admin/controls.php:16
 #: build/mesh/tags/1.0.4/class.mesh.php:722
-#: build/mesh/trunk/admin/controls.php:16 build/mesh/trunk/class.mesh.php:728
-#: class.mesh.php:728
+#: build/mesh/tags/1.0.5/admin/controls.php:16
+#: build/mesh/tags/1.0.5/class.mesh.php:728
+#: build/mesh/trunk/admin/controls.php:16 build/mesh/trunk/class.mesh.php:741
+#: class.mesh.php:741
 msgid "Collapse All"
 msgstr ""
 
@@ -52,12 +58,14 @@ msgstr ""
 #: build/mesh/tags/1.0.3/class.mesh.php:264
 #: build/mesh/tags/1.0.4/admin/controls.php:17
 #: build/mesh/tags/1.0.4/class.mesh.php:264
-#: build/mesh/trunk/admin/controls.php:17 build/mesh/trunk/class.mesh.php:270
-#: class.mesh.php:270
+#: build/mesh/tags/1.0.5/admin/controls.php:17
+#: build/mesh/tags/1.0.5/class.mesh.php:270
+#: build/mesh/trunk/admin/controls.php:17 build/mesh/trunk/class.mesh.php:282
+#: class.mesh.php:282
 msgid "Add Section"
 msgstr ""
 
-#: admin/section-blocks.php:57 admin/section-blocks.php:87
+#: admin/section-blocks.php:57 admin/section-blocks.php:86
 #: admin/section-container.php:26 admin/section-container.php:39
 #: build/mesh/tags/1.0.1/admin/section-blocks.php:57
 #: build/mesh/tags/1.0.1/admin/section-blocks.php:87
@@ -71,26 +79,32 @@ msgstr ""
 #: build/mesh/tags/1.0.4/admin/section-blocks.php:87
 #: build/mesh/tags/1.0.4/admin/section-container.php:26
 #: build/mesh/tags/1.0.4/admin/section-container.php:39
+#: build/mesh/tags/1.0.5/admin/section-blocks.php:57
+#: build/mesh/tags/1.0.5/admin/section-blocks.php:87
+#: build/mesh/tags/1.0.5/admin/section-container.php:26
+#: build/mesh/tags/1.0.5/admin/section-container.php:39
 #: build/mesh/trunk/admin/section-blocks.php:57
-#: build/mesh/trunk/admin/section-blocks.php:87
+#: build/mesh/trunk/admin/section-blocks.php:86
 #: build/mesh/trunk/admin/section-container.php:26
 #: build/mesh/trunk/admin/section-container.php:39
 msgid "Done"
 msgstr ""
 
-#: admin/section-blocks.php:63 admin/section-blocks.php:97
+#: admin/section-blocks.php:63 admin/section-blocks.php:96
 #: build/mesh/tags/1.0.1/admin/section-blocks.php:63
 #: build/mesh/tags/1.0.1/admin/section-blocks.php:97
 #: build/mesh/tags/1.0.3/admin/section-blocks.php:63
 #: build/mesh/tags/1.0.3/admin/section-blocks.php:97
 #: build/mesh/tags/1.0.4/admin/section-blocks.php:63
 #: build/mesh/tags/1.0.4/admin/section-blocks.php:97
+#: build/mesh/tags/1.0.5/admin/section-blocks.php:63
+#: build/mesh/tags/1.0.5/admin/section-blocks.php:97
 #: build/mesh/trunk/admin/section-blocks.php:63
-#: build/mesh/trunk/admin/section-blocks.php:97
+#: build/mesh/trunk/admin/section-blocks.php:96
 msgid "Offset:"
 msgstr ""
 
-#: admin/section-blocks.php:71 admin/section-blocks.php:106
+#: admin/section-blocks.php:70 admin/section-blocks.php:105
 #: admin/section-controls.php:40
 #: build/mesh/tags/1.0.1/admin/section-blocks.php:71
 #: build/mesh/tags/1.0.1/admin/section-blocks.php:106
@@ -101,29 +115,34 @@ msgstr ""
 #: build/mesh/tags/1.0.4/admin/section-blocks.php:71
 #: build/mesh/tags/1.0.4/admin/section-blocks.php:106
 #: build/mesh/tags/1.0.4/admin/section-controls.php:40
-#: build/mesh/trunk/admin/section-blocks.php:71
-#: build/mesh/trunk/admin/section-blocks.php:106
+#: build/mesh/tags/1.0.5/admin/section-blocks.php:71
+#: build/mesh/tags/1.0.5/admin/section-blocks.php:106
+#: build/mesh/tags/1.0.5/admin/section-controls.php:40
+#: build/mesh/trunk/admin/section-blocks.php:70
+#: build/mesh/trunk/admin/section-blocks.php:105
 #: build/mesh/trunk/admin/section-controls.php:40
 msgid "CSS Class"
 msgstr ""
 
-#: admin/section-blocks.php:91
+#: admin/section-blocks.php:90
 #: build/mesh/tags/1.0.1/admin/section-blocks.php:91
 #: build/mesh/tags/1.0.3/admin/section-blocks.php:91
 #: build/mesh/tags/1.0.4/admin/section-blocks.php:91
-#: build/mesh/trunk/admin/section-blocks.php:91
+#: build/mesh/tags/1.0.5/admin/section-blocks.php:91
+#: build/mesh/trunk/admin/section-blocks.php:90
 msgid "More"
 msgstr ""
 
-#: admin/section-blocks.php:100
+#: admin/section-blocks.php:99
 #: build/mesh/tags/1.0.1/admin/section-blocks.php:100
 #: build/mesh/tags/1.0.3/admin/section-blocks.php:100
 #: build/mesh/tags/1.0.4/admin/section-blocks.php:100
-#: build/mesh/trunk/admin/section-blocks.php:100
+#: build/mesh/tags/1.0.5/admin/section-blocks.php:100
+#: build/mesh/trunk/admin/section-blocks.php:99
 msgid " selected"
 msgstr ""
 
-#: admin/section-blocks.php:115 admin/section-controls.php:71
+#: admin/section-blocks.php:114 admin/section-controls.php:71
 #: build/mesh/tags/1.0.1/admin/section-blocks.php:115
 #: build/mesh/tags/1.0.1/admin/section-controls.php:71
 #: build/mesh/tags/1.0.1/class.mesh.php:717
@@ -133,9 +152,12 @@ msgstr ""
 #: build/mesh/tags/1.0.4/admin/section-blocks.php:115
 #: build/mesh/tags/1.0.4/admin/section-controls.php:71
 #: build/mesh/tags/1.0.4/class.mesh.php:719
-#: build/mesh/trunk/admin/section-blocks.php:115
+#: build/mesh/tags/1.0.5/admin/section-blocks.php:115
+#: build/mesh/tags/1.0.5/admin/section-controls.php:71
+#: build/mesh/tags/1.0.5/class.mesh.php:725
+#: build/mesh/trunk/admin/section-blocks.php:114
 #: build/mesh/trunk/admin/section-controls.php:71
-#: build/mesh/trunk/class.mesh.php:725 class.mesh.php:725
+#: build/mesh/trunk/class.mesh.php:738 class.mesh.php:738
 msgid "Set Background Image"
 msgstr ""
 
@@ -143,6 +165,7 @@ msgstr ""
 #: build/mesh/tags/1.0.1/admin/section-container.php:34
 #: build/mesh/tags/1.0.3/admin/section-container.php:34
 #: build/mesh/tags/1.0.4/admin/section-container.php:34
+#: build/mesh/tags/1.0.5/admin/section-container.php:34
 #: build/mesh/trunk/admin/section-container.php:34
 msgid "Status:"
 msgstr ""
@@ -151,6 +174,7 @@ msgstr ""
 #: build/mesh/tags/1.0.1/admin/section-container.php:36
 #: build/mesh/tags/1.0.3/admin/section-container.php:36
 #: build/mesh/tags/1.0.4/admin/section-container.php:36
+#: build/mesh/tags/1.0.5/admin/section-container.php:36
 #: build/mesh/trunk/admin/section-container.php:36
 msgid "Draft"
 msgstr ""
@@ -159,6 +183,7 @@ msgstr ""
 #: build/mesh/tags/1.0.1/admin/section-container.php:37
 #: build/mesh/tags/1.0.3/admin/section-container.php:37
 #: build/mesh/tags/1.0.4/admin/section-container.php:37
+#: build/mesh/tags/1.0.5/admin/section-container.php:37
 #: build/mesh/trunk/admin/section-container.php:37
 msgid "Published"
 msgstr ""
@@ -167,6 +192,7 @@ msgstr ""
 #: build/mesh/tags/1.0.1/admin/section-container.php:63
 #: build/mesh/tags/1.0.3/admin/section-container.php:63
 #: build/mesh/tags/1.0.4/admin/section-container.php:63
+#: build/mesh/tags/1.0.5/admin/section-container.php:63
 #: build/mesh/trunk/admin/section-container.php:63
 msgid "Remove"
 msgstr ""
@@ -178,6 +204,8 @@ msgstr ""
 #: build/mesh/tags/1.0.3/admin/section-container.php:74
 #: build/mesh/tags/1.0.4/admin/section-container.php:70
 #: build/mesh/tags/1.0.4/admin/section-container.php:74
+#: build/mesh/tags/1.0.5/admin/section-container.php:70
+#: build/mesh/tags/1.0.5/admin/section-container.php:74
 #: build/mesh/trunk/admin/section-container.php:70
 #: build/mesh/trunk/admin/section-container.php:74
 msgid "Save Draft"
@@ -190,6 +218,8 @@ msgstr ""
 #: build/mesh/tags/1.0.3/admin/section-container.php:75
 #: build/mesh/tags/1.0.4/admin/section-container.php:71
 #: build/mesh/tags/1.0.4/admin/section-container.php:75
+#: build/mesh/tags/1.0.5/admin/section-container.php:71
+#: build/mesh/tags/1.0.5/admin/section-container.php:75
 #: build/mesh/trunk/admin/section-container.php:71
 #: build/mesh/trunk/admin/section-container.php:75
 msgid "Publish"
@@ -202,6 +232,8 @@ msgstr ""
 #: build/mesh/tags/1.0.3/admin/section-container.php:76
 #: build/mesh/tags/1.0.4/admin/section-container.php:72
 #: build/mesh/tags/1.0.4/admin/section-container.php:76
+#: build/mesh/tags/1.0.5/admin/section-container.php:72
+#: build/mesh/tags/1.0.5/admin/section-container.php:76
 #: build/mesh/trunk/admin/section-container.php:72
 #: build/mesh/trunk/admin/section-container.php:76
 msgid "Update"
@@ -211,6 +243,7 @@ msgstr ""
 #: build/mesh/tags/1.0.1/admin/section-controls.php:16
 #: build/mesh/tags/1.0.3/admin/section-controls.php:16
 #: build/mesh/tags/1.0.4/admin/section-controls.php:16
+#: build/mesh/tags/1.0.5/admin/section-controls.php:16
 #: build/mesh/trunk/admin/section-controls.php:16
 msgid "Columns:"
 msgstr ""
@@ -219,6 +252,7 @@ msgstr ""
 #: build/mesh/tags/1.0.1/admin/section-controls.php:27
 #: build/mesh/tags/1.0.3/admin/section-controls.php:27
 #: build/mesh/tags/1.0.4/admin/section-controls.php:27
+#: build/mesh/tags/1.0.5/admin/section-controls.php:27
 #: build/mesh/trunk/admin/section-controls.php:27
 msgid "Display Title"
 msgstr ""
@@ -227,6 +261,7 @@ msgstr ""
 #: build/mesh/tags/1.0.1/admin/section-controls.php:33
 #: build/mesh/tags/1.0.3/admin/section-controls.php:33
 #: build/mesh/tags/1.0.4/admin/section-controls.php:33
+#: build/mesh/tags/1.0.5/admin/section-controls.php:33
 #: build/mesh/trunk/admin/section-controls.php:33
 msgid "More Options"
 msgstr ""
@@ -235,6 +270,7 @@ msgstr ""
 #: build/mesh/tags/1.0.1/admin/section-controls.php:48
 #: build/mesh/tags/1.0.3/admin/section-controls.php:48
 #: build/mesh/tags/1.0.4/admin/section-controls.php:48
+#: build/mesh/tags/1.0.5/admin/section-controls.php:48
 #: build/mesh/trunk/admin/section-controls.php:48
 msgid "Collapse Padding"
 msgstr ""
@@ -243,6 +279,7 @@ msgstr ""
 #: build/mesh/tags/1.0.1/admin/section-controls.php:55
 #: build/mesh/tags/1.0.3/admin/section-controls.php:55
 #: build/mesh/tags/1.0.4/admin/section-controls.php:55
+#: build/mesh/tags/1.0.5/admin/section-controls.php:55
 #: build/mesh/trunk/admin/section-controls.php:55
 msgid "Push/Pull"
 msgstr ""
@@ -251,6 +288,7 @@ msgstr ""
 #: build/mesh/tags/1.0.1/admin/section-controls.php:62
 #: build/mesh/tags/1.0.3/admin/section-controls.php:62
 #: build/mesh/tags/1.0.4/admin/section-controls.php:62
+#: build/mesh/tags/1.0.5/admin/section-controls.php:62
 #: build/mesh/trunk/admin/section-controls.php:62
 msgid "Equalize"
 msgstr ""
@@ -259,6 +297,7 @@ msgstr ""
 #: build/mesh/tags/1.0.1/admin/section-template-warnings.php:17
 #: build/mesh/tags/1.0.3/admin/section-template-warnings.php:17
 #: build/mesh/tags/1.0.4/admin/section-template-warnings.php:17
+#: build/mesh/tags/1.0.5/admin/section-template-warnings.php:17
 #: build/mesh/trunk/admin/section-template-warnings.php:17
 msgid "The number of columns selected is causing some content to be hidden."
 msgstr ""
@@ -267,6 +306,7 @@ msgstr ""
 #: build/mesh/tags/1.0.1/admin/section-template-warnings.php:19
 #: build/mesh/tags/1.0.3/admin/section-template-warnings.php:19
 #: build/mesh/tags/1.0.4/admin/section-template-warnings.php:19
+#: build/mesh/tags/1.0.5/admin/section-template-warnings.php:19
 #: build/mesh/trunk/admin/section-template-warnings.php:19
 msgid "Increase the column number to access that content."
 msgstr ""
@@ -277,14 +317,17 @@ msgstr ""
 #: build/mesh/tags/1.0.3/class.mesh.php:723
 #: build/mesh/tags/1.0.4/class.mesh-ajax.php:48
 #: build/mesh/tags/1.0.4/class.mesh.php:723
-#: build/mesh/trunk/class.mesh-ajax.php:48 build/mesh/trunk/class.mesh.php:729
-#: class.mesh-ajax.php:48 class.mesh.php:729
+#: build/mesh/tags/1.0.5/class.mesh-ajax.php:48
+#: build/mesh/tags/1.0.5/class.mesh.php:729
+#: build/mesh/trunk/class.mesh-ajax.php:48 build/mesh/trunk/class.mesh.php:742
+#: class.mesh-ajax.php:48 class.mesh.php:742
 msgid "No Section Title"
 msgstr ""
 
 #: build/mesh/tags/1.0.1/class.mesh-pointers.php:98
 #: build/mesh/tags/1.0.3/class.mesh-pointers.php:98
 #: build/mesh/tags/1.0.4/class.mesh-pointers.php:98
+#: build/mesh/tags/1.0.5/class.mesh-pointers.php:98
 #: build/mesh/trunk/class.mesh-pointers.php:98 class.mesh-pointers.php:98
 msgid "Section Options"
 msgstr ""
@@ -292,6 +335,7 @@ msgstr ""
 #: build/mesh/tags/1.0.1/class.mesh-pointers.php:99
 #: build/mesh/tags/1.0.3/class.mesh-pointers.php:99
 #: build/mesh/tags/1.0.4/class.mesh-pointers.php:99
+#: build/mesh/tags/1.0.5/class.mesh-pointers.php:99
 #: build/mesh/trunk/class.mesh-pointers.php:99 class.mesh-pointers.php:99
 msgid "View all section options by click the \"More Options\" toggle."
 msgstr ""
@@ -299,6 +343,7 @@ msgstr ""
 #: build/mesh/tags/1.0.1/class.mesh-pointers.php:109
 #: build/mesh/tags/1.0.3/class.mesh-pointers.php:109
 #: build/mesh/tags/1.0.4/class.mesh-pointers.php:109
+#: build/mesh/tags/1.0.5/class.mesh-pointers.php:109
 #: build/mesh/trunk/class.mesh-pointers.php:109 class.mesh-pointers.php:109
 msgid "What is an offset?"
 msgstr ""
@@ -306,6 +351,7 @@ msgstr ""
 #: build/mesh/tags/1.0.1/class.mesh-pointers.php:110
 #: build/mesh/tags/1.0.3/class.mesh-pointers.php:110
 #: build/mesh/tags/1.0.4/class.mesh-pointers.php:110
+#: build/mesh/tags/1.0.5/class.mesh-pointers.php:110
 #: build/mesh/trunk/class.mesh-pointers.php:110 class.mesh-pointers.php:110
 msgid ""
 "If using Foundation, an offset will indent your column by the amount of "
@@ -315,6 +361,7 @@ msgstr ""
 #: build/mesh/tags/1.0.1/class.mesh-pointers.php:120
 #: build/mesh/tags/1.0.3/class.mesh-pointers.php:120
 #: build/mesh/tags/1.0.4/class.mesh-pointers.php:120
+#: build/mesh/tags/1.0.5/class.mesh-pointers.php:120
 #: build/mesh/trunk/class.mesh-pointers.php:120 class.mesh-pointers.php:120
 msgid "Rearrange Columns"
 msgstr ""
@@ -322,6 +369,7 @@ msgstr ""
 #: build/mesh/tags/1.0.1/class.mesh-pointers.php:121
 #: build/mesh/tags/1.0.3/class.mesh-pointers.php:121
 #: build/mesh/tags/1.0.4/class.mesh-pointers.php:121
+#: build/mesh/tags/1.0.5/class.mesh-pointers.php:121
 #: build/mesh/trunk/class.mesh-pointers.php:121 class.mesh-pointers.php:121
 msgid ""
 "Use this handle to click and drag this column, giving you the ability to "
@@ -331,126 +379,146 @@ msgstr ""
 #: build/mesh/tags/1.0.1/class.mesh-settings.php:53
 #: build/mesh/tags/1.0.3/class.mesh-settings.php:53
 #: build/mesh/tags/1.0.4/class.mesh-settings.php:53
-#: build/mesh/trunk/class.mesh-settings.php:53 class.mesh-settings.php:53
+#: build/mesh/tags/1.0.5/class.mesh-settings.php:53
+#: build/mesh/trunk/class.mesh-settings.php:61 class.mesh-settings.php:61
 msgid "Below are your settings for Mesh"
 msgstr ""
 
 #: build/mesh/tags/1.0.1/class.mesh-settings.php:62
 #: build/mesh/tags/1.0.3/class.mesh-settings.php:62
 #: build/mesh/tags/1.0.4/class.mesh-settings.php:62
-#: build/mesh/trunk/class.mesh-settings.php:62 class.mesh-settings.php:62
+#: build/mesh/tags/1.0.5/class.mesh-settings.php:62
+#: build/mesh/trunk/class.mesh-settings.php:70 class.mesh-settings.php:70
 msgid "Select the post types that allow Mesh."
 msgstr ""
 
 #: build/mesh/tags/1.0.1/class.mesh-settings.php:77
 #: build/mesh/tags/1.0.3/class.mesh-settings.php:77
 #: build/mesh/tags/1.0.4/class.mesh-settings.php:77
-#: build/mesh/trunk/class.mesh-settings.php:77 class.mesh-settings.php:77
+#: build/mesh/tags/1.0.5/class.mesh-settings.php:77
+#: build/mesh/trunk/class.mesh-settings.php:87 class.mesh-settings.php:87
 msgid "Mesh Configurations"
 msgstr ""
 
 #: build/mesh/tags/1.0.1/class.mesh-settings.php:84
 #: build/mesh/tags/1.0.3/class.mesh-settings.php:84
 #: build/mesh/tags/1.0.4/class.mesh-settings.php:84
-#: build/mesh/trunk/class.mesh-settings.php:84 class.mesh-settings.php:84
+#: build/mesh/tags/1.0.5/class.mesh-settings.php:84
+#: build/mesh/trunk/class.mesh-settings.php:94 class.mesh-settings.php:94
 msgid "Use Mesh CSS"
 msgstr ""
 
 #: build/mesh/tags/1.0.1/class.mesh-settings.php:85
 #: build/mesh/tags/1.0.3/class.mesh-settings.php:85
 #: build/mesh/tags/1.0.4/class.mesh-settings.php:85
-#: build/mesh/trunk/class.mesh-settings.php:85 class.mesh-settings.php:85
+#: build/mesh/tags/1.0.5/class.mesh-settings.php:85
+#: build/mesh/trunk/class.mesh-settings.php:95 class.mesh-settings.php:95
 msgid "Disable Mesh CSS"
 msgstr ""
 
 #: build/mesh/tags/1.0.1/class.mesh-settings.php:86
 #: build/mesh/tags/1.0.3/class.mesh-settings.php:86
 #: build/mesh/tags/1.0.4/class.mesh-settings.php:86
-#: build/mesh/trunk/class.mesh-settings.php:86 class.mesh-settings.php:86
+#: build/mesh/tags/1.0.5/class.mesh-settings.php:86
+#: build/mesh/trunk/class.mesh-settings.php:96 class.mesh-settings.php:96
 msgid "Use Foundation w/ my theme"
 msgstr ""
 
 #: build/mesh/tags/1.0.1/class.mesh-settings.php:87
 #: build/mesh/tags/1.0.3/class.mesh-settings.php:87
 #: build/mesh/tags/1.0.4/class.mesh-settings.php:87
-#: build/mesh/trunk/class.mesh-settings.php:87 class.mesh-settings.php:87
+#: build/mesh/tags/1.0.5/class.mesh-settings.php:87
+#: build/mesh/trunk/class.mesh-settings.php:97 class.mesh-settings.php:97
 msgid "Use Bootstrap (coming soon)"
 msgstr ""
 
 #: build/mesh/tags/1.0.1/class.mesh-settings.php:95
 #: build/mesh/tags/1.0.3/class.mesh-settings.php:95
 #: build/mesh/tags/1.0.4/class.mesh-settings.php:95
-#: build/mesh/trunk/class.mesh-settings.php:95 class.mesh-settings.php:95
+#: build/mesh/tags/1.0.5/class.mesh-settings.php:95
+#: build/mesh/trunk/class.mesh-settings.php:105 class.mesh-settings.php:105
 msgid "CSS Settings"
 msgstr ""
 
 #: build/mesh/tags/1.0.1/class.mesh-settings.php:101
 #: build/mesh/tags/1.0.3/class.mesh-settings.php:101
 #: build/mesh/tags/1.0.4/class.mesh-settings.php:101
-#: build/mesh/trunk/class.mesh-settings.php:101 class.mesh-settings.php:101
+#: build/mesh/tags/1.0.5/class.mesh-settings.php:101
+#: build/mesh/trunk/class.mesh-settings.php:111 class.mesh-settings.php:111
 msgid "CSS"
 msgstr ""
 
 #: build/mesh/tags/1.0.1/class.mesh-settings.php:102
 #: build/mesh/tags/1.0.3/class.mesh-settings.php:102
 #: build/mesh/tags/1.0.4/class.mesh-settings.php:102
-#: build/mesh/trunk/class.mesh-settings.php:102 class.mesh-settings.php:102
+#: build/mesh/tags/1.0.5/class.mesh-settings.php:102
+#: build/mesh/trunk/class.mesh-settings.php:112 class.mesh-settings.php:112
 msgid "Choose whether or not to enqueue CSS with Mesh."
 msgstr ""
 
 #: build/mesh/tags/1.0.1/class.mesh-settings.php:111
 #: build/mesh/tags/1.0.3/class.mesh-settings.php:111
 #: build/mesh/tags/1.0.4/class.mesh-settings.php:111
-#: build/mesh/trunk/class.mesh-settings.php:111 class.mesh-settings.php:111
+#: build/mesh/tags/1.0.5/class.mesh-settings.php:111
+#: build/mesh/trunk/class.mesh-settings.php:121 class.mesh-settings.php:121
 msgid "Post Types"
 msgstr ""
 
 #: build/mesh/tags/1.0.1/class.mesh-settings.php:306
 #: build/mesh/tags/1.0.3/class.mesh-settings.php:306
 #: build/mesh/tags/1.0.4/class.mesh-settings.php:306
-#: build/mesh/trunk/class.mesh-settings.php:304 class.mesh-settings.php:304
+#: build/mesh/tags/1.0.5/class.mesh-settings.php:304
+#: build/mesh/trunk/class.mesh-settings.php:51
+#: build/mesh/trunk/class.mesh-settings.php:316 class.mesh-settings.php:51
+#: class.mesh-settings.php:316
 msgid "Settings"
 msgstr ""
 
 #: build/mesh/tags/1.0.1/class.mesh-settings.php:307
 #: build/mesh/tags/1.0.3/class.mesh-settings.php:307
 #: build/mesh/tags/1.0.4/class.mesh-settings.php:307
-#: build/mesh/trunk/class.mesh-settings.php:305 class.mesh-settings.php:305
+#: build/mesh/tags/1.0.5/class.mesh-settings.php:305
+#: build/mesh/trunk/class.mesh-settings.php:317 class.mesh-settings.php:317
 msgid "About Mesh"
 msgstr ""
 
 #: build/mesh/tags/1.0.1/class.mesh-settings.php:308
 #: build/mesh/tags/1.0.3/class.mesh-settings.php:308
 #: build/mesh/tags/1.0.4/class.mesh-settings.php:308
-#: build/mesh/trunk/class.mesh-settings.php:306 class.mesh-settings.php:306
+#: build/mesh/tags/1.0.5/class.mesh-settings.php:306
+#: build/mesh/trunk/class.mesh-settings.php:318 class.mesh-settings.php:318
 msgid "Change Log"
 msgstr ""
 
 #: build/mesh/tags/1.0.1/class.mesh.php:38
 #: build/mesh/tags/1.0.3/class.mesh.php:38
-#: build/mesh/tags/1.0.4/class.mesh.php:38 build/mesh/trunk/class.mesh.php:38
-#: class.mesh.php:38
+#: build/mesh/tags/1.0.4/class.mesh.php:38
+#: build/mesh/tags/1.0.5/class.mesh.php:38 build/mesh/trunk/class.mesh.php:45
+#: class.mesh.php:45
 msgid "1 Columns"
 msgstr ""
 
 #: build/mesh/tags/1.0.1/class.mesh.php:43
 #: build/mesh/tags/1.0.3/class.mesh.php:43
-#: build/mesh/tags/1.0.4/class.mesh.php:43 build/mesh/trunk/class.mesh.php:43
-#: class.mesh.php:43
+#: build/mesh/tags/1.0.4/class.mesh.php:43
+#: build/mesh/tags/1.0.5/class.mesh.php:43 build/mesh/trunk/class.mesh.php:50
+#: class.mesh.php:50
 msgid "2 Columns"
 msgstr ""
 
 #: build/mesh/tags/1.0.1/class.mesh.php:48
 #: build/mesh/tags/1.0.3/class.mesh.php:48
-#: build/mesh/tags/1.0.4/class.mesh.php:48 build/mesh/trunk/class.mesh.php:48
-#: class.mesh.php:48
+#: build/mesh/tags/1.0.4/class.mesh.php:48
+#: build/mesh/tags/1.0.5/class.mesh.php:48 build/mesh/trunk/class.mesh.php:55
+#: class.mesh.php:55
 msgid "3 Columns"
 msgstr ""
 
 #: build/mesh/tags/1.0.1/class.mesh.php:127
 #: build/mesh/tags/1.0.3/class.mesh.php:127
-#: build/mesh/tags/1.0.4/class.mesh.php:127 build/mesh/trunk/class.mesh.php:127
-#: class.mesh.php:127
+#: build/mesh/tags/1.0.4/class.mesh.php:127
+#: build/mesh/tags/1.0.5/class.mesh.php:127 build/mesh/trunk/class.mesh.php:134
+#: class.mesh.php:134
 msgid "Show Extra MCS Section Controls?"
 msgstr ""
 
@@ -465,87 +533,108 @@ msgstr ""
 #: build/mesh/tags/1.0.4/class.mesh.php:188
 #: build/mesh/tags/1.0.4/class.mesh.php:189
 #: build/mesh/tags/1.0.4/class.mesh.php:204
-#: build/mesh/tags/1.0.4/class.mesh.php:205 build/mesh/trunk/class.mesh.php:188
-#: build/mesh/trunk/class.mesh.php:189 build/mesh/trunk/class.mesh.php:204
-#: build/mesh/trunk/class.mesh.php:205 class.mesh.php:188 class.mesh.php:189
-#: class.mesh.php:204 class.mesh.php:205
+#: build/mesh/tags/1.0.4/class.mesh.php:205
+#: build/mesh/tags/1.0.5/class.mesh.php:188
+#: build/mesh/tags/1.0.5/class.mesh.php:189
+#: build/mesh/tags/1.0.5/class.mesh.php:204
+#: build/mesh/tags/1.0.5/class.mesh.php:205 build/mesh/trunk/class.mesh.php:195
+#: build/mesh/trunk/class.mesh.php:196 build/mesh/trunk/class.mesh.php:211
+#: build/mesh/trunk/class.mesh.php:212 class.mesh.php:195 class.mesh.php:196
+#: class.mesh.php:211 class.mesh.php:212
 msgid "Content Section"
 msgstr ""
 
 #: build/mesh/tags/1.0.1/class.mesh.php:188
 #: build/mesh/tags/1.0.3/class.mesh.php:190
-#: build/mesh/tags/1.0.4/class.mesh.php:190 build/mesh/trunk/class.mesh.php:190
-#: class.mesh.php:190
+#: build/mesh/tags/1.0.4/class.mesh.php:190
+#: build/mesh/tags/1.0.5/class.mesh.php:190 build/mesh/trunk/class.mesh.php:197
+#: class.mesh.php:197
 msgid "Parent Content Section:"
 msgstr ""
 
 #: build/mesh/tags/1.0.1/class.mesh.php:189
 #: build/mesh/tags/1.0.3/class.mesh.php:191
-#: build/mesh/tags/1.0.4/class.mesh.php:191 build/mesh/trunk/class.mesh.php:191
-#: class.mesh.php:191
+#: build/mesh/tags/1.0.4/class.mesh.php:191
+#: build/mesh/tags/1.0.5/class.mesh.php:191 build/mesh/trunk/class.mesh.php:198
+#: class.mesh.php:198
 msgid "All Content Sections"
 msgstr ""
 
 #: build/mesh/tags/1.0.1/class.mesh.php:190
 #: build/mesh/tags/1.0.3/class.mesh.php:192
-#: build/mesh/tags/1.0.4/class.mesh.php:192 build/mesh/trunk/class.mesh.php:192
-#: class.mesh.php:192
+#: build/mesh/tags/1.0.4/class.mesh.php:192
+#: build/mesh/tags/1.0.5/class.mesh.php:192 build/mesh/trunk/class.mesh.php:199
+#: class.mesh.php:199
 msgid "Add New Content Section"
 msgstr ""
 
 #: build/mesh/tags/1.0.1/class.mesh.php:191
 #: build/mesh/tags/1.0.3/class.mesh.php:193
-#: build/mesh/tags/1.0.4/class.mesh.php:193 build/mesh/trunk/class.mesh.php:193
-#: class.mesh.php:193
+#: build/mesh/tags/1.0.4/class.mesh.php:193
+#: build/mesh/tags/1.0.5/class.mesh.php:193
+#: build/mesh/trunk/class.mesh-templates.php:48
+#: build/mesh/trunk/class.mesh.php:200 class.mesh-templates.php:48
+#: class.mesh.php:200
 msgid "Add New"
 msgstr ""
 
 #: build/mesh/tags/1.0.1/class.mesh.php:192
 #: build/mesh/tags/1.0.3/class.mesh.php:194
-#: build/mesh/tags/1.0.4/class.mesh.php:194 build/mesh/trunk/class.mesh.php:194
-#: class.mesh.php:194
+#: build/mesh/tags/1.0.4/class.mesh.php:194
+#: build/mesh/tags/1.0.5/class.mesh.php:194 build/mesh/trunk/class.mesh.php:201
+#: class.mesh.php:201
 msgid "New Content Section"
 msgstr ""
 
 #: build/mesh/tags/1.0.1/class.mesh.php:193
 #: build/mesh/tags/1.0.3/class.mesh.php:195
-#: build/mesh/tags/1.0.4/class.mesh.php:195 build/mesh/trunk/class.mesh.php:195
-#: class.mesh.php:195
+#: build/mesh/tags/1.0.4/class.mesh.php:195
+#: build/mesh/tags/1.0.5/class.mesh.php:195 build/mesh/trunk/class.mesh.php:202
+#: class.mesh.php:202
 msgid "Edit Content Section"
 msgstr ""
 
 #: build/mesh/tags/1.0.1/class.mesh.php:194
 #: build/mesh/tags/1.0.3/class.mesh.php:196
-#: build/mesh/tags/1.0.4/class.mesh.php:196 build/mesh/trunk/class.mesh.php:196
-#: class.mesh.php:196
+#: build/mesh/tags/1.0.4/class.mesh.php:196
+#: build/mesh/tags/1.0.5/class.mesh.php:196 build/mesh/trunk/class.mesh.php:203
+#: class.mesh.php:203
 msgid "Update Content Section"
 msgstr ""
 
 #: build/mesh/tags/1.0.1/class.mesh.php:195
 #: build/mesh/tags/1.0.3/class.mesh.php:197
-#: build/mesh/tags/1.0.4/class.mesh.php:197 build/mesh/trunk/class.mesh.php:197
-#: class.mesh.php:197
+#: build/mesh/tags/1.0.4/class.mesh.php:197
+#: build/mesh/tags/1.0.5/class.mesh.php:197 build/mesh/trunk/class.mesh.php:204
+#: class.mesh.php:204
 msgid "View Content Section"
 msgstr ""
 
 #: build/mesh/tags/1.0.1/class.mesh.php:196
 #: build/mesh/tags/1.0.3/class.mesh.php:198
-#: build/mesh/tags/1.0.4/class.mesh.php:198 build/mesh/trunk/class.mesh.php:198
-#: class.mesh.php:198
+#: build/mesh/tags/1.0.4/class.mesh.php:198
+#: build/mesh/tags/1.0.5/class.mesh.php:198 build/mesh/trunk/class.mesh.php:205
+#: class.mesh.php:205
 msgid "Search Content Sections"
 msgstr ""
 
 #: build/mesh/tags/1.0.1/class.mesh.php:197
 #: build/mesh/tags/1.0.3/class.mesh.php:199
-#: build/mesh/tags/1.0.4/class.mesh.php:199 build/mesh/trunk/class.mesh.php:199
-#: class.mesh.php:199
+#: build/mesh/tags/1.0.4/class.mesh.php:199
+#: build/mesh/tags/1.0.5/class.mesh.php:199
+#: build/mesh/trunk/class.mesh-templates.php:54
+#: build/mesh/trunk/class.mesh.php:206 class.mesh-templates.php:54
+#: class.mesh.php:206
 msgid "Not found"
 msgstr ""
 
 #: build/mesh/tags/1.0.1/class.mesh.php:198
 #: build/mesh/tags/1.0.3/class.mesh.php:200
-#: build/mesh/tags/1.0.4/class.mesh.php:200 build/mesh/trunk/class.mesh.php:200
-#: class.mesh.php:200
+#: build/mesh/tags/1.0.4/class.mesh.php:200
+#: build/mesh/tags/1.0.5/class.mesh.php:200
+#: build/mesh/trunk/class.mesh-templates.php:55
+#: build/mesh/trunk/class.mesh.php:207 class.mesh-templates.php:55
+#: class.mesh.php:207
 msgid "Not found in Trash"
 msgstr ""
 
@@ -555,22 +644,25 @@ msgstr ""
 
 #: build/mesh/tags/1.0.1/class.mesh.php:260
 #: build/mesh/tags/1.0.3/class.mesh.php:262
-#: build/mesh/tags/1.0.4/class.mesh.php:262 build/mesh/trunk/class.mesh.php:268
-#: class.mesh.php:268
+#: build/mesh/tags/1.0.4/class.mesh.php:262
+#: build/mesh/tags/1.0.5/class.mesh.php:268 build/mesh/trunk/class.mesh.php:276
+#: class.mesh.php:276
 msgid "You do not have any Content Sections."
 msgstr ""
 
 #: build/mesh/tags/1.0.1/class.mesh.php:261
 #: build/mesh/tags/1.0.3/class.mesh.php:263
-#: build/mesh/tags/1.0.4/class.mesh.php:263 build/mesh/trunk/class.mesh.php:269
-#: class.mesh.php:269
+#: build/mesh/tags/1.0.4/class.mesh.php:263
+#: build/mesh/tags/1.0.5/class.mesh.php:269 build/mesh/trunk/class.mesh.php:277
+#: class.mesh.php:277
 msgid "Get started using Mesh by adding a Content Section now."
 msgstr ""
 
 #: build/mesh/tags/1.0.1/class.mesh.php:267
 #: build/mesh/tags/1.0.3/class.mesh.php:269
-#: build/mesh/tags/1.0.4/class.mesh.php:269 build/mesh/trunk/class.mesh.php:275
-#: class.mesh.php:275
+#: build/mesh/tags/1.0.4/class.mesh.php:269
+#: build/mesh/tags/1.0.5/class.mesh.php:275 build/mesh/trunk/class.mesh.php:288
+#: class.mesh.php:288
 msgid ""
 "Multiple content sections allow you to easily segment your page's contents "
 "into different blocks of markup."
@@ -578,15 +670,17 @@ msgstr ""
 
 #: build/mesh/tags/1.0.1/class.mesh.php:715
 #: build/mesh/tags/1.0.3/class.mesh.php:717
-#: build/mesh/tags/1.0.4/class.mesh.php:717 build/mesh/trunk/class.mesh.php:723
-#: class.mesh.php:723
+#: build/mesh/tags/1.0.4/class.mesh.php:717
+#: build/mesh/tags/1.0.5/class.mesh.php:723 build/mesh/trunk/class.mesh.php:736
+#: class.mesh.php:736
 msgid "Be sure to save the order of your sections once your changes are complete."
 msgstr ""
 
 #: build/mesh/tags/1.0.1/class.mesh.php:716
 #: build/mesh/tags/1.0.3/class.mesh.php:718
-#: build/mesh/tags/1.0.4/class.mesh.php:718 build/mesh/trunk/class.mesh.php:724
-#: class.mesh.php:724
+#: build/mesh/tags/1.0.4/class.mesh.php:718
+#: build/mesh/tags/1.0.5/class.mesh.php:724 build/mesh/trunk/class.mesh.php:737
+#: class.mesh.php:737
 msgid ""
 "Multiple content sections allows you to easily segment your page's contents "
 "into different blocks of markup."
@@ -594,64 +688,139 @@ msgstr ""
 
 #: build/mesh/tags/1.0.1/class.mesh.php:718
 #: build/mesh/tags/1.0.3/class.mesh.php:720
-#: build/mesh/tags/1.0.4/class.mesh.php:720 build/mesh/trunk/class.mesh.php:726
-#: class.mesh.php:726
+#: build/mesh/tags/1.0.4/class.mesh.php:720
+#: build/mesh/tags/1.0.5/class.mesh.php:726 build/mesh/trunk/class.mesh.php:739
+#: class.mesh.php:739
 msgid "Remove Background"
 msgstr ""
 
 #: build/mesh/tags/1.0.1/class.mesh.php:722
 #: build/mesh/tags/1.0.3/class.mesh.php:724
-#: build/mesh/tags/1.0.4/class.mesh.php:724 build/mesh/trunk/class.mesh.php:730
-#: class.mesh.php:730
+#: build/mesh/tags/1.0.4/class.mesh.php:724
+#: build/mesh/tags/1.0.5/class.mesh.php:730 build/mesh/trunk/class.mesh.php:743
+#: class.mesh.php:743
 msgid "Select Section Background"
 msgstr ""
 
 #: build/mesh/tags/1.0.1/class.mesh.php:723
 #: build/mesh/tags/1.0.3/class.mesh.php:725
-#: build/mesh/tags/1.0.4/class.mesh.php:725 build/mesh/trunk/class.mesh.php:731
-#: class.mesh.php:731
+#: build/mesh/tags/1.0.4/class.mesh.php:725
+#: build/mesh/tags/1.0.5/class.mesh.php:731 build/mesh/trunk/class.mesh.php:744
+#: class.mesh.php:744
 msgid "Select Background"
 msgstr ""
 
 #: build/mesh/tags/1.0.1/class.mesh.php:724
 #: build/mesh/tags/1.0.3/class.mesh.php:726
-#: build/mesh/tags/1.0.4/class.mesh.php:726 build/mesh/trunk/class.mesh.php:732
-#: class.mesh.php:732
+#: build/mesh/tags/1.0.4/class.mesh.php:726
+#: build/mesh/tags/1.0.5/class.mesh.php:732 build/mesh/trunk/class.mesh.php:745
+#: class.mesh.php:745
 msgid "Select Column Background"
 msgstr ""
 
 #: build/mesh/tags/1.0.1/class.mesh.php:725
 #: build/mesh/tags/1.0.3/class.mesh.php:727
-#: build/mesh/tags/1.0.4/class.mesh.php:727 build/mesh/trunk/class.mesh.php:733
-#: class.mesh.php:733
+#: build/mesh/tags/1.0.4/class.mesh.php:727
+#: build/mesh/tags/1.0.5/class.mesh.php:733 build/mesh/trunk/class.mesh.php:746
+#: class.mesh.php:746
 msgid "Status: Published"
 msgstr ""
 
 #: build/mesh/tags/1.0.1/class.mesh.php:726
 #: build/mesh/tags/1.0.3/class.mesh.php:728
-#: build/mesh/tags/1.0.4/class.mesh.php:728 build/mesh/trunk/class.mesh.php:734
-#: class.mesh.php:734
+#: build/mesh/tags/1.0.4/class.mesh.php:728
+#: build/mesh/tags/1.0.5/class.mesh.php:734 build/mesh/trunk/class.mesh.php:747
+#: class.mesh.php:747
 msgid "Status: Draft"
 msgstr ""
 
 #: build/mesh/tags/1.0.1/class.mesh.php:727
 #: build/mesh/tags/1.0.3/class.mesh.php:729
-#: build/mesh/tags/1.0.4/class.mesh.php:729 build/mesh/trunk/class.mesh.php:735
-#: class.mesh.php:735
+#: build/mesh/tags/1.0.4/class.mesh.php:729
+#: build/mesh/tags/1.0.5/class.mesh.php:735 build/mesh/trunk/class.mesh.php:748
+#: class.mesh.php:748
 msgid "Are you sure you want to remove this section?"
 msgstr ""
 
 #: build/mesh/tags/1.0.1/class.mesh.php:728
 #: build/mesh/tags/1.0.3/class.mesh.php:730
-#: build/mesh/tags/1.0.4/class.mesh.php:730 build/mesh/trunk/class.mesh.php:736
-#: class.mesh.php:736
+#: build/mesh/tags/1.0.4/class.mesh.php:730
+#: build/mesh/tags/1.0.5/class.mesh.php:736 build/mesh/trunk/class.mesh.php:749
+#: class.mesh.php:749
 msgid "Save Order"
 msgstr ""
 
 #: build/mesh/tags/1.0.1/mesh.php:342 build/mesh/tags/1.0.3/mesh.php:340
-#: build/mesh/tags/1.0.4/mesh.php:340 build/mesh/trunk/mesh.php:340
-#: mesh.php:340
+#: build/mesh/tags/1.0.4/mesh.php:340 build/mesh/tags/1.0.5/mesh.php:340
+#: build/mesh/trunk/mesh.php:344 mesh.php:344
 msgid "No Column Title"
+msgstr ""
+
+#: build/mesh/trunk/class.mesh-settings.php:319 class.mesh-settings.php:319
+msgid "About Linchpin"
+msgstr ""
+
+#: build/mesh/trunk/class.mesh-templates.php:43
+#: build/mesh/trunk/class.mesh-templates.php:44
+#: build/mesh/trunk/class.mesh-templates.php:59
+#: build/mesh/trunk/class.mesh-templates.php:60 class.mesh-templates.php:43
+#: class.mesh-templates.php:44 class.mesh-templates.php:59
+#: class.mesh-templates.php:60
+msgid "Mesh Template"
+msgstr ""
+
+#: build/mesh/trunk/class.mesh-templates.php:45 class.mesh-templates.php:45
+msgid "Parent Mesh Template:"
+msgstr ""
+
+#: build/mesh/trunk/class.mesh-templates.php:46 class.mesh-templates.php:46
+msgid "All Mesh Templates"
+msgstr ""
+
+#: build/mesh/trunk/class.mesh-templates.php:47 class.mesh-templates.php:47
+msgid "Add New Mesh Template"
+msgstr ""
+
+#: build/mesh/trunk/class.mesh-templates.php:49 class.mesh-templates.php:49
+msgid "New Mesh Template"
+msgstr ""
+
+#: build/mesh/trunk/class.mesh-templates.php:50 class.mesh-templates.php:50
+msgid "Edit Mesh Template"
+msgstr ""
+
+#: build/mesh/trunk/class.mesh-templates.php:51 class.mesh-templates.php:51
+msgid "Update Mesh Template"
+msgstr ""
+
+#: build/mesh/trunk/class.mesh-templates.php:52 class.mesh-templates.php:52
+msgid "View Mesh Template"
+msgstr ""
+
+#: build/mesh/trunk/class.mesh-templates.php:53 class.mesh-templates.php:53
+msgid "Search Mesh Templates"
+msgstr ""
+
+#: build/mesh/trunk/class.mesh-templates.php:83
+#: build/mesh/trunk/class.mesh-templates.php:95 class.mesh-templates.php:83
+#: class.mesh-templates.php:95
+msgid "Template Description"
+msgstr ""
+
+#: build/mesh/trunk/class.mesh-templates.php:103 class.mesh-templates.php:103
+msgid "View Templates"
+msgstr ""
+
+#: build/mesh/trunk/class.mesh-templates.php:104 class.mesh-templates.php:104
+msgid "Add Template"
+msgstr ""
+
+#: build/mesh/trunk/class.mesh.php:280 class.mesh.php:280
+msgid "Begin with a Template"
+msgstr ""
+
+#: build/mesh/trunk/class.mesh.php:280 class.mesh.php:280
+msgid " or "
 msgstr ""
 
 #: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:102
@@ -785,8 +954,20 @@ msgstr ""
 #: build/mesh/tags/1.0.3/class.mesh.php:186
 #: build/mesh/tags/1.0.3/class.mesh.php:187
 #: build/mesh/tags/1.0.4/class.mesh.php:186
-#: build/mesh/tags/1.0.4/class.mesh.php:187 build/mesh/trunk/class.mesh.php:186
-#: build/mesh/trunk/class.mesh.php:187 class.mesh.php:186 class.mesh.php:187
+#: build/mesh/tags/1.0.4/class.mesh.php:187
+#: build/mesh/tags/1.0.5/class.mesh.php:186
+#: build/mesh/tags/1.0.5/class.mesh.php:187 build/mesh/trunk/class.mesh.php:193
+#: build/mesh/trunk/class.mesh.php:194 class.mesh.php:193 class.mesh.php:194
 msgctxt "Content Section"
 msgid "Content Section"
+msgstr ""
+
+#: build/mesh/trunk/class.mesh-templates.php:41 class.mesh-templates.php:41
+msgctxt "Mesh Templates"
+msgid "Mesh Templates"
+msgstr ""
+
+#: build/mesh/trunk/class.mesh-templates.php:42 class.mesh-templates.php:42
+msgctxt "Mesh Template"
+msgid "Mesh Template"
 msgstr ""

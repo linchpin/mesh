@@ -253,8 +253,9 @@ class Mesh {
 			return;
 		}
 
-		$content_sections = mesh_get_sections( $post->ID, 'array', array( 'publish', 'draft' ) );
+		$content_sections   = mesh_get_sections( $post->ID, 'array', array( 'publish', 'draft' ) );
 		$mesh_notifications = get_user_option( 'linchpin_mesh_notifications', get_current_user_id() );
+		$mesh_templates     = mesh_get_templates();
 		?>
 		<div id="mesh-container">
 			<?php wp_nonce_field( 'mesh_content_sections_nonce', 'mesh_content_sections_nonce' ); ?>
@@ -274,7 +275,12 @@ class Mesh {
 				<div id="mesh-description" class="description notice below-h2 text-center lead empty-sections-message">
 					<p><?php esc_html_e( 'You do not have any Content Sections.', 'mesh' ); ?></p>
 					<p><?php esc_html_e( 'Get started using Mesh by adding a Content Section now.', 'mesh' ); ?></p>
-					<p><a href="#" class="button primary mesh-section-add dashicons-before dashicons-plus"><?php esc_html_e( 'Add Section', 'mesh' ); ?></a></p>
+					<p>
+						<?php if ( ! empty( $mesh_templates ) ) : ?>
+							<a href="#" class="button primary mesh-section-add dashicons-before dashicons-plus"><?php esc_html_e( 'Begin with a Template', 'mesh' ); ?></a> <?php esc_html_e( ' or ', 'mesh' ); ?>
+						<?php endif; ?>
+						<a href="#" class="button primary mesh-section-add dashicons-before dashicons-plus"><?php esc_html_e( 'Add Section', 'mesh' ); ?></a>
+					</p>
 				</div>
 			<?php else : ?>
 				<?php if ( empty( $mesh_notifications['intro'] ) ) : ?>
@@ -325,6 +331,10 @@ class Mesh {
 		}
 
 		if ( empty( $_POST['mesh-sections'] ) ) {
+			return;
+		}
+
+		if ( 'mesh_section' !== $post->post_type ) {
 			return;
 		}
 
