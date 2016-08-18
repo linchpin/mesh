@@ -41,7 +41,7 @@
 		}
 
 		$block_css_class = get_post_meta( $blocks[ $block_increment ]->ID, '_mesh_css_class', true );
-		$block_offset = get_post_meta( $blocks[ $block_increment ]->ID, '_mesh_offset', true );
+		$block_offset = (int) get_post_meta( $blocks[ $block_increment ]->ID, '_mesh_offset', true );
 
 		?>
 
