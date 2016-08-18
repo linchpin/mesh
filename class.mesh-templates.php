@@ -186,7 +186,17 @@ class Mesh_Templates {
 	 */
 	function add_layout_column_title( $columns ) {
 
-		$columns['layout'] = __( 'Layout', 'mesh' );
+		foreach ( $columns as $key => $title ) {
+
+			if ( 'title' !== $key ) {
+				continue;
+			} else {
+				unset( $columns['title'] );
+				$columns['layout'] = __( 'Layout', 'mesh' );
+				$columns['title']  = $title;
+				break;
+			}
+		}
 
 		return $columns;
 	}
@@ -210,7 +220,6 @@ class Mesh_Templates {
 				}
 
 				?>
-				<pre><?php print_r( $layout); ?></pre>
 				<div class="mesh-template-row" style="max-width:100px">
 				<?php foreach ( $layout as $key => $row ) : ?>
 					<div class="mcs-row">
