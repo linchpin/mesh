@@ -17,6 +17,7 @@ mesh.admin = function ( $ ) {
 		self,
 		blocks,
 		pointers,
+		templates,
 		section_count;
 
 	return {
@@ -26,9 +27,10 @@ mesh.admin = function ( $ ) {
 		 */
 		init : function() {
 
-			self     = mesh.admin;
-			blocks   = mesh.blocks;
-			pointers = mesh.pointers;
+			self      = mesh.admin;
+			blocks    = mesh.blocks;
+			pointers  = mesh.pointers;
+			templates = mesh.templates;
 
 			$body
 				.on('click', '.mesh-section-add',           self.add_section )
@@ -63,8 +65,11 @@ mesh.admin = function ( $ ) {
 			// Setup our controls for Blocks
 			blocks.init();
 
-			// Seupt our Pointers
+			// Setup our Pointers
 			pointers.show_pointer(0);
+
+			// Setup our controls for templates
+			templates.init();
 
 			self.setup_notifications( $meta_box_container );
 
