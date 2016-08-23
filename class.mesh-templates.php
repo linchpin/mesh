@@ -219,17 +219,10 @@ class Mesh_Templates {
 					return;
 				}
 
-				?>
-				<div class="mesh-template-row" style="max-width:100px">
-				<?php foreach ( $layout as $key => $row ) : ?>
-					<div class="mcs-row">
-						<?php foreach ( $row['blocks'] as $block ) : ?>
-							<div class="<?php if ( ! empty( $block['offset'] ) ) : ?>mesh-offset-<?php esc_attr( $block['offset'] ); ?><?php endif; ?> mesh-block mesh-<?php esc_attr( $block['columns'] ); ?> columns" style="min-height:10px; border:1px solid #ff00bb;"></div>
-						<?php endforeach; ?>
-					</div>
-				<?php endforeach; ?>
-				</div>
-				<?php
+				/**
+				 * Include our layout templates
+				 */
+				include LINCHPIN_MESH___PLUGIN_DIR . 'admin/template-layout-preview.php';
 				break;
 		}
 	}

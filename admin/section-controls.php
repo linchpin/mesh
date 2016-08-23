@@ -24,7 +24,7 @@
 
 			<li>
 				<label for="mesh-section[<?php esc_attr_e( $section->ID ); ?>][title_display]">
-					<?php esc_html_e( 'Display Title', 'mesh' ); ?> <input type="checkbox" name="mesh-sections[<?php esc_attr_e( $section->ID ); ?>][title_display]" value="1" <?php if ( get_post_meta( $section->ID, '_mesh_title_display', true ) ): ?>checked<?php endif; ?> />
+					<?php esc_html_e( 'Display Title', 'mesh' ); ?> <input type="checkbox" name="mesh-sections[<?php esc_attr_e( $section->ID ); ?>][title_display]" value="1" <?php if ( get_post_meta( $section->ID, '_mesh_title_display', true ) ) : ?>checked<?php endif; ?> />
 				</label>
 			</li>
 		</ul>

@@ -62,6 +62,9 @@ function add_multiple_content_sections( $the_content ) {
 * `apply_filters( 'mesh_allowed_html', array_merge_recursive( $post_allowed, $mesh_allowed );` Filter allowed HTML within MCS
 * `apply_filters( 'mesh_admin_pointers-' . $screen_id, array() );`
 
+##### Filters added 1.1
+* `apply_filters( 'mesh_templates_per_page', 50 );`
+
 ### Recognition
 
 * We're utilizing the [PHP Markdown Lib](https://github.com/michelf/php-markdown) by Michel Fortin @michelf

@@ -277,7 +277,7 @@ class Mesh {
 					<p><?php esc_html_e( 'Get started using Mesh by adding a Content Section now.', 'mesh' ); ?></p>
 					<p>
 						<?php if ( ! empty( $mesh_templates ) ) : ?>
-							<a href="#" class="button primary mesh-section-add dashicons-before dashicons-plus"><?php esc_html_e( 'Begin with a Template', 'mesh' ); ?></a> <?php esc_html_e( ' or ', 'mesh' ); ?>
+							<a href="#" class="button primary mesh-select-template dashicons-before dashicons-plus"><?php esc_html_e( 'Begin with a Template', 'mesh' ); ?></a> <?php esc_html_e( ' or ', 'mesh' ); ?>
 						<?php endif; ?>
 						<a href="#" class="button primary mesh-section-add dashicons-before dashicons-plus"><?php esc_html_e( 'Add Section', 'mesh' ); ?></a>
 					</p>
@@ -737,7 +737,7 @@ class Mesh {
 		wp_enqueue_script( 'admin-mesh', plugins_url( 'assets/js/admin-mesh.js', __FILE__ ), array( 'jquery', 'jquery-ui-draggable', 'jquery-ui-droppable', 'jquery-ui-slider', 'wp-pointer' ), '1.0', true );
 
 		$strings = array(
-			'reorder' =>           __( 'Be sure to save the order of your sections once your changes are complete.', 'mesh' ),
+			'reorder_warn' =>      __( 'Be sure to save the order of your sections once your changes are complete.', 'mesh' ),
 			'description' =>       __( 'Multiple content sections allows you to easily segment your page\'s contents into different blocks of markup.', 'mesh' ),
 			'add_image' =>         __( 'Set Background Image', 'mesh' ),
 			'remove_image' =>      __( 'Remove Background', 'mesh' ),
@@ -767,6 +767,7 @@ class Mesh {
 			'featured_image_nonce'  => wp_create_nonce( 'mesh_featured_image_nonce' ),
 			'reorder_blocks_nonce'  => wp_create_nonce( 'mesh_reorder_blocks_nonce' ),
 			'dismiss_nonce'         => wp_create_nonce( 'mesh_dismiss_notification_nonce' ),
+			'choose_template_nonce' => wp_create_nonce( 'mesh_choose_template_nonce' ),
 			'content_css'           => apply_filters( 'mesh_content_css', get_stylesheet_directory_uri() . '/css/admin-editor.css' , 'editor_path' ),
 			'strings'               => $strings,
 		);

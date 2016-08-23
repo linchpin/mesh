@@ -18,10 +18,14 @@ class Mesh_AJAX {
 	 * @access public
 	 */
 	function __construct() {
+		add_action( 'wp_ajax_mesh_list_templates',        array( $this, 'mesh_list_templates' ) );
+		add_action( 'wp_ajax_mesh_choose_template',       array( $this, 'mesh_choose_template' ) );
+
 		add_action( 'wp_ajax_mesh_add_section',           array( $this, 'mesh_add_section' ) );
 		add_action( 'wp_ajax_mesh_save_section',          array( $this, 'mesh_save_section' ) );
-		add_action( 'wp_ajax_mesh_choose_layout',         array( $this, 'mesh_choose_layout' ) );
 		add_action( 'wp_ajax_mesh_remove_section',        array( $this, 'mesh_remove_section' ) );
+
+		add_action( 'wp_ajax_mesh_choose_layout',         array( $this, 'mesh_choose_layout' ) );
 		add_action( 'wp_ajax_mesh_update_order',          array( $this, 'mesh_update_order' ) );
 		add_action( 'wp_ajax_mesh_update_featured_image', array( $this, 'mesh_update_featured_image' ) );
 		add_action( 'wp_ajax_mesh_dismiss_notification',  array( $this, 'mesh_dismiss_notification' ) );
@@ -36,8 +40,8 @@ class Mesh_AJAX {
 	function mesh_add_section() {
 		check_ajax_referer( 'mesh_add_section_nonce', 'mesh_add_section_nonce' );
 
-		$post_id = (int) $_POST['mesh_post_id'];
-		$menu_order = (int) $_POST['mesh_section_count'];
+		$post_id = (int) $_POST['mesh_post_id']; // WPCS: sanitization ok
+		$menu_order = (int) $_POST['mesh_section_count']; // WPCS: sanitization ok
 
 		if ( empty( $post_id ) ) {
 			wp_die( -1 );
@@ -145,7 +149,51 @@ class Mesh_AJAX {
 		ob_end_clean();
 
 		// Clean whitespace before output to prevent jQuery ajax warnings.
-		echo trim( $output );
+		echo trim( $output ); // WPCS: XSS ok, sanitization ok.
+
+		wp_die();
+	}
+
+	/**
+	 * Select a template from the mesh_template post type
+	 * This template will be used to create all the mesh_sections
+	 * on your selected post.
+	 *
+	 * @since 1.1
+	 */
+	function mesh_list_templates() {
+
+		check_ajax_referer( 'mesh_choose_template_nonce', 'mesh_choose_template_nonce' );
+
+		if ( ! current_user_can( 'edit_post', (int) $_POST['mesh_post_id'] ) ) {
+			wp_die();
+		}
+
+		$mesh_templates = new WP_Query( array(
+			'post_type'      => 'mesh_template',
+			'posts_per_page' => apply_filters( 'mesh_templates_per_page', 50 ),
+			'no_found_rows'  => true,
+			'post_status'    => 'publish',
+		) );
+
+		$mesh_template_selectable = true;
+
+		if ( $mesh_templates->have_posts() ) {
+			while ( $mesh_templates->have_posts() ) {
+				global $post;
+
+				$mesh_templates->the_post();
+
+				$mesh_template_title = get_the_title( $post->ID );
+				$mesh_template_id = $post->ID;
+
+				$layout = get_post_meta( $post->ID, '_mesh_template_layout', true );
+
+				include LINCHPIN_MESH___PLUGIN_DIR . 'admin/template-layout-preview.php';
+			}
+		} else {
+			esc_html_e( 'No Templates Found. Did you build one yet?', 'mesh' );
+		}
 
 		wp_die();
 	}
@@ -158,8 +206,8 @@ class Mesh_AJAX {
 	function mesh_remove_section() {
 		check_ajax_referer( 'mesh_remove_section_nonce', 'mesh_remove_section_nonce' );
 
-		$post_id    = (int) $_POST['mesh_post_id'];
-		$section_id = (int) $_POST['mesh_section_id'];
+		$post_id    = (int) $_POST['mesh_post_id']; // WPCS: XSS ok, sanitization ok.
+		$section_id = (int) $_POST['mesh_section_id']; // WPCS: XSS ok, sanitization ok.
 
 		if ( empty( $post_id ) || empty( $section_id ) ) {
 			wp_die( -1 );
@@ -169,14 +217,14 @@ class Mesh_AJAX {
 			wp_die( -1 );
 		}
 
-		if ( $post_id != $section->post_parent ) {
+		if ( $post_id !== $section->post_parent ) {
 			wp_die( -1 );
 		}
 
 		if ( wp_trash_post( $section_id ) ) {
-			//trash the section's blocks
+			// Trash the section's blocks.
 			foreach ( mesh_get_section_blocks( $section_id ) as $block ) {
-				if ( $section_id == $block->post_parent ) {
+				if ( $section_id === $block->post_parent ) {
 					wp_trash_post( $block->ID );
 				}
 			}
@@ -195,8 +243,8 @@ class Mesh_AJAX {
 	function mesh_update_order() {
 		check_ajax_referer( 'mesh_reorder_section_nonce', 'mesh_reorder_section_nonce' );
 
-		$post_id     = (int) $_POST['mesh_post_id'];
-		$section_ids = array_values( array_map( 'intval', $_POST['mesh_section_ids'] ) );
+		$post_id     = (int) $_POST['mesh_post_id']; // WPCS: XSS ok, sanitization ok
+		$section_ids = array_values( array_map( 'intval', $_POST['mesh_section_ids'] ) ); // WPCS: XSS ok, sanitization ok
 
 		if ( empty( $post_id ) || empty( $section_ids ) ) {
 			wp_die( -1 );
