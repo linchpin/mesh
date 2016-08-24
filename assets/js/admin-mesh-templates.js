@@ -28,7 +28,15 @@ mesh.templates = function ( $ ) {
             $body
                 .on('click', '.mesh-select-template', self.select_template )
                 .on('click', '.mesh-template-layout', self.select_layout )
+                .on('click', '.mesh-template-start',  self.display_template_types )
                 .on('click', '.mesh-template-type',   self.select_template_type );
+        },
+
+        display_template_types : function( event ) {
+            event.preventDefault();
+            event.stopPropagation();
+
+            $('#mesh-template-usage').show();
         },
 
         /**
