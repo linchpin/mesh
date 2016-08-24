@@ -7,6 +7,10 @@
  * @since      0.2.0
  */
 
+// Make sure we don't expose any info if called directly.
+if ( ! function_exists( 'add_action' ) ) {
+	exit;
+}
 ?>
 <div class="mesh-row">
 	<?php include LINCHPIN_MESH___PLUGIN_DIR . 'admin/section-column-resize.php'; ?>

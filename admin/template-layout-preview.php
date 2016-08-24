@@ -10,6 +10,10 @@
  * @since      1.1
  */
 
+// Make sure we don't expose any info if called directly.
+if ( ! function_exists( 'add_action' ) ) {
+	exit;
+}
 ?>
 <div class="mesh-template-layout" style="max-width:100px; padding:5px; border:1px solid #ccc; background:#fff; border-radius: 3px">
 	<?php foreach ( $layout as $key => $row ) : ?>
@@ -61,6 +65,6 @@
 
 	<?php if ( ! empty( $mesh_template_selectable ) && ! empty( $mesh_template_id ) && ! empty( $mesh_template_title ) ) : ?>
 		<label for="mesh_template_<?php esc_attr_e( $mesh_template_id ); ?>"><?php esc_html_e( $mesh_template_title ); ?></label>
-		<input id="mesh_template_<?php esc_attr_e( $mesh_template_id ); ?>" class="mesh-template" type="radio" name="mesh_template" value="<?php esc_attr_e( $mesh_template_id ); ?>" />
+		<input id="mesh_template_<?php esc_attr_e( $mesh_template_id ); ?>" class="mesh-template" type="radio" name="mesh_template" value="<?php esc_attr_e( $mesh_template_id ); ?>" <?php if ( ! empty( $default_template ) ) : ?> checked<?php endif; ?> />
 	<?php endif; ?>
 </div>

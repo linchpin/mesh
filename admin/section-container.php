@@ -8,6 +8,11 @@
  * @subpackage AdminTemplates
  */
 
+// Make sure we don't expose any info if called directly.
+if ( ! function_exists( 'add_action' ) ) {
+	exit;
+}
+
 if ( ! $closed_metaboxes = get_user_option( 'closedpostboxes_page' ) ) {
 	$closed_metaboxes = array();
 }

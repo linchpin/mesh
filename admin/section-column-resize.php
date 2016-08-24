@@ -9,6 +9,11 @@
  * @since      1.0.0
  */
 
+// Make sure we don't expose any info if called directly.
+if ( ! function_exists( 'add_action' ) ) {
+	exit;
+}
+
 // If the template doesn't have any blocks make sure it has 1.
 if ( ! $section_blocks = (int) $templates[ $selected_template ]['blocks'] ) {
 	$section_blocks = 1;

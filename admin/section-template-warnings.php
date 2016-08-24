@@ -8,6 +8,11 @@
  * @subpackage AdminTemplates
  */
 
+// Make sure we don't expose any info if called directly.
+if ( ! function_exists( 'add_action' ) ) {
+	exit;
+}
+
 ?>
 <?php if ( ! empty( $selected_template ) && count( $blocks ) > $templates[ $selected_template ]['blocks'] ) : ?>
 

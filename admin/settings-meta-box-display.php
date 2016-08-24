@@ -6,6 +6,11 @@
  * @package    Mesh
  * @subpackage MeshAdmin
  */
+
+// Make sure we don't expose any info if called directly.
+if ( ! function_exists( 'add_action' ) ) {
+	exit;
+}
 ?>
 <form action="options.php" method="POST">
 	<h2><?php esc_html_e( LINCHPIN_MESH_PLUGIN_NAME, 'mesh' ); ?></h2>
