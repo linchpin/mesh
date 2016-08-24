@@ -169,6 +169,10 @@ function mesh_add_section_admin_markup( $section, $closed = false ) {
 	$collapse          = get_post_meta( $section->ID, '_mesh_collapse', true ); // Collapse our column spacing.
 	$featured_image_id = get_post_thumbnail_id( $section->ID );
 
+	$parents = get_post_ancestors( $section->ID );
+	$section_parent_id = ($parents) ? $parents[ count( $parents ) - 1 ] : $section->ID;
+	$section_parent = get_post( $section_parent_id );
+
 	include LINCHPIN_MESH___PLUGIN_DIR . 'admin/section-container.php';
 }
 

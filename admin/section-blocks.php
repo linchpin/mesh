@@ -54,7 +54,7 @@ if ( ! function_exists( 'add_action' ) ) {
 				<div class="block" id="mesh-block-editor-<?php esc_attr_e( $blocks[ $block_increment ]->ID ); ?>" data-mesh-block-id="<?php esc_attr_e( $blocks[ $block_increment ]->ID ); ?>">
 					<div class="block-header">
 						<div class="mesh-row mesh-row-title mesh-block-title-row">
-							<?php if ( 1 == $section_blocks ) : ?>
+							<?php if ( 1 === $section_blocks ) : ?>
 								<div class="mesh-columns-6">
 									<div class="msc-clean-edit">
 										<input id="<?php esc_attr_e( 'mesh-sections-' . $section->ID . '-' . $blocks[ $block_increment ]->ID . '-title]' ); ?>" type="text" class="mesh-column-title msc-clean-edit-element widefat left" name="mesh-sections[<?php esc_attr_e( $section->ID ); ?>][blocks][<?php esc_attr_e( $blocks[ $block_increment ]->ID ); ?>][post_title]" value="<?php esc_attr_e( $blocks[ $block_increment ]->post_title ); ?>"/>

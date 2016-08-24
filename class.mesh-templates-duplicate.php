@@ -163,7 +163,7 @@ class Mesh_Templates_Duplicate {
 			'post_excerpt'   => $post->post_excerpt,
 			'post_mime_type' => $post->post_mime_type,
 			'post_parent'    => $new_post_parent = empty( $parent_id ) ? $post->post_parent : $parent_id,
-			'post_status'    => $new_post_status = empty( $status ) ? $post->post_status : $status,
+			'post_status'    => $status, // Always set a published section to draft. Exclude attachments.
 			'post_title'     => $post->post_title,
 			'post_type'      => $post->post_type,
 			'post_date'      => $post->post_date,
@@ -173,17 +173,16 @@ class Mesh_Templates_Duplicate {
 		$new_post_id = wp_insert_post( $new_post );
 
 		// Create a new slug.
-		if ( 'publish' === $new_post_status ) {
-			$post_name = wp_unique_post_slug( $post->post_name, $new_post_id, $new_post_status, $post->post_type, $new_post_parent );
 
-			$new_post = array(
-				'ID'        => $new_post_id,
-				'post_name' => $post_name,
-			);
+		$post_name = wp_unique_post_slug( $post->post_name, $new_post_id, $status, $post->post_type, $new_post_parent );
 
-			// Update our new post with the correct slug and information.
-			wp_update_post( $new_post );
-		}
+		$new_post = array(
+			'ID'        => $new_post_id,
+			'post_name' => $post_name,
+		);
+
+		// Update our new post with the correct slug and information.
+		wp_update_post( $new_post );
 
 		do_action( 'mesh_duplicate_template_section', $new_post_id, $post );
 
