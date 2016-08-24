@@ -155,50 +155,6 @@ class Mesh_AJAX {
 	}
 
 	/**
-	 * Select a template from the mesh_template post type
-	 * This template will be used to create all the mesh_sections
-	 * on your selected post.
-	 *
-	 * @since 1.1
-	 */
-	function mesh_list_templates() {
-
-		check_ajax_referer( 'mesh_choose_template_nonce', 'mesh_choose_template_nonce' );
-
-		if ( ! current_user_can( 'edit_post', (int) $_POST['mesh_post_id'] ) ) {
-			wp_die();
-		}
-
-		$mesh_templates = new WP_Query( array(
-			'post_type'      => 'mesh_template',
-			'posts_per_page' => apply_filters( 'mesh_templates_per_page', 50 ),
-			'no_found_rows'  => true,
-			'post_status'    => 'publish',
-		) );
-
-		$mesh_template_selectable = true;
-
-		if ( $mesh_templates->have_posts() ) {
-			while ( $mesh_templates->have_posts() ) {
-				global $post;
-
-				$mesh_templates->the_post();
-
-				$mesh_template_title = get_the_title( $post->ID );
-				$mesh_template_id = $post->ID;
-
-				$layout = get_post_meta( $post->ID, '_mesh_template_layout', true );
-
-				include LINCHPIN_MESH___PLUGIN_DIR . 'admin/template-layout-preview.php';
-			}
-		} else {
-			esc_html_e( 'No Templates Found. Did you build one yet?', 'mesh' );
-		}
-
-		wp_die();
-	}
-
-	/**
 	 * Remove the selected section from
 	 *
 	 * @since 1.0
@@ -306,6 +262,8 @@ class Mesh_AJAX {
 
 	/**
 	 * Add the ability to store when notifications are dismissed
+	 *
+	 * @since 1.0
 	 */
 	function mesh_dismiss_notification() {
 		check_ajax_referer( 'mesh_dismiss_notification_nonce', 'mesh_dismiss_notification_nonce' );
@@ -326,6 +284,102 @@ class Mesh_AJAX {
 			update_user_meta( $user_id, 'linchpin_mesh_notifications', $notifications );
 			wp_die( 1 );
 		}
+	}
+
+	/**
+	 * Select a template from the mesh_template post type
+	 * This template will be used to create all the mesh_sections
+	 * on your selected post.
+	 *
+	 * @since 1.1
+	 */
+	function mesh_list_templates() {
+
+		check_ajax_referer( 'mesh_choose_template_nonce', 'mesh_choose_template_nonce' );
+
+		if ( ! current_user_can( 'edit_post', (int) $_POST['mesh_post_id'] ) ) {
+			wp_die();
+		}
+
+		$mesh_templates = new WP_Query( array(
+			'post_type'      => 'mesh_template',
+			'posts_per_page' => apply_filters( 'mesh_templates_per_page', 50 ),
+			'no_found_rows'  => true,
+			'post_status'    => 'publish',
+		) );
+
+		$mesh_template_selectable = true;
+		$default_template = false;
+		if ( $mesh_templates->have_posts() ) {
+			while ( $mesh_templates->have_posts() ) {
+				global $post;
+
+				$mesh_templates->the_post();
+
+				$mesh_template_title = get_the_title( $post->ID );
+				$mesh_template_id = $post->ID;
+
+				$layout = get_post_meta( $post->ID, '_mesh_template_layout', true );
+
+				include LINCHPIN_MESH___PLUGIN_DIR . 'admin/template-layout-preview.php';
+			}
+
+			$mesh_template_title = __( 'Blank Template', 'mesh' );
+			$mesh_template_id    = 'blank';
+			$layout              = array();
+			$layout['row-blank']['blocks'][] = array(
+				'columns' => 12,
+				'offset' => 0,
+			);
+			$default_template = true;
+			include LINCHPIN_MESH___PLUGIN_DIR . 'admin/template-layout-preview.php';
+		} else {
+			esc_html_e( 'No Templates Found. Did you build one yet?', 'mesh' );
+		} ?>
+		<p>
+			<a href="#" class="button primary mesh-reference-template dashicons-before dashicons-plus"><?php esc_html_e( 'Select Template', 'mesh' ); ?></a>
+			<a href="#" class="button primary mesh-starter-template dashicons-before dashicons-plus"><?php esc_html_e( 'Nevermind Start from Scratch', 'mesh' ); ?></a>
+		</p>
+		<?php
+		wp_die();
+	}
+
+	/**
+	 * Choose a template and build out all mesh_section posts
+	 * based on the selected template.
+	 *
+	 * @todo There should probably be a busy spinner of sorts while
+	 *       the build out is being done behind the scenes.
+	 *
+	 * @since 1.1
+	 */
+	function mesh_choose_template() {
+		check_ajax_referer( 'mesh_choose_template_nonce', 'mesh_choose_template_nonce' );
+
+		$post_id            = (int) $_POST['mesh_post_id']; // WPCS: input var ok.
+		$mesh_template_id   = (int) $_POST['mesh_template_id']; // WPCS: input var ok.
+		$mesh_template_type = sanitize_title( $_POST['mesh_template_type'] );
+
+		if ( ! current_user_can( 'edit_post', $mesh_template_id ) ) {
+			wp_die( -1 );
+		}
+
+		// Apply template type to our taxonomy that tracks template usage.
+		wp_set_post_terms( $post_id, $mesh_template_type, 'mesh_template_usage', false );
+
+		$post_mesh_sections = mesh_get_sections( $mesh_template_id );
+
+		if ( empty( $post_mesh_sections ) ) {
+			wp_die( -1 );
+		}
+
+		include LINCHPIN_MESH___PLUGIN_DIR . '/class.mesh-templates-duplicate.php';
+
+		$mesh_templates_duplicate = new Mesh_Templates_Duplicate();
+
+		$mesh_templates_duplicate->duplicate_sections( $mesh_template_id, $post_id, $post_mesh_sections );
+
+
 	}
 }
 

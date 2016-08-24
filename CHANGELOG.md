@@ -1,17 +1,22 @@
 ##Change Log For Mesh
 
-## [1.1] - 2016-08-19
+## [1.1] - 2016-08-26
 
 ### Added
 - You can now create reusable templates.
-- Better version tracking and upgrade process.
 - Templates are excluded from Yoast SEO admin shenanigans by default.
 - Preliminary remove Mesh Settings on Uninstall.
+- You can now filter how many mesh_templates are queried if you have a lot of templates (More than 50)
+- Better version tracking and upgrade process.
 
 ### Fixed
 - Typo in Mesh settings text field utility method.
 - Offset now displays properly within Post Edit screen on page load.
 - When setting an offset to 7,8 or 9 on single column (12) visual did not match what was being stored in post_meta.
+- Minor security improvements.
+
+### Updated
+- Some localization strings needed sprucing up.
 
 ## [1.0.5] - 2016-08-08
 

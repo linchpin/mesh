@@ -27,7 +27,7 @@ define( 'LINCHPIN_MESH__MINIMUM_WP_VERSION', '4.0' );
 define( 'LINCHPIN_MESH___PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 define( 'LINCHPIN_MESH___PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 
-$GLOBALS['mesh_current_version'] = get_option( 'mesh_version', '0.0' ); // Default to no version.
+$GLOBALS['mesh_current_version'] = get_option( 'mesh_version', '0.0' ); // Get our current Mesh Version.
 
 include_once 'class.mesh-upgrades.php';
 include_once 'class.mesh-settings.php';
@@ -141,7 +141,7 @@ function mesh_locate_template_files() {
  *
  * @access public
  *
- * @param  object $section Current section being manipulated.
+ * @param  object     $section Current section being manipulated.
  * @param  bool|false $closed
  * @return void Prints the markup of the admin panel
  */
@@ -183,12 +183,12 @@ function mesh_add_section_admin_markup( $section, $closed = false ) {
  */
 function mesh_get_sections( $post_id, $return_type = 'array', $statuses = array( 'publish' ) ) {
 	$args = array(
-		'post_type' => 'mesh_section',
-		'posts_per_page' => 50,
-		'orderby' => 'menu_order',
-		'order' => 'ASC',
-		'post_parent' => (int) $post_id,
-		'post_status' => $statuses,
+		'post_type'      => 'mesh_section',
+		'posts_per_page' => apply_filters( 'mesh_templates_per_page', 50 ),
+		'orderby'        => 'menu_order',
+		'order'          => 'ASC',
+		'post_parent'    => (int) $post_id,
+		'post_status'    => $statuses,
 	);
 
 	$content_sections = new WP_Query( $args );

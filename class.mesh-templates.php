@@ -15,10 +15,17 @@ if ( ! function_exists( 'add_action' ) ) {
 	exit;
 }
 
+
+
 /**
  * Class Mesh_Templates
  */
 class Mesh_Templates {
+
+	/**
+	 * @var Mesh_Templates
+	 */
+	private $mesh_templates_duplicate;
 
 	/**
 	 * Mesh_Templates constructor.
@@ -33,10 +40,15 @@ class Mesh_Templates {
 		 */
 		add_action( 'manage_mesh_template_posts_custom_column' , array( $this, 'add_layout_column' ), 10, 2 );
 		add_filter( 'manage_mesh_template_posts_columns', array( $this, 'add_layout_column_title' ) );
+
+		include LINCHPIN_MESH___PLUGIN_DIR . '/class.mesh-templates-duplicate.php';
+
+		$this->mesh_templates_duplicate = new Mesh_Templates_Duplicate();
 	}
 
 	/**
-	 * Init function.
+	 * Create our mesh_template post type along with
+	 * our mesh_template_usage taxonomy.
 	 *
 	 * @access public
 	 * @return void
@@ -76,6 +88,32 @@ class Mesh_Templates {
 			'publicly_queryable' => false,
 			'show_ui' => true,
 			'rewrite' => false,
+		) );
+
+		$mesh_post_types = get_option( 'mesh_post_types' );
+		$available_post_types = array_merge( array( 'mesh_template' ), $mesh_post_types );
+
+		/*
+		 * @todo remove this from frontend display once ready for public release
+		 */
+		register_taxonomy( 'mesh_template_usage', $available_post_types, array(
+			'labels' => array(
+				'name'              => _x( 'Mesh Template Usage', 'Mesh Template Usage', 'mesh' ),
+				'singular_name'     => _x( 'Mesh Template Usage', 'Mesh Template Usage', 'mesh' ),
+				'search_items'      => __( 'Search Mesh Template Usage', 'mesh' ),
+				'all_items'         => __( 'All Mesh Template Usage', 'mesh' ),
+				'parent_item'       => __( 'Parent Mesh Template Usage', 'mesh' ),
+				'parent_item_colon' => __( 'Parent Mesh Template Usage:', 'mesh' ),
+				'edit_item'         => __( 'Edit Mesh Template Usage', 'mesh' ),
+				'update_item'       => __( 'Update Mesh Template Usage', 'mesh' ),
+				'add_new_item'      => __( 'Add New Mesh Template Usage', 'mesh' ),
+				'new_item_name'     => __( 'New Mesh Template Usage Name', 'mesh' ),
+				'menu_name'         => __( 'Mesh Template Usage', 'mesh' ),
+			),
+			'show_ui' => true,
+			'query_var' => true,
+			'rewrite' => false,
+			'show_admin_column' => true,
 		) );
 	}
 
@@ -139,7 +177,7 @@ class Mesh_Templates {
 				continue;
 			}
 
-			// Create a new row per section
+			// Create a new row per section.
 			$mesh_layout[ sanitize_title( 'row-' . $section_id ) ] = array();
 
 			$count ++;
@@ -180,7 +218,7 @@ class Mesh_Templates {
 	/**
 	 * Add Layout Column Title
 	 *
-	 * @param $columns
+	 * @param int $columns The columns in the admin to iterate through.
 	 *
 	 * @return mixed
 	 */
@@ -232,8 +270,8 @@ class Mesh_Templates {
  * Get our available mesh templates
  *
  * @since 1.1
- * @param string $return_type
- * @param array  $statuses
+ * @param string $return_type Query or Array.
+ * @param array  $statuses    Publish, Draft.
  *
  * @return array|WP_Query
  */
