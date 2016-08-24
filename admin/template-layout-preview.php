@@ -15,9 +15,9 @@ if ( ! function_exists( 'add_action' ) ) {
 	exit;
 }
 ?>
-<div class="mesh-template-layout" style="max-width:100px; padding:5px; border:1px solid #ccc; background:#fff; border-radius: 3px">
+<div class="mesh-template-layout<?php if ( ! empty( $default_template ) ) : ?> active<?php endif; ?>">
 	<?php foreach ( $layout as $key => $row ) : ?>
-		<div class="mesh-row" style="margin:2px">
+		<div class="mesh-row">
 			<?php
 			$offsets_available = 9;
 
@@ -52,9 +52,9 @@ if ( ! function_exists( 'add_action' ) ) {
 
 				?>
 
-				<div class="mesh-section-block mesh-columns-<?php esc_attr_e( $block_columns ); ?> columns" style="border:1px solid #278dbc; min-height:40px">
-					<div class="block" style="background-color: #f2f2f2; height:40px">
-						<div class="block-content <?php if ( 4 !== $section_blocks && $block_offset ) { esc_attr_e( ' mesh-has-offset mesh-offset-' . $block_offset ); } ?>" style="background: #fff; height:40px">
+				<div class="mesh-section-block mesh-columns-<?php esc_attr_e( $block_columns ); ?> columns">
+					<div class="block">
+						<div class="block-content <?php if ( 4 !== $section_blocks && $block_offset ) { esc_attr_e( ' mesh-has-offset mesh-offset-' . $block_offset ); } ?>">
 						</div>
 					</div>
 				</div>
