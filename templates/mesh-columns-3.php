@@ -18,7 +18,7 @@
 	?>
 	<div class="row <?php if ( ! empty( $collapse_column_spacing ) ) : ?>collapse <?php endif; ?>"<?php if ( ! empty( $lp_equal ) ) : ?> data-equalizer<?php endif; ?>>
 		<?php if ( ! empty( $title_display ) && 'no block title' != strtolower( get_the_title() ) ) : ?>
-			<div class="small-12 columns">
+			<div class="small-12 columns title-row">
 				<h2 class="entry-title"><?php the_title(); ?></h2>
 			</div>
 		<?php endif; ?>
