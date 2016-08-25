@@ -21,9 +21,8 @@ if ( ! function_exists( 'add_action' ) ) {
  * Class Mesh_Templates
  */
 class Mesh_Templates {
-
 	/**
-	 * @var Mesh_Templates
+	 * @var Mesh_Templates_Duplicate
 	 */
 	private $mesh_templates_duplicate;
 
@@ -109,6 +108,26 @@ class Mesh_Templates {
 				'add_new_item'      => __( 'Add New Mesh Template Usage', 'mesh' ),
 				'new_item_name'     => __( 'New Mesh Template Usage Name', 'mesh' ),
 				'menu_name'         => __( 'Mesh Template Usage', 'mesh' ),
+			),
+			'show_ui' => true,
+			'query_var' => true,
+			'rewrite' => false,
+			'show_admin_column' => true,
+		) );
+
+		register_taxonomy( 'mesh_template_types', $available_post_types, array(
+			'labels' => array(
+				'name'              => _x( 'Mesh Template Type', 'Mesh Template Type', 'mesh' ),
+				'singular_name'     => _x( 'Mesh Template Type', 'Mesh Template Type', 'mesh' ),
+				'search_items'      => __( 'Search Mesh Template Types', 'mesh' ),
+				'all_items'         => __( 'All Mesh Template Types', 'mesh' ),
+				'parent_item'       => __( 'Parent Mesh Template Types', 'mesh' ),
+				'parent_item_colon' => __( 'Parent Mesh Template Types:', 'mesh' ),
+				'edit_item'         => __( 'Edit Mesh Template Type', 'mesh' ),
+				'update_item'       => __( 'Update Mesh Template Type', 'mesh' ),
+				'add_new_item'      => __( 'Add New Mesh Template Type', 'mesh' ),
+				'new_item_name'     => __( 'New Mesh Template Type Name', 'mesh' ),
+				'menu_name'         => __( 'Mesh Template Type', 'mesh' ),
 			),
 			'show_ui' => true,
 			'query_var' => true,
@@ -208,8 +227,14 @@ class Mesh_Templates {
 
 		if ( ! empty( $mesh_layout ) ) {
 			update_post_meta( $post_id, '_mesh_template_layout', $mesh_layout );
+			wp_insert_term( $post->post_title, 'mesh_template_usage', array(
+				'slug' => $post->post_name,
+			) );
 		} else {
 			delete_post_meta( $post_id, '_mesh_template_layout' );
+			wp_delete_term( $post->post_title, 'mesh_template_usage', array(
+				'slug' => $post->post_name,
+			) );
 		}
 
 		add_action( 'save_post', array( $this, 'save_post' ), 10, 2 );
@@ -253,7 +278,7 @@ class Mesh_Templates {
 				$layout = get_post_meta( $post_id, '_mesh_template_layout', true );
 
 				if ( empty( $layout ) ) {
-					echo '';
+					esc_html_e( 'Template missing published sections', 'mesh' );
 					return;
 				}
 

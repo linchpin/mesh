@@ -29,6 +29,8 @@ class Mesh_AJAX {
 		add_action( 'wp_ajax_mesh_update_order',          array( $this, 'mesh_update_order' ) );
 		add_action( 'wp_ajax_mesh_update_featured_image', array( $this, 'mesh_update_featured_image' ) );
 		add_action( 'wp_ajax_mesh_dismiss_notification',  array( $this, 'mesh_dismiss_notification' ) );
+
+		include_once LINCHPIN_MESH___PLUGIN_DIR . '/class.mesh-templates-duplicate.php';
 	}
 
 	/**
@@ -321,6 +323,11 @@ class Mesh_AJAX {
 
 				$layout = get_post_meta( $post->ID, '_mesh_template_layout', true );
 
+				// If our layout doesn't have any published sections we should skip it's display.
+				if ( empty( $layout ) ) {
+					continue;
+				}
+
 				include LINCHPIN_MESH___PLUGIN_DIR . 'admin/template-layout-preview.php';
 			}
 
@@ -367,22 +374,24 @@ class Mesh_AJAX {
 			wp_die( -1 );
 		}
 
-		// Apply template type to our taxonomy that tracks template usage.
-		wp_set_post_terms( $post_id, $mesh_template_type, 'mesh_template_usage', false );
+		if ( $mesh_template = get_post( $mesh_template_id ) ) {
+			// Apply template type to our taxonomy that tracks template usage.
+			wp_set_object_terms( $post_id, $mesh_template->post_name, 'mesh_template_usage', false );
+			wp_set_object_terms( $post_id, $mesh_template_type, 'mesh_template_type', false );
 
-		$post_mesh_sections = mesh_get_sections( $mesh_template_id );
+			$mesh_templates_duplicate = new Mesh_Templates_Duplicate();
 
-		if ( empty( $post_mesh_sections ) ) {
-			wp_die( -1 );
+			$duplicate_sections = $mesh_templates_duplicate->duplicate_sections( $mesh_template_id, $post_id );
+
+			if ( ! empty( $duplicate_sections ) ) {
+				print_r( $duplicate_sections );
+			} else {
+				echo 'did not duplicate sections';
+			}
+			exit;
 		}
 
-		include LINCHPIN_MESH___PLUGIN_DIR . '/class.mesh-templates-duplicate.php';
-
-		$mesh_templates_duplicate = new Mesh_Templates_Duplicate();
-
-		$mesh_templates_duplicate->duplicate_sections( $mesh_template_id, $post_id, $post_mesh_sections );
-
-
+		exit;
 	}
 }
 

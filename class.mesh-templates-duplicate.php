@@ -41,14 +41,117 @@ class Mesh_Templates_Duplicate {
 	 * @param int    $template_id Template ID.
 	 * @param string $status      Template Publish Status.
 	 * @param int    $post_id     Target Post ID.
+	 *
+	 * @return string
 	 */
-	function duplicate_sections( $template_id, $status = 'publish', $post_id ) {
-
+	function duplicate_sections( $template_id, $post_id ) {
 		$template_id = (int) $template_id;
 
 		if ( $template_post = get_post( $template_id ) ) {
-			$new_template_id = $this->duplicate_section( $template_post, $status, $post_id );
+			$children = $this->duplicate_children( $post_id, $template_post );
+
+			if ( ! empty( $children ) ) {
+				return 'created children';
+			} else {
+				return 'created nothing';
+			}
 		}
+
+		return 'no template found';
+	}
+
+	/**
+	 * Duplicate the post attachments to the new section
+	 * This does not actually duplicate the files.
+	 *
+	 * @thanks https://plugins.svn.wordpress.org/duplicate-post/
+	 *
+	 * @param int    $new_id New Post ID.
+	 * @param object $post   Original Post Object.
+	 */
+	function duplicate_children( $new_id, $post ) {
+
+		$children = new WP_Query( array(
+			'post_type'      => array( 'mesh_section', 'attachment' ),
+			'posts_per_page' => apply_filters( 'mesh_templates_per_page', 50 ),
+			'post_status'    => array( 'publish', 'draft' ),
+			'post_parent'    => $post->ID,
+		) );
+
+		$duplicated_children = array();
+
+		if ( $children->have_posts() ) {
+			while ( $children->have_posts() ) {
+				global $post;
+
+				$children->the_post();
+
+				$duplicated_children[] = $this->duplicate_section( $post, $new_id );
+			}
+		}
+
+		return $duplicated_children;
+	}
+
+	/**
+	 * Duplicate the section
+	 *
+	 * @param object $post      Post Object.
+	 * @param string $status    Post Status.
+	 * @param string $parent_id Parent Post ID.
+	 *
+	 * @return int|void|WP_Error
+	 */
+	function duplicate_section( $post, $parent_id = '' ) {
+
+		// Skip Revisions.
+		if ( 'revision' === $post->post_type ) {
+			return;
+		}
+
+		$status = 'draft';
+
+		if ( 'attachment' !== $post->post_type ) {
+			if ( empty( $status ) ) {
+				$status = 'draft';
+			}
+		} else {
+			$status = 'publish';
+		}
+
+		$new_post = array(
+			'menu_order'     => $post->menu_order,
+			'post_author'    => $post->post_author,
+			'post_content'   => $post->post_content,
+			'post_excerpt'   => $post->post_excerpt,
+			'post_mime_type' => $post->post_mime_type,
+			'post_parent'    => $new_post_parent = empty( $parent_id ) ? $post->post_parent : $parent_id,
+			'post_status'    => $status, // Always set a published section to draft. Exclude attachments.
+			'post_title'     => $post->post_title,
+			'post_type'      => $post->post_type,
+			'post_date'      => $post->post_date,
+			'post_date_gmt'  => get_gmt_from_date( $post->post_date ),
+		);
+
+		$new_post_id = wp_insert_post( $new_post );
+
+		// Create a new slug.
+		$post_name = wp_unique_post_slug( $post->post_name, $new_post_id, $status, $post->post_type, $new_post_parent );
+
+		$new_post = array(
+			'ID'        => $new_post_id,
+			'post_name' => $post_name,
+		);
+
+		// Update our new post with the correct slug and information.
+		wp_update_post( $new_post );
+
+		do_action( 'mesh_duplicate_template_section', $new_post_id, $post );
+
+		delete_post_meta( $new_post_id, '_mesh_template_original' );
+		add_post_meta( $new_post_id, '_mesh_template_original', $post->ID );
+
+		return $new_post_id;
 	}
 
 	/**
@@ -103,92 +206,5 @@ class Mesh_Templates_Duplicate {
 				add_post_meta( $new_id, $meta_key, $meta_value );
 			}
 		}
-	}
-
-	/**
-	 * Duplicate the post attachments to the new section
-	 * This does not actually duplicate the files.
-	 *
-	 * @thanks https://plugins.svn.wordpress.org/duplicate-post/
-	 *
-	 * @param int    $new_id New Post ID.
-	 * @param object $post   Original Post Object.
-	 */
-	function duplicate_children( $new_id, $post ) {
-
-		$children = new WP_Query( array(
-			'post_type'      => array( 'mesh_section', 'attachment' ),
-			'posts_per_page' => apply_filters( 'mesh_templates_per_page', 50 ),
-			'post_status'    => array( 'publish', 'draft' ),
-		    'post_parent'    => $post->ID,
-			) );
-
-		if ( $children->have_posts() ) {
-			while ( $children->have_posts() ) {
-				global $post;
-
-				$children->the_post();
-
-				$this->duplicate_section( $post, '', $new_id );
-			}
-		}
-	}
-
-	/**
-	 * Duplicate the section
-	 *
-	 * @param object $post      Post Object.
-	 * @param string $status    Post Status.
-	 * @param string $parent_id Parent Post ID.
-	 *
-	 * @return int|void|WP_Error
-	 */
-	function duplicate_section( $post, $status = '', $parent_id = '' ) {
-
-		// Skip Revisions.
-		if ( 'revision' === $post->post_type ) {
-			return;
-		}
-
-		if ( 'attachment' !== $post->post_type ) {
-			if ( empty( $status ) ) {
-				$status = 'draft';
-			}
-		}
-
-		$new_post = array(
-			'menu_order'     => $post->menu_order,
-			'post_author'    => $post->post_author,
-			'post_content'   => $post->post_content,
-			'post_excerpt'   => $post->post_excerpt,
-			'post_mime_type' => $post->post_mime_type,
-			'post_parent'    => $new_post_parent = empty( $parent_id ) ? $post->post_parent : $parent_id,
-			'post_status'    => $status, // Always set a published section to draft. Exclude attachments.
-			'post_title'     => $post->post_title,
-			'post_type'      => $post->post_type,
-			'post_date'      => $post->post_date,
-			'post_date_gmt'  => get_gmt_from_date( $post->post_date ),
-		);
-
-		$new_post_id = wp_insert_post( $new_post );
-
-		// Create a new slug.
-
-		$post_name = wp_unique_post_slug( $post->post_name, $new_post_id, $status, $post->post_type, $new_post_parent );
-
-		$new_post = array(
-			'ID'        => $new_post_id,
-			'post_name' => $post_name,
-		);
-
-		// Update our new post with the correct slug and information.
-		wp_update_post( $new_post );
-
-		do_action( 'mesh_duplicate_template_section', $new_post_id, $post );
-
-		delete_post_meta( $new_post_id, '_mesh_template_original' );
-		add_post_meta( $new_post_id, '_mesh_template_original', $post->ID );
-
-		return $new_post_id;
 	}
 }

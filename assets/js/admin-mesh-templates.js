@@ -53,7 +53,7 @@ mesh.templates = function ( $ ) {
 
             var $this         = $(this),
                 valid_types   = [ 'starter', 'reference' ],
-                template      = $('.mesh-template').val(),
+                template      = $('.mesh-template:checked').val(),
                 template_type = $this.prop( 'data-template-type' );
 
             if ( -1 === valid_types.indexOf( template_type ) ) {
@@ -74,10 +74,9 @@ mesh.templates = function ( $ ) {
                     var $response = $( response );
 
                     $('#mesh-description').html('').append( $response );
-                    $spinner.removeClass('is-active');
-
+                //    $spinner.removeClass('is-active');
                 } else {
-                    $spinner.removeClass('is-active');
+                //    $spinner.removeClass('is-active');
                 }
             });
         },
