@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * Mesh Template: 1
  * Mesh Template Blocks: 1
  *
@@ -8,6 +8,7 @@
  * @package    Mesh
  * @subpackage Templates
  */
+
 ?>
 <section <?php post_class(); ?> <?php mesh_section_background(); ?>>
 	<?php
@@ -26,13 +27,13 @@
 			foreach ( $blocks as $block ) : ?>
 
 				<?php
-					$block_css_class = get_post_meta( $block->ID, '_mesh_css_class', true );
-					$block_offset    = get_post_meta( $block->ID, '_mesh_offset',  true );
-					$block_column_class = 'columns small-12';
+				$block_css_class = get_post_meta( $block->ID, '_mesh_css_class', true );
+				$block_offset    = get_post_meta( $block->ID, '_mesh_offset',  true );
+				$block_column_class = 'columns small-12';
 
-					if ( $block_offset ) {
-						$block_column_class .= ' medium-' . ( 12 - $block_offset ) . ' medium-offset-' . $block_offset;
-					}
+				if ( $block_offset ) {
+					$block_column_class .= ' medium-' . ( 12 - $block_offset ) . ' medium-offset-' . $block_offset;
+				}
 				?>
 
 				<div class="<?php esc_attr_e( $block_column_class ); ?> <?php esc_attr_e( $block_css_class ); ?>" <?php mesh_section_background( $block->ID ); ?>>

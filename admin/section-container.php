@@ -54,7 +54,6 @@ $blocks = mesh_maybe_create_section_blocks( $section );
 		<?php include LINCHPIN_MESH___PLUGIN_DIR . 'admin/section-controls.php'; ?>
 
 		<div class="mesh-editor-blocks" id="mesh-sections-editor-<?php esc_attr_e( $section->ID ); ?>">
-
 		<?php
 		if ( $blocks ) {
 			include LINCHPIN_MESH___PLUGIN_DIR . 'admin/section-blocks.php';

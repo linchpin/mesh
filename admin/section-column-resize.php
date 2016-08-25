@@ -42,7 +42,7 @@ if ( (int) $section_blocks > 1 ) :
 
 		$block_increment++;
 	}
-	endif;
-	if ( (int) $section_blocks > 1 && (int) $section_blocks < 4 ) : ?>
-		<div class="wp-slider column-slider mesh-hide-for-small" data-mesh-blocks="<?php esc_attr_e( $section_blocks ); ?>" data-mesh-columns="<?php esc_attr_e( wp_json_encode( $block_sizes ) ); ?>"><span class="ui-slider-handle ui-state-default ui-corner-all fade-in-on-create hide" tabindex="0"></span></div>
+endif;
+if ( (int) $section_blocks > 1 && (int) $section_blocks < 4 ) : ?>
+	<div class="wp-slider column-slider mesh-hide-for-small" data-mesh-blocks="<?php esc_attr_e( $section_blocks ); ?>" data-mesh-columns="<?php esc_attr_e( wp_json_encode( $block_sizes ) ); ?>"><span class="ui-slider-handle ui-state-default ui-corner-all fade-in-on-create hide" tabindex="0"></span></div>
 <?php endif;

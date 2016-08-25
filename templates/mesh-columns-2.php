@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * Mesh Template: 2
  * Mesh Template Blocks: 2
  *
@@ -8,6 +8,7 @@
  * @package    Mesh
  * @subpackage Templates
  */
+
 ?>
 <section <?php post_class() ?> <?php mesh_section_background(); ?>>
 	<?php
