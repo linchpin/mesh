@@ -131,7 +131,7 @@ class Mesh {
 		}
 
 		$args = array(
-			'label'   => __( 'Show Extra MCS Section Controls?', 'mesh' ),
+			'label'   => __( 'Show Extra Mesh Section Controls?', 'mesh' ),
 			'default' => 0,
 			'option'  => 'linchpin_mesh_section_kitchensink',
 		);
