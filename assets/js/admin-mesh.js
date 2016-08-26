@@ -902,9 +902,11 @@ mesh.templates = function ( $ ) {
                     var $postboxes = $('.mesh-section', $('#mesh-container'));
 
                     if ($postboxes.length > 1) {
-                        $reorder_button.removeClass('disabled');
+                        $('.mesh-section-reorder').removeClass('disabled');
                     }
 
+                    blocks.setup_resize_slider();
+                    blocks.setup_sortable();
                     blocks.rerender_blocks($tinymce_editors);
 
                     // Repopulate the sections cache so that the new section is included going forward.
