@@ -141,17 +141,23 @@ function mesh_locate_template_files() {
  *
  * @access public
  *
- * @param  object     $section Current section being manipulated.
- * @param  bool|false $closed
- * @return void Prints the markup of the admin panel
+ * @param mixed  $section Current section being manipulated.
+ * @param bool   $closed  Display the section closed by default.
+ * @param bool   $return  Return the value instead of echo.
+ *
+ * @return mixed|void|string Prints the markup of the admin panel
  */
-function mesh_add_section_admin_markup( $section, $closed = false ) {
+function mesh_add_section_admin_markup( $section, $closed = false, $return = false ) {
 	if ( ! is_admin() ) {
-		return;
+		return false;
+	}
+
+	if ( ! is_object( $section ) ) {
+		$section = get_post( $section );
 	}
 
 	if ( ! current_user_can( 'edit_post', $section->ID ) ) {
-		return;
+		return false;
 	}
 
 	$templates = mesh_locate_template_files();
@@ -173,7 +179,13 @@ function mesh_add_section_admin_markup( $section, $closed = false ) {
 	$section_parent_id = ($parents) ? $parents[ count( $parents ) - 1 ] : $section->ID;
 	$section_parent = get_post( $section_parent_id );
 
+	if ( $return ) {
+		ob_start();
+	}
 	include LINCHPIN_MESH___PLUGIN_DIR . 'admin/section-container.php';
+	if ( $return ) {
+		return ob_end_flush();
+	}
 }
 
 /**

@@ -874,16 +874,8 @@ mesh.templates = function ( $ ) {
             event.stopPropagation();
 
             var $this         = $(this),
-                valid_types   = [ 'starter', 'reference' ],
                 template      = $('.mesh-template:checked').val(),
-                template_type = $this.prop( 'data-template-type' );
-
-            if ( -1 === valid_types.indexOf( template_type ) ) {
-                $( '#mesh_template_usage' ).val( template_type );
-            } else {
-                console.log( 'Invalid Template Type' );
-                return;
-            }
+                template_type = $this.attr( 'data-template-type' );
 
             $.post( ajaxurl, {
                 action: 'mesh_choose_template',
@@ -891,14 +883,32 @@ mesh.templates = function ( $ ) {
                 mesh_template_id: template,
                 mesh_template_type: template_type,
                 mesh_choose_template_nonce: mesh_data.choose_template_nonce
-            }, function( response ){
-                if ( response ) {
-                    var $response = $( response );
+            }, function( response ) {
+                if (response) {
+                    var $response = $(response),
+                        $tinymce_editors = $response.find('.wp-editor-area'),
+                        $empty_msg = $('.empty-sections-message'),
+                        $controls = $('.mesh-main-ua-row');
 
-                    $('#mesh-description').html('').append( $response );
-                //    $spinner.removeClass('is-active');
-                } else {
-                //    $spinner.removeClass('is-active');
+                    $section_container = $('#mesh-sections-container')
+                    $section_container.append($response);
+                   // $spinner.removeClass('is-active');
+
+                    if ($empty_msg.length) {
+                        $empty_msg.fadeOut('fast');
+                        $controls.fadeIn('fast');
+                    }
+
+                    var $postboxes = $('.mesh-section', $('#mesh-container'));
+
+                    if ($postboxes.length > 1) {
+                        $reorder_button.removeClass('disabled');
+                    }
+
+                    blocks.rerender_blocks($tinymce_editors);
+
+                    // Repopulate the sections cache so that the new section is included going forward.
+                    blocks.$sections = $('.mesh-section', $section_container);
                 }
             });
         },

@@ -33,5 +33,5 @@ if ( ! function_exists( 'add_action' ) ) {
 			</p>
 		</div>
 	</div>
-	<input type="hidden" id="mesh_template_usage" name="mesh_template_usage" />
+	<input type="hidden" name="mesh_template_usage" />
 </div>

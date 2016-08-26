@@ -384,7 +384,7 @@ class Mesh_AJAX {
 			$duplicate_sections = $mesh_templates_duplicate->duplicate_sections( $mesh_template_id, $post_id );
 
 			if ( ! empty( $duplicate_sections ) ) {
-				print_r( $duplicate_sections );
+				echo $duplicate_sections; // WPCS: ok
 			} else {
 				echo 'did not duplicate sections';
 			}

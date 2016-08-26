@@ -51,7 +51,17 @@ class Mesh_Templates_Duplicate {
 			$children = $this->duplicate_children( $post_id, $template_post );
 
 			if ( ! empty( $children ) ) {
-				return 'created children';
+
+				$markup = '';
+
+				foreach ( $children as $section_id ) {
+					error_log( print_r( $section_id, true ) );
+
+					$markup .= mesh_add_section_admin_markup( $section_id, false, true );
+				}
+
+				return $markup;
+
 			} else {
 				return 'created nothing';
 			}
@@ -66,16 +76,18 @@ class Mesh_Templates_Duplicate {
 	 *
 	 * @thanks https://plugins.svn.wordpress.org/duplicate-post/
 	 *
-	 * @param int    $new_id New Post ID.
-	 * @param object $post   Original Post Object.
+	 * @param int    $new_id        New Post ID.
+	 * @param object $template_post Original Post Object.
+	 *
+	 * @return array $duplicate_children Array of IDs
 	 */
-	function duplicate_children( $new_id, $post ) {
+	function duplicate_children( $new_id, $template_post ) {
 
 		$children = new WP_Query( array(
 			'post_type'      => array( 'mesh_section', 'attachment' ),
 			'posts_per_page' => apply_filters( 'mesh_templates_per_page', 50 ),
 			'post_status'    => array( 'publish', 'draft' ),
-			'post_parent'    => $post->ID,
+			'post_parent'    => $template_post->ID,
 		) );
 
 		$duplicated_children = array();
@@ -86,7 +98,11 @@ class Mesh_Templates_Duplicate {
 
 				$children->the_post();
 
-				$duplicated_children[] = $this->duplicate_section( $post, $new_id );
+				$duplicated_child = $this->duplicate_section( $post, $new_id );
+
+				if ( ! empty( $duplicated_child ) ) {
+					$duplicated_children[] = $duplicated_child;
+				}
 			}
 		}
 
@@ -151,7 +167,13 @@ class Mesh_Templates_Duplicate {
 		delete_post_meta( $new_post_id, '_mesh_template_original' );
 		add_post_meta( $new_post_id, '_mesh_template_original', $post->ID );
 
-		return $new_post_id;
+		$parent_post_type = get_post_type( $post->post_parent );
+
+		if ( $post->post_parent && 'mesh_section' !== $parent_post_type ) {
+			return $new_post_id;
+		} else {
+			return '';
+		}
 	}
 
 	/**
@@ -203,7 +225,8 @@ class Mesh_Templates_Duplicate {
 
 			foreach ( $meta_values as $meta_value ) {
 				$meta_value = maybe_unserialize( $meta_value );
-				add_post_meta( $new_id, $meta_key, $meta_value );
+
+				update_post_meta( $new_id, $meta_key, $meta_value );
 			}
 		}
 	}
