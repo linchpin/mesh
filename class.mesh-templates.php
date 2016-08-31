@@ -89,7 +89,7 @@ class Mesh_Templates {
 			'rewrite' => false,
 		) );
 
-		$mesh_post_types = get_option( 'mesh_post_types' );
+		$mesh_post_types = array_keys( get_option( 'mesh_post_types' ) );
 		$available_post_types = array_merge( array( 'mesh_template' ), $mesh_post_types );
 
 		/*
