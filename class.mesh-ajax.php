@@ -376,15 +376,15 @@ class Mesh_AJAX {
 
 		if ( $mesh_template = get_post( $mesh_template_id ) ) {
 			// Apply template type to our taxonomy that tracks template usage.
-			wp_set_object_terms( $post_id, $mesh_template->post_name, 'mesh_template_usage', false );
+			wp_set_object_terms( $post_id, array( $mesh_template->post_name ), 'mesh_template_usage', false );
 
-			$terms = get_terms( array(
+			$template_terms = get_terms( array(
 				'taxonomy' => 'mesh_template_types',
 				'hide_empty' => false,
-				'fields' => array( 'slug' ),
+				'fields' => 'id=>slug',
 			) );
 
-			if ( in_array( $mesh_template_type ) ) {
+			if ( in_array( $mesh_template_type, $template_terms, true ) ) {
 				wp_set_object_terms( $post_id, $mesh_template_type, 'mesh_template_types', false );
 			}
 

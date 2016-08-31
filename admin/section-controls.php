@@ -12,6 +12,8 @@
 if ( ! function_exists( 'add_action' ) ) {
 	exit;
 }
+
+global $post;
 ?>
 
 <div class="mesh-section-meta mesh-row mesh-row-padding">

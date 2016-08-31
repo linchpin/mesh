@@ -16,7 +16,11 @@ if ( ! function_exists( 'add_action' ) ) {
 
 	<?php
 
-	if ( ! has_term( 'reference', 'mesh_template_types', $post ) ) {
+	global $post;
+
+	$reference_template = has_term( 'reference', 'mesh_template_types', $post );
+
+	if ( ! $reference_template ) {
 		include LINCHPIN_MESH___PLUGIN_DIR . 'admin/section-column-resize.php';
 	}
 
@@ -68,12 +72,14 @@ if ( ! function_exists( 'add_action' ) ) {
 								</div>
 
 								<div class="mesh-columns-6 text-right">
+									<?php if ( ! $reference_template ) : ?>
 									<label for="<?php esc_attr_e( 'mesh-sections-' . $section->ID . '-' . $blocks[ $block_increment ]->ID . '-offset' ); ?>"><?php esc_html_e( 'Offset:', 'mesh' ); ?></label>
 									<select id="<?php esc_attr_e( 'mesh-sections-' . $section->ID . '-' . $blocks[ $block_increment ]->ID . '-offset' ); ?>" class="mesh-column-offset msc-clean-edit-element" name="mesh-sections[<?php esc_attr_e( $section->ID ); ?>][blocks][<?php esc_attr_e( $blocks[ $block_increment ]->ID ); ?>][offset]">
 										<?php for ( $i = 0; $i <= $offsets_available; $i++ ) : ?>
 											<option value="<?php esc_attr_e( $i ); ?>"<?php if ( $i === $block_offset ) : ?> selected<?php endif; ?>><?php esc_attr_e( $i ); ?></option>
 										<?php endfor; ?>
 									</select>
+									<?php endif; ?>
 									<label for="mesh-sections-<?php esc_attr_e( $blocks[ $block_increment ]->ID ); ?>-css-class" class="nowrap">
 										<?php esc_html_e( 'CSS Class', 'mesh' ); ?> <input type="text" id="mesh-sections-<?php esc_attr_e( $blocks[ $block_increment ]->ID ); ?>-css-class" name="mesh-sections[<?php esc_attr_e( $section->ID ); ?>][blocks][<?php esc_attr_e( $blocks[ $block_increment ]->ID ); ?>][css_class]" class="mesh-block-css-class" value="<?php esc_attr_e( $block_css_class ); ?>" />
 									</label>
