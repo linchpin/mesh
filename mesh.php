@@ -141,9 +141,9 @@ function mesh_locate_template_files() {
  *
  * @access public
  *
- * @param mixed  $section Current section being manipulated.
- * @param bool   $closed  Display the section closed by default.
- * @param bool   $return  Return the value instead of echo.
+ * @param mixed $section Current section being manipulated.
+ * @param bool  $closed  Display the section closed by default.
+ * @param bool  $return  Return the value instead of echo.
  *
  * @return mixed|void|string Prints the markup of the admin panel
  */
