@@ -73,6 +73,7 @@ $blocks = mesh_maybe_create_section_blocks( $section );
 					<a href="#" class="button primary mesh-section-update "><?php esc_html_e( 'Update', 'mesh' ); ?></a>
 				<?php endif; ?>
 			</div>
+			<input type="hidden" class="section-menu-order" name="mesh-sections[<?php esc_attr_e( $section->ID ); ?>][menu_order]" value="<?php esc_attr_e( $section->menu_order ); ?>" />
 		</div>
 	</div>
 </div>

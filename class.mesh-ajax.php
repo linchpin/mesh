@@ -74,6 +74,8 @@ class Mesh_AJAX {
 
 	/**
 	 * Save a block via AJAX
+	 *
+	 * @since 1.0
 	 */
 	function mesh_save_section() {
 		check_ajax_referer( 'mesh_save_section_nonce', 'mesh_save_section_nonce' );
@@ -99,8 +101,9 @@ class Mesh_AJAX {
 		$_POST = array_merge( $_POST, $new_data );
 
 		$section_args = array(
-			'ID' => $section->ID,
-			'post_title' => $_POST['mesh-sections'][ $section->ID ]['post_title'],
+			'ID'         => $section->ID,
+			'post_title' => sanitize_text_field( $_POST['mesh-sections'][ $section->ID ]['post_title'] ),
+			'menu_order' => (int) $_POST['mesh-sections'][ $section->ID ]['menu_order'],
 		);
 
 		wp_update_post( $section_args );

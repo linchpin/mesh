@@ -511,8 +511,13 @@ mesh.admin = function ( $ ) {
 
 			$reorder_spinner.addClass( 'is-active' );
 
-			$('.mesh-postbox', $section_container).each(function(){
-				section_ids.push( $(this).attr('data-mesh-section-id') );
+			$('.mesh-postbox', $section_container).each( function( index ) {
+
+				var $this = $(this);
+
+				section_ids.push( $this.attr('data-mesh-section-id') );
+
+				$this.find('.section-menu-order').val( index );
 			});
 
 			response = self.save_section_ajax( section_ids, $reorder_spinner );

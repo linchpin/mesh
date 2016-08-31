@@ -213,14 +213,14 @@ class Mesh {
 			'labels'              => $labels,
 			'public' => false,
 			'hierarchical' => true,
-			'supports' => array( 'title','editor','author','thumbnail','excerpt' ),
+			'supports' => array( 'title', 'editor', 'author', 'thumbnail', 'excerpt', 'page-attributes' ),
 			'capability_type' => 'post',
 			'has_archive' => false,
 			'show_in_menus' => false,
 			'show_in_nav_menus' => false,
 			'exclude_from_search' => true,
 			'publicly_queryable' => false,
-			'show_ui' => false,
+			'show_ui' => true,
 			'rewrite' => false,
 		) );
 	}
@@ -306,12 +306,12 @@ class Mesh {
 	}
 
 	/**
-	 * save_post function.
+	 * Save post.
 	 *
 	 * @access public
 	 *
-	 * @param mixed  $post_id
-	 * @param object $post
+	 * @param mixed  $post_id Post ID.
+	 * @param object $post    Post Object.
 	 *
 	 * @return void
 	 */
@@ -334,15 +334,11 @@ class Mesh {
 			return;
 		}
 
-		if ( 'mesh_section' !== $post->post_type ) {
-			return;
-		}
-
 		remove_action( 'save_post', array( $this, 'save_post' ), 10 );
 
 		$count = 0;
 
-		// Check if we are doing a section update via AJAX
+		// Check if we are doing a section update via AJAX.
 		$saving_section_via_ajax = false;
 		$ajax_section_id = 0;
 
@@ -373,14 +369,14 @@ class Mesh {
 			$updates = array(
 				'ID'           => (int) $section_id,
 				'post_title'   => sanitize_text_field( $section_data['post_title'] ),
-				'post_content' => '', // Sections don't have content
+				'post_content' => '', // Sections don't have content.
 				'post_status'  => $status,
-				'menu_order'   => $count,
+				'menu_order'   => ( empty( $section_data['menu_order'] ) ) ? $count : $section_data['menu_order'],
 			);
 
 			wp_update_post( $updates );
 
-			$count ++;
+			$count++;
 
 			// Save Template.
 			$template = sanitize_text_field( $section_data['template'] );
@@ -419,7 +415,7 @@ class Mesh {
 				update_post_meta( $section->ID, '_mesh_lp_equal', $lp_equal );
 			}
 
-			// Save Title Display
+			// Save Title Display.
 			if ( empty( $section_data['title_display'] ) ) {
 				delete_post_meta( $section->ID, '_mesh_title_display' );
 			} else {
@@ -510,8 +506,9 @@ class Mesh {
 			}
 		}
 
-		//If this is an AJAX request, and we are saving a section, we need to make sure we process the sections based on the parent.
-		if ( 'mesh_section' == $post->post_type ) {
+		// If this is an AJAX request, and we are saving a section,
+		// we need to make sure we process the sections based on the parent.
+		if ( 'mesh_section' === $post->post_type ) {
 			$page_id = $post->post_parent;
 		} else {
 			$page_id = $post_id;
@@ -567,6 +564,7 @@ class Mesh {
 			$current_page = get_post( $page_id );
 			$content = $current_page->post_content;
 			$pos = strpos( $content, '<div id="mesh-section-content">' );
+
 			if ( false !== $pos ) {
 				$content = substr( $content, 0, ( strlen( $content ) - $pos ) * -1 );
 			}
