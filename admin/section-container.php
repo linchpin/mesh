@@ -23,7 +23,6 @@ $blocks = mesh_maybe_create_section_blocks( $section );
 
 ?>
 <div class="mesh-section mesh-postbox postbox<?php if ( in_array( 'mesh-section-' . esc_attr( $section->ID ), $closed_metaboxes ) ) : ?> closed<?php endif; ?>" data-mesh-section-id="<?php esc_attr_e( $section->ID ); ?>" id="mesh-section-<?php esc_attr_e( $section->ID ); ?>">
-
 	<div class="mesh-row mesh-title-row mesh-row-padding">
 		<div class="mesh-columns-8">
 			<div class="msc-clean-edit">
@@ -32,7 +31,6 @@ $blocks = mesh_maybe_create_section_blocks( $section );
 				<span class="handle-title"><?php esc_html_e( $section->post_title ); ?></span>
 			</div>
 		</div>
-
 		<div class="mesh-columns-4 text-right">
 			<div id="section-status-select-<?php esc_attr_e( $section->ID ); ?>-container">
 				<div class="msc-clean-edit handle-right">
@@ -47,12 +45,9 @@ $blocks = mesh_maybe_create_section_blocks( $section );
 			</div>
 		</div>
 	</div>
-
 	<span class="handlediv text-center"></span>
-
 	<div class="inside">
 		<?php include LINCHPIN_MESH___PLUGIN_DIR . 'admin/section-controls.php'; ?>
-
 		<div class="mesh-editor-blocks" id="mesh-sections-editor-<?php esc_attr_e( $section->ID ); ?>">
 		<?php
 		if ( $blocks ) {
@@ -61,13 +56,11 @@ $blocks = mesh_maybe_create_section_blocks( $section );
 		}
 		?>
 		</div>
-
 		<div class="mesh-row mesh-section-footer">
 			<div class="mesh-section-remove-container mesh-columns-4">
 				<a href="#" class="mesh-section-remove dashicons-before dashicons-no plain-link grey-link"><?php esc_html_e( 'Remove', 'mesh' ); ?></a>
 				<span class="spinner"></span>
 			</div>
-
 			<div class="mesh-columns-8 text-right">
 				<span class="spinner" style="float:none;"></span>
 				<?php if ( 'draft' === get_post_status( $section->ID ) ) : ?>

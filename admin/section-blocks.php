@@ -13,9 +13,13 @@ if ( ! function_exists( 'add_action' ) ) {
 }
 ?>
 <div class="mesh-row">
-	<?php include LINCHPIN_MESH___PLUGIN_DIR . 'admin/section-column-resize.php'; ?>
 
 	<?php
+
+	if ( ! has_term( 'reference', 'mesh_template_types', $post ) ) {
+		include LINCHPIN_MESH___PLUGIN_DIR . 'admin/section-column-resize.php';
+	}
+
 	// If the template doesn't have any blocks make sure it has 1.
 	if ( ! $section_blocks = (int) $templates[ $selected_template ]['blocks'] ) {
 		$section_blocks = 1;

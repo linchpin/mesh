@@ -38,9 +38,8 @@ class Mesh_Templates_Duplicate {
 	/**
 	 * Duplicate all the template's sections
 	 *
-	 * @param int    $template_id Template ID.
-	 * @param string $status      Template Publish Status.
-	 * @param int    $post_id     Target Post ID.
+	 * @param int $template_id Template ID.
+	 * @param int $post_id     Target Post ID.
 	 *
 	 * @return string
 	 */
@@ -55,8 +54,6 @@ class Mesh_Templates_Duplicate {
 				$markup = '';
 
 				foreach ( $children as $section_id ) {
-					error_log( print_r( $section_id, true ) );
-
 					$markup .= mesh_add_section_admin_markup( $section_id, false, true );
 				}
 
@@ -113,7 +110,6 @@ class Mesh_Templates_Duplicate {
 	 * Duplicate the section
 	 *
 	 * @param object $post      Post Object.
-	 * @param string $status    Post Status.
 	 * @param string $parent_id Parent Post ID.
 	 *
 	 * @return int|void|WP_Error
