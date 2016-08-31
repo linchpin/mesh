@@ -366,25 +366,79 @@ class Mesh_AJAX {
 	function mesh_choose_template() {
 		check_ajax_referer( 'mesh_choose_template_nonce', 'mesh_choose_template_nonce' );
 
-		$post_id            = (int) $_POST['mesh_post_id']; // WPCS: input var ok.
-		$mesh_template_id   = (int) $_POST['mesh_template_id']; // WPCS: input var ok.
-		$mesh_template_type = sanitize_title( $_POST['mesh_template_type'] );
+		$post_id            = ( isset( $_POST['mesh_post_id'] ) && '' !== $_POST['mesh_post_id'] ) ? (int) $_POST['mesh_post_id'] : 0;
+		$mesh_template_id   = ( isset( $_POST['mesh_template_id'] ) ) ? (int) $_POST['mesh_template_id'] : 0;
+		$mesh_template_type = ( isset( $_POST['mesh_template_type'] ) ) ? sanitize_title( $_POST['mesh_template_type'] ) : '';
 
-		if ( ! current_user_can( 'edit_post', $mesh_template_id ) ) {
+		if ( ! current_user_can( 'edit_post', $mesh_template_id ) || empty( $post_id ) || empty( $mesh_template_id ) ) {
 			wp_die( -1 );
 		}
 
 		if ( $mesh_template = get_post( $mesh_template_id ) ) {
 			// Apply template type to our taxonomy that tracks template usage.
 			wp_set_object_terms( $post_id, $mesh_template->post_name, 'mesh_template_usage', false );
-			wp_set_object_terms( $post_id, $mesh_template_type, 'mesh_template_type', false );
+
+			$terms = get_terms( array(
+				'taxonomy' => 'mesh_template_types',
+				'hide_empty' => false,
+				'fields' => array( 'slug' ),
+			) );
+
+			if ( in_array( $mesh_template_type ) ) {
+				wp_set_object_terms( $post_id, $mesh_template_type, 'mesh_template_types', false );
+			}
 
 			$mesh_templates_duplicate = new Mesh_Templates_Duplicate();
 
 			$duplicate_sections = $mesh_templates_duplicate->duplicate_sections( $mesh_template_id, $post_id );
 
 			if ( ! empty( $duplicate_sections ) ) {
-				echo $duplicate_sections; // WPCS: ok
+				echo wp_kses( $duplicate_sections, array(
+					'div' => array(
+						'class' => array(),
+						'id' => array(),
+						'data-type' => array(),
+						'style' => array(),
+					),
+					'a' => array(
+						'href' => array(),
+						'title' => array(),
+						'class' => array(),
+					),
+					'input' => array(
+						'type' => array(),
+						'name' => array(),
+						'id' => array(),
+						'class' => array(),
+						'value' => array(),
+					),
+					'label' => array(
+						'for' => array(),
+						'class' => array(),
+					),
+					'select' => array(
+						'name' => array(),
+						'id' => array(),
+						'class' => array(),
+						'value' => array(),
+					),
+					'option' => array(
+						'value' => array(),
+						'selected' => array(),
+					),
+					'span' => array(
+						'class' => array(),
+						'style' => array(),
+					),
+					'ul' => array(
+						'class' => array(),
+					),
+					'li' => array(
+						'class' => array(),
+					),
+					'p' => array(),
+					'br' => array(),
+				) );
 			} else {
 				echo 'did not duplicate sections';
 			}
