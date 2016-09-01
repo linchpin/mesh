@@ -302,15 +302,15 @@ function mesh_display_sections( $post_id = '', $echo = true ) {
 
 	// Do not show blocks if parent post is private.
 	if ( 'private' === get_post_status( $post_id ) && ! current_user_can( 'edit_posts' ) ) {
-		return;
+		return '';
 	}
 
 	if ( ! $mesh_section_query = mesh_get_sections( $post_id, 'query' ) ) {
-		return;
+		return '';
 	}
 
 	if ( empty( $mesh_section_query ) ) {
-		return;
+		return '';
 	}
 
 	if ( true === $echo ) {

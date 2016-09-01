@@ -520,7 +520,7 @@ mesh.admin = function ( $ ) {
 				$this.find('.section-menu-order').val( index );
 			});
 
-			response = self.save_section_ajax( section_ids, $reorder_spinner );
+		//	response = self.save_section_ajax( section_ids, $reorder_spinner );
 		},
 
 		/**
