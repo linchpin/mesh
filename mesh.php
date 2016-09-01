@@ -281,7 +281,19 @@ function the_mesh_content( $post_id = '' ) {
  *
  * @return void
  */
-function mesh_display_sections( $post_id = '' ) {
+
+/**
+ * Display our mesh sections.
+ * By default this method will echo the contents similar to
+ * a traditional loop. Else it will return the contents of the
+ * rendered html.
+ *
+ * @param string $post_id
+ * @param bool   $echo
+ *
+ * @return string|void
+ */
+function mesh_display_sections( $post_id = '', $echo = true ) {
 	global $post, $mesh_section_query;
 
 	if ( empty( $post_id ) ) {
@@ -297,7 +309,11 @@ function mesh_display_sections( $post_id = '' ) {
 		return;
 	}
 
-	if ( ! empty( $mesh_section_query ) ) {
+	if ( empty( $mesh_section_query ) ) {
+		return;
+	}
+
+	if ( true === $echo ) {
 		if ( $mesh_section_query->have_posts() ) {
 			while ( $mesh_section_query->have_posts() ) {
 				$mesh_section_query->the_post();
@@ -305,6 +321,18 @@ function mesh_display_sections( $post_id = '' ) {
 			}
 			wp_reset_postdata();
 		}
+	} else {
+		ob_start();
+		if ( $mesh_section_query->have_posts() ) {
+			while ( $mesh_section_query->have_posts() ) {
+				$mesh_section_query->the_post();
+				the_mesh_content();
+			}
+			wp_reset_postdata();
+		}
+		$output = ob_get_contents();
+		ob_end_clean();
+		return $output;
 	}
 }
 

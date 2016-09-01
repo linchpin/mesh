@@ -64,6 +64,7 @@ function add_multiple_content_sections( $the_content ) {
 
 ##### Filters added 1.1
 * `apply_filters( 'mesh_templates_per_page', 50 );`
+* `apply_filters( 'mesh_loop_end', $section_html_content );` 
 
 ### Recognition
 

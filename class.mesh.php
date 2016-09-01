@@ -716,8 +716,12 @@ class Mesh {
 			return;
 		}
 
-		mesh_display_sections( $wp_query->post->ID );
+		$sections = mesh_display_sections( $wp_query->post->ID, false );
+
+		echo apply_filters( 'mesh_loop_end', $sections, $wp_query->post->ID );
 	}
+
+	// add_filter( 'mesh_loop_end', '__return_empty_string' );
 
 	/**
 	 * admin_enqueue_scripts function.
