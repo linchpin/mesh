@@ -97,8 +97,8 @@ class Mesh_Templates {
 		 */
 		register_taxonomy( 'mesh_template_usage', $available_post_types, array(
 			'labels' => array(
-				'name'              => _x( 'Mesh Template Usage', 'Mesh Template Usage', 'mesh' ),
-				'singular_name'     => _x( 'Mesh Template Usage', 'Mesh Template Usage', 'mesh' ),
+				'name'              => _x( 'Mesh Template', 'Mesh Template', 'mesh' ),
+				'singular_name'     => _x( 'Mesh Template', 'Mesh Template', 'mesh' ),
 				'search_items'      => __( 'Search Mesh Template Usage', 'mesh' ),
 				'all_items'         => __( 'All Mesh Template Usage', 'mesh' ),
 				'parent_item'       => __( 'Parent Mesh Template Usage', 'mesh' ),

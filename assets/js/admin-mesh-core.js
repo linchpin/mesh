@@ -48,9 +48,9 @@ mesh.admin = function ( $ ) {
 				.on('click', '.mesh-section-publish',       self.section_publish )
 
 				.on('change', '.mesh-choose-layout',           self.choose_layout )
-				.on('keypress', '.msc-clean-edit-element',     self.prevent_submit )
-				.on('keyup', '.msc-clean-edit-element',        self.change_input_title )
-				.on('change', 'select.msc-clean-edit-element', self.change_select_title );
+				.on('keypress', '.mesh-clean-edit-element',     self.prevent_submit )
+				.on('keyup', '.mesh-clean-edit-element',        self.change_input_title )
+				.on('change', 'select.mesh-clean-edit-element', self.change_select_title );
 
 			$sections = $( '.mesh-section' );
 
@@ -469,9 +469,7 @@ mesh.admin = function ( $ ) {
 				$(this).addClass('closed');
 			});
 
-			$section_container.sortable({
-				update : self.save_section_order_sortable
-			});
+			$section_container.sortable();
 		},
 
 		/**

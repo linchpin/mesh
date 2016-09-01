@@ -104,9 +104,9 @@ class Mesh {
 	 *
 	 * @since 0.4.4
 	 *
-	 * @param string  $status Save status
-	 * @param array   $option Option we're saving
-	 * @param mixed   $value  Value to save
+	 * @param string $status Save status.
+	 * @param array  $option Option we're saving.
+	 * @param mixed  $value  Value to save.
 	 *
 	 * @return void|mixed
 	 */
@@ -142,7 +142,7 @@ class Mesh {
 	/**
 	 * Update our tiny MCE w/ our own settings.
 	 *
-	 * @param array $in
+	 * @param array $in Input Object used by TinyMCE
 	 *
 	 * @return array $in Input Object
 	 */
@@ -167,7 +167,12 @@ class Mesh {
 		$in['paste_text_use_dialog'] = true;
 		$in['wpeditimage_disable_captions'] = true;
 		$in['plugins'] = 'tabfocus,paste,media,wordpress,wpgallery,wplink';
-		$in['content_css'] = get_template_directory_uri() . '/editor-style.css';
+
+		// Only add in our editor styles if we have the file.
+		if ( file_exists( get_template_directory_uri() . '/editor-style.css' ) ) {
+			$in['content_css'] = get_template_directory_uri() . '/editor-style.css';
+		}
+
 		$in['wpautop'] = true;
 		$in['apply_source_formatting'] = false;
 		$in['block_formats'] = 'Paragraph=p; Heading 3=h3; Heading 4=h4';
@@ -220,7 +225,7 @@ class Mesh {
 			'show_in_nav_menus' => false,
 			'exclude_from_search' => true,
 			'publicly_queryable' => false,
-			'show_ui' => true,
+			'show_ui' => false,
 			'rewrite' => false,
 		) );
 	}

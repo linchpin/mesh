@@ -25,17 +25,17 @@ $blocks = mesh_maybe_create_section_blocks( $section );
 <div class="mesh-section mesh-postbox postbox<?php if ( in_array( 'mesh-section-' . esc_attr( $section->ID ), $closed_metaboxes ) ) : ?> closed<?php endif; ?>" data-mesh-section-id="<?php esc_attr_e( $section->ID ); ?>" id="mesh-section-<?php esc_attr_e( $section->ID ); ?>">
 	<div class="mesh-row mesh-title-row mesh-row-padding">
 		<div class="mesh-columns-8">
-			<div class="msc-clean-edit">
-				<input type="text" name="mesh-sections[<?php esc_attr_e( $section->ID ); ?>][post_title]" class="msc-clean-edit-element widefat mesh-section-title left" value="<?php esc_attr_e( $section->post_title ); ?>" />
+			<div class="mesh-clean-edit">
+				<input type="text" name="mesh-sections[<?php esc_attr_e( $section->ID ); ?>][post_title]" class="mesh-clean-edit-element widefat mesh-section-title left" value="<?php esc_attr_e( $section->post_title ); ?>" />
 				<span class="close-title-edit left"><?php esc_html_e( 'Done', 'mesh' ); ?></span>
 				<span class="handle-title"><?php esc_html_e( $section->post_title ); ?></span>
 			</div>
 		</div>
 		<div class="mesh-columns-4 text-right">
 			<div id="section-status-select-<?php esc_attr_e( $section->ID ); ?>-container">
-				<div class="msc-clean-edit handle-right">
+				<div class="mesh-clean-edit handle-right">
 					<label for="section-status-select-<?php esc_attr_e( $section->ID ); ?>" class="screen-reader-text"><?php esc_html_e( 'Status:', 'mesh' ); ?></label>
-					<select class="mesh-block-propagation msc-clean-edit-element mesh-section-status" id="section-status-select-<?php esc_attr_e( $section->ID ); ?>" name="mesh-sections[<?php esc_attr_e( $section->ID ); ?>][post_status]">
+					<select class="mesh-block-propagation mesh-clean-edit-element mesh-section-status" id="section-status-select-<?php esc_attr_e( $section->ID ); ?>" name="mesh-sections[<?php esc_attr_e( $section->ID ); ?>][post_status]">
 						<option value="draft" <?php selected( $section->post_status, 'draft' ); ?>><?php esc_html_e( 'Draft', 'mesh' ); ?></option>
 						<option value="publish" <?php selected( $section->post_status, 'publish' ); ?>><?php esc_html_e( 'Published', 'mesh' ); ?></option>
 					</select>

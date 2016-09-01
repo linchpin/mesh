@@ -64,8 +64,8 @@ if ( ! function_exists( 'add_action' ) ) {
 						<div class="mesh-row mesh-row-title mesh-block-title-row">
 							<?php if ( 1 === $section_blocks ) : ?>
 								<div class="mesh-columns-6">
-									<div class="msc-clean-edit">
-										<input id="<?php esc_attr_e( 'mesh-sections-' . $section->ID . '-' . $blocks[ $block_increment ]->ID . '-title]' ); ?>" type="text" class="mesh-column-title msc-clean-edit-element widefat left" name="mesh-sections[<?php esc_attr_e( $section->ID ); ?>][blocks][<?php esc_attr_e( $blocks[ $block_increment ]->ID ); ?>][post_title]" value="<?php esc_attr_e( $blocks[ $block_increment ]->post_title ); ?>"/>
+									<div class="mesh-clean-edit">
+										<input id="<?php esc_attr_e( 'mesh-sections-' . $section->ID . '-' . $blocks[ $block_increment ]->ID . '-title]' ); ?>" type="text" class="mesh-column-title mesh-clean-edit-element widefat left" name="mesh-sections[<?php esc_attr_e( $section->ID ); ?>][blocks][<?php esc_attr_e( $blocks[ $block_increment ]->ID ); ?>][post_title]" value="<?php esc_attr_e( $blocks[ $block_increment ]->post_title ); ?>"/>
 										<span class="close-title-edit left"><?php esc_html_e( 'Done', 'mesh' ); ?></span>
 										<span class="handle-title"><?php esc_attr_e( $blocks[ $block_increment ]->post_title ); ?></span>
 									</div>
@@ -74,7 +74,7 @@ if ( ! function_exists( 'add_action' ) ) {
 								<div class="mesh-columns-6 text-right">
 									<?php if ( ! $reference_template ) : ?>
 									<label for="<?php esc_attr_e( 'mesh-sections-' . $section->ID . '-' . $blocks[ $block_increment ]->ID . '-offset' ); ?>"><?php esc_html_e( 'Offset:', 'mesh' ); ?></label>
-									<select id="<?php esc_attr_e( 'mesh-sections-' . $section->ID . '-' . $blocks[ $block_increment ]->ID . '-offset' ); ?>" class="mesh-column-offset msc-clean-edit-element" name="mesh-sections[<?php esc_attr_e( $section->ID ); ?>][blocks][<?php esc_attr_e( $blocks[ $block_increment ]->ID ); ?>][offset]">
+									<select id="<?php esc_attr_e( 'mesh-sections-' . $section->ID . '-' . $blocks[ $block_increment ]->ID . '-offset' ); ?>" class="mesh-column-offset mesh-clean-edit-element" name="mesh-sections[<?php esc_attr_e( $section->ID ); ?>][blocks][<?php esc_attr_e( $blocks[ $block_increment ]->ID ); ?>][offset]">
 										<?php for ( $i = 0; $i <= $offsets_available; $i++ ) : ?>
 											<option value="<?php esc_attr_e( $i ); ?>"<?php if ( $i === $block_offset ) : ?> selected<?php endif; ?>><?php esc_attr_e( $i ); ?></option>
 										<?php endfor; ?>
@@ -95,8 +95,8 @@ if ( ! function_exists( 'add_action' ) ) {
 
 								<div class="mesh-columns-12 mesh-block-options-toggle-container">
 									<span class="the-mover hndle ui-sortable-handle left mesh-hide-for-small"><span></span></span>
-									<div class="msc-clean-edit left">
-										<input id="<?php esc_attr_e( 'mesh-sections-' . $section->ID . '-' . $blocks[ $block_increment ]->ID . '-title' ); ?>" type="text" class="mesh-column-title msc-clean-edit-element widefat left" name="mesh-sections[<?php esc_attr_e( $section->ID ); ?>][blocks][<?php esc_attr_e( $blocks[ $block_increment ]->ID ); ?>][post_title]" value="<?php esc_attr_e( $blocks[ $block_increment ]->post_title ); ?>"/>
+									<div class="mesh-clean-edit left">
+										<input id="<?php esc_attr_e( 'mesh-sections-' . $section->ID . '-' . $blocks[ $block_increment ]->ID . '-title' ); ?>" type="text" class="mesh-column-title mesh-clean-edit-element widefat left" name="mesh-sections[<?php esc_attr_e( $section->ID ); ?>][blocks][<?php esc_attr_e( $blocks[ $block_increment ]->ID ); ?>][post_title]" value="<?php esc_attr_e( $blocks[ $block_increment ]->post_title ); ?>"/>
 										<span class="close-title-edit left"><?php esc_html_e( 'Done', 'mesh' ); ?></span>
 										<span class="handle-title"><?php esc_attr_e( $blocks[ $block_increment ]->post_title ); ?></span>
 									</div>

@@ -27,8 +27,8 @@ mesh.blocks = function ( $ ) {
                 .on('click', '.mesh-block-featured-image-trash', self.remove_background )
                 .on('click', '.mesh-block-featured-image-choose', self.choose_background )
                 .on('click.OpenMediaManager', '.mesh-block-featured-image-choose', self.choose_background )
-                .on('click', '.msc-clean-edit:not(.title-input-visible)', self.show_field )
-                .on('blur', '.msc-clean-edit-element:not(select)', self.hide_field )
+                .on('click', '.mesh-clean-edit:not(.title-input-visible)', self.show_field )
+                .on('blur', '.mesh-clean-edit-element:not(select)', self.hide_field )
                 .on('click', '.close-title-edit', self.hide_field )
                 .on('click', '.slide-toggle-element', self.slide_toggle_element )
                 .on('change', '.mesh-column-offset', self.display_offset );

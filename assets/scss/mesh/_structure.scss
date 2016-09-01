@@ -39,11 +39,11 @@
 	}
 }
 
-.msc-clean-edit {
+.mesh-clean-edit {
 	margin-left: 5px;
 	position: relative;
 
-	.msc-clean-edit-element,
+	.mesh-clean-edit-element,
 	input {
 		opacity: 0;
 		visibility: hidden;
@@ -100,12 +100,12 @@
 	}
 
 	&.title-input-visible {
-		.msc-clean-edit-element {
+		.mesh-clean-edit-element {
 			opacity: 1;
 			visibility: visible;
 		}
 
-		input.msc-clean-edit-element {
+		input.mesh-clean-edit-element {
 			width: 90%;
 			width: calc(100% - 100px);
 		}
