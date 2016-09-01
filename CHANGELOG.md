@@ -6,14 +6,16 @@
 - You can now create reusable templates.
 - Templates are excluded from Yoast SEO admin shenanigans by default.
 - Preliminary remove Mesh Settings on Uninstall.
-- You can now filter how many mesh_templates are queried if you have a lot of templates (More than 50)
+- You can now filter how many mesh_templates `mesh_templates_per_page` are queried if you have a lot of templates (More than 50)
 - Better version tracking and upgrade process.
+- You can now filter the output of `mesh_loop_end`. An example would be to stop teh default output of mesh_display_sections
 
 ### Fixed
 - Typo in Mesh settings text field utility method.
 - Offset now displays properly within Post Edit screen on page load.
 - When setting an offset to 7,8 or 9 on single column (12) visual did not match what was being stored in post_meta.
 - Minor security improvements.
+- Now running Mesh admin sections through wp_kses with a custom set of whitelisted elements and attributes.
 
 ### Updated
 - Some localization strings needed sprucing up.
