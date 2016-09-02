@@ -150,7 +150,7 @@ if ( ! function_exists( 'add_action' ) ) {
 								'statusbar'             => true,
 								'autoresize_min_height' => 150,
 								'wp_autoresize_on'      => false,
-								'plugins'               => 'lists,media,paste,tabfocus,wordpress,wpautoresize,wpeditimage,wpgallery,wplink,wptextpattern,wpview',
+								'plugins'               => 'lists,media,paste,tabfocus,wordpress,textcolor,wpautoresize,wpeditimage,wpgallery,wplink,wptextpattern,wpview',
 								'toolbar1'              => 'bold,italic,bullist,numlist,hr,alignleft,aligncenter,alignright,alignjustify,link,wp_adv',
 								'toolbar2'              => 'formatselect,underline,strikethrough,forecolor,pastetext,removeformat',
 							),
