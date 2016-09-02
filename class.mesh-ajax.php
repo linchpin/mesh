@@ -18,9 +18,6 @@ class Mesh_AJAX {
 	 * @access public
 	 */
 	function __construct() {
-		add_action( 'wp_ajax_mesh_list_templates',        array( $this, 'mesh_list_templates' ) );
-		add_action( 'wp_ajax_mesh_choose_template',       array( $this, 'mesh_choose_template' ) );
-
 		add_action( 'wp_ajax_mesh_add_section',           array( $this, 'mesh_add_section' ) );
 		add_action( 'wp_ajax_mesh_save_section',          array( $this, 'mesh_save_section' ) );
 		add_action( 'wp_ajax_mesh_remove_section',        array( $this, 'mesh_remove_section' ) );
@@ -29,8 +26,6 @@ class Mesh_AJAX {
 		add_action( 'wp_ajax_mesh_update_order',          array( $this, 'mesh_update_order' ) );
 		add_action( 'wp_ajax_mesh_update_featured_image', array( $this, 'mesh_update_featured_image' ) );
 		add_action( 'wp_ajax_mesh_dismiss_notification',  array( $this, 'mesh_dismiss_notification' ) );
-
-		include_once LINCHPIN_MESH___PLUGIN_DIR . '/class.mesh-templates-duplicate.php';
 	}
 
 	/**
@@ -49,7 +44,7 @@ class Mesh_AJAX {
 			wp_die( -1 );
 		}
 
-		$args = array(
+		$section_args = array(
 			'post_type'   => 'mesh_section',
 			'post_title'  => __( 'No Section Title', 'mesh' ),
 			'post_status' => 'draft',
@@ -57,7 +52,7 @@ class Mesh_AJAX {
 			'menu_order'  => $menu_order,
 		);
 
-		if ( $new_section = wp_insert_post( $args ) ) {
+		if ( $new_section = wp_insert_post( $section_args ) ) {
 			$section = get_post( $new_section );
 
 			// Make sure the new section has one block (default number needed).
@@ -68,8 +63,6 @@ class Mesh_AJAX {
 		} else {
 			wp_die( -1 );
 		}
-
-		wp_die();
 	}
 
 	/**
@@ -289,166 +282,6 @@ class Mesh_AJAX {
 			update_user_meta( $user_id, 'linchpin_mesh_notifications', $notifications );
 			wp_die( 1 );
 		}
-	}
-
-	/**
-	 * Select a template from the mesh_template post type
-	 * This template will be used to create all the mesh_sections
-	 * on your selected post.
-	 *
-	 * @since 1.1
-	 */
-	function mesh_list_templates() {
-
-		check_ajax_referer( 'mesh_choose_template_nonce', 'mesh_choose_template_nonce' );
-
-		if ( ! current_user_can( 'edit_post', (int) $_POST['mesh_post_id'] ) ) {
-			wp_die();
-		}
-
-		$mesh_templates = new WP_Query( array(
-			'post_type'      => 'mesh_template',
-			'posts_per_page' => apply_filters( 'mesh_templates_per_page', 50 ),
-			'no_found_rows'  => true,
-			'post_status'    => 'publish',
-		) );
-
-		$mesh_template_selectable = true;
-		$default_template = false;
-		if ( $mesh_templates->have_posts() ) {
-			while ( $mesh_templates->have_posts() ) {
-				global $post;
-
-				$mesh_templates->the_post();
-
-				$mesh_template_title = get_the_title( $post->ID );
-				$mesh_template_id = $post->ID;
-
-				$layout = get_post_meta( $post->ID, '_mesh_template_layout', true );
-
-				// If our layout doesn't have any published sections we should skip it's display.
-				if ( empty( $layout ) ) {
-					continue;
-				}
-
-				include LINCHPIN_MESH___PLUGIN_DIR . 'admin/template-layout-preview.php';
-			}
-
-			$mesh_template_title = __( 'Blank Template', 'mesh' );
-			$mesh_template_id    = 'blank';
-			$layout              = array();
-			$layout['row-blank']['blocks'][] = array(
-				'columns' => 12,
-				'offset' => 0,
-			);
-			$default_template = true;
-			include LINCHPIN_MESH___PLUGIN_DIR . 'admin/template-layout-preview.php';
-		} else {
-			esc_html_e( 'No Templates Found. Did you build one yet?', 'mesh' );
-		} ?>
-		<p>
-			<a href="#" class="button primary mesh-template-start dashicons-before dashicons-plus"><?php esc_html_e( 'Select Template', 'mesh' ); ?></a>
-			<a href="#" class="button primary mesh-template-skip dashicons-before dashicons-plus"><?php esc_html_e( 'Nevermind Start from Scratch', 'mesh' ); ?></a>
-		</p>
-		<?php
-
-		include LINCHPIN_MESH___PLUGIN_DIR . 'admin/template-layout-usage.php';
-
-		wp_die();
-	}
-
-	/**
-	 * Choose a template and build out all mesh_section posts
-	 * based on the selected template.
-	 *
-	 * @todo There should probably be a busy spinner of sorts while
-	 *       the build out is being done behind the scenes.
-	 *
-	 * @since 1.1
-	 */
-	function mesh_choose_template() {
-		check_ajax_referer( 'mesh_choose_template_nonce', 'mesh_choose_template_nonce' );
-
-		$post_id            = ( isset( $_POST['mesh_post_id'] ) && '' !== $_POST['mesh_post_id'] ) ? (int) $_POST['mesh_post_id'] : 0;
-		$mesh_template_id   = ( isset( $_POST['mesh_template_id'] ) ) ? (int) $_POST['mesh_template_id'] : 0;
-		$mesh_template_type = ( isset( $_POST['mesh_template_type'] ) ) ? sanitize_title( $_POST['mesh_template_type'] ) : '';
-
-		if ( ! current_user_can( 'edit_post', $mesh_template_id ) || empty( $post_id ) || empty( $mesh_template_id ) ) {
-			wp_die( -1 );
-		}
-
-		if ( $mesh_template = get_post( $mesh_template_id ) ) {
-			// Apply template type to our taxonomy that tracks template usage.
-			wp_set_object_terms( $post_id, array( $mesh_template->post_name ), 'mesh_template_usage', false );
-
-			$template_terms = get_terms( array(
-				'taxonomy' => 'mesh_template_types',
-				'hide_empty' => false,
-				'fields' => 'id=>slug',
-			) );
-
-			if ( in_array( $mesh_template_type, $template_terms, true ) ) {
-				wp_set_object_terms( $post_id, $mesh_template_type, 'mesh_template_types', false );
-			}
-
-			$mesh_templates_duplicate = new Mesh_Templates_Duplicate();
-
-			$duplicate_sections = $mesh_templates_duplicate->duplicate_sections( $mesh_template_id, $post_id );
-
-			if ( ! empty( $duplicate_sections ) ) {
-				echo wp_kses( $duplicate_sections, array(
-					'div' => array(
-						'class' => array(),
-						'id' => array(),
-						'data-type' => array(),
-						'style' => array(),
-					),
-					'a' => array(
-						'href' => array(),
-						'title' => array(),
-						'class' => array(),
-					),
-					'input' => array(
-						'type' => array(),
-						'name' => array(),
-						'id' => array(),
-						'class' => array(),
-						'value' => array(),
-					),
-					'label' => array(
-						'for' => array(),
-						'class' => array(),
-					),
-					'select' => array(
-						'name' => array(),
-						'id' => array(),
-						'class' => array(),
-						'value' => array(),
-					),
-					'option' => array(
-						'value' => array(),
-						'selected' => array(),
-					),
-					'span' => array(
-						'class' => array(),
-						'style' => array(),
-					),
-					'ul' => array(
-						'class' => array(),
-					),
-					'li' => array(
-						'class' => array(),
-					),
-					'p' => array(),
-					'br' => array(),
-				) );
-			} else {
-				echo 'did not duplicate sections';
-			}
-			exit;
-		}
-
-		exit;
 	}
 }
 

@@ -61,7 +61,8 @@ class Mesh {
 		add_action( 'init',                  array( $this, 'init' ) );
 		add_action( 'admin_init',            array( $this, 'admin_init' ) );
 
-		add_action( 'edit_form_after_editor', array( $this, 'edit_page_form' ) );
+		// Edit form is static so it can be called elsewhere.
+		add_action( 'edit_form_after_editor', array( 'Mesh', 'edit_page_form' ) );
 
 		add_action( 'save_post',             array( $this, 'save_post' ), 10, 2 );
 		add_action( 'wp_trash_post',         array( $this, 'wp_trash_post' ) );
@@ -80,8 +81,11 @@ class Mesh {
 		add_filter( 'the_content',           array( $this, 'the_content' ), 5 );
 		add_filter( 'post_class',            array( $this, 'post_class' ) );
 
+		add_filter( 'edit_form_after_title', array( $this, 'output_debug_post_info' ) );
+
 		if ( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
 			include_once( 'class.mesh-ajax.php' );
+			include_once( 'class.mesh-templates-ajax.php' );
 		}
 
 		// Adjust TinyMCE and Media buttons.
@@ -89,6 +93,17 @@ class Mesh {
 
 		// Add Screen Options.
 		add_action( 'admin_menu',           array( $this, 'admin_menu' ) );
+	}
+
+	/**
+	 * Output some useful information about posts.
+	 */
+	function output_debug_post_info() {
+	    global $post;
+
+	    if ( 'mesh_section' === $post->post_type && true === LINCHPIN_MESH_DEBUG_MODE ) {
+		    print_r( $post );
+	    }
 	}
 
 	/**
@@ -142,7 +157,7 @@ class Mesh {
 	/**
 	 * Update our tiny MCE w/ our own settings.
 	 *
-	 * @param array $in Input Object used by TinyMCE
+	 * @param array $in Input Object used by TinyMCE.
 	 *
 	 * @return array $in Input Object
 	 */
@@ -225,7 +240,8 @@ class Mesh {
 			'show_in_nav_menus' => false,
 			'exclude_from_search' => true,
 			'publicly_queryable' => false,
-			'show_ui' => false,
+			'menu_icon' => 'dashicons-feedback',
+			'show_ui' => LINCHPIN_MESH_DEBUG_MODE,
 			'rewrite' => false,
 		) );
 	}
@@ -251,7 +267,7 @@ class Mesh {
 	 *
 	 * @return void
 	 */
-	function edit_page_form( $post ) {
+	public static function edit_page_form( $post ) {
 		$allowed_post_types = get_option( 'mesh_post_types' );
 
 		if ( ! array_key_exists( $post->post_type, $allowed_post_types ) ) {
@@ -528,13 +544,13 @@ class Mesh {
 
 				$blocks = mesh_get_section_blocks( $p->ID );
 
-				foreach ( $blocks as $b ) {
-					if ( ! empty( $b->post_title ) && 'No Column Title' != $b->post_title ) {
-						$section_content[] = strip_tags( $b->post_title );
+				foreach ( $blocks as $block ) {
+					if ( ! empty( $block->post_title ) && __( 'No Column Title', 'mesh' ) !== $block->post_title ) {
+						$section_content[] = strip_tags( $block->post_title );
 					}
 
-					if ( ! empty( $b->post_content ) ) {
-						$section_content[] = strip_tags( $b->post_content );
+					if ( ! empty( $block->post_content ) ) {
+						$section_content[] = strip_tags( $block->post_content );
 					}
 				}
 
@@ -555,7 +571,7 @@ class Mesh {
 					continue;
 				}
 
-				if ( ! empty( $p->post_title ) && 'No Section Title' != $p->post_title ) {
+				if ( ! empty( $p->post_title ) && __( 'No Section Title', 'mesh' ) !== $p->post_title ) {
 					$page_content_sections[] = strip_tags( $p->post_title );
 				}
 
@@ -586,14 +602,14 @@ class Mesh {
 	/**
 	 * When supported post type is trashed, trash its sections and blocks.
 	 *
-	 * @param $post_id
+	 * @param int $post_id ID of the Post to trash.
 	 */
 	function wp_trash_post( $post_id ) {
-		$post = get_post( $post_id );
+		$post_to_trash = get_post( $post_id );
 
 		$supported_post_types = get_option( 'mesh_post_types', array() );
 
-		if ( empty( $supported_post_types[ $post->post_type ] ) ) {
+		if ( empty( $supported_post_types[ $post_to_trash->post_type ] ) ) {
 			return;
 		}
 
@@ -616,14 +632,14 @@ class Mesh {
 	/**
 	 * When a supported post type is deleted, delete its sections and blocks.
 	 *
-	 * @param $post_id
+	 * @param int $post_id ID of the post to be deleted.
 	 */
 	function before_delete_post( $post_id ) {
-		$post = get_post( $post_id );
+		$post_to_delete = get_post( $post_id );
 
 		$supported_post_types = get_option( 'mesh_post_types', array() );
 
-		if ( empty( $supported_post_types[ $post->post_type ] ) ) {
+		if ( empty( $supported_post_types[ $post_to_delete->post_type ] ) ) {
 			return;
 		}
 
@@ -646,14 +662,14 @@ class Mesh {
 	/**
 	 * When a post is untrashed, untrash any sections or blocks that belong to it.
 	 *
-	 * @param $post_id
+	 * @param int $post_id The trashed Post's ID.
 	 */
 	function untrash_post( $post_id ) {
-		$post = get_post( $post_id );
+		$trashed_post = get_post( $post_id );
 
 		$supported_post_types = get_option( 'mesh_post_types', array() );
 
-		if ( empty( $supported_post_types[ $post->post_type ] ) ) {
+		if ( empty( $supported_post_types[ $trashed_post->post_type ] ) ) {
 			return;
 		}
 
@@ -676,9 +692,9 @@ class Mesh {
 	/**
 	 * Simple loop to get our sections
 	 *
-	 * @param string $content
+	 * @param string $content Post content.
 	 *
-	 * @return string
+	 * @return string Return the content that has been filtered.
 	 */
 	function the_content( $content ) {
 		$pos = strpos( $content, '<div id="mesh-section-content">' );
@@ -709,8 +725,10 @@ class Mesh {
 
 	/**
 	 * At the end of a page, let's show sections.
+     *
+     * @example add_filter( 'mesh_loop_end', '__return_empty_string' );
 	 *
-	 * @param $wp_query
+	 * @param object $wp_query WordPress Query Object.
 	 */
 	function loop_end( $wp_query ) {
 		if ( ! $wp_query->is_main_query() ) {
@@ -723,10 +741,8 @@ class Mesh {
 
 		$sections = mesh_display_sections( $wp_query->post->ID, false );
 
-		echo apply_filters( 'mesh_loop_end', $sections, $wp_query->post->ID );
+		echo apply_filters( 'mesh_loop_end', $sections, $wp_query->post->ID ); // WPCS: ok.
 	}
-
-	// add_filter( 'mesh_loop_end', '__return_empty_string' );
 
 	/**
 	 * admin_enqueue_scripts function.
@@ -829,6 +845,8 @@ class Mesh {
 			return false;
 		}
 
+		$_extensions = '';
+
 		if ( $extensions ) {
 			$extensions = (array) $extensions;
 			$_extensions = implode( '|', $extensions );
@@ -860,4 +878,59 @@ class Mesh {
 
 		return $files;
 	}
+
+	/**
+     * Return a list of valid admin markup kses passing elements.
+     *
+     * @since 1.1
+	 * @return array
+	 */
+    public static function get_admin_template_kses() {
+        return array(
+	        'div' => array(
+		        'class' => array(),
+		        'id' => array(),
+		        'data-type' => array(),
+		        'style' => array(),
+	        ),
+	        'a' => array(
+		        'href' => array(),
+		        'title' => array(),
+		        'class' => array(),
+	        ),
+	        'input' => array(
+		        'type' => array(),
+		        'name' => array(),
+		        'id' => array(),
+		        'class' => array(),
+		        'value' => array(),
+	        ),
+	        'label' => array(
+		        'for' => array(),
+		        'class' => array(),
+	        ),
+	        'select' => array(
+		        'name' => array(),
+		        'id' => array(),
+		        'class' => array(),
+		        'value' => array(),
+	        ),
+	        'option' => array(
+		        'value' => array(),
+		        'selected' => array(),
+	        ),
+	        'span' => array(
+		        'class' => array(),
+		        'style' => array(),
+	        ),
+	        'ul' => array(
+		        'class' => array(),
+	        ),
+	        'li' => array(
+		        'class' => array(),
+	        ),
+	        'p' => array(),
+	        'br' => array(),
+        );
+    }
 }

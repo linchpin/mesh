@@ -15,13 +15,13 @@ if ( ! function_exists( 'add_action' ) ) {
 	exit;
 }
 
-
-
 /**
  * Class Mesh_Templates
  */
 class Mesh_Templates {
 	/**
+	 * Store an instance of our Duplicate Class
+	 *
 	 * @var Mesh_Templates_Duplicate
 	 */
 	private $mesh_templates_duplicate;
@@ -34,11 +34,9 @@ class Mesh_Templates {
 		add_action( 'admin_menu', array( $this, 'add_mesh_menu' ) );
 		add_action( 'save_post',  array( $this, 'save_post' ), 20, 2 ); // This saving should happen later to make sure our data is available.
 
-		/*
-		 * Columns
-		 */
+		// Columns.
 		add_action( 'manage_mesh_template_posts_custom_column' , array( $this, 'add_layout_column' ), 10, 2 );
-		add_filter( 'manage_mesh_template_posts_columns', array( $this, 'add_layout_column_title' ) );
+		add_filter( 'manage_mesh_template_posts_columns', array( $this, 'add_layout_columns' ) );
 
 		include LINCHPIN_MESH___PLUGIN_DIR . '/class.mesh-templates-duplicate.php';
 
@@ -85,6 +83,7 @@ class Mesh_Templates {
 			'show_in_nav_menus' => false,
 			'exclude_from_search' => true,
 			'publicly_queryable' => false,
+			'menu_icon' => 'dashicons-schedule',
 			'show_ui' => true,
 			'rewrite' => false,
 		) );
@@ -109,7 +108,7 @@ class Mesh_Templates {
 				'new_item_name'     => __( 'New Mesh Template Usage Name', 'mesh' ),
 				'menu_name'         => __( 'Mesh Template Usage', 'mesh' ),
 			),
-			'show_ui' => true,
+			'show_ui' => LINCHPIN_MESH_DEBUG_MODE,
 			'query_var' => true,
 			'rewrite' => false,
 			'show_admin_column' => true,
@@ -129,7 +128,7 @@ class Mesh_Templates {
 				'new_item_name'     => __( 'New Mesh Template Type Name', 'mesh' ),
 				'menu_name'         => __( 'Mesh Template Type', 'mesh' ),
 			),
-			'show_ui' => true,
+			'show_ui' => LINCHPIN_MESH_DEBUG_MODE,
 			'query_var' => true,
 			'rewrite' => false,
 			'show_admin_column' => true,
@@ -247,16 +246,18 @@ class Mesh_Templates {
 	 *
 	 * @return mixed
 	 */
-	function add_layout_column_title( $columns ) {
+	function add_layout_columns( $columns ) {
 
 		foreach ( $columns as $key => $title ) {
 
 			if ( 'title' !== $key ) {
 				continue;
 			} else {
+				unset( $columns['taxonomy-mesh_template_types'] );
 				unset( $columns['title'] );
 				$columns['layout'] = __( 'Layout', 'mesh' );
 				$columns['title']  = $title;
+
 				break;
 			}
 		}
@@ -271,8 +272,13 @@ class Mesh_Templates {
 	 * @param int    $post_id Post ID.
 	 */
 	function add_layout_column( $column, $post_id ) {
-		switch ( $column ) {
 
+		error_log( $column );
+
+		switch ( $column ) {
+			case 'taxonomy-mesh_template_usage' :
+				echo 'boom';
+				break;
 			case 'layout' :
 
 				$layout = get_post_meta( $post_id, '_mesh_template_layout', true );

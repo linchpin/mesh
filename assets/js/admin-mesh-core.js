@@ -594,7 +594,6 @@ mesh.admin = function ( $ ) {
 			$handle_title.text( current_title );
 		},
 
-
 		/**
 		 * Change the title on our select field
 		 *

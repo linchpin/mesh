@@ -30,6 +30,11 @@ if ( ! has_term( 'reference', 'mesh_template_types', $post ) ) : ?>
 </ul>
 <?php else : ?>
 <div>
-	<?php esc_html_e( 'This is a reference template. You must edit the Master template', 'mesh' ); ?>
+    <p><?php esc_html_e( 'This is a reference template. You must edit the Master template', 'mesh' ); ?></p>
+    <ul class="inline-block-list space-left">
+        <li><span class="spinner mesh-reorder-spinner"></span></li>
+        <li><a href="#" class="button primary mesh-template-change-type dashicons-before dashicons-plus"><?php esc_html_e( 'Convert to Starter Template', 'mesh' ); ?></a></li>
+        <li><a href="#" class="button primary mesh-template-remove dashicons-before dashicons-plus"><?php esc_html_e( 'Remove Template', 'mesh' ); ?></a></li>
+    </ul>
 </div>
 <?php endif; ?>

@@ -848,12 +848,74 @@ mesh.templates = function ( $ ) {
             blocks = mesh.blocks;
 
             $body
-                .on('click', '.mesh-select-template', self.select_template )
-                .on('click', '.mesh-template-layout', self.select_layout )
-                .on('click', '.mesh-template-start',  self.display_template_types )
-                .on('click', '.mesh-template-type',   self.select_template_type );
+                .on('click', '.mesh-select-template',      self.select_template )
+                .on('click', '.mesh-template-layout',      self.select_layout )
+                .on('click', '.mesh-template-start',       self.display_template_types )
+                .on('click', '.mesh-template-type',        self.select_template_type )
+                .on('click', '.mesh-template-change-type', self.change_template_type )
+                .on('click', '.mesh-template-remove',      self.remove_template );
         },
 
+        remove_template : function( event ) {
+
+        },
+
+        /**
+         * Change the type of template that is being used (Reference vs Starter)
+         *
+         * Our response should include a refreshed set of sections
+         * with all of our proper controls needed now that this
+         * template is no longer being used as a "reference"
+         *
+         * @since 1.1
+         * @param event
+         */
+        change_template_type : function( event ) {
+            event.preventDefault();
+            event.stopPropagation();
+
+            $.post( ajaxurl, {
+                action: 'mesh_change_template_type',
+                mesh_post_id: mesh_data.post_id,
+                mesh_template_type: 'starter',
+                mesh_choose_template_nonce: mesh_data.choose_template_nonce
+            }, function( response ) {
+
+                if ( response ) {
+                    var $response = $(response),
+                        $tinymce_editors = $response.find('.wp-editor-area'),
+                        $empty_msg = $('.empty-sections-message'),
+                        $controls = $('.mesh-main-ua-row');
+
+                    var $mesh_container = $('#mesh-container');
+                    $mesh_container.html('').append( $response.children() );
+                    // $spinner.removeClass('is-active');
+
+                    if ($empty_msg.length) {
+                        $empty_msg.fadeOut('fast');
+                        $controls.fadeIn('fast');
+                    }
+
+                    var $postboxes = $('.mesh-section', $mesh_container );
+
+                    if ($postboxes.length > 1) {
+                        $('.mesh-section-reorder').removeClass('disabled');
+                    }
+
+                    blocks.setup_resize_slider();
+                    blocks.setup_sortable();
+                    blocks.rerender_blocks($tinymce_editors);
+
+                    // Repopulate the sections cache so that the new section is included going forward.
+                    blocks.$sections = $('.mesh-section', $('#mesh-sections-container') );
+                }
+            });
+        },
+
+        /**
+         * Display our available template usage, Reference or Starting Point
+         * @param event
+         */
         display_template_types : function( event ) {
             event.preventDefault();
             event.stopPropagation();
@@ -890,9 +952,8 @@ mesh.templates = function ( $ ) {
                         $empty_msg = $('.empty-sections-message'),
                         $controls = $('.mesh-main-ua-row');
 
-                    $section_container = $('#mesh-sections-container')
-                    $section_container.append($response);
-                   // $spinner.removeClass('is-active');
+                   var $section_container = $('#mesh-sections-container');
+                       $section_container.append($response);
 
                     if ($empty_msg.length) {
                         $empty_msg.fadeOut('fast');
@@ -1573,7 +1634,6 @@ mesh.admin = function ( $ ) {
 
 			$handle_title.text( current_title );
 		},
-
 
 		/**
 		 * Change the title on our select field
