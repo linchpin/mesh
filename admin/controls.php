@@ -30,7 +30,26 @@ if ( ! has_term( 'reference', 'mesh_template_types', $post ) ) : ?>
 </ul>
 <?php else : ?>
 <div>
-    <p><?php esc_html_e( 'This is a reference template. You must edit the Master template', 'mesh' ); ?></p>
+    <p>
+	    <?php
+
+        $template_terms = get_the_terms( $post, 'mesh_template_usage' );
+
+        if ( ! empty( $template_terms ) ) {
+	        $template = new WP_Query( array(
+	                'name'           => $template_terms[0]->slug,
+                    'post_type'      => 'mesh_template',
+                    'no_found_rows'  => true,
+                    'posts_per_page' => 1,
+                )
+	        );
+
+	        if( $template->have_posts() ) {
+		        echo sprintf( wp_kses( __( 'This is a reference template. You must edit the the reference template:<a href="%s">%s</a>.', 'mesh' ), array(  'a' => array( 'href' => array() ) ) ), esc_url( get_edit_post_link( $template->posts[0]->ID ) ),  esc_html( $template->posts[0]->post_name ) );
+	        }
+        }
+        ?>
+    </p>
     <ul class="inline-block-list space-left">
         <li><span class="spinner mesh-reorder-spinner"></span></li>
         <li><a href="#" class="button primary mesh-template-change-type dashicons-before dashicons-plus"><?php esc_html_e( 'Convert to Starter Template', 'mesh' ); ?></a></li>
