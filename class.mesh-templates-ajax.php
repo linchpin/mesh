@@ -112,7 +112,6 @@ class Mesh_Templates_AJAX {
 		if ( ! current_user_can( 'edit_post', $mesh_template_id ) || empty( $post_id ) || empty( $mesh_template_id ) ) {
 			wp_die( -1 );
 		}
-
 		if ( $mesh_template = get_post( $mesh_template_id ) ) {
 			// Apply template type to our taxonomy that tracks template usage.
 			wp_set_object_terms( $post_id, array( $mesh_template->post_name ), 'mesh_template_usage', false );
@@ -136,9 +135,7 @@ class Mesh_Templates_AJAX {
 			} else {
 				echo 'did not duplicate sections';
 			}
-			exit;
 		}
-
 		exit;
 	}
 

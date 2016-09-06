@@ -24,7 +24,6 @@ class Mesh_Templates_Duplicate {
 	 * Mesh_Templates_Duplicate constructor.
 	 */
 	function __construct() {
-
 		// Duplicate Post Meta.
 		add_action( 'mesh_duplicate_template_section', array( $this, 'duplicate_post_meta' ), 10, 2 );
 
@@ -44,9 +43,11 @@ class Mesh_Templates_Duplicate {
 	 * @return string
 	 */
 	function duplicate_sections( $template_id, $post_id ) {
+
 		$template_id = (int) $template_id;
 
 		if ( $template_post = get_post( $template_id ) ) {
+
 			$children = $this->duplicate_children( $post_id, $template_post );
 
 			if ( ! empty( $children ) ) {
@@ -83,9 +84,12 @@ class Mesh_Templates_Duplicate {
 		$children = new WP_Query( array(
 			'post_type'      => array( 'mesh_section', 'attachment' ),
 			'posts_per_page' => apply_filters( 'mesh_templates_per_page', 50 ),
-			'post_status'    => array( 'publish', 'draft' ),
+			'post_status'    => array( 'publish' ),
 			'post_parent'    => $template_post->ID,
 		) );
+
+		error_log( "Found Posts.\n\r" );
+		error_log( $children->found_posts );
 
 		$duplicated_children = array();
 
@@ -101,6 +105,8 @@ class Mesh_Templates_Duplicate {
 					$duplicated_children[] = $duplicated_child;
 				}
 			}
+
+			wp_reset_postdata();
 		}
 
 		return $duplicated_children;
@@ -117,7 +123,7 @@ class Mesh_Templates_Duplicate {
 	function duplicate_section( $post, $parent_id = '' ) {
 
 		// Skip Revisions.
-		if ( 'revision' === $post->post_type ) {
+		if ( wp_is_post_revision( $post ) || 'revision' === $post->post_type ) {
 			return;
 		}
 
@@ -131,6 +137,8 @@ class Mesh_Templates_Duplicate {
 			$status = 'publish';
 		}
 
+		$new_date = date( 'Y-m-d H:i:s' );
+
 		$new_post = array(
 			'menu_order'     => $post->menu_order,
 			'post_author'    => $post->post_author,
@@ -141,8 +149,8 @@ class Mesh_Templates_Duplicate {
 			'post_status'    => $status, // Always set a published section to draft. Exclude attachments.
 			'post_title'     => $post->post_title,
 			'post_type'      => $post->post_type,
-			'post_date'      => $post->post_date,
-			'post_date_gmt'  => get_gmt_from_date( $post->post_date ),
+			'post_date'      => $new_date,
+			'post_date_gmt'  => get_gmt_from_date( $new_date ),
 		);
 
 		$new_post_id = wp_insert_post( $new_post );

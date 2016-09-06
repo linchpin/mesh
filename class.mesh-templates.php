@@ -39,8 +39,6 @@ class Mesh_Templates {
 		add_filter( 'manage_mesh_template_posts_columns', array( $this, 'add_layout_columns' ) );
 
 		include LINCHPIN_MESH___PLUGIN_DIR . '/class.mesh-templates-duplicate.php';
-
-		$this->mesh_templates_duplicate = new Mesh_Templates_Duplicate();
 	}
 
 	/**

@@ -14,8 +14,9 @@ if ( ! function_exists( 'add_action' ) ) {
 }
 
 ?>
-<?php if ( ! empty( $selected_template ) && count( $blocks ) > $templates[ $selected_template ]['blocks'] ) : ?>
+<?php
 
+if ( ! empty( $selected_template ) && count( $blocks ) > $templates[ $selected_template ]['blocks'] ) : ?>
 	<?php if ( empty( $mesh_notifications['moreblocks'] ) ) : ?>
 		<div id="mesh-warnings-<?php esc_attr_e( $section->ID ); ?>" class="description notice notice-info is-dismissible below-h2" data-type="moreblocks">
 			<p>
