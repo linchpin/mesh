@@ -210,12 +210,13 @@
 	}
 }
 
-.mesh-title-row {
-  border-bottom: 1px solid #f2f2f2;
-}
-
 .mesh-row-padding {
 	padding: 8px 50px 8px 12px;
+}
+
+.mesh-title-row {
+  border-bottom: 1px solid #f2f2f2;
+  padding: 4px 40px 4px 4px;
 }
 
 // 04. Section Meta
@@ -447,6 +448,10 @@
 		padding: 0 $base;
 		position: relative;
 		z-index: 11;
+	}
+
+    .mesh-columns-12.columns {
+	    padding: 0 9px;
 	}
 
 	.wp-slider .ui-slider-handle {
