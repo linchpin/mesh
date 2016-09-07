@@ -293,16 +293,7 @@ class Mesh {
 			</div>
 
 			<?php if ( empty( $content_sections ) ) : ?>
-				<div id="mesh-description" class="description notice below-h2 text-center lead empty-sections-message">
-					<p><?php esc_html_e( 'You do not have any Content Sections.', 'mesh' ); ?></p>
-					<p><?php esc_html_e( 'Get started using Mesh by adding a Content Section now.', 'mesh' ); ?></p>
-					<p>
-						<?php if ( ! empty( $mesh_templates ) ) : ?>
-							<a href="#" class="button primary mesh-select-template dashicons-before dashicons-plus"><?php esc_html_e( 'Begin with a Template', 'mesh' ); ?></a> <?php esc_html_e( ' or ', 'mesh' ); ?>
-						<?php endif; ?>
-						<a href="#" class="button primary mesh-section-add dashicons-before dashicons-plus"><?php esc_html_e( 'Add Section', 'mesh' ); ?></a>
-					</p>
-				</div>
+                <?php include LINCHPIN_MESH___PLUGIN_DIR . 'admin/sections-empty.php'; ?>
 			<?php else : ?>
 				<?php if ( empty( $mesh_notifications['intro'] ) ) : ?>
 					<div id="mesh-description" class="description notice is-dismissible notice-info below-h2" data-type="intro">
@@ -317,7 +308,7 @@ class Mesh {
 				<?php endforeach; ?>
 			</div>
 
-			<div class="notice below-h2 mesh-row mesh-main-ua-row<?php if ( empty( $content_sections ) ) { echo ' hide'; } ?>">
+			<div class="notice below-h2 mesh-row mesh-main-ua-row bottom<?php if ( empty( $content_sections ) ) : ?> hide<?php endif; ?>">
 				<div class="mesh-columns-12 columns text-right">
 					<?php include LINCHPIN_MESH___PLUGIN_DIR .'admin/controls.php'; ?>
 				</div>

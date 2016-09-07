@@ -20,6 +20,7 @@ global $post;
  *
  * Reference templates can not add/remove or reorder sections
  */
+
 if ( ! has_term( 'reference', 'mesh_template_types', $post ) ) : ?>
 <ul class="inline-block-list space-left">
 	<li><span class="spinner mesh-reorder-spinner"></span></li>

@@ -183,7 +183,15 @@ class Mesh_AJAX {
 				}
 			}
 
-			wp_die( 1 );
+			$sections = mesh_get_sections( $post_id, 'array', $statuses = array( 'publish', 'draft' ) );
+
+			// If we don't have any sections remaining. Show the initial set.
+			if ( empty( $sections ) ) {
+				include LINCHPIN_MESH___PLUGIN_DIR . 'admin/sections-empty.php';
+				exit;
+			} else {
+				wp_die( 1 );
+			}
 		} else {
 			wp_die( -1 );
 		}

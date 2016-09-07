@@ -1388,12 +1388,10 @@ mesh.admin = function ( $ ) {
 
 				var content = '',
 					editorID = $(this).attr('id'),
-					editor = tinymce.get( editorID ),
-					$editor =  $('#' + editorID);
+					editor = tinymce.get( editorID );
 
 					// Make sure we have an editor and we aren't in text view.
 					if( editor && ! editor.hidden ) {
-
 
 						content = editor.getContent({format: 'raw'});
 						$('#' + editorID).val(content);
@@ -1462,18 +1460,37 @@ mesh.admin = function ( $ ) {
 				mesh_post_id: mesh_data.post_id,
 				mesh_section_id: section_id,
 				mesh_remove_section_nonce: mesh_data.remove_section_nonce
-			}, function(response){
+			}, function( response){
 				if ( '1' === response ) {
-					$postbox.fadeOut( 400, function(){
+					$postbox.fadeOut(400, function () {
 						$postbox.remove();
 
-						var $postboxes = $meta_box_container.find( '.mesh-section' );
+						var $postboxes = $meta_box_container.find('.mesh-section');
 
-						if ( $postboxes.length <= 1 ) {
-							$reorder_button.addClass( 'disabled' );
+						if ($postboxes.length <= 1) {
+							$reorder_button.addClass('disabled');
 						}
 					});
+				} else if( '-1' === response ) {
+					console.log( 'There was an error' );
 				} else {
+
+					var $response = $(response),
+						$empty_msg = $('.empty-sections-message'),
+						$controls = $('.mesh-main-ua-row');
+
+					$section_container.append($response);
+
+					$postbox.fadeOut(400, function () {
+						$postbox.remove();
+					});
+
+					if ($empty_msg.length) {
+						$empty_msg.fadeOut('fast');
+					}
+
+					$controls.fadeOut('fast');
+
 					$spinner.removeClass('is-active');
 				}
 			});
