@@ -122,13 +122,15 @@ mesh.admin = function ( $ ) {
 			event.preventDefault();
 			event.stopPropagation();
 
-			var $this = $(this);
-
-			$this.addClass('expanded');
-
 			$('#mesh-container').find('.handlediv').each(function () {
-				if ( $this.hasClass('expanded') && 'true' != $(this).attr('aria-expanded') ) {
-					$(this).trigger('click');
+				if ( 'false' == $(this).attr('aria-expanded') ) {
+					$(this).trigger('click').promise(function() {
+						// Loop through all of our edits in the response
+						// reset our editors after clearing
+						var $tinymce_editors = $sections.find('.wp-editor-area');
+
+						blocks.rerender_blocks( $tinymce_editors );
+					});
 				}
 			} );
 		},
@@ -142,15 +144,13 @@ mesh.admin = function ( $ ) {
 		 */
 		collapse_all_sections : function( event ) {
 
-			event.preventDefault();
-			event.stopPropagation();
-
-			var $this = $(this);
-
-			$this.removeClass('expanded');
+			if( typeof( event ) != 'undefined' ) {
+				event.preventDefault();
+				event.stopPropagation();
+			}
 
 			$('#mesh-container').find('.handlediv').each(function () {
-				if ( ! $this.hasClass('expanded') && 'true' == $(this).attr('aria-expanded') ) {
+				if ( 'true' == $(this).attr('aria-expanded') ) {
 					$(this).trigger('click');
 				}
 			} );
@@ -485,9 +485,7 @@ mesh.admin = function ( $ ) {
 
 			$reorder_button.text( mesh_data.strings.save_order ).addClass('mesh-save-order button-primary').removeClass('mesh-section-reorder');
 
-			$sections.each(function(){
-				$(this).addClass('closed');
-			});
+			self.collapse_all_sections();
 
 			$section_container.sortable();
 		},
