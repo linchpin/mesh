@@ -1388,10 +1388,13 @@ mesh.admin = function ( $ ) {
 
 				var content = '',
 					editorID = $(this).attr('id'),
-					editor = tinymce.get( editorID );
+					editor = tinymce.get( editorID ),
+					$editor =  $('#' + editorID);
 
 					// Make sure we have an editor and we aren't in text view.
-					if( editor ) {
+					if( editor && ! editor.hidden ) {
+
+
 						content = editor.getContent({format: 'raw'});
 						$('#' + editorID).val(content);
 					}
