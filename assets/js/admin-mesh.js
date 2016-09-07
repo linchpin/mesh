@@ -1479,10 +1479,12 @@ mesh.admin = function ( $ ) {
 						$empty_msg = $('.empty-sections-message'),
 						$controls = $('.mesh-main-ua-row');
 
-					$section_container.append($response);
-
 					$postbox.fadeOut(400, function () {
 						$postbox.remove();
+
+						if( response ) {
+							$('#mesh-description').html('').show().append( $response );
+						}
 					});
 
 					if ($empty_msg.length) {

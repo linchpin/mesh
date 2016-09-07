@@ -293,7 +293,9 @@ class Mesh {
 			</div>
 
 			<?php if ( empty( $content_sections ) ) : ?>
-                <?php include LINCHPIN_MESH___PLUGIN_DIR . 'admin/sections-empty.php'; ?>
+                <div id="mesh-description" class="description notice below-h2 text-center lead empty-sections-message">
+	                <?php include LINCHPIN_MESH___PLUGIN_DIR . 'admin/sections-empty.php'; ?>
+                </div>
 			<?php else : ?>
 				<?php if ( empty( $mesh_notifications['intro'] ) ) : ?>
 					<div id="mesh-description" class="description notice is-dismissible notice-info below-h2" data-type="intro">
