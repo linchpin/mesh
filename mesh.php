@@ -41,6 +41,7 @@ include_once 'class.mesh-settings.php';
 include_once 'class.mesh-templates.php';
 include_once 'class.mesh-pointers.php';
 include_once 'class.mesh.php';
+include_once 'class.mesh-reponsive-grid.php';
 
 $mesh          = new Mesh();
 $mesh_pointers = new Mesh_Admin_Pointers();
@@ -62,6 +63,97 @@ function mesh_deactivation_hook() {
 	flush_rewrite_rules();
 }
 register_deactivation_hook( __FILE__, 'mesh_deactivation_hook' );
+
+
+/**
+ * Return the classes used to build our grid structure
+ */
+
+/**
+ * Return a string of classes back to our block
+ * @param string $extra_classes
+ *
+ */
+function mesh_block_class( $block_id, $args = array() ) {
+
+	$defaults = array(
+		'push_pull'        => false,
+        'collapse_spacing' => false,
+		'total_columns'    => 1,
+        'max_columns'      => apply_filters( 'mesh_max_columns', 12 ),
+        'column_index'     => -1,
+        'column_width'     => 12,
+	);
+
+	$args = wp_parse_args( $args, $defaults );
+
+	$grid_system = apply_filters( 'mesh_grid_system', 'foundation' );
+
+	$grid = Mesh_Responsive_Grid::get_responsive_grid( $grid_system );
+
+	$block_css_class = get_post_meta( $block_id, '_mesh_css_class', true );
+	$block_offset    = (int) get_post_meta( $block_id, '_mesh_offset', true );
+
+	$classes = array(
+		$grid['columns_class'],
+		$grid['columns']['small'] . '-' . $args['max_columns'],
+	);
+
+	$classes[] = $grid['columns']['medium'] . '-' . ( (int) $args['column_width'] - $block_offset );
+
+	if ( $block_offset ) {
+		$classes[] = $grid['columns']['medium'] . '-' . $grid['offset'] . '-' . $block_offset;
+	}
+
+	if ( ! empty( $args['push_pull'] ) ) {
+
+		$push_or_pull = '';
+
+	    if ( 2 === (int) $args['total_columns'] ) {
+
+	        switch ( (int) $args['column_index'] ) {
+                case 0 :
+	                $push_or_pull = 'push';
+                break;
+                case 1 :
+                    $push_or_pull = 'pull';
+                break;
+            }
+
+            if ( ! empty( $push_or_pull ) ) {
+	            $classes[] = $grid['columns']['medium'] . '-' . $push_or_pull . '-' . ( $args['max_columns'] - $args['column_width'] );
+            }
+	    }
+	}
+
+	// Merge our block classes (from the input field).
+	if ( ! empty( $block_css_class ) ) {
+		$block_css_class = explode( ' ', $block_css_class );
+		$classes = array_merge( $classes, $block_css_class );
+	}
+
+    $classes = array_filter( $classes, 'sanitize_html_class' );
+    $classes = array_unique( $classes );
+
+	echo 'class="' . join( ' ', $classes ) . '"'; // WPCS: ok
+}
+
+/**
+ * <?php
+
+
+
+$offset_class = 'medium-' . $column_width;
+
+// Change our column width based on our offset.
+if ( ! empty( $block_offset ) ) {
+$offset_class = 'medium-' . ( $column_width - $block_offset ) . ' medium-offset-' . $block_offset;
+} ?>
+
+<div class="small-12 <?php if ( ! empty( $collapse_column_spacing ) ) : ?>collapse <?php endif; ?><?php esc_attr_e( $offset_class ); ?> columns <?php esc_attr_e( $block_css_class ); ?> <?php if ( $push_pull ) { echo $push_pull_class; } ?>"<?php if ( ! empty( $lp_equal ) ) : ?> data-equalizer-watch<?php endif; ?> <?php mesh_section_background( $block->ID ); ?>>
+
+ */
+
 
 /**
  * Get files within our directory
@@ -295,8 +387,8 @@ function the_mesh_content( $post_id = '' ) {
  * a traditional loop. Else it will return the contents of the
  * rendered html.
  *
- * @param string $post_id
- * @param bool   $echo
+ * @param string $post_id Post ID.
+ * @param bool   $echo    Echo the sections or not.
  *
  * @return string|void
  */
