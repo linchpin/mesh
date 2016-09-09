@@ -93,7 +93,42 @@ class Mesh {
 
 		// Add Screen Options.
 		add_action( 'admin_menu',           array( $this, 'admin_menu' ) );
+
+		add_filter( 'get_edit_post_link',   array( $this, 'get_edit_post_link' ), 10, 3 );
 	}
+
+	/**
+	 * @param string $link
+	 * @param int    $post_id
+	 * @param string $context
+	 *
+	 * @return mixed
+	 */
+	function get_edit_post_link( $link, $post_id , $context ) {
+        global $post;
+
+        if ( empty( $post->post_parent ) ) {
+            return $link;
+        }
+
+		if ( 'mesh_section' !== get_post_type( $post->ID ) ) {
+			return $link;
+		}
+
+        if ( 'mesh_section' !== get_post_type( $post->post_parent ) ) {
+            return $link;
+        }
+
+	    $parents = get_post_ancestors( $post->ID );
+
+		$id = ( ! empty( $parents ) ) ? $parents[ count( $parents ) - 1 ]: $post->post_parent;
+
+		if ( 'mesh_section' !== get_post_type( $id ) ) {
+		    return '#'; // get_edit_post_link( $id );
+		}
+
+	    return '#'; // get_edit_post_link();
+    }
 
 	/**
 	 * Output some useful information about posts.
@@ -102,8 +137,7 @@ class Mesh {
 	    global $post;
 
 	    if ( 'mesh_section' === $post->post_type && true === LINCHPIN_MESH_DEBUG_MODE ) {
-		    print_r( $post );
-	    }
+		}
 	}
 
 	/**
@@ -233,7 +267,7 @@ class Mesh {
 			'labels'              => $labels,
 			'public' => false,
 			'hierarchical' => true,
-			'supports' => array( 'title', 'editor', 'author', 'thumbnail', 'excerpt', 'page-attributes' ),
+			'supports' => array( 'title', 'editor', 'author', 'thumbnail', 'excerpt', 'page-attributes', 'revisions' ),
 			'capability_type' => 'post',
 			'has_archive' => false,
 			'show_in_menus' => false,

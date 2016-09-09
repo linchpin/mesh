@@ -132,28 +132,11 @@ function mesh_block_class( $block_id, $args = array() ) {
 		$classes = array_merge( $classes, $block_css_class );
 	}
 
-    $classes = array_filter( $classes, 'sanitize_html_class' );
+    $classes = array_map( 'sanitize_html_class', $classes );
     $classes = array_unique( $classes );
 
 	echo 'class="' . join( ' ', $classes ) . '"'; // WPCS: ok
 }
-
-/**
- * <?php
-
-
-
-$offset_class = 'medium-' . $column_width;
-
-// Change our column width based on our offset.
-if ( ! empty( $block_offset ) ) {
-$offset_class = 'medium-' . ( $column_width - $block_offset ) . ' medium-offset-' . $block_offset;
-} ?>
-
-<div class="small-12 <?php if ( ! empty( $collapse_column_spacing ) ) : ?>collapse <?php endif; ?><?php esc_attr_e( $offset_class ); ?> columns <?php esc_attr_e( $block_css_class ); ?> <?php if ( $push_pull ) { echo $push_pull_class; } ?>"<?php if ( ! empty( $lp_equal ) ) : ?> data-equalizer-watch<?php endif; ?> <?php mesh_section_background( $block->ID ); ?>>
-
- */
-
 
 /**
  * Get files within our directory
@@ -463,6 +446,49 @@ function mesh_get_section_blocks( $section_id, $post_status = 'publish' ) {
 }
 
 /**
+ * Cleanup our mesh sections.
+ *
+ * Create more blocks if needed
+ * If Less blocks are needed set the status of the extra blocks to "draft"
+ *
+ * @since 1.1
+ *
+ * @param object $section
+ * @param int    $number_needed
+ *
+ * @return array|void
+ */
+function mesh_cleanup_section_blocks( $section, $number_needed = 0 ) {
+
+	$blocks = mesh_get_section_blocks( $section->ID, array( 'publish', 'draft' ) );
+	$count = count( $blocks );
+
+	// Create enough blocks to fill the section.
+	if ( $count < $number_needed ) {
+		return mesh_maybe_create_section_blocks( $section, $number_needed );
+	}
+
+	if ( $count > $number_needed ) {
+
+		// Make sure all child sections aren't enough blocks to fill the section.
+		$start = $count - $number_needed;
+
+		while ( $start < $count ) {
+
+			wp_update_post( array(
+				'ID'          => $blocks[ $start ]->ID,
+				'post_status' => 'draft',
+			) );
+
+			++$start;
+		}
+	}
+
+	return mesh_maybe_create_section_blocks( $section, $number_needed );
+}
+
+
+/**
  * Make sure a section has a certain number of blocks
  *
  * @todo Should always be at least 1 section?
@@ -475,23 +501,56 @@ function mesh_get_section_blocks( $section_id, $post_status = 'publish' ) {
  */
 function mesh_maybe_create_section_blocks( $section, $number_needed = 0 ) {
 
-	$blocks = mesh_get_section_blocks( $section->ID, $section->post_status );
+	if ( empty( $section ) ) {
+		return;
+	}
+
+	$blocks = mesh_get_section_blocks( $section->ID, array( 'publish', 'draft' ) );
 	$count = count( $blocks );
 	$start = $count;
 
-	// Create enough blocks to fill the section.
-	while ( $count < $number_needed ) {
-		wp_insert_post( array(
-			'post_type'   => 'mesh_section',
-			'post_status' => $section->post_status,
-			'post_title'  => __( 'No Column Title', 'mesh' ),
-			'post_parent' => $section->ID,
-			'menu_order'  => ( $start + $count ),
-			'post_name'   => 'section-' . $section->ID . '-block-' . ( $start + $count ),
-		) );
+	if ( $count < $number_needed ) {
 
-		++$count;
-	}
+        // Create enough blocks to fill the section.
+        while ( $count < $number_needed ) {
+            wp_insert_post( array(
+                'post_type'   => 'mesh_section',
+                'post_status' => $section->post_status,
+                'post_title'  => __( 'No Column Title', 'mesh' ),
+                'post_parent' => $section->ID,
+                'menu_order'  => ( $start + $count ),
+                'post_name'   => 'section-' . $section->ID . '-block-' . ( $start + $count ),
+            ) );
+
+            ++$count;
+        }
+
+        // If we have more blocks than we need. Set the extras to draft and make sure the
+        // blocks that should be visible match the status of the parent section.
+	} else {
+		$total = $count;
+
+		while ( $total > $number_needed ) {
+	        wp_update_post(array(
+	                'ID' => $blocks[ $total - 1 ]->ID,
+                    'post_status' => 'draft',
+                ) );
+
+			$total--;
+        }
+
+        // Set the rest to what we need.
+
+        $start = 0;
+		while ( $start < $number_needed ) {
+			wp_update_post(array(
+				'ID' => $blocks[ $start ]->ID,
+				'post_status' => $section->post_status,
+			) );
+
+			$start++;
+		}
+    }
 
 	return mesh_get_section_blocks( $section->ID, $section->post_status );
 }

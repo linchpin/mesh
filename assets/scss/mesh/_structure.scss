@@ -12,11 +12,22 @@
 
 // 01. Global
 #mesh-container {
-	margin-bottom: $base * 2;
-}
 
-#mesh-container .postbox .hndle {
+  margin-bottom: $base * 2;
+
+  .postbox.closed {
+	.handle-title:after {
+	  visibility:hidden;
+	}
+  }
+
+  .postbox:last-child {
+	margin-bottom: 2px;
+  }
+
+  .postbox .hndle {
 	border: none;
+  }
 }
 
 .wrap .notice.mesh-main-ua-row {
@@ -28,7 +39,7 @@
     margin : 10px 0 4px;
 
     &.bottom {
-    	margin: 2px;
+    	margin-top: 4px;
     }
 
 	.lead {

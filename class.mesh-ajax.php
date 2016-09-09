@@ -133,7 +133,7 @@ class Mesh_AJAX {
 		$templates = apply_filters( 'mesh_section_data', $block_template );
 
 		// Make sure that a section has enough blocks to fill the template.
-		$blocks = mesh_maybe_create_section_blocks( $section, $templates[ $selected_template ]['blocks'] );
+		$blocks = mesh_cleanup_section_blocks( $section, $templates[ $selected_template ]['blocks'] );
 
 		// Reset our widths on layout change.
 		foreach ( $blocks as $block ) {

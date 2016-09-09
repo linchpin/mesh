@@ -45,10 +45,30 @@
 			&:hover {
 				background-color: $primary-light;
 			}
+
+		  .spinner {
+			display: none;
+		  }
+		}
+
+	    &.disabled {
+		  &.active {
+			.spinner {
+			  visibility: visible;
+			  display: inline-block;
+			  float: left;
+			  margin: 4px 0;
+			}
+
+			&.dashicons-before:before {
+			  display: none;
+			}
+		  }
 		}
 
 		&.dashicons-before:before {
 			vertical-align: middle;
+
 		}
 	}
 
@@ -87,6 +107,9 @@
 
 	.plain-link {
 		text-decoration: none;
+	    &.disabled {
+		    color:$darkest-grey;
+		}
 	}
 
 	.grey-link {

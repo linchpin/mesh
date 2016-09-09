@@ -118,6 +118,17 @@ if ( ! function_exists( 'add_action' ) ) {
 										<label for="mesh-sections-<?php esc_attr_e( $blocks[ $block_increment ]->ID ); ?>-css-class" class="nowrap">
 											<?php esc_html_e( 'CSS Class', 'mesh' ); ?> <input type="text" id="mesh-sections-<?php esc_attr_e( $blocks[ $block_increment ]->ID ); ?>-css-class" name="mesh-sections[<?php esc_attr_e( $section->ID ); ?>][blocks][<?php esc_attr_e( $blocks[ $block_increment ]->ID ); ?>][css_class]" value="<?php esc_attr_e( $block_css_class ); ?>" />
 										</label>
+
+                                        <?php
+
+                                        $revisions = wp_get_post_revisions( $blocks[ $block_increment ]->ID );
+
+                                        if ( ! empty( $revisions ) ) : ?>
+                                        <div class="misc-pub-section misc-pub-revisions">
+											<?php printf( __( 'Revisions: %s' ), '<b>' . number_format_i18n( count( $revisions ) ) . '</b>' ); ?>
+                                            <a class="hide-if-no-js" href="<?php echo esc_url( get_edit_post_link( reset( $revisions )->ID ) ); ?>"><span aria-hidden="true"><?php _ex( 'Browse', 'revisions' ); ?></span> <span class="screen-reader-text"><?php _e( 'Browse revisions' ); ?></span></a>
+                                        </div>
+										<?php endif; ?>
 									</div>
 
 									<div class="block-background-container right text-right mesh-columns-4 mesh-section-background">

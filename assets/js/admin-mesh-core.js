@@ -5,6 +5,7 @@ mesh.admin = function ( $ ) {
 	var $body		        = $('body'),
 		$reorder_button     = $('.mesh-section-reorder'),
 		$add_button         = $('.mesh-section-add'),
+		$collapse_button    = $('.mesh-section-collapse'),
 		$expand_button      = $('.mesh-section-expand'),
 		$meta_box_container = $('#mesh-container'),
 		$section_container  = $('#mesh-sections-container'),
@@ -238,11 +239,14 @@ mesh.admin = function ( $ ) {
 			section_count = $sections.length;
 
 			var $this = $(this),
-				$spinner = $this.siblings('.spinner');
+				$spinner = $this.find('.spinner');
 
 			if ( $this.hasClass('disabled') ) {
 				return false;
 			}
+
+			$this.addClass('disabled active');
+			$this.parent('mesh-main-ua-row').find('.plain-link').addClass('disabled');
 
 			$spinner.addClass('is-active');
 
@@ -260,6 +264,9 @@ mesh.admin = function ( $ ) {
 
 					$section_container.append( $response );
 					$spinner.removeClass('is-active');
+
+					$this.removeClass('disabled');
+					$this.parents('mesh-main-ua-row').find('.plain-link').addClass('removeClass');
 
 					if ( $empty_msg.length ) {
 						$empty_msg.fadeOut('fast');
@@ -467,21 +474,15 @@ mesh.admin = function ( $ ) {
 			event.stopPropagation();
 
 			var $this = $(this),
-				$reorder_spinner = $this.siblings('.spinner'),
-				$sections = $( '.mesh-postbox', $section_container),
-				$block_click_span = $( '<span class="mesh-block-click">' );
+				$reorder_spinner = $this.siblings('.spinner');
 
 			$expand_button.addClass('disabled');
 			$add_button.addClass('disabled');
+			$collapse_button.addClass('disabled');
+
 			$meta_box_container.addClass('mesh-is-ordering');
 
 			self.update_notifications( 'reorder', 'warning' );
-
-			$('.hndle', $meta_box_container ).each(function(){
-				$(this).prepend( $block_click_span.clone() );
-			});
-
-			$('.mesh-block-click').on('click', self.block_click );
 
 			$reorder_button.text( mesh_data.strings.save_order ).addClass('mesh-save-order button-primary').removeClass('mesh-section-reorder');
 
@@ -549,21 +550,20 @@ mesh.admin = function ( $ ) {
 			event.stopPropagation();
 
 			var $this = $(this),
-			// @todo confirm this is needed : $sections = $( '.mesh-postbox', $section_container ),
 				$reorder_spinner = $('.mesh-reorder-spinner'),
 				section_ids = [];
 
 			$reorder_spinner.addClass( 'is-active' );
 
+			$meta_box_container.removeClass('mesh-is-ordering');
 			$expand_button.removeClass('disabled');
 			$add_button.removeClass('disabled');
+			$collapse_button.removeClass('disabled');
 			$reorder_button.text( mesh_data.strings.reorder ).addClass('mesh-section-reorder').removeClass('mesh-save-order button-primary');
 
 			$('.mesh-postbox', $section_container).each(function(){
 				section_ids.push( $(this).attr('data-mesh-section-id') );
 			});
-
-			$('.mesh-block-click').remove();
 
 			if( $description.is(':visible') ) {
 				$description.removeClass('notice-warning').addClass('notice-info').find('p').text( mesh_data.strings.description );
@@ -592,13 +592,18 @@ mesh.admin = function ( $ ) {
 		},
 
 		/**
-		 * @todo needs description @mmorgan?
+		 * Handle the toggle been text and input areas
 		 *
 		 * @param event
          */
 		change_input_title : function(event) {
-			var $this = $(this),
-				current_title = $this.val(),
+			var $this = $(this);
+
+			if ( $this.parents('.mesh-postbox').hasClass('closed') ) {
+				return;
+			}
+
+			var	current_title = $this.val(),
 				$handle_title = $this.siblings('.handle-title');
 
 			if ( $this.is('select') ) {

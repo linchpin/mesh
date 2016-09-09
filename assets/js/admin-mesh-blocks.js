@@ -468,6 +468,12 @@ mesh.blocks = function ( $ ) {
 	        event.preventDefault();
 	        event.stopPropagation();
 
+	        var $this = $(this);
+
+	        if( $this.parents('.mesh-postbox').hasClass('closed') ) {
+	            return;
+            }
+
 	        $(this).addClass('title-input-visible');
 		},
 
