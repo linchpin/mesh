@@ -32,7 +32,7 @@ define( 'LINCHPIN_MESH___PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
  *
  * @since 1.1
  */
-define( 'LINCHPIN_MESH_DEBUG_MODE', true );
+define( 'LINCHPIN_MESH_DEBUG_MODE', false );
 
 $GLOBALS['mesh_current_version'] = get_option( 'mesh_version', '0.0' ); // Get our current Mesh Version.
 
