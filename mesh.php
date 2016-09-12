@@ -67,12 +67,12 @@ register_deactivation_hook( __FILE__, 'mesh_deactivation_hook' );
 
 /**
  * Return the classes used to build our grid structure
- */
-
-/**
- * Return a string of classes back to our block
- * @param string $extra_classes
+ * Return a string of classes back to our block.
  *
+ * @since 1.1
+ *
+ * @param int   $block_id
+ * @param array $args
  */
 function mesh_block_class( $block_id, $args = array() ) {
 
