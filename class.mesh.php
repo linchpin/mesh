@@ -498,10 +498,8 @@ class Mesh {
 					continue;
 				}
 
-				if ( empty( $section->post_status ) ) {
+				if ( empty( $status ) ) {
 					$status = 'draft';
-				} else {
-				    $status = $section->post_status;
                 }
 
 				$updates = array(
