@@ -19,7 +19,7 @@ if ( ! $closed_metaboxes = get_user_option( 'closedpostboxes_page' ) ) {
 
 $mesh_notifications = get_user_option( 'linchpin_mesh_notifications' );
 
-$blocks = mesh_maybe_create_section_blocks( $section );
+$blocks = mesh_maybe_create_section_blocks( $section, $block_count );
 
 ?>
 <div class="mesh-section mesh-postbox postbox<?php if ( in_array( 'mesh-section-' . esc_attr( $section->ID ), $closed_metaboxes ) ) : ?> closed<?php endif; ?>" data-mesh-section-id="<?php esc_attr_e( $section->ID ); ?>" id="mesh-section-<?php esc_attr_e( $section->ID ); ?>">

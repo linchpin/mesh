@@ -410,7 +410,7 @@ class Mesh {
 
 			$status = sanitize_post_field( 'post_status', $section_data['post_status'], $post_id, 'attribute' );
 
-			if ( ! in_array( $status, array( 'publish', 'draft' ), true ) ) {
+			if ( ! in_array( $status, array( 'publish', 'draft' ) ) ) {
 				$status = 'draft';
 			}
 
@@ -498,9 +498,11 @@ class Mesh {
 					continue;
 				}
 
-				if ( empty( $status ) ) {
+				if ( empty( $section->post_status ) ) {
 					$status = 'draft';
-				}
+				} else {
+				    $status = $section->post_status;
+                }
 
 				$updates = array(
 					'ID'           => (int) $block_id,
@@ -577,7 +579,7 @@ class Mesh {
 					}
 
 					if ( ! empty( $block->post_content ) ) {
-						$section_content[] = strip_tags( $block->post_content );
+						$section_content[] = $block->post_content;
 					}
 				}
 

@@ -249,6 +249,11 @@ function mesh_add_section_admin_markup( $section, $closed = false, $return = fal
 		$selected_template = 'mesh-columns-1.php';
 	}
 
+	// This block count is determined by the selected template above.
+	// It's important to pass this to the admin to control if a
+	// section's blocks have a post_status of publish or draft.
+	$block_count       = $templates[ $selected_template ]['blocks'];
+
 	$css_class         = get_post_meta( $section->ID, '_mesh_css_class', true );
 	$lp_equal          = get_post_meta( $section->ID, '_mesh_lp_equal', true );
 	$offset            = get_post_meta( $section->ID, '_mesh_offset', true );
