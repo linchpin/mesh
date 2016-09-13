@@ -1,5 +1,7 @@
 <?php
 /**
+ * Mesh Template designed to display 4 columns.
+ *
  * Mesh Template: 4
  * Mesh Template Blocks: 4
  *

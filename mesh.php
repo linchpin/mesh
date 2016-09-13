@@ -166,7 +166,7 @@ function mesh_get_files( $type = null, $depth = 0, $search_parent = false, $dire
  * @return mixed
  */
 function mesh_locate_template_files() {
-	$current_theme = wp_get_theme();
+	$current_theme = wp_get_theme( 'mesh' );
 
 	$section_templates = array();
 
@@ -197,9 +197,11 @@ function mesh_locate_template_files() {
 		$section_templates[ $file ]['file'] = _cleanup_header_comment( $header[1] );
 
 		if ( preg_match( '/Mesh Template Blocks: ?([0-9]{1,2})$/mi', file_get_contents( $full_path ), $block_header ) ) {
-			$section_templates[ $file ]['blocks'] = (int) $block_header[0];
+			$section_templates[ $file ]['blocks'] = (int) $block_header[1];
 		}
 	}
+
+
 
 	/**
 	 * Filter list of page templates for a theme.

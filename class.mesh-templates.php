@@ -238,7 +238,7 @@ class Mesh_Templates {
 	}
 
 	/**
-	 * Add Layout Column Title
+	 * Add Layout Column Title and also reorder out columns
 	 *
 	 * @param int $columns The columns in the admin to iterate through.
 	 *
@@ -253,8 +253,15 @@ class Mesh_Templates {
 			} else {
 				unset( $columns['taxonomy-mesh_template_types'] );
 				unset( $columns['title'] );
+				unset( $columns['taxonomy-mesh_template_usage'] );
+
+				$date = $columns['date'];
+
+				unset( $columns['date'] );
 				$columns['layout'] = __( 'Layout', 'mesh' );
 				$columns['title']  = $title;
+				$columns['taxonomy-mesh_template_usage'] = 'Usage';
+				$columns['date'] = $date;
 
 				break;
 			}

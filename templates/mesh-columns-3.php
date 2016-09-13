@@ -1,5 +1,7 @@
 <?php
 /**
+ * Mesh Template designed to display 3 columns.
+ *
  * Mesh Template: 3
  * Mesh Template Blocks: 3
  *
