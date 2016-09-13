@@ -188,6 +188,10 @@
 		bottom: $base * 2;
 		top: $base * 2;
 	};
+
+    &.collapse {
+	  padding:1px 12px;
+	}
 }
 
 

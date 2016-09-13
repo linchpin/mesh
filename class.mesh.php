@@ -332,8 +332,8 @@ class Mesh {
                 </div>
 			<?php else : ?>
 				<?php if ( empty( $mesh_notifications['intro'] ) ) : ?>
-					<div id="mesh-description" class="description notice is-dismissible notice-info below-h2" data-type="intro">
-						<p><?php esc_html_e( 'Multiple content sections allow you to easily segment your page\'s contents into different blocks of markup.', 'mesh' ); ?></p>
+					<div id="mesh-description" class="description collapse notice is-dismissible notice-info below-h2" data-type="intro">
+						<p><?php esc_html_e( 'Mesh allow you to easily break up your page into different blocks of content/markup.', 'mesh' ); ?></p>
 					</div>
 				<?php endif; ?>
 			<?php endif; ?>
@@ -788,7 +788,7 @@ class Mesh {
 
 		$strings = array(
 			'reorder_warn' =>      __( 'Be sure to save the order of your sections once your changes are complete.', 'mesh' ),
-			'description' =>       __( 'Multiple content sections allows you to easily segment your page\'s contents into different blocks of markup.', 'mesh' ),
+			'description' =>       __( 'Mesh allow you to easily break up your page into different blocks of content/markup.', 'mesh' ),
 			'add_image' =>         __( 'Set Background Image', 'mesh' ),
 			'remove_image' =>      __( 'Remove Background', 'mesh' ),
 			'expand_all' =>        __( 'Expand All', 'mesh' ),
