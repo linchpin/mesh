@@ -753,7 +753,9 @@ class Mesh {
 	/**
 	 * At the end of a page, let's show sections.
      *
-     * @example add_filter( 'mesh_loop_end', '__return_empty_string' );
+     * @since 1.0
+     *
+     * @example "add_filter( 'mesh_loop_end', '__return_empty_string' );" return nothing and add my sections manually
 	 *
 	 * @param object $wp_query WordPress Query Object.
 	 */

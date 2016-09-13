@@ -21,11 +21,16 @@ class Mesh_AJAX {
 		add_action( 'wp_ajax_mesh_add_section',           array( $this, 'mesh_add_section' ) );
 		add_action( 'wp_ajax_mesh_save_section',          array( $this, 'mesh_save_section' ) );
 		add_action( 'wp_ajax_mesh_remove_section',        array( $this, 'mesh_remove_section' ) );
-
 		add_action( 'wp_ajax_mesh_choose_layout',         array( $this, 'mesh_choose_layout' ) );
 		add_action( 'wp_ajax_mesh_update_order',          array( $this, 'mesh_update_order' ) );
 		add_action( 'wp_ajax_mesh_update_featured_image', array( $this, 'mesh_update_featured_image' ) );
 		add_action( 'wp_ajax_mesh_dismiss_notification',  array( $this, 'mesh_dismiss_notification' ) );
+
+		/**
+		 * Since 1.1
+		 */
+
+		add_action( 'wp_ajax_mesh_trash_blocks',          array( $this, 'mesh_trash_hidden_blocks' ) );
 	}
 
 	/**
@@ -150,6 +155,48 @@ class Mesh_AJAX {
 		echo trim( $output ); // WPCS: XSS ok, sanitization ok.
 
 		wp_die();
+	}
+
+	/**
+	 * Trash blocks that are not visible due to column selection.
+	 *
+	 * @since 1.1
+	 */
+	function mesh_trash_hidden_blocks() {
+		check_ajax_referer( 'mesh_choose_layout_nonce', 'mesh_choose_layout_nonce' );
+
+		if ( ! $selected_template = sanitize_text_field( $_POST['mesh_section_layout'] ) ) {
+			$selected_template = 'mesh-columns-1.php';
+		}
+
+		$section_id = (int) $_POST['mesh_section_id'];
+
+		if ( empty( $section_id ) || ! current_user_can( 'edit_post', $section_id ) ) {
+			wp_die( -1 );
+		}
+
+		$templates     = mesh_get_templates();
+		$number_needed = $templates[ $selected_template ]['blocks'];
+		$blocks        = mesh_get_section_blocks( $section_id, array( 'publish', 'draft' ) );
+
+		if ( empty( $blocks ) ) {
+			wp_die( -1 );
+		}
+
+		$count = count( $blocks );
+
+		if ( $count > $number_needed ) {
+			$total = $count;
+
+			while ( $total > $number_needed ) {
+				wp_delete_post( $blocks[ $total - 1 ]->ID );
+				$total--;
+			}
+
+			wp_die( 1 );
+		}
+
+		wp_die( 0 );
 	}
 
 	/**

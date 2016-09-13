@@ -496,7 +496,7 @@ function mesh_cleanup_section_blocks( $section, $number_needed = 0 ) {
 /**
  * Make sure a section has a certain number of blocks
  *
- * @todo Should always be at least 1 section?
+ * @uses   mesh_get_section_blocks() to get all blocks within a defined section.
  *
  * @access public
  * @param  mixed $section       Post Object for the defined Section.
