@@ -56,7 +56,6 @@ if ( ! function_exists( 'add_action' ) ) {
 		$block_offset = (int) get_post_meta( $blocks[ $block_increment ]->ID, '_mesh_offset', true );
 
 		?>
-
 		<div class="mesh-section-block mesh-columns-<?php esc_attr_e( $block_columns ); ?> columns" data-mesh-block-id="<?php esc_attr_e( $blocks[ $block_increment ]->ID ); ?>">
 			<div class="drop-target">
 				<div class="block" id="mesh-block-editor-<?php esc_attr_e( $blocks[ $block_increment ]->ID ); ?>" data-mesh-block-id="<?php esc_attr_e( $blocks[ $block_increment ]->ID ); ?>">

@@ -29,7 +29,6 @@ class Mesh_AJAX {
 		/**
 		 * Since 1.1
 		 */
-
 		add_action( 'wp_ajax_mesh_trash_blocks',          array( $this, 'mesh_trash_hidden_blocks' ) );
 	}
 

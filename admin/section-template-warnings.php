@@ -18,14 +18,14 @@ if ( ! function_exists( 'add_action' ) ) {
 
 if ( ! empty( $selected_template ) && count( $blocks ) > $templates[ $selected_template ]['blocks'] ) : ?>
 	<?php if ( empty( $mesh_notifications['moreblocks'] ) ) : ?>
-		<div id="mesh-warnings-<?php esc_attr_e( $section->ID ); ?>" class="description notice notice-info is-dismissible below-h2 mesh-row" data-type="moreblocks">
+		<div id="mesh-warnings-<?php esc_attr_e( $section->ID ); ?>" class="description notice notice-info below-h2 mesh-row" data-type="moreblocks">
 			<div class="mesh-columns-8 columns">
 				<?php esc_html_e( 'The number of columns selected is causing some content to be hidden.', 'mesh' ); ?>
 				<br/>
 				<?php esc_html_e( 'Increase the column number to access that content. Or...', 'mesh' ); ?>
 			</div>
             <div class="mesh-columns-4 columns">
-                <a href="#" class="right button secondary"><?php esc_html_e( 'Trash Hidden Columns', 'mesh' ); ?></a>
+                <a href="#" class="right button secondary"><span class="dashicons dashicons-trash"></span><?php esc_html_e( 'Trash Hidden Columns', 'mesh' ); ?></a>
             </div>
 		</div>
 	<?php endif; ?>

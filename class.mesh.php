@@ -314,8 +314,6 @@ class Mesh {
 		?>
 		<div id="mesh-container">
 			<?php wp_nonce_field( 'mesh_content_sections_nonce', 'mesh_content_sections_nonce' ); ?>
-
-
 			<div class="notice below-h2 mesh-row mesh-main-ua-row<?php if ( empty( $content_sections ) ) { echo ' hide'; } ?>">
 				<div class="mesh-columns-3 columns">
 					<p class="title mesh-admin-title"><?php esc_html_e( 'Mesh', 'mesh' ); ?></p>

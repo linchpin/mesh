@@ -89,9 +89,6 @@ class Mesh_Templates {
 		$mesh_post_types = array_keys( get_option( 'mesh_post_types' ) );
 		$available_post_types = array_merge( array( 'mesh_template' ), $mesh_post_types );
 
-		/*
-		 * @todo remove this from frontend display once ready for public release
-		 */
 		register_taxonomy( 'mesh_template_usage', $available_post_types, array(
 			'labels' => array(
 				'name'              => _x( 'Mesh Template', 'Mesh Template', 'mesh' ),
@@ -278,11 +275,8 @@ class Mesh_Templates {
 	 */
 	function add_layout_column( $column, $post_id ) {
 
-		error_log( $column );
-
 		switch ( $column ) {
 			case 'taxonomy-mesh_template_usage' :
-				echo 'boom';
 				break;
 			case 'layout' :
 

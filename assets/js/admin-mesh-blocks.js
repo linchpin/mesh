@@ -294,8 +294,6 @@ mesh.blocks = function ( $ ) {
                             if ( parseInt( tinymce.majorVersion ) >= 4 ) {
                                 tinymce.execCommand( 'mceRemoveEditor', false, editor_id );
                             }
-                            
-                            // tinymce.init( tinyMCEPreInit.mceInit[ editor_id ] );
 
                             $( this ).closest( '.wp-editor-wrap' ).on( 'click.wp-editor', function() {
                                 if ( this.id ) {

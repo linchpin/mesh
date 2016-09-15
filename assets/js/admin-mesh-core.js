@@ -44,6 +44,9 @@ mesh.admin = function ( $ ) {
 				.on('click', '.mesh-featured-image-choose', self.choose_background )
 				.on('click.OpenMediaManager', '.mesh-featured-image-choose', self.choose_background )
 
+				// @since 1.1
+				.on('click', '.mesh-trash-extra-blocks', self.trash_extra_blocks )
+
 				.on('click', '.mesh-section-update',        self.section_save )
 				.on('click', '.mesh-section-save-draft',    self.section_save_draft )
 				.on('click', '.mesh-section-publish',       self.section_publish )
@@ -123,7 +126,7 @@ mesh.admin = function ( $ ) {
 			event.preventDefault();
 			event.stopPropagation();
 
-			$('#mesh-container').find('.handlediv').each(function () {
+			$meta_box_container.find('.handlediv').each(function () {
 				if ( 'false' == $(this).attr('aria-expanded') ) {
 					$(this).trigger('click').promise(function() {
 						// Loop through all of our edits in the response
@@ -150,7 +153,7 @@ mesh.admin = function ( $ ) {
 				event.stopPropagation();
 			}
 
-			$('#mesh-container').find('.handlediv').each(function () {
+			$meta_box_container.find('.handlediv').each(function () {
 				if ( 'true' == $(this).attr('aria-expanded') ) {
 					$(this).trigger('click');
 				}
@@ -181,6 +184,8 @@ mesh.admin = function ( $ ) {
 
 			$spinner.addClass('is-active');
 
+			self.disable_controls( $section );
+
 			$.post( ajaxurl, {
 				action                  : 'mesh_choose_layout',
 				mesh_post_id             : mesh_data.post_id,
@@ -196,7 +201,7 @@ mesh.admin = function ( $ ) {
 
 					$tinymce_editors = $section.find('.wp-editor-area');
 
-                    // @todo this should be done more efficiently later: Needed to Firefox but will be fixed
+                    // @todo this should be done more efficiently later: Needed for Firefox but will be fixed
                     // once consolidated. Can't clear html before removing or tinymce throws an error
 					$tinymce_editors.each( function() {
 						if ( parseInt( tinymce.majorVersion ) >= 4 ) {
@@ -215,12 +220,10 @@ mesh.admin = function ( $ ) {
 					blocks.rerender_blocks( $tinymce_editors );
 
 					// self.setup_notifications( $layout );
-
-					$spinner.removeClass('is-active');
-
-				} else {
-					$spinner.removeClass('is-active');
 				}
+				self.enable_controls( $section );
+
+				$spinner.removeClass('is-active');
 			});
 		},
 
@@ -473,12 +476,9 @@ mesh.admin = function ( $ ) {
 			event.preventDefault();
 			event.stopPropagation();
 
-			var $this = $(this),
-				$reorder_spinner = $this.siblings('.spinner');
+			var $this = $(this);
 
-			$expand_button.addClass('disabled');
-			$add_button.addClass('disabled');
-			$collapse_button.addClass('disabled');
+			self.disable_controls( $meta_box_container );
 
 			$meta_box_container.addClass('mesh-is-ordering');
 
@@ -556,9 +556,9 @@ mesh.admin = function ( $ ) {
 			$reorder_spinner.addClass( 'is-active' );
 
 			$meta_box_container.removeClass('mesh-is-ordering');
-			$expand_button.removeClass('disabled');
-			$add_button.removeClass('disabled');
-			$collapse_button.removeClass('disabled');
+
+			self.enable_controls( $meta_box_container );
+
 			$reorder_button.text( mesh_data.strings.reorder ).addClass('mesh-section-reorder').removeClass('mesh-save-order button-primary');
 
 			$('.mesh-postbox', $section_container).each(function(){
@@ -805,6 +805,80 @@ mesh.admin = function ( $ ) {
 				eq_height = this_height > eq_height ? this_height : eq_height;
 			}).height(eq_height);
 
+		},
+
+		/**
+		 * Remove any extra non visible blocks from our section
+		 * through an ajax call.
+		 *
+		 * @since 1.1
+		 *
+		 * @param event
+		 */
+		trash_extra_blocks : function(event) {
+			event.preventDefault();
+			event.stopPropagation();
+
+			var $this = $(this),
+				$postbox = $this.parents('.mesh-postbox'),
+				section_id = $postbox.attr( 'data-mesh-section-id' );
+
+			self.disable_controls( $postbox );
+
+			$.post( ajaxurl, {
+				action: 'mesh_trash_extra_blocks',
+				mesh_post_id: mesh_data.post_id,
+				mesh_section_id: section_id,
+				mesh_remove_section_nonce: mesh_data.choose_layout_nonce
+			}, function( response){
+				if ( '1' === response ) {
+
+					var $notice = $postbox.find('description.notice');
+
+					$notice.fadeOut(400, function () {
+						$notice.remove();
+					});
+
+				} else if( '-1' === response ) {
+					console.log( 'There was an error' );
+				}
+
+				self.enable_controls( $postbox );
+
+			});
+		},
+
+		/**
+		 * Disable all controls.
+		 *
+		 * This is best used when you are awaiting a
+		 * response from an ajax call or if you are in
+		 * a multi step option that shouldn't be interrupted
+		 * by another action.
+		 *
+		 * @since 1.1
+		 */
+		disable_controls : function( $tgt) {
+			$expand_button.addClass('disabled');
+			$add_button.addClass('disabled');
+			$collapse_button.addClass('disabled');
+
+			$('.disabled-overlay').remove(); // Make sure we remove any instance of our overlay.
+
+			$tgt.find('.inside').css('position','relative').prepend( '<div class="disabled-overlay" />' );
+		},
+
+		/**
+		 * Enable all controls
+		 *
+		 * @since 1.1
+		 */
+		enable_controls : function( $tgt ) {
+			$expand_button.removeClass('disabled');
+			$add_button.removeClass('disabled');
+			$collapse_button.removeClass('disabled');
+
+			$tgt.find('.inside').find( '.disabled-overlay' ).remove();
 		}
 	};
 } ( jQuery );
