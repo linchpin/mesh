@@ -25,7 +25,7 @@ if ( ! empty( $selected_template ) && count( $blocks ) > $templates[ $selected_t
 				<?php esc_html_e( 'Increase the column number to access that content. Or...', 'mesh' ); ?>
 			</div>
             <div class="mesh-columns-4 columns">
-                <a href="#" class="right button secondary"><span class="dashicons dashicons-trash"></span><?php esc_html_e( 'Trash Hidden Columns', 'mesh' ); ?></a>
+                <a href="#" class="right button secondary mesh-trash-extra-blocks"><span class="dashicons dashicons-trash"></span><?php esc_html_e( 'Trash Hidden Columns', 'mesh' ); ?></a>
             </div>
 		</div>
 	<?php endif; ?>

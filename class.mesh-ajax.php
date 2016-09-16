@@ -29,7 +29,7 @@ class Mesh_AJAX {
 		/**
 		 * Since 1.1
 		 */
-		add_action( 'wp_ajax_mesh_trash_blocks',          array( $this, 'mesh_trash_hidden_blocks' ) );
+		add_action( 'wp_ajax_mesh_trash_hidden_blocks',          array( $this, 'mesh_trash_hidden_blocks' ) );
 	}
 
 	/**
@@ -164,15 +164,13 @@ class Mesh_AJAX {
 	function mesh_trash_hidden_blocks() {
 		check_ajax_referer( 'mesh_choose_layout_nonce', 'mesh_choose_layout_nonce' );
 
-		if ( ! $selected_template = sanitize_text_field( $_POST['mesh_section_layout'] ) ) {
-			$selected_template = 'mesh-columns-1.php';
-		}
-
 		$section_id = (int) $_POST['mesh_section_id'];
 
 		if ( empty( $section_id ) || ! current_user_can( 'edit_post', $section_id ) ) {
 			wp_die( -1 );
 		}
+
+		$selected_template = get_post_meta( $section_id, '_mesh_template', true );
 
 		$templates     = mesh_get_templates();
 		$number_needed = $templates[ $selected_template ]['blocks'];

@@ -1871,14 +1871,14 @@ mesh.admin = function ( $ ) {
 			self.disable_controls( $postbox );
 
 			$.post( ajaxurl, {
-				action: 'mesh_trash_extra_blocks',
+				action: 'mesh_trash_hidden_blocks',
 				mesh_post_id: mesh_data.post_id,
 				mesh_section_id: section_id,
-				mesh_remove_section_nonce: mesh_data.choose_layout_nonce
+				mesh_choose_layout_nonce: mesh_data.choose_layout_nonce
 			}, function( response){
 				if ( '1' === response ) {
 
-					var $notice = $postbox.find('description.notice');
+					var $notice = $postbox.find('.description.notice');
 
 					$notice.fadeOut(400, function () {
 						$notice.remove();
