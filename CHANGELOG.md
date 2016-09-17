@@ -8,7 +8,8 @@
  - Preliminary remove Mesh Settings on Uninstall.
  - You can now filter how many mesh_templates `mesh_templates_per_page` are queried if you have a lot of templates (More than 50)
  - Better version tracking and upgrade process.
- - You can now filter the output of `mesh_loop_end`. An example would be to stop teh default output of mesh_display_sections
+ - You can now filter the output of `mesh_loop_end`. An example would be to stop the default output of mesh_display_sections.
+ - Better "in progress and busy" state of page building.
  
  ### Fixed
  - Typo in Mesh settings text field utility method.
@@ -17,6 +18,7 @@
  - Minor security improvements.
  - Now running Mesh admin sections through wp_kses with a custom set of whitelisted elements and attributes.
  - After deleting all sections within a post you had to refresh the pages before you could get your controls back.
+ - New sections could not toggle post box collapse with out a page refresh.
  
  ### Updated
  - Some localization strings needed sprucing up (old MCS references).

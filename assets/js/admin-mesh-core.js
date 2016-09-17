@@ -161,6 +161,53 @@ mesh.admin = function ( $ ) {
 		},
 
 		/**
+		 * This method is only used when a new section is added
+		 * to a post. The post toggle action is not bound to the document
+		 * or body so we are replicating what is happening from core.
+		 *
+		 * @since 1.1
+		 *
+		 * @param event
+		 */
+		toggle_collapse : function( event ) {
+			var $el = $( this ),
+				p = $el.parent( '.postbox' ),
+				id = p.attr( 'id' ),
+				ariaExpandedValue;
+
+			if ( 'dashboard_browser_nag' === id ) {
+				return;
+			}
+
+			p.toggleClass( 'closed' );
+
+			ariaExpandedValue = ! p.hasClass( 'closed' );
+
+			if ( $el.hasClass( 'handlediv' ) ) {
+				// The handle button was clicked.
+				$el.attr( 'aria-expanded', ariaExpandedValue );
+			} else {
+				// The handle heading was clicked.
+				$el.closest( '.postbox' ).find( 'button.handlediv' )
+					.attr( 'aria-expanded', ariaExpandedValue );
+			}
+
+			if ( postboxes.page !== 'press-this' ) {
+				postboxes.save_state( postboxes.page );
+			}
+
+			if ( id ) {
+				if ( !p.hasClass('closed') && $.isFunction( postboxes.pbshow ) ) {
+					postboxes.pbshow( id );
+				} else if ( p.hasClass('closed') && $.isFunction( postboxes.pbhide ) ) {
+					postboxes.pbhide( id );
+				}
+			}
+
+			$document.trigger( 'postbox-toggled', p );
+		},
+
+		/**
 		 * Choose what layout is used for the section
 		 *
 		 * @since 0.1.0
@@ -248,8 +295,9 @@ mesh.admin = function ( $ ) {
 				return false;
 			}
 
-			$this.addClass('disabled active');
-			$this.parent('mesh-main-ua-row').find('.plain-link').addClass('disabled');
+			self.disable_controls( $meta_box_container );
+
+			$this.addClass('active');
 
 			$spinner.addClass('is-active');
 
@@ -268,19 +316,14 @@ mesh.admin = function ( $ ) {
 					$section_container.append( $response );
 					$spinner.removeClass('is-active');
 
-					$this.removeClass('disabled');
-					$this.parents('mesh-main-ua-row').find('.plain-link').addClass('removeClass');
+					$this.removeClass('active');
 
 					if ( $empty_msg.length ) {
 						$empty_msg.fadeOut('fast');
 						$controls.fadeIn('fast');
 					}
 
-					var $postboxes = $('.mesh-section', $meta_box_container );
-
-					if ( $postboxes.length > 1 ) {
-						$reorder_button.removeClass( 'disabled' );
-					}
+					$section_container.find( '.handlediv' ).on( 'click', self.toggle_collapse );
 
 					blocks.rerender_blocks( $tinymce_editors );
 
@@ -290,6 +333,8 @@ mesh.admin = function ( $ ) {
 					setTimeout(function () {
 						mesh.pointers.show_pointer();
 					}, 250);
+
+					self.enable_controls( $meta_box_container );
 
 				} else {
 					$spinner.removeClass('is-active');
@@ -862,6 +907,13 @@ mesh.admin = function ( $ ) {
 			$expand_button.addClass('disabled');
 			$add_button.addClass('disabled');
 			$collapse_button.addClass('disabled');
+			$reorder_button.addClass( 'disabled' );
+
+			var $postboxes = $( '.mesh-section', $meta_box_container );
+
+			if ( $postboxes.length > 1 ) {
+				$reorder_button.removeClass( 'disabled' );
+			}
 
 			$('.disabled-overlay').remove(); // Make sure we remove any instance of our overlay.
 
@@ -877,6 +929,14 @@ mesh.admin = function ( $ ) {
 			$expand_button.removeClass('disabled');
 			$add_button.removeClass('disabled');
 			$collapse_button.removeClass('disabled');
+
+			var $postboxes = $( '.mesh-section', $meta_box_container );
+
+			if ( $postboxes.length > 1 ) {
+				$reorder_button.removeClass( 'disabled' );
+			} else {
+				$reorder_button.addClass( 'disabled' );
+			}
 
 			$tgt.find('.inside').find( '.disabled-overlay' ).remove();
 		}
