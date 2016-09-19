@@ -1618,7 +1618,7 @@ mesh.admin = function ( $ ) {
 
 			$reorder_spinner.addClass( 'is-active' );
 
-			$('.mesh-postbox', $section_container).each( function( index ) {
+			$( '.mesh-postbox', $section_container ).each( function( index ) {
 
 				var $this = $(this);
 
@@ -1626,6 +1626,8 @@ mesh.admin = function ( $ ) {
 
 				$this.find('.section-menu-order').val( index );
 			});
+
+			console.log( section_ids );
 
 		//	response = self.save_section_ajax( section_ids, $reorder_spinner );
 		},
@@ -1651,8 +1653,12 @@ mesh.admin = function ( $ ) {
 
 			$reorder_button.text( mesh_data.strings.reorder ).addClass('mesh-section-reorder').removeClass('mesh-save-order button-primary');
 
-			$('.mesh-postbox', $section_container).each(function(){
-				section_ids.push( $(this).attr('data-mesh-section-id') );
+			$( '.mesh-postbox', $section_container ).each( function( index ){
+				var $this = $(this);
+
+				section_ids.push( $this.attr('data-mesh-section-id') );
+
+				$this.find('.section-menu-order').val( index );
 			});
 
 			if( $description.is(':visible') ) {
