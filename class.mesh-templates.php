@@ -30,15 +30,40 @@ class Mesh_Templates {
 	 * Mesh_Templates constructor.
 	 */
 	function __construct() {
-		add_action( 'init',       array( $this, 'init' ) );
+		add_action( 'init', array( $this, 'init' ) );
 		add_action( 'admin_menu', array( $this, 'add_mesh_menu' ) );
-		add_action( 'save_post',  array( $this, 'save_post' ), 20, 2 ); // This saving should happen later to make sure our data is available.
+		add_action( 'save_post', array(
+			$this,
+			'save_post',
+		), 20, 2 ); // This saving should happen later to make sure our data is available.
 
 		// Columns.
-		add_action( 'manage_mesh_template_posts_custom_column' , array( $this, 'add_layout_column' ), 10, 2 );
+		add_action( 'manage_mesh_template_posts_custom_column', array( $this, 'add_layout_column' ), 10, 2 );
 		add_filter( 'manage_mesh_template_posts_columns', array( $this, 'add_layout_columns' ) );
 
 		include LINCHPIN_MESH___PLUGIN_DIR . '/class.mesh-templates-duplicate.php';
+
+		add_action( 'load-edit.php', array( $this, 'admin_notices' ) );
+	}
+
+	/**
+	 * Add our welcome area to mesh templates
+	 *
+	 * since 1.1
+	 */
+	function admin_notices() {
+
+		$screen = get_current_screen();
+
+		// Only edit mesh template list screen:
+		if( 'edit-mesh_template' === $screen->id ) {
+			// Before:
+			add_action( 'all_admin_notices', array( $this, 'welcome_message' ) );
+		}
+	}
+
+	function welcome_message() {
+		include_once LINCHPIN_MESH___PLUGIN_DIR . 'admin/welcome.php';
 	}
 
 	/**

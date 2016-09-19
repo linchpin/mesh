@@ -10,6 +10,7 @@
  - Better version tracking and upgrade process.
  - You can now filter the output of `mesh_loop_end`. An example would be to stop the default output of mesh_display_sections.
  - Better "in progress and busy" state of page building.
+ - New Welcome message on Mesh Templates Post List
  
  ### Fixed
  - Typo in Mesh settings text field utility method.
