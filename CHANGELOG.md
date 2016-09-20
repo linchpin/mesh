@@ -1,6 +1,6 @@
 ##Change Log For Mesh
 
-## [1.1] - 2016-09-08
+## [1.1] - 2016-09-20
  
  ### Added
  - You can now create reusable templates.
@@ -22,6 +22,7 @@
  - After deleting all sections within a post you had to refresh the pages before you could get your controls back.
  - New sections could not toggle post box collapse with out a page refresh.
  - Ordering of sections was being lost when updating a post.
+ - If you added a section then immediately tried to resize a JS error would occur to do aria checks.
  
  ### Updated
  - Some localization strings needed sprucing up (old MCS references).

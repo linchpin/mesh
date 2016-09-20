@@ -174,6 +174,12 @@ function mesh_locate_template_files() {
 
 	// Loop through our local plugin templates.
 	foreach ( $plugin_template_files as $plugin_file => $plugin_file_full_path ) {
+
+	    // Skip the file if it doesn't exist.
+	    if ( ! file_exists( $plugin_file_full_path ) ) {
+	        continue;
+        }
+
 		if ( ! preg_match( '|Mesh Template:(.*)$|mi', file_get_contents( $plugin_file_full_path ), $header ) ) {
 			continue;
 		}

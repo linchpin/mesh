@@ -3,6 +3,7 @@ var mesh = mesh || {};
 mesh.admin = function ( $ ) {
 
 	var $body		        = $('body'),
+		$document           = $('document'),
 		$reorder_button     = $('.mesh-section-reorder'),
 		$add_button         = $('.mesh-section-add'),
 		$collapse_button    = $('.mesh-section-collapse'),
@@ -185,10 +186,6 @@ mesh.admin = function ( $ ) {
 				id = p.attr( 'id' ),
 				ariaExpandedValue;
 
-			if ( 'dashboard_browser_nag' === id ) {
-				return;
-			}
-
 			p.toggleClass( 'closed' );
 
 			ariaExpandedValue = ! p.hasClass( 'closed' );
@@ -333,7 +330,9 @@ mesh.admin = function ( $ ) {
 						$controls.fadeIn('fast');
 					}
 
-					$section_container.find( '.handlediv' ).on( 'click', self.toggle_collapse );
+					var $handle = $section_container.find( '.handlediv' );
+
+					$handle.attr( 'aria-expanded', true ).on( 'click', self.toggle_collapse );
 
 					blocks.rerender_blocks( $tinymce_editors );
 
