@@ -103,8 +103,8 @@ class Mesh_Templates_AJAX {
 			esc_html_e( 'No Templates Found. Did you build one yet?', 'mesh' );
 		} ?>
 		<p>
-			<a href="#" class="button primary mesh-template-start dashicons-before dashicons-plus"><?php esc_html_e( 'Select Template', 'mesh' ); ?></a>
-			<a href="#" class="button primary mesh-template-skip dashicons-before dashicons-plus"><?php esc_html_e( 'Nevermind Start from Scratch', 'mesh' ); ?></a>
+			<a href="#" class="button primary mesh-template-start dashicons-before dashicons-schedule"><?php esc_html_e( 'Select Template', 'mesh' ); ?></a>
+			<a href="#" class="button primary mesh-template-skip dashicons-before dashicons-plus-alt mesh-section-add"><?php esc_html_e( 'Nevermind Start from Scratch', 'mesh' ); ?></a>
 		</p>
 		<?php
 
