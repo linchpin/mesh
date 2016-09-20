@@ -49,19 +49,21 @@ class Mesh_Templates {
 	/**
 	 * Add our welcome area to mesh templates
 	 *
-	 * since 1.1
+	 * @since 1.1
 	 */
 	function admin_notices() {
 
 		$screen = get_current_screen();
 
-		// Only edit mesh template list screen:
-		if( 'edit-mesh_template' === $screen->id ) {
-			// Before:
+		// Only edit mesh template list screen.
+		if ( 'edit-mesh_template' === $screen->id ) {
 			add_action( 'all_admin_notices', array( $this, 'welcome_message' ) );
 		}
 	}
 
+	/**
+	 * Output our welcome markup
+	 */
 	function welcome_message() {
 		include_once LINCHPIN_MESH___PLUGIN_DIR . 'admin/welcome.php';
 	}

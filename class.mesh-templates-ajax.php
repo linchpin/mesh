@@ -24,8 +24,28 @@ class Mesh_Templates_AJAX {
 		add_action( 'wp_ajax_mesh_remove_template',      array( $this, 'remove_template' ) );
 		add_action( 'wp_ajax_mesh_change_template_type', array( $this, 'change_template_type' ) );
 
+		add_action( 'wp_ajax_mesh_template_update_welcome_panel', array( $this, 'update_welcome_panel' ) );
+
 		include_once LINCHPIN_MESH___PLUGIN_DIR . '/class.mesh-templates-duplicate.php';
 	}
+
+	/**
+	 * Close our welcome panel if the user doesn't want to see it anymore.
+     *
+     * @since 1.1
+	 */
+	function update_welcome_panel() {
+
+		check_ajax_referer( 'meshtemplatepanelnonce', 'meshtemplatepanelnonce' );
+
+		if ( ! current_user_can( 'edit_posts' ) ) {
+			wp_die( - 1 );
+		}
+
+		update_user_meta( get_current_user_id(), 'show_mesh_template_panel', empty( $_POST['visible'] ) ? 0 : 1 );
+
+		wp_die( 1 );
+    }
 
 	/**
 	 * Select a template from the mesh_template post type

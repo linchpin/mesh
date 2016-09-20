@@ -28,6 +28,16 @@ mesh.admin = function ( $ ) {
 		 */
 		init : function() {
 
+			if ( 'post' !== mesh_data.screen && 'edit' !== mesh_data.screen ) {
+				return;
+			}
+
+			if ( 'edit' === mesh_data.screen  ) {
+				templates = mesh.templates;
+				// Setup our controls for templates
+				templates.init();
+			}
+
 			self      = mesh.admin;
 			blocks    = mesh.blocks;
 			pointers  = mesh.pointers;

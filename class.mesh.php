@@ -780,7 +780,7 @@ class Mesh {
 	function admin_enqueue_scripts() {
 		global $current_screen, $post;
 
-		if ( 'post' !== $current_screen->base ) {
+		if ( 'post' !== $current_screen->base &&  ( 'edit' !== $current_screen->base && 'edit-mesh_template' !== $current_screen->ID ) ) {
 			return;
 		}
 
@@ -809,6 +809,7 @@ class Mesh {
 		$localized_data = array(
 			'post_id' => $post->ID,
 			'site_uri' => site_url(),
+            'screen' => $current_screen->base,
 			'choose_layout_nonce'   => wp_create_nonce( 'mesh_choose_layout_nonce' ),
 			'remove_section_nonce'  => wp_create_nonce( 'mesh_remove_section_nonce' ),
 			'add_section_nonce'     => wp_create_nonce( 'mesh_add_section_nonce' ),

@@ -10,7 +10,8 @@
  - Better version tracking and upgrade process.
  - You can now filter the output of `mesh_loop_end`. An example would be to stop the default output of mesh_display_sections.
  - Better "in progress and busy" state of page building.
- - New Welcome message on Mesh Templates Post List
+ - New Welcome message on Mesh Templates Post List to help guide users
+ - Initial implementation for documentation generation.
  
  ### Fixed
  - Typo in Mesh settings text field utility method.
@@ -20,6 +21,7 @@
  - Now running Mesh admin sections through wp_kses with a custom set of whitelisted elements and attributes.
  - After deleting all sections within a post you had to refresh the pages before you could get your controls back.
  - New sections could not toggle post box collapse with out a page refresh.
+ - Ordering of sections was being lost when updating a post.
  
  ### Updated
  - Some localization strings needed sprucing up (old MCS references).

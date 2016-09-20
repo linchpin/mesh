@@ -286,6 +286,10 @@ mesh.blocks = function ( $ ) {
             self = mesh.blocks;
             admin = mesh.admin;
 
+            if ( 'post' !== mesh_data.screen ) {
+                return;
+            }
+
             $body
                 .on('click', '.mesh-block-featured-image-trash', self.remove_background )
                 .on('click', '.mesh-block-featured-image-choose', self.choose_background )
@@ -839,7 +843,8 @@ mesh.templates = function ( $ ) {
     var $body = $('body'),
         // Instance of our template controller
         self,
-        blocks;
+        blocks,
+        $welcomePanel = $( '#mesh-template-welcome-panel' );
 
     return {
 
@@ -849,6 +854,19 @@ mesh.templates = function ( $ ) {
         init : function() {
 
             self   = mesh.templates;
+
+            $welcomePanel.find( '.mesh-template-welcome-panel-close' ).on( 'click', function( event ) {
+                event.preventDefault();
+
+                $welcomePanel.addClass('hidden');
+
+                self.updateWelcomePanel( 0 );
+            });
+
+            if ( 'post' !== mesh_data.screen ) {
+                return;
+            }
+
             blocks = mesh.blocks;
 
             $body
@@ -858,6 +876,21 @@ mesh.templates = function ( $ ) {
                 .on('click', '.mesh-template-type',        self.select_template_type )
                 .on('click', '.mesh-template-change-type', self.change_template_type )
                 .on('click', '.mesh-template-remove',      self.remove_template );
+
+        },
+
+        /**
+         * Show or Hide our Mesh Welcome Panel
+         * Based on the Welcome Panel in WP Core
+         *
+         * @param visible
+         */
+        updateWelcomePanel : function( visible ) {
+            $.post( ajaxurl, {
+                action: 'mesh_template_update_welcome_panel',
+                visible: visible,
+                meshtemplatepanelnonce: $( '#mesh-templates-welcome-panel-nonce' ).val()
+            });
         },
 
         remove_template : function( event ) {
@@ -1072,6 +1105,16 @@ mesh.admin = function ( $ ) {
 		 * Initialize our script
 		 */
 		init : function() {
+
+			if ( 'post' !== mesh_data.screen && 'edit' !== mesh_data.screen ) {
+				return;
+			}
+
+			if ( 'edit' === mesh_data.screen  ) {
+				templates = mesh.templates;
+				// Setup our controls for templates
+				templates.init();
+			}
 
 			self      = mesh.admin;
 			blocks    = mesh.blocks;

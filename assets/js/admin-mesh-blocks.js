@@ -23,6 +23,10 @@ mesh.blocks = function ( $ ) {
             self = mesh.blocks;
             admin = mesh.admin;
 
+            if ( 'post' !== mesh_data.screen ) {
+                return;
+            }
+
             $body
                 .on('click', '.mesh-block-featured-image-trash', self.remove_background )
                 .on('click', '.mesh-block-featured-image-choose', self.choose_background )

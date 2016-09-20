@@ -36,10 +36,10 @@
 		top: 10px;
 	};
 
-    margin : 10px 0 4px;
+    margin : 10px 0 10px;
 
     &.bottom {
-    	margin-top: 4px;
+    	margin-top: 10px;
     }
 
 	.lead {
@@ -644,6 +644,37 @@
   .welcome-panel {
 	margin: 30px 20px 16px 0;
   }
+
+  .mesh-template-welcome-panel-close {
+	position: absolute;
+	top: 10px;
+	right: 20px;
+	padding: 10px 15px 10px 21px;
+	font-size: 13px;
+	line-height: 1.23076923;
+	text-decoration: none;
+
+	&:before {
+	  position: absolute;
+	  top: 8px;
+	  left: 0;
+	  -webkit-transition: all .1s ease-in-out;
+	  transition: all .1s ease-in-out;
+	  background: none;
+	  color: #b4b9be;
+	  content: "\f153";
+	  display: block;
+	  font: normal 16px/20px dashicons;
+	  speak: none;
+	  height: 20px;
+	  text-align: center;
+	  width: 20px;
+	  -webkit-font-smoothing: antialiased;
+	  -moz-osx-font-smoothing: grayscale;
+	}
+  }
+
+
 }
 
 .disabled-overlay {
