@@ -71,13 +71,21 @@ use \Michelf\MarkdownExtra;
 					<?php include_once( LINCHPIN_MESH___PLUGIN_DIR . '/admin/settings-meta-box-display.php' ); ?>
 				<?php elseif ( 'changelog' === $active_tab ) : ?>
 					<?php
-						$readme = file_get_contents( LINCHPIN_MESH___PLUGIN_DIR . '/CHANGELOG.md', true );
-						echo MarkdownExtra::defaultTransform( $readme ); // WPCS: ok.
+                    $changelog_path = LINCHPIN_MESH___PLUGIN_DIR . '/CHANGELOG.md';
+
+                    if ( file_exists( $changelog_path ) ) {
+                        $changelog = file_get_contents( $changelog_path, true );
+                        echo MarkdownExtra::defaultTransform( $changelog ); // WPCS: ok.
+                    }
 					?>
 				<?php elseif ( 'faq' === $active_tab ) : ?>
 					<?php
-						$readme = file_get_contents( LINCHPIN_MESH___PLUGIN_DIR . '/README.md', true );
-						echo MarkdownExtra::defaultTransform( $readme ); // WPCS: ok.
+                    $readme_path = LINCHPIN_MESH___PLUGIN_DIR . '/README.md';
+
+                    if ( file_exists( $readme_path ) ) {
+                        $readme = file_get_contents( $readme_path, true );
+                        echo MarkdownExtra::defaultTransform( $readme ); // WPCS: ok.
+                    }
 					?>
 				<?php endif; ?>
 			</div>
