@@ -126,9 +126,9 @@ class Mesh_Upgrades {
 
 		update_option( 'mesh_post_types', $available_post_types );
 
-		// Add our taxonomy terms
-		wp_insert_term( 'reference', 'mesh_template_type' );
-		wp_insert_term( 'starter', 'mesh_template_type' );
+		// Add our taxonomy terms.
+		wp_insert_term( 'reference', 'mesh_template_types' );
+		wp_insert_term( 'starter', 'mesh_template_types' );
 
 		update_option( 'mesh_version', '1.1' );
 		$GLOBALS['mesh_current_version'] = '1.1';

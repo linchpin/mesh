@@ -62,6 +62,8 @@ class Mesh_Templates_AJAX {
 			wp_die();
 		}
 
+		global $post;
+
 		$mesh_templates = new WP_Query( array(
 			'post_type'      => 'mesh_template',
 			'posts_per_page' => apply_filters( 'mesh_templates_per_page', 50 ),
@@ -71,6 +73,7 @@ class Mesh_Templates_AJAX {
 
 		$mesh_template_selectable = true;
 		$default_template = false;
+
 		if ( $mesh_templates->have_posts() ) {
 			while ( $mesh_templates->have_posts() ) {
 				global $post;
@@ -99,13 +102,18 @@ class Mesh_Templates_AJAX {
 			);
 			$default_template = true;
 			include LINCHPIN_MESH___PLUGIN_DIR . 'admin/template-layout-preview.php';
+
+			wp_reset_postdata();
 		} else {
 			esc_html_e( 'No Templates Found. Did you build one yet?', 'mesh' );
 		} ?>
+
+
 		<p>
 			<a href="#" class="button primary mesh-template-start dashicons-before dashicons-schedule"><?php esc_html_e( 'Select Template', 'mesh' ); ?></a>
 			<a href="#" class="button primary mesh-template-skip dashicons-before dashicons-plus-alt mesh-section-add"><?php esc_html_e( 'Nevermind Start from Scratch', 'mesh' ); ?></a>
 		</p>
+
 		<?php
 
 		include LINCHPIN_MESH___PLUGIN_DIR . 'admin/template-layout-usage.php';

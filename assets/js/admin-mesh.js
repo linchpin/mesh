@@ -957,7 +957,12 @@ mesh.templates = function ( $ ) {
             event.preventDefault();
             event.stopPropagation();
 
-            $('#mesh-template-usage').show();
+            // If we have a mesh template. Always use it as a starting point.
+            if( 'mesh_template' !== mesh_data.post_type) {
+                $('#mesh-template-usage').show();
+            } else {
+                $('.mesh-starter-template').trigger('click');
+            }
         },
 
         /**

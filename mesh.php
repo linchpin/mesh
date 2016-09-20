@@ -32,15 +32,15 @@ define( 'LINCHPIN_MESH___PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
  *
  * @since 1.1
  */
-define( 'LINCHPIN_MESH_DEBUG_MODE', false );
+define( 'LINCHPIN_MESH_DEBUG_MODE', true );
 
 $GLOBALS['mesh_current_version'] = get_option( 'mesh_version', '0.0' ); // Get our current Mesh Version.
 
-include_once 'class.mesh-upgrades.php';
 include_once 'class.mesh-settings.php';
 include_once 'class.mesh-templates.php';
 include_once 'class.mesh-pointers.php';
 include_once 'class.mesh.php';
+include_once 'class.mesh-upgrades.php';
 include_once 'class.mesh-reponsive-grid.php';
 
 $mesh          = new Mesh();
