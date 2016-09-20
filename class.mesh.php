@@ -601,7 +601,7 @@ class Mesh {
 				}
 
 				if ( ! empty( $p->post_content ) ) {
-					$page_content_sections[] = strip_tags( $p->post_content );
+					$page_content_sections[] = $p->post_content;
 				}
 			}
 
@@ -808,6 +808,7 @@ class Mesh {
 
 		$localized_data = array(
 			'post_id' => $post->ID,
+            'post_type' => $post->post_type,
 			'site_uri' => site_url(),
             'screen' => $current_screen->base,
 			'choose_layout_nonce'   => wp_create_nonce( 'mesh_choose_layout_nonce' ),

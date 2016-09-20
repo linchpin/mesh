@@ -432,6 +432,7 @@ mesh.admin = function ( $ ) {
 				action: 'mesh_save_section',
 				mesh_section_id: section_id,
 				mesh_section_data: form_data,
+				mesh_post_type: mesh_data.post_type,
 				mesh_save_section_nonce: mesh_data.save_section_nonce
 			}, function( response ) {
 

@@ -32,10 +32,7 @@ class Mesh_Templates {
 	function __construct() {
 		add_action( 'init', array( $this, 'init' ) );
 		add_action( 'admin_menu', array( $this, 'add_mesh_menu' ) );
-		add_action( 'save_post', array(
-			$this,
-			'save_post',
-		), 20, 2 ); // This saving should happen later to make sure our data is available.
+		add_action( 'save_post', array( $this, 'save_post', ), 20, 2 ); // This saving should happen later to make sure our data is available.
 
 		// Columns.
 		add_action( 'manage_mesh_template_posts_custom_column', array( $this, 'add_layout_column' ), 10, 2 );
@@ -220,7 +217,7 @@ class Mesh_Templates {
 			// Create a new row per section.
 			$mesh_layout[ sanitize_title( 'row-' . $section_id ) ] = array();
 
-			$count ++;
+			$count++;
 
 			// Process the section's blocks.
 			$blocks = array();
