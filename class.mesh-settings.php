@@ -46,9 +46,7 @@ class Mesh_Settings {
 	 */
 	public static function add_admin_menu() {
 		add_options_page( LINCHPIN_MESH_PLUGIN_NAME, LINCHPIN_MESH_PLUGIN_NAME, 'manage_options', self::$settings_page, array( 'Mesh_Settings', 'add_options_page' ) );
-
-		add_menu_page( LINCHPIN_MESH_PLUGIN_NAME, LINCHPIN_MESH_PLUGIN_NAME, 'manage_options', self::$settings_page, array( 'Mesh_Settings', 'add_options_page' ) );
-		add_submenu_page( 'mesh', __( 'Settings', 'mesh' ), __( 'Settings', 'mesh' ), 'manage_options', 'mesh' );
+		add_submenu_page( 'edit.php?post_type=mesh_template', __( 'Settings', 'mesh' ), __( 'Settings', 'mesh' ), 'manage_options', 'mesh' );
 	}
 
 	/**

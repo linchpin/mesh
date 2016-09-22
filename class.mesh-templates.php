@@ -31,7 +31,6 @@ class Mesh_Templates {
 	 */
 	function __construct() {
 		add_action( 'init', array( $this, 'init' ) );
-		add_action( 'admin_menu', array( $this, 'add_mesh_menu' ) );
 		add_action( 'save_post', array( $this, 'save_post', ), 20, 2 ); // This saving should happen later to make sure our data is available.
 
 		// Columns.
@@ -77,12 +76,12 @@ class Mesh_Templates {
 		$labels = array(
 			'name'                => _x( 'Mesh Templates', 'Mesh Templates', 'mesh' ),
 			'singular_name'       => _x( 'Mesh Template', 'Mesh Template', 'mesh' ),
-			'menu_name'           => __( 'Mesh Template', 'mesh' ),
+			'menu_name'           => __( 'Mesh', 'mesh' ),
 			'name_admin_bar'      => __( 'Mesh Template', 'mesh' ),
 			'parent_item_colon'   => __( 'Parent Mesh Template:', 'mesh' ),
-			'all_items'           => __( 'All Mesh Templates', 'mesh' ),
+			'all_items'           => __( 'Mesh Templates', 'mesh' ),
 			'add_new_item'        => __( 'Add New Mesh Template', 'mesh' ),
-			'add_new'             => __( 'Add New', 'mesh' ),
+			'add_new'             => __( 'Add Template', 'mesh' ),
 			'new_item'            => __( 'New Mesh Template', 'mesh' ),
 			'edit_item'           => __( 'Edit Mesh Template', 'mesh' ),
 			'update_item'         => __( 'Update Mesh Template', 'mesh' ),
@@ -155,14 +154,6 @@ class Mesh_Templates {
 	}
 
 	/**
-	 * Add Mesh Template Menu Item
-	 */
-	public static function add_mesh_menu() {
-		add_submenu_page( 'mesh', __( 'View Templates', 'mesh' ) , __( 'View Templates', 'mesh' ), 'edit_posts', 'edit.php?post_type=mesh_template' );
-		add_submenu_page( 'mesh', __( 'Add Template', 'mesh' ), __( 'Add Template', 'mesh' ), 'edit_posts', 'post-new.php?post_type=mesh_template' );
-	}
-
-	/**
 	 * Save our layout within simple post meta for easier retrieval later on.
 	 *
 	 * @access public
@@ -198,11 +189,91 @@ class Mesh_Templates {
 
 		remove_action( 'save_post', array( $this, 'save_post' ), 10 );
 
+		if ( ( defined( 'DOING_AJAX' ) && DOING_AJAX ) ) {
+			$mesh_layout_post_meta = get_post_meta( $post_id, '_mesh_template_layout', true );
+
+			$single_mesh_section = (array) $_POST['mesh-sections'];
+
+			$first_mesh_section_key = key( $single_mesh_section );
+			$single_mesh_section = array_shift( $_POST['mesh-sections'] );
+
+			$mesh_layout_preview = $this->update_template_single_section_preview( $first_mesh_section_key, $mesh_layout_post_meta, $single_mesh_section );
+
+		} else {
+			$mesh_layout_preview = $this->create_template_preview( $_POST['mesh-sections'] );
+		}
+
+
+		if ( ! empty( $mesh_layout_preview ) ) {
+			update_post_meta( $post_id, '_mesh_template_layout', $mesh_layout_preview );
+			wp_insert_term( $post->post_title, 'mesh_template_usage', array(
+				'slug' => $post->post_name,
+			) );
+		} else {
+			delete_post_meta( $post_id, '_mesh_template_layout' );
+			wp_delete_term( $post->post_title, 'mesh_template_usage', array(
+				'slug' => $post->post_name,
+			) );
+		}
+
+		add_action( 'save_post', array( $this, 'save_post' ), 10, 2 );
+	}
+
+	/**
+	 * On AJAX calls to update sections we still need to update our preview.
+	 * This will rebuild the preview but only update the section being passed
+	 * in the AJAX call.
+	 *
+	 * @since 1.1
+	 * @param int    $section_id       ID of section.
+	 * @param array  $mesh_layout_meta Array of our sections within our template
+	 * @param object $section          Single object of our new build.
+	 */
+	function update_template_single_section_preview( $section_id, $mesh_layout_meta, $section_data ) {
+
+		// Process the section's blocks.
+		$blocks = array();
+
+		if ( ! empty( $section_data['blocks'] ) ) {
+			$blocks = $section_data['blocks'];
+		}
+
+		$mesh_layout_meta[ sanitize_title( 'row-' . $section_id ) ]['blocks'] = array(); // reset
+
+		foreach ( $blocks as $block_id => $block_data ) {
+			$block = get_post( (int) $block_id );
+
+			if ( empty( $block ) || 'publish' != get_post_status( $block ) || 'mesh_section' !== $block->post_type || $section_id !== $block->post_parent ) {
+				continue;
+			}
+
+			$offset = (int) $section_data['blocks'][ sanitize_title( $block_id ) ]['offset'];
+			$columns = (int) $section_data['blocks'][ sanitize_title( $block_id ) ]['columns'];
+
+			$mesh_layout_meta[ sanitize_title( 'row-' . $section_id ) ]['blocks'][] = array(
+				'columns' => $columns - $offset,
+				'offset' => $offset,
+			);
+		}
+
+		return $mesh_layout_meta;
+	}
+
+	/**
+	 * Create the preview "thumbnail" of our template.
+	 *
+	 * Used in the post list and the add new section process
+	 *
+	 * $sections array Our sections to build out.
+	 *
+	 * @since 1.1
+	 */
+	function create_template_preview( $sections ) {
 		$count = 0;
 
 		$mesh_layout = array();
 
-		foreach ( $_POST['mesh-sections'] as $section_id => $section_data ) {
+		foreach ( $sections as $section_id => $section_data ) {
 
 			$section = get_post( (int) $section_id );
 
@@ -243,24 +314,13 @@ class Mesh_Templates {
 			}
 		}
 
-		if ( ! empty( $mesh_layout ) ) {
-			update_post_meta( $post_id, '_mesh_template_layout', $mesh_layout );
-			wp_insert_term( $post->post_title, 'mesh_template_usage', array(
-				'slug' => $post->post_name,
-			) );
-		} else {
-			delete_post_meta( $post_id, '_mesh_template_layout' );
-			wp_delete_term( $post->post_title, 'mesh_template_usage', array(
-				'slug' => $post->post_name,
-			) );
-		}
-
-		add_action( 'save_post', array( $this, 'save_post' ), 10, 2 );
+		return $mesh_layout;
 	}
 
 	/**
 	 * Add Layout Column Title and also reorder out columns
 	 *
+	 * @since 1.1
 	 * @param int $columns The columns in the admin to iterate through.
 	 *
 	 * @return mixed
