@@ -341,6 +341,7 @@ class Mesh_Templates {
 				unset( $columns['date'] );
 				$columns['layout'] = __( 'Layout', 'mesh' );
 				$columns['title']  = $title;
+				$columns['mesh_template_uses'] = 'Uses';
 				$columns['taxonomy-mesh_template_usage'] = 'Usage';
 				$columns['date'] = $date;
 
@@ -360,7 +361,16 @@ class Mesh_Templates {
 	function add_layout_column( $column, $post_id ) {
 
 		switch ( $column ) {
-			case 'taxonomy-mesh_template_usage' :
+			case 'mesh_template_uses' :
+
+				$template_post = get_post( $post_id, array(
+					'field'	=> 'slug',
+				) );
+
+				$template_usage = get_term_by( 'slug', $template_post->post_name, 'mesh_template_usage' );
+
+				esc_html_e( (int) $template_usage->count );
+
 				break;
 			case 'layout' :
 
