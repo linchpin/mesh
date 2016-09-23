@@ -46,7 +46,7 @@ if ( ! has_term( 'reference', 'mesh_template_types', $post ) ) : ?>
 	        );
 
 	        if( $template->have_posts() ) {
-		        echo sprintf( wp_kses( __( 'This is a reference template. You must edit the the reference template:<a href="%s">%s</a>.', 'mesh' ), array(  'a' => array( 'href' => array() ) ) ), esc_url( get_edit_post_link( $template->posts[0]->ID ) ),  esc_html( $template->posts[0]->post_name ) );
+		        echo sprintf( wp_kses( __( 'This is a reference template. You must edit the the reference template:<a href="%s">%s</a>.', 'mesh' ), array(  'a' => array( 'href' => array() ) ) ), esc_url( get_edit_post_link( $template->posts[0]->ID ) ), esc_html( $template->posts[0]->post_title ) );
 	        }
         }
         ?>
