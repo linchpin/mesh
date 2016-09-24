@@ -107,7 +107,7 @@ class Mesh_Templates {
 			'show_in_nav_menus' => false,
 			'exclude_from_search' => true,
 			'publicly_queryable' => false,
-			'menu_icon' => 'dashicons-schedule',
+			'menu_icon' => 'dashicons-mesh-logo',
 			'show_ui' => true,
 			'rewrite' => false,
 		) );
