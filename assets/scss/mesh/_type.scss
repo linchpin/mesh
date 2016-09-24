@@ -1,15 +1,43 @@
 /**
  *
- * 01. Alignment
- * 02. Buttons
- * 03. Helper Classes
+ * 01. Font icons
+ * 02. Alignment
+ * 03. Buttons
+ * 04. Helper Classes
  *
  **/
+
+// 01. Font icons
+
+// Mesh logo font icon. Can be used anywhere in the WordPress admin
+@font-face {
+	font-family: 'mesh';
+	src:  url('/fonts/mesh.eot?9llfsr');
+	src:  url('/fonts/mesh.eot?9llfsr#iefix') format('embedded-opentype'),
+	url('/fonts/mesh.ttf?9llfsr') format('truetype'),
+	url('/fonts/mesh.woff?9llfsr') format('woff'),
+	url('/fonts/mesh.svg?9llfsr#mesh') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+// Apply the Mesh font icon to the menu icon
+.dashicons-mesh-logo:before {
+	content: "\2635";
+	font-family: 'mesh' !important;
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
 
 // We want all styles in the context of the MCS container, as to not overwrite any
 // WordPress Core styles or custom editor styles inserted by theme devs.
 #mesh-container {
-	// 01. Alignment
+	// 02. Alignment
 	.text-left {
 		text-align: left;
 	}
@@ -31,7 +59,7 @@
 	}
 
 
-	// 02. Buttons/Links
+	// 03. Buttons/Links
 	a {
 		cursor: pointer;
 	}
@@ -72,7 +100,7 @@
 		}
 	}
 
-	// Helper Classes
+	// 04. Helper Classes
 	p.lead,
 	.lead > p {
 		font-size: 18px;
