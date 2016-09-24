@@ -5,6 +5,9 @@
  * This class creates a new custom post type that are used to store
  * reusable templates within Mesh
  *
+ * @todo Upon save post. Layout changes should be applied to all posts that
+ *       use the selected templates as a reference.
+ *
  * @package    Mesh
  * @subpackage Templates
  * @since      1.1
