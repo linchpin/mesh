@@ -807,8 +807,8 @@ class Mesh {
 		$strings = apply_filters( 'mesh_strings', $strings ); // Allow filtering of localization strings.
 
 		$localized_data = array(
-			'post_id' => $post->ID,
-            'post_type' => $post->post_type,
+			'post_id' => !is_null( $post ) ? $post->ID : 0,
+            'post_type' => !is_null( $post ) ? $post->post_type : $current_screen->post_type,
 			'site_uri' => site_url(),
             'screen' => $current_screen->base,
 			'choose_layout_nonce'   => wp_create_nonce( 'mesh_choose_layout_nonce' ),
