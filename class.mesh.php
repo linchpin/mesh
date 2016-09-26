@@ -856,7 +856,7 @@ class Mesh {
 	 * @return void
 	 */
 	function wp_enqueue_styles() {
-		$mesh_options = get_options( 'mesh_settings' );
+		$mesh_options = get_option( 'mesh_settings' );
 		$css_mode     = (int) $mesh_options['css_mode'];
 
 		if ( 0 == $css_mode ) {
