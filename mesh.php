@@ -166,7 +166,7 @@ function mesh_get_files( $type = null, $depth = 0, $search_parent = false, $dire
  * @return mixed
  */
 function mesh_locate_template_files() {
-	$current_theme = wp_get_theme( 'mesh' );
+	$current_theme = wp_get_theme();
 
 	$section_templates = array();
 

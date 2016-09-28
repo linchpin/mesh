@@ -808,8 +808,8 @@ class Mesh {
 		$strings = apply_filters( 'mesh_strings', $strings ); // Allow filtering of localization strings.
 
 		$localized_data = array(
-			'post_id' => $post->ID,
-            'post_type' => $post->post_type,
+			'post_id' => !is_null( $post ) ? $post->ID : 0,
+            'post_type' => !is_null( $post ) ? $post->post_type : $current_screen->post_type,
 			'site_uri' => site_url(),
             'screen' => $current_screen->base,
 			'choose_layout_nonce'   => wp_create_nonce( 'mesh_choose_layout_nonce' ),
@@ -857,7 +857,14 @@ class Mesh {
 	 * @return void
 	 */
 	function wp_enqueue_styles() {
-		wp_enqueue_style( 'mesh-grid-foundation', plugins_url( 'assets/css/mesh-grid-foundation.css', __FILE__ ), array(), LINCHPIN_MESH_VERSION );
+		$mesh_options = get_option( 'mesh_settings' );
+		$css_mode     = (int) $mesh_options['css_mode'];
+
+		if ( 0 == $css_mode ) {
+			return;
+		} else {
+			wp_enqueue_style( 'mesh-grid-foundation', plugins_url( 'assets/css/mesh-grid-foundation.css', __FILE__ ), array(), LINCHPIN_MESH_VERSION );
+		}
 	}
 
 	/**
