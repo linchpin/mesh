@@ -873,10 +873,50 @@ mesh.templates = function ( $ ) {
                 .on('click', '.mesh-select-template',      self.select_template )
                 .on('click', '.mesh-template-layout',      self.select_layout )
                 .on('click', '.mesh-template-start',       self.display_template_types )
-                .on('click', '.mesh-template-type',        self.select_template_type )
+               //  .on('click', '.mesh-template-type',        self.select_template_type )
                 .on('click', '.mesh-template-change-type', self.change_template_type )
                 .on('click', '.mesh-template-remove',      self.remove_template );
 
+                // .on('click', '.mesh_template .mesh-section-update, .mesh_template .mesh-section-publish', self.warn_on_save );
+        },
+
+        /**
+         * Warn the user that they will their changes will
+         * be applied to other templates on update/publish
+         *
+         * @todo 1.2
+         *
+         * @param event
+         */
+        warn_on_save : function( event ) {
+            event.preventDefault();
+            event.stopPropagation();
+
+            var confirmation = confirm( mesh_data.strings.confirm_template_section_update );
+
+            if ( true !== confirmation ) {
+                self.applyTemplateChanges();
+            }
+        },
+
+        /**
+         * When we update a template's section(s) update all sections
+         * of each posts that use this templates sections.
+         *
+         * @todo 1.2
+         */
+        applyTemplateChanges : function() {
+            $.post( ajaxurl, {
+                action: 'mesh_apply_template_changes',
+                mesh_post_id: mesh_data.post_id,
+                mesh_template_id: template,
+                mesh_template_type: template_type,
+                mesh_choose_template_nonce: mesh_data.choose_template_nonce
+            }, function( response ) {
+                if ( response ) {
+
+                }
+            });
         },
 
         /**
@@ -957,12 +997,15 @@ mesh.templates = function ( $ ) {
             event.preventDefault();
             event.stopPropagation();
 
+            // @todo 1.2
             // If we have a mesh template. Always use it as a starting point.
-            if( 'mesh_template' !== mesh_data.post_type) {
-                $('#mesh-template-usage').show();
-            } else {
-                $('.mesh-starter-template').trigger('click');
-            }
+            // if( 'mesh_template' !== mesh_data.post_type ) {
+            //    $('#mesh-template-usage').show();
+            // } else {
+            //    $('.mesh-starter-template').trigger('click');
+            // }
+
+            self.select_template_type( event );
         },
 
         /**

@@ -191,7 +191,7 @@ class Mesh_Templates_Duplicate {
 
 		if ( isset( $wpdb->terms ) ) {
 
-			wp_set_object_terms( $new_id, NULL, 'category' );
+			wp_set_object_terms( $new_id, null, 'category' );
 
 			$taxonomies = get_object_taxonomies( $post->post_type );
 

@@ -24,9 +24,66 @@ class Mesh_Templates_AJAX {
 		add_action( 'wp_ajax_mesh_remove_template',      array( $this, 'remove_template' ) );
 		add_action( 'wp_ajax_mesh_change_template_type', array( $this, 'change_template_type' ) );
 
+		add_action( 'wp_ajax_mesh_apply_template_changes', array( $this, 'apply_template_changes' ) );
+
 		add_action( 'wp_ajax_mesh_template_update_welcome_panel', array( $this, 'update_welcome_panel' ) );
 
 		include_once LINCHPIN_MESH___PLUGIN_DIR . '/class.mesh-templates-duplicate.php';
+	}
+
+	/**
+	 * Apply our template changes across all posts that reference this template
+     *
+     * @since 1.1
+	 */
+	function apply_template_changes() {
+
+		check_ajax_referer( 'mesh_choose_template_nonce', 'mesh_choose_template_nonce' );
+
+		$post_id = ( isset( $_POST['mesh_post_id'] ) && '' !== $_POST['mesh_post_id'] ) ? (int) $_POST['mesh_post_id'] : '';
+
+		if ( ! current_user_can( 'edit_post', $post_id ) ) {
+			wp_die( -1 );
+		}
+
+		$current_template = get_post( $post_id );
+
+		if ( empty( $current_template ) ) {
+		    wp_die( -1 );
+        }
+
+		$available_post_types = get_option( 'mesh_post_types', array() );
+
+		$template_references = new WP_Query( array(
+            'post_type' => $available_post_types,
+			'tax_query' => array(
+				'relation' => 'AND',
+				array(
+					'taxonomy' => 'mesh_template_types',
+					'field'    => 'slug',
+					'terms'    => 'reference',
+				),
+				array(
+					'taxonomy' => 'mesh_template_usage',
+					'field'    => 'slug',
+					'terms'    => $current_template->post_name,
+				),
+			),
+		) );
+
+		if ( ! $template_references->have_posts() ) {
+		    wp_die( -1 );
+        }
+
+		/**
+		 * @todo loop through all of our posts and get all the child sections.
+         *
+  		 * while( $template_references->have_posts() ) {
+         *
+         * }
+         *
+         */
+
 	}
 
 	/**
@@ -107,13 +164,10 @@ class Mesh_Templates_AJAX {
 		} else {
 			esc_html_e( 'No Templates Found. Did you build one yet?', 'mesh' );
 		} ?>
-
-
 		<p>
 			<a href="#" class="button primary mesh-template-start dashicons-before dashicons-schedule"><?php esc_html_e( 'Select Template', 'mesh' ); ?></a>
 			<a href="#" class="button primary mesh-template-skip dashicons-before dashicons-plus-alt mesh-section-add"><?php esc_html_e( 'Nevermind Start from Scratch', 'mesh' ); ?></a>
 		</p>
-
 		<?php
 
 		include LINCHPIN_MESH___PLUGIN_DIR . 'admin/template-layout-usage.php';

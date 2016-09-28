@@ -312,7 +312,7 @@ class Mesh {
 		$mesh_notifications = get_user_option( 'linchpin_mesh_notifications', get_current_user_id() );
 		$mesh_templates     = mesh_get_templates();
 		?>
-		<div id="mesh-container">
+		<div id="mesh-container" class="<?php esc_attr_e( $post->post_type ); ?>">
 			<?php wp_nonce_field( 'mesh_content_sections_nonce', 'mesh_content_sections_nonce' ); ?>
 			<div class="notice below-h2 mesh-row mesh-main-ua-row<?php if ( empty( $content_sections ) ) { echo ' hide'; } ?>">
 				<div class="mesh-columns-3 columns">
@@ -802,6 +802,7 @@ class Mesh {
 			'confirm_remove' =>    __( 'Are you sure you want to remove this section?', 'mesh' ),
 			'save_order'     =>    __( 'Save Order', 'mesh' ),
 			'reorder'        =>    __( 'Reorder Sections', 'mesh' ),
+            'confirm_template_section_update' => __( 'Apply template changes to posts/pages?', 'mesh' ),
 		);
 
 		$strings = apply_filters( 'mesh_strings', $strings ); // Allow filtering of localization strings.
