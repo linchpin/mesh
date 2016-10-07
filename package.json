@@ -1,13 +1,9 @@
 {
   "name": "mesh",
   "version": "1.1.0",
-  "license": "GPLv2",
+  "license": "GPL-2.0",
   "respository": "https://github.com/linchpinagency/mesh",
-  "author": {
-    "name": "Linchpin",
-    "email": "sayhi@linchpin.agency",
-    "url": "https://linchpin.agency"
-  },
+  "author": "Linchpin <sayhi@linchpin.agency> (https://linchpin.agency)",
   "devDependencies": {
     "grunt": "~0.4.1",
     "grunt-contrib-concat": "~0.5.1",
@@ -39,5 +35,23 @@
     "editor",
     "page layout",
     "visual editor"
-  ]
+  ],
+  "description": "![Mesh Banner Image](https://linchpin.agency/wp-content/uploads/2016/05/mesh-banner-github.jpg) # Mesh - Multiple Content Sections",
+  "main": "Gruntfile.js",
+  "directories": {
+    "doc": "docs",
+    "test": "tests"
+  },
+  "dependencies": {},
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://aaronware@github.com/linchpinagency/mesh.git"
+  },
+  "bugs": {
+    "url": "https://github.com/linchpinagency/mesh/issues"
+  },
+  "homepage": "https://github.com/linchpinagency/mesh#readme"
 }
