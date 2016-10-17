@@ -2,8 +2,8 @@
 Contributors: linchpin_agency, aware, maxinacube, desrosj, ebeltram, lulu5588
 Tags: linchpin, sections, content, page builder, page builder plugin, design, wysiwyg, home page builder, template builder, layout builder, responsive, landing page builder, website builder, site builder, drag and drop builder, editor, page layout, visual editor, foundation, bootstrap
 Requires at least: 4.0
-Tested up to: 4.5
-Stable tag: 1.0.2
+Tested up to: 4.6.1
+Stable tag: 1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -101,6 +101,29 @@ function add_multiple_content_sections( $the_content ) {
 2. Mesh front end output.
 
 == Changelog ==
+
+= 1.1 =
+* Changed You can now create reusable templates.
+* Changed Templates are excluded from Yoast SEO admin shenanigans by default.
+* Changed Preliminary remove Mesh Settings on Uninstall.
+* Changed You can now filter how many mesh_templates `mesh_templates_per_page` are queried if you have a lot of templates (More than 50)
+* Changed Better version tracking and upgrade process.
+* Changed You can now filter the output of `mesh_loop_end`. An example would be to stop the default output of mesh_display_sections.
+* Changed Better "in progress and busy" state of page building.
+* Changed New Welcome message on Mesh Templates Post List to help guide users
+* Changed Initial implementation for documentation generation.
+* Fixed Typo in Mesh settings text field utility method.
+* Fixed Offset now displays properly within Post Edit screen on page load.
+* Fixed When setting an offset to 7,8 or 9 on single column (12) visual did not match what was being stored in post_meta.
+* Fixed Minor security improvements.
+* Fixed Now running Mesh admin sections through wp_kses with a custom set of whitelisted elements and attributes.
+* Fixed After deleting all sections within a post you had to refresh the pages before you could get your controls back.
+* Fixed New sections could not toggle post box collapse with out a page refresh.
+* Fixed Ordering of sections was being lost when updating a post.
+* Fixed Some formatting issues in the readme.
+* Fixed If you added a section then immediately tried to resize a JS error would occur to do aria checks.
+* Updated Some localization strings needed sprucing up (old MCS references).
+* Updated Some style updates (notifications, tighted up soe visuals for consistency).
 
 = 1.0.4 =
 * Fixed Javascript error was thrown if the user had any columns within text view when saving. [mesh-21]
