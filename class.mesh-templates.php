@@ -152,7 +152,7 @@ class Mesh_Templates {
 			'show_ui' => LINCHPIN_MESH_DEBUG_MODE,
 			'query_var' => true,
 			'rewrite' => false,
-			'show_admin_column' => true,
+			'show_admin_column' => false, // @todo this should be added back in, in a later version.
 		) );
 	}
 
@@ -345,7 +345,7 @@ class Mesh_Templates {
 				$columns['layout'] = __( 'Layout', 'mesh' );
 				$columns['title']  = $title;
 				$columns['mesh_template_uses'] = 'Uses';
-				$columns['taxonomy-mesh_template_usage'] = 'Usage';
+				$columns['taxonomy-mesh_template_usage'] = 'Template';
 				$columns['date'] = $date;
 
 				break;

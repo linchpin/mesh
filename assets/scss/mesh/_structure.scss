@@ -537,13 +537,12 @@
 				left: 16px;
 				right: 16px;
 			};
+
 			visibility: visible !important;
 
 			&:before {
 				content: '';
-
 				border: 2px dashed $grey;
-
 				position: absolute;
 				left: 16px;
 				right: 16px;
@@ -596,10 +595,8 @@
 	&:before,
 	&:after {
 		content: '';
-
 		background: mix($dark-grey, $darkest-grey);
 		width: 2px;
-
 		position: absolute;
 		top: 4px;
 		bottom: 4px;
@@ -637,8 +634,8 @@
 	width:120px;
   }
 
-  .column-taxonomy-mesh_template_usage {
-	width:50px;
+  .column-mesh_template_uses {
+	width:45px;
   }
 
   .welcome-panel {
@@ -673,8 +670,13 @@
 	  -moz-osx-font-smoothing: grayscale;
 	}
   }
+}
 
-
+/**
+ * This column can be used in multiple places
+ */
+.column-taxonomy-mesh_template_usage {
+  width:120px;
 }
 
 .disabled-overlay {
@@ -686,4 +688,18 @@
   bottom: 0;
   z-index: 20;
   opacity: 0.6;
+}
+
+#mesh-settings {
+	img {
+	  max-width: 100%;
+	}
+
+  	ul {
+	  list-style: initial;
+	}
+
+  	li {
+	  margin-left:10px;
+	}
 }

@@ -34,13 +34,13 @@ We’re working on the ability to tie in extra controls to Columns and Sections.
 
 #### Adding a function to your page template(s)
 
-```php
+```
 <?php
 if ( function_exists( 'mesh_display_sections' ) ) {
     mesh_display_sections();
 }
 ?>
- ```
+```
  
 #### Using add_filter to append content to "the_content"
 

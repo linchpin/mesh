@@ -1,8 +1,8 @@
 ##Change Log For Mesh
 
-## [1.1] - 2016-09-20
- 
- ### Added
+## [1.1] - 2016-10-17
+
+### Added
  - You can now create reusable templates.
  - Templates are excluded from Yoast SEO admin shenanigans by default.
  - Preliminary remove Mesh Settings on Uninstall.
@@ -13,7 +13,7 @@
  - New Welcome message on Mesh Templates Post List to help guide users
  - Initial implementation for documentation generation.
  
- ### Fixed
+### Fixed
  - Typo in Mesh settings text field utility method.
  - Offset now displays properly within Post Edit screen on page load.
  - When setting an offset to 7,8 or 9 on single column (12) visual did not match what was being stored in post_meta.
@@ -22,9 +22,10 @@
  - After deleting all sections within a post you had to refresh the pages before you could get your controls back.
  - New sections could not toggle post box collapse with out a page refresh.
  - Ordering of sections was being lost when updating a post.
+ - Some formatting issues in the readme.
  - If you added a section then immediately tried to resize a JS error would occur to do aria checks.
  
- ### Updated
+### Updated
  - Some localization strings needed sprucing up (old MCS references).
  - Some style updates (notifications, tighted up soe visuals for consistency).
  

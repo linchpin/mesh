@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Mesh 1.1.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/mesh\n"
-"POT-Creation-Date: 2016-09-27 00:08:07+00:00\n"
+"POT-Creation-Date: 2016-10-17 13:47:39+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -64,20 +64,6 @@ msgstr ""
 #: build/mesh/trunk/admin/controls.php:30
 #: build/mesh/trunk/admin/sections-empty.php:20
 msgid "Add Section"
-msgstr ""
-
-#: admin/controls.php:49 build/mesh/trunk/admin/controls.php:49
-msgid ""
-"This is a reference template. You must edit the the reference template:<a "
-"href=\"%s\">%s</a>."
-msgstr ""
-
-#: admin/controls.php:56 build/mesh/trunk/admin/controls.php:56
-msgid "Convert to Starter Template"
-msgstr ""
-
-#: admin/controls.php:57 build/mesh/trunk/admin/controls.php:57
-msgid "Remove Template"
 msgstr ""
 
 #: admin/section-blocks.php:68 admin/section-blocks.php:99
@@ -407,36 +393,50 @@ msgid ""
 msgstr ""
 
 #: admin/welcome.php:20 build/mesh/trunk/admin/welcome.php:20
+msgid ""
+"Templates are currently best used as a starting point but there are plans "
+"for more robust template usage in future releases."
+msgstr ""
+
+#: admin/welcome.php:21 build/mesh/trunk/admin/welcome.php:21
 msgid "We&#8217;ve assembled some links to get you started:"
 msgstr ""
 
-#: admin/welcome.php:23 build/mesh/trunk/admin/welcome.php:23
+#: admin/welcome.php:24 build/mesh/trunk/admin/welcome.php:24
 msgid "Get Started"
 msgstr ""
 
-#: admin/welcome.php:24 build/mesh/trunk/admin/welcome.php:24
+#: admin/welcome.php:25 build/mesh/trunk/admin/welcome.php:25
 msgid "Create New Mesh Template"
 msgstr ""
 
-#: admin/welcome.php:27 build/mesh/trunk/admin/welcome.php:27
+#: admin/welcome.php:28 build/mesh/trunk/admin/welcome.php:28
 msgid "More Actions"
 msgstr ""
 
-#: admin/welcome.php:29 build/mesh/trunk/admin/welcome.php:29
+#: admin/welcome.php:30 build/mesh/trunk/admin/welcome.php:30
 msgid "Learn more about Mesh"
 msgstr ""
 
-#: admin/welcome.php:29 build/mesh/trunk/admin/welcome.php:29
+#: admin/welcome.php:30 build/mesh/trunk/admin/welcome.php:30
 msgid "https://github.com/linchpinagency/mesh"
 msgstr ""
 
-#: admin/welcome.php:30 build/mesh/trunk/admin/welcome.php:30
+#: admin/welcome.php:31 build/mesh/trunk/admin/welcome.php:31
 #: build/mesh/trunk/class.mesh-settings.php:317 class.mesh-settings.php:317
 msgid "About Linchpin"
 msgstr ""
 
-#: admin/welcome.php:30 build/mesh/trunk/admin/welcome.php:30
+#: admin/welcome.php:31 build/mesh/trunk/admin/welcome.php:31
 msgid "https://linchpin.agency"
+msgstr ""
+
+#: admin/welcome.php:32 build/mesh/trunk/admin/welcome.php:32
+msgid "View Features Requests"
+msgstr ""
+
+#: admin/welcome.php:32 build/mesh/trunk/admin/welcome.php:32
+msgid "https://github.com/linchpinagency/mesh/issues"
 msgstr ""
 
 #: build/mesh/tags/1.0.1/admin/section-template-warnings.php:19
@@ -872,23 +872,23 @@ msgstr ""
 msgid "No Column Title"
 msgstr ""
 
-#: build/mesh/trunk/class.mesh-templates-ajax.php:96
-#: class.mesh-templates-ajax.php:96
+#: build/mesh/trunk/class.mesh-templates-ajax.php:153
+#: class.mesh-templates-ajax.php:153
 msgid "Blank Template"
 msgstr ""
 
-#: build/mesh/trunk/class.mesh-templates-ajax.php:108
-#: class.mesh-templates-ajax.php:108
+#: build/mesh/trunk/class.mesh-templates-ajax.php:165
+#: class.mesh-templates-ajax.php:165
 msgid "No Templates Found. Did you build one yet?"
 msgstr ""
 
-#: build/mesh/trunk/class.mesh-templates-ajax.php:113
-#: class.mesh-templates-ajax.php:113
+#: build/mesh/trunk/class.mesh-templates-ajax.php:168
+#: class.mesh-templates-ajax.php:168
 msgid "Select Template"
 msgstr ""
 
-#: build/mesh/trunk/class.mesh-templates-ajax.php:114
-#: class.mesh-templates-ajax.php:114
+#: build/mesh/trunk/class.mesh-templates-ajax.php:169
+#: class.mesh-templates-ajax.php:169
 msgid "Nevermind Start from Scratch"
 msgstr ""
 
@@ -1024,6 +1024,10 @@ msgstr ""
 msgid ""
 "Mesh allow you to easily break up your page into different blocks of "
 "content/markup."
+msgstr ""
+
+#: build/mesh/trunk/class.mesh.php:805 class.mesh.php:805
+msgid "Apply template changes to posts/pages?"
 msgstr ""
 
 #: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:102
