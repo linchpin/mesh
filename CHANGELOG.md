@@ -1,5 +1,10 @@
 ##Change Log For Mesh
 
+## [1.1.1] - 2016-10-19
+
+### Added
+ - Equalizer minimum breakpoint support for Foundation 6
+
 ## [1.1] - 2016-10-17
 
 ### Added

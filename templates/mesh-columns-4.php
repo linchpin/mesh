@@ -18,7 +18,7 @@
 		$collapse_column_spacing = get_post_meta( get_the_ID(), '_mesh_collapse', true );
 		$lp_equal = get_post_meta( get_the_ID(), '_mesh_lp_equal', true );
 	?>
-	<div class="row <?php if ( ! empty( $collapse_column_spacing ) ) : ?>collapse <?php endif; ?>"<?php if ( ! empty( $lp_equal ) ) : ?> data-equalizer<?php endif; ?>>
+	<div class="row <?php if ( ! empty( $collapse_column_spacing ) ) : ?>collapse <?php endif; ?>"<?php if ( ! empty( $lp_equal ) ) : ?> data-equalizer data-equalize-on="medium"<?php endif; ?>>
 		<?php if ( ! empty( $title_display ) && 'no block title' !== strtolower( get_the_title() ) ) : ?>
 			<div class="small-12 columns title-row">
 				<h2 class="entry-title"><?php the_title(); ?></h2>
