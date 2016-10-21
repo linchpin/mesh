@@ -1,12 +1,12 @@
 <?php
     $classes = 'welcome-panel';
 
-    $option = (int) get_user_meta( get_current_user_id(), 'show_mesh_template_panel', true );
+    $option = get_user_meta( get_current_user_id(), 'show_mesh_template_panel', true );
 
-    // 1 = hide, 0 = toggled to show.
-    $hide = ( 0 === $option );
+    // 1 = show, 0 = hide.
+    $show = ( '' === $option ) ? 1 : (int) $option;
 
-    if ( $hide ) {
+    if ( ! $show ) {
 	    $classes .= ' hidden';
     }
 
