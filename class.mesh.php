@@ -621,6 +621,8 @@ class Mesh {
 			) );
 		}
 
+		delete_transient( 'mesh_section_' . $post_id );
+
 		add_action( 'save_post', array( $this, 'save_post' ), 10, 2 );
 	}
 
@@ -682,6 +684,8 @@ class Mesh {
 			}
 			wp_delete_post( $section->ID );
 		}
+
+		delete_transient( 'mesh_section_' . $post_id );
 	}
 
 	/**
