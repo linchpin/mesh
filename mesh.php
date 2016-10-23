@@ -422,7 +422,7 @@ function mesh_display_sections( $post_id = '', $echo = true ) {
 		$mesh_sections = ob_get_contents();
 		ob_end_clean();
 
-		set_transient( 'mesh_section_' . $post_id, $mesh_sections, 24 * HOUR_IN_SECONDS );
+		set_transient( 'mesh_section_' . $post_id, $mesh_sections, apply_filters( 'mesh_transient_expires', 86400 ) );
 	}
 
 	if ( $echo ) {
