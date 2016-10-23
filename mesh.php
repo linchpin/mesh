@@ -408,16 +408,9 @@ function mesh_display_sections( $post_id = '', $echo = true ) {
 		return '';
 	}
 
-	if ( true === $echo ) {
-		if ( $mesh_section_query->have_posts() ) {
-			while ( $mesh_section_query->have_posts() ) {
-				$mesh_section_query->the_post();
-				the_mesh_content();
-			}
-			wp_reset_postdata();
-		}
-	} else {
+	if ( false === ( $mesh_sections = get_transient( 'mesh_section_' . $post_id ) ) ) {
 		ob_start();
+
 		if ( $mesh_section_query->have_posts() ) {
 			while ( $mesh_section_query->have_posts() ) {
 				$mesh_section_query->the_post();
@@ -425,10 +418,19 @@ function mesh_display_sections( $post_id = '', $echo = true ) {
 			}
 			wp_reset_postdata();
 		}
-		$output = ob_get_contents();
+
+		$mesh_sections = ob_get_contents();
 		ob_end_clean();
-		return $output;
+
+		set_transient( 'mesh_section_' . $post_id, $mesh_sections, 24 * HOUR_IN_SECONDS );
 	}
+
+	if ( $echo ) {
+		echo $mesh_sections;
+	} else {
+		return $mesh_sections;
+	}
+
 }
 
 /**
