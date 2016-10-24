@@ -1,12 +1,12 @@
 <?php
     $classes = 'welcome-panel';
 
-    $option = (int) get_user_meta( get_current_user_id(), 'show_mesh_template_panel', true );
+    $option = get_user_meta( get_current_user_id(), 'show_mesh_template_panel', true );
 
-    // 1 = hide, 0 = toggled to show.
-    $hide = ( 0 === $option );
+    // 1 = show, 0 = hide.
+    $show = ( '' === $option ) ? 1 : (int) $option;
 
-    if ( $hide ) {
+    if ( ! $show ) {
 	    $classes .= ' hidden';
     }
 
@@ -28,8 +28,8 @@
                 <h3><?php esc_html_e( 'More Actions', 'mesh' ); ?></h3>
                 <ul>
                     <li><?php printf( '<a href="%s" class="welcome-icon welcome-learn-more" target="_blank">' . __( 'Learn more about Mesh', 'mesh' ) . '</a>', __( 'https://github.com/linchpinagency/mesh' ) ); ?></li>
-                    <li><?php printf( '<a href="%s" class="welcome-icon welcome-view-linchin" target="_blank">' . __( 'About Linchpin', 'mesh' ) . '</a>', __( 'https://linchpin.agency' ) ); ?></li>
-                    <li><?php printf( '<a href="%s" class="welcome-icon welcome-view-github" target="_blank">' . __( 'View Features Requests', 'mesh' ) . '</a>', __( 'https://github.com/linchpinagency/mesh/issues' ) ); ?></li>
+                    <li><?php printf( '<a href="%s" class="welcome-icon welcome-view-linchin icon-linchpin-logo" target="_blank">' . __( 'About Linchpin', 'mesh' ) . '</a>', __( 'https://linchpin.agency' ) ); ?></li>
+                    <li><?php printf( '<a href="%s" class="welcome-icon welcome-view-github icon-github" target="_blank">' . __( 'View Features Requests', 'mesh' ) . '</a>', __( 'https://github.com/linchpinagency/mesh/issues' ) ); ?></li>
                 </ul>
             </div>
         </div>
