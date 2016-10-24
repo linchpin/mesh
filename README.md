@@ -59,7 +59,7 @@ function add_multiple_content_sections( $the_content ) {
 * `apply_filters( 'mesh_section_templates', $section_templates );`
 * `apply_filters( 'mesh_tabs', $tabs );`
 * `apply_filters( 'mesh_css_mode', $css_mode );` Allow filtering of available css_mode options
-* `apply_filters( 'mesh_allowed_html', array_merge_recursive( $post_allowed, $mesh_allowed );` Filter allowed HTML within MCS
+* `apply_filters( 'mesh_allowed_html', array_merge_recursive( $post_allowed, $mesh_allowed );` Filter allowed HTML within Mesh
 * `apply_filters( 'mesh_admin_pointers-' . $screen_id, array() );`
 
 ##### Filters added 1.1
@@ -69,4 +69,4 @@ function add_multiple_content_sections( $the_content ) {
 ### Recognition
 
 * We're utilizing the [PHP Markdown Lib](https://github.com/michelf/php-markdown) by Michel Fortin @michelf
-* Found some help along the way from regarding [draggable editors](https://github.com/alleyinteractive/wordpress-fieldmanager/blob/master/js/richtext.js#L58-L95) by @danielbachhuber
+* Found some help along the way [draggable editors](https://github.com/alleyinteractive/wordpress-fieldmanager/blob/master/js/richtext.js#L58-L95) by @danielbachhuber

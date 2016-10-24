@@ -29,7 +29,6 @@
 		<?php $i = 0; foreach ( $blocks as $block ) : ?>
 			<?php
 			$block_class_args = array(
-				'push_pull'        => $push_pull,
 				'total_columns'    => count( $blocks ),
 				'column_width'     => (int) get_post_meta( $block->ID, '_mesh_column_width', true ),
 				'column_index'     => $i,

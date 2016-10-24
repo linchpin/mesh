@@ -2,8 +2,14 @@
 
 ## [1.1.1] - 2016-10-19
 
+### Fixed
+ - Some minor copy / typo adjustments
+
 ### Added
  - Equalizer minimum breakpoint support for Foundation 6
+
+### Updated
+ - Changelog should have proper information now
 
 ## [1.1] - 2016-10-17
 
@@ -27,6 +33,7 @@
  - After deleting all sections within a post you had to refresh the pages before you could get your controls back.
  - New sections could not toggle post box collapse with out a page refresh.
  - Ordering of sections was being lost when updating a post.
+ - Fixed When going from more to less columns you can now trash unused columns. (Thanks for the find @kelter)
  - Some formatting issues in the readme.
  - If you added a section then immediately tried to resize a JS error would occur to do aria checks.
  

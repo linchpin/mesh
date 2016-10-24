@@ -102,6 +102,11 @@ function add_multiple_content_sections( $the_content ) {
 
 == Changelog ==
 
+= 1.1.1 =
+* Fixed Some minor copy / typo adjustments
+* Added Equalizer minimum breakpoint support for Foundation 6
+* Updated Changelog should have proper information now
+
 = 1.1 =
 * Changed You can now create reusable templates.
 * Changed Templates are excluded from Yoast SEO admin shenanigans by default.
@@ -121,6 +126,7 @@ function add_multiple_content_sections( $the_content ) {
 * Fixed New sections could not toggle post box collapse with out a page refresh.
 * Fixed Ordering of sections was being lost when updating a post.
 * Fixed Some formatting issues in the readme.
+* Fixed When going from more to less columns you can now trash unused columns. (Thanks for the find @kelter)
 * Fixed If you added a section then immediately tried to resize a JS error would occur to do aria checks.
 * Updated Some localization strings needed sprucing up (old MCS references).
 * Updated Some style updates (notifications, tighted up soe visuals for consistency).
