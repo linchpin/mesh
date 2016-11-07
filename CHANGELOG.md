@@ -1,5 +1,11 @@
 ##Change Log For Mesh
 
+
+## [1.1.2] - 2016-11-07
+
+### Fixed
+ - Fixed compatability issue with PHP 5.4 (Thanks @missmuttly anf @tecbrat)
+
 ## [1.1.1] - 2016-10-19
 
 ### Fixed
