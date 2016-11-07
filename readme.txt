@@ -1,9 +1,9 @@
 === Mesh - Multiple Content Sections ===
-Contributors: linchpin_agency, aware, maxinacube, desrosj, ebeltram, lulu5588
+Contributors: linchpin_agency, aware, maxinacube, desrosj, nateallen, ebeltram, lulu5588
 Tags: linchpin, sections, content, page builder, page builder plugin, design, wysiwyg, home page builder, template builder, layout builder, responsive, landing page builder, website builder, site builder, drag and drop builder, editor, page layout, visual editor, foundation, bootstrap
 Requires at least: 4.0
 Tested up to: 4.6.1
-Stable tag: 1.1
+Stable tag: 1.1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -33,7 +33,7 @@ We have added a few hooks to extend the functionality of Mesh and will continue 
 * Drag to adjust Column widths
 * Drag to reorder Columns within a Section (horizontally) and Sections within your Page or Post (vertically)
 * Add an offset before a Column (not available in 4 column layouts)
-* Add custom CSS classes to an entire Section or a specific Column (This works great in tandem with [Jetpackâ€™s Custom CSS](https://jetpack.com/support/custom-css/) feature!)
+* Add custom CSS classes to an entire Section or a specific Column (This works great in tandem with [Jetpack's Custom CSS](https://jetpack.com/support/custom-css/) feature!)
 * Click to apply built-in styling options like Collapse Padding, Push/Pull, and Equalize
 * Set a background image for a Section or a Column
 * Save Sections in Draft status or Publish
@@ -50,7 +50,7 @@ Leave a review here or start a conversation on [GitHub](https://github.com/linch
 == Installation ==
 
 1. Click **Add New** under Plugins in your WordPress install.
-1. Search for **Mesh - Multiple Content Sections** in the directory.
+1. Search for **Mesh** in the directory.
 1. Click **Install Now** and *activate* the plugin.
 
 Or
@@ -104,8 +104,11 @@ function add_multiple_content_sections( $the_content ) {
 
 = 1.1.1 =
 * Fixed Some minor copy / typo adjustments
+* Fixed Some css / icon changes.
+* Fixed Welcome message not displaying properly. [#36]
 * Added Equalizer minimum breakpoint support for Foundation 6
-* Updated Changelog should have proper information now
+* Updated Changelog should have proper information now (Thanks for the find @kelter)
+* Updated Ajax to not save column width in realtime. [#17]
 
 = 1.1 =
 * Changed You can now create reusable templates.
