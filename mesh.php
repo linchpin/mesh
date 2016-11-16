@@ -3,7 +3,7 @@
  * Plugin Name: Mesh
  * Plugin URI: http://linchpin.agency/wordpress-plugins/mesh
  * Description: Adds multiple sections for content on a post by post basis. Mesh also has settings to enable it for specific post types
- * Version: 1.1.2
+ * Version: 1.1.3
  * Text Domain: mesh
  * Domain Path: /languages
  * Author: Linchpin
@@ -21,7 +21,7 @@ if ( ! function_exists( 'add_action' ) ) {
 /**
  * Define all globals.
  */
-define( 'LINCHPIN_MESH_VERSION', '1.1.2' );
+define( 'LINCHPIN_MESH_VERSION', '1.1.3' );
 define( 'LINCHPIN_MESH_PLUGIN_NAME', 'Mesh' );
 define( 'LINCHPIN_MESH__MINIMUM_WP_VERSION', '4.0' );
 define( 'LINCHPIN_MESH___PLUGIN_URL', plugin_dir_url( __FILE__ ) );
@@ -54,6 +54,7 @@ add_action( 'init', array( 'Mesh_Settings', 'init' ) );
 function mesh_activation_hook() {
 	flush_rewrite_rules();
 }
+
 register_activation_hook( __FILE__, 'mesh_activation_hook' );
 
 /**
@@ -573,6 +574,7 @@ function mesh_maybe_create_section_blocks( $section, $number_needed = 0 ) {
  *
  * @todo This should be disabled if the user selects to NOT use foundation.
  *
+ *
  * @param int    $post_id     PostID of the Section.
  * @param bool   $echo        Echo the output or not.
  * @param string $size_large  The name of the Thumbnail for our Large image used by Interchange.
@@ -592,19 +594,32 @@ function mesh_section_background( $post_id = 0, $echo = true, $size_large = 'lar
 
 		$backgrounds = array();
 
-		if ( $default_image_url = wp_get_attachment_image_src( get_post_thumbnail_id( $post_id ), 'full' ) ) {
+		$mesh_options = get_option( 'mesh_settings' );
+		$foundation_version = (int) $mesh_options['foundation_version'];
+
+		switch( $foundation_version ) {
+			case 6 :
+				$interchange_format = '[%s, %s]';
+				break;
+			default :
+				$interchange_format = '[%s, (%s)]';
+		}
+
+		$default_bg_size = apply_filters( 'mesh_default_bg_size', 'full' );
+
+		if ( $default_image_url = wp_get_attachment_image_src( get_post_thumbnail_id( $post_id ), $default_bg_size ) ) {
 			if ( ! empty( $default_image_url[0] ) && '' !== $default_image_url[0] ) {
-				$backgrounds[] = '[' . $default_image_url[0] . ', (default)]';
+				$backgrounds[] = sprintf( $interchange_format, $default_image_url[0], 'default' );
 
 				if ( $medium_image_url = wp_get_attachment_image_src( get_post_thumbnail_id( $post_id ), $size_medium ) ) {
 					if ( ! empty( $medium_image_url[0] ) && '' !== $medium_image_url[0] ) {
-						$backgrounds[] = '[' . $medium_image_url[0] . ', (medium)]';
+						$backgrounds[] = sprintf( $interchange_format, $medium_image_url[0], 'medium' );
 					}
 				}
 
 				if ( $large_image_url = wp_get_attachment_image_src( get_post_thumbnail_id( $post_id ), $size_large ) ) {
 					if ( ! empty( $large_image_url[0] ) && '' !== $large_image_url[0] ) {
-						$backgrounds[] = '[' . $large_image_url[0] . ', (large)]';
+						$backgrounds[] = sprintf( $interchange_format, $large_image_url[0], 'large' );
 					}
 				}
 			}

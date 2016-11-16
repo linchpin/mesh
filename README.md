@@ -54,17 +54,19 @@ function add_multiple_content_sections( $the_content ) {
 ```
 
 #### Available Filters
-
-* `apply_filters( 'mesh_content_css', get_stylesheet_directory_uri() . '/css/admin-editor.css' , 'editor_path' ),`
-* `apply_filters( 'mesh_section_templates', $section_templates );`
-* `apply_filters( 'mesh_tabs', $tabs );`
-* `apply_filters( 'mesh_css_mode', $css_mode );` Allow filtering of available css_mode options
-* `apply_filters( 'mesh_allowed_html', array_merge_recursive( $post_allowed, $mesh_allowed );` Filter allowed HTML within Mesh
-* `apply_filters( 'mesh_admin_pointers-' . $screen_id, array() );`
+* `add_filter( 'mesh_content_css', get_stylesheet_directory_uri() . '/css/admin-editor.css' , 'editor_path' ),`
+* `add_filter( 'mesh_section_templates', $section_templates );`
+* `add_filter( 'mesh_tabs', $tabs );`
+* `add_filter( 'mesh_css_mode', $css_mode );` Allow filtering of available css_mode options
+* `add_filter( 'mesh_allowed_html', array_merge_recursive( $post_allowed, $mesh_allowed );` Filter allowed HTML within Mesh
+* `add_filter( 'mesh_admin_pointers-' . $screen_id, array() );`
 
 ##### Filters added 1.1
-* `apply_filters( 'mesh_templates_per_page', 50 );`
-* `apply_filters( 'mesh_loop_end', $section_html_content );` 
+* `add_filter( 'mesh_templates_per_page', 50 );`
+* `add_filter( 'mesh_loop_end', $section_html_content );` 
+
+##### Filters added 1.1.3
+* `add_filter( 'mesh_default_bg_size', $size );`   
 
 ### Recognition
 

@@ -1,5 +1,12 @@
 ##Change Log For Mesh
 
+## [1.1.3] - 2016-11-09
+
+### Added
+ - Exclude mesh template taxonomies from being added to the WordPress SEO sitemap.xml
+
+### Added
+ - Equalizer minimum breakpoint support for Foundation 6
 
 ## [1.1.2] - 2016-11-07
 

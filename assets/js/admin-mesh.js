@@ -1155,7 +1155,7 @@ mesh.admin = function ( $ ) {
 		 */
 		init : function() {
 
-			if ( 'post' !== mesh_data.screen && 'edit' !== mesh_data.screen ) {
+			if ( 'post' !== mesh_data.screen && 'edit' !== mesh_data.screen && 'settings_page_mesh' !== mesh_data.screen ) {
 				return;
 			}
 
@@ -1191,7 +1191,10 @@ mesh.admin = function ( $ ) {
 				.on('change', '.mesh-choose-layout',           self.choose_layout )
 				.on('keypress', '.mesh-clean-edit-element',     self.prevent_submit )
 				.on('keyup', '.mesh-clean-edit-element',        self.change_input_title )
-				.on('change', 'select.mesh-clean-edit-element', self.change_select_title );
+				.on('change', 'select.mesh-clean-edit-element', self.change_select_title )
+
+				// @since 1.1.3
+				.on('change', '#mesh-css_mode', self.display_foundation_options );
 
 			$sections = $( '.mesh-section' );
 
@@ -1213,6 +1216,8 @@ mesh.admin = function ( $ ) {
 			templates.init();
 
 			self.setup_notifications( $meta_box_container );
+
+			self.display_foundation_options();
 
 		},
 
@@ -2081,6 +2086,28 @@ mesh.admin = function ( $ ) {
 			}
 
 			$tgt.find('.inside').find( '.disabled-overlay' ).remove();
+		},
+
+        /**
+		 * Allow the usage of Foundation 5 or 6 interchange
+		 *
+		 * @since 1.1.3
+         * @param event
+         */
+		display_foundation_options : function( event ) {
+
+            var using_foundation = $('#mesh-css_mode').find('option:selected').val(),
+				$foundation_version = $('#mesh-foundation_version'),
+				$parent_row = $foundation_version.closest('tr');
+
+            console.log( using_foundation );
+
+            if( parseInt( using_foundation ) === 1 ) {
+                $parent_row.show();
+			} else {
+                $parent_row.hide();
+                $foundation_version.val('');
+			}
 		}
 	};
 } ( jQuery );

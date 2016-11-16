@@ -3,7 +3,7 @@ Contributors: linchpin_agency, aware, maxinacube, desrosj, nateallen, ebeltram, 
 Tags: linchpin, sections, content, page builder, page builder plugin, design, wysiwyg, home page builder, template builder, layout builder, responsive, landing page builder, website builder, site builder, drag and drop builder, editor, page layout, visual editor, foundation, bootstrap
 Requires at least: 4.0
 Tested up to: 4.6.1
-Stable tag: 1.1.2
+Stable tag: 1.1.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -101,6 +101,11 @@ function add_multiple_content_sections( $the_content ) {
 2. Mesh front end output.
 
 == Changelog ==
+
+= 1.1.3=
+* Added exclusion for Mesh Template taxonomies when using WordPress / Yoast SEO
+* Added the ability to select which version of Foundation your theme is using (Defaults to Foundation 5)
+* Fixed interchange on section and block background images
 
 = 1.1.2=
 * Fixed compatability issue with PHP 5.4 (Thanks @missmuttly anf @tecbrat)

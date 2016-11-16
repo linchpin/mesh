@@ -91,8 +91,8 @@ class Mesh_Settings {
 		$css_mode = array(
 			array( 'label' => __( 'Use Mesh CSS', 'mesh' ), 'value' => '' ),
 			array( 'label' => __( 'Disable Mesh CSS', 'mesh' ), 'value' => 0 ),
-			array( 'label' => __( 'Use Foundation w/ my theme', 'mesh' ), 'value' => 1 ),
-			array( 'label' => __( 'Use Bootstrap (coming soon)', 'mesh' ), 'value' => 2 ),
+			array( 'label' => __( 'Use Foundation built into my theme', 'mesh' ), 'value' => 1 ),
+			array( 'label' => __( 'Use Bootstrap', 'mesh' ), 'value' => 2 ),
 		);
 
 		// Allow filtering of available css_mode options.
@@ -109,6 +109,28 @@ class Mesh_Settings {
 				'label' => __( 'CSS', 'mesh' ),
 				'description' => __( 'Choose whether or not to enqueue CSS with Mesh.', 'mesh' ),
 				'options' => $css_mode,
+			)
+		);
+
+		// Option: Foundation Version
+		// Add an option for Foundation Version
+		// @since 1.1.3
+		$foundation_version = array(
+			array( 'label' => __( 'Foundation 5', 'mesh' ), 'value' => '' ),
+			array( 'label' => __( 'Foundation 6', 'mesh' ), 'value' => 6 ),
+		);
+
+		add_settings_field(
+			'foundation_version',
+			__( 'Foundation Version', 'mesh' ),
+			array( 'Mesh_Settings', 'add_select' ),
+			self::$settings_page,
+			'mesh_sections',
+			array(
+				'field' => 'foundation_version',
+				'label' => __( 'Foundation Version', 'mesh' ),
+				'description' => __( 'Choose which version of Foundation you are using. Foundation 5 and 6 have subtle yet important differences when it comes to markup for components like interchange that Mesh utilizes.', 'mesh' ),
+				'options' => $foundation_version,
 			)
 		);
 
@@ -192,7 +214,6 @@ class Mesh_Settings {
 		<?php if ( ! empty( $args['description'] ) ) : ?>
 			<p class="description"><?php esc_html_e( $args['description'] ); ?></p>
 		<?php endif; ?>
-
 		<input type="<?php esc_attr_e( $args['type'] ); ?>" class="<?php esc_attr_e( $args['class'] ); ?>" name="mesh_settings[<?php esc_attr_e( $args['field'] ); ?>]" value="<?php esc_attr_e( $options[ $args['field'] ] ); ?>">
 
 		<?php
@@ -221,7 +242,6 @@ class Mesh_Settings {
 		$select_options = $args['options'];
 
 		?>
-
 		<?php if ( ! empty( $args['description'] ) ) : ?>
 			<p class="description"><?php esc_html_e( $args['description'] ); ?></p>
 		<?php endif; ?>
