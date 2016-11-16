@@ -87,13 +87,28 @@ function add_multiple_content_sections( $the_content ) {
 } ?>
 `
 
+= Using add_filter to set change default size for background images =
+`
+<?php
+add_filter( 'mesh_default_bg_size', 'hatch_mesh_default_bg_size' );
+
+function hatch_mesh_default_bg_size( $size ) {
+    // default $size = 'mesh-background' will fall back to 'full'.
+
+	return 'large';
+}
+
+?>
+`
+
 = Available Filters =
-* `apply_filters( 'mesh_content_css', get_stylesheet_directory_uri() . '/css/admin-editor.css' , 'editor_path' ),`
-* `apply_filters( 'mesh_section_templates', $section_templates );`
-* `apply_filters( 'mesh_tabs', $tabs );`
-* `apply_filters( 'mesh_css_mode', $css_mode );` Allow filtering of available css_mode options
-* `apply_filters( 'mesh_allowed_html', array_merge_recursive( $post_allowed, $mesh_allowed );` Filter allowed HTML within MCS
-* `apply_filters( 'mesh_admin_pointers-' . $screen_id, array() );`
+* `add_filter( 'mesh_content_css', get_stylesheet_directory_uri() . '/css/admin-editor.css' , 'editor_path' ),`
+* `add_filter( 'mesh_section_templates', $section_templates );`
+* `add_filter( 'mesh_tabs', $tabs );`
+* `add_filter( 'mesh_css_mode', $css_mode );` Allow filtering of available css_mode options
+* `add_filter( 'mesh_allowed_html', array_merge_recursive( $post_allowed, $mesh_allowed );` Filter allowed HTML within MCS
+* `add_filter( 'mesh_admin_pointers-' . $screen_id, array() );`
+* `add_filter( 'mesh_default_bg_size' . $size );`
 
 == Screenshots ==
 
@@ -105,6 +120,7 @@ function add_multiple_content_sections( $the_content ) {
 = 1.1.3=
 * Added exclusion for Mesh Template taxonomies when using WordPress / Yoast SEO
 * Added the ability to select which version of Foundation your theme is using (Defaults to Foundation 5)
+* Added mesh-background custom image size (1920 x 1080) by default.
 * Fixed interchange on section and block background images
 
 = 1.1.2=
