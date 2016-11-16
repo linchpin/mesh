@@ -974,8 +974,6 @@ mesh.admin = function ( $ ) {
 				$foundation_version = $('#mesh-foundation_version'),
 				$parent_row = $foundation_version.closest('tr');
 
-            console.log( using_foundation );
-
             if( parseInt( using_foundation ) === 1 ) {
                 $parent_row.show();
 			} else {
