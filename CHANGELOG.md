@@ -1,17 +1,22 @@
 ##Change Log For Mesh
 
-## [1.1.3] - 2016-11-09
+## [1.1.3] - 2016-11-17
 
+### Fixed
+ - Interchange on section and block background images
+ - Fixed minor typo in the previous changelog
+ 
 ### Added
  - Exclude mesh template taxonomies from being added to the WordPress SEO sitemap.xml
-
-### Added
  - Equalizer minimum breakpoint support for Foundation 6
+ - The ability to select which version of Foundation your theme is using (Defaults to Foundation 5)
+ - `mesh-background` custom image size (1920 x 1080) by default.
+ - Filters to define what images sizes will be used by interchange.
 
 ## [1.1.2] - 2016-11-07
 
 ### Fixed
- - Fixed compatability issue with PHP 5.4 (Thanks @missmuttly anf @tecbrat)
+ - Fixed compatibility issue with PHP 5.4 (Thanks @missmuttly anf @tecbrat)
 
 ## [1.1.1] - 2016-10-19
 

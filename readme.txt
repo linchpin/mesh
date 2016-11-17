@@ -108,12 +108,17 @@ function hatch_mesh_default_bg_size( $size ) {
 * `add_filter( 'mesh_css_mode', $css_mode );` Allow filtering of available css_mode options
 * `add_filter( 'mesh_allowed_html', array_merge_recursive( $post_allowed, $mesh_allowed );` Filter allowed HTML within MCS
 * `add_filter( 'mesh_admin_pointers-' . $screen_id, array() );`
-* `add_filter( 'mesh_default_bg_size' . $size );`
+
+* `add_filter( 'mesh_default_bg_size', $size );`
+* `add_filter( 'mesh_large_bg_size', $size );`
+* `add_filter( 'mesh_medium_bg_size', $size );`
+* `add_filter( 'mesh_xlarge_bg_size', $size );`
 
 == Screenshots ==
 
 1. Mesh editor interface.
-2. Mesh front end output.
+2. Mesh front end display.
+3. Mesh templates and welcome.
 
 == Changelog ==
 
@@ -121,6 +126,7 @@ function hatch_mesh_default_bg_size( $size ) {
 * Added exclusion for Mesh Template taxonomies when using WordPress / Yoast SEO
 * Added the ability to select which version of Foundation your theme is using (Defaults to Foundation 5)
 * Added mesh-background custom image size (1920 x 1080) by default.
+* Added filters to define what images sizes will be used by interchange.
 * Fixed interchange on section and block background images
 
 = 1.1.2=

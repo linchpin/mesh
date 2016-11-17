@@ -579,10 +579,11 @@ function mesh_maybe_create_section_blocks( $section, $number_needed = 0 ) {
  * @param bool   $echo        Echo the output or not.
  * @param string $size_large  The name of the Thumbnail for our Large image used by Interchange.
  * @param string $size_medium The name of the Thumbnail for our Medium image used by Interchange.
+ * @param string $size_xlarge The name of the Thumbnail for our Medium image used by Interchange.
  *
  * @return array|string|void
  */
-function mesh_section_background( $post_id = 0, $echo = true, $size_large = 'large', $size_medium = 'large' ) {
+function mesh_section_background( $post_id = 0, $echo = true, $size_large = 'large', $size_medium = 'large', $size_xlarge = 'large' ) {
 
 	global $post;
 
@@ -594,44 +595,68 @@ function mesh_section_background( $post_id = 0, $echo = true, $size_large = 'lar
 
 		$backgrounds = array();
 
-		$mesh_options = get_option( 'mesh_settings' );
-		$foundation_version = (int) $mesh_options['foundation_version'];
-
-		switch( $foundation_version ) {
-			case 6 :
-				$interchange_format = '[%s, %s]';
-				break;
-			default :
-				$interchange_format = '[%s, (%s)]';
-		}
+		$mesh_options       = get_option( 'mesh_settings' );
+		$foundation_version = (int) $mesh_options[ 'foundation_version' ];
+		$css_mode           = $mesh_options[ 'css_mode' ];
 
 		$default_bg_size = apply_filters( 'mesh_default_bg_size', 'full' );
+		$size_medium     = apply_filters( 'mesh_medium_bg_size', $size_medium );
+		$size_large      = apply_filters( 'mesh_large_bg_size', $size_large );
+		$size_xlarge     = apply_filters( 'mesh_large_bg_size', $size_xlarge );
 
-		if ( $default_image_url = wp_get_attachment_image_src( get_post_thumbnail_id( $post_id ), $default_bg_size ) ) {
-			if ( ! empty( $default_image_url[0] ) && '' !== $default_image_url[0] ) {
-				$backgrounds[] = sprintf( $interchange_format, $default_image_url[0], 'default' );
+		$default_image_url = wp_get_attachment_image_src( get_post_thumbnail_id( $post_id ), $default_bg_size );
 
-				if ( $medium_image_url = wp_get_attachment_image_src( get_post_thumbnail_id( $post_id ), $size_medium ) ) {
-					if ( ! empty( $medium_image_url[0] ) && '' !== $medium_image_url[0] ) {
-						$backgrounds[] = sprintf( $interchange_format, $medium_image_url[0], 'medium' );
+		$using_foundation = ( '' === $css_mode || 1 === (int) $css_mode );
+
+		// Only allow interchange or backgrounds when using Mesh css or a theme based on foundation.
+		if ( $using_foundation ) {
+			switch ( $foundation_version ) {
+				case 6 :
+					$interchange_format = '[%s, %s]';
+					break;
+				default :
+					$interchange_format = '[%s, (%s)]';
+			}
+
+			if ( ! empty( $default_image_url ) ) {
+				if ( ! empty( $default_image_url[ 0 ] ) && '' !== $default_image_url[ 0 ] ) {
+					$backgrounds[] = sprintf( $interchange_format, $default_image_url[ 0 ], 'default' );
+
+					if ( $medium_image_url = wp_get_attachment_image_src( get_post_thumbnail_id( $post_id ), $size_medium ) ) {
+						if ( ! empty( $medium_image_url[ 0 ] ) && '' !== $medium_image_url[ 0 ] ) {
+							$backgrounds[] = sprintf( $interchange_format, $medium_image_url[ 0 ], 'medium' );
+						}
+					}
+
+					if ( $large_image_url = wp_get_attachment_image_src( get_post_thumbnail_id( $post_id ), $size_large ) ) {
+						if ( ! empty( $large_image_url[ 0 ] ) && '' !== $large_image_url[ 0 ] ) {
+							$backgrounds[] = sprintf( $interchange_format, $large_image_url[ 0 ], 'large' );
+						}
+					}
+
+					if ( $xlarge_image_url = wp_get_attachment_image_src( get_post_thumbnail_id( $post_id ), $size_xlarge ) ) {
+						if ( ! empty( $large_image_url[ 0 ] ) && '' !== $xlarge_image_url[ 0 ] ) {
+							$backgrounds[] = sprintf( $interchange_format, $xlarge_image_url[ 0 ], 'xlarge' );
+						}
 					}
 				}
 
-				if ( $large_image_url = wp_get_attachment_image_src( get_post_thumbnail_id( $post_id ), $size_large ) ) {
-					if ( ! empty( $large_image_url[0] ) && '' !== $large_image_url[0] ) {
-						$backgrounds[] = sprintf( $interchange_format, $large_image_url[0], 'large' );
-					}
+				if ( empty( $backgrounds ) ) {
+					return array();
 				}
+
 			}
 		}
 
-		if ( empty( $backgrounds ) ) {
-			return array();
+		$style = '';
+
+		if ( is_array( $backgrounds ) && '' !== $default_image_url[0] ) {
+			if ( $using_foundation ) {
+				$style .= 'data-interchange="' . esc_attr( implode( ', ', $backgrounds ) ) . '"';
+			}
 		}
 
-		if ( is_array( $default_image_url ) && '' !== $default_image_url[0] ) {
-			$style = 'data-interchange="' . esc_attr( implode( ', ', $backgrounds ) ) . '" style="background-image: url(' . esc_url( $default_image_url[0] ) . ');"';
-		}
+		$style .= ' style="background-image: url(' . esc_url( $default_image_url[0] ) . ');"';
 	}
 
 	if ( empty( $style ) ) {
