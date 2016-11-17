@@ -583,7 +583,7 @@ function mesh_maybe_create_section_blocks( $section, $number_needed = 0 ) {
  *
  * @return array|string|void
  */
-function mesh_section_background( $post_id = 0, $echo = true, $size_large = 'large', $size_medium = 'large', $size_xlarge = 'large' ) {
+function mesh_section_background( $post_id = 0, $echo = true, $size_large = 'large', $size_medium = 'large', $size_xlarge = 'large', $size_small = 'small' ) {
 
 	global $post;
 
@@ -599,10 +599,11 @@ function mesh_section_background( $post_id = 0, $echo = true, $size_large = 'lar
 		$foundation_version = (int) $mesh_options[ 'foundation_version' ];
 		$css_mode           = $mesh_options[ 'css_mode' ];
 
-		$default_bg_size = apply_filters( 'mesh_default_bg_size', 'full' );
+		$default_bg_size = apply_filters( 'mesh_default_bg_size', 'mesh-background' );
+		$size_medium     = apply_filters( 'mesh_small_bg_size', $size_small );
 		$size_medium     = apply_filters( 'mesh_medium_bg_size', $size_medium );
 		$size_large      = apply_filters( 'mesh_large_bg_size', $size_large );
-		$size_xlarge     = apply_filters( 'mesh_large_bg_size', $size_xlarge );
+		$size_xlarge     = apply_filters( 'mesh_xlarge_bg_size', $size_xlarge );
 
 		$default_image_url = wp_get_attachment_image_src( get_post_thumbnail_id( $post_id ), $default_bg_size );
 
