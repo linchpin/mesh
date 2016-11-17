@@ -618,25 +618,50 @@ function mesh_section_background( $post_id = 0, $echo = true, $size_large = 'lar
 					$interchange_format = '[%s, (%s)]';
 			}
 
+			$background_urls = array();
+
 			if ( ! empty( $default_image_url ) ) {
 				if ( ! empty( $default_image_url[ 0 ] ) && '' !== $default_image_url[ 0 ] ) {
-					$backgrounds[] = sprintf( $interchange_format, $default_image_url[ 0 ], 'default' );
+
+					// foundation 6 doesn't use default
+					if ( 6 !== $foundation_version ) {
+						$background_urls[] = $default_image_url[ 0 ];
+						$backgrounds[] = sprintf( $interchange_format, $default_image_url[ 0 ], 'default' );
+					}
+
+					if ( $small_image_url = wp_get_attachment_image_src( get_post_thumbnail_id( $post_id ), $size_medium ) ) {
+						if ( ! empty( $small_image_url[ 0 ] ) && '' !== $small_image_url[ 0 ] ) {
+							if ( ! in_array( $small_image_url[0], $background_urls ) ) {
+								$background_urls[] = $small_image_url[ 0 ];
+								$backgrounds[] = sprintf( $interchange_format, $small_image_url[ 0 ], 'small' );
+							}
+						}
+					}
 
 					if ( $medium_image_url = wp_get_attachment_image_src( get_post_thumbnail_id( $post_id ), $size_medium ) ) {
 						if ( ! empty( $medium_image_url[ 0 ] ) && '' !== $medium_image_url[ 0 ] ) {
-							$backgrounds[] = sprintf( $interchange_format, $medium_image_url[ 0 ], 'medium' );
+							if ( ! in_array( $medium_image_url[0], $background_urls ) ) {
+								$background_urls[] = $medium_image_url[ 0 ];
+								$backgrounds[]     = sprintf( $interchange_format, $medium_image_url[ 0 ], 'medium' );
+							}
 						}
 					}
 
 					if ( $large_image_url = wp_get_attachment_image_src( get_post_thumbnail_id( $post_id ), $size_large ) ) {
 						if ( ! empty( $large_image_url[ 0 ] ) && '' !== $large_image_url[ 0 ] ) {
-							$backgrounds[] = sprintf( $interchange_format, $large_image_url[ 0 ], 'large' );
+							if ( ! in_array( $large_image_url[0], $background_urls ) ) {
+								$background_urls[] = $large_image_url[ 0 ];
+								$backgrounds[] = sprintf( $interchange_format, $large_image_url[ 0 ], 'large' );
+							}
 						}
 					}
 
 					if ( $xlarge_image_url = wp_get_attachment_image_src( get_post_thumbnail_id( $post_id ), $size_xlarge ) ) {
-						if ( ! empty( $large_image_url[ 0 ] ) && '' !== $xlarge_image_url[ 0 ] ) {
-							$backgrounds[] = sprintf( $interchange_format, $xlarge_image_url[ 0 ], 'xlarge' );
+						if ( ! empty( $xlarge_image_url[ 0 ] ) && '' !== $xlarge_image_url[ 0 ] ) {
+							if ( ! in_array( $xlarge_image_url[0], $background_urls ) ) {
+								$background_urls[] = $xlarge_image_url[ 0 ];
+								$backgrounds[] = sprintf( $interchange_format, $xlarge_image_url[ 0 ], 'xlarge' );
+							}
 						}
 					}
 				}
@@ -650,13 +675,13 @@ function mesh_section_background( $post_id = 0, $echo = true, $size_large = 'lar
 
 		$style = '';
 
-		if ( is_array( $backgrounds ) && '' !== $default_image_url[0] ) {
-			if ( $using_foundation ) {
-				$style .= 'data-interchange="' . esc_attr( implode( ', ', $backgrounds ) ) . '"';
-			}
+		if ( is_array( $backgrounds ) && ! empty( $backgrounds ) && $using_foundation ) {
+			$style .= 'data-interchange="' . esc_attr( implode( ', ', $backgrounds ) ) . '"';
 		}
 
-		$style .= ' style="background-image: url(' . esc_url( $default_image_url[0] ) . ');"';
+		if ( '' !== $default_image_url[0] ) {
+			$style .= ' style="background-image: url(' . esc_url( $default_image_url[ 0 ] ) . ');"';
+		}
 	}
 
 	if ( empty( $style ) ) {
