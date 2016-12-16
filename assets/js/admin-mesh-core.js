@@ -839,7 +839,7 @@ mesh.admin = function ( $ ) {
 						});
 
 						$button
-							.html( $img.html() )
+							.html( $img )
 							.attr('data-mesh-section-featured-image', parseInt( media_attachment.id ) )
 							.after( $trash );
 
