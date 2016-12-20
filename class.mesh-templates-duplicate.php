@@ -86,10 +86,9 @@ class Mesh_Templates_Duplicate {
 			'posts_per_page' => apply_filters( 'mesh_templates_per_page', 50 ),
 			'post_status'    => array( 'publish' ),
 			'post_parent'    => $template_post->ID,
+			'order_by'       => 'menu_order',
+			'order'          => 'ASC'
 		) );
-
-		error_log( "Found Posts.\n\r" );
-		error_log( $children->found_posts );
 
 		$duplicated_children = array();
 
