@@ -122,6 +122,11 @@ function hatch_mesh_default_bg_size( $size ) {
 
 == Changelog ==
 
+= 1.1.4=
+* Fixed selected background images were not displaying within admin until refresh.
+* Fixed Mesh Template order consistenty when closing.
+* Fixed Block resizing was broken in some instances.
+
 = 1.1.3=
 * Added exclusion for Mesh Template taxonomies when using WordPress / Yoast SEO
 * Added the ability to select which version of Foundation your theme is using (Defaults to Foundation 5)

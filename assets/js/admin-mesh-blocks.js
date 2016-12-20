@@ -114,7 +114,7 @@ mesh.blocks = function ( $ ) {
          */
         change_block_widths : function( event, ui ) {
             var $tgt          = $( event.target ),
-                $columns      = $tgt.parent().parent().parent().find('.mesh-editor-blocks').find('.columns').addClass('dragging'),
+                $columns      = $tgt.parent().parent().parent().find('.mesh-editor-blocks').find('.mesh-row:first .columns').addClass('dragging'),
                 column_length = $columns.length,
                 column_total  = 12,
                 column_values = [],
@@ -195,6 +195,7 @@ mesh.blocks = function ( $ ) {
          * Setup Resize Slider
          */
         setup_resize_slider : function() {
+
             $('.column-slider').addClass('ui-slider-horizontal').each(function() {
                 var $this    = $(this),
                     blocks   = parseInt( $this.attr('data-mesh-blocks') ),

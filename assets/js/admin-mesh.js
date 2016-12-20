@@ -100,6 +100,7 @@
 			for (index = 0; index <= values.length; ++index) {
 				var range = options.ranges[index],
 					sliderRange;
+
 				if (range) {
 					left = scale(index == 0? options.min : values[index - 1]);
 					right = scale(index < values.length? values[index] : options.max);
@@ -377,7 +378,7 @@ mesh.blocks = function ( $ ) {
          */
         change_block_widths : function( event, ui ) {
             var $tgt          = $( event.target ),
-                $columns      = $tgt.parent().parent().parent().find('.mesh-editor-blocks').find('.columns').addClass('dragging'),
+                $columns      = $tgt.parent().parent().parent().find('.mesh-editor-blocks').find('.mesh-row:first .columns').addClass('dragging'),
                 column_length = $columns.length,
                 column_total  = 12,
                 column_values = [],
@@ -458,6 +459,7 @@ mesh.blocks = function ( $ ) {
          * Setup Resize Slider
          */
         setup_resize_slider : function() {
+
             $('.column-slider').addClass('ui-slider-horizontal').each(function() {
                 var $this    = $(this),
                     blocks   = parseInt( $this.attr('data-mesh-blocks') ),

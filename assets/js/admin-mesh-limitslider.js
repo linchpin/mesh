@@ -100,6 +100,7 @@
 			for (index = 0; index <= values.length; ++index) {
 				var range = options.ranges[index],
 					sliderRange;
+
 				if (range) {
 					left = scale(index == 0? options.min : values[index - 1]);
 					right = scale(index < values.length? values[index] : options.max);

@@ -1,5 +1,12 @@
 ##Change Log For Mesh
 
+## [1.1.4] - 2016-12-23
+
+### Fixed
+ - Selected background images were not displaying within admin until refresh.
+ - Fixed Mesh Template order consistenty when closing.
+ - Fixed block resizing was broken in some instances.
+
 ## [1.1.3] - 2016-11-17
 
 ### Fixed
