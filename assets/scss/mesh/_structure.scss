@@ -126,6 +126,18 @@
 			width: 100%;
 			max-width: 100%;
 		}
+
+		&.title-input-visible {
+			width: calc(100% - 32px);
+
+			input.mesh-clean-edit-element {
+				width: calc(100% - 55px);
+			}
+
+			& + .mesh-more-section-options {
+				display: none;
+			}
+		}
 	}
 
 	.close-title-edit {
