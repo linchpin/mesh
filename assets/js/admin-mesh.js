@@ -1483,9 +1483,22 @@ mesh.admin = function ( $ ) {
 					$spinner.removeClass('is-active');
 				}
 
+                var windowBottom = $(window).height() + $(window).scrollTop(),
+                    meshBottom = $meshSectionsContainer.offset().top + $meshSectionsContainer.outerHeight(true),
+                    scrollTiming = ( ( meshBottom - windowBottom ) * .5 );
+
+					if ( 1000 > scrollTiming ) {
+						scrollTiming = 1000;
+					}
+
+                    if ( 3000 < scrollTiming ) {
+                        scrollTiming = 3000;
+                    }
+
+
                 $('html, body').animate({
                     scrollTop: $meshSectionsContainer.offset().top + $meshSectionsContainer.outerHeight(true) - $(window).height()
-                }, 1000 );
+                }, scrollTiming );
 			});
 		},
 

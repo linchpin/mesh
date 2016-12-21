@@ -121,7 +121,6 @@
 	&.mesh-column-title-container {
 		width: 100%;
 		width: calc(100% - 70px - 24px);
-		max-width: 70%;
 
 		@media only screen and (max-width: 1023px) {
 			width: 100%;
