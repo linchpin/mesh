@@ -3,7 +3,7 @@
  * Plugin Name: Mesh
  * Plugin URI: http://linchpin.agency/wordpress-plugins/mesh
  * Description: Adds multiple sections for content on a post by post basis. Mesh also has settings to enable it for specific post types
- * Version: 1.1.4
+ * Version: 1.2.0
  * Text Domain: mesh
  * Domain Path: /languages
  * Author: Linchpin
@@ -21,7 +21,7 @@ if ( ! function_exists( 'add_action' ) ) {
 /**
  * Define all globals.
  */
-define( 'LINCHPIN_MESH_VERSION', '1.1.4' );
+define( 'LINCHPIN_MESH_VERSION', '1.2.0' );
 define( 'LINCHPIN_MESH_PLUGIN_NAME', 'Mesh' );
 define( 'LINCHPIN_MESH__MINIMUM_WP_VERSION', '4.0' );
 define( 'LINCHPIN_MESH___PLUGIN_URL', plugin_dir_url( __FILE__ ) );
@@ -41,7 +41,7 @@ include_once 'class.mesh-templates.php';
 include_once 'class.mesh-pointers.php';
 include_once 'class.mesh.php';
 include_once 'class.mesh-upgrades.php';
-include_once 'class.mesh-reponsive-grid.php';
+include_once 'class.mesh-responsive-grid.php';
 
 $mesh          = new Mesh();
 $mesh_pointers = new Mesh_Admin_Pointers();
@@ -301,6 +301,7 @@ function mesh_get_sections( $post_id, $return_type = 'array', $statuses = array(
 		'order'          => 'ASC',
 		'post_parent'    => (int) $post_id,
 		'post_status'    => $statuses,
+		'no_found_rows'  => true,
 	);
 
 	$content_sections = new WP_Query( $args );
@@ -501,7 +502,6 @@ function mesh_cleanup_section_blocks( $section, $number_needed = 0 ) {
 	return mesh_maybe_create_section_blocks( $section, $number_needed );
 }
 
-
 /**
  * Make sure a section has a certain number of blocks
  *
@@ -573,7 +573,6 @@ function mesh_maybe_create_section_blocks( $section, $number_needed = 0 ) {
  * Utility Method to add a background to a section
  *
  * @todo This should be disabled if the user selects to NOT use foundation.
- *
  *
  * @param int    $post_id     PostID of the Section.
  * @param bool   $echo        Echo the output or not.
@@ -701,7 +700,7 @@ function mesh_section_background( $post_id = 0, $echo = true, $size_large = 'lar
 /**
  * Return an array of allowed html for wp_kses functions
  *
- * @return mixed|void
+ * @return mixed
  */
 function mesh_get_allowed_html() {
 	$mesh_allowed = apply_filters( 'mesh_default_allowed_html', array(
