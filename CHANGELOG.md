@@ -6,6 +6,11 @@
  - Selected background images were not displaying within admin until refresh.
  - Fixed Mesh Template order consistenty when closing.
  - Fixed block resizing was broken in some instances.
+ - Fixed Mesh titles going of outside their container if they were too long 
+ - Show background image preview on upload.
+ 
+### Added
+ - Window will now scroll to the newest block when adding a new section.
 
 ## [1.1.3] - 2016-11-17
 
@@ -14,7 +19,7 @@
  - Fixed minor typo in the previous changelog
  
 ### Added
- - Exclude mesh template taxonomies from being added to the WordPress SEO sitemap.xml
+ - Exclude Mesh template taxonomies from being added to the WordPress SEO sitemap.xml
  - Equalizer minimum breakpoint support for Foundation 6
  - The ability to select which version of Foundation your theme is using (Defaults to Foundation 5)
  - `mesh-background` custom image size (1920 x 1080) by default.
