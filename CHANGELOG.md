@@ -1,13 +1,12 @@
 ##Change Log For Mesh
 
-## [1.1.4] - 2016-12-23
+## [1.1.4] - 2016-12-21
 
 ### Fixed
- - Selected background images were not displaying within admin until refresh.
+ - Selected/uploaded background images were not displaying within admin until refresh.
  - Fixed Mesh Template order consistenty when closing.
  - Fixed block resizing was broken in some instances.
- - Fixed Mesh titles going of outside their container if they were too long 
- - Show background image preview on upload.
+ - Fixed Mesh titles displaying outside of their container if the title is too long 
  
 ### Added
  - Window will now scroll to the newest block when adding a new section.

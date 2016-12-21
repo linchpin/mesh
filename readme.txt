@@ -123,9 +123,11 @@ function hatch_mesh_default_bg_size( $size ) {
 == Changelog ==
 
 = 1.1.4=
-* Fixed selected background images were not displaying within admin until refresh.
+* Fixed selected/upload background images were not displaying within admin until refresh.
 * Fixed Mesh Template order consistenty when closing.
 * Fixed Block resizing was broken in some instances.
+* Fixed Mesh titles displaying outside of their container if the title is too long
+* Added Window will now scroll to the newest block when adding a new section.
 
 = 1.1.3=
 * Added exclusion for Mesh Template taxonomies when using WordPress / Yoast SEO
