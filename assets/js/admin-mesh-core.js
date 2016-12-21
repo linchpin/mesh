@@ -301,7 +301,8 @@ mesh.admin = function ( $ ) {
 			section_count = $sections.length;
 
 			var $this = $(this),
-				$spinner = $this.find('.spinner');
+				$spinner = $this.find('.spinner'),
+                $meshSectionsContainer = $('#mesh-sections-container');
 
 			if ( $this.hasClass('disabled') ) {
 				return false;
@@ -353,6 +354,10 @@ mesh.admin = function ( $ ) {
 				} else {
 					$spinner.removeClass('is-active');
 				}
+
+                $('html, body').animate({
+                    scrollTop: $meshSectionsContainer.offset().top + $meshSectionsContainer.outerHeight(true) - $(window).height()
+                }, 1000 );
 			});
 		},
 
