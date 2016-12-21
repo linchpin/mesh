@@ -102,6 +102,31 @@
 		    color: $primary;
 		    margin-left: $input_padding_x;
 	    }
+
+		&.mesh-section-title-text {
+			max-width: 100%;
+			overflow: hidden;
+			padding-right: 28px;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+
+			&:after {
+				position: absolute;
+				right: 10px;
+				top: 3px;
+			}
+		}
+	}
+
+	&.mesh-column-title-container {
+		width: 100%;
+		width: calc(100% - 70px - 24px);
+		max-width: 70%;
+
+		@media only screen and (max-width: 1023px) {
+			width: 100%;
+			max-width: 100%;
+		}
 	}
 
 	.close-title-edit {

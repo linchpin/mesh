@@ -28,7 +28,7 @@ $blocks = mesh_maybe_create_section_blocks( $section, $block_count );
 			<div class="mesh-clean-edit">
 				<input type="text" name="mesh-sections[<?php esc_attr_e( $section->ID ); ?>][post_title]" class="mesh-clean-edit-element widefat mesh-section-title left" value="<?php esc_attr_e( $section->post_title ); ?>" />
 				<span class="close-title-edit left"><?php esc_html_e( 'Done', 'mesh' ); ?></span>
-				<span class="handle-title"><?php esc_html_e( $section->post_title ); ?></span>
+				<span class="handle-title mesh-section-title-text"><?php esc_html_e( $section->post_title ); ?></span>
 			</div>
 		</div>
 		<div class="mesh-columns-4 text-right">
