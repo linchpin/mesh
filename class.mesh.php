@@ -886,10 +886,12 @@ class Mesh {
 		$mesh_options = get_option( 'mesh_settings' );
 		$css_mode     = (int) $mesh_options['css_mode'];
 
-		if ( 0 == $css_mode ) {
+		if ( -1 === $css_mode ) {
 			return;
 		} else {
-			wp_enqueue_style( 'mesh-grid-foundation', plugins_url( 'assets/css/mesh-grid-foundation.css', __FILE__ ), array(), LINCHPIN_MESH_VERSION );
+			if ( 0 === $css_mode ) {
+				wp_enqueue_style( 'mesh-grid-foundation', plugins_url( 'assets/css/mesh-grid-foundation.css', __FILE__ ), array(), LINCHPIN_MESH_VERSION );
+			}
 		}
 	}
 

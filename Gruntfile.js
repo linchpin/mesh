@@ -50,7 +50,8 @@ module.exports = function(grunt) {
 
             frontend: {
 	            src: [
-		            'assets/js/mesh-frontend.js'
+		            'assets/js/mesh-frontend.js',
+                    'assets/js/mesh-frontend-interchange.js'
 	            ],
 
 	            dest: 'assets/js/mesh.js'
@@ -87,7 +88,8 @@ module.exports = function(grunt) {
                     'assets/js/admin-mesh-blocks.js',
                     'assets/js/admin-mesh-templates.js',
                     'assets/js/admin-mesh-core.js',
-                    'assets/js/mesh-frontend.js'
+                    'assets/js/mesh-frontend.js',
+                    'assets/js/mesh-frontend-interchange.js'
                 ],
                 tasks: ['concat','uglify']
             }

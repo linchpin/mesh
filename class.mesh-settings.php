@@ -89,8 +89,8 @@ class Mesh_Settings {
 
 		// Option : CSS Mode.
 		$css_mode = array(
-			array( 'label' => __( 'Use Mesh CSS', 'mesh' ), 'value' => '' ),
-			array( 'label' => __( 'Disable Mesh CSS', 'mesh' ), 'value' => 0 ),
+			array( 'label' => __( 'Use Mesh CSS', 'mesh' ), 'value' => 0 ),
+			array( 'label' => __( 'Disable Mesh CSS', 'mesh' ), 'value' => -1 ),
 			array( 'label' => __( 'Use Foundation built into my theme', 'mesh' ), 'value' => 1 ),
 			array( 'label' => __( 'Use Bootstrap', 'mesh' ), 'value' => 2 ),
 		);

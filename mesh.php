@@ -607,10 +607,15 @@ function mesh_section_background( $post_id = 0, $echo = true, $size_large = 'lar
 
 		$default_image_url = wp_get_attachment_image_src( get_post_thumbnail_id( $post_id ), $default_bg_size );
 
-		$using_foundation = ( '' === $css_mode || 1 === (int) $css_mode );
+		$using_foundation = ( 0 === (int) $css_mode || 1 === (int) $css_mode );
 
 		// Only allow interchange or backgrounds when using Mesh css or a theme based on foundation.
 		if ( $using_foundation ) {
+
+			if ( 0 === (int) $css_mode ) {
+				$foundation_version = 6;
+			}
+
 			switch ( $foundation_version ) {
 				case 6 :
 					$interchange_format = '[%s, %s]';
@@ -670,7 +675,6 @@ function mesh_section_background( $post_id = 0, $echo = true, $size_large = 'lar
 				if ( empty( $backgrounds ) ) {
 					return array();
 				}
-
 			}
 		}
 
