@@ -112,7 +112,8 @@ class Mesh_Templates {
 			'rewrite' => false,
 		) );
 
-		$available_post_types = Mesh_Settings::get_post_types();
+		$mesh_post_types_array = Mesh_Settings::get_post_types();
+		$available_post_types = array_keys( $mesh_post_types_array );
 
 		register_taxonomy( 'mesh_template_usage', $available_post_types, array(
 			'labels' => array(
