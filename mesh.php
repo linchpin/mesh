@@ -288,33 +288,32 @@ function mesh_add_section_admin_markup( $section, $closed = false, $return = fal
  * Retrieve Mesh sections.
  *
  * @param int    $post_id        Post ID.
- * @param string $return_type    Object Return Type.
  * @param array  $statuses       Statuses to query.
  *
  * @return array|WP_Query
  */
-function mesh_get_sections( $post_id, $return_type = 'array', $statuses = array( 'publish' ) ) {
-	$args = array(
-		'post_type'      => 'mesh_section',
-		'posts_per_page' => apply_filters( 'mesh_templates_per_page', 50 ),
-		'orderby'        => 'menu_order',
-		'order'          => 'ASC',
-		'post_parent'    => (int) $post_id,
-		'post_status'    => $statuses,
-	);
-
-	$content_sections = new WP_Query( $args );
-
-	switch ( $return_type ) {
-		case 'query' :
-			return $content_sections;
-			break;
-
-		case 'array' :
-		default      :
-			return $content_sections->posts;
-			break;
+function mesh_get_sections( $post_id, $statuses = array( 'publish' ) ) {
+	static $query = array();
+	if ( ! array_key_exists( $post_id, $query ) ) {
+		$all_section_ids = get_post_meta( $post_id, '_mesh_sections', true );
+		$query[ $post_id ] = new WP_Query( array(
+			'posts_per_page' => -1,
+			'post_type' => 'mesh_section',
+			'orderby' => 'menu_order',
+			'order' => 'ASC',
+			'status' => 'any',
+			'post__in' => $all_section_ids,
+		) );
 	}
+
+	$sections = array();
+	foreach ( $query[ $post_id ]->posts as $post ) {
+		if ( (int) $post->post_parent === (int) $post_id && ( in_array( 'any', (array) $statuses ) || in_array( $post->post_status, (array) $statuses ) ) ) {
+			$sections[] = $post;
+		}
+	}
+
+	return $sections;
 }
 
 /**
@@ -401,31 +400,25 @@ function mesh_display_sections( $post_id = '', $echo = true ) {
 		return '';
 	}
 
-	if ( ! $mesh_section_query = mesh_get_sections( $post_id, 'query' ) ) {
-		return '';
-	}
+	$mesh_sections = mesh_get_sections( $post_id );
 
-	if ( empty( $mesh_section_query ) ) {
+	if ( empty( $mesh_sections ) ) {
 		return '';
 	}
 
 	if ( true === $echo ) {
-		if ( $mesh_section_query->have_posts() ) {
-			while ( $mesh_section_query->have_posts() ) {
-				$mesh_section_query->the_post();
-				the_mesh_content();
-			}
-			wp_reset_postdata();
+		foreach ( $mesh_sections as $post ) {
+			setup_postdata( $post );
+			the_mesh_content();
 		}
+		wp_reset_postdata();
 	} else {
 		ob_start();
-		if ( $mesh_section_query->have_posts() ) {
-			while ( $mesh_section_query->have_posts() ) {
-				$mesh_section_query->the_post();
-				the_mesh_content();
-			}
-			wp_reset_postdata();
+		foreach ( $mesh_sections as $post ) {
+			setup_postdata( $post );
+			the_mesh_content();
 		}
+		wp_reset_postdata();
 		$output = ob_get_contents();
 		ob_end_clean();
 		return $output;
@@ -442,21 +435,8 @@ function mesh_display_sections( $post_id = '', $echo = true ) {
  *
  * @return array
  */
-function mesh_get_section_blocks( $section_id, $post_status = 'publish' ) {
-	$content_blocks = new WP_Query( array(
-		'post_type' => 'mesh_section',
-		'post_status' => $post_status,
-		'posts_per_page' => 50,
-		'orderby' => 'menu_order',
-		'order' => 'ASC',
-		'post_parent' => (int) $section_id,
-	) );
-
-	if ( $content_blocks->have_posts() ) {
-		return $content_blocks->posts;
-	} else {
-		return array();
-	}
+function mesh_get_section_blocks( $section_id, $post_status = array( 'publish' ) ) {
+	return mesh_get_sections( $section_id, $post_status );
 }
 
 /**

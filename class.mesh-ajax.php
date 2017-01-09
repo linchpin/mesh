@@ -225,7 +225,7 @@ class Mesh_AJAX {
 				}
 			}
 
-			$sections = mesh_get_sections( $post_id, 'array', $statuses = array( 'publish', 'draft' ) );
+			$sections = mesh_get_sections( $post_id, array( 'publish', 'draft' ) );
 
 			// If we don't have any sections remaining. Show the initial set.
 			if ( empty( $sections ) ) {

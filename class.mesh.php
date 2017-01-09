@@ -322,7 +322,7 @@ class Mesh {
 			return;
 		}
 
-		$content_sections   = mesh_get_sections( $post->ID, 'array', array( 'publish', 'draft' ) );
+		$content_sections   = mesh_get_sections( $post->ID, array( 'publish', 'draft' ) );
 		$mesh_notifications = get_user_option( 'linchpin_mesh_notifications', get_current_user_id() );
 		$mesh_templates     = mesh_get_templates();
 		?>
@@ -398,6 +398,9 @@ class Mesh {
 
 		$count = 0;
 
+		// Store the section/block IDs for later.
+		$section_ids = array();
+
 		// Check if we are doing a section update via AJAX.
 		$saving_section_via_ajax = false;
 		$ajax_section_id         = 0;
@@ -408,6 +411,12 @@ class Mesh {
 		}
 
 		foreach ( $_POST['mesh-sections'] as $section_id => $section_data ) {
+			$section_ids[] = $section_id;
+
+			if ( ! empty( $section_data['blocks'] ) ) {
+				$block_ids = array_keys( $section_data['blocks'] );
+				$section_ids = array_merge( $section_ids, $block_ids );
+			}
 
 			// If using AJAX, make sure we only update the section we want to save.
 			if ( $saving_section_via_ajax && $ajax_section_id !== $section_id ) {
@@ -572,6 +581,9 @@ class Mesh {
 			$page_id = $post->post_parent;
 		} else {
 			$page_id = $post_id;
+			// Save the Mesh section and block IDs as postmeta so we can optimize
+			// the mesh_get_sections() function.
+			update_post_meta( $page_id, '_mesh_sections', $section_ids );
 		}
 
 		// Save a block's content into its section, and then into it's page.
@@ -652,14 +664,14 @@ class Mesh {
 			return;
 		}
 
-		$sections = mesh_get_sections( $post_id, 'array', array( 'any' ) );
+		$sections = mesh_get_sections( $post_id, array( 'any' ) );
 
 		if ( empty( $sections ) ) {
 			return;
 		}
 
 		foreach ( $sections as $section ) {
-			if ( $blocks = mesh_get_sections( $section->ID, 'array', array( 'any' ) ) ) {
+			if ( $blocks = mesh_get_sections( $section->ID, array( 'any' ) ) ) {
 				foreach ( $blocks as $block ) {
 					wp_trash_post( $block->ID );
 				}
@@ -682,14 +694,14 @@ class Mesh {
 			return;
 		}
 
-		$sections = mesh_get_sections( $post_id, 'array', array( 'publish', 'draft', 'trash' ) );
+		$sections = mesh_get_sections( $post_id, array( 'publish', 'draft', 'trash' ) );
 
 		if ( empty( $sections ) ) {
 			return;
 		}
 
 		foreach ( $sections as $section ) {
-			if ( $blocks = mesh_get_sections( $section->ID, 'array', array( 'publish', 'draft', 'trash' ) ) ) {
+			if ( $blocks = mesh_get_sections( $section->ID, array( 'publish', 'draft', 'trash' ) ) ) {
 				foreach ( $blocks as $block ) {
 					wp_delete_post( $block->ID );
 				}
@@ -712,14 +724,14 @@ class Mesh {
 			return;
 		}
 
-		$sections = mesh_get_sections( $post_id, 'array', array( 'trash' ) );
+		$sections = mesh_get_sections( $post_id, array( 'trash' ) );
 
 		if ( empty( $sections ) ) {
 			return;
 		}
 
 		foreach ( $sections as $section ) {
-			if ( $blocks = mesh_get_sections( $section->ID, 'array', array( 'trash' ) ) ) {
+			if ( $blocks = mesh_get_sections( $section->ID, array( 'trash' ) ) ) {
 				foreach ( $blocks as $block ) {
 					wp_untrash_post( $block->ID );
 				}
