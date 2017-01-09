@@ -293,10 +293,10 @@ function mesh_add_section_admin_markup( $section, $closed = false, $return = fal
  * @return array|WP_Query
  */
 function mesh_get_sections( $post_id, $statuses = array( 'publish' ) ) {
-	static $query;
-	if ( null === $query ) {
+	static $query = array();
+	if ( ! array_key_exists( $post_id, $query ) ) {
 		$all_section_ids = get_post_meta( $post_id, '_mesh_sections', true );
-		$query = new WP_Query( array(
+		$query[ $post_id ] = new WP_Query( array(
 			'posts_per_page' => -1,
 			'post_type' => 'mesh_section',
 			'orderby' => 'menu_order',
@@ -307,7 +307,7 @@ function mesh_get_sections( $post_id, $statuses = array( 'publish' ) ) {
 	}
 
 	$sections = array();
-	foreach ( $query->posts as $post ) {
+	foreach ( $query[ $post_id ]->posts as $post ) {
 		if ( (int) $post->post_parent === (int) $post_id && ( in_array( 'any', (array) $statuses ) || in_array( $post->post_status, (array) $statuses ) ) ) {
 			$sections[] = $post;
 		}
