@@ -496,6 +496,13 @@ class Mesh {
 				update_post_meta( $section->ID, '_mesh_collapse', $section_data['collapse'] );
 			}
 
+			// Save Parallax.
+			if ( empty( $section_data['parallax'] ) ) {
+				delete_post_meta( $section->ID, '_mesh_parallax' );
+			} else {
+				update_post_meta( $section->ID, '_mesh_parallax', $section_data['parallax'] );
+			}
+
 			// Process the section's blocks.
 			$blocks = array();
 
@@ -885,6 +892,8 @@ class Mesh {
 	function wp_enqueue_styles() {
 		$mesh_options = get_option( 'mesh_settings' );
 		$css_mode     = (int) $mesh_options['css_mode'];
+
+		wp_enqueue_style( 'mesh-frontend-css', plugins_url( 'assets/css/mesh-frontend.css', __FILE__ ), array(), LINCHPIN_MESH_VERSION );
 
 		if ( 0 == $css_mode ) {
 			return;

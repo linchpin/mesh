@@ -55,6 +55,12 @@ mesh.frontend = function ( $ ) {
 					.load( self.mesh_equalize_init )
 					.resize( self.mesh_equalize_init );
 			}
+
+			if ( $('.has-parallax').length ) {
+				$window
+					.load( self.mesh_parallax )
+					.scroll( self.mesh_parallax );
+			}
 		},
 
 		mesh_equalize_init : function() {
@@ -77,6 +83,25 @@ mesh.frontend = function ( $ ) {
 				eq_height = this_height > eq_height ? this_height : eq_height;
 			}).height(eq_height);
 
+		},
+
+		mesh_parallax : function() {
+
+			var $scrolled = $(window).scrollTop(),
+				$windowHeight = $(window).height(),
+				$midWindow = ( $scrolled + ( $windowHeight / 2 ) );
+
+			$('.has-parallax').each( function() {
+
+				var $height = $(this).height(),
+					$offtop = $(this).offset().top,
+					$midBlock = ( $offtop + ( $height / 2 ) ),
+					$ratio = ( $height / $windowHeight );
+
+				// Multiplied by 2/3rds because of size of blocks ( 100% Mesh Section Height / 150% Background Height )
+				$('.parallax-background', this).css('top', ( ( $midWindow - $midBlock) * (2/3) * $ratio ) - ( $height / 4)  );
+
+			});
 		}
 	};
 } ( jQuery );

@@ -15,7 +15,8 @@ module.exports = function(grunt) {
 
 				files: {
 					'assets/css/admin-mesh.css': 'assets/scss/admin-mesh.scss',
-					'assets/css/mesh-grid-foundation.css': 'assets/scss/mesh-grid-foundation.scss'
+					'assets/css/mesh-grid-foundation.css': 'assets/scss/mesh-grid-foundation.scss',
+                    'assets/css/mesh-frontend.css': 'assets/scss/mesh-frontend.scss'
 				}
 			}
 		},

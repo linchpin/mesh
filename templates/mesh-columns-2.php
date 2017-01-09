@@ -10,14 +10,29 @@
  */
 
 ?>
-<section <?php post_class() ?> <?php mesh_section_background(); ?>>
-	<?php
-		$push_pull       = get_post_meta( get_the_ID(), '_mesh_push_pull', true );
-		$collapse_column_spacing = get_post_meta( get_the_ID(), '_mesh_collapse', true );
-		$lp_equal = get_post_meta( get_the_ID(), '_mesh_lp_equal', true );
 
-		$title_display = get_post_meta( get_the_ID(), '_mesh_title_display', true );
-	?>
+<?php
+	$push_pull       = get_post_meta( get_the_ID(), '_mesh_push_pull', true );
+	$collapse_column_spacing = get_post_meta( get_the_ID(), '_mesh_collapse', true );
+	$lp_equal = get_post_meta( get_the_ID(), '_mesh_lp_equal', true );
+
+	$title_display = get_post_meta( get_the_ID(), '_mesh_title_display', true );
+
+	$parallax = get_post_meta( get_the_ID(), '_mesh_parallax', true );
+
+	if ( ! empty( $parallax ) ) { 
+		$has_parallax = 'has-parallax';
+	} else {
+		$has_parallax = '';
+	}
+?>
+
+<section <?php post_class( $has_parallax ) ?> <?php mesh_section_background(); ?>>
+
+	<?php if ( ! empty( $parallax ) ) : ?>
+		<div class="parallax-background" <?php mesh_section_background(); ?>></div>
+	<?php endif; ?>
+
 	<div class="row <?php if ( ! empty( $collapse_column_spacing ) ) : ?>collapse<?php endif; ?>"<?php if ( ! empty( $lp_equal ) ) : ?> data-equalizer data-equalize-on="medium"<?php endif; ?>>
 		<?php if ( ! empty( $title_display ) && 'no block title' != strtolower( get_the_title() ) ) : ?>
 			<div class="small-12 columns title-row">

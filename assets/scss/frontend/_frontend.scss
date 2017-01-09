@@ -1,0 +1,13 @@
+.has-parallax {
+	position: relative;
+	overflow: hidden;
+
+	.parallax-background {
+		position: absolute;
+
+		background-size: cover;
+		background-position: center center;
+		height: 150%;
+		width: 100%;	
+	}
+}
