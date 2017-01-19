@@ -152,20 +152,23 @@ if ( ! function_exists( 'add_action' ) ) {
 
 					<div class="block-content<?php if ( 4 !== $section_blocks && $block_offset ) { esc_attr_e( ' mesh-has-offset mesh-offset-' . $block_offset ); } ?>">
 						<?php
+
+						$tiny_mce_options = apply_filters( 'mesh_tiny_mce_before_init', array(
+							'resize'                => false,
+							'wordpress_adv_hidden'  => true,
+							'add_unload_trigger'    => false,
+							'statusbar'             => true,
+							'autoresize_min_height' => 150,
+							'wp_autoresize_on'      => false,
+							'plugins'               => 'lists,media,paste,tabfocus,wordpress,textcolor,wpautoresize,wpeditimage,wpgallery,wplink,wptextpattern,wpview',
+							'toolbar1'              => 'bold,italic,bullist,numlist,hr,alignleft,aligncenter,alignright,alignjustify,link,wp_adv',
+							'toolbar2'              => 'formatselect,underline,strikethrough,forecolor,pastetext,removeformat',
+						) );
+
 						wp_editor( apply_filters( 'content_edit_pre', $blocks[ $block_increment ]->post_content ), 'mesh-section-editor-' . $blocks[ $block_increment ]->ID, array(
 							'textarea_name' => 'mesh-sections[' . $section->ID . '][blocks][' . $blocks[ $block_increment ]->ID . '][post_content]',
 							'teeny' => true,
-							'tinymce'          => array(
-								'resize'                => false,
-								'wordpress_adv_hidden'  => true,
-								'add_unload_trigger'    => false,
-								'statusbar'             => true,
-								'autoresize_min_height' => 150,
-								'wp_autoresize_on'      => false,
-								'plugins'               => 'lists,media,paste,tabfocus,wordpress,textcolor,wpautoresize,wpeditimage,wpgallery,wplink,wptextpattern,wpview',
-								'toolbar1'              => 'bold,italic,bullist,numlist,hr,alignleft,aligncenter,alignright,alignjustify,link,wp_adv',
-								'toolbar2'              => 'formatselect,underline,strikethrough,forecolor,pastetext,removeformat',
-							),
+							'tinymce' => $tiny_mce_options,
 							'quicktags' => array(
 								'buttons' => 'strong,em,link,block,img,ul,ol,li',
 							),

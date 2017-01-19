@@ -236,7 +236,7 @@ class Mesh {
 		$in['toolbar3']                = '';
 		$in['toolbar4']                = '';
 
-		return $in;
+		return apply_filters( 'mesh_tiny_mce_before_init', $in );
 	}
 
 	/**
