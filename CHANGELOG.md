@@ -1,5 +1,11 @@
 ##Change Log For Mesh
 
+## [1.1.5] - 2017-1-19
+
+## Added
+ - Ability to filter `mesh_tiny_mce_before_init` to allow even more extended option filtering
+ - Support for interchange using Mesh even if your theme isn't built on Foundation
+
 ## [1.1.4] - 2016-12-21
 
 ### Fixed

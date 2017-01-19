@@ -153,17 +153,22 @@ if ( ! function_exists( 'add_action' ) ) {
 					<div class="block-content<?php if ( 4 !== $section_blocks && $block_offset ) { esc_attr_e( ' mesh-has-offset mesh-offset-' . $block_offset ); } ?>">
 						<?php
 
-						$tiny_mce_options = apply_filters( 'mesh_tiny_mce_before_init', array(
+						$tiny_mce_options = array(
 							'resize'                => false,
 							'wordpress_adv_hidden'  => true,
 							'add_unload_trigger'    => false,
 							'statusbar'             => true,
 							'autoresize_min_height' => 150,
 							'wp_autoresize_on'      => false,
+							'wpautop'               => true,
 							'plugins'               => 'lists,media,paste,tabfocus,wordpress,textcolor,wpautoresize,wpeditimage,wpgallery,wplink,wptextpattern,wpview',
 							'toolbar1'              => 'bold,italic,bullist,numlist,hr,alignleft,aligncenter,alignright,alignjustify,link,wp_adv',
 							'toolbar2'              => 'formatselect,underline,strikethrough,forecolor,pastetext,removeformat',
-						) );
+						);
+
+						$tiny_mce_options = apply_filters( 'mesh_tiny_mce_options', $tiny_mce_options );
+
+						error_log( '$toggle_wp_auto_p ' . print_r( $tiny_mce_options, true ) );
 
 						wp_editor( apply_filters( 'content_edit_pre', $blocks[ $block_increment ]->post_content ), 'mesh-section-editor-' . $blocks[ $block_increment ]->ID, array(
 							'textarea_name' => 'mesh-sections[' . $section->ID . '][blocks][' . $blocks[ $block_increment ]->ID . '][post_content]',

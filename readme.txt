@@ -114,6 +114,8 @@ function hatch_mesh_default_bg_size( $size ) {
 * `add_filter( 'mesh_medium_bg_size', $size );`
 * `add_filter( 'mesh_xlarge_bg_size', $size );`
 
+* `add_filter( 'mesh_tiny_mce_before_init', $init_options );`
+
 == Screenshots ==
 
 1. Mesh editor interface.
@@ -122,21 +124,25 @@ function hatch_mesh_default_bg_size( $size ) {
 
 == Changelog ==
 
-= 1.1.4=
+= 1.1.5 =
+* Added ability to filter `mesh_tiny_mce_before_init` to allow even more extended option filtering
+* Added default support for interchange using Mesh even if your theme isn't built on Foundation
+
+= 1.1.4 =
 * Fixed selected/upload background images were not displaying within admin until refresh.
 * Fixed Mesh Template order consistenty when closing.
 * Fixed Block resizing was broken in some instances.
 * Fixed Mesh titles displaying outside of their container if the title is too long
 * Added Window will now scroll to the newest block when adding a new section.
 
-= 1.1.3=
+= 1.1.3 =
 * Added exclusion for Mesh Template taxonomies when using WordPress / Yoast SEO
 * Added the ability to select which version of Foundation your theme is using (Defaults to Foundation 5)
 * Added mesh-background custom image size (1920 x 1080) by default.
 * Added filters to define what images sizes will be used by interchange.
 * Fixed interchange on section and block background images
 
-= 1.1.2=
+= 1.1.2 =
 * Fixed compatability issue with PHP 5.4 (Thanks @missmuttly anf @tecbrat)
 
 = 1.1.1 =

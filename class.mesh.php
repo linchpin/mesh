@@ -228,7 +228,7 @@ class Mesh {
 			$in['content_css'] = get_template_directory_uri() . '/editor-style.css';
 		}
 
-		$in['wpautop']                 = true; // @todo This should be filterable
+		$in['wpautop']                 = true;
 		$in['apply_source_formatting'] = false;
 		$in['block_formats']           = 'Paragraph=p; Heading 3=h3; Heading 4=h4';
 		$in['toolbar1']                = 'bold,italic,bullist,numlist,hr,alignleft,aligncenter,alignright,alignjustify,link,wp_adv ';

@@ -66,7 +66,11 @@ function add_multiple_content_sections( $the_content ) {
 * `add_filter( 'mesh_loop_end', $section_html_content );` 
 
 ##### Filters added 1.1.3
-* `add_filter( 'mesh_default_bg_size', $size );`   
+* `add_filter( 'mesh_default_bg_size', $size );`
+
+##### Filters added 1.1.5
+* `add_filter( 'mesh_tiny_mce_before_init', $init_options )`
+* `add_filter( 'mesh_tiny_mce_options', $options )`
 
 ### Recognition
 
