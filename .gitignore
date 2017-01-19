@@ -1,1 +1,4 @@
 build/*
+vendor
+docs
+composer.lock
