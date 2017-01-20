@@ -54,6 +54,7 @@ if ( ! function_exists( 'add_action' ) ) {
 
 		$block_css_class = get_post_meta( $blocks[ $block_increment ]->ID, '_mesh_css_class', true );
 		$block_offset = (int) get_post_meta( $blocks[ $block_increment ]->ID, '_mesh_offset', true );
+		$block_is_locked = get_post_meta( $blocks[ $block_increment ]->ID, '_mesh_is_locked', true );
 
 		?>
 		<div class="mesh-section-block mesh-columns-<?php esc_attr_e( $block_columns ); ?> columns" data-mesh-block-id="<?php esc_attr_e( $blocks[ $block_increment ]->ID ); ?>">
@@ -119,6 +120,12 @@ if ( ! function_exists( 'add_action' ) ) {
 										<label for="mesh-sections-<?php esc_attr_e( $blocks[ $block_increment ]->ID ); ?>-css-class" class="nowrap">
 											<?php esc_html_e( 'CSS Class', 'mesh' ); ?> <input type="text" id="mesh-sections-<?php esc_attr_e( $blocks[ $block_increment ]->ID ); ?>-css-class" name="mesh-sections[<?php esc_attr_e( $section->ID ); ?>][blocks][<?php esc_attr_e( $blocks[ $block_increment ]->ID ); ?>][css_class]" value="<?php esc_attr_e( $block_css_class ); ?>" />
 										</label>
+
+										<?php if ( 'mesh_template' === $post->post_type ) : ?>
+										<label for="mesh-sections-<?php esc_attr_e( $blocks[ $block_increment ]->ID ); ?>-is-locked">
+											<?php esc_html_e( 'Lock this block', 'mesh' ); ?> <input type="checkbox" id="mesh-sections-<?php esc_attr_e( $blocks[ $block_increment ]->ID ); ?>-is-locked" name="mesh-sections[<?php esc_attr_e( $section->ID ); ?>][blocks][<?php esc_attr_e( $blocks[ $block_increment ]->ID ); ?>][is_locked]" value="1"<?php echo $block_is_locked ? ' checked': ''; ?> />
+										</label>
+										<?php endif; ?>
 
                                         <?php
 

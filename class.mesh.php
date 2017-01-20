@@ -398,6 +398,9 @@ class Mesh {
 
 		$count = 0;
 
+		// Store the section/block IDs for later.
+		$section_ids = array();
+
 		// Check if we are doing a section update via AJAX.
 		$saving_section_via_ajax = false;
 		$ajax_section_id         = 0;
@@ -408,6 +411,12 @@ class Mesh {
 		}
 
 		foreach ( $_POST['mesh-sections'] as $section_id => $section_data ) {
+			$section_ids[ $section_id ] = array();
+
+			if ( ! empty( $section_data['blocks'] ) ) {
+				$block_ids = array_keys( $section_data['blocks'] );
+				$section_ids[ $section_id ] = $block_ids;
+			}
 
 			// If using AJAX, make sure we only update the section we want to save.
 			if ( $saving_section_via_ajax && $ajax_section_id !== $section_id ) {
@@ -496,6 +505,13 @@ class Mesh {
 				update_post_meta( $section->ID, '_mesh_collapse', $section_data['collapse'] );
 			}
 
+			// Save locked status.
+			if ( empty( $section_data['is_locked'] ) ) {
+				delete_post_meta( $section->ID, '_mesh_is_locked' );
+			} else {
+				update_post_meta( $section->ID, '_mesh_is_locked', 1 );
+			}
+
 			// Process the section's blocks.
 			$blocks = array();
 
@@ -563,6 +579,13 @@ class Mesh {
 				} else {
 					update_post_meta( $block_id, '_mesh_css_class', $sanitized_css_classes );
 				}
+
+				// Save locked status.
+				if ( empty( $section_data['blocks'][ $block_id ]['is_locked'] ) ) {
+					delete_post_meta( $block_id, '_mesh_is_locked' );
+				} else {
+					update_post_meta( $block_id, '_mesh_is_locked', 1 );
+				}
 			}
 		}
 
@@ -572,6 +595,9 @@ class Mesh {
 			$page_id = $post->post_parent;
 		} else {
 			$page_id = $post_id;
+			// Save the Mesh section and block IDs as postmeta so we can optimize
+			// the mesh_get_sections() function.
+			update_post_meta( $page_id, '_mesh_sections', $section_ids );
 		}
 
 		// Save a block's content into its section, and then into it's page.
