@@ -71,14 +71,6 @@ global $post;
 						<?php esc_html_e( 'Equalize', 'mesh' ); ?> <input type="checkbox" name="mesh-sections[<?php esc_attr_e( $section->ID ); ?>][lp_equal]" class="mesh-section-equalize" value="1" <?php if ( get_post_meta( $section->ID, '_mesh_lp_equal', true ) ) : ?>checked<?php endif; ?> />
 					</label>
 				</li>
-
-				<?php if ( 'mesh_template' === $post->post_type ) : ?>
-				<li>
-					<label for="mesh-sections[<?php esc_attr_e( $section->ID ); ?>][is-locked]">
-						<?php esc_html_e( 'Lock this section', 'mesh' ); ?> <input type="checkbox" name="mesh-sections[<?php esc_attr_e( $section->ID ); ?>][is_locked]" class="mesh-section-is-locked" value="1" <?php if ( get_post_meta( $section->ID, '_mesh_is_locked', true ) ) : ?>checked<?php endif; ?> />
-					</label>
-				</li>
-				<?php endif; ?>
 			<?php endif; ?>
 		</div>
 	</div>

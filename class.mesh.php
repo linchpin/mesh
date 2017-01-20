@@ -505,13 +505,6 @@ class Mesh {
 				update_post_meta( $section->ID, '_mesh_collapse', $section_data['collapse'] );
 			}
 
-			// Save locked status.
-			if ( empty( $section_data['is_locked'] ) ) {
-				delete_post_meta( $section->ID, '_mesh_is_locked' );
-			} else {
-				update_post_meta( $section->ID, '_mesh_is_locked', 1 );
-			}
-
 			// Process the section's blocks.
 			$blocks = array();
 
@@ -581,10 +574,10 @@ class Mesh {
 				}
 
 				// Save locked status.
-				if ( empty( $section_data['blocks'][ $block_id ]['is_locked'] ) ) {
-					delete_post_meta( $block_id, '_mesh_is_locked' );
+				if ( empty( $section_data['blocks'][ $block_id ]['locked_properties'] ) ) {
+					delete_post_meta( $block_id, '_mesh_locked_properties' );
 				} else {
-					update_post_meta( $block_id, '_mesh_is_locked', 1 );
+					update_post_meta( $block_id, '_mesh_locked_properties', $section_data['blocks'][ $block_id ]['locked_properties'] );
 				}
 			}
 		}
