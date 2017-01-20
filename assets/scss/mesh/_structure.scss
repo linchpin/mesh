@@ -378,6 +378,37 @@
 			line-height: $input_height;
 		}
 	}
+
+	.mesh-update-status-container {
+		display: inline-block;
+		position: relative;
+
+		.saved-status-icon {
+			background-color: $green;
+			border-radius: 100%;
+			position: absolute;
+			top: 0;
+			right: 0;
+			height: 20px;
+			width: 20px;
+			margin: 4px 10px 0;
+			opacity: 0;
+			transition: opacity .5s;
+
+			&:before {
+				color: white;
+				position: absolute;
+				top: 1px;
+				left: -1px;
+			}
+
+			&.is-active {
+				display: block;
+				opacity: 1;
+				transition: opacity 0s;
+			}
+		}
+	}
 }
 
 // 06. Blocks

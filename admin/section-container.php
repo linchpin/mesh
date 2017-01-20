@@ -62,7 +62,10 @@ $blocks = mesh_maybe_create_section_blocks( $section, $block_count );
 				<span class="spinner"></span>
 			</div>
 			<div class="mesh-columns-8 text-right">
-				<span class="spinner" style="float:none;"></span>
+				<div class="mesh-update-status-container">
+					<span class="spinner" style="float:none;"></span>
+					<span class="saved-status-icon dashicons-before dashicons-yes"></span>
+				</div>
 				<?php if ( 'draft' === get_post_status( $section->ID ) ) : ?>
 					<a href="#" class="button mesh-section-save-draft"><?php esc_html_e( 'Save Draft', 'mesh' ); ?></a>
 					<a href="#" class="button primary mesh-section-publish"><?php esc_html_e( 'Publish', 'mesh' ); ?></a>
