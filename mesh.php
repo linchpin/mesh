@@ -303,6 +303,15 @@ function mesh_get_sections( $post_id, $return_type = 'array', $statuses = array(
 		'post_status'    => $statuses,
 	);
 
+    if ( isset($_GET['preview_id']) && isset($_GET['preview_nonce']) ) {
+        $id = (int) $_GET['preview_id'];
+
+        if ( false === wp_verify_nonce( $_GET['preview_nonce'], 'post_preview_' . $id ) )
+            wp_die( __('Sorry, you are not allowed to preview drafts.') );
+
+        $args['post_status'] = array_merge( $args['post_status'], array( 'draft' ) );
+    }
+
 	$content_sections = new WP_Query( $args );
 
 	switch ( $return_type ) {
@@ -327,7 +336,6 @@ function mesh_get_sections( $post_id, $return_type = 'array', $statuses = array(
  * @return void
  */
 function the_mesh_content( $post_id = '' ) {
-
 	global $post;
 
 	if ( empty( $post_id ) ) {
@@ -412,7 +420,7 @@ function mesh_display_sections( $post_id = '', $echo = true ) {
 	if ( true === $echo ) {
 		if ( $mesh_section_query->have_posts() ) {
 			while ( $mesh_section_query->have_posts() ) {
-				$mesh_section_query->the_post();
+			    $mesh_section_query->the_post();
 				the_mesh_content();
 			}
 			wp_reset_postdata();
@@ -443,14 +451,28 @@ function mesh_display_sections( $post_id = '', $echo = true ) {
  * @return array
  */
 function mesh_get_section_blocks( $section_id, $post_status = 'publish' ) {
-	$content_blocks = new WP_Query( array(
-		'post_type' => 'mesh_section',
-		'post_status' => $post_status,
-		'posts_per_page' => 50,
-		'orderby' => 'menu_order',
-		'order' => 'ASC',
-		'post_parent' => (int) $section_id,
-	) );
+	$args = array(
+        'post_type' => 'mesh_section',
+        'post_status' => $post_status,
+        'posts_per_page' => 50,
+        'orderby' => 'menu_order',
+        'order' => 'ASC',
+        'post_parent' => (int) $section_id,
+    );
+
+    if ( isset($_GET['preview_id']) && isset($_GET['preview_nonce']) ) {
+        $id = (int) $_GET['preview_id'];
+
+        if ( false === wp_verify_nonce( $_GET['preview_nonce'], 'post_preview_' . $id ) )
+            wp_die( __('Sorry, you are not allowed to preview drafts.') );
+
+        // Make sure $post_status is an array
+        $args['post_status'] = is_array( $args['post_status'] ) ? $args['post_status'] : array( $args['post_status'] );
+
+        $args['post_status'] = array_merge( $args['post_status'], array( 'draft' ) );
+    }
+
+    $content_blocks = new WP_Query( $args );
 
 	if ( $content_blocks->have_posts() ) {
 		return $content_blocks->posts;
