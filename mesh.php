@@ -3,7 +3,7 @@
  * Plugin Name: Mesh
  * Plugin URI: http://linchpin.agency/wordpress-plugins/mesh
  * Description: Adds multiple sections for content on a post by post basis. Mesh also has settings to enable it for specific post types
- * Version: 1.1.4
+ * Version: 1.1.5
  * Text Domain: mesh
  * Domain Path: /languages
  * Author: Linchpin
@@ -21,7 +21,7 @@ if ( ! function_exists( 'add_action' ) ) {
 /**
  * Define all globals.
  */
-define( 'LINCHPIN_MESH_VERSION', '1.1.4' );
+define( 'LINCHPIN_MESH_VERSION', '1.1.5' );
 define( 'LINCHPIN_MESH_PLUGIN_NAME', 'Mesh' );
 define( 'LINCHPIN_MESH__MINIMUM_WP_VERSION', '4.0' );
 define( 'LINCHPIN_MESH___PLUGIN_URL', plugin_dir_url( __FILE__ ) );
@@ -607,10 +607,15 @@ function mesh_section_background( $post_id = 0, $echo = true, $size_large = 'lar
 
 		$default_image_url = wp_get_attachment_image_src( get_post_thumbnail_id( $post_id ), $default_bg_size );
 
-		$using_foundation = ( '' === $css_mode || 1 === (int) $css_mode );
+		$using_foundation = ( 0 === (int) $css_mode || 1 === (int) $css_mode );
 
 		// Only allow interchange or backgrounds when using Mesh css or a theme based on foundation.
 		if ( $using_foundation ) {
+
+			if ( 0 === (int) $css_mode ) {
+				$foundation_version = 6;
+			}
+
 			switch ( $foundation_version ) {
 				case 6 :
 					$interchange_format = '[%s, %s]';
@@ -670,7 +675,6 @@ function mesh_section_background( $post_id = 0, $echo = true, $size_large = 'lar
 				if ( empty( $backgrounds ) ) {
 					return array();
 				}
-
 			}
 		}
 

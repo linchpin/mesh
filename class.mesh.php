@@ -228,7 +228,7 @@ class Mesh {
 			$in['content_css'] = get_template_directory_uri() . '/editor-style.css';
 		}
 
-		$in['wpautop']                 = true; // @todo This should be filterable
+		$in['wpautop']                 = true;
 		$in['apply_source_formatting'] = false;
 		$in['block_formats']           = 'Paragraph=p; Heading 3=h3; Heading 4=h4';
 		$in['toolbar1']                = 'bold,italic,bullist,numlist,hr,alignleft,aligncenter,alignright,alignjustify,link,wp_adv ';
@@ -236,7 +236,7 @@ class Mesh {
 		$in['toolbar3']                = '';
 		$in['toolbar4']                = '';
 
-		return $in;
+		return apply_filters( 'mesh_tiny_mce_before_init', $in );
 	}
 
 	/**
@@ -398,6 +398,9 @@ class Mesh {
 
 		$count = 0;
 
+		// Store the section/block IDs for later.
+		$section_ids = array();
+
 		// Check if we are doing a section update via AJAX.
 		$saving_section_via_ajax = false;
 		$ajax_section_id         = 0;
@@ -408,6 +411,12 @@ class Mesh {
 		}
 
 		foreach ( $_POST['mesh-sections'] as $section_id => $section_data ) {
+			$section_ids[ $section_id ] = array();
+
+			if ( ! empty( $section_data['blocks'] ) ) {
+				$block_ids = array_keys( $section_data['blocks'] );
+				$section_ids[ $section_id ] = $block_ids;
+			}
 
 			// If using AJAX, make sure we only update the section we want to save.
 			if ( $saving_section_via_ajax && $ajax_section_id !== $section_id ) {
@@ -563,6 +572,13 @@ class Mesh {
 				} else {
 					update_post_meta( $block_id, '_mesh_css_class', $sanitized_css_classes );
 				}
+
+				// Save locked status.
+				if ( empty( $section_data['blocks'][ $block_id ]['locked_properties'] ) ) {
+					delete_post_meta( $block_id, '_mesh_locked_properties' );
+				} else {
+					update_post_meta( $block_id, '_mesh_locked_properties', $section_data['blocks'][ $block_id ]['locked_properties'] );
+				}
 			}
 		}
 
@@ -572,6 +588,9 @@ class Mesh {
 			$page_id = $post->post_parent;
 		} else {
 			$page_id = $post_id;
+			// Save the Mesh section and block IDs as postmeta so we can optimize
+			// the mesh_get_sections() function.
+			update_post_meta( $page_id, '_mesh_sections', $section_ids );
 		}
 
 		// Save a block's content into its section, and then into it's page.
@@ -886,10 +905,12 @@ class Mesh {
 		$mesh_options = get_option( 'mesh_settings' );
 		$css_mode     = (int) $mesh_options['css_mode'];
 
-		if ( 0 == $css_mode ) {
+		if ( -1 === $css_mode ) {
 			return;
 		} else {
-			wp_enqueue_style( 'mesh-grid-foundation', plugins_url( 'assets/css/mesh-grid-foundation.css', __FILE__ ), array(), LINCHPIN_MESH_VERSION );
+			if ( 0 === $css_mode ) {
+				wp_enqueue_style( 'mesh-grid-foundation', plugins_url( 'assets/css/mesh-grid-foundation.css', __FILE__ ), array(), LINCHPIN_MESH_VERSION );
+			}
 		}
 	}
 

@@ -54,6 +54,7 @@ if ( ! function_exists( 'add_action' ) ) {
 
 		$block_css_class = get_post_meta( $blocks[ $block_increment ]->ID, '_mesh_css_class', true );
 		$block_offset = (int) get_post_meta( $blocks[ $block_increment ]->ID, '_mesh_offset', true );
+		$block_locked_props = (array) get_post_meta( $blocks[ $block_increment ]->ID, '_mesh_locked_properties', true );
 
 		?>
 		<div class="mesh-section-block mesh-columns-<?php esc_attr_e( $block_columns ); ?> columns" data-mesh-block-id="<?php esc_attr_e( $blocks[ $block_increment ]->ID ); ?>">
@@ -116,9 +117,29 @@ if ( ! function_exists( 'add_action' ) ) {
                                             <?php endif; ?>
 										<?php endif; ?>
 
+										<?php if ( 'mesh_template' === $post->post_type || ! in_array( 'css-class', $block_locked_props ) ) : ?>
 										<label for="mesh-sections-<?php esc_attr_e( $blocks[ $block_increment ]->ID ); ?>-css-class" class="nowrap">
 											<?php esc_html_e( 'CSS Class', 'mesh' ); ?> <input type="text" id="mesh-sections-<?php esc_attr_e( $blocks[ $block_increment ]->ID ); ?>-css-class" name="mesh-sections[<?php esc_attr_e( $section->ID ); ?>][blocks][<?php esc_attr_e( $blocks[ $block_increment ]->ID ); ?>][css_class]" value="<?php esc_attr_e( $block_css_class ); ?>" />
 										</label>
+										<?php endif; ?>
+
+										<?php if ( 'mesh_template' === $post->post_type ) : ?>
+										<label for="mesh-sections-<?php esc_attr_e( $blocks[ $block_increment ]->ID ); ?>-locked-properties"><?php esc_html_e( 'Prevent changes to:', 'mesh' ); ?></label>
+										<?php
+										$options = array(
+											'css-class' => __( 'CSS Class', 'mesh' ),
+											'background' => __( 'Background', 'mesh' ),
+											'content' => __( 'Content', 'mesh' ),
+										);
+
+										foreach ( $options as $value => $label ) :
+											$id = 'mesh-sections-' . $blocks[ $block_increment ]->ID . '-locked-properties-' . $value; ?>
+										<label for="<?php echo esc_attr( $id ); ?>">
+											 <input style="display: inline-block" type="checkbox" id="<?php echo esc_attr( $id ); ?>" name="mesh-sections[<?php esc_attr_e( $section->ID ); ?>][blocks][<?php esc_attr_e( $blocks[ $block_increment ]->ID ); ?>][locked_properties][]" value="<?php echo esc_attr( $value ); ?>"<?php echo in_array( $value, $block_locked_props ) ? ' checked' : ''; ?>> <?php echo esc_attr( $label ); ?>
+										</label>
+										<?php
+										endforeach; ?>
+										<?php endif; ?>
 
                                         <?php
 
@@ -132,6 +153,7 @@ if ( ! function_exists( 'add_action' ) ) {
 										<?php endif; ?>
 									</div>
 
+									<?php if ( 'mesh_template' === $post->post_type || ! in_array( 'background', $block_locked_props ) ) : ?>
 									<div class="block-background-container right text-right mesh-columns-4 mesh-section-background">
 										<div class="choose-image">
 											<?php $featured_image_id = get_post_thumbnail_id( $blocks[ $block_increment ]->ID );
@@ -145,6 +167,7 @@ if ( ! function_exists( 'add_action' ) ) {
 											<?php endif; ?>
 										</div>
 									</div>
+									<?php endif; ?>
 								</div>
 							<?php endif; ?>
 						</div>
@@ -152,25 +175,38 @@ if ( ! function_exists( 'add_action' ) ) {
 
 					<div class="block-content<?php if ( 4 !== $section_blocks && $block_offset ) { esc_attr_e( ' mesh-has-offset mesh-offset-' . $block_offset ); } ?>">
 						<?php
-						wp_editor( apply_filters( 'content_edit_pre', $blocks[ $block_increment ]->post_content ), 'mesh-section-editor-' . $blocks[ $block_increment ]->ID, array(
-							'textarea_name' => 'mesh-sections[' . $section->ID . '][blocks][' . $blocks[ $block_increment ]->ID . '][post_content]',
-							'teeny' => true,
-							'tinymce'          => array(
+						$textarea_name = 'mesh-sections[' . $section->ID . '][blocks][' . $blocks[ $block_increment ]->ID . '][post_content]';
+						$textarea_content = apply_filters( 'content_edit_pre', $blocks[ $block_increment ]->post_content );
+						$textarea_id = 'mesh-section-editor-' . $blocks[ $block_increment ]->ID;
+
+						if ( 'mesh_template' === $post->post_type || ! in_array( 'content', $block_locked_props ) ) {
+							$tiny_mce_options = array(
 								'resize'                => false,
 								'wordpress_adv_hidden'  => true,
 								'add_unload_trigger'    => false,
 								'statusbar'             => true,
 								'autoresize_min_height' => 150,
 								'wp_autoresize_on'      => false,
+								'wpautop'               => true,
 								'plugins'               => 'lists,media,paste,tabfocus,wordpress,textcolor,wpautoresize,wpeditimage,wpgallery,wplink,wptextpattern,wpview',
 								'toolbar1'              => 'bold,italic,bullist,numlist,hr,alignleft,aligncenter,alignright,alignjustify,link,wp_adv',
 								'toolbar2'              => 'formatselect,underline,strikethrough,forecolor,pastetext,removeformat',
-							),
-							'quicktags' => array(
-								'buttons' => 'strong,em,link,block,img,ul,ol,li',
-							),
-						) );
-						?>
+							);
+
+							$tiny_mce_options = apply_filters( 'mesh_tiny_mce_options', $tiny_mce_options );
+
+							wp_editor( $textarea_content, $textarea_id , array(
+								'textarea_name' => $textarea_name,
+								'teeny' => true,
+								'tinymce' => $tiny_mce_options,
+								'quicktags' => array(
+									'buttons' => 'strong,em,link,block,img,ul,ol,li',
+								),
+							) );
+						} else { ?>
+						<textarea id="<?php echo esc_attr( $textarea_id ); ?>" name="<?php echo esc_attr( $textarea_name ); ?>" readonly><?php echo esc_textarea( $textarea_content ); ?></textarea>
+						<?php
+						} ?>
 					</div>
 
 					<input type="hidden" class="column-width" name="mesh-sections[<?php esc_attr_e( $section->ID ); ?>][blocks][<?php esc_attr_e( $blocks[ $block_increment ]->ID ); ?>][columns]" value="<?php esc_attr_e( $block_columns ); ?>"/>

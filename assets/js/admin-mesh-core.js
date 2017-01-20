@@ -615,8 +615,6 @@ mesh.admin = function ( $ ) {
 				$this.find('.section-menu-order').val( index );
 			});
 
-			console.log( section_ids );
-
 		//	response = self.save_section_ajax( section_ids, $reorder_spinner );
 		},
 
