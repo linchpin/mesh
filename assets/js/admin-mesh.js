@@ -1555,6 +1555,7 @@ mesh.admin = function ( $ ) {
 			var $button            = $(this),
 				$button_container  = $button.parent(),
 				$spinner           = $button_container.find( '.spinner' ),
+				$saved_status      = $button_container.find( '.saved-status-icon' ),
 				$current_section   = $button.closest( '.mesh-section' ),
 				$post_status_field = $current_section.find( '.mesh-section-status' ),
 				section_id         = $current_section.attr( 'data-mesh-section-id' );
@@ -1591,6 +1592,9 @@ mesh.admin = function ( $ ) {
 
 				$button.removeClass( 'disabled' );
 				$spinner.removeClass( 'is-active' );
+				$saved_status.addClass("is-active").delay(2000).queue(function(){
+					$(this).removeClass("is-active").dequeue();
+				});
 
 				if ( response ) {
 
