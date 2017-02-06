@@ -37,18 +37,19 @@ class Mesh_Templates_Duplicate {
 	/**
 	 * Duplicate all the template's sections
 	 *
-	 * @param int $template_id Template ID.
-	 * @param int $post_id     Target Post ID.
+	 * @param int  $template_id    Template ID.
+	 * @param int  $post_id        Target Post ID.
+	 * @param bool $include_drafts Do we include drafts?
 	 *
 	 * @return string
 	 */
-	function duplicate_sections( $template_id, $post_id ) {
+	function duplicate_sections( $template_id, $post_id, $include_drafts ) {
 
 		$template_id = (int) $template_id;
 
 		if ( $template_post = get_post( $template_id ) ) {
 
-			$children = $this->duplicate_children( $post_id, $template_post );
+			$children = $this->duplicate_children( $post_id, $template_post, $include_drafts );
 
 			if ( ! empty( $children ) ) {
 
@@ -74,17 +75,26 @@ class Mesh_Templates_Duplicate {
 	 *
 	 * @thanks https://plugins.svn.wordpress.org/duplicate-post/
 	 *
-	 * @param int    $new_id        New Post ID.
-	 * @param object $template_post Original Post Object.
+	 * @param int    $new_id         New Post ID.
+	 * @param object $template_post  Original Post Object.
+	 * @param bool   $include_drafts Include Drafts
 	 *
 	 * @return array $duplicate_children Array of IDs
 	 */
-	function duplicate_children( $new_id, $template_post ) {
+	function duplicate_children( $new_id, $template_post, $include_drafts = false ) {
+
+		$post_status = array(
+			'publish'
+		);
+
+		if ( $include_drafts ) {
+			$post_status[] = 'draft';
+		}
 
 		$children = new WP_Query( array(
 			'post_type'      => array( 'mesh_section', 'attachment' ),
 			'posts_per_page' => apply_filters( 'mesh_templates_per_page', 50 ),
-			'post_status'    => array( 'publish' ),
+			'post_status'    => $post_status,
 			'post_parent'    => $template_post->ID,
 			'order_by'       => 'menu_order',
 			'order'          => 'ASC'
