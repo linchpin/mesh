@@ -195,6 +195,7 @@ class Mesh_Templates_AJAX {
 			wp_die( -1 );
 		}
 		if ( $mesh_template = get_post( $mesh_template_id ) ) {
+
 			// Apply template type to our taxonomy that tracks template usage.
 			wp_set_object_terms( $post_id, array( $mesh_template->post_name ), 'mesh_template_usage', false );
 
@@ -206,6 +207,9 @@ class Mesh_Templates_AJAX {
 
 			if ( in_array( $mesh_template_type, $template_terms, true ) ) {
 				wp_set_object_terms( $post_id, $mesh_template_type, 'mesh_template_types', false );
+			} else {
+				// Default make a theme a starter.
+				wp_set_object_terms( $post_id, 'starter', 'mesh_template_types', false );
 			}
 
 			$mesh_templates_duplicate = new Mesh_Templates_Duplicate();
