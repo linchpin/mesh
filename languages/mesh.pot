@@ -2,9 +2,9 @@
 # This file is distributed under the GPLv2 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Mesh 1.1.4\n"
+"Project-Id-Version: Mesh 1.1.5\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/mesh\n"
-"POT-Creation-Date: 2017-01-19 17:22:40+00:00\n"
+"POT-Creation-Date: 2017-02-06 17:27:05+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -82,7 +82,7 @@ msgstr ""
 msgid "Collapse All"
 msgstr ""
 
-#: admin/controls.php:30 admin/sections-empty.php:20
+#: admin/controls.php:30 admin/sections-empty.php:23
 #: build/mesh/tags/1.0.1/admin/controls.php:17
 #: build/mesh/tags/1.0.1/class.mesh.php:262
 #: build/mesh/tags/1.0.3/admin/controls.php:17
@@ -102,7 +102,7 @@ msgstr ""
 #: build/mesh/tags/1.1.4/admin/controls.php:30
 #: build/mesh/tags/1.1.4/admin/sections-empty.php:20
 #: build/mesh/trunk/admin/controls.php:30
-#: build/mesh/trunk/admin/sections-empty.php:20
+#: build/mesh/trunk/admin/sections-empty.php:23
 msgid "Add Section"
 msgstr ""
 
@@ -238,27 +238,7 @@ msgstr ""
 msgid " selected"
 msgstr ""
 
-#: admin/section-blocks.php:129
-#: build/mesh/tags/1.1/admin/section-blocks.php:129
-#: build/mesh/tags/1.1.1/admin/section-blocks.php:129
-#: build/mesh/tags/1.1.2/admin/section-blocks.php:129
-#: build/mesh/tags/1.1.3/admin/section-blocks.php:129
-#: build/mesh/tags/1.1.4/admin/section-blocks.php:129
-#: build/mesh/trunk/admin/section-blocks.php:129
-msgid "Revisions: %s"
-msgstr ""
-
-#: admin/section-blocks.php:130
-#: build/mesh/tags/1.1/admin/section-blocks.php:130
-#: build/mesh/tags/1.1.1/admin/section-blocks.php:130
-#: build/mesh/tags/1.1.2/admin/section-blocks.php:130
-#: build/mesh/tags/1.1.3/admin/section-blocks.php:130
-#: build/mesh/tags/1.1.4/admin/section-blocks.php:130
-#: build/mesh/trunk/admin/section-blocks.php:130
-msgid "Browse revisions"
-msgstr ""
-
-#: admin/section-blocks.php:140 admin/section-controls.php:81
+#: admin/section-blocks.php:129 admin/section-controls.php:84
 #: build/mesh/tags/1.0.1/admin/section-blocks.php:115
 #: build/mesh/tags/1.0.1/admin/section-controls.php:71
 #: build/mesh/tags/1.0.1/class.mesh.php:717
@@ -286,10 +266,24 @@ msgstr ""
 #: build/mesh/tags/1.1.4/admin/section-blocks.php:140
 #: build/mesh/tags/1.1.4/admin/section-controls.php:81
 #: build/mesh/tags/1.1.4/class.mesh.php:818
-#: build/mesh/trunk/admin/section-blocks.php:140
-#: build/mesh/trunk/admin/section-controls.php:81
+#: build/mesh/trunk/admin/section-blocks.php:129
+#: build/mesh/trunk/admin/section-controls.php:84
 #: build/mesh/trunk/class.mesh.php:818 class.mesh.php:818
 msgid "Set Background Image"
+msgstr ""
+
+#: admin/section-blocks.php:179 build/mesh/trunk/admin/section-blocks.php:179
+msgid "Revisions: "
+msgstr ""
+
+#: admin/section-blocks.php:180
+#: build/mesh/tags/1.1/admin/section-blocks.php:130
+#: build/mesh/tags/1.1.1/admin/section-blocks.php:130
+#: build/mesh/tags/1.1.2/admin/section-blocks.php:130
+#: build/mesh/tags/1.1.3/admin/section-blocks.php:130
+#: build/mesh/tags/1.1.4/admin/section-blocks.php:130
+#: build/mesh/trunk/admin/section-blocks.php:180
+msgid "Browse revisions"
 msgstr ""
 
 #: admin/section-container.php:37
@@ -348,7 +342,7 @@ msgstr ""
 msgid "Remove"
 msgstr ""
 
-#: admin/section-container.php:67 admin/section-container.php:71
+#: admin/section-container.php:70 admin/section-container.php:74
 #: build/mesh/tags/1.0.1/admin/section-container.php:70
 #: build/mesh/tags/1.0.1/admin/section-container.php:74
 #: build/mesh/tags/1.0.3/admin/section-container.php:70
@@ -367,12 +361,12 @@ msgstr ""
 #: build/mesh/tags/1.1.3/admin/section-container.php:71
 #: build/mesh/tags/1.1.4/admin/section-container.php:67
 #: build/mesh/tags/1.1.4/admin/section-container.php:71
-#: build/mesh/trunk/admin/section-container.php:67
-#: build/mesh/trunk/admin/section-container.php:71
+#: build/mesh/trunk/admin/section-container.php:70
+#: build/mesh/trunk/admin/section-container.php:74
 msgid "Save Draft"
 msgstr ""
 
-#: admin/section-container.php:68 admin/section-container.php:72
+#: admin/section-container.php:71 admin/section-container.php:75
 #: build/mesh/tags/1.0.1/admin/section-container.php:71
 #: build/mesh/tags/1.0.1/admin/section-container.php:75
 #: build/mesh/tags/1.0.3/admin/section-container.php:71
@@ -391,12 +385,12 @@ msgstr ""
 #: build/mesh/tags/1.1.3/admin/section-container.php:72
 #: build/mesh/tags/1.1.4/admin/section-container.php:68
 #: build/mesh/tags/1.1.4/admin/section-container.php:72
-#: build/mesh/trunk/admin/section-container.php:68
-#: build/mesh/trunk/admin/section-container.php:72
+#: build/mesh/trunk/admin/section-container.php:71
+#: build/mesh/trunk/admin/section-container.php:75
 msgid "Publish"
 msgstr ""
 
-#: admin/section-container.php:69 admin/section-container.php:73
+#: admin/section-container.php:72 admin/section-container.php:76
 #: build/mesh/tags/1.0.1/admin/section-container.php:72
 #: build/mesh/tags/1.0.1/admin/section-container.php:76
 #: build/mesh/tags/1.0.3/admin/section-container.php:72
@@ -415,8 +409,8 @@ msgstr ""
 #: build/mesh/tags/1.1.3/admin/section-container.php:73
 #: build/mesh/tags/1.1.4/admin/section-container.php:69
 #: build/mesh/tags/1.1.4/admin/section-container.php:73
-#: build/mesh/trunk/admin/section-container.php:69
-#: build/mesh/trunk/admin/section-container.php:73
+#: build/mesh/trunk/admin/section-container.php:72
+#: build/mesh/trunk/admin/section-container.php:76
 msgid "Update"
 msgstr ""
 
@@ -490,7 +484,7 @@ msgstr ""
 msgid "Push/Pull"
 msgstr ""
 
-#: admin/section-controls.php:71
+#: admin/section-controls.php:72
 #: build/mesh/tags/1.0.1/admin/section-controls.php:62
 #: build/mesh/tags/1.0.3/admin/section-controls.php:62
 #: build/mesh/tags/1.0.4/admin/section-controls.php:62
@@ -500,7 +494,7 @@ msgstr ""
 #: build/mesh/tags/1.1.2/admin/section-controls.php:71
 #: build/mesh/tags/1.1.3/admin/section-controls.php:71
 #: build/mesh/tags/1.1.4/admin/section-controls.php:71
-#: build/mesh/trunk/admin/section-controls.php:71
+#: build/mesh/trunk/admin/section-controls.php:72
 msgid "Equalize"
 msgstr ""
 
@@ -564,16 +558,16 @@ msgstr ""
 msgid "Get started using Mesh by adding a Content Section now."
 msgstr ""
 
-#: admin/sections-empty.php:18 build/mesh/tags/1.1/admin/sections-empty.php:18
+#: admin/sections-empty.php:20 build/mesh/tags/1.1/admin/sections-empty.php:18
 #: build/mesh/tags/1.1.1/admin/sections-empty.php:18
 #: build/mesh/tags/1.1.2/admin/sections-empty.php:18
 #: build/mesh/tags/1.1.3/admin/sections-empty.php:18
 #: build/mesh/tags/1.1.4/admin/sections-empty.php:18
-#: build/mesh/trunk/admin/sections-empty.php:18
+#: build/mesh/trunk/admin/sections-empty.php:20
 msgid "Begin with a Template"
 msgstr ""
 
-#: admin/sections-empty.php:18 admin/template-layout-usage.php:26
+#: admin/sections-empty.php:21 admin/template-layout-usage.php:26
 #: build/mesh/tags/1.1/admin/sections-empty.php:18
 #: build/mesh/tags/1.1/admin/template-layout-usage.php:26
 #: build/mesh/tags/1.1.1/admin/sections-empty.php:18
@@ -584,7 +578,7 @@ msgstr ""
 #: build/mesh/tags/1.1.3/admin/template-layout-usage.php:26
 #: build/mesh/tags/1.1.4/admin/sections-empty.php:18
 #: build/mesh/tags/1.1.4/admin/template-layout-usage.php:26
-#: build/mesh/trunk/admin/sections-empty.php:18
+#: build/mesh/trunk/admin/sections-empty.php:21
 #: build/mesh/trunk/admin/template-layout-usage.php:26
 msgid " or "
 msgstr ""
@@ -1486,9 +1480,17 @@ msgstr ""
 #: build/mesh/tags/1.1.2/class.mesh.php:573 build/mesh/tags/1.1.2/mesh.php:532
 #: build/mesh/tags/1.1.3/class.mesh.php:587 build/mesh/tags/1.1.3/mesh.php:533
 #: build/mesh/tags/1.1.4/class.mesh.php:587 build/mesh/tags/1.1.4/mesh.php:533
-#: build/mesh/trunk/class.mesh.php:587 build/mesh/trunk/mesh.php:533
-#: class.mesh.php:587 mesh.php:533
+#: build/mesh/trunk/class.mesh.php:587 build/mesh/trunk/mesh.php:555
+#: class.mesh.php:587 mesh.php:555
 msgid "No Column Title"
+msgstr ""
+
+#: build/mesh/tags/1.1/admin/section-blocks.php:129
+#: build/mesh/tags/1.1.1/admin/section-blocks.php:129
+#: build/mesh/tags/1.1.2/admin/section-blocks.php:129
+#: build/mesh/tags/1.1.3/admin/section-blocks.php:129
+#: build/mesh/tags/1.1.4/admin/section-blocks.php:129
+msgid "Revisions: %s"
 msgstr ""
 
 #: build/mesh/tags/1.1/class.mesh-templates-ajax.php:153
@@ -1891,6 +1893,11 @@ msgid ""
 "like interchange that Mesh utilizes."
 msgstr ""
 
+#: build/mesh/trunk/mesh.php:310 build/mesh/trunk/mesh.php:467 mesh.php:310
+#: mesh.php:467
+msgid "Sorry, you are not allowed to preview drafts."
+msgstr ""
+
 #: vendor/phpdocumentor/phpdocumentor/src/phpDocumentor/Parser/Command/Project/ParseCommand.php:102
 msgid "PPCPP-DESCRIPTION"
 msgstr ""
@@ -2017,17 +2024,6 @@ msgid ""
 "campaign=wp-plugin"
 msgstr ""
 
-#: admin/section-blocks.php:130
-#: build/mesh/tags/1.1/admin/section-blocks.php:130
-#: build/mesh/tags/1.1.1/admin/section-blocks.php:130
-#: build/mesh/tags/1.1.2/admin/section-blocks.php:130
-#: build/mesh/tags/1.1.3/admin/section-blocks.php:130
-#: build/mesh/tags/1.1.4/admin/section-blocks.php:130
-#: build/mesh/trunk/admin/section-blocks.php:130
-msgctxt "revisions"
-msgid "Browse"
-msgstr ""
-
 #: build/mesh/tags/1.0.1/class.mesh.php:184
 #: build/mesh/tags/1.0.1/class.mesh.php:185
 #: build/mesh/tags/1.0.3/class.mesh.php:186
@@ -2049,6 +2045,15 @@ msgstr ""
 #: build/mesh/trunk/class.mesh.php:254 class.mesh.php:253 class.mesh.php:254
 msgctxt "Content Section"
 msgid "Content Section"
+msgstr ""
+
+#: build/mesh/tags/1.1/admin/section-blocks.php:130
+#: build/mesh/tags/1.1.1/admin/section-blocks.php:130
+#: build/mesh/tags/1.1.2/admin/section-blocks.php:130
+#: build/mesh/tags/1.1.3/admin/section-blocks.php:130
+#: build/mesh/tags/1.1.4/admin/section-blocks.php:130
+msgctxt "revisions"
+msgid "Browse"
 msgstr ""
 
 #: build/mesh/tags/1.1/class.mesh-templates.php:80

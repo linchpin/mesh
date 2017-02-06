@@ -229,6 +229,11 @@ class Mesh_AJAX {
 
 			// If we don't have any sections remaining. Show the initial set.
 			if ( empty( $sections ) ) {
+
+				// Clear Post terms related to templates.
+				wp_set_object_terms( $post_id, NULL, 'mesh_template_types' );
+				wp_set_object_terms( $post_id, NULL, 'mesh_template_usage' );
+
 				include LINCHPIN_MESH___PLUGIN_DIR . 'admin/sections-empty.php';
 				exit;
 			} else {
