@@ -72,6 +72,10 @@ function add_multiple_content_sections( $the_content ) {
 * `add_filter( 'mesh_tiny_mce_before_init', $init_options )`
 * `add_filter( 'mesh_tiny_mce_options', $options )`
 
+##### Actions added 1.1.5
+* `add_action( 'mesh_section_add_misc_actions_before' )`
+* `add_action( 'mesh_section_add_misc_actions_after' )`
+
 ### Recognition
 
 * We're utilizing the [PHP Markdown Lib](https://github.com/michelf/php-markdown) by Michel Fortin @michelf

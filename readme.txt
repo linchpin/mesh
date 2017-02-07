@@ -127,10 +127,12 @@ function hatch_mesh_default_bg_size( $size ) {
 = 1.1.5 =
 * Fixed equalize options should not show if the section is only 1 column wide.
 * Fixed some minor typos.
+* Fixed minor display issue that occurred when removing all Mesh sections on a post.
 * Added ability to filter `mesh_tiny_mce_before_init` to allow even more extended option filtering
 * Added default support for interchange using Mesh even if your theme isn't built on Foundation
 * Added actions mesh_section_add_before_misc_actions and mesh_section_add_misc_actions for more customization.
 * Added ability to preview sections that are not published yet.
+* Updated templates to default to "starter" mesh_template_type taxonomy term
 
 = 1.1.4 =
 * Fixed selected/upload background images were not displaying within admin until refresh.

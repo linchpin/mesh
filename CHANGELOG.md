@@ -1,10 +1,20 @@
 ##Change Log For Mesh
 
-## [1.1.5] - 2017-1-19
+## [1.1.5] - 2017-2-6
 
-## Added
+### Fixed
+ - Fixed equalize options should not show if the section is only 1 column wide.
+ - Fixed some minor typos.
+ - Fixed minor display issue that occurred when removing all Mesh sections on a post.
+
+### Added
  - Ability to filter `mesh_tiny_mce_before_init` to allow even more extended option filtering
- - Support for interchange using Mesh even if your theme isn't built on Foundation
+ - Default support for interchange using Mesh even if your theme isn't built on Foundation
+ - Actions mesh_section_add_before_misc_actions and mesh_section_add_misc_actions for more customization.
+ - Ability to preview sections that are not published yet.
+
+### Updated
+ - Mesh templates default to "starter" mesh_template_type upon creation
 
 ## [1.1.4] - 2016-12-21
 

@@ -426,7 +426,8 @@ mesh.admin = function ( $ ) {
 			var $button            = $(this),
 				$button_container  = $button.parent(),
 				$spinner           = $button_container.find( '.spinner' ),
-				$current_section   = $button.closest( '.mesh-section' ),
+                $saved_status      = $button_container.find( '.saved-status-icon' ),
+                $current_section   = $button.closest( '.mesh-section' ),
 				$post_status_field = $current_section.find( '.mesh-section-status' ),
 				section_id         = $current_section.attr( 'data-mesh-section-id' );
 
@@ -462,8 +463,11 @@ mesh.admin = function ( $ ) {
 
 				$button.removeClass( 'disabled' );
 				$spinner.removeClass( 'is-active' );
+                $saved_status.addClass("is-active").delay(2000).queue(function(){
+                    $(this).removeClass("is-active").dequeue();
+                });
 
-				if ( response ) {
+                if ( response ) {
 
 					var $publish_draft = $current_section.find( '.mesh-section-publish, .mesh-section-save-draft' );
 
@@ -507,7 +511,7 @@ mesh.admin = function ( $ ) {
 				mesh_post_id: mesh_data.post_id,
 				mesh_section_id: section_id,
 				mesh_remove_section_nonce: mesh_data.remove_section_nonce
-			}, function( response){
+			}, function( response ){
 				if ( '1' === response ) {
 					$postbox.fadeOut(400, function () {
 						$postbox.remove();
@@ -523,18 +527,21 @@ mesh.admin = function ( $ ) {
 				} else {
 
 					var $response = $(response),
-						$empty_msg = $('.empty-sections-message'),
-						$controls = $('.mesh-main-ua-row');
+						$controls = $('.mesh-main-ua-row'),
+						$description = $('#mesh-description');
 
-					$section_container.append($response);
+					// Add either the empty message or visible sections.
+                    if ( response.indexOf( 'mesh-empty-actions' ) === -1 ) {
+                        $section_container.append( $response );
+                    }
 
-					$postbox.fadeOut(400, function () {
+                    $postbox.fadeOut(400, function () {
 						$postbox.remove();
-					});
 
-					if ($empty_msg.length) {
-						$empty_msg.fadeOut('fast');
-					}
+                        if ( response.indexOf( 'mesh-empty-actions' ) > 0 ) {
+                            $description.html('').append( $response ).show();
+                        }
+					});
 
 					$controls.fadeOut('fast');
 

@@ -14,7 +14,7 @@ $mesh_templates = mesh_get_templates();
 <p><?php esc_html_e( 'You do not have any Content Sections.', 'mesh' ); ?></p>
 <p><?php esc_html_e( 'Get started using Mesh by adding a Content Section now.', 'mesh' ); ?></p>
 <?php do_action( 'mesh_section_add_before_misc_actions' ); ?>
-<div>
+<div id="mesh-empty-actions">
 	<?php do_action( 'mesh_section_add_misc_actions_before' ); ?>
 	<?php if ( ! empty( $mesh_templates ) ) : ?>
 		<a href="#" class="button primary mesh-select-template dashicons-before dashicons-schedule"><?php esc_html_e( 'Begin with a Template', 'mesh' ); ?></a>
