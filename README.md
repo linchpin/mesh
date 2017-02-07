@@ -73,6 +73,7 @@ function add_multiple_content_sections( $the_content ) {
 * `add_filter( 'mesh_tiny_mce_options', $options )`
 
 ##### Actions added 1.1.5
+* `add_action( 'mesh_section_add_before_misc_actions' )`
 * `add_action( 'mesh_section_add_misc_actions_before' )`
 * `add_action( 'mesh_section_add_misc_actions_after' )`
 

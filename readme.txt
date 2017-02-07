@@ -117,6 +117,12 @@ function hatch_mesh_default_bg_size( $size ) {
 * `add_filter( 'mesh_tiny_mce_before_init', $init_options );`
 * `add_filter( 'mesh_tiny_mce_options`, $mesh_tiny_mce_options );`
 
+= Available Actions =
+* `add_action( 'mesh_section_add_before_misc_actions' )`
+* `add_action( 'mesh_section_add_misc_actions_before' )`
+* `add_action( 'mesh_section_add_misc_actions_after' )`
+
+
 == Screenshots ==
 
 1. Mesh editor interface.
