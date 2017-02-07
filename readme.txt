@@ -115,6 +115,7 @@ function hatch_mesh_default_bg_size( $size ) {
 * `add_filter( 'mesh_xlarge_bg_size', $size );`
 
 * `add_filter( 'mesh_tiny_mce_before_init', $init_options );`
+* `add_filter( 'mesh_tiny_mce_options`, $mesh_tiny_mce_options );`
 
 == Screenshots ==
 

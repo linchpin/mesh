@@ -157,8 +157,6 @@ if ( ! function_exists( 'add_action' ) ) {
 
 						$tiny_mce_options = apply_filters( 'mesh_tiny_mce_options', $tiny_mce_options );
 
-						error_log( '$toggle_wp_auto_p ' . print_r( $tiny_mce_options, true ) );
-
 						wp_editor( apply_filters( 'content_edit_pre', $blocks[ $block_increment ]->post_content ), 'mesh-section-editor-' . $blocks[ $block_increment ]->ID, array(
 							'textarea_name' => 'mesh-sections[' . $section->ID . '][blocks][' . $blocks[ $block_increment ]->ID . '][post_content]',
 							'teeny' => true,
