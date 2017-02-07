@@ -727,7 +727,7 @@ function mesh_section_background( $post_id = 0, $echo = true, $size_large = 'lar
 /**
  * Return an array of allowed html for wp_kses functions
  *
- * @return mixed|void
+ * @return mixed
  */
 function mesh_get_allowed_html() {
 	$mesh_allowed = apply_filters( 'mesh_default_allowed_html', array(
