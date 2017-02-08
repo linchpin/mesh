@@ -299,7 +299,7 @@ class Mesh {
 	 */
 	function admin_init() {
 		if ( false === get_option( 'mesh_version' ) ) {
-			update_option( 'mesh_post_types', array( 'page' => 1, 'mesh_template' => 1 ) );
+			update_option( 'mesh_post_types', Mesh_Settings::get_post_types() );
 			update_option( 'mesh_version', LINCHPIN_MESH_VERSION );
 		}
 	}
@@ -316,9 +316,9 @@ class Mesh {
 	 * @return void
 	 */
 	public static function edit_page_form( $post ) {
-		$allowed_post_types = get_option( 'mesh_post_types' );
+		$allowed_post_types = Mesh_Settings::get_post_types();
 
-		if ( ! array_key_exists( $post->post_type, $allowed_post_types ) ) {
+		if ( empty( $allowed_post_types[ $post->post_type ] ) ) {
 			return;
 		}
 
@@ -646,7 +646,7 @@ class Mesh {
 	function wp_trash_post( $post_id ) {
 		$post_to_trash = get_post( $post_id );
 
-		$supported_post_types = get_option( 'mesh_post_types', array() );
+		$supported_post_types = Mesh_Settings::get_post_types();
 
 		if ( empty( $supported_post_types[ $post_to_trash->post_type ] ) ) {
 			return;
@@ -676,7 +676,7 @@ class Mesh {
 	function before_delete_post( $post_id ) {
 		$post_to_delete = get_post( $post_id );
 
-		$supported_post_types = get_option( 'mesh_post_types', array() );
+		$supported_post_types = Mesh_Settings::get_post_types();
 
 		if ( empty( $supported_post_types[ $post_to_delete->post_type ] ) ) {
 			return;
@@ -706,7 +706,7 @@ class Mesh {
 	function untrash_post( $post_id ) {
 		$trashed_post = get_post( $post_id );
 
-		$supported_post_types = get_option( 'mesh_post_types', array() );
+		$supported_post_types = Mesh_Settings::get_post_types();
 
 		if ( empty( $supported_post_types[ $trashed_post->post_type ] ) ) {
 			return;

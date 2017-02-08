@@ -52,7 +52,7 @@ class Mesh_Templates_AJAX {
 		    wp_die( -1 );
         }
 
-		$available_post_types = get_option( 'mesh_post_types', array() );
+		$available_post_types = Mesh_Settings::get_post_types();
 
 		$template_references = new WP_Query( array(
             'post_type' => $available_post_types,

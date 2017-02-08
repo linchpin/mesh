@@ -112,10 +112,8 @@ class Mesh_Templates {
 			'rewrite' => false,
 		) );
 
-		// Using an extra variable for the array to support PHP 5.4
-		$mesh_post_types_array = get_option( 'mesh_post_types' );
-		$mesh_post_types = array_keys( $mesh_post_types_array );
-		$available_post_types = array_merge( array( 'mesh_template' ), $mesh_post_types );
+		$mesh_post_types_array = Mesh_Settings::get_post_types();
+		$available_post_types = array_keys( $mesh_post_types_array );
 
 		register_taxonomy( 'mesh_template_usage', $available_post_types, array(
 			'labels' => array(

@@ -32,6 +32,36 @@ class Mesh_Settings {
 	public static $plugin_name = LINCHPIN_MESH_PLUGIN_NAME;
 
 	/**
+	 * Store the Mesh post-types.
+	 *
+	 * @var array
+	 */
+	protected static $post_types;
+
+	/**
+	 * Store the default Mesh post-types for new installs.
+	 *
+	 * @var array
+	 */
+	protected static $default_post_types = array( 'page' => 1 );
+
+	/**
+	 * Gets the Mesh post-types.
+	 *
+	 * @return array An array of post-types.
+	 */
+	public static function get_post_types() {
+		if ( null === self::$post_types ) {
+			// Get the mesh post-types from the database. If nothing exists in the
+			// database, use the plugin's defaults.
+			self::$post_types = get_option( 'mesh_post_types', self::$default_post_types );
+			// Ensure the mesh_template post-type is always included.
+			self::$post_types += array( 'mesh_template' => 1 );
+		}
+		return self::$post_types;
+	}
+
+	/**
 	 * Initialize our plugin settings.
 	 *
 	 * @since 1.0.0
@@ -273,13 +303,9 @@ class Mesh_Settings {
 		// Parse incoming $args into an array and merge it with $defaults.
 		$args = wp_parse_args( $args, $defaults );
 
-		$options = get_option( 'mesh_post_types' );
+		$options = Mesh_Settings::get_post_types();
 
-		$checked = false;
-
-		if ( ! empty( $options[ $args['post_type'] ] ) ) {
-			$checked = true;
-		}
+		$checked = ! empty( $options[ $args['post_type'] ] );
 		?>
 
 		<?php if ( ! empty( $args['description'] ) ) : ?>
