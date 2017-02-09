@@ -409,6 +409,8 @@ class Mesh {
 
 		foreach ( $_POST['mesh-sections'] as $section_id => $section_data ) {
 
+			error_log( print_r( $section_data, true ) );
+
 			// If using AJAX, make sure we only update the section we want to save.
 			if ( $saving_section_via_ajax && $ajax_section_id !== $section_id ) {
 				continue;

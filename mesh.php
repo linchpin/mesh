@@ -21,7 +21,7 @@ if ( ! function_exists( 'add_action' ) ) {
 /**
  * Define all globals.
  */
-define( 'LINCHPIN_MESH_VERSION', '1.1.5' );
+define( 'LINCHPIN_MESH_VERSION', '1.2' );
 define( 'LINCHPIN_MESH_PLUGIN_NAME', 'Mesh' );
 define( 'LINCHPIN_MESH__MINIMUM_WP_VERSION', '4.0' );
 define( 'LINCHPIN_MESH___PLUGIN_URL', plugin_dir_url( __FILE__ ) );
@@ -42,6 +42,7 @@ include_once 'class.mesh-pointers.php';
 include_once 'class.mesh.php';
 include_once 'class.mesh-upgrades.php';
 include_once 'class.mesh-reponsive-grid.php';
+include_once 'class.mesh-controls.php';
 
 $mesh          = new Mesh();
 $mesh_pointers = new Mesh_Admin_Pointers();

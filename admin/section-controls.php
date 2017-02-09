@@ -43,37 +43,11 @@ global $post;
 
 <div class="mesh-section-meta-dropdown mesh-section-meta-dropdown-<?php esc_attr_e( $section->ID ); ?> mesh-row hide">
 	<div class="mesh-columns-9 mesh-table">
-		<div class="mesh-row">
-			<label for="mesh-sections[<?php esc_attr_e( $section->ID ); ?>][css-class]">
-				<?php esc_html_e( 'CSS Class', 'mesh' ); ?> <input type="text" name="mesh-sections[<?php esc_attr_e( $section->ID ); ?>][css_class]" class="mesh-section-class" value="<?php esc_attr_e( $css_class ); ?>" />
-			</label>
-		</div>
-
 		<div class="mesh-row mesh-table-footer">
 			<?php if ( ! has_term( 'reference', 'mesh_template_types', $post ) ) : ?>
 			<ul class="inline-block-list space-left">
-				<li>
-					<label for="mesh-section[<?php esc_attr_e( $section->ID ); ?>][collapse]">
-						<?php esc_html_e( 'Collapse Padding', 'mesh' ); ?> <input type="checkbox" name="mesh-sections[<?php esc_attr_e( $section->ID ); ?>][collapse]" class="mesh-section-collapse-input" value="1" <?php if ( get_post_meta( $section->ID, '_mesh_collapse', true ) ) : ?>checked<?php endif; ?> />
-					</label>
-				</li>
-
-				<?php if ( 2 === count( $blocks ) ) : ?>
-					<li>
-						<label for="mesh-section[<?php esc_attr_e( $section->ID ); ?>][push-pull]">
-							<?php esc_html_e( 'Push/Pull', 'mesh' ); ?> <input type="checkbox" name="mesh-sections[<?php esc_attr_e( $section->ID ); ?>][push_pull]" class="mesh-section-push" value="1" <?php if ( get_post_meta( $section->ID, '_mesh_push_pull', true ) ) : ?>checked<?php endif; ?> />
-						</label>
-					</li>
-				<?php endif; ?>
-
-				<?php if ( 1 < count( $blocks ) ) : ?>
-				<li>
-					<label for="mesh-sections[<?php esc_attr_e( $section->ID ); ?>][lp-equal]">
-						<?php esc_html_e( 'Equalize', 'mesh' ); ?> <input type="checkbox" name="mesh-sections[<?php esc_attr_e( $section->ID ); ?>][lp_equal]" class="mesh-section-equalize" value="1" <?php if ( get_post_meta( $section->ID, '_mesh_lp_equal', true ) ) : ?>checked<?php endif; ?> />
-					</label>
-				</li>
-				<?php endif; ?>
-
+				<?php mesh_section_controls(  $section, $blocks ); ?>
+			</ul>
 			<?php endif; ?>
 		</div>
 	</div>
@@ -89,4 +63,10 @@ global $post;
 			<?php endif; ?>
 		</div>
 	</div>
+	<?php
+
+	/**
+	 * Add the ability to add controls after
+	 */
+	do_action( 'mesh_section_add_controls_after' ); ?>
 </div>
