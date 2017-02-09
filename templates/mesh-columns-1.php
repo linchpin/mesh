@@ -10,7 +10,7 @@
  */
 
 ?>
-<section <?php post_class(); ?> <?php mesh_section_background(); ?>>
+<section <?php post_class(); ?> <?php mesh_section_background(); ?> <?php mesh_section_attributes(); ?>>
 	<?php
 		$title_display           = get_post_meta( get_the_ID(), '_mesh_title_display', true );
 		$collapse_column_spacing = get_post_meta( get_the_ID(), '_mesh_collapse', true );

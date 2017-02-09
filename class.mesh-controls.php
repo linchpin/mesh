@@ -98,20 +98,22 @@ class Mesh_Controls {
 				}
 
 				$css_classes = implode( ' ', $css_classes );
+
+				$underscore_key = str_replace( '-', '_', $key );
 				?>
 				<li class="mesh-section-control-<?php esc_attr_e( $key ); ?>">
-					<label for="mesh-section[<?php esc_attr_e( $section->ID ); ?>][<?php esc_attr_e( $key ); ?>]">
+					<label for="mesh-section[<?php esc_attr_e( $section->ID ); ?>][<?php esc_attr_e( $underscore_key ); ?>]">
 						<?php esc_html_e( $control['label'] ); ?>
 						<?php
 						switch( $control['type'] ) {
 							case 'checkbox' : ?>
-								<input type="checkbox" name="mesh-sections[<?php esc_attr_e( $section->ID ); ?>][<?php esc_attr_e( $key ); ?>]" class="<?php esc_attr_e( $css_classes ); ?>" value="1" <?php if ( get_post_meta( $section->ID, '_mesh_' . esc_attr( str_replace( '-', '_', $key ) ), true ) ) : ?>checked<?php endif; ?> />
+								<input type="checkbox" name="mesh-sections[<?php esc_attr_e( $section->ID ); ?>][<?php esc_attr_e( $underscore_key ); ?>]" class="<?php esc_attr_e( $css_classes ); ?>" value="1" <?php if ( get_post_meta( $section->ID, '_mesh_' . esc_attr( $underscore_key ), true ) ) : ?>checked<?php endif; ?> />
 								<?php
 								break;
 							case 'input' :
 							case 'text' :
 							default : ?>
-								<input type="text" name="mesh-sections[<?php esc_attr_e( $section->ID ); ?>][<?php esc_attr_e( $key ); ?>]" class="<?php esc_attr_e( $css_classes ); ?>" value="<?php esc_attr( get_post_meta( $section->ID, '_mesh_' . esc_attr( str_replace( '-', '_', $key ) ), true ) ); ?>" />
+								<input type="text" name="mesh-sections[<?php esc_attr_e( $section->ID ); ?>][<?php esc_attr_e( $underscore_key ); ?>]" class="<?php esc_attr_e( $css_classes ); ?>" value="<?php esc_attr_e( get_post_meta( $section->ID, '_mesh_' . esc_attr( $underscore_key ), true ) ); ?>" />
 								<?php
 								break;
 						}
@@ -124,9 +126,99 @@ class Mesh_Controls {
 	}
 }
 
+/**
+ * @param int  $post_id
+ * @param bool $echo
+ * @since 1.2
+ *
+ * @return string
+ */
+function mesh_section_attributes( $post_id = 0, $echo = true ) {
+
+	global $post;
+
+	if ( empty( $post_id ) ) {
+		$post_id  = $post->ID;
+	}
+
+	/**
+	 * Process Section Meta
+	 */
+
+	$default_section_meta = array(
+		'_mesh_css_class',
+		'_mesh_lp_equal',
+		'_mesh_title_display',
+		'_mesh_push_pull',
+		'_mesh_collapse',
+		'_mesh_blocks',
+		'post_title',
+		'post_status',
+		'_mesh_template',
+		'template_original',
+		'menu_order'
+	);
+
+	/**
+	 * This filter is used to remove or add elements to the default section meta
+	 * @todo "meta" related to a section
+	 */
+	$default_section_meta = apply_filters( 'mesh_default_section_meta_fields', $default_section_meta );
+
+	$section_data = get_post_meta( $post_id, '' );
+
+	$attributes = array();
+
+	// Process our custom meta
+	foreach( $section_data as $data_key => $data_field ) {
+		// Do not process default keys
+		if( in_array( $data_key, $default_section_meta ) ) {
+			continue;
+		}
+
+		$lowercase_data_key = str_replace( '_mesh_', '', $data_key );
+
+		if( ! empty( $data_field ) ) {
+			$attributes[ 'data-' . $lowercase_data_key ] = $data_field[0];
+		}
+	}
+
+	if ( empty( $attributes ) ) {
+		return '';
+	} else {
+		if ( false === $echo ) {
+			return $attributes;
+		} else {
+
+			$attributes = join(' ', array_map( function( $data_key ) use ( $attributes )
+				{
+					if( is_bool( $attributes[ $data_key ] ) ) {
+						return $attributes[ $data_key ] ? $data_key : '';
+					}
+					return $data_key . '="' . $attributes[ $data_key ] . '"';
+				}, array_keys( $attributes ) ) );
+
+			echo $attributes; // WPCS: XSS ok.
+		}
+	}
+
+	return $attributes;
+}
+
+/**
+ * Public functions to call classes
+ *
+ * @param $section
+ * @param $blocks
+ */
 function mesh_section_controls( $section, $blocks ) {
 
 	$mesh_controls = new Mesh_Controls();
 
 	$mesh_controls->mesh_section_controls( $section, $blocks );
+}
+
+function mesh_block_controls( $block ) {
+	$mesh_controls = new Mesh_Controls();
+	$mesh_controls->mesh_block_controls( $block );
 }

@@ -409,8 +409,6 @@ class Mesh {
 
 		foreach ( $_POST['mesh-sections'] as $section_id => $section_data ) {
 
-			error_log( print_r( $section_data, true ) );
-
 			// If using AJAX, make sure we only update the section we want to save.
 			if ( $saving_section_via_ajax && $ajax_section_id !== $section_id ) {
 				continue;
@@ -448,6 +446,29 @@ class Mesh {
 			} else {
 				update_post_meta( $section->ID, '_mesh_template', $template );
 			}
+
+			/**
+			 * Process Section Meta
+			 */
+
+			$default_section_meta = array(
+				'css_class',
+				'lp_equal',
+				'title_display',
+				'push_pull',
+				'collapse',
+				'blocks',
+				'post_title',
+				'post_status',
+				'template',
+				'menu_order'
+			);
+
+			/**
+			 * This filter is used to remove or add elements to the default section meta
+			 * @todo "meta" related to a section
+			 */
+			apply_filters( 'mesh_default_section_meta_fields', $default_section_meta );
 
 			// Save CSS Classes.
 			$css_classes           = explode( ' ', $section_data['css_class'] );
@@ -496,6 +517,21 @@ class Mesh {
 				delete_post_meta( $section->ID, '_mesh_collapse' );
 			} else {
 				update_post_meta( $section->ID, '_mesh_collapse', $section_data['collapse'] );
+			}
+
+			// Process our custom meta
+			foreach( $section_data as $data_key => $data_field ) {
+				// Do not process default keys
+				if( in_array( $data_key, $default_section_meta ) ) {
+					continue;
+				}
+
+				// Save Custom Meta Field.
+				if ( empty( $section_data[ $data_key ] ) ) {
+					delete_post_meta( $section->ID, '_mesh_' . $data_key );
+				} else {
+					update_post_meta( $section->ID, '_mesh_' . $data_key, $section_data[ $data_key ] );
+				}
 			}
 
 			// Process the section's blocks.

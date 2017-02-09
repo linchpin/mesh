@@ -91,7 +91,6 @@ if ( ! function_exists( 'add_action' ) ) {
 									$block_offset = 0;
 								}
 								?>
-
 								<div class="mesh-columns-12 mesh-block-options-toggle-container">
 									<span class="the-mover hndle ui-sortable-handle left mesh-hide-for-small"><span></span></span>
 									<div class="mesh-clean-edit left mesh-column-title-container">
@@ -99,7 +98,6 @@ if ( ! function_exists( 'add_action' ) ) {
 										<span class="close-title-edit left"><?php esc_html_e( 'Done', 'mesh' ); ?></span>
 										<span class="handle-title mesh-section-title-text mesh-column-title-text"><?php esc_attr_e( $blocks[ $block_increment ]->post_title ); ?></span>
 									</div>
-
 									<a href="#" class="slide-toggle-element mesh-more-section-options right slide-toggle-meta-dropdown mesh-hide-for-small" data-toggle=".mesh-block-meta-dropdown-<?php esc_attr_e( $blocks[ $block_increment ]->ID ); ?>"><?php esc_html_e( 'More', 'mesh' ); ?></a>
 								</div>
 

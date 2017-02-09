@@ -2,8 +2,8 @@
 Contributors: linchpin_agency, aware, maxinacube, desrosj, nateallen, ebeltram, lulu5588, fischfood
 Tags: linchpin, sections, content, page builder, page builder plugin, design, wysiwyg, home page builder, template builder, layout builder, responsive, landing page builder, website builder, site builder, drag and drop builder, editor, page layout, visual editor, foundation, bootstrap
 Requires at least: 4.0
-Tested up to: 4.7.0
-Stable tag: 1.1.5
+Tested up to: 4.7.2
+Stable tag: 1.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -117,6 +117,10 @@ function hatch_mesh_default_bg_size( $size ) {
 * `add_filter( 'mesh_tiny_mce_before_init', $init_options );`
 * `add_filter( 'mesh_tiny_mce_options`, $mesh_tiny_mce_options );`
 
+* `add_filter( 'mesh_section_controls', $mesh_section_controls );`
+* `add_filter( 'mesh_default_section_meta_fields', $default_section_meta );`
+
+
 = Available Actions =
 * `add_action( 'mesh_section_add_before_misc_actions' )`
 * `add_action( 'mesh_section_add_misc_actions_before' )`
@@ -130,6 +134,9 @@ function hatch_mesh_default_bg_size( $size ) {
 3. Mesh templates and welcome.
 
 == Changelog ==
+
+= 1.2 =
+* Added the ability for developers to extend controls within sections and columns/blocks.
 
 = 1.1.5 =
 * Fixed equalize options should not show if the section is only 1 column wide.

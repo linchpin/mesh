@@ -1,5 +1,11 @@
 ##Change Log For Mesh
 
+## [1.2] - 2017-2-13
+
+### Added
+ - Controls within Sections and Columns/Blocks are now extendible for developers.
+ - Filters for controlling and saving new options in sections.
+
 ## [1.1.5] - 2017-2-6
 
 ### Fixed
