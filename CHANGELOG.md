@@ -1,4 +1,8 @@
-##Change Log For Mesh
+#Change Log For Mesh
+
+## Unreleased
+
+* Introduce a `CONTRIBUTING.md` file.
 
 ## [1.1.5] - 2017-2-6
 
