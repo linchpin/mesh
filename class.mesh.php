@@ -818,6 +818,11 @@ class Mesh {
 			return;
 		}
 
+		// Do not show content on password protected posts
+		if ( post_password_required() ) {
+			return;
+		}
+
 		$sections = mesh_display_sections( $wp_query->post->ID, false );
 
 		echo apply_filters( 'mesh_loop_end', $sections, $wp_query->post->ID ); // WPCS: ok.
