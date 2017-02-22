@@ -1,0 +1,38 @@
+ecmaFeatures:
+  modules: true
+  jsx: false
+
+env:
+  amd: true
+  browser: true
+  es6: false
+  jquery: true
+  node: false
+
+globals:
+  _: false
+  Backbone: false
+  jQuery: false
+  JSON: false
+  wp: false
+
+# http://eslint.org/docs/rules/
+rules:
+  # Possible Errors
+  comma-dangle: [2, never]
+  no-cond-assign: [error, except-parens]
+  no-irregular-whitespace: error
+
+  # Best Practices
+  curly: error
+  eqeqeq: error
+  no-caller: error
+  no-eq-null: error
+  wrap-iife: [error, any]
+
+  # Variables
+  no-undef: error
+  no-unused-vars: error
+
+  # Stylistic Issues
+  quotes: [error, single]
