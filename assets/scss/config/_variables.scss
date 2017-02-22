@@ -1,0 +1,43 @@
+/**
+ *
+ * 01. Dimensions
+ * 02. Colors
+ * 03. Animations
+ * 04. Breakpoints
+ *
+ **/
+
+
+// 01. Dimensions
+$base:            16px;
+$input_height:    28px;
+$input_padding_x: 5px;
+$input_padding_y: 3px;
+$inside_padding:  12px;
+$block_padding:   10px;
+
+// 02. Colors
+$blue:         #009fd4;
+$green:        #46B450;
+$darkest-grey: #666;
+$dark-grey:    #ccc;
+$grey:         #dedede;
+$light-grey:   #f5f5f5;
+$super-light-grey: #fafafa;
+
+$primary:       $blue;
+$primary-light: scale-color( $primary, $lightness: 8% );
+$primary-dark:  scale-color( $primary, $lightness: -8% );
+
+$pointer-title-bg: #00a0d2;
+$pointer-border:   #3592b6;
+
+
+// 03. Animations
+$global_timing: 300ms;
+$global_easing: ease-out;
+
+
+// 04. Breakpoints
+$mesh-small: 'screen and (max-width: 1023px)';
+$mesh-medium-up: 'screen and (min-width: 1024px)';

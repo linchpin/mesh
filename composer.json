@@ -1,0 +1,6 @@
+{
+  "require-dev": {
+    "phpdocumentor/phpdocumentor": "2.*",
+    "michelf/php-markdown": "1.6"
+  }
+}

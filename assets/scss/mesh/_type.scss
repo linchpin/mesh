@@ -1,0 +1,217 @@
+/**
+ *
+ * 01. Font icons
+ * 02. Alignment
+ * 03. Buttons
+ * 04. Helper Classes
+ *
+ **/
+
+// 01. Font icons
+
+// Mesh logo font icon. Can be used anywhere in the WordPress admin
+@font-face {
+	font-family: 'mesh';
+	src:  url('fonts/mesh.eot?2cd9aa');
+	src:  url('fonts/mesh.eot?2cd9aa#iefix') format('embedded-opentype'),
+	url('fonts/mesh.ttf?2cd9aa') format('truetype'),
+	url('fonts/mesh.woff?2cd9aa') format('woff'),
+	url('fonts/mesh.svg?2cd9aa#mesh') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+// Apply the Mesh font icon to the menu icon
+.dashicons-mesh-logo:before,
+.icon-mesh:before {
+	content: "\2635";
+	font-family: 'mesh' !important;
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+.icon-facebook:before {
+	content: "\e900";
+	font-family: 'mesh' !important;
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+.icon-github:before {
+	content: "\e901";
+	font-family: 'mesh' !important;
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+.icon-linchpin-logo:before {
+	content: "\e902";
+	font-family: 'mesh' !important;
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+.icon-linchpin-logo-alt:before {
+	content: "\e903";
+	font-family: 'mesh' !important;
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+.icon-twitter:before {
+	content: "\e904";
+	font-family: 'mesh' !important;
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+// We want all styles in the context of the MCS container, as to not overwrite any
+// WordPress Core styles or custom editor styles inserted by theme devs.
+#mesh-container {
+	// 02. Alignment
+	.text-left {
+		text-align: left;
+	}
+
+	.text-center {
+		text-align: center;
+	}
+
+	.text-right {
+		text-align: right;
+	}
+
+	.left {
+		float: left;
+	}
+
+	.right {
+		float: right;
+	}
+
+
+	// 03. Buttons/Links
+	a {
+		cursor: pointer;
+	}
+
+	.button {
+		&.primary {
+			background-color: $primary;
+			border-color: $primary-dark;
+			color: $light-grey;
+
+			&:hover {
+				background-color: $primary-light;
+			}
+
+		  .spinner {
+			display: none;
+		  }
+		}
+
+	    &.disabled {
+		  &.active {
+			.spinner {
+			  visibility: visible;
+			  display: inline-block;
+			  float: left;
+			  margin: 4px 0;
+			}
+
+			&.dashicons-before:before {
+			  display: none;
+			}
+		  }
+		}
+
+		&.dashicons-before:before {
+			vertical-align: middle;
+
+		}
+	}
+
+	// 04. Helper Classes
+	p.lead,
+	.lead > p {
+		font-size: 18px;
+	}
+
+	.clearfix {
+		@include clearfix;
+	}
+
+	.inline-block-list {
+		list-style: none;
+		margin: 0;
+
+		&.space-left {
+			> li + li {
+				margin-left: $base * .5;
+			}
+		}
+
+		&.space-right {
+			> li + li {
+				margin-left: $base * .5;
+			}
+		}
+
+		> li {
+			display: inline-block;
+			margin: 0;
+			vertical-align: middle;
+		}
+	}
+
+	.plain-link {
+		text-decoration: none;
+	    &.disabled {
+		    color:$darkest-grey;
+		}
+	}
+
+	.grey-link {
+		color: $darkest-grey;
+	}
+
+	.nowrap {
+		white-space: nowrap;
+	}
+}
+
+#mesh-template-welcome-panel {
+	.welcome-icon:before {
+		vertical-align: middle;
+	}
+}

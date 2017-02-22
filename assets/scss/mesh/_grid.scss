@@ -1,0 +1,48 @@
+@for $i from 1 through 12  {
+	.mesh-columns-#{$i} {
+		width: ($i/12) * 100%;
+	}
+}
+
+@for $i from 1 through 12 {
+	.mesh-columns-#{$i} {
+		@for $j from 1 through $i {
+			.mesh-offset-#{$j} {
+				padding-left: 100% * $j/$i;
+
+				&.block-content:before {
+					right: 100% - (($j/$i) * 100%);
+				}
+			}
+		}
+	}
+}
+
+.mesh-row {
+	position: relative;
+
+	@include clearfix;
+}
+
+[class*="mesh-columns"] {
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	float: left;
+
+	@media #{$mesh-small} {
+		clear: both;
+		width: 100% !important;
+	}
+}
+
+.mesh-hide-for-small {
+	@media #{$mesh-small} {
+		display: none !important;
+	}
+}
+
+.mesh-show-for-small {
+	@media #{$mesh-medium-up} {
+		display: none !important;
+	}
+}

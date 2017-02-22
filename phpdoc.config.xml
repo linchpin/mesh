@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<phpdoc>
+    <title>linchpin</title>
+    <parser>
+        <target>./</target>
+        <extensions>
+            <extension>module</extension>
+            <extension>inc</extension>
+            <extension>php</extension>
+        </extensions>
+    </parser>
+    <transformer>
+        <target>docs</target>
+    </transformer>
+    <files>
+        <ignore>node_modules/*</ignore>
+        <ignore>vendor/*</ignore>
+        <ignore>build/*</ignore>
+        <ignore>lib/*</ignore>
+    </files>
+</phpdoc>

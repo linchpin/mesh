@@ -1,0 +1,56 @@
+/**
+ * Mesh Template display in the admin
+ */
+
+.mesh-template-layout {
+	#mesh-container & {
+		cursor: pointer;
+	}
+
+	background: white;
+	border: 1px solid $dark-grey;
+	border-radius: 3px;
+	display: inline-block;
+	margin: 0 4px 4px;
+	width: 100px;
+	padding: 5px;
+	position: relative;
+	vertical-align: top;
+
+	&.active {
+		background: #f2f2f2;
+	}
+
+	input[type="radio"] {
+		position: absolute;
+		left: 0;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		visibility: hidden;
+	}
+
+	.mesh-row {
+		margin: 0 0 2px;
+	}
+
+	.mesh-section-block {
+		border: 1px solid $primary-dark;
+
+	}
+
+	.block {
+		background: $light-grey;
+		height: 40px;
+	}
+
+	.block-content {
+		background: white;
+		height: inherit;
+
+		&.mesh-has-offset:before {
+			background-size: 8px;
+			margin-right: 0;
+		}
+	}
+}

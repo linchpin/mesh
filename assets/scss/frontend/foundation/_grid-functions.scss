@@ -1,0 +1,237 @@
+// Functions for the grid
+@function -zf-get-options($opts, $seeking) {
+  @if type-of($opts) != 'list' {
+    $opts: ($opts);
+  }
+
+  $map: ();
+  @each $keyword in $seeking {
+    $val: if(index($opts, $keyword) != null, true, false);
+    $item: ($keyword: $val);
+    $map: map-merge($map, $item);
+  }
+
+  @return $map;
+}
+
+@function -zf-get-bp-val($map, $value) {
+  // Check if the breakpoint name exists globally
+  @if not map-has-key($breakpoints, $value) {
+    @return null;
+  }
+  // Check if the breakpoint name exists in the local config map
+  @else if map-has-key($map, $value) {
+    // If it does, just return the value
+    @return map-get($map, $value);
+  }
+  // Otherwise, find the next lowest breakpoint and return that value
+  @else {
+    $anchor: null;
+    $found: false;
+
+    @each $key, $val in $breakpoints {
+      @if not $found {
+        @if map-has-key($map, $key) {
+          $anchor: $key;
+        }
+        @if $key == $value {
+          $found: true;
+        }
+      }
+    }
+
+    @return map-get($map, $anchor);
+  }
+}
+
+@function -zf-bp-to-em($value) {
+  // Pixel and unitless values are converted to rems
+  @if unit($value) == 'px' or unitless($value) {
+    $value: rem-calc($value, $base: 16px);
+  }
+
+  // Then the value is converted to ems
+  @return strip-unit($value) * 1em;
+}
+
+@function rem-calc($values, $base: null) {
+  $rem-values: ();
+  $count: length($values);
+
+  // If no base is defined, defer to the global font size
+  @if $base == null {
+    $base: $global-font-size;
+  }
+
+  // If the base font size is a %, then multiply it by 16px
+  // This is because 100% font size = 16px in most all browsers
+  @if unit($base) == '%' {
+    $base: ($base / 100%) * 16px;
+  }
+
+  @if $count == 1 {
+    @return -zf-to-rem($values, $base);
+  }
+
+  @for $i from 1 through $count {
+    $rem-values: append($rem-values, -zf-to-rem(nth($values, $i), $base));
+  }
+
+  @return $rem-values;
+}
+
+@function -zf-to-rem($value, $base: null) {
+  // Check if the value is a number
+  @if type-of($value) != 'number' {
+    @warn inspect($value) + ' was passed to rem-calc(), which is not a number.';
+    @return $value;
+  }
+
+  // Calculate rem if units for $value is not rem
+  @if unit($value) != 'rem' {
+    $value: strip-unit($value) / strip-unit($base) * 1rem;
+  }
+
+  // Turn 0rem into 0
+  @if $value == 0rem {
+    $value: 0;
+  }
+
+  @return $value;
+}
+
+@function strip-unit($num) {
+	@return $num / ($num * 0 + 1);
+}
+
+@function breakpoint($val: small) {
+  // Size or keyword
+  $bp: nth($val, 1);
+  // Value for max-width media queries
+  $bp-max: 0;
+  // Direction of media query (up, down, or only)
+  $dir: if(length($val) > 1, nth($val, 2), up);
+  // Eventual output
+  $str: '';
+  // Is it a named media query?
+  $named: false;
+
+  // Orientation media queries have a unique syntax
+  @if $bp == 'landscape' or $bp == 'portrait' {
+    @return '(orientation: #{$bp})';
+  }
+  @else if $bp == 'retina' {
+    @return '(-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi)';
+  }
+
+  // Try to pull a named breakpoint out of the $breakpoints map
+  @if type-of($bp) == 'string' {
+    @if map-has-key($breakpoints, $bp) {
+      @if $dir == 'only' or $dir == 'down' {
+        $next-bp: -zf-map-next($breakpoints, $bp);
+
+        @if $next-bp == null {
+          $bp-max: null;
+          @warn 'breakpoint(): the media query "#{$val}" cannot be used because #{$bp} is the largest breakpoint.';
+        }
+        @else {
+          $bp-max: $next-bp;
+        }
+      }
+
+      $bp: map-get($breakpoints, $bp);
+      $named: true;
+    }
+    @else {
+      $bp: 0;
+    }
+  }
+
+  // Convert any pixel, rem, or unitless value to em
+  $bp: -zf-bp-to-em($bp);
+  @if $bp-max {
+    $bp-max: -zf-bp-to-em($bp-max) - (1/16);
+  }
+
+  // Skip media query creation if the input is "0 up"
+  @if $bp > 0em or $dir == 'only' or $dir == 'down' {
+    // `only` ranges use the format `(min-width: n) and (max-width: n)`
+    @if $dir == 'only' {
+      @if $named == true {
+        $str: $str + '(min-width: #{$bp})';
+
+        @if $bp-max != null {
+          $str: $str + ' and (max-width: #{$bp-max})';
+        }
+      }
+      @else {
+        @warn 'Only named media queries can have an `only` range.';
+      }
+    }
+
+    // `down` ranges use the format `(max-width: n)`
+    @else if $dir == 'down' {
+      $max: 0;
+
+      // For named breakpoints, subtract the breakpoint value by one "pixel", or 1/16em.
+      @if $named {
+        $max: $bp-max;
+      }
+      @else {
+        $max: $bp;
+      }
+
+      // Skip media query creation if input value is exactly "0 down" but don't "small down"
+      @if $named or $bp > 0em {
+        $str: $str + '(max-width: #{$max})';
+      }
+    }
+
+    // `up` ranges use the format `(min-width: n)`
+    @else if $bp > 0em {
+      $str: $str + '(min-width: #{$bp})';
+    }
+  }
+
+  @return $str;
+}
+
+@function grid-column($columns) {
+  $width: 0%;
+
+  // Parsing percents, decimals, and column counts
+  @if type-of($columns) == 'number' {
+    @if unit($columns) == '%' {
+      $width: $columns;
+    }
+    @else if $columns < 1 {
+      $width: percentage($columns);
+    }
+    @else {
+      $width: percentage($columns / $grid-column-count);
+    }
+  }
+
+  // Parsing "n of n" expressions
+  @else if type-of($columns) == 'list' {
+    @if length($columns) != 3 {
+      @error 'Wrong syntax for grid-column(). Use the format "n of n".';
+    }
+    @else {
+      $width: percentage(nth($columns, 1) / nth($columns, 3));
+    }
+  }
+
+  // Anything else is incorrect
+  @else {
+    @error 'Wrong syntax for grid-column(). Use a number, decimal, percentage, or "n of n".';
+  }
+
+  @return $width;
+}
+
+@function grid-col(
+  $columns: $grid-column-count
+) {
+  @return grid-column($columns);
+}

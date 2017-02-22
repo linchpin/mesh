@@ -1,0 +1,772 @@
+/**
+ *
+ * 01. Global
+ * 02. No Sections
+ * 03. Section Header
+ * 04. Section Meta
+ * 05. Section Footer
+ * 06. Blocks
+ *
+ **/
+
+
+// 01. Global
+#mesh-container {
+
+  margin-bottom: $base * 2;
+
+  .postbox.closed {
+	.handle-title:after {
+	  visibility:hidden;
+	}
+  }
+
+  .postbox:last-child {
+	margin-bottom: 2px;
+  }
+
+  .postbox .hndle {
+	border: none;
+  }
+}
+
+.wrap .notice.mesh-main-ua-row {
+	padding: {
+		bottom: 10px;
+		top: 10px;
+	};
+
+    margin : 10px 0 10px;
+
+    &.bottom {
+    	margin-top: 10px;
+    }
+
+	.lead {
+		margin: 0;
+	}
+
+	&.notice {
+		p {
+			height: $input_height;
+			line-height: $input_height;
+			margin: 0;
+			padding: 0;
+		}
+	}
+}
+
+.mesh-clean-edit {
+	margin-left: 5px;
+	position: relative;
+
+	.mesh-clean-edit-element,
+	input {
+		opacity: 0;
+		visibility: hidden;
+		width: auto;
+
+		transition: $global_timing opacity $global_easing;
+	}
+
+	input {
+		margin: {
+			bottom: $base * .25;
+			top: $base * .25;
+		};
+	}
+
+	span {
+		cursor: pointer;
+	}
+
+	.handle-title {
+		-moz-box-sizing: border-box;
+	    box-sizing: border-box;
+	    height: 32px;
+	    line-height: 32px - ($input_padding_y * 2);
+	    padding: $input_padding_y $input_padding_x;
+
+	    opacity: 1;
+	    visibility: visible;
+
+		position: absolute;
+	    top: 0;
+	    left: 0;
+
+	    @include dashicons( '\f464', 'after' );
+
+	    transition: $global_timing opacity $global_easing;
+
+	    &:after {
+		    color: $primary;
+		    margin-left: $input_padding_x;
+	    }
+
+		&.mesh-section-title-text {
+			max-width: 100%;
+			overflow: hidden;
+			padding-right: 28px;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+
+			&:after {
+				position: absolute;
+				right: 10px;
+				top: 3px;
+			}
+		}
+	}
+
+	&.mesh-column-title-container {
+		width: 100%;
+		width: calc(100% - 70px - 24px);
+
+		@media only screen and (max-width: 1023px) {
+			width: 100%;
+			max-width: 100%;
+		}
+
+		&.title-input-visible {
+			width: calc(100% - 32px);
+
+			input.mesh-clean-edit-element {
+				width: calc(100% - 55px);
+			}
+
+			& + .mesh-more-section-options {
+				display: none;
+			}
+		}
+	}
+
+	.close-title-edit {
+		display: none;
+
+		color: $primary;
+		height: 32px;
+	    line-height: 32px;
+		padding: {
+			left: $input_padding_x;
+			right: $input_padding_x;
+		};
+	}
+
+	&.title-input-visible {
+		.mesh-clean-edit-element {
+			opacity: 1;
+			visibility: visible;
+		}
+
+		input.mesh-clean-edit-element {
+			width: 90%;
+			width: calc(100% - 100px);
+		}
+
+		.handle-title {
+			opacity: 0;
+			visibility: hidden;
+		}
+
+		.close-title-edit {
+			display: inline-block;
+		}
+	}
+
+	&.handle-right {
+		margin: {
+			left: 0;
+			right: 5px;
+		};
+
+		.handle-title {
+			left: auto;
+			right: 0;
+		}
+	}
+}
+
+.mesh-columns-12 + .mesh-columns-12 {
+	margin-top: $base;
+}
+
+.mesh-section-expand {
+	@include dashicons( '\f164' );
+}
+
+.mesh-section-collapse {
+	@include dashicons( '\f163' );
+}
+
+.mesh-section-reorder {
+	@include dashicons( '\f156' );
+}
+
+.mesh-section-expand,
+.mesh-section-collapse,
+.mesh-section-reorder {
+	&:before {
+		font-size: 18px;
+		margin-right: 4px;
+	}
+}
+
+.mesh-admin-title {
+	font: {
+		size: 15px;
+		weight: 600;
+	};
+}
+
+// 02. No Sections
+#mesh-description {
+	padding: {
+		bottom: $base * 2;
+		top: $base * 2;
+	};
+
+    &.collapse {
+	  padding:1px 12px;
+	}
+}
+
+
+// 03. Section Header
+.mesh-section {
+	.handlediv {
+		cursor: pointer;
+		font-size: 20px;
+		height: $input_height;
+		line-height: $input_height;
+		width: 26px;
+
+		position: absolute;
+		right: 12px;
+		top: 8px;
+
+		@include dashicons( '\f142' );
+	}
+
+	&.ui-sortable-handle {
+		cursor: move;
+	}
+
+	&.closed .handlediv {
+		@include dashicons( '\f140' );
+	}
+
+	&.ui-sortable-placeholder {
+		background-color: transparent;
+		border: 2px dashed $dark-grey;
+		visibility: visible !important;
+	}
+
+	.notice {
+		background-color: $light-grey;
+		box-shadow: none;
+	}
+}
+
+.mesh-row-padding {
+	padding: 8px 50px 8px 12px;
+}
+
+.mesh-title-row {
+  border-bottom: 1px solid #f2f2f2;
+  padding: 4px 40px 4px 4px;
+}
+
+// 04. Section Meta
+.mesh-section-meta,
+.mesh-section-meta-dropdown {
+	margin: {
+		left: -$inside_padding;
+		right: -$inside_padding;
+	};
+}
+
+.mesh-section-meta {
+	border-bottom: 1px solid $grey;
+	position: relative;
+    background-color: $super-light-grey;
+}
+
+.slide-toggle-meta-dropdown {
+	background-color: $light-grey;
+	border: 1px solid $grey;
+	border-bottom: none;
+	color: $darkest-grey;
+	line-height: $base;
+	padding: $base * .5;
+	text-decoration: none;
+
+	position: absolute;
+	right: $base * .75;
+	bottom: -1px;
+
+	@include dashicons( '\f140', 'after' );
+
+	&:after {
+		font-size: 20px;
+	}
+
+	&:active {
+		outline: none;
+	}
+
+	&.toggled {
+		@include dashicons( '\f142', 'after' );
+	}
+}
+
+.mesh-section-meta-dropdown {
+	background-color: $light-grey;
+	border-bottom: 1px solid $grey;
+	padding: $base;
+
+	.mesh-table {
+		display: table;
+		height: 80px;
+	}
+
+	.mesh-table-footer {
+		display: table-footer-group;
+	}
+}
+
+.mesh-section-background {
+	.choose-image {
+		height: 80px;
+		position: relative;
+
+		img {
+			height: 80px;
+			width: auto;
+		}
+
+		.mesh-featured-image-trash,
+		.mesh-block-featured-image-trash {
+			text-decoration: none;
+
+			position: absolute;
+			right: 0;
+			top: 0;
+		}
+	}
+
+	.mesh-featured-image-choose {
+		height: inherit;
+		line-height: 80px;
+	}
+}
+
+// 05. Section Footer
+.mesh-section-footer {
+	background-color: $light-grey;
+	border-top: 1px solid $grey;
+	margin: {
+		left: -$inside_padding;
+		right: -$inside_padding;
+		bottom: -$inside_padding;
+	};
+	padding: $inside_padding;
+
+	.mesh-section-remove {
+		line-height: $input_height;
+
+		&:before {
+			line-height: $input_height;
+		}
+	}
+
+	.mesh-update-status-container {
+		display: inline-block;
+		position: relative;
+
+		.saved-status-icon {
+			background-color: $green;
+			border-radius: 100%;
+			position: absolute;
+			top: 0;
+			right: 0;
+			height: 20px;
+			width: 20px;
+			margin: 4px 10px 0;
+			opacity: 0;
+			transition: opacity .5s;
+
+			&:before {
+				color: white;
+				position: absolute;
+				top: 1px;
+				left: -1px;
+			}
+
+			&.is-active {
+				display: block;
+				opacity: 1;
+				transition: opacity 0s;
+			}
+		}
+	}
+}
+
+// 06. Blocks
+
+.mesh-editor-blocks {
+	.block {
+	  .mesh-has-offset {
+		.wp-media-buttons {
+			margin-left:0;
+		}
+		.wp-editor-container {
+		  border-left:1px solid #e5e5e5;
+	  }
+	}
+  }
+}
+
+.mesh-editor-blocks {
+	margin: {
+		bottom: 6px;
+		top: 6px;
+	};
+	position: relative;
+
+	.mesh-block-options-toggle-container {
+		background-color: $light-grey;
+		border-bottom: 1px solid $grey;
+		position: relative;
+	}
+
+	.block {
+		border: 1px solid $grey;
+	    background: #fcfcfc;
+
+	    .wp-editor-wrap {
+		  padding-top:6px;
+		}
+
+		.wp-editor-container {
+			border: {
+				left: none;
+				right: none;
+				bottom: none;
+			};
+		}
+
+		.slide-toggle-meta-dropdown {
+			border: {
+				right: none;
+				top: none;
+			};
+
+			right: 0;
+			top: 0;
+		}
+
+		.wp-media-buttons {
+			margin-left: $base * .25;
+		}
+	}
+
+	.mesh-block-meta-dropdown {
+		background-color: $light-grey;
+		margin-top: 0;
+		padding: .75rem;
+	}
+
+	.mesh-columns-3,
+	.mesh-columns-4 {
+		.mesh-block-meta-dropdown{
+			.left {
+				width: 100%;
+				margin-bottom: 1em;
+
+				label {
+					display: block;
+
+					input {
+						display: block;
+						max-width: 100%;
+					}
+				}
+			}
+
+			.right {
+				width: 100%;
+			}
+		}
+	}
+
+	.column-slider {
+		position: absolute;
+	    left: 0px;
+	    right: 0px;
+	    top: 0px;
+	    height: auto;
+	    bottom: 0px;
+	    border: none;
+
+	    &[data-mesh-blocks="2"] {
+		    ~ .mesh-section-block {
+			    &:nth-of-type(2) {
+				    padding-right: $block_padding * 1.8;
+			    }
+
+			    &:nth-of-type(3) {
+				    padding-left: $block_padding * 1.8;
+			    }
+		    }
+	    }
+
+	    &[data-mesh-blocks="3"] {
+		    .ui-slider-handle {
+			    &:nth-of-type(1) {
+				    margin-left: -15px;
+			    }
+
+			    &:nth-of-type(2) {
+				    margin-left: -11px;
+			    }
+		    }
+
+		    ~ .mesh-section-block {
+			    &:nth-of-type(2) {
+				    padding-right: 20px;
+			    }
+
+			    &:nth-of-type(3) {
+				    padding-left: 16px;
+				    padding-right: 16px
+			    }
+
+			    &:nth-of-type(4) {
+				    padding-left: 20px;
+			    }
+			}
+	    }
+	}
+
+	> .mesh-row {
+		margin: 0 (-$base);
+
+	  &.notice {
+		margin: 5px -7px 0 -7px;
+	  }
+	}
+
+	.columns {
+		padding: 0 $block_padding;
+		position: relative;
+		z-index: 11;
+	}
+
+    .mesh-columns-12.columns {
+	    padding: 0 9px;
+	}
+
+	.wp-slider .ui-slider-handle {
+		border-radius: 0;
+		box-shadow: none;
+		box-sizing: border-box;
+		cursor: ew-resize;
+		height: auto;
+		margin-left: -($base * 2 - 6px)/2;
+		width: $base * 2 - 6px;
+
+		top: 5px;
+		bottom: 0;
+		z-index: 12;
+
+		&:before {
+			background-color: $primary;
+			border-radius: 50%;
+			color: white;
+			line-height: $base * 2 - 12px;
+			height: $base * 2 - 12px;
+			width: $base * 2 - 12px;
+			text-align: center;
+
+			top: 50%;
+			margin-top: ( $base * 2 - 12px )/2;
+		}
+	}
+
+	// Sortable Columns
+	.ui-sortable {
+		.ui-sortable-helper .drop-target {
+			background-color: white;
+		}
+
+		.ui-sortable-placeholder {
+			padding: {
+				left: 16px;
+				right: 16px;
+			};
+
+			visibility: visible !important;
+
+			&:before {
+				content: '';
+				border: 2px dashed $grey;
+				position: absolute;
+				left: 16px;
+				right: 16px;
+				top: 0;
+				bottom: 0;
+			}
+		}
+	}
+}
+
+.mesh-block-title-row {
+	margin-bottom: 0;
+}
+
+.mesh-columns-12 .mesh-block-title-row {
+  background-color: #f5f5f5;
+  border-bottom: 1px solid #dedede;
+  position: relative;
+  padding: 4px 4px 0 0;
+}
+
+.block-content {
+	&.mesh-has-offset {
+		position: relative;
+
+		&:before {
+			content: '';
+
+			background: {
+				color: $light-grey;
+				image: url('../images/offset-pattern.png');
+			};
+			margin-right: 10px;
+
+			position: absolute;
+			left: 0;
+			bottom: 0;
+			top: 0;
+		}
+	}
+}
+
+.the-mover {
+	background: $light-grey;
+	height: $base * 2;
+	width: $base * 1.5;
+
+	position: relative;
+
+	&:before,
+	&:after {
+		content: '';
+		background: mix($dark-grey, $darkest-grey);
+		width: 2px;
+		position: absolute;
+		top: 4px;
+		bottom: 4px;
+	}
+
+	&:before {
+		left: 5px;
+	}
+
+	&:after {
+		right: 5px;
+	}
+
+	span {
+		background: mix($dark-grey, $darkest-grey);
+		margin-left: -1px;
+		width: 2px;
+
+		position: absolute;
+		top: 4px;
+		bottom: 4px;
+		left: 50%;
+	}
+}
+
+#poststuff .mesh-section .inside {
+  margin-top:0;
+}
+
+/**
+ * @todo Temp thing. Should be moved later
+ */
+.post-type-mesh_template {
+  .column-layout {
+	width:120px;
+  }
+
+  .column-mesh_template_uses {
+	width:45px;
+  }
+
+  .welcome-panel {
+	margin: 30px 20px 16px 0;
+  }
+
+  .mesh-template-welcome-panel-close {
+	position: absolute;
+	top: 10px;
+	right: 20px;
+	padding: 10px 15px 10px 21px;
+	font-size: 13px;
+	line-height: 1.23076923;
+	text-decoration: none;
+
+	&:before {
+	  position: absolute;
+	  top: 8px;
+	  left: 0;
+	  -webkit-transition: all .1s ease-in-out;
+	  transition: all .1s ease-in-out;
+	  background: none;
+	  color: #b4b9be;
+	  content: "\f153";
+	  display: block;
+	  font: normal 16px/20px dashicons;
+	  speak: none;
+	  height: 20px;
+	  text-align: center;
+	  width: 20px;
+	  -webkit-font-smoothing: antialiased;
+	  -moz-osx-font-smoothing: grayscale;
+	}
+  }
+}
+
+/**
+ * This column can be used in multiple places
+ */
+.column-taxonomy-mesh_template_usage {
+  width:120px;
+}
+
+.disabled-overlay {
+  position: absolute;
+  background-color: #fff;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 20;
+  opacity: 0.6;
+}
+
+#mesh-settings {
+	img {
+	  max-width: 100%;
+	}
+
+  	ul {
+	  list-style: initial;
+	}
+
+  	li {
+	  margin-left:10px;
+	}
+}

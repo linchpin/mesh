@@ -1,0 +1,37 @@
+/**
+ *
+ * 01. Global Helpers
+ * 02. Admin Pointers
+ *
+ **/
+
+// 01. Global Helpers
+.hide {
+	display: none;
+}
+
+// 02. Admin Pointers
+.wp-pointer {
+	&.mesh-pointer-top-left,
+	&.mesh-pointer-top-right {
+		.wp-pointer-arrow {
+			top: 30px;
+		}
+	}
+
+	&.mesh-pointer-top-left {
+		.wp-pointer-arrow,
+		.wp-pointer-arrow-inner {
+			border-right-color: $pointer-title-bg;
+		}
+	}
+
+	&.mesh-pointer-top-right {
+		.wp-pointer-arrow,
+		.wp-pointer-arrow-inner {
+			border-left-color: $pointer-title-bg;
+		}
+	}
+}
+
+// 03. Button / Asset Override
