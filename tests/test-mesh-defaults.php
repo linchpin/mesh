@@ -24,10 +24,4 @@ class Mesh_Defaults extends WP_UnitTestCase {
 		$this->assertTrue( defined( 'LINCHPIN_MESH_DEBUG_MODE' ) );
 	}
 
-	/**
-	* Test the correct version is in the database.
-	*/
-	function test_current_version() {
-		$this->assertEquals( $GLOBALS['mesh_current_version'], LINCHPIN_MESH_VERSION );
-	}
 }
