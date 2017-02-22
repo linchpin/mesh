@@ -43,11 +43,10 @@ useful information in branch names, such as:
 
 ### Writing Good Code
 
-All pull requests should be peer reviewed by another team member. Please use
+All pull requests should be peer reviewed by another contributor. Please use
 good coding style & best practices.
 
-Except where noted in [our own coding standards repository](https://github.com/bu-ist/coding-standards),
-we follow the [WordPress Coding Standards](https://make.wordpress.org/core/handbook/best-practices/coding-standards/)
+Except where noted this repository follows the [WordPress Coding Standards](https://make.wordpress.org/core/handbook/best-practices/coding-standards/)
 to the best of our abilities. This helps ensure that everyone's coding style
 and methodologies follow the same conventions, allowing our review efforts to
 be focused on the code's effectiveness, performance, and functionality.
