@@ -10,7 +10,10 @@ exclude_paths:
 - "*.min.css"
 - "*.min.js"
 - "**.css"
-- "js/script.js"
+- "js/assets/admin-mesh.js"
+- "js/assets/admin-mesh.min.js"
+- "js/assets/mesh.js"
+- "js/assets/mesh.min.js"
 
 engines:
   csslint:
