@@ -3,6 +3,9 @@
 ## Unreleased
 
 * Introduce a `CONTRIBUTING.md` file.
+* Add a `.travis.yml` file to automate our unit tests.
+* Update unit test install scripts.
+* Setup Code Climate and Code Climate test coverage reporting.
 
 ## [1.1.5] - 2017-2-6
 
