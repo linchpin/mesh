@@ -1569,9 +1569,11 @@ mesh.admin = function ( $ ) {
 					// Make sure we have an editor and we aren't in text view.
 					if( editor && ! editor.hidden ) {
 
-						content = editor.getContent({format: 'raw'});
+						content = editor.getContent();
+
 						$('#' + editorID).val(content);
 					}
+				
 			});
 
 			var	form_data = $current_section.parents( 'form' ).serialize(),

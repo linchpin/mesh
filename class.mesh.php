@@ -436,7 +436,7 @@ class Mesh {
 
 			wp_update_post( $updates );
 
-			$count ++;
+			$count++;
 
 			// Save Template.
 			$template = sanitize_text_field( $section_data['template'] );
