@@ -6,6 +6,7 @@
 * Add a `.travis.yml` file to automate our unit tests.
 * Update unit test install scripts.
 * Setup Code Climate and Code Climate test coverage reporting.
+* Include mesh.js.map in Grunt build
 
 ## [1.1.5] - 2017-2-6
 
