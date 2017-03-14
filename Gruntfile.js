@@ -119,6 +119,8 @@ module.exports = function(grunt) {
 
     grunt.loadNpmTasks( 'grunt-wp-i18n' );
     grunt.loadNpmTasks( 'grunt-contrib-copy' );
-    grunt.registerTask( 'build', ['sass', 'addtextdomain' ] );
-    grunt.registerTask( 'default', [ 'copy', 'uglify', 'concat', 'watch' ] );
+
+    grunt.registerTask( 'scripts', [ 'concat', 'uglify' ] );
+    grunt.registerTask( 'build', [ 'addtextdomain', 'scripts', 'sass', 'copy' ] );
+    grunt.registerTask( 'default', [ 'scripts', 'sass', 'watch' ] );
 }
