@@ -7,6 +7,7 @@
 * Update unit test install scripts.
 * Setup Code Climate and Code Climate test coverage reporting.
 * Include mesh.js.map in Grunt build
+* Fix PHP warnings when retrieving `mesh_post_types` when it is not yet set.
 
 ## [1.1.5] - 2017-2-6
 
