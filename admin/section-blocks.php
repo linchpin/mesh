@@ -126,7 +126,7 @@ if ( ! function_exists( 'add_action' ) ) {
 											<?php $featured_image_id = get_post_thumbnail_id( $blocks[ $block_increment ]->ID );
 
 											if ( empty( $featured_image_id ) ) : ?>
-												<a class="mesh-block-featured-image-choose"><?php esc_attr_e( 'Set Background Image', 'linchpin-mce' ); ?></a>
+												<a class="mesh-block-featured-image-choose"><?php esc_attr_e( 'Set Background Image', 'mesh' ); ?></a>
 											<?php else : ?>
 												<?php $featured_image = wp_get_attachment_image_src( $featured_image_id, array( 160, 60 ) ); ?>
 												<a class="mesh-block-featured-image-choose right" data-mesh-block-featured-image="<?php echo esc_attr( $featured_image_id ); ?>"><img src="<?php echo esc_attr( $featured_image[0] ); ?>" /></a>

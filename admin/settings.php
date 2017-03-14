@@ -43,7 +43,7 @@ require_once LINCHPIN_MESH___PLUGIN_DIR . '/lib/Michelf/MarkdownExtra.php';
 use \Michelf\MarkdownExtra;
 ?>
 <div class="wrap" id="mesh-settings">
-    <h2><?php esc_html_e( get_admin_page_title() ); ?> </h2>
+    <h2><?php echo esc_html( get_admin_page_title() ); ?> </h2>
 	<?php settings_errors( self::$plugin_name . '-notices' ); ?>
     <h2 class="nav-tab-wrapper">
 		<?php
@@ -58,7 +58,7 @@ use \Michelf\MarkdownExtra;
 
 			?>
             <a href="<?php echo esc_url( $tab_url ); ?>" title="<?php echo esc_attr( $tab_name ); ?>" class="nav-tab <?php echo esc_attr( $active ); ?>">
-				<?php esc_html_e( $tab_name ); ?>
+				<?php echo esc_html( $tab_name ); ?>
             </a>
 		<?php endforeach; ?>
     </h2>

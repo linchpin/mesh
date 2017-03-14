@@ -27,9 +27,9 @@
             <div class="welcome-panel-column">
                 <h3><?php esc_html_e( 'More Actions', 'mesh' ); ?></h3>
                 <ul>
-                    <li><?php printf( '<a href="%s" class="welcome-icon welcome-learn-more" target="_blank">' . __( 'Learn more about Mesh', 'mesh' ) . '</a>', __( 'https://github.com/linchpinagency/mesh' ) ); ?></li>
-                    <li><?php printf( '<a href="%s" class="welcome-icon welcome-view-linchin icon-linchpin-logo" target="_blank">' . __( 'About Linchpin', 'mesh' ) . '</a>', __( 'https://linchpin.agency' ) ); ?></li>
-                    <li><?php printf( '<a href="%s" class="welcome-icon welcome-view-github icon-github" target="_blank">' . __( 'View Features Requests', 'mesh' ) . '</a>', __( 'https://github.com/linchpinagency/mesh/issues' ) ); ?></li>
+                    <li><?php printf( '<a href="%s" class="welcome-icon welcome-learn-more" target="_blank">' . __( 'Learn more about Mesh', 'mesh' ) . '</a>', esc_url( __( 'https://github.com/linchpinagency/mesh', 'mesh' ) ) ); ?></li>
+                    <li><?php printf( '<a href="%s" class="welcome-icon welcome-view-linchin icon-linchpin-logo" target="_blank">' . __( 'About Linchpin', 'mesh' ) . '</a>', esc_url( __( 'https://linchpin.agency', 'mesh' ) ) ); ?></li>
+                    <li><?php printf( '<a href="%s" class="welcome-icon welcome-view-github icon-github" target="_blank">' . __( 'View Features Requests', 'mesh' ) . '</a>', esc_url( __( 'https://github.com/linchpinagency/mesh/issues', 'mesh' ) ) ); ?></li>
                 </ul>
             </div>
         </div>
