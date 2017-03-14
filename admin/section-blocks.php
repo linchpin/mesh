@@ -64,7 +64,7 @@ if ( ! function_exists( 'add_action' ) ) {
 							<?php if ( 1 === $section_blocks ) : ?>
 								<div class="mesh-columns-6">
 									<div class="mesh-clean-edit">
-										<input id="<?php esc_attr_e( 'mesh-sections-' . $section->ID . '-' . $blocks[ $block_increment ]->ID . '-title]' ); ?>" type="text" class="mesh-column-title mesh-clean-edit-element widefat left" name="mesh-sections[<?php esc_attr_e( $section->ID ); ?>][blocks][<?php esc_attr_e( $blocks[ $block_increment ]->ID ); ?>][post_title]" value="<?php esc_attr_e( $blocks[ $block_increment ]->post_title ); ?>"/>
+										<input id="<?php echo esc_attr( 'mesh-sections-' . $section->ID . '-' . $blocks[ $block_increment ]->ID . '-title]' ); ?>" type="text" class="mesh-column-title mesh-clean-edit-element widefat left" name="mesh-sections[<?php echo esc_attr( $section->ID ); ?>][blocks][<?php echo esc_attr( $blocks[ $block_increment ]->ID ); ?>][post_title]" value="<?php echo esc_attr( $blocks[ $block_increment ]->post_title ); ?>"/>
 										<span class="close-title-edit left"><?php esc_html_e( 'Done', 'mesh' ); ?></span>
 										<span class="handle-title mesh-section-title-text mesh-column-title-text"><?php echo esc_html( $blocks[ $block_increment ]->post_title ); ?></span>
 									</div>

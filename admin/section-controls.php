@@ -21,24 +21,24 @@ global $post;
 		<ul class="inline-block-list space-left">
 			<?php if ( ! has_term( 'reference', 'mesh_template_types', $post ) ) : ?>
 			<li>
-				<label for="mesh-sections[<?php esc_attr_e( $section->ID ); ?>][template]"><?php esc_html_e( 'Columns:', 'mesh' ); ?></label>
+				<label for="mesh-sections[<?php echo esc_attr( $section->ID ); ?>][template]"><?php esc_html_e( 'Columns:', 'mesh' ); ?></label>
 
-				<select class="mesh-choose-layout" id="mesh-sections-template-<?php esc_attr_e( $section->ID ); ?>" name="mesh-sections[<?php esc_attr_e( $section->ID ); ?>][template]">
+				<select class="mesh-choose-layout" id="mesh-sections-template-<?php echo esc_attr( $section->ID ); ?>" name="mesh-sections[<?php echo esc_attr( $section->ID ); ?>][template]">
 					<?php foreach ( array_keys( $templates ) as $template ) : ?>
-						<option value="<?php esc_attr_e( $template ); ?>" <?php selected( $selected_template, $template ); ?>><?php esc_html_e( $templates[ $template ]['file'] ); ?></option>
+						<option value="<?php echo esc_attr( $template ); ?>" <?php selected( $selected_template, $template ); ?>><?php echo esc_html( $templates[ $template ]['file'] ); ?></option>
 					<?php endforeach; ?>
 				</select>
 			</li>
 			<?php endif; ?>
 			<li>
-				<label for="mesh-section[<?php esc_attr_e( $section->ID ); ?>][title_display]">
-					<?php esc_html_e( 'Display Title', 'mesh' ); ?> <input type="checkbox" name="mesh-sections[<?php esc_attr_e( $section->ID ); ?>][title_display]" value="1" <?php if ( get_post_meta( $section->ID, '_mesh_title_display', true ) ) : ?>checked<?php endif; ?> />
+				<label for="mesh-section[<?php echo esc_attr( $section->ID ); ?>][title_display]">
+					<?php esc_html_e( 'Display Title', 'mesh' ); ?> <input type="checkbox" name="mesh-sections[<?php echo esc_attr( $section->ID ); ?>][title_display]" value="1" <?php if ( get_post_meta( $section->ID, '_mesh_title_display', true ) ) : ?>checked<?php endif; ?> />
 				</label>
 			</li>
 		</ul>
 	</div>
 
-	<a href="#" class="slide-toggle-element slide-toggle-meta-dropdown mesh-more-section-options" data-toggle=".mesh-section-meta-dropdown-<?php esc_attr_e( $section->ID ); ?>"><?php _e( 'More Options', 'mesh' ); ?></a>
+	<a href="#" class="slide-toggle-element slide-toggle-meta-dropdown mesh-more-section-options" data-toggle=".mesh-section-meta-dropdown-<?php echo esc_attr( $section->ID ); ?>"><?php _e( 'More Options', 'mesh' ); ?></a>
 </div>
 
 <div class="mesh-section-meta-dropdown mesh-section-meta-dropdown-<?php echo esc_attr( $section->ID ); ?> mesh-row hide">

@@ -22,25 +22,25 @@ $mesh_notifications = get_user_option( 'linchpin_mesh_notifications' );
 $blocks = mesh_maybe_create_section_blocks( $section, $block_count );
 
 ?>
-<div class="mesh-section mesh-postbox postbox<?php if ( in_array( 'mesh-section-' . esc_attr( $section->ID ), $closed_metaboxes ) ) : ?> closed<?php endif; ?>" data-mesh-section-id="<?php esc_attr_e( $section->ID ); ?>" id="mesh-section-<?php esc_attr_e( $section->ID ); ?>">
+<div class="mesh-section mesh-postbox postbox<?php if ( in_array( 'mesh-section-' . esc_attr( $section->ID ), $closed_metaboxes ) ) : ?> closed<?php endif; ?>" data-mesh-section-id="<?php echo esc_attr( $section->ID ); ?>" id="mesh-section-<?php echo esc_attr( $section->ID ); ?>">
 	<div class="mesh-row mesh-title-row mesh-row-padding">
 		<div class="mesh-columns-8">
 			<div class="mesh-clean-edit">
-				<input type="text" name="mesh-sections[<?php esc_attr_e( $section->ID ); ?>][post_title]" class="mesh-clean-edit-element widefat mesh-section-title left" value="<?php esc_attr_e( $section->post_title ); ?>" />
+				<input type="text" name="mesh-sections[<?php echo esc_attr( $section->ID ); ?>][post_title]" class="mesh-clean-edit-element widefat mesh-section-title left" value="<?php echo esc_attr( $section->post_title ); ?>" />
 				<span class="close-title-edit left"><?php esc_html_e( 'Done', 'mesh' ); ?></span>
-				<span class="handle-title mesh-section-title-text"><?php esc_html_e( $section->post_title ); ?></span>
+				<span class="handle-title mesh-section-title-text"><?php echo esc_html( $section->post_title ); ?></span>
 			</div>
 		</div>
 		<div class="mesh-columns-4 text-right">
-			<div id="section-status-select-<?php esc_attr_e( $section->ID ); ?>-container">
+			<div id="section-status-select-<?php echo esc_attr( $section->ID ); ?>-container">
 				<div class="mesh-clean-edit handle-right">
-					<label for="section-status-select-<?php esc_attr_e( $section->ID ); ?>" class="screen-reader-text"><?php esc_html_e( 'Status:', 'mesh' ); ?></label>
-					<select class="mesh-block-propagation mesh-clean-edit-element mesh-section-status" id="section-status-select-<?php esc_attr_e( $section->ID ); ?>" name="mesh-sections[<?php esc_attr_e( $section->ID ); ?>][post_status]">
+					<label for="section-status-select-<?php echo esc_attr( $section->ID ); ?>" class="screen-reader-text"><?php esc_html_e( 'Status:', 'mesh' ); ?></label>
+					<select class="mesh-block-propagation mesh-clean-edit-element mesh-section-status" id="section-status-select-<?php echo esc_attr( $section->ID ); ?>" name="mesh-sections[<?php echo esc_attr( $section->ID ); ?>][post_status]">
 						<option value="draft" <?php selected( $section->post_status, 'draft' ); ?>><?php esc_html_e( 'Draft', 'mesh' ); ?></option>
 						<option value="publish" <?php selected( $section->post_status, 'publish' ); ?>><?php esc_html_e( 'Published', 'mesh' ); ?></option>
 					</select>
 					<span class="close-title-edit right"><?php esc_html_e( 'Done', 'mesh' ); ?></span>
-					<span class="handle-title mesh-section-status-text"><?php esc_html_e( 'publish' === $section->post_status ? 'Status: Published' : 'Status: Draft' ); ?></span>
+					<span class="handle-title mesh-section-status-text"><?php echo esc_html( 'publish' === $section->post_status ? 'Status: Published' : 'Status: Draft' ); ?></span>
 				</div>
 			</div>
 		</div>
@@ -48,7 +48,7 @@ $blocks = mesh_maybe_create_section_blocks( $section, $block_count );
 	<span class="handlediv text-center"></span>
 	<div class="inside">
 		<?php include LINCHPIN_MESH___PLUGIN_DIR . 'admin/section-controls.php'; ?>
-		<div class="mesh-editor-blocks" id="mesh-sections-editor-<?php esc_attr_e( $section->ID ); ?>">
+		<div class="mesh-editor-blocks" id="mesh-sections-editor-<?php echo esc_attr( $section->ID ); ?>">
 		<?php
 		if ( $blocks ) {
 			include LINCHPIN_MESH___PLUGIN_DIR . 'admin/section-blocks.php';
@@ -76,7 +76,7 @@ $blocks = mesh_maybe_create_section_blocks( $section, $block_count );
 					<a href="#" class="button primary mesh-section-update "><?php esc_html_e( 'Update', 'mesh' ); ?></a>
 				<?php endif; ?>
 			</div>
-			<input type="hidden" class="section-menu-order" name="mesh-sections[<?php esc_attr_e( $section->ID ); ?>][menu_order]" value="<?php esc_attr_e( $section->menu_order ); ?>" />
+			<input type="hidden" class="section-menu-order" name="mesh-sections[<?php echo esc_attr( $section->ID ); ?>][menu_order]" value="<?php echo esc_attr( $section->menu_order ); ?>" />
 		</div>
 	</div>
 </div>
