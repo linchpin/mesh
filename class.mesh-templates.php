@@ -113,7 +113,7 @@ class Mesh_Templates {
 		) );
 
 		// Using an extra variable for the array to support PHP 5.4
-		$mesh_post_types_array = get_option( 'mesh_post_types' );
+		$mesh_post_types_array = get_option( 'mesh_post_types', array() );
 		$mesh_post_types = array_keys( $mesh_post_types_array );
 		$available_post_types = array_merge( array( 'mesh_template' ), $mesh_post_types );
 
