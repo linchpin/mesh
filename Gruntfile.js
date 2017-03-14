@@ -58,18 +58,23 @@ module.exports = function(grunt) {
             }
         },
 
-        makepot: {
+        addtextdomain: {
+            options: {
+                textdomain: 'mesh',    // Project text domain.
+                updateDomains: [
+                    'linchpin-mce'
+                ]  // List of text domains to replace.
+            },
             target: {
-                options: {
-                    mainFile: 'mesh.php',
-                    potFilename: 'mesh.pot',
-                    domainPath: '/languages',
-                    exclude:[
-                        '/vendor',
-                        '/node_modules',
-                        '/lib'
-                    ],
-                    type: 'wp-plugin'
+                files: {
+                    src: [
+                        '*.php',
+                        '**/*.php',
+                        '!node_modules/**',
+                        '!tests/**',
+                        '!lib/Mischelf/**',
+                        '!vendor/**'
+                    ]
                 }
             }
         },
@@ -96,13 +101,11 @@ module.exports = function(grunt) {
         },
 
         // copy all the files needed for a build within wordpress.org
-
         copy: {
             main: {
                 files: [
                     {expand: true, src: ['admin/*'], dest: 'build/mesh/trunk/'},
-                    {expand: true, src: ['assets/**', '!assets/scss/**', '!assets/js/**.js.map'], dest: 'build/mesh/trunk/'},
-                    {expand: true, src: ['languages/*.pot'], dest: 'build/mesh/trunk/'},
+                    {expand: true, src: ['assets/**', '!assets/scss/**'], dest: 'build/mesh/trunk/'},
                     {expand: true, src: ['lib/**'], dest: 'build/mesh/trunk/'},
                     {expand: true, src: ['templates/**'], dest: 'build/mesh/trunk/'},
                     {expand: true, src: ['./readme.txt'], dest: 'build/mesh/trunk/', isFile:true},
@@ -116,6 +119,6 @@ module.exports = function(grunt) {
 
     grunt.loadNpmTasks( 'grunt-wp-i18n' );
     grunt.loadNpmTasks( 'grunt-contrib-copy' );
-	grunt.registerTask( 'build', ['sass'] );
-    grunt.registerTask( 'default', [ 'copy', 'makepot','uglify', 'concat', 'watch' ] );
+    grunt.registerTask( 'build', ['sass', 'addtextdomain' ] );
+    grunt.registerTask( 'default', [ 'copy', 'uglify', 'concat', 'watch' ] );
 }

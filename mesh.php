@@ -22,7 +22,7 @@ if ( ! function_exists( 'add_action' ) ) {
  * Define all globals.
  */
 define( 'LINCHPIN_MESH_VERSION', '1.1.5' );
-define( 'LINCHPIN_MESH_PLUGIN_NAME', 'Mesh' );
+define( 'LINCHPIN_MESH_PLUGIN_NAME', __( 'Mesh', 'mesh' ) );
 define( 'LINCHPIN_MESH__MINIMUM_WP_VERSION', '4.0' );
 define( 'LINCHPIN_MESH___PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 define( 'LINCHPIN_MESH___PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
@@ -307,7 +307,7 @@ function mesh_get_sections( $post_id, $return_type = 'array', $statuses = array(
         $id = (int) $_GET['preview_id'];
 
         if ( false === wp_verify_nonce( $_GET['preview_nonce'], 'post_preview_' . $id ) )
-            wp_die( __('Sorry, you are not allowed to preview drafts.') );
+            wp_die( __( 'Sorry, you are not allowed to preview drafts.', 'mesh' ) );
 
         $args['post_status'] = array_merge( $args['post_status'], array( 'draft' ) );
     }
@@ -464,7 +464,7 @@ function mesh_get_section_blocks( $section_id, $post_status = 'publish' ) {
         $id = (int) $_GET['preview_id'];
 
         if ( false === wp_verify_nonce( $_GET['preview_nonce'], 'post_preview_' . $id ) )
-            wp_die( __('Sorry, you are not allowed to preview drafts.') );
+            wp_die( __( 'Sorry, you are not allowed to preview drafts.', 'mesh' ) );
 
         // Make sure $post_status is an array
         $args['post_status'] = is_array( $args['post_status'] ) ? $args['post_status'] : array( $args['post_status'] );

@@ -14,6 +14,7 @@ exclude_paths:
 - "js/assets/admin-mesh.min.js"
 - "js/assets/mesh.js"
 - "js/assets/mesh.min.js"
+- "lib/Michelf/"
 
 engines:
   csslint:
@@ -50,6 +51,7 @@ ratings:
   - "**.md"
   - "**.inc"
   - "**.js"
+  - "**.json"
   - "**.php"
   - "**.css"
   - "**.scss"

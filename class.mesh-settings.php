@@ -212,9 +212,9 @@ class Mesh_Settings {
 		$options = get_option( 'mesh_settings' ); ?>
 
 		<?php if ( ! empty( $args['description'] ) ) : ?>
-			<p class="description"><?php esc_html_e( $args['description'] ); ?></p>
+			<p class="description"><?php echo esc_html( $args['description'] ); ?></p>
 		<?php endif; ?>
-		<input type="<?php esc_attr_e( $args['type'] ); ?>" class="<?php esc_attr_e( $args['class'] ); ?>" name="mesh_settings[<?php esc_attr_e( $args['field'] ); ?>]" value="<?php esc_attr_e( $options[ $args['field'] ] ); ?>">
+		<input type="<?php echo esc_attr( $args['type'] ); ?>" class="<?php echo esc_attr( $args['class'] ); ?>" name="mesh_settings[<?php echo esc_attr( $args['field'] ); ?>]" value="<?php echo esc_attr( $options[ $args['field'] ] ); ?>">
 
 		<?php
 	}
@@ -243,12 +243,12 @@ class Mesh_Settings {
 
 		?>
 		<?php if ( ! empty( $args['description'] ) ) : ?>
-			<p class="description"><?php esc_html_e( $args['description'] ); ?></p>
+			<p class="description"><?php echo esc_html( $args['description'] ); ?></p>
 		<?php endif; ?>
-		<label for="mesh-<?php esc_attr_e( $args['field'] ); ?>"><?php esc_html_e( $args['label'] ); ?></label>
-		<select id="mesh-<?php esc_attr_e( $args['field'] ); ?>" name="mesh_settings[<?php esc_attr_e( $args['field'] ); ?>]">
+		<label for="mesh-<?php echo esc_attr( $args['field'] ); ?>"><?php echo esc_html( $args['label'] ); ?></label>
+		<select id="mesh-<?php echo esc_attr( $args['field'] ); ?>" name="mesh_settings[<?php echo esc_attr( $args['field'] ); ?>]">
 			<?php foreach ( $select_options as $option ) : ?>
-				<option value="<?php esc_attr_e( $option['value'] ); ?>" <?php selected( $options[ $args['field'] ], $option['value'] ); ?>><?php esc_html_e( $option['label'] ); ?></option>
+				<option value="<?php echo esc_attr( $option['value'] ); ?>" <?php selected( $options[ $args['field'] ], $option['value'] ); ?>><?php echo esc_html( $option['label'] ); ?></option>
 			<?php endforeach; ?>
 		</select>
 		<?php
@@ -283,10 +283,10 @@ class Mesh_Settings {
 		?>
 
 		<?php if ( ! empty( $args['description'] ) ) : ?>
-			<p class="description"><?php esc_html_e( $args['description'] ); ?></p>
+			<p class="description"><?php echo esc_html( $args['description'] ); ?></p>
 		<?php endif; ?>
 
-		<input type="checkbox" class="<?php esc_attr_e( $args['class'] ); ?>" name="mesh_post_types[<?php esc_attr_e( $args['post_type'] ); ?>]" value="1" <?php checked( $checked ); ?>>
+		<input type="checkbox" class="<?php echo esc_attr( $args['class'] ); ?>" name="mesh_post_types[<?php echo esc_attr( $args['post_type'] ); ?>]" value="1" <?php checked( $checked ); ?>>
 
 		<?php
 	}

@@ -43,7 +43,7 @@ require_once LINCHPIN_MESH___PLUGIN_DIR . '/lib/Michelf/MarkdownExtra.php';
 use \Michelf\MarkdownExtra;
 ?>
 <div class="wrap" id="mesh-settings">
-    <h2><?php esc_html_e( get_admin_page_title() ); ?> </h2>
+    <h2><?php echo esc_html( get_admin_page_title() ); ?> </h2>
 	<?php settings_errors( self::$plugin_name . '-notices' ); ?>
     <h2 class="nav-tab-wrapper">
 		<?php
@@ -57,8 +57,8 @@ use \Michelf\MarkdownExtra;
 			$active = ( $active_tab === $tab_slug ) ? ' nav-tab-active' : '';
 
 			?>
-            <a href="<?php echo esc_url( $tab_url ); ?>" title="<?php esc_attr_e( $tab_name ); ?>" class="nav-tab <?php esc_attr_e( $active ); ?>">
-				<?php esc_html_e( $tab_name ); ?>
+            <a href="<?php echo esc_url( $tab_url ); ?>" title="<?php echo esc_attr( $tab_name ); ?>" class="nav-tab <?php echo esc_attr( $active ); ?>">
+				<?php echo esc_html( $tab_name ); ?>
             </a>
 		<?php endforeach; ?>
     </h2>
@@ -87,9 +87,9 @@ use \Michelf\MarkdownExtra;
 					}
 					?>
 					<?php elseif ( 'linchpin' === $active_tab ) : ?>
-                    <h2><?php esc_html_e( ' Linchpin is a Digital Agency that specializes in WordPress' ); ?></h2>
-                    <p>We loving giving back to the WordPress community through Plugins, Tools/Utilities and through Organzing <a href="http://meetup.com/WordPressRI/">WordPress Rhode Island</a> and WordCamp Rhode Island</p>
-                    <p>Check our our <a href="https://linchpin.agency" target="_blank">site</a>. or visit our various profiles below or come say hi at a local event.</p>
+                    <h2><?php esc_html_e( 'Linchpin is a Digital Agency that specializes in WordPress', 'mesh' ); ?></h2>
+										<p><?php printf( __( 'We loving giving back to the WordPress community through Plugins, Tools/Utilities and through Organzing <a href="%s">WordPress Rhode Island</a> and WordCamp Rhode Island', 'mesh' ), esc_url( 'https://meetup.com/WordPressRI/' ) ); ?></p>
+                    <p><?php printf( __( 'Check our our <a href="%s" target="_blank">site</a>. or visit our various profiles below or come say hi at a local event.', 'mesh' ), esc_url( 'https://linchpin.agency' ) ); ?></p>
                     <dl>
                         <dd><a href="https://jetpack.pro/profile/linchpin/" target="_blank">https://jetpack.pro/profile/linchpin/</a></dd>
                         <dd><a href="https://twitter.com/linchpin_agency" target="_blank">https://twitter.com/linchpin_agency</a></dd>
