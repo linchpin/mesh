@@ -64,7 +64,7 @@ if ( ! function_exists( 'add_action' ) ) {
 							<?php if ( 1 === $section_blocks ) : ?>
 								<div class="mesh-columns-6">
 									<div class="mesh-clean-edit">
-										<input id="<?php esc_attr_e( 'mesh-sections-' . $section->ID . '-' . $blocks[ $block_increment ]->ID . '-title]' ); ?>" type="text" class="mesh-column-title mesh-clean-edit-element widefat left" name="mesh-sections[<?php esc_attr_e( $section->ID ); ?>][blocks][<?php esc_attr_e( $blocks[ $block_increment ]->ID ); ?>][post_title]" value="<?php esc_attr_e( $blocks[ $block_increment ]->post_title ); ?>"/>
+										<input id="<?php echo esc_attr( 'mesh-sections-' . $section->ID . '-' . $blocks[ $block_increment ]->ID . '-title]' ); ?>" type="text" class="mesh-column-title mesh-clean-edit-element widefat left" name="mesh-sections[<?php echo esc_attr( $section->ID ); ?>][blocks][<?php echo esc_attr( $blocks[ $block_increment ]->ID ); ?>][post_title]" value="<?php echo esc_attr( $blocks[ $block_increment ]->post_title ); ?>"/>
 										<span class="close-title-edit left"><?php esc_html_e( 'Done', 'mesh' ); ?></span>
 										<span class="handle-title mesh-section-title-text mesh-column-title-text"><?php echo esc_html( $blocks[ $block_increment ]->post_title ); ?></span>
 									</div>
@@ -126,7 +126,7 @@ if ( ! function_exists( 'add_action' ) ) {
 											<?php $featured_image_id = get_post_thumbnail_id( $blocks[ $block_increment ]->ID );
 
 											if ( empty( $featured_image_id ) ) : ?>
-												<a class="mesh-block-featured-image-choose"><?php esc_attr_e( 'Set Background Image', 'linchpin-mce' ); ?></a>
+												<a class="mesh-block-featured-image-choose"><?php esc_attr_e( 'Set Background Image', 'mesh' ); ?></a>
 											<?php else : ?>
 												<?php $featured_image = wp_get_attachment_image_src( $featured_image_id, array( 160, 60 ) ); ?>
 												<a class="mesh-block-featured-image-choose right" data-mesh-block-featured-image="<?php echo esc_attr( $featured_image_id ); ?>"><img src="<?php echo esc_attr( $featured_image[0] ); ?>" /></a>
@@ -175,7 +175,7 @@ if ( ! function_exists( 'add_action' ) ) {
 					if ( ! empty( $revisions ) ) : ?>
 						<div class="misc-pub-section misc-pub-revisions">
 							<?php esc_attr_e( 'Revisions: ', 'mesh' ); ?>
-							<a class="hide-if-no-js" href="<?php echo esc_url( get_edit_post_link( reset( $revisions )->ID ) ); ?>"><b><?php echo number_format_i18n( count( $revisions ) ); ?></b> <span class="screen-reader-text"><?php _e( 'Browse revisions', 'mesh' ); ?></span></a>
+							<a class="hide-if-no-js" href="<?php echo esc_url( get_edit_post_link( reset( $revisions )->ID ) ); ?>"><b><?php echo number_format_i18n( count( $revisions ) ); ?></b> <span class="screen-reader-text"><?php esc_html_e( 'Browse revisions', 'mesh' ); ?></span></a>
 						</div>
 					<?php endif; ?>
 
