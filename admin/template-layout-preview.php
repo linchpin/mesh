@@ -52,9 +52,9 @@ if ( ! function_exists( 'add_action' ) ) {
 
 				?>
 
-				<div class="mesh-section-block mesh-columns-<?php esc_attr_e( $block_columns ); ?> columns">
+				<div class="mesh-section-block mesh-columns-<?php echo esc_attr( $block_columns ); ?> columns">
 					<div class="block">
-						<div class="block-content <?php if ( 4 !== $section_blocks && $block_offset ) { esc_attr_e( ' mesh-has-offset mesh-offset-' . $block_offset ); } ?>">
+						<div class="block-content <?php if ( 4 !== $section_blocks && $block_offset ) { echo esc_attr( ' mesh-has-offset mesh-offset-' . $block_offset ); } ?>">
 						</div>
 					</div>
 				</div>
@@ -64,7 +64,7 @@ if ( ! function_exists( 'add_action' ) ) {
 	<?php endforeach; ?>
 
 	<?php if ( ! empty( $mesh_template_selectable ) && ! empty( $mesh_template_id ) && ! empty( $mesh_template_title ) ) : ?>
-		<label for="mesh_template_<?php esc_attr_e( $mesh_template_id ); ?>"><?php esc_html_e( $mesh_template_title ); ?></label>
-		<input id="mesh_template_<?php esc_attr_e( $mesh_template_id ); ?>" class="mesh-template" type="radio" name="mesh_template" value="<?php esc_attr_e( $mesh_template_id ); ?>" <?php if ( ! empty( $default_template ) ) : ?> checked<?php endif; ?> />
+		<label for="mesh_template_<?php echo esc_attr( $mesh_template_id ); ?>"><?php echo esc_html( $mesh_template_title ); ?></label>
+		<input id="mesh_template_<?php echo esc_attr( $mesh_template_id ); ?>" class="mesh-template" type="radio" name="mesh_template" value="<?php echo esc_attr( $mesh_template_id ); ?>" <?php if ( ! empty( $default_template ) ) : ?> checked<?php endif; ?> />
 	<?php endif; ?>
 </div>

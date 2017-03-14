@@ -7,6 +7,7 @@
 * Update unit test install scripts.
 * Setup Code Climate and Code Climate test coverage reporting.
 * Include mesh.js.map in Grunt build
+* Changed `esc_attr_e()` calls to `echo esc_attr()` when containing a variable.
 
 ## [1.1.5] - 2017-2-6
 
