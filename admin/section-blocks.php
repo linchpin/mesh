@@ -175,7 +175,7 @@ if ( ! function_exists( 'add_action' ) ) {
 					if ( ! empty( $revisions ) ) : ?>
 						<div class="misc-pub-section misc-pub-revisions">
 							<?php esc_attr_e( 'Revisions: ', 'mesh' ); ?>
-							<a class="hide-if-no-js" href="<?php echo esc_url( get_edit_post_link( reset( $revisions )->ID ) ); ?>"><b><?php echo number_format_i18n( count( $revisions ) ); ?></b> <span class="screen-reader-text"><?php _e( 'Browse revisions', 'mesh' ); ?></span></a>
+							<a class="hide-if-no-js" href="<?php echo esc_url( get_edit_post_link( reset( $revisions )->ID ) ); ?>"><b><?php echo number_format_i18n( count( $revisions ) ); ?></b> <span class="screen-reader-text"><?php esc_html_e( 'Browse revisions', 'mesh' ); ?></span></a>
 						</div>
 					<?php endif; ?>
 

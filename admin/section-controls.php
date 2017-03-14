@@ -38,7 +38,7 @@ global $post;
 		</ul>
 	</div>
 
-	<a href="#" class="slide-toggle-element slide-toggle-meta-dropdown mesh-more-section-options" data-toggle=".mesh-section-meta-dropdown-<?php echo esc_attr( $section->ID ); ?>"><?php _e( 'More Options', 'mesh' ); ?></a>
+	<a href="#" class="slide-toggle-element slide-toggle-meta-dropdown mesh-more-section-options" data-toggle=".mesh-section-meta-dropdown-<?php echo esc_attr( $section->ID ); ?>"><?php esc_html_e( 'More Options', 'mesh' ); ?></a>
 </div>
 
 <div class="mesh-section-meta-dropdown mesh-section-meta-dropdown-<?php echo esc_attr( $section->ID ); ?> mesh-row hide">
