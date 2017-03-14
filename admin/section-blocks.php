@@ -75,7 +75,7 @@ if ( ! function_exists( 'add_action' ) ) {
 									<label for="<?php echo esc_attr( 'mesh-sections-' . $section->ID . '-' . $blocks[ $block_increment ]->ID . '-offset' ); ?>"><?php esc_html_e( 'Offset:', 'mesh' ); ?></label>
 									<select id="<?php echo esc_attr( 'mesh-sections-' . $section->ID . '-' . $blocks[ $block_increment ]->ID . '-offset' ); ?>" class="mesh-column-offset mesh-clean-edit-element" name="mesh-sections[<?php echo esc_attr( $section->ID ); ?>][blocks][<?php echo esc_attr( $blocks[ $block_increment ]->ID ); ?>][offset]">
 										<?php for ( $i = 0; $i <= $offsets_available; $i++ ) : ?>
-											<option value="<?php echo esc_attr( $i ); ?>"<?php if ( $i === $block_offset ) : ?> selected<?php endif; ?>><?php esc_html( $i ); ?></option>
+											<option value="<?php echo esc_attr( $i ); ?>"<?php if ( $i === $block_offset ) : ?> selected<?php endif; ?>><?php echo esc_html( $i ); ?></option>
 										<?php endfor; ?>
 									</select>
 									<?php endif; ?>
