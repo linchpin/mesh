@@ -40,7 +40,7 @@ $blocks = mesh_maybe_create_section_blocks( $section, $block_count );
 						<option value="publish" <?php selected( $section->post_status, 'publish' ); ?>><?php esc_html_e( 'Published', 'mesh' ); ?></option>
 					</select>
 					<span class="close-title-edit right"><?php esc_html_e( 'Done', 'mesh' ); ?></span>
-					<span class="handle-title mesh-section-status-text"><?php echo esc_html( 'publish' === $section->post_status ? 'Status: Published' : 'Status: Draft' ); ?></span>
+					<span class="handle-title mesh-section-status-text"><?php echo esc_html( 'publish' === $section->post_status ? __( 'Status: Published', 'mesh' ) : __( 'Status: Draft', 'mesh' ) ); ?></span>
 				</div>
 			</div>
 		</div>
