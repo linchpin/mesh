@@ -8,6 +8,7 @@
 * Setup Code Climate and Code Climate test coverage reporting.
 * Include mesh.js.map in Grunt build
 * Fix PHP warnings when retrieving `mesh_post_types` when it is not yet set.
+* Changed `esc_attr_e()` calls to `echo esc_attr()` when containing a variable.
 
 ## [1.1.5] - 2017-2-6
 

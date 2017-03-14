@@ -374,7 +374,7 @@ class Mesh_Templates {
 
 				$template_usage = get_term_by( 'slug', $template_post->post_name, 'mesh_template_usage' );
 
-				esc_html_e( (int) $template_usage->count );
+				echo esc_html( (int) $template_usage->count );
 
 				break;
 			case 'layout' :
