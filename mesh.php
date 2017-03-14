@@ -22,7 +22,7 @@ if ( ! function_exists( 'add_action' ) ) {
  * Define all globals.
  */
 define( 'LINCHPIN_MESH_VERSION', '1.1.5' );
-define( 'LINCHPIN_MESH_PLUGIN_NAME', 'Mesh' );
+define( 'LINCHPIN_MESH_PLUGIN_NAME', __( 'Mesh' ) );
 define( 'LINCHPIN_MESH__MINIMUM_WP_VERSION', '4.0' );
 define( 'LINCHPIN_MESH___PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 define( 'LINCHPIN_MESH___PLUGIN_DIR', plugin_dir_path( __FILE__ ) );

@@ -13,7 +13,7 @@ if ( ! function_exists( 'add_action' ) ) {
 }
 ?>
 <form action="options.php" method="POST">
-	<h2><?php esc_html_e( LINCHPIN_MESH_PLUGIN_NAME, 'mesh' ); ?></h2>
+	<h2><?php echo esc_html( LINCHPIN_MESH_PLUGIN_NAME ); ?></h2>
 	<?php settings_fields( 'mesh' ); ?>
 	<?php do_settings_sections( 'mesh' ); ?>
 	<?php submit_button(); ?>
