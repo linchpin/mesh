@@ -39,6 +39,15 @@ install:
   - composer install --prefer-dist
 
 before_script:
+  # Before script, failures in this section will result in build status 'failed'
+before_script:
+  - |
+  # Remove Xdebug for a huge performance increase, but not from nightly or hhvm:
+  stable='^[0-9\.]+$'
+  if [[ "$TRAVIS_PHP_VERSION" =~ $stable ]]; then
+    phpenv config-rm xdebug.ini
+  fi
+  - phpenv config-rm xdebug.ini
   - export PATH="$HOME/.composer/vendor/bin:$PATH"
   - |
     if [[ ${TRAVIS_PHP_VERSION:0:2} == "7." ]]; then
