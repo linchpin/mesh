@@ -113,7 +113,7 @@ class Mesh_Templates {
 		) );
 
 		// Using an extra variable for the array to support PHP 5.4
-		$mesh_post_types_array = get_option( 'mesh_post_types' );
+		$mesh_post_types_array = get_option( 'mesh_post_types', array() );
 		$mesh_post_types = array_keys( $mesh_post_types_array );
 		$available_post_types = array_merge( array( 'mesh_template' ), $mesh_post_types );
 
@@ -374,7 +374,7 @@ class Mesh_Templates {
 
 				$template_usage = get_term_by( 'slug', $template_post->post_name, 'mesh_template_usage' );
 
-				esc_html_e( (int) $template_usage->count );
+				echo esc_html( (int) $template_usage->count );
 
 				break;
 			case 'layout' :
