@@ -24,23 +24,13 @@ if ( ! function_exists( 'add_action' ) ) {
  */
 
 /*
- * Including PHP Markdown Library
+ * Including Parsedown Library
  *
- * PHP Markdown Lib
- * Copyright (c) 2004-2015 Michel Fortin
- * <https://michelf.ca/>
- * All rights reserved.
- *
- * Based on Markdown
- * Copyright (c) 2003-2006 John Gruber
- * <https://daringfireball.net/>
- * All rights reserved.
+ * Copyright (c) 2013 Emanuil Rusev, erusev.com
  */
-require_once LINCHPIN_MESH___PLUGIN_DIR . '/lib/Michelf/MarkdownInterface.php';
-require_once LINCHPIN_MESH___PLUGIN_DIR . '/lib/Michelf/Markdown.php';
-require_once LINCHPIN_MESH___PLUGIN_DIR . '/lib/Michelf/MarkdownExtra.php';
+require_once LINCHPIN_MESH___PLUGIN_DIR . '/lib/parsedown/Parsedown.php';
 
-use \Michelf\MarkdownExtra;
+$Parsedown = new Parsedown();
 ?>
 <div class="wrap" id="mesh-settings">
     <h2><?php echo esc_html( get_admin_page_title() ); ?> </h2>
@@ -74,7 +64,7 @@ use \Michelf\MarkdownExtra;
 
 					if ( file_exists( $changelog_path ) ) {
 						$changelog = file_get_contents( $changelog_path, true );
-						echo MarkdownExtra::defaultTransform( $changelog ); // WPCS: ok.
+						echo $Parsedown->text( $changelog ); // WPCS: ok.
 					}
 					?>
 				<?php elseif ( 'faq' === $active_tab ) : ?>
@@ -83,7 +73,7 @@ use \Michelf\MarkdownExtra;
 
 					if ( file_exists( $readme_path ) ) {
 						$readme = file_get_contents( $readme_path, true );
-						echo MarkdownExtra::defaultTransform( $readme ); // WPCS: ok.
+						echo $Parsedown->text( $readme ); // WPCS: ok.
 					}
 					?>
 					<?php elseif ( 'linchpin' === $active_tab ) : ?>
