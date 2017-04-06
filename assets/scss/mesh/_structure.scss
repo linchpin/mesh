@@ -340,7 +340,9 @@
 		position: relative;
 
 		img {
-			height: 80px;
+			max-height: 80px;
+			max-width: 100%;
+			height: auto;
 			width: auto;
 		}
 
@@ -357,6 +359,12 @@
 	.mesh-featured-image-choose {
 		height: inherit;
 		line-height: 80px;
+	}
+
+	@media #{$mesh-medium-only} {
+		width: 100%;
+		clear: both;
+		margin-top: 1rem;
 	}
 }
 
