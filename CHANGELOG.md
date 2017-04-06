@@ -16,6 +16,7 @@
 * Add `JSON` files to Code Climate grading.
 * Exclude the `Michelf` library from Code Climate scanning.
 * Add `node_modules` folder to the `.gitignore`.
+* Fixed undefined index `foundation_version`.
 
 ## [1.1.5] - 2017-2-6
 
