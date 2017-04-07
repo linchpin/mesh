@@ -603,7 +603,7 @@ function mesh_maybe_create_section_blocks( $section, $number_needed = 0 ) {
  * @param string $size_medium The name of the Thumbnail for our Medium image used by Interchange.
  * @param string $size_xlarge The name of the Thumbnail for our Medium image used by Interchange.
  *
- * @return array|string|void
+ * @return array|string
  */
 function mesh_section_background( $post_id = 0, $echo = true, $size_large = 'large', $size_medium = 'large', $size_xlarge = 'large', $size_small = 'small' ) {
 
@@ -617,8 +617,10 @@ function mesh_section_background( $post_id = 0, $echo = true, $size_large = 'lar
 
 		$backgrounds = array();
 
-		$mesh_options       = get_option( 'mesh_settings' );
+		$mesh_options       = get_option( 'mesh_settings', array( 'foundation_version' => 5 ) );
+
 		$foundation_version = (int) $mesh_options[ 'foundation_version' ];
+
 		$css_mode           = $mesh_options[ 'css_mode' ];
 
 		$default_bg_size = apply_filters( 'mesh_default_bg_size', 'mesh-background' );

@@ -16,6 +16,7 @@
 * Add `JSON` files to Code Climate grading.
 * Exclude the `Michelf` library from Code Climate scanning.
 * Add `node_modules` folder to the `.gitignore`.
+* Fixed undefined index `foundation_version`.
 * Fix bug for `.row` max-width being set to `rem-calc(1200)`
 * Fix issue within visual editors within blocks. The html was being saved instead of the raw data. wpautop filter should still be applied if available.
 
