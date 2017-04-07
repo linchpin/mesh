@@ -19,6 +19,7 @@
 * Fixed undefined index `foundation_version`.
 * Fix bug for `.row` max-width being set to `rem-calc(1200)`
 * Fix issue within visual editors within blocks. The html was being saved instead of the raw data. wpautop filter should still be applied if available.
+* Hot fix bug with Foundation interchange conflict
 
 ## [1.1.5] - 2017-2-6
 
