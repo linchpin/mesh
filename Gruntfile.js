@@ -50,8 +50,7 @@ module.exports = function(grunt) {
 
             frontend: {
 	            src: [
-		            'assets/js/mesh-frontend.js',
-                    'assets/js/mesh-frontend-interchange.js'
+		            'assets/js/mesh-frontend.js'
 	            ],
 
 	            dest: 'assets/js/mesh.js'
