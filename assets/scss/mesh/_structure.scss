@@ -340,8 +340,10 @@
 		position: relative;
 
 		img {
-			height: 80px;
+			height: auto;
 			width: auto;
+			max-height: 80px;
+			max-width: 100%;
 		}
 
 		.mesh-featured-image-trash,
@@ -357,6 +359,12 @@
 	.mesh-featured-image-choose {
 		height: inherit;
 		line-height: 80px;
+	}
+
+	@media #{$mesh-medium-only} {
+		width: 100%;
+		clear: both;
+		margin-top: 1rem;
 	}
 }
 
