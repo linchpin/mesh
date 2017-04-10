@@ -1,9 +1,9 @@
-=== Mesh - Multiple Content Sections ===
+=== Mesh - Page Builder ===
 Contributors: linchpin_agency, aware, maxinacube, desrosj, nateallen, ebeltram, lulu5588, fischfood
 Tags: linchpin, sections, content, page builder, page builder plugin, design, wysiwyg, home page builder, template builder, layout builder, responsive, landing page builder, website builder, site builder, drag and drop builder, editor, page layout, visual editor, foundation, bootstrap
 Requires at least: 4.0
 Tested up to: 4.7.0
-Stable tag: 1.1.5
+Stable tag: 1.1.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -130,6 +130,27 @@ function hatch_mesh_default_bg_size( $size ) {
 3. Mesh templates and welcome.
 
 == Changelog ==
+
+= 1.1.6 =
+* Fixed undefined index `foundation_version`.
+* Fix bug for `.row` max-width being set to `rem-calc(1200)`
+* Fix issue within visual editors within blocks. The html was being saved instead of the raw data. wpautop filter should still be applied if available.
+* Hot fix bug with Foundation interchange conflict
+* Setup Code Climate and Code Climate test coverage reporting.
+* Fixed PHP warnings when retrieving `mesh_post_types` when it is not yet set.
+* Include mesh.js.map in Grunt build
+* Introduce a `CONTRIBUTING.md` file.
+* Added a `.travis.yml` file to automate our unit tests.
+* Added `addtextdomain` task to the Grunt configuration.
+* Added `JSON` files to Code Climate grading.
+* Added `node_modules` folder to the `.gitignore`.
+* Update unit test install scripts.
+* Changed `esc_attr_e()` and `esc_html_()` calls to `echo esc_attr()` and
+* `echo esc_html()` when containing a variable.
+* Remove `makepot` task from the Grunt configuration.
+* Exclude the `Michelf` library from Code Climate scanning.
+* Remove `languages` folder.
+* Replace Michelf library with Parsedown
 
 = 1.1.5 =
 * Fixed equalize options should not show if the section is only 1 column wide.
