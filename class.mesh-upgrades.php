@@ -55,6 +55,10 @@ class Mesh_Upgrades {
 		if ( version_compare( $GLOBALS['mesh_current_version'], '1.1.0', '<' ) ) {
 			$this->version_1_1();
 		}
+
+		if ( version_compare( $GLOBALS['mesh_current_version'], '1.1.6', '<' ) ) {
+			$this->version_1_1_6();
+		}
 	}
 
 	/**
@@ -132,7 +136,14 @@ class Mesh_Upgrades {
 
 		update_option( 'mesh_version', '1.1' );
 		$GLOBALS['mesh_current_version'] = '1.1';
+	}
 
+	/**
+	 * Nothing to update here, just the version to 1.1.6
+	 */
+	function version_1_1_6() {
+		update_option( 'mesh_version', '1.1.6' );
+		$GLOBALS['mesh_current_version'] = '1.1.6';
 	}
 }
 
