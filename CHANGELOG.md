@@ -1,4 +1,31 @@
-##Change Log For Mesh
+#Change Log For Mesh
+
+## [1.1.6] - 2017-4-10
+
+### Fixed
+ - Fixed undefined index `foundation_version`.
+ - Fix bug for `.row` max-width being set to `rem-calc(1200)`
+ - Fix issue within visual editors within blocks. The html was being saved instead of the raw data. wpautop filter should still be applied if available.
+ - Hot fix bug with Foundation interchange conflict
+ - Setup Code Climate and Code Climate test coverage reporting.
+ - Fix PHP warnings when retrieving `mesh_post_types` when it is not yet set.
+ - Include mesh.js.map in Grunt build
+
+### Added
+ - Introduce a `CONTRIBUTING.md` file.
+ - Add a `.travis.yml` file to automate our unit tests.
+ - Add `addtextdomain` task to the Grunt configuration.
+ - Add `JSON` files to Code Climate grading.
+ - Add `node_modules` folder to the `.gitignore`.
+
+### Updated
+ - Update unit test install scripts.
+ - Changed `esc_attr_e()` and `esc_html_()` calls to `echo esc_attr()` and
+ - `echo esc_html()` when containing a variable.
+ - Remove `makepot` task from the Grunt configuration.
+ - Exclude the `Michelf` library from Code Climate scanning.
+ - Remove `languages` folder.
+ - Replace `Michelf` library with `Parsedown`
 
 ## [1.2] - 2017-2-13
 
@@ -28,8 +55,8 @@
  - Selected/uploaded background images were not displaying within admin until refresh.
  - Fixed Mesh Template order consistenty when closing.
  - Fixed block resizing was broken in some instances.
- - Fixed Mesh titles displaying outside of their container if the title is too long 
- 
+ - Fixed Mesh titles displaying outside of their container if the title is too long
+
 ### Added
  - Window will now scroll to the newest block when adding a new section.
 
@@ -38,7 +65,7 @@
 ### Fixed
  - Interchange on section and block background images
  - Fixed minor typo in the previous changelog
- 
+
 ### Added
  - Exclude Mesh template taxonomies from being added to the WordPress SEO sitemap.xml
  - Equalizer minimum breakpoint support for Foundation 6
@@ -74,7 +101,7 @@
  - Better "in progress and busy" state of page building.
  - New Welcome message on Mesh Templates Post List to help guide users
  - Initial implementation for documentation generation.
- 
+
 ### Fixed
  - Typo in Mesh settings text field utility method.
  - Offset now displays properly within Post Edit screen on page load.
@@ -87,11 +114,11 @@
  - Fixed When going from more to less columns you can now trash unused columns. (Thanks for the find @kelter)
  - Some formatting issues in the readme.
  - If you added a section then immediately tried to resize a JS error would occur to do aria checks.
- 
+
 ### Updated
  - Some localization strings needed sprucing up (old MCS references).
  - Some style updates (notifications, tighted up soe visuals for consistency).
- 
+
 ## [1.0.5] - 2016-08-08
 
 ### Fixed

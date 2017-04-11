@@ -82,5 +82,5 @@ function add_multiple_content_sections( $the_content ) {
 
 ### Recognition
 
-* We're utilizing the [PHP Markdown Lib](https://github.com/michelf/php-markdown) by Michel Fortin @michelf
+* We're utilizing the [Parsedown Lib](https://github.com/erusev/parsedown) by Emanuil Rusev @erusev
 * Found some help along the way [draggable editors](https://github.com/alleyinteractive/wordpress-fieldmanager/blob/master/js/richtext.js#L58-L95) by @danielbachhuber

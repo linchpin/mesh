@@ -3,7 +3,7 @@
  * Plugin Name: Mesh
  * Plugin URI: http://linchpin.agency/wordpress-plugins/mesh
  * Description: Adds multiple sections for content on a post by post basis. Mesh also has settings to enable it for specific post types
- * Version: 1.1.5
+ * Version: 1.1.6
  * Text Domain: mesh
  * Domain Path: /languages
  * Author: Linchpin
@@ -21,8 +21,8 @@ if ( ! function_exists( 'add_action' ) ) {
 /**
  * Define all globals.
  */
-define( 'LINCHPIN_MESH_VERSION', '1.2' );
-define( 'LINCHPIN_MESH_PLUGIN_NAME', 'Mesh' );
+define( 'LINCHPIN_MESH_VERSION', '1.1.6' );
+define( 'LINCHPIN_MESH_PLUGIN_NAME', __( 'Mesh', 'mesh' ) );
 define( 'LINCHPIN_MESH__MINIMUM_WP_VERSION', '4.0' );
 define( 'LINCHPIN_MESH___PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 define( 'LINCHPIN_MESH___PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
@@ -37,12 +37,12 @@ define( 'LINCHPIN_MESH_DEBUG_MODE', false );
 $GLOBALS['mesh_current_version'] = get_option( 'mesh_version', '0.0' ); // Get our current Mesh Version.
 
 include_once 'class.mesh-settings.php';
+include_once 'class.mesh-controls.php';
 include_once 'class.mesh-templates.php';
 include_once 'class.mesh-pointers.php';
 include_once 'class.mesh.php';
 include_once 'class.mesh-upgrades.php';
 include_once 'class.mesh-reponsive-grid.php';
-include_once 'class.mesh-controls.php';
 
 $mesh          = new Mesh();
 $mesh_pointers = new Mesh_Admin_Pointers();
@@ -308,7 +308,7 @@ function mesh_get_sections( $post_id, $return_type = 'array', $statuses = array(
         $id = (int) $_GET['preview_id'];
 
         if ( false === wp_verify_nonce( $_GET['preview_nonce'], 'post_preview_' . $id ) )
-            wp_die( __('Sorry, you are not allowed to preview drafts.') );
+            wp_die( __( 'Sorry, you are not allowed to preview drafts.', 'mesh' ) );
 
         $args['post_status'] = array_merge( $args['post_status'], array( 'draft' ) );
     }
@@ -465,7 +465,7 @@ function mesh_get_section_blocks( $section_id, $post_status = 'publish' ) {
         $id = (int) $_GET['preview_id'];
 
         if ( false === wp_verify_nonce( $_GET['preview_nonce'], 'post_preview_' . $id ) )
-            wp_die( __('Sorry, you are not allowed to preview drafts.') );
+            wp_die( __( 'Sorry, you are not allowed to preview drafts.', 'mesh' ) );
 
         // Make sure $post_status is an array
         $args['post_status'] = is_array( $args['post_status'] ) ? $args['post_status'] : array( $args['post_status'] );
@@ -604,7 +604,7 @@ function mesh_maybe_create_section_blocks( $section, $number_needed = 0 ) {
  * @param string $size_medium The name of the Thumbnail for our Medium image used by Interchange.
  * @param string $size_xlarge The name of the Thumbnail for our Medium image used by Interchange.
  *
- * @return array|string|void
+ * @return array|string
  */
 function mesh_section_background( $post_id = 0, $echo = true, $size_large = 'large', $size_medium = 'large', $size_xlarge = 'large', $size_small = 'small' ) {
 
@@ -618,8 +618,10 @@ function mesh_section_background( $post_id = 0, $echo = true, $size_large = 'lar
 
 		$backgrounds = array();
 
-		$mesh_options       = get_option( 'mesh_settings' );
+		$mesh_options       = get_option( 'mesh_settings', array( 'foundation_version' => 5 ) );
+
 		$foundation_version = (int) $mesh_options[ 'foundation_version' ];
+
 		$css_mode           = $mesh_options[ 'css_mode' ];
 
 		$default_bg_size = apply_filters( 'mesh_default_bg_size', 'mesh-background' );

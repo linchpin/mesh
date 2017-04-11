@@ -326,7 +326,7 @@ class Mesh {
 		$mesh_notifications = get_user_option( 'linchpin_mesh_notifications', get_current_user_id() );
 		$mesh_templates     = mesh_get_templates();
 		?>
-		<div id="mesh-container" class="<?php esc_attr_e( $post->post_type ); ?>">
+		<div id="mesh-container" class="<?php echo esc_attr( $post->post_type ); ?>">
 			<?php wp_nonce_field( 'mesh_content_sections_nonce', 'mesh_content_sections_nonce' ); ?>
 			<div class="notice below-h2 mesh-row mesh-main-ua-row<?php if ( empty( $content_sections ) ) : ?> hide<?php endif; ?>">
 				<div class="mesh-columns-3 columns">
@@ -436,7 +436,7 @@ class Mesh {
 
 			wp_update_post( $updates );
 
-			$count ++;
+			$count++;
 
 			// Save Template.
 			$template = sanitize_text_field( $section_data['template'] );

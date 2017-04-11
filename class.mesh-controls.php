@@ -37,47 +37,72 @@ class Mesh_Controls {
 	}
 
 	/**
-	 * Display all of our Mesh Section Controls
+	 * Display all section controls
 	 *
 	 * @param object  $section Current Section
-	 * @param array   $blocks Our Sections Current Block
+	 * @param array   $blocks  Our Sections Current Block
+	 * @param bool    $visible Show visible options?
 	 *
 	 * @since 1.2
 	 */
-	function mesh_section_controls( $section, $blocks ) {
+	function mesh_section_controls( $section, $blocks, $visible = false ) {
 
 		$controls = array(
-			'css-class' => array(
-				'label'	         => __( 'CSS Class(es)', 'mesh' ),
-				'type'           => 'text',
-				'css_classes'    => array( 'mesh-section-class' ),
-				'show_on_cb'     => false,
-				'validation_cb'  => false,
+			'visible_options' => array(
+				'template' => array(
+					'label'          => __( 'Template', 'mesh' ),
+					'type'           => 'select',
+					'css_classes'    => array( 'mesh-section-template' ),
+					'show_on_cb'     => array( $this, 'show_templates' ),
+					'validation_cb'  => false,
+				),
+				'show-title' => array(
+					'label'          => __( 'Show Title', 'mesh' ),
+					'type'           => 'checkbox',
+					'css_classes'    => array( 'mesh-section-show-title' ),
+					'show_on_cb'     => false,
+					'validation_cb'  => false,
+				),
 			),
-			'collapse' => array(
-				'label'          => __( 'Collapse Padding', 'mesh' ),
-				'type'           => 'checkbox',
-				'css_classes'    => array( 'mesh-section-collapse-input' ),
-				'show_on_cb'     => false,
-				'validation_cb'  => false,
-			),
-			'push-pull' => array(
-				'label'          => __( 'Push Pull', 'mesh' ),
-				'type'           => 'checkbox',
-				'css_classes'    => array( 'mesh-section-push' ),
-				'show_on_cb'     => array( $this, 'show_push_pull' ),
-				'validation_cb'  => false,
-			),
-			'lp-equal' => array(
-				'label'          => __( 'Equalize', 'mesh' ),
-				'type'           => 'checkbox',
-				'css_classes'    => 'mesh-section-equalize',
-				'show_on_cb'     => array( $this, 'show_equalize' ),
-				'validate_cb'    => false,
+			'more_options' => array(
+				'css-class' => array(
+					'label'	         => __( 'CSS Class(es)', 'mesh' ),
+					'type'           => 'text',
+					'css_classes'    => array( 'mesh-section-class' ),
+					'show_on_cb'     => false,
+					'validation_cb'  => false,
+				),
+				'collapse' => array(
+					'label'          => __( 'Collapse Padding', 'mesh' ),
+					'type'           => 'checkbox',
+					'css_classes'    => array( 'mesh-section-collapse-input' ),
+					'show_on_cb'     => false,
+					'validation_cb'  => false,
+				),
+				'push-pull' => array(
+					'label'          => __( 'Push Pull', 'mesh' ),
+					'type'           => 'checkbox',
+					'css_classes'    => array( 'mesh-section-push' ),
+					'show_on_cb'     => array( $this, 'show_push_pull' ),
+					'validation_cb'  => false,
+				),
+				'lp-equal' => array(
+					'label'          => __( 'Equalize', 'mesh' ),
+					'type'           => 'checkbox',
+					'css_classes'    => 'mesh-section-equalize',
+					'show_on_cb'     => array( $this, 'show_equalize' ),
+					'validate_cb'    => false,
+				),
 			),
 		);
 
 		$controls = apply_filters( 'mesh_section_controls', $controls );
+
+		if ( $visible ) {
+			$controls = $controls['visible_options'];
+		} else {
+			$controls = $controls['more_options'];
+		}
 
 		foreach( $controls as $key => $control ) {
 
@@ -110,6 +135,24 @@ class Mesh_Controls {
 								<input type="checkbox" name="mesh-sections[<?php esc_attr_e( $section->ID ); ?>][<?php esc_attr_e( $underscore_key ); ?>]" class="<?php esc_attr_e( $css_classes ); ?>" value="1" <?php if ( get_post_meta( $section->ID, '_mesh_' . esc_attr( $underscore_key ), true ) ) : ?>checked<?php endif; ?> />
 								<?php
 								break;
+							case 'select' :
+							case 'dropdown' :
+							?>
+								<select name="mesh-sections[<?php esc_attr_e( $section->ID ); ?>][<?php esc_attr_e( $underscore_key ); ?>]" class="<?php esc_attr_e( $css_classes ); ?>">
+									<?php
+									/**
+									 * @todo Loop through all of our options for the given field
+									 */
+									?>
+									<option>Default</option>
+								</select>
+							<?php
+								break;
+							case 'media' :
+								/**
+								 * @todo add the ability to select media/image.
+								 */
+								break;
 							case 'input' :
 							case 'text' :
 							default : ?>
@@ -123,6 +166,19 @@ class Mesh_Controls {
 				<?php
 			endif;
 		}
+	}
+
+	/**
+	 * Display all block controls
+	 *
+	 * @param $block
+	 *
+	 * @since 1.2
+	 *
+	 * @return bool
+	 */
+	function mesh_block_controls( $block ) {
+		return false;
 	}
 }
 
@@ -208,17 +264,28 @@ function mesh_section_attributes( $post_id = 0, $echo = true ) {
 /**
  * Public functions to call classes
  *
- * @param $section
- * @param $blocks
+ * @param object  $section Current Section
+ * @param array   $blocks  Our Sections Current Block
+ * @param bool    $visible Show visible options?
+ *
+ * @since 1.2
  */
-function mesh_section_controls( $section, $blocks ) {
+function mesh_section_controls( $section, $blocks, $visible ) {
 
 	$mesh_controls = new Mesh_Controls();
 
-	$mesh_controls->mesh_section_controls( $section, $blocks );
+	$mesh_controls->mesh_section_controls( $section, $blocks, $visible );
 }
 
-function mesh_block_controls( $block ) {
+/**
+ * Public functions to call classes
+ *
+ * @param array   $block  Our Current Block
+ * @param bool    $visible Show visible options?
+ *
+ * @since 1.2
+ */
+function mesh_block_controls( $block, $visible = false ) {
 	$mesh_controls = new Mesh_Controls();
 	$mesh_controls->mesh_block_controls( $block );
 }

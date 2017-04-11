@@ -16,7 +16,7 @@
 		$collapse_column_spacing = get_post_meta( get_the_ID(), '_mesh_collapse', true );
 		$lp_equal = get_post_meta( get_the_ID(), '_mesh_lp_equal', true );
 	?>
-	<div class="row <?php if ( ! empty( $collapse_column_spacing ) ) : ?>collapse<?php endif; ?>"<?php if ( ! empty( $lp_equal ) ) : ?> <?php esc_attr_e( $lp_equal ); ?><?php endif; ?>>
+	<div class="row <?php if ( ! empty( $collapse_column_spacing ) ) : ?>collapse<?php endif; ?>"<?php if ( ! empty( $lp_equal ) ) : ?> <?php echo esc_attr( $lp_equal ); ?><?php endif; ?>>
 		<?php if ( ! empty( $title_display ) && 'no block title' !== strtolower( get_the_title() ) ) : ?>
 			<div class="small-12 columns title-row">
 				<h2 class="entry-title"><?php the_title(); ?></h2>
@@ -27,7 +27,7 @@
 			foreach ( $blocks as $block ) : ?>
 				<div <?php mesh_block_class( $block->ID ); ?> <?php mesh_section_background( $block->ID ); ?>>
 					<?php if ( ! empty( $block->post_title ) && 'no column title' !== strtolower( $block->post_title ) ) : ?>
-						<h3 class="entry-subtitle"><?php esc_html_e( apply_filters( 'the_title', $block->post_title ) ); ?></h3>
+						<h3 class="entry-subtitle"><?php echo esc_html( apply_filters( 'the_title', $block->post_title ) ); ?></h3>
 					<?php endif; ?>
 
 					<?php echo apply_filters( 'the_content', $block->post_content ); // @todo what sanitization is best suited here? ?>
