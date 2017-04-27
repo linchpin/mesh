@@ -108,15 +108,15 @@ class Mesh_Controls {
 
 			$display_control = true;
 
-			if ( ! empty( $controls['show_on_cb'] ) && is_callable( $controls['show_on_cb'] ) ) {
-				$display_control = call_user_func_array( $controls['show_on_cb'], array( $section, $blocks ) );
+			if ( ! empty( $control['show_on_cb'] ) && is_callable( $control['show_on_cb'] ) ) {
+				$display_control = call_user_func_array( $control['show_on_cb'], array( $section, $blocks ) );
 			}
 
 			$css_classes = array();
 
 			if ( $display_control ) : ?>
 				<?php
-				if( ! empty( $control['css_classes'] ) && is_array( $control['css_classes'] ) ) {
+				if ( ! empty( $control['css_classes'] ) && is_array( $control['css_classes'] ) ) {
 					$css_classes = array_map( 'sanitize_html_class', $control['css_classes'] );
 				} else {
 					$css_classes = array( sanitize_html_class( $control['css_classes'] ) );
@@ -140,11 +140,14 @@ class Mesh_Controls {
 							?>
 								<select name="mesh-sections[<?php esc_attr_e( $section->ID ); ?>][<?php esc_attr_e( $underscore_key ); ?>]" class="<?php esc_attr_e( $css_classes ); ?>">
 									<?php
-									/**
-									 * @todo Loop through all of our options for the given field
-									 */
-									?>
-									<option>Default</option>
+                                    $options = ( ! empty( $control['options_cb'] ) && is_callable( $control['options_cb'] ) )
+                                        ? call_user_func_array( $control['options_cb'], array( $section, $blocks ) )
+                                        : $control['options'];
+
+                                    foreach( $options as $key => $value ) {
+                                        printf( '<option value="%s">%s</option>', $key, $value );
+                                    }
+                                    ?>
 								</select>
 							<?php
 								break;
