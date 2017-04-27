@@ -329,12 +329,12 @@ class Mesh_Settings {
 	 * @return   array $tabs Settings tabs
 	 */
 	static public function get_tabs() {
-
-		$tabs                 = array();
-		$tabs['settings']  = __( 'Settings',   'mesh' );
-		$tabs['faq']       = __( 'About Mesh', 'mesh' );
-		$tabs['changelog'] = __( 'Change Log', 'mesh' );
-		$tabs['linchpin']  = __( 'About Linchpin', 'mesh' );
+		$tabs = array(
+			'settings'  => __( 'Settings',   'mesh' ),
+            'faq'       => __( 'About Mesh', 'mesh' ),
+            'changelog' => __( 'Change Log', 'mesh' ),
+            'linchpin'  => __( 'About Linchpin', 'mesh' ),
+        );
 
 		return apply_filters( 'mesh_tabs', $tabs );
 	}
