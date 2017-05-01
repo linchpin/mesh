@@ -66,7 +66,7 @@ class Mesh_Controls {
 					'css_classes'    => array( 'mesh-choose-layout' ),
 					'validation_cb'  => false,
                     'options_cb'     => array( $this, 'get_template_options' ),
-                    'id'             => 'mesh-sections-template-' . $section->ID
+                    'id'             => 'mesh-sections-template-' . $section->ID,
 				),
 				'display-title' => array(
 					'label'          => __( 'Display Title', 'mesh' ),
@@ -151,7 +151,7 @@ class Mesh_Controls {
 							case 'select' :
 							case 'dropdown' :
 							?>
-								<select name="mesh-sections[<?php esc_attr_e( $section->ID ); ?>][<?php esc_attr_e( $underscore_key ); ?>]" class="<?php esc_attr_e( $css_classes ); ?>"<?php echo isset( $control['id'] ) ? 'id="' . esc_attr( $control['id'] ) .'"' : ''; ?>>
+								<select name="mesh-sections[<?php esc_attr_e( $section->ID ); ?>][<?php esc_attr_e( $underscore_key ); ?>]" class="<?php esc_attr_e( $css_classes ); ?>"<?php echo isset( $control['id'] ) ? 'id="' . esc_attr( $control['id'] ) .'"' : ''; ?><?php if ( isset( $control['multiple'] ) && $control['multiple'] ) echo ' multiple'; ?>>
 									<?php
                                     $options = ( ! empty( $control['options_cb'] ) && is_callable( $control['options_cb'] ) )
                                         ? call_user_func_array( $control['options_cb'], array( $section, $blocks ) )
