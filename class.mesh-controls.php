@@ -37,9 +37,14 @@ class Mesh_Controls {
 	}
 
 	function get_template_options() {
-	    $mesh_templates = mesh_get_templates();
-	    error_log( print_r( $mesh_templates, 1 ) );
-	    return array('test' => 'Test', 'test2' => 'Test2' );
+		$templates = mesh_locate_template_files();
+		$options = array();
+
+		foreach ( $templates as $key => $value ) {
+		    $options[$key] = $templates[$key]['file'];
+        }
+
+		return $options;
     }
 
 	/**
