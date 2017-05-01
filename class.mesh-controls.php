@@ -36,6 +36,12 @@ class Mesh_Controls {
 		return ( 2 === count( $blocks ) );
 	}
 
+	function get_template_options() {
+	    $mesh_templates = mesh_get_templates();
+	    error_log( print_r( $mesh_templates, 1 ) );
+	    return array('test' => 'Test', 'test2' => 'Test2' );
+    }
+
 	/**
 	 * Display all section controls
 	 *
@@ -53,8 +59,8 @@ class Mesh_Controls {
 					'label'          => __( 'Template', 'mesh' ),
 					'type'           => 'select',
 					'css_classes'    => array( 'mesh-section-template' ),
-					'show_on_cb'     => array( $this, 'show_templates' ),
 					'validation_cb'  => false,
+                    'options_cb'     => array( $this, 'get_template_options' )
 				),
 				'show-title' => array(
 					'label'          => __( 'Show Title', 'mesh' ),
@@ -140,12 +146,13 @@ class Mesh_Controls {
 							?>
 								<select name="mesh-sections[<?php esc_attr_e( $section->ID ); ?>][<?php esc_attr_e( $underscore_key ); ?>]" class="<?php esc_attr_e( $css_classes ); ?>">
 									<?php
+									$current = get_post_meta( $section->ID, '_mesh_' . esc_attr( $underscore_key ), true );
                                     $options = ( ! empty( $control['options_cb'] ) && is_callable( $control['options_cb'] ) )
                                         ? call_user_func_array( $control['options_cb'], array( $section, $blocks ) )
                                         : $control['options'];
 
                                     foreach( $options as $key => $value ) {
-                                        printf( '<option value="%s">%s</option>', $key, $value );
+                                        printf( '<option value="%1$s" %2$s>%3$s</option>', $key, selected( $current, $key, false), $value );
                                     }
                                     ?>
 								</select>
