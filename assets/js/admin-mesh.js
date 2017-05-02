@@ -1480,6 +1480,8 @@ mesh.admin = function ( $ ) {
 
 					self.enable_controls( $meta_box_container );
 
+                    $meta_box_container.trigger("mesh:add_section");
+
 				} else {
 					$spinner.removeClass('is-active');
 				}
