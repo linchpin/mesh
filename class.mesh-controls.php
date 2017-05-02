@@ -19,11 +19,11 @@ class Mesh_Controls {
 	 * @return bool
 	 */
 	function show_equalize( $section, $blocks ) {
-		return ( 1 === ( count( $blocks ) ) );
+		return ( count( $blocks ) > 1 );
 	}
 
 	/**
-	 * Only show push pull controls when we have 2 items.
+	 * Only show push pull controls when we have more than 1 block
 	 *
 	 * @param $section
 	 * @param $blocks
@@ -33,7 +33,7 @@ class Mesh_Controls {
 	 * @return bool
 	 */
 	function show_push_pull( $section, $blocks ) {
-		return ( 2 === count( $blocks ) );
+		return ( count( $blocks ) > 1 );
 	}
 
 	function get_template_options() {
@@ -45,6 +45,10 @@ class Mesh_Controls {
         }
 
 		return $options;
+    }
+
+    function get_offset_options( $block ) {
+
     }
 
 	/**
@@ -158,7 +162,7 @@ class Mesh_Controls {
                                         : $control['options'];
 
                                     foreach( $options as $key => $value ) {
-                                        printf( '<option value="%1$s" %2$s>%3$s</option>', $key, selected( $current, $key, false), $value );
+                                        printf( '<option value="%1$s" %2$s>%3$s</option>', esc_attr($key), selected( esc_attr($current), esc_attr($key), false), esc_attr($value) );
                                     }
                                     ?>
 								</select>
@@ -194,7 +198,55 @@ class Mesh_Controls {
 	 * @return bool
 	 */
 	function mesh_block_controls( $block ) {
-		return false;
+		$controls = array(
+			'visible_options' => array(
+				'offset' => array(
+					'label'          => __( 'Offset', 'mesh' ),
+					'type'           => 'select',
+					'css_classes'    => array( 'text-right' ),
+					'validation_cb'  => false,
+					'options_cb'     => array( $this, 'get_offset_options' ),
+					'id'             => 'mesh-sections-template-' . $block->ID,
+				),
+				'display-title' => array(
+					'label'          => __( 'Display Title', 'mesh' ),
+					'type'           => 'checkbox',
+					'css_classes'    => array( 'mesh-section-show-title' ),
+					'show_on_cb'     => false,
+					'validation_cb'  => false,
+				),
+			),
+			'more_options' => array(
+				'css-class' => array(
+					'label'	         => __( 'CSS Class', 'mesh' ),
+					'type'           => 'text',
+					'css_classes'    => array( 'mesh-section-class' ),
+					'show_on_cb'     => false,
+					'validation_cb'  => false,
+				),
+				'collapse' => array(
+					'label'          => __( 'Collapse Padding', 'mesh' ),
+					'type'           => 'checkbox',
+					'css_classes'    => array( 'mesh-section-collapse-input' ),
+					'show_on_cb'     => false,
+					'validation_cb'  => false,
+				),
+				'push-pull' => array(
+					'label'          => __( 'Push Pull', 'mesh' ),
+					'type'           => 'checkbox',
+					'css_classes'    => array( 'mesh-section-push' ),
+					'show_on_cb'     => array( $this, 'show_push_pull' ),
+					'validation_cb'  => false,
+				),
+				'lp-equal' => array(
+					'label'          => __( 'Equalize', 'mesh' ),
+					'type'           => 'checkbox',
+					'css_classes'    => 'mesh-section-equalize',
+					'show_on_cb'     => array( $this, 'show_equalize' ),
+					'validate_cb'    => false,
+				),
+			),
+		);
 	}
 }
 
@@ -287,9 +339,7 @@ function mesh_section_attributes( $post_id = 0, $echo = true ) {
  * @since 1.2
  */
 function mesh_section_controls( $section, $blocks, $visible ) {
-
 	$mesh_controls = new Mesh_Controls();
-
 	$mesh_controls->mesh_section_controls( $section, $blocks, $visible );
 }
 
