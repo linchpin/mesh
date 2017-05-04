@@ -17,7 +17,7 @@
         $title_display = get_post_meta( get_the_ID(), '_mesh_title_display', true );
         $collapse_column_spacing = get_post_meta( get_the_ID(), '_mesh_collapse', true );
 
-	$row_class = ( ! empty( $collapse_column_spacing ) ) ? $row_class . 'row collapse' : 'row';
+	    $row_class = ( ! empty( $collapse_column_spacing ) ) ? 'row collapse' : 'row';
 	?>
 
 	<div class="<?php echo esc_attr( $row_class ); ?>"<?php if ( ! empty( $lp_equal ) ) : ?> data-equalizer data-equalize-on="medium"<?php endif; ?>>
