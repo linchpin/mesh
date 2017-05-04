@@ -1,5 +1,11 @@
 #Change Log For Mesh
 
+## Unreleased
+
+### Fixed
+ - Remove trailing whitespace from row class
+ - Remove checks for equalizer in the 1 column template
+
 ## [1.1.6] - 2017-4-10
 
 ### Fixed
