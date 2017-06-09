@@ -531,11 +531,9 @@ mesh.blocks = function ( $ ) {
 
                         // Clean up the proto id which appears in some of the wp_editor generated HTML
 
-                        var block_html = $(this).closest('.block-content').html(),
-                            pattern = /\[post_mesh\-section\-editor\-[0-9]+\]/;
+                        var block_html = $(this).closest('.block-content').html();
 
-                        block_html = block_html.replace(new RegExp(proto_id, 'g'), editor_id);
-                        block_html = block_html.replace(new RegExp(pattern, 'g'), '[post_content]');
+                        block_html = block_html.replace(new RegExp('id="'+proto_id+'"', 'g'), 'id="'+editor_id+'"');
 
                         $block_content.html(block_html);
 
