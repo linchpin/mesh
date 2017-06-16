@@ -146,7 +146,7 @@ class Mesh_Templates_Duplicate {
 			$status = 'publish';
 		}
 
-		$new_date = date( 'Y-m-d H:i:s' );
+		$new_date = current_time( 'Y-m-d H:i:s' );
 
 		$new_post = array(
 			'menu_order'     => $post->menu_order,
