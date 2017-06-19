@@ -36,6 +36,19 @@ class Mesh_Controls {
 		return ( count( $blocks ) > 1 );
 	}
 
+	function show_offset( $block, $section_blocks ) {
+		$default_block_columns = 12 / $section_blocks;
+		$block_columns = get_post_meta( $block->ID, '_mesh_column_width', true );
+
+		if ( empty( $block_columns ) ) {
+			$block_columns = $default_block_columns;
+		}
+
+		$offsets_available = $block_columns - 3;
+
+		return $offsets_available > 0;
+    }
+
 	function get_template_options() {
 		$templates = mesh_locate_template_files();
 		$options = array();
@@ -47,8 +60,24 @@ class Mesh_Controls {
 		return $options;
     }
 
-    function get_offset_options( $block ) {
+    function get_offset_options( $block, $section_blocks ) {
 
+	    $default_block_columns = 12 / $section_blocks;
+	    $block_columns = get_post_meta( $block->ID, '_mesh_column_width', true );
+
+	    if ( empty( $block_columns ) ) {
+	        $block_columns = $default_block_columns;
+        }
+
+	    $offsets_available = $block_columns - 3;
+
+	    $options = array();
+
+        for ( $i = 0; $i <= $offsets_available; $i++ ) {
+	        $options[$i] = $i;
+        }
+
+        return $options;
     }
 
 	/**
@@ -196,53 +225,31 @@ class Mesh_Controls {
 	 *
 	 * @return bool
 	 */
-	function mesh_block_controls( $block, $visible ) {
+	function mesh_block_controls( $block, $section_blocks ) {
 		$controls = array(
-			'visible_options' => array(
-				'offset' => array(
-					'label'          => __( 'Offset', 'mesh' ),
-					'type'           => 'select',
-					'css_classes'    => array( 'text-right' ),
-					'validation_cb'  => false,
-					'options_cb'     => array( $this, 'get_offset_options' ),
-				),
-				'css-class' => array(
-					'label'	         => __( 'CSS Class', 'mesh' ),
-					'type'           => 'text',
-					'css_classes'    => array( 'mesh-section-class' ),
-					'validation_cb'  => false,
-				),
-			),
-			'more_options' => array(
-				'offset' => array(
-					'label'          => __( 'Offset', 'mesh' ),
-					'type'           => 'select',
-					'css_classes'    => array( 'text-right' ),
-					'validation_cb'  => false,
-					'options_cb'     => array( $this, 'get_offset_options' ),
-				),
-				'css-class' => array(
-					'label'	         => __( 'CSS Class', 'mesh' ),
-					'type'           => 'text',
-					'css_classes'    => array( 'mesh-section-class' ),
-					'validation_cb'  => false,
-				),
-			),
+            'offset' => array(
+                'label'          => __( 'Offset', 'mesh' ),
+                'type'           => 'select',
+                'css_classes'    => array( 'mesh-column-offset' ),
+                'validation_cb'  => false,
+                'options_cb'     => array( $this, 'get_offset_options' ),
+                'show_on_cb'     => array( $this, 'show_offset' ),
+            ),
+            'css-class' => array(
+                'label'	         => __( 'CSS Class', 'mesh' ),
+                'type'           => 'text',
+                'css_classes'    => array( 'mesh-section-class' ),
+                'validation_cb'  => false,
+            ),
 		);
 
 		$controls = apply_filters( 'mesh_block_controls', $controls );
-
-		if ( $visible ) {
-			$controls = $controls['visible_options'];
-		} else {
-			$controls = $controls['more_options'];
-		}
 
 		foreach( $controls as $key => $control ) {
 			$display_control = true;
 
 			if ( ! empty( $control['show_on_cb'] ) && is_callable( $control['show_on_cb'] ) ) {
-				$display_control = call_user_func_array( $control['show_on_cb'], array( $block ) );
+				$display_control = call_user_func_array( $control['show_on_cb'], array( $block, $section_blocks ) );
 			}
 
 			if ( ! $display_control ) {
@@ -275,7 +282,7 @@ class Mesh_Controls {
                             <select name="mesh-sections[<?php esc_attr_e( $block->ID ); ?>][<?php esc_attr_e( $underscore_key ); ?>]" class="<?php esc_attr_e( $css_classes ); ?>"<?php echo isset( $control['id'] ) ? 'id="' . esc_attr( $control['id'] ) .'"' : ''; ?><?php if ( isset( $control['multiple'] ) && $control['multiple'] ) echo ' multiple'; ?>>
 								<?php
 								$options = ( ! empty( $control['options_cb'] ) && is_callable( $control['options_cb'] ) )
-									? call_user_func_array( $control['options_cb'], array( $block ) )
+									? call_user_func_array( $control['options_cb'], array( $block, $section_blocks ) )
 									: $control['options'];
 
 								foreach( $options as $key => $value ) {
@@ -402,11 +409,10 @@ function mesh_section_controls( $section, $blocks, $visible ) {
  * Public functions to call classes
  *
  * @param array   $block  Our Current Block
- * @param bool    $visible Show visible options?
  *
  * @since 1.2
  */
-function mesh_block_controls( $block, $visible = false ) {
+function mesh_block_controls( $block, $section_blocks ) {
 	$mesh_controls = new Mesh_Controls();
-	$mesh_controls->mesh_block_controls( $block );
+	$mesh_controls->mesh_block_controls( $block, $section_blocks );
 }
