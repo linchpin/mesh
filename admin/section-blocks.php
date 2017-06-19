@@ -105,20 +105,7 @@ if ( ! function_exists( 'add_action' ) ) {
 
 								<div class="mesh-columns-12 mesh-block-meta-dropdown mesh-block-meta-dropdown-<?php echo esc_attr( $blocks[ $block_increment ]->ID ); ?> hide">
 									<div class="left mesh-columns-8">
-										<?php if ( ! $reference_template ) : ?>
-                                            <?php if ( 4 !== $section_blocks ) : ?>
-                                                <label for="<?php echo esc_attr( 'mesh-sections-' . $section->ID . '-' . $blocks[ $block_increment ]->ID . '-offset' ); ?>"><?php esc_html_e( 'Offset:', 'mesh' ); ?></label>
-                                                <select id="<?php echo esc_attr( 'mesh-sections-' . $section->ID . '-' . $blocks[ $block_increment ]->ID . '-offset' ); ?>" class="mesh-column-offset" name="mesh-sections[<?php echo esc_attr( $section->ID ); ?>][blocks][<?php echo esc_attr( $blocks[ $block_increment ]->ID ); ?>][offset]">
-                                                    <?php for ( $i = 0; $i <= $offsets_available; $i++ ) : ?>
-                                                        <option value="<?php echo esc_attr( $i ); ?>"<?php if ( (int) $i === (int) $block_offset ) { echo esc_attr( ' selected' ); } ?>><?php echo esc_html( $i ); ?></option>
-                                                    <?php endfor; ?>
-                                                </select>
-                                            <?php endif; ?>
-										<?php endif; ?>
-
-										<label for="mesh-sections-<?php echo esc_attr( $blocks[ $block_increment ]->ID ); ?>-css-class" class="nowrap">
-											<?php esc_html_e( 'CSS Class', 'mesh' ); ?> <input type="text" id="mesh-sections-<?php echo esc_attr( $blocks[ $block_increment ]->ID ); ?>-css-class" name="mesh-sections[<?php echo esc_attr( $section->ID ); ?>][blocks][<?php echo esc_attr( $blocks[ $block_increment ]->ID ); ?>][css_class]" value="<?php echo esc_attr( $block_css_class ); ?>" />
-										</label>
+										<?php mesh_block_controls( $blocks[ $block_increment ], $section_blocks ) ?>
 									</div>
 
 									<div class="block-background-container right text-right mesh-columns-4 mesh-section-background">
