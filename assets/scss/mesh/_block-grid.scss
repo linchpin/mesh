@@ -67,4 +67,19 @@
       }
     }
   }
+
+  .medium-block-grid-4 {
+    > li {
+      list-style: none;
+      width: 25%;
+
+      &:nth-of-type(1n) {
+        clear: none;
+      }
+
+      &:nth-of-type(4n+1) {
+        clear: both;
+      }
+    }
+  }
 }
