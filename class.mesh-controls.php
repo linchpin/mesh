@@ -131,6 +131,9 @@ class Mesh_Controls {
 					'show_on_cb'     => array( $this, 'show_push_pull' ),
 					'validation_cb'  => false,
 				),
+				'featured_image' => array(
+					'type' => 'media',
+				),
 				'lp-equal' => array(
 					'label'          => __( 'Equalize', 'mesh' ),
 					'type'           => 'checkbox',
@@ -149,7 +152,7 @@ class Mesh_Controls {
 			$controls = $controls['more_options'];
 		}
 
-		echo '<ul class="small-block-grid-1 medium-block-grid-2">';
+		print( '<ul class="small-block-grid-1 medium-block-grid-4">' );
 
 		foreach( $controls as $key => $control ) {
 
@@ -199,11 +202,22 @@ class Mesh_Controls {
                             </select>
                         <?php
                             break;
-                        case 'media' :
-                            /**
-                             * @todo add the ability to select media/image.
-                             */
-                            break;
+	                    case 'media' : ?>
+                            <div class="mesh-section-background">
+                                <div class="choose-image">
+				                    <?php $featured_image_id = get_post_thumbnail_id( $section->ID );
+
+				                    if ( empty( $featured_image_id ) ) : ?>
+                                        <a class="mesh-featured-image-choose"><?php esc_attr_e( 'Set Background Image', 'mesh' ); ?></a>
+				                    <?php else : ?>
+					                    <?php $featured_image = wp_get_attachment_image_src( $featured_image_id, array( 160, 60 ) ); ?>
+                                        <a class="mesh-featured-image-choose right" data-mesh-featured-image="<?php echo esc_attr( $featured_image_id ); ?>"><img src="<?php echo esc_attr( $featured_image[0] ); ?>" /></a>
+                                        <a class="mesh-featured-image-trash dashicons-before dashicons-dismiss" data-mesh-featured-image="<?php echo esc_attr( $featured_image_id ); ?>"></a>
+				                    <?php endif; ?>
+                                </div>
+                            </div>
+		                    <?php
+		                    break;
                         case 'input' :
                         case 'text' :
                         default : ?>
