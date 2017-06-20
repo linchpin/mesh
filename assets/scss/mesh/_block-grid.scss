@@ -39,15 +39,30 @@
 
 @media #{$mesh-medium-up} {
   .medium-block-grid-2 {
+     > li {
+       list-style: none;
+       width: 50%;
+
+       &:nth-of-type(1n) {
+         clear: none;
+       }
+
+       &:nth-of-type(2n+1) {
+         clear: both;
+       }
+     }
+   }
+
+  .medium-block-grid-3 {
     > li {
       list-style: none;
-      width: 50%;
+      width: 33.33333%;
 
       &:nth-of-type(1n) {
         clear: none;
       }
 
-      &:nth-of-type(2n+1) {
+      &:nth-of-type(3n+1) {
         clear: both;
       }
     }
