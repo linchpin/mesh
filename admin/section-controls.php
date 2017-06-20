@@ -18,11 +18,9 @@ global $post;
 
 <div class="mesh-section-meta mesh-row mesh-row-padding">
 	<div class="mesh-columns-12">
-		<ul class="inline-block-list space-left">
-			<?php if ( ! has_term( 'reference', 'mesh_template_types', $post ) ) : ?>
-				<?php mesh_section_controls( $section, $blocks, true ); ?>
-			<?php endif; ?>
-		</ul>
+        <?php if ( ! has_term( 'reference', 'mesh_template_types', $post ) ) : ?>
+            <?php mesh_section_controls( $section, $blocks, true ); ?>
+        <?php endif; ?>
 	</div>
 
 	<a href="#" class="slide-toggle-element slide-toggle-meta-dropdown mesh-more-section-options" data-toggle=".mesh-section-meta-dropdown-<?php echo esc_attr( $section->ID ); ?>"><?php esc_html_e( 'More Options', 'mesh' ); ?></a>
@@ -39,9 +37,7 @@ global $post;
 			 */
 
 			if ( ! has_term( 'reference', 'mesh_template_types', $post ) ) : ?>
-			<ul class="inline-block-list space-left">
-				<?php mesh_section_controls( $section, $blocks, false ); ?>
-			</ul>
+			<?php mesh_section_controls( $section, $blocks, false ); ?>
 			<?php endif; ?>
 		</div>
 	</div>

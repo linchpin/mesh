@@ -46,7 +46,7 @@ class Mesh_Controls {
 
 		$offsets_available = $block_columns - 3;
 
-		return $offsets_available > 0;
+        return $offsets_available > 0;
     }
 
 	function get_template_options() {
@@ -149,6 +149,8 @@ class Mesh_Controls {
 			$controls = $controls['more_options'];
 		}
 
+		echo '<ul class="small-block-grid-1 medium-block-grid-2">';
+
 		foreach( $controls as $key => $control ) {
 
 			$display_control = true;
@@ -158,7 +160,7 @@ class Mesh_Controls {
 			}
 
 			if ( ! $display_control ) {
-			    return;
+			    continue;
             }
 
             if ( ! empty( $control['css_classes'] ) && is_array( $control['css_classes'] ) ) {
@@ -214,13 +216,15 @@ class Mesh_Controls {
             </li>
             <?php
 		}
+
+		echo '</ul>';
 	}
 
 	/**
 	 * Display all block controls
 	 *
 	 * @param $block
-	 * @param bool    $visible Show visible options?
+	 * @param $section_blocks
 	 * @since 1.2
 	 *
 	 * @return bool
@@ -245,6 +249,8 @@ class Mesh_Controls {
 
 		$controls = apply_filters( 'mesh_block_controls', $controls );
 
+		echo '<ul class="small-block-grid-1 medium-block-grid-2">';
+
 		foreach( $controls as $key => $control ) {
 			$display_control = true;
 
@@ -253,7 +259,7 @@ class Mesh_Controls {
 			}
 
 			if ( ! $display_control ) {
-				return;
+				continue;
 			}
 
 			if ( ! empty( $control['css_classes'] ) && is_array( $control['css_classes'] ) ) {
@@ -309,6 +315,8 @@ class Mesh_Controls {
             </li>
 			<?php
         }
+
+        echo '</ul>';
 	}
 }
 
