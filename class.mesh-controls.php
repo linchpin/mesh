@@ -230,9 +230,7 @@ class Mesh_Controls {
 	 * @return bool
 	 */
 	function mesh_block_controls( $block, $section_blocks ) {
-
-	    error_log(print_r( $block,1));
-		$controls = array(
+        $controls = array(
             'offset' => array(
                 'label'          => __( 'Offset', 'mesh' ),
                 'type'           => 'select',
@@ -247,11 +245,15 @@ class Mesh_Controls {
                 'css_classes'    => array( 'mesh-section-class' ),
                 'validation_cb'  => false,
             ),
+            'featured_image' => array(
+                'type' => 'media',
+            )
 		);
 
 		$controls = apply_filters( 'mesh_block_controls', $controls );
 
-		echo '<ul class="small-block-grid-1 medium-block-grid-2">';
+		$block_grid = ( ( 4 - $section_blocks ) < 1 ) ? 1 : ( 4 - $section_blocks );
+		printf( '<ul class="small-block-grid-1 medium-block-grid-%s">', $block_grid );
 
 		foreach( $controls as $key => $control ) {
 			$display_control = true;
@@ -300,10 +302,21 @@ class Mesh_Controls {
                             </select>
 							<?php
 							break;
-						case 'media' :
-							/**
-							 * @todo add the ability to select media/image.
-							 */
+						case 'media' : ?>
+                            <div class="mesh-section-background">
+                                <div class="choose-image">
+		                            <?php $featured_image_id = get_post_thumbnail_id( $block->ID );
+
+		                            if ( empty( $featured_image_id ) ) : ?>
+                                        <a class="mesh-block-featured-image-choose"><?php esc_attr_e( 'Set Background Image', 'mesh' ); ?></a>
+		                            <?php else : ?>
+			                            <?php $featured_image = wp_get_attachment_image_src( $featured_image_id, array( 160, 60 ) ); ?>
+                                        <a class="mesh-block-featured-image-choose right" data-mesh-block-featured-image="<?php echo esc_attr( $featured_image_id ); ?>"><img src="<?php echo esc_attr( $featured_image[0] ); ?>" /></a>
+                                        <a class="mesh-block-featured-image-trash dashicons-before dashicons-dismiss" data-mesh-block-featured-image="<?php echo esc_attr( $featured_image_id ); ?>"></a>
+		                            <?php endif; ?>
+                                </div>
+                            </div>
+                            <?php
 							break;
 						case 'input' :
 						case 'text' :
