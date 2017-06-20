@@ -81,22 +81,8 @@ if ( ! function_exists( 'add_action' ) ) {
                             </div>
 
                             <div class="mesh-columns-12 mesh-block-meta-dropdown mesh-block-meta-dropdown-<?php echo esc_attr( $blocks[ $block_increment ]->ID ); ?> hide">
-                                <div class="left mesh-columns-8">
+                                <div class="left mesh-columns-12">
                                     <?php mesh_block_controls( $blocks[ $block_increment ], $section_blocks ) ?>
-                                </div>
-
-                                <div class="block-background-container right text-right mesh-columns-4 mesh-section-background">
-                                    <div class="choose-image">
-                                        <?php $featured_image_id = get_post_thumbnail_id( $blocks[ $block_increment ]->ID );
-
-                                        if ( empty( $featured_image_id ) ) : ?>
-                                            <a class="mesh-block-featured-image-choose"><?php esc_attr_e( 'Set Background Image', 'mesh' ); ?></a>
-                                        <?php else : ?>
-                                            <?php $featured_image = wp_get_attachment_image_src( $featured_image_id, array( 160, 60 ) ); ?>
-                                            <a class="mesh-block-featured-image-choose right" data-mesh-block-featured-image="<?php echo esc_attr( $featured_image_id ); ?>"><img src="<?php echo esc_attr( $featured_image[0] ); ?>" /></a>
-                                            <a class="mesh-block-featured-image-trash dashicons-before dashicons-dismiss" data-mesh-block-featured-image="<?php echo esc_attr( $featured_image_id ); ?>"></a>
-                                        <?php endif; ?>
-                                    </div>
                                 </div>
                             </div>
 						</div>
