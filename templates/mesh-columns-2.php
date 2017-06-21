@@ -10,7 +10,7 @@
  */
 
 ?>
-<section id="mesh-section-<?php the_ID(); ?>" <?php post_class() ?> <?php mesh_section_background(); ?> <?php mesh_section_attributes(); ?>>
+<section <?php post_class() ?> <?php mesh_section_background(); ?>>
 	<?php
 		$push_pull       = get_post_meta( get_the_ID(), '_mesh_push_pull', true );
 		$collapse_column_spacing = get_post_meta( get_the_ID(), '_mesh_collapse', true );

@@ -2,7 +2,7 @@
 
 ## Unreleased
 
- - Add ability to filter section and block fields
+Controls within Sections and Columns/Blocks are now expendable for developers.
 
 ## [1.1.6] - 2017-4-10
 
@@ -30,12 +30,6 @@
  - Exclude the `Michelf` library from Code Climate scanning.
  - Remove `languages` folder.
  - Replace `Michelf` library with `Parsedown`
-
-## [1.2] - 2017-2-13
-
-### Added
- - Controls within Sections and Columns/Blocks are now extendible for developers.
- - Filters for controlling and saving new options in sections.
 
 ## [1.1.5] - 2017-2-6
 

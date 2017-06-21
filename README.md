@@ -77,9 +77,6 @@ function add_multiple_content_sections( $the_content ) {
 * `add_action( 'mesh_section_add_misc_actions_before' )`
 * `add_action( 'mesh_section_add_misc_actions_after' )`
 
-##### Filters added in 1.2
-* `add_filter( 'mesh_section_controls', $mesh_section_controls );`
-
 ### Recognition
 
 * We're utilizing the [Parsedown Lib](https://github.com/erusev/parsedown) by Emanuil Rusev @erusev
