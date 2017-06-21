@@ -1,5 +1,9 @@
 #Change Log For Mesh
 
+## Unreleased
+
+ - Add ability to filter section and block fields
+
 ## [1.1.6] - 2017-4-10
 
 ### Fixed
