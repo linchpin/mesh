@@ -63,6 +63,8 @@ mesh.integrations.yoast = function ( $ ) {
                         mesh_content += $this.attr( 'yoast-analysis-after' );
                     }
                 }
+            }).on('keyup paste cut click', function () {
+                YoastSEO.app.pluginReloaded( 'MeshAnalysis' );
             });
             return data + mesh_content;
         }
