@@ -3,25 +3,10 @@ var mesh = mesh || {};
 
 mesh.integrations.yoast = function ( $ ) {
 
-    var $body		        = $('body'),
-        $document           = $('document'),
-        $reorder_button     = $('.mesh-section-reorder'),
-        $add_button         = $('.mesh-section-add'),
-        $collapse_button    = $('.mesh-section-collapse'),
-        $expand_button      = $('.mesh-section-expand'),
-        $meta_box_container = $('#mesh-container'),
-        $section_container  = $('#mesh-sections-container'),
-        $description        = $('#mesh-description'),
-        $equalize           = $('.mesh_section [data-equalizer]'),
-        $sections,
-        media_frames        = [],
+    var $postBody,
 
         // Container References for Admin(self) / Block
-        self,
-        blocks,
-        pointers,
-        templates,
-        section_count;
+        self;
 
     return {
 
@@ -32,6 +17,8 @@ mesh.integrations.yoast = function ( $ ) {
 
             self = mesh.integrations.yoast;
 
+            $postBody = $('#post-body');
+
             YoastSEO.app.registerPlugin( 'MeshAnalysis', {status: 'ready'});
             YoastSEO.app.registerModification(
                 'content',
@@ -39,19 +26,26 @@ mesh.integrations.yoast = function ( $ ) {
                 'MeshAnalysis'
             );
 
-            $('#post-body').find(
+            $postBody.find(
                 'textarea.mesh-wp-editor-area'
             ).on('keyup paste cut click', function () {
                 YoastSEO.app.pluginReloaded( 'MeshAnalysis' );
             });
         },
 
+        /**
+         * This portion is inspired by
+         * https://github.com/alexis-magina/yoast-cmb2-field-analysis
+         *
+         * @param data
+         * @returns {string}
+         */
         addMeshSections : function( data ) {
             tinyMCE.triggerSave();
 
             var mesh_content = '';
 
-            $( '#post-body' ).find( 'textarea.mesh-wp-editor-area' ).each( function () {
+            $postBody.find( 'textarea.mesh-wp-editor-area' ).each( function () {
 
                 var $this = $(this);
 
