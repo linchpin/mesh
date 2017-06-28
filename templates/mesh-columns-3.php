@@ -18,6 +18,7 @@
         $collapse_column_spacing = get_post_meta( get_the_ID(), '_mesh_collapse', true );
 
 	    $row_class = ( ! empty( $collapse_column_spacing ) ) ? 'row collapse' : 'row';
+	    $lp_equal = get_post_meta( get_the_ID(), '_mesh_lp_equal', true );
 	?>
 
 	<div class="<?php echo esc_attr( $row_class ); ?>"<?php if ( ! empty( $lp_equal ) ) : ?> data-equalizer data-equalize-on="medium"<?php endif; ?>>
