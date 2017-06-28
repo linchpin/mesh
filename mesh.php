@@ -42,6 +42,7 @@ include_once 'class.mesh-pointers.php';
 include_once 'class.mesh.php';
 include_once 'class.mesh-upgrades.php';
 include_once 'class.mesh-reponsive-grid.php';
+include_once 'class.mesh-integrations.php';
 
 $mesh          = new Mesh();
 $mesh_pointers = new Mesh_Admin_Pointers();
