@@ -602,6 +602,10 @@ mesh.blocks = function ( $ ) {
                     $block_content.find('.switch-tmce').trigger('click');
                 }
             });
+
+            if( typeof mesh.integrations.yoast != 'undefined' ) {
+                mesh.integrations.yoast.addMeshSections();
+            }
         },
 
         mode_enabled: function( el ) {
@@ -1313,6 +1317,7 @@ mesh.admin = function ( $ ) {
 		 * @param event
 		 */
 		toggle_collapse : function( event ) {
+
 			var $el = $( this ),
 				p = $el.parent( '.postbox' ),
 				id = p.attr( 'id' ),

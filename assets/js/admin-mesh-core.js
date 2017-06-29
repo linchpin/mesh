@@ -186,6 +186,7 @@ mesh.admin = function ( $ ) {
 		 * @param event
 		 */
 		toggle_collapse : function( event ) {
+
 			var $el = $( this ),
 				p = $el.parent( '.postbox' ),
 				id = p.attr( 'id' ),
