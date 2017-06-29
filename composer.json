@@ -37,7 +37,6 @@
   "license": "GPL-2.0+",
   "require-dev": {
     "phpdocumentor/phpdocumentor": "2.*",
-    "michelf/php-markdown": "1.6",
     "codeclimate/php-test-reporter": "^0.4.1"
   },
   "type": "wordpress-plugin",

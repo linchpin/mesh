@@ -2,8 +2,8 @@
 Contributors: linchpin_agency, aware, maxinacube, desrosj, nateallen, ebeltram, lulu5588, fischfood
 Tags: linchpin, sections, content, page builder, page builder plugin, design, wysiwyg, home page builder, template builder, layout builder, responsive, landing page builder, website builder, site builder, drag and drop builder, editor, page layout, visual editor, foundation, bootstrap
 Requires at least: 4.0
-Tested up to: 4.7.3
-Stable tag: 1.1.6
+Tested up to: 4.8
+Stable tag: 1.1.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -59,69 +59,24 @@ Or
 1. Click **Add New** under Plugins in your WordPress install.
 1. Click **Upload Plugin** and select the zip file containing the plugin
 
-
-== Frequently Asked Questions ==
-
-= Can I use Mesh on other post types? =
-Any post type that is publicly available within your WordPress install can be enabled to support Mesh. Under **Settings** > **Mesh** you can see all post types available to you. Only Pages are Mesh enabled by default.
-
-= Can I add my own controls? =
-We're working on the ability to tie in extra controls to Columns and Sections.
-
-= Adding a function to your page template(s) =
-`
-<?php
-if ( function_exists( 'mesh_display_sections' ) ) {
-    mesh_display_sections();
-}
-?>
- `
-
-= Using add_filter to append content to "the_content" =
-`
-<?php
-add_action( 'the_content', 'add_multiple_content_sections' );
-function add_multiple_content_sections( $the_content ) {
-    $the_content .= mesh_get_sections();
-    return $the_content;
-} ?>
-`
-
-= Using add_filter to set change default size for background images =
-`
-<?php
-add_filter( 'mesh_default_bg_size', 'hatch_mesh_default_bg_size' );
-
-function hatch_mesh_default_bg_size( $size ) {
-    // default $size = 'mesh-background' will fall back to 'full'.
-
-	return 'large';
-}
-
-?>
-`
-
 = Available Filters =
-* `add_filter( 'mesh_content_css', get_stylesheet_directory_uri() . '/css/admin-editor.css' , 'editor_path' ),`
+* `add_filter( 'mesh_content_css', get_stylesheet_directory_uri() . '/css/admin-editor.css' , 'editor_path' );`
 * `add_filter( 'mesh_section_templates', $section_templates );`
 * `add_filter( 'mesh_tabs', $tabs );`
 * `add_filter( 'mesh_css_mode', $css_mode );` Allow filtering of available css_mode options
 * `add_filter( 'mesh_allowed_html', array_merge_recursive( $post_allowed, $mesh_allowed );` Filter allowed HTML within MCS
 * `add_filter( 'mesh_admin_pointers-' . $screen_id, array() );`
-
 * `add_filter( 'mesh_default_bg_size', $size );`
 * `add_filter( 'mesh_large_bg_size', $size );`
 * `add_filter( 'mesh_medium_bg_size', $size );`
 * `add_filter( 'mesh_xlarge_bg_size', $size );`
-
 * `add_filter( 'mesh_tiny_mce_before_init', $init_options );`
-* `add_filter( 'mesh_tiny_mce_options`, $mesh_tiny_mce_options );`
+* `add_filter( 'mesh_tiny_mce_options', $mesh_tiny_mce_options );`
 
 = Available Actions =
 * `add_action( 'mesh_section_add_before_misc_actions' )`
 * `add_action( 'mesh_section_add_misc_actions_before' )`
 * `add_action( 'mesh_section_add_misc_actions_after' )`
-
 
 == Screenshots ==
 
@@ -130,6 +85,14 @@ function hatch_mesh_default_bg_size( $size ) {
 3. Mesh templates and welcome.
 
 == Changelog ==
+
+= Unreleased =
+* Add support for Yoast SEO Page Content Analysis
+
+= 1.1.7 =
+* Confirmed 4.8 compatibility
+* Fix for issue within "content" being replaced when it shouldn't be
+* Fix for duplicated sections not applying the proper date.
 
 = 1.1.6 =
 * Fixed undefined index `foundation_version`.

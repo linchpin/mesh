@@ -161,6 +161,7 @@ if ( ! function_exists( 'add_action' ) ) {
 							'textarea_name' => 'mesh-sections[' . $section->ID . '][blocks][' . $blocks[ $block_increment ]->ID . '][post_content]',
 							'teeny' => true,
 							'tinymce' => $tiny_mce_options,
+							'editor_class' => 'mesh-wp-editor-area',
 							'quicktags' => array(
 								'buttons' => 'strong,em,link,block,img,ul,ol,li',
 							),
