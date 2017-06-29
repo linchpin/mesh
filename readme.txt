@@ -86,6 +86,9 @@ Or
 
 == Changelog ==
 
+= Unreleased =
+* Add support for Yoast SEO Page Content Analysis
+
 = 1.1.7 =
 * Confirmed 4.8 compatibility
 * Fix for issue within "content" being replaced when it shouldn't be

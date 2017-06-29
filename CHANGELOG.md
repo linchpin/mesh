@@ -1,5 +1,8 @@
 #Change Log For Mesh
 
+## Unreleased
+* Added support for Yoast SEO page analysis
+
 ## [1.1.7] - 2017-6-12
 
 * Confirmed 4.8 compatibility
