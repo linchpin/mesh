@@ -86,6 +86,9 @@ Or
 
 == Changelog ==
 
+= Unreleased
+* Fixed a bug where reordering would stop that section from working properly until refresh.
+
 = 1.1.7 =
 * Confirmed 4.8 compatibility
 * Fix for issue within "content" being replaced when it shouldn't be

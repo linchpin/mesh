@@ -1,10 +1,13 @@
 #Change Log For Mesh
 
+## Unreleased
+ - Fixed a bug where reordering would stop that section from working properly until refresh.
+
 ## [1.1.7] - 2017-6-12
 
-* Confirmed 4.8 compatibility
-* Fix for issue within "content" being replaced when it shouldn't be
-* Fix for duplicated sections not applying the proper date.
+ - Confirmed 4.8 compatibility
+ - Fix for issue within "content" being replaced when it shouldn't be
+ - Fix for duplicated sections not applying the proper date.
 
 ## [1.1.6] - 2017-4-10
 
