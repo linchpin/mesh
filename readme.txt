@@ -86,6 +86,9 @@ Or
 
 == Changelog ==
 
+= Unreleased =
+* Fixed a bug where collapsed sections could not be toggled open after a new section was added
+
 = 1.1.7 =
 * Confirmed 4.8 compatibility
 * Fix for issue within "content" being replaced when it shouldn't be
