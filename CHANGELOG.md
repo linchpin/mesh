@@ -1,13 +1,14 @@
 #Change Log For Mesh
 
 ## Unreleased
-* Added support for Yoast SEO page analysis
+ - Added support for Yoast SEO page analysis
+ - Fixed a bug when excluding Mesh template related taxonomies from the generated sitemap
 
 ## [1.1.7] - 2017-6-12
 
-* Confirmed 4.8 compatibility
-* Fix for issue within "content" being replaced when it shouldn't be
-* Fix for duplicated sections not applying the proper date.
+ - Confirmed 4.8 compatibility
+ - Fix for issue within "content" being replaced when it shouldn't be
+ - Fix for duplicated sections not applying the proper date.
 
 ## [1.1.6] - 2017-4-10
 
