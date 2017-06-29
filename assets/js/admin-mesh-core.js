@@ -70,6 +70,9 @@ mesh.admin = function ( $ ) {
 				// @since 1.1.3
 				.on('change', '#mesh-css_mode', self.display_foundation_options );
 
+			$(document)
+				.on( 'postbox-toggled', {event:event}, self.expand_section );
+
 			$sections = $( '.mesh-section' );
 
 			if ( $sections.length <= 1 ) {
@@ -130,6 +133,24 @@ mesh.admin = function ( $ ) {
 			});
 		},
 
+        /**
+		 * Expand targeted section
+		 *
+		 * @since 1.2
+		 *
+         * @param event The jQuery Event
+         * @param element The Object Being Expanded (typically postbox)
+         */
+		expand_section : function( event, element ) {
+
+            var $section = $(element),
+				$tinymce_editor = $section.find('.wp-editor-area');
+
+            if ( ! $section.hasClass( 'closed' ) ) {
+				blocks.rerender_blocks( $tinymce_editor );
+			}
+		},
+
 		/**
 		 * 1 click to expand sections
 		 *
@@ -186,6 +207,9 @@ mesh.admin = function ( $ ) {
 		 * @param event
 		 */
 		toggle_collapse : function( event ) {
+
+			console.log('Toggle Collapse');
+
 			var $el = $( this ),
 				p = $el.parent( '.postbox' ),
 				id = p.attr( 'id' ),
@@ -571,7 +595,10 @@ mesh.admin = function ( $ ) {
 
 			self.update_notifications( 'reorder', 'warning' );
 
-			$reorder_button.text( mesh_data.strings.save_order ).addClass('mesh-save-order button-primary').removeClass('mesh-section-reorder');
+			$reorder_button
+				.text( mesh_data.strings.save_order )
+				.addClass('mesh-save-order button-primary')
+				.removeClass('mesh-section-reorder');
 
 			self.collapse_all_sections();
 
@@ -623,8 +650,6 @@ mesh.admin = function ( $ ) {
 
 				$this.find('.section-menu-order').val( index );
 			});
-
-		//	response = self.save_section_ajax( section_ids, $reorder_spinner );
 		},
 
 		/**
@@ -646,7 +671,10 @@ mesh.admin = function ( $ ) {
 
 			self.enable_controls( $meta_box_container );
 
-			$reorder_button.text( mesh_data.strings.reorder ).addClass('mesh-section-reorder').removeClass('mesh-save-order button-primary');
+			$reorder_button
+				.text( mesh_data.strings.reorder )
+				.addClass('mesh-section-reorder')
+				.removeClass('mesh-save-order button-primary');
 
 			$( '.mesh-postbox', $section_container ).each( function( index ){
 				var $this = $(this);
