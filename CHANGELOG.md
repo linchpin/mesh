@@ -1,7 +1,11 @@
 #Change Log For Mesh
 
 ## Unreleased
+
  - Fixed a bug where reordering would stop that section from working properly until refresh.
+ - Fixed a bug where collapsed sections could not be toggled open after a new section was added
+ - Added support for Yoast SEO page analysis
+ - Fixed a bug when excluding Mesh template related taxonomies from the generated sitemap
 
 ## [1.1.7] - 2017-6-12
 
