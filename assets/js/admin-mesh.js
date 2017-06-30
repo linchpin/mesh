@@ -1197,6 +1197,7 @@ mesh.admin = function ( $ ) {
 				// @since 1.1.3
 				.on('change', '#mesh-css_mode', self.display_foundation_options );
 
+			// @since 1.2
 			$(document)
 				.on( 'postbox-toggled', {event:event}, self.expand_section );
 
@@ -1279,7 +1280,7 @@ mesh.admin = function ( $ ) {
 		},
 
 		/**
-		 * 1 click to expand sections
+		 * 1 click to expand all sections
 		 *
 		 * @since 0.3.0
 		 *
@@ -1290,15 +1291,12 @@ mesh.admin = function ( $ ) {
 			event.preventDefault();
 			event.stopPropagation();
 
-			$section_container.find('.handlediv').each(function () {
-				if ( 'false' == $(this).attr('aria-expanded') ) {
-					$(this).trigger('click').promise(function() {
-						// Loop through all of our edits in the response
-						// reset our editors after clearing
-						var $tinymce_editors = $sections.find('.wp-editor-area');
+			$sections.each(function () {
+                var $handle = $(this).find('.handlediv');
 
-						blocks.rerender_blocks( $tinymce_editors );
-					});
+				if ( 'true' != $handle.attr('aria-expanded') ) {
+                    $handle.trigger('click');
+                    self.expand_section( event, $(this) );
 				}
 			} );
 		},
