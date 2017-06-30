@@ -1468,7 +1468,7 @@ mesh.admin = function ( $ ) {
 						$controls.fadeIn('fast');
 					}
 
-					var $handle = $section_container.find( '.handlediv' );
+					var $handle = $response.find( '.handlediv' );
 
 					$handle.attr( 'aria-expanded', true ).on( 'click', self.toggle_collapse );
 
