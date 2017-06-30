@@ -1290,7 +1290,7 @@ mesh.admin = function ( $ ) {
 			event.preventDefault();
 			event.stopPropagation();
 
-			$meta_box_container.find('.handlediv').each(function () {
+			$section_container.find('.handlediv').each(function () {
 				if ( 'false' == $(this).attr('aria-expanded') ) {
 					$(this).trigger('click').promise(function() {
 						// Loop through all of our edits in the response
@@ -1317,9 +1317,12 @@ mesh.admin = function ( $ ) {
 				event.stopPropagation();
 			}
 
-			$meta_box_container.find('.handlediv').each(function () {
-				if ( 'true' == $(this).attr('aria-expanded') ) {
-					$(this).trigger('click');
+            $section_container.find('.handlediv').each(function () {
+
+            	var $this = $(this);
+
+				if ( 'true' == $this.attr('aria-expanded') || $this.hasClass('toggled') ) {
+					$this.trigger('click');
 				}
 			} );
 		},
@@ -1480,18 +1483,21 @@ mesh.admin = function ( $ ) {
 					$this.removeClass('active');
 
 					if ( $empty_msg.length ) {
-						$empty_msg.fadeOut('fast');
+						$empty_msg.fadeOut('fast').promise(function() {
+                            $('#description-wrap').remove();
+						});
 						$controls.fadeIn('fast');
 					}
-
-					var $handle = $section_container.find( '.handlediv' );
-
-					$handle.attr( 'aria-expanded', true ).on( 'click', self.toggle_collapse );
 
 					blocks.rerender_blocks( $tinymce_editors );
 
 					// Repopulate the sections cache so that the new section is included going forward.
 					$sections = $('.mesh-section', $section_container);
+
+                    var $handle = $response.find( '.handlediv' );
+
+                    $handle.attr( 'aria-expanded', true )
+                        .on( 'click', self.toggle_collapse );
 
 					setTimeout(function () {
 						mesh.pointers.show_pointer();
@@ -1713,11 +1719,15 @@ mesh.admin = function ( $ ) {
 
 			var $this = $(this);
 
+			if( $this.hasClass('disabled' ) ) {
+				return;
+			}
+
 			self.disable_controls( $meta_box_container );
 
 			$meta_box_container.addClass('mesh-is-ordering');
 
-			self.update_notifications( 'reorder', 'warning' );
+			// self.update_notifications( 'reorder', 'warning' );
 
 			$reorder_button
 				.text( mesh_data.strings.save_order )
@@ -1725,7 +1735,6 @@ mesh.admin = function ( $ ) {
 				.removeClass('mesh-section-reorder');
 
 			self.collapse_all_sections();
-
 			$section_container.sortable();
 		},
 
@@ -2101,13 +2110,13 @@ mesh.admin = function ( $ ) {
 		 *
 		 * @since 1.1
 		 */
-		disable_controls : function( $tgt) {
+		disable_controls : function( $tgt ) {
 			$expand_button.addClass('disabled');
 			$add_button.addClass('disabled');
 			$collapse_button.addClass('disabled');
 			$reorder_button.addClass( 'disabled' );
 
-			var $postboxes = $( '.mesh-section', $meta_box_container );
+			var $postboxes = $( '.mesh-section', $section_container );
 
 			if ( $postboxes.length > 1 ) {
 				$reorder_button.removeClass( 'disabled' );
