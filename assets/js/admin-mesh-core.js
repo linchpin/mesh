@@ -1,4 +1,5 @@
 var mesh = mesh || {};
+	mesh.integrations = mesh.integrations || {}; // @since 1.2 store integrations.
 
 mesh.admin = function ( $ ) {
 
