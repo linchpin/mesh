@@ -263,7 +263,6 @@ function mesh_add_section_admin_markup( $section, $closed = false, $return = fal
 	// It's important to pass this to the admin to control if a
 	// section's blocks have a post_status of publish or draft.
 	$block_count       = $templates[ $selected_template ]['blocks'];
-
 	$css_class         = get_post_meta( $section->ID, '_mesh_css_class', true );
 	$lp_equal          = get_post_meta( $section->ID, '_mesh_lp_equal', true );
 	$offset            = get_post_meta( $section->ID, '_mesh_offset', true );
@@ -448,24 +447,27 @@ function mesh_display_sections( $post_id = '', $echo = true ) {
  *
  * @param  int    $section_id  Post ID of the target Section.
  * @param  string $post_status Post Status of the target Section.
+ * @param  int    $number_needed
  *
  * @return array
  */
-function mesh_get_section_blocks( $section_id, $post_status = 'publish' ) {
+function mesh_get_section_blocks( $section_id, $post_status = 'publish', $number_needed = 50 ) {
+
 	$args = array(
         'post_type' => 'mesh_section',
         'post_status' => $post_status,
-        'posts_per_page' => 50,
+        'posts_per_page' => $number_needed,
         'orderby' => 'menu_order',
         'order' => 'ASC',
         'post_parent' => (int) $section_id,
     );
 
-    if ( isset($_GET['preview_id']) && isset($_GET['preview_nonce']) ) {
+    if ( isset( $_GET['preview_id'] ) && isset( $_GET['preview_nonce'] ) ) {
         $id = (int) $_GET['preview_id'];
 
-        if ( false === wp_verify_nonce( $_GET['preview_nonce'], 'post_preview_' . $id ) )
-            wp_die( __( 'Sorry, you are not allowed to preview drafts.', 'mesh' ) );
+        if ( false === wp_verify_nonce( $_GET['preview_nonce'], 'post_preview_' . $id ) ) {
+	        wp_die( __( 'Sorry, you are not allowed to preview drafts.', 'mesh' ) );
+        }
 
         // Make sure $post_status is an array
         $args['post_status'] = is_array( $args['post_status'] ) ? $args['post_status'] : array( $args['post_status'] );
@@ -589,7 +591,9 @@ function mesh_maybe_create_section_blocks( $section, $number_needed = 0 ) {
 		}
     }
 
-	return mesh_get_section_blocks( $section->ID, array( 'publish', 'draft' ) );
+    error_log( $number_needed );
+
+	return mesh_get_section_blocks( $section->ID, array( 'publish' ), $number_needed );
 }
 
 /**

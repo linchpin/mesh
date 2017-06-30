@@ -15,7 +15,6 @@ if ( ! function_exists( 'add_action' ) ) {
 
 global $post;
 ?>
-
 <div class="mesh-section-meta mesh-row mesh-row-padding">
 	<div class="mesh-columns-12">
         <?php if ( ! has_term( 'reference', 'mesh_template_types', $post ) ) : ?>

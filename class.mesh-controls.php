@@ -19,6 +19,10 @@ class Mesh_Controls {
 	 * @return bool
 	 */
 	function show_equalize( $section, $blocks ) {
+
+		error_log( 'equalize' );
+		error_log( print_r( $section, true  ) );
+		error_log( print_r( $blocks, true ) );
 		return ( count( $blocks ) > 1 );
 	}
 
@@ -133,6 +137,8 @@ class Mesh_Controls {
 				),
 				'featured_image' => array(
 					'type' => 'media',
+					'label' => __( 'Featured Image', 'mesh' ),
+					'css_classes' => '',
 				),
 				'lp-equal' => array(
 					'label'          => __( 'Equalize', 'mesh' ),
@@ -151,14 +157,16 @@ class Mesh_Controls {
 		} else {
 			$controls = $controls['more_options'];
 		}
-
-		print( '<ul class="small-block-grid-1 medium-block-grid-4">' );
+		?>
+		<ul class="small-block-grid-1 medium-block-grid-4">
+		<?php
 
 		foreach( $controls as $key => $control ) {
 
 			$display_control = true;
 
 			if ( ! empty( $control['show_on_cb'] ) && is_callable( $control['show_on_cb'] ) ) {
+
 				$display_control = call_user_func_array( $control['show_on_cb'], array( $section, $blocks ) );
 			}
 
@@ -244,6 +252,7 @@ class Mesh_Controls {
 	 * @return bool
 	 */
 	function mesh_block_controls( $block, $section_blocks ) {
+
         $controls = array(
             'offset' => array(
                 'label'          => __( 'Offset', 'mesh' ),
@@ -261,6 +270,8 @@ class Mesh_Controls {
             ),
             'featured_image' => array(
                 'type' => 'media',
+                'label' => '',
+                'css_classes'    => array( 'mesh-section-class' ),
             )
 		);
 
@@ -280,10 +291,12 @@ class Mesh_Controls {
 				continue;
 			}
 
-			if ( ! empty( $control['css_classes'] ) && is_array( $control['css_classes'] ) ) {
-				$css_classes = array_map( 'sanitize_html_class', $control['css_classes'] );
-			} else {
-				$css_classes = array( sanitize_html_class( $control['css_classes'] ) );
+			if ( isset( $control['css_classes'] ) ) {
+				if ( ! empty( $control['css_classes'] ) && is_array( $control['css_classes'] ) ) {
+					$css_classes = array_map( 'sanitize_html_class', $control['css_classes'] );
+				} else {
+					$css_classes = array( sanitize_html_class( $control['css_classes'] ) );
+				}
 			}
 
 			$css_classes = implode( ' ', $css_classes );
@@ -293,7 +306,11 @@ class Mesh_Controls {
 			?>
             <li class="mesh-section-control-<?php esc_attr_e( $key ); ?>">
                 <label for="mesh-section[<?php esc_attr_e( $block->ID ); ?>][<?php esc_attr_e( $underscore_key ); ?>]">
-					<?php esc_html_e( $control['label'] ); ?>
+					<?php
+						if ( isset( $control['label']) ) {
+							echo esc_html( $control['label'] );
+						}
+					?>
 					<?php
 					switch( $control['type'] ) {
 						case 'checkbox' : ?>

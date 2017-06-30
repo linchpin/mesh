@@ -1361,10 +1361,13 @@ mesh.admin = function ( $ ) {
 			event.preventDefault();
 			event.stopPropagation();
 
-			var $this      = $(this),
-				$spinner   = $this.siblings('.spinner'),
-				$section   = $this.parents('.mesh-section'),
-				section_id = $section.attr('data-mesh-section-id');
+			var $this         = $(this),
+                temp_val      = $(this).val(),
+				$spinner      = $this.siblings('.spinner'),
+				$section      = $this.parents('.mesh-section'),
+				section_id    = $section.attr('data-mesh-section-id'),
+                $more_options = $section.find('.mesh-section-meta').find( '.mesh-more-section-options' ),
+                tab_open      = $more_options.hasClass( 'toggled' );
 
 			if ( $this.hasClass('disabled') ) {
 				return false;
@@ -1378,26 +1381,37 @@ mesh.admin = function ( $ ) {
 				action                  : 'mesh_choose_layout',
 				mesh_post_id             : mesh_data.post_id,
 				mesh_section_id          : section_id,
-				mesh_section_layout      : $(this).val(),
+				mesh_section_layout      : temp_val,
 				mesh_choose_layout_nonce : mesh_data.choose_layout_nonce
 			}, function( response ) {
 				if ( response ) {
 
-					var $response        = $( response ),
-						$tinymce_editors,
-						$layout          = $( '#mesh-sections-editor-' + section_id );
+                    var $response = $(response),
+                        $tinymce_editors,
+                        $section = $('#mesh-section-' + section_id);
 
-					$tinymce_editors = $section.find('.wp-editor-area');
+                    $tinymce_editors = $section.find('.wp-editor-area');
 
                     // @todo this should be done more efficiently later: Needed for Firefox but will be fixed
                     // once consolidated. Can't clear html before removing or tinymce throws an error
-					$tinymce_editors.each( function() {
-						if ( parseInt( tinymce.majorVersion ) >= 4 ) {
-							tinymce.execCommand( 'mceRemoveEditor', false, $(this).prop('id') );
-						}
-					});
+                    $tinymce_editors.each(function () {
+                        if (parseInt(tinymce.majorVersion) >= 4) {
+                            tinymce.execCommand('mceRemoveEditor', false, $(this).prop('id'));
+                        }
+                    });
 
-					$layout.html('').append( $response );
+                    // Store current display
+
+                    $response.find('.mesh-choose-layout').val(temp_val); // Set our newly render html to the properly layout.
+
+					// End display reset
+
+                    $section.find('.inside').html('').append( $response );
+
+                    if ( tab_open ) {
+                        $section.find( '.mesh-more-section-options' ).addClass( 'toggled' );
+                        $section.find( '.mesh-section-meta-dropdown' ).removeClass('hide').show();
+                    }
 					
 					// Loop through all of our edits in the response
 					// reset our editors after clearing

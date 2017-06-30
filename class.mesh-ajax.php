@@ -142,15 +142,21 @@ class Mesh_AJAX {
 		$templates = apply_filters( 'mesh_section_data', $block_template );
 
 		// Make sure that a section has enough blocks to fill the template.
-		$blocks = mesh_cleanup_section_blocks( $section, $templates[ $selected_template ]['blocks'] );
+		$block_count       = $templates[ $selected_template ]['blocks'];
+
+		$blocks = mesh_cleanup_section_blocks( $section, $block_count );
 
 		// Reset our widths on layout change.
 		foreach ( $blocks as $block ) {
 			delete_post_meta( $block->ID, '_mesh_column_width' );
 		}
+
 		ob_start();
-		include( LINCHPIN_MESH___PLUGIN_DIR . '/admin/section-blocks.php' );
-		include( LINCHPIN_MESH___PLUGIN_DIR . '/admin/section-template-warnings.php' );
+		// This block count is determined by the selected template above.
+		// It's important to pass this to the admin to control if a
+		// section's blocks have a post_status of publish or draft.
+
+		include( LINCHPIN_MESH___PLUGIN_DIR . '/admin/section-inside.php' );
 		$output = ob_get_contents();
 
 		ob_end_clean();
