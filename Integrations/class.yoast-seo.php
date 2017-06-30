@@ -43,10 +43,10 @@ class Yoast_SEO {
 
 		if ( ! is_plugin_active('wordpress-seo/wp-seo.php' ) &&
 		 ! is_plugin_active('wordpress-seo-premium/wp-seo-premium.php' ) ) {
-			return true;
+			return false;
 		}
 
-		return false;
+		return true;
 	}
 
 	/**

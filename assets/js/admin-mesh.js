@@ -1130,6 +1130,7 @@ mesh.templates = function ( $ ) {
 } ( jQuery );
 ;
 var mesh = mesh || {};
+	mesh.integrations = mesh.integrations || {}; // @since 1.2 store integrations.
 
 mesh.admin = function ( $ ) {
 
@@ -1370,7 +1371,7 @@ mesh.admin = function ( $ ) {
 				}
 			}
 
-			$document.trigger( 'postbox-toggled', p );
+			self.expand_section( event, p.closest('.mesh-section') );
 		},
 
 		/**

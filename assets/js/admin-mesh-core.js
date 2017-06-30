@@ -240,7 +240,7 @@ mesh.admin = function ( $ ) {
 				}
 			}
 
-			$document.trigger( 'postbox-toggled', p );
+			self.expand_section( event, p.closest('.mesh-section') );
 		},
 
 		/**
