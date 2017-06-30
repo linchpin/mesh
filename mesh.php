@@ -591,7 +591,7 @@ function mesh_maybe_create_section_blocks( $section, $number_needed = 0 ) {
 		}
     }
 
-	return mesh_get_section_blocks( $section->ID, array( 'publish' ), $number_needed );
+	return mesh_get_section_blocks( $section->ID, array( 'publish', 'draft' ), $number_needed );
 }
 
 /**
