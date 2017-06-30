@@ -1,8 +1,10 @@
 #Change Log For Mesh
 
 ## Unreleased
+
  - Fixed a bug where collapsed sections could not be toggled open after a new section was added
- 
+ - Added support for Yoast SEO page analysis
+
 ## [1.1.7] - 2017-6-12
 
  - Confirmed 4.8 compatibility

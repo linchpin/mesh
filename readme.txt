@@ -88,6 +88,7 @@ Or
 
 = Unreleased =
 * Fixed a bug where collapsed sections could not be toggled open after a new section was added
+* Add support for Yoast SEO Page Content Analysis
 
 = 1.1.7 =
 * Confirmed 4.8 compatibility
