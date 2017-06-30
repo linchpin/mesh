@@ -19,10 +19,6 @@ class Mesh_Controls {
 	 * @return bool
 	 */
 	function show_equalize( $section, $blocks ) {
-
-		error_log( 'equalize' );
-		error_log( print_r( $section, true  ) );
-		error_log( print_r( $blocks, true ) );
 		return ( count( $blocks ) > 1 );
 	}
 
