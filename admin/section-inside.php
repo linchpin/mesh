@@ -16,9 +16,11 @@ if ( ! function_exists( 'add_action' ) ) {
 <?php include_once LINCHPIN_MESH___PLUGIN_DIR . 'admin/section-controls.php'; ?>
 <div class="mesh-editor-blocks" id="mesh-sections-editor-<?php echo esc_attr( $section->ID ); ?>">
 <?php
-if ( $blocks ) {
+if ( ! empty( $blocks ) ) {
 	include_once LINCHPIN_MESH___PLUGIN_DIR . 'admin/section-blocks.php';
 	include_once LINCHPIN_MESH___PLUGIN_DIR . 'admin/section-template-warnings.php';
+} else {
+	echo 'no blocks';
 }
 ?>
 </div>

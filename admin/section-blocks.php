@@ -13,9 +13,7 @@ if ( ! function_exists( 'add_action' ) ) {
 }
 ?>
 <div class="mesh-row">
-
 	<?php
-
 	global $post;
 
 	$reference_template = has_term( 'reference', 'mesh_template_types', $post );

@@ -450,7 +450,6 @@ class Mesh {
 			/**
 			 * Process Section Meta
 			 */
-
 			$default_section_meta = array(
 				'css_class',
 				'lp_equal',
@@ -461,7 +460,8 @@ class Mesh {
 				'post_title',
 				'post_status',
 				'template',
-				'menu_order'
+				'menu_order',
+				'featured_image',
 			);
 
 			/**
@@ -484,6 +484,14 @@ class Mesh {
 				delete_post_meta( $section->ID, '_mesh_css_class' );
 			} else {
 				update_post_meta( $section->ID, '_mesh_css_class', $sanitized_css_classes );
+			}
+
+			$featured_image = $section_data['featured_image'];
+
+			if ( empty( $featured_image ) ) {
+				delete_post_meta( $section->ID, '_thumbnail_id' );
+			} else {
+				update_post_meta( $section->ID, '_thumbnail_id', (int) $featured_image );
 			}
 
 			// Save LP Equal.
