@@ -305,6 +305,11 @@ class Mesh_AJAX {
 		check_ajax_referer( 'mesh_featured_image_nonce', 'mesh_featured_image_nonce' );
 
 		$post_id  = (int) $_POST['mesh_section_id']; // WPCS: input var okay.
+
+		if ( ! isset( $_POST['mesh_image_id'] ) || 0 === (int) $_POST['mesh_image_id'] ) {
+			die( 0 );
+		}
+
 		$image_id = (int) $_POST['mesh_image_id']; // WPCS: input var okay.
 
 		if ( 'mesh_section' !== get_post_type( $post_id ) ) {
