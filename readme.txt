@@ -131,6 +131,20 @@ function hatch_mesh_default_bg_size( $size ) {
 
 == Changelog ==
 
+<<<<<<< Updated upstream
+=======
+= Unreleased =
+* Fixed a bug where collapsed sections could not be toggled open after a new section was added
+* Add support for Yoast SEO Page Content Analysis
+* Fixed a bug when excluding Mesh template related taxonomies from the generated sitemap
+* Fixed a bug where section and block background images were displayed before "update" / "publish"
+
+= 1.1.7 =
+* Confirmed 4.8 compatibility
+* Fix for issue within "content" being replaced when it shouldn't be
+* Fix for duplicated sections not applying the proper date.
+
+>>>>>>> Stashed changes
 = 1.1.6 =
 * Fixed undefined index `foundation_version`.
 * Fix bug for `.row` max-width being set to `rem-calc(1200)`

@@ -218,6 +218,8 @@ class Mesh_Controls {
                                         <a class="mesh-featured-image-choose right" data-mesh-featured-image="<?php echo esc_attr( $featured_image_id ); ?>"><img src="<?php echo esc_attr( $featured_image[0] ); ?>" /></a>
                                         <a class="mesh-featured-image-trash dashicons-before dashicons-dismiss" data-mesh-featured-image="<?php echo esc_attr( $featured_image_id ); ?>"></a>
 				                    <?php endif; ?>
+
+				                    <input type="hidden" name="mesh-sections[<?php esc_attr_e( $section->ID ); ?>][<?php esc_attr_e( $underscore_key ); ?>]" value="<?php echo esc_attr( $featured_image_id ); ?>" />
                                 </div>
                             </div>
 		                    <?php

@@ -1,6 +1,13 @@
 #Change Log For Mesh
 
 ## Unreleased
+<<<<<<< Updated upstream
+=======
+ - Fixed a bug where collapsed sections could not be toggled open after a new section was added
+ - Added support for Yoast SEO page analysis
+ - Fixed a bug when excluding Mesh template related taxonomies from the generated sitemap
+ - Fixed a bug where section and block background images were displayed before "update" / "publish"
+>>>>>>> Stashed changes
 
 Controls within Sections and Columns/Blocks are now expendable for developers.
 

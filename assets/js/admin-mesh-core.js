@@ -787,29 +787,20 @@ mesh.admin = function ( $ ) {
 			event.preventDefault();
 			event.stopPropagation();
 
-			var $button       = $(this),
-				$section      = $button.parents('.mesh-postbox'),
-				section_id    = parseInt( $section.attr('data-mesh-section-id') );
+			var $button       = $(this);
 
-			$.post( ajaxurl, {
-				'action': 'mesh_update_featured_image',
-				'mesh_section_id'  : parseInt( section_id ),
-				'mesh_featured_image_nonce' : mesh_data.featured_image_nonce
-			}, function( response ) {
-				if ( response != -1 ) {
-
-					if ( $button.prev().hasClass('right') && ! $button.prev().hasClass('button') ) {
-						if ( ! $button.parents('.block-background-container') ) {
-							$button.prev().toggleClass( 'button right' );
-						} else {
-							$button.prev().toggleClass( 'right' ).attr('data-mesh-block-featured-image', '' );
-						}
-					}
-
-					$button.prev().text( mesh_data.strings.add_image );
-					$button.remove();
+			if ( $button.prev().hasClass('right') && ! $button.prev().hasClass('button') ) {
+				if ( ! $button.parents('.block-background-container') ) {
+					$button.prev().toggleClass( 'button right' );
+				} else {
+					$button.prev().toggleClass( 'right' ).attr('data-mesh-block-featured-image', '' );
 				}
-			});
+			}
+
+			$button.siblings('input[type="hidden"]').val('');
+
+			$button.prev().text( mesh_data.strings.add_image );
+			$button.remove();
 		},
 
 		/**
@@ -866,29 +857,23 @@ mesh.admin = function ( $ ) {
 						'class' : 'mesh-featured-image-trash dashicons-before dashicons-dismiss'
 					});
 
-				$.post( ajaxurl, {
-	                'action': 'mesh_update_featured_image',
-	                'mesh_section_id'  : parseInt( section_id ),
-	                'mesh_image_id' : parseInt( media_attachment.id ),
-	                'mesh_featured_image_nonce' : mesh_data.featured_image_nonce
-	            }, function( response ) {
-					if ( response != -1 ) {
-						current_image = media_attachment.id;
+				current_image = media_attachment.id;
 
-						var $img = $('<img />', {
-							src : media_attachment.url
-						});
+				var $img = $('<img />', {
+					src : media_attachment.url
+				});
 
-						$button
-							.html( $img )
-							.attr('data-mesh-section-featured-image', parseInt( media_attachment.id ) )
-							.after( $trash );
+				$button
+					.html( $img )
+					.attr('data-mesh-section-featured-image', parseInt( media_attachment.id ) )
+					.after( $trash );
 
-						if ( $button.hasClass('button') && ! $button.hasClass('right') ) {
-							$button.toggleClass( 'button right' );
-						}
-					}
-	            });
+				// Add selected attachment id to input
+				$button.siblings('input[type="hidden"]').val( media_attachment.id );
+
+				if ( $button.hasClass('button') && ! $button.hasClass('right') ) {
+					$button.toggleClass( 'button right' );
+				}
 	        });
 
 	        // Now that everything has been set, let's open up the frame.
