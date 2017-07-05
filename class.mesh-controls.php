@@ -219,7 +219,7 @@ class Mesh_Controls {
                                         <a class="mesh-featured-image-trash dashicons-before dashicons-dismiss" data-mesh-featured-image="<?php echo esc_attr( $featured_image_id ); ?>"></a>
 				                    <?php endif; ?>
 
-				                    <input type="hidden" name="mesh-sections[<?php esc_attr_e( $section->ID ); ?>][<?php esc_attr_e( $underscore_key ); ?>]" value="<?php echo esc_attr( $featured_image_id ); ?>" />
+				                    <input type="hidden" name="mesh-sections[<?php echo esc_attr( $section->ID ); ?>][<?php echo esc_attr( $underscore_key ); ?>]" value="<?php echo esc_attr( $featured_image_id ); ?>" />
                                 </div>
                             </div>
 		                    <?php
@@ -227,7 +227,7 @@ class Mesh_Controls {
                         case 'input' :
                         case 'text' :
                         default : ?>
-                            <input type="text" name="mesh-sections[<?php esc_attr_e( $section->ID ); ?>][<?php esc_attr_e( $underscore_key ); ?>]" class="<?php esc_attr_e( $css_classes ); ?>" value="<?php esc_attr_e( get_post_meta( $section->ID, '_mesh_' . esc_attr( $underscore_key ), true ) ); ?>" />
+                            <input type="text" name="mesh-sections[<?php echo esc_attr( $section->ID ); ?>][<?php echo esc_attr( $underscore_key ); ?>]" class="<?php echo esc_attr( $css_classes ); ?>" value="<?php echo esc_attr( get_post_meta( $section->ID, '_mesh_' . esc_attr( $underscore_key ), true ) ); ?>" />
                             <?php
                             break;
                     }
@@ -302,8 +302,8 @@ class Mesh_Controls {
             $underscore_key = str_replace( '-', '_', $key );
 			$current        = get_post_meta( $block->ID, '_mesh_' . esc_attr( $underscore_key ), true );
 			?>
-            <li class="mesh-section-control-<?php esc_attr_e( $key ); ?>">
-                <label for="mesh-section[<?php esc_attr_e( $block->ID ); ?>][<?php esc_attr_e( $underscore_key ); ?>]">
+            <li class="mesh-section-control-<?php echo esc_attr( $key ); ?>">
+                <label for="mesh-section[<?php echo esc_attr( $block->ID ); ?>][<?php echo esc_attr( $underscore_key ); ?>]">
 					<?php
 						if ( isset( $control['label']) ) {
 							echo esc_html( $control['label'] );
@@ -312,20 +312,20 @@ class Mesh_Controls {
 					<?php
 					switch( $control['type'] ) {
 						case 'checkbox' : ?>
-                            <input type="checkbox" name="mesh-sections[<?php esc_attr_e( $block->post_parent ); ?>][blocks][<?php esc_attr_e( $block->ID ); ?>][<?php esc_attr_e( $underscore_key ); ?>]" class="<?php esc_attr_e( $css_classes ); ?>" value="1" <?php checked( $current ); ?> />
+                            <input type="checkbox" name="mesh-sections[<?php echo esc_attr( $block->post_parent ); ?>][blocks][<?php echo esc_attr( $block->ID ); ?>][<?php echo esc_attr( $underscore_key ); ?>]" class="<?php echo esc_attr( $css_classes ); ?>" value="1" <?php checked( $current ); ?> />
 							<?php
 							break;
 						case 'select' :
 						case 'dropdown' :
 							?>
-                            <select name="mesh-sections[<?php esc_attr_e( $block->post_parent ); ?>][blocks][<?php esc_attr_e( $block->ID ); ?>][<?php esc_attr_e( $underscore_key ); ?>]" class="<?php esc_attr_e( $css_classes ); ?>"<?php echo isset( $control['id'] ) ? 'id="' . esc_attr( $control['id'] ) .'"' : ''; ?><?php if ( isset( $control['multiple'] ) && $control['multiple'] ) echo ' multiple'; ?>>
+                            <select name="mesh-sections[<?php echo esc_attr( $block->post_parent ); ?>][blocks][<?php echo esc_attr( $block->ID ); ?>][<?php echo esc_attr( $underscore_key ); ?>]" class="<?php echo esc_attr( $css_classes ); ?>"<?php echo isset( $control['id'] ) ? 'id="' . esc_attr( $control['id'] ) .'"' : ''; ?><?php if ( isset( $control['multiple'] ) && $control['multiple'] ) echo ' multiple'; ?>>
 								<?php
 								$options = ( ! empty( $control['options_cb'] ) && is_callable( $control['options_cb'] ) )
 									? call_user_func_array( $control['options_cb'], array( $block, $section_blocks ) )
 									: $control['options'];
 
 								foreach( $options as $key => $value ) {
-									printf( '<option value="%1$s" %2$s>%3$s</option>', esc_attr($key), selected( esc_attr($current), esc_attr($key), false), esc_attr($value) );
+									printf( '<option value="%1$s" %2$s>%3$s</option>', esc_attr( $key ), selected( esc_attr( $current ), esc_attr( $key ), false), esc_attr( $value ) );
 								}
 								?>
                             </select>
@@ -350,7 +350,7 @@ class Mesh_Controls {
 						case 'input' :
 						case 'text' :
 						default : ?>
-                            <input type="text" name="mesh-sections[<?php esc_attr_e( $block->post_parent ); ?>][blocks][<?php esc_attr_e( $block->ID ); ?>][<?php esc_attr_e( $underscore_key ); ?>]" class="<?php esc_attr_e( $css_classes ); ?>" value="<?php esc_attr_e( get_post_meta( $block->ID, '_mesh_' . esc_attr( $underscore_key ), true ) ); ?>" />
+                            <input type="text" name="mesh-sections[<?php echo esc_attr( $block->post_parent ); ?>][blocks][<?php echo esc_attr( $block->ID ); ?>][<?php echo esc_attr( $underscore_key ); ?>]" class="<?php echo esc_attr( $css_classes ); ?>" value="<?php echo esc_attr( get_post_meta( $block->ID, '_mesh_' . esc_attr( $underscore_key ), true ) ); ?>" />
 							<?php
 							break;
 					}
@@ -358,9 +358,9 @@ class Mesh_Controls {
                 </label>
             </li>
 			<?php
-        }
-
-        echo '</ul>';
+        } ?>
+        </ul>
+		<?php
 	}
 }
 

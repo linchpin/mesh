@@ -468,7 +468,7 @@ class Mesh {
 			 * This filter is used to remove or add elements to the default section meta
 			 * @todo "meta" related to a section
 			 */
-			apply_filters( 'mesh_default_section_meta_fields', $default_section_meta );
+			$default_section_meta = apply_filters( 'mesh_default_section_meta_fields', $default_section_meta );
 
 			// Save CSS Classes.
 			$css_classes           = explode( ' ', $section_data['css_class'] );
