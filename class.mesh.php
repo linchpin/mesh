@@ -218,6 +218,7 @@ class Mesh {
 		$in['paste_strip_class_attributes'] = 'none';
 		$in['paste_text_use_dialog']        = true;
 		$in['wpeditimage_disable_captions'] = true;
+		$in['allow_script_urls']            = true;
 		$in['plugins']                      = 'tabfocus,paste,media,wordpress,wpgallery,wplink';
 
 		// Only add in our editor styles if we have the file.
