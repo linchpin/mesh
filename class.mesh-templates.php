@@ -152,8 +152,9 @@ class Mesh_Templates {
 				'menu_name'         => __( 'Mesh Template Type', 'mesh' ),
 			),
 			'show_ui' => LINCHPIN_MESH_DEBUG_MODE,
-			'query_var' => true,
 			'rewrite' => false,
+			'show_in_nav_menus' => false,
+			'show_in_rest' => false,
 			'show_admin_column' => false, // @todo this should be added back in, in a later version.
 		) );
 	}

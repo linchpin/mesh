@@ -531,11 +531,9 @@ mesh.blocks = function ( $ ) {
 
                         // Clean up the proto id which appears in some of the wp_editor generated HTML
 
-                        var block_html = $(this).closest('.block-content').html(),
-                            pattern = /\[post_mesh\-section\-editor\-[0-9]+\]/;
+                        var block_html = $(this).closest('.block-content').html();
 
-                        block_html = block_html.replace(new RegExp(proto_id, 'g'), editor_id);
-                        block_html = block_html.replace(new RegExp(pattern, 'g'), '[post_content]');
+                        block_html = block_html.replace(new RegExp('id="'+proto_id+'"', 'g'), 'id="'+editor_id+'"');
 
                         $block_content.html(block_html);
 
@@ -604,6 +602,10 @@ mesh.blocks = function ( $ ) {
                     $block_content.find('.switch-tmce').trigger('click');
                 }
             });
+
+            if( typeof mesh.integrations.yoast != 'undefined' ) {
+                mesh.integrations.yoast.addMeshSections();
+            }
         },
 
         mode_enabled: function( el ) {
@@ -1128,6 +1130,7 @@ mesh.templates = function ( $ ) {
 } ( jQuery );
 ;
 var mesh = mesh || {};
+	mesh.integrations = mesh.integrations || {}; // @since 1.2 store integrations.
 
 mesh.admin = function ( $ ) {
 
@@ -1315,6 +1318,7 @@ mesh.admin = function ( $ ) {
 		 * @param event
 		 */
 		toggle_collapse : function( event ) {
+
 			var $el = $( this ),
 				p = $el.parent( '.postbox' ),
 				id = p.attr( 'id' ),
@@ -1479,7 +1483,7 @@ mesh.admin = function ( $ ) {
 						$controls.fadeIn('fast');
 					}
 
-					var $handle = $section_container.find( '.handlediv' );
+					var $handle = $response.find( '.handlediv' );
 
 					$handle.attr( 'aria-expanded', true ).on( 'click', self.toggle_collapse );
 

@@ -1,4 +1,5 @@
 var mesh = mesh || {};
+	mesh.integrations = mesh.integrations || {}; // @since 1.2 store integrations.
 
 mesh.admin = function ( $ ) {
 
@@ -186,6 +187,7 @@ mesh.admin = function ( $ ) {
 		 * @param event
 		 */
 		toggle_collapse : function( event ) {
+
 			var $el = $( this ),
 				p = $el.parent( '.postbox' ),
 				id = p.attr( 'id' ),
@@ -350,7 +352,7 @@ mesh.admin = function ( $ ) {
 						$controls.fadeIn('fast');
 					}
 
-					var $handle = $section_container.find( '.handlediv' );
+					var $handle = $response.find( '.handlediv' );
 
 					$handle.attr( 'aria-expanded', true ).on( 'click', self.toggle_collapse );
 

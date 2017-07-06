@@ -96,9 +96,6 @@ class Mesh {
 
 		add_filter( 'get_edit_post_link', array( $this, 'get_edit_post_link' ), 10, 3 );
 
-		// Exclude certain taxonomies for WordPress SEO / Yoast.
-		add_filter( 'wpseo_sitemap_exclude_taxonomy', array( $this, 'wpseo_sitemap_exclude_taxonomy' ) );
-
 		// @since 1.1.3
 		add_action( 'after_setup_theme', array( $this, 'after_theme_setup' ) );
 	}
@@ -221,6 +218,7 @@ class Mesh {
 		$in['paste_strip_class_attributes'] = 'none';
 		$in['paste_text_use_dialog']        = true;
 		$in['wpeditimage_disable_captions'] = true;
+		$in['allow_script_urls']            = true;
 		$in['plugins']                      = 'tabfocus,paste,media,wordpress,wpgallery,wplink';
 
 		// Only add in our editor styles if we have the file.
@@ -1048,30 +1046,6 @@ class Mesh {
 			'p'      => array(),
 			'br'     => array(),
 		);
-	}
-
-	/**
-	 * Filter to exclude the taxonomy from the XML sitemap.
-	 *
-	 * @since 1.1.3
-	 *
-	 * @param boolean $exclude       Defaults to false.
-	 * @param string  $taxonomy_name Name of the taxonomy to exclude.
-	 *
-	 * @return boolean
-	 */
-	public function wpseo_sitemap_exclude_taxonomy( $exclude = false, $taxonomy_name ) {
-
-		$excluded_taxonomies = array(
-			'mesh_template_usage',
-			'mesh_template_types',
-		);
-
-		if ( in_array( $taxonomy_name, $excluded_taxonomies ) ) {
-			return true;
-		}
-
-		return false;
 	}
 
 	/**
