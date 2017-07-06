@@ -90,6 +90,7 @@ Or
 * Fixed a bug where collapsed sections could not be toggled open after a new section was added
 * Add support for Yoast SEO Page Content Analysis
 * Fixed a bug when excluding Mesh template related taxonomies from the generated sitemap
+* Added support for scripts within urls within TinyMCE
 
 = 1.1.7 =
 * Confirmed 4.8 compatibility
