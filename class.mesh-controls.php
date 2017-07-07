@@ -235,9 +235,9 @@ class Mesh_Controls {
                 </label>
             </li>
             <?php
-		}
-
-		echo '</ul>';
+		} ?>
+		</ul>
+		<?php
 	}
 
 	/**
