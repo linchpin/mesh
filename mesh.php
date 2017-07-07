@@ -294,7 +294,14 @@ function mesh_add_section_admin_markup( $section, $closed = false, $return = fal
  *
  * @return array|WP_Query
  */
-function mesh_get_sections( $post_id, $return_type = 'array', $statuses = array( 'publish' ) ) {
+function mesh_get_sections( $post_id = '', $return_type = 'array', $statuses = array( 'publish' ) ) {
+
+	// If no Post ID fall back to the current global ID
+	if( empty( $post_id ) ) {
+		global $post;
+		$post_id = $post->ID;
+	}
+
 	$args = array(
 		'post_type'      => 'mesh_section',
 		'posts_per_page' => apply_filters( 'mesh_templates_per_page', 50 ),
