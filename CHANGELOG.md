@@ -6,7 +6,7 @@
  - Added support for Yoast SEO page analysis
  - Fixed a bug when excluding Mesh template related taxonomies from the generated sitemap
  - Fixed a bug where section and block background images were displayed before "update" / "publish"
- - Controls within Sections and Columns/Blocks are now expendable for developers.
+ - Controls within Sections and Columns/Blocks are now extendable for developers.
  - Added support for scripts within urls within TinyMCE
 
 ## [1.1.7] - 2017-6-12
