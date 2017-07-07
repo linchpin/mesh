@@ -126,9 +126,7 @@ if ( ! function_exists( 'add_action' ) ) {
 							<a class="hide-if-no-js" href="<?php echo esc_url( get_edit_post_link( reset( $revisions )->ID ) ); ?>"><b><?php echo number_format_i18n( count( $revisions ) ); ?></b> <span class="screen-reader-text"><?php esc_html_e( 'Browse revisions', 'mesh' ); ?></span></a>
 						</div>
 					<?php endif; ?>
-
 					<input type="hidden" class="column-width" name="mesh-sections[<?php echo esc_attr( $section->ID ); ?>][blocks][<?php echo esc_attr( $blocks[ $block_increment ]->ID ); ?>][columns]" value="<?php echo esc_attr( $block_columns ); ?>"/>
-
 					<input type="hidden" class="block-menu-order" name="mesh-sections[<?php echo esc_attr( $section->ID ); ?>][blocks][<?php echo esc_attr( $blocks[ $block_increment ]->ID ); ?>][menu_order]" value="<?php echo esc_attr( $blocks[ $block_increment ]->menu_order ); ?>"/>
 				</div>
 			</div>
