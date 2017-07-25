@@ -31,6 +31,22 @@ class Duplicate_Post {
 	public function __construct() {
 		add_action( 'dp_duplicate_page', array( $this, 'duplicate_mesh_sections' ), 99, 3 );
 		add_action( 'dp_duplicate_post', array( $this, 'duplicate_mesh_sections' ), 99, 3 );
+
+		add_action ( 'duplicate_post_pre_copy', array( $this, 'skip_mesh_sections' ) );
+		add_action ( 'duplicate_post_post_copy', array( $this, 'skip_mesh_sections' ) );
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function skip_mesh_sections() {
+		global $post;
+
+		// if ( $post->post_type == 'mesh_section' ) {
+
+		// }
+
+		return false;
 	}
 
 	/**
@@ -45,7 +61,7 @@ class Duplicate_Post {
 		}
 
 		$mesh_template_duplicate = new Duplicate_Sections();
-		$mesh_template_duplicate->duplicate_sections( $post->ID, $new_post_id, false );
+		$mesh_template_duplicate->duplicate_sections( $new_post_id, $post->ID, false );
 	}
 }
 

@@ -25,6 +25,7 @@ class Duplicate_Sections {
 	 * Section_Duplicate constructor.
 	 */
 	function __construct() {
+
 		// Duplicate Post Meta.
 		add_action( 'mesh_duplicate_section', array( $this, 'duplicate_post_meta' ), 10, 2 );
 
@@ -38,17 +39,23 @@ class Duplicate_Sections {
 	/**
 	 * Duplicate all the template's sections
 	 *
-	 * @param int  $original_id    Original ID.
-	 * @param int  $post_id        Target Post ID.
-	 * @param bool $include_drafts Do we include drafts?
+	 * @param int         $new_post_id        Target Post ID.
+	 * @param object|int  $source_post        Original Post Or ID.
+	 * @param bool        $include_drafts     Do we include drafts?
 	 */
-	function duplicate_sections( $original_id, $post_id, $include_drafts = false ) {
+	function duplicate_sections( $new_post_id, $source_post, $include_drafts = false ) {
 
-		$template_id = (int) $original_id;
+		if ( is_int( $source_post ) ) {
+			$source_post = get_post( $source_post );
 
-		if ( $template_post = get_post( $template_id ) ) {
-			$this->duplicate_children( $post_id, $template_post, $include_drafts );
+			if ( ! $source_post ) { // If we don't have a post return
+				return;
+			}
 		}
+
+		error_log( 'Duplicate ' . $source_post->ID . '  to ' . $new_post_id  );
+
+		$this->duplicate_children( $new_post_id, $source_post, $include_drafts );
 	}
 
 	/**
@@ -57,54 +64,57 @@ class Duplicate_Sections {
 	 *
 	 * @thanks https://plugins.svn.wordpress.org/duplicate-post/
 	 *
-	 * @param int      $new_id         New Post ID.
-	 * @param \WP_Post $original_post  Original Post Object.
-	 * @param bool     $include_drafts Include Drafts
+	 * @param int      $new_parent_post_id New Post ID.
+	 * @param \WP_Post $source_post        Source Post Object.
+	 * @param bool     $include_drafts     Include Drafts
 	 */
-	function duplicate_children( $new_id, $original_post, $include_drafts = false ) {
+	function duplicate_children( $new_parent_post_id, $source_post, $include_drafts = false ) {
+
+		error_log( 'duplicate_children(new:'  . $new_parent_post_id . ', source:' . $source_post->ID . ');' );
 
 		$post_status = array(
 			'publish'
 		);
 
-		if ( $include_drafts ) {
+		if ( false !== $include_drafts ) {
 			$post_status[] = 'draft';
 		}
 
-		$children = new WP_Query( array(
+		$source_post_children = new WP_Query( array(
 			'post_type'      => array( 'mesh_section', 'attachment' ),
 			'posts_per_page' => 100,
 			'post_status'    => $post_status,
-			'post_parent'    => $original_post->ID,
+			'post_parent'    => $source_post->ID,
 			'order_by'       => 'menu_order',
-			'order'          => 'ASC'
+			'order'          => 'ASC',
 		) );
 
-		if ( $children->have_posts() ) {
-			while ( $children->have_posts() ) {
-				global $post;
+		if ( $source_post_children->have_posts() ) {
 
-				$children->the_post();
-				$this->duplicate_section( $post, $new_id );
+			$children = $source_post_children->posts;
+
+			foreach ( $children as $child ) {
+				$this->duplicate_section( $new_parent_post_id, $child );
 			}
 
-			wp_reset_postdata();
+		} else {
+			error_log("\t\t\tno children" );
 		}
 	}
 
 	/**
 	 * Duplicate the section
 	 *
-	 * @param \WP_Post   $post      Post Object.
-	 * @param int|string $parent_id Parent Post ID.
+	 * @param int|string $new_parent_post_id Parent Post ID.
+	 * @param \WP_Post   $post            Post Object.
 	 *
-	 * @return int|void|/WP_Error
+	 * @return int|mixed|/WP_Error
 	 */
-	function duplicate_section( $post, $parent_id = '' ) {
+	function duplicate_section( $new_parent_post_id = '', $post ) {
 
 		// Skip Revisions.
 		if ( wp_is_post_revision( $post ) || 'revision' === $post->post_type ) {
-			return;
+			return '';
 		}
 
 		$status = 'draft';
@@ -119,13 +129,17 @@ class Duplicate_Sections {
 
 		$new_date = current_time( 'Y-m-d H:i:s' );
 
+		if ( empty( $new_parent_post_id ) ) {
+			return $new_post_parent_id = $post->post_parent;
+		}
+
 		$new_post = array(
 			'menu_order'     => $post->menu_order,
 			'post_author'    => $post->post_author,
 			'post_content'   => $post->post_content,
 			'post_excerpt'   => $post->post_excerpt,
 			'post_mime_type' => $post->post_mime_type,
-			'post_parent'    => $new_post_parent = empty( $parent_id ) ? $post->post_parent : $parent_id,
+			'post_parent'    => $new_parent_post_id,
 			'post_status'    => $status, // Always set a published section to draft. Exclude attachments.
 			'post_title'     => $post->post_title,
 			'post_type'      => $post->post_type,
@@ -136,7 +150,7 @@ class Duplicate_Sections {
 		$new_post_id = wp_insert_post( $new_post );
 
 		// Create a new slug.
-		$post_name = wp_unique_post_slug( $post->post_name, $new_post_id, $status, $post->post_type, $new_post_parent );
+		$post_name = wp_unique_post_slug( $post->post_name, $new_post_id, $status, $post->post_type, $new_parent_post_id );
 
 		$new_post = array(
 			'ID'        => $new_post_id,
@@ -146,7 +160,11 @@ class Duplicate_Sections {
 		// Update our new post with the correct slug and information.
 		wp_update_post( $new_post );
 
+		error_log( "\t\t\tDuplicate " . $post->post_type . " : " . $post->ID . ' to ' . $new_parent_post_id . ' as ' . $new_post_id );
+
 		do_action( 'mesh_duplicate_section', $new_post_id, $post );
+
+		// $this->duplicate_children( $new_post_id, $post );
 
 		$parent_post_type = get_post_type( $post->post_parent );
 
@@ -211,8 +229,6 @@ class Duplicate_Sections {
 			}
 		}
 	}
-
-
 }
 
 $mesh_duplicate_sections = new Duplicate_Sections();
