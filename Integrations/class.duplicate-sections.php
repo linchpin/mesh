@@ -24,8 +24,9 @@ class Duplicate_Sections {
 	/**
 	 * Section_Duplicate constructor.
 	 */
-	function __construct() {
+	function __construct() {}
 
+	function register_actions() {
 		// Duplicate Post Meta.
 		add_action( 'mesh_duplicate_section', array( $this, 'duplicate_post_meta' ), 10, 2 );
 
@@ -230,5 +231,5 @@ class Duplicate_Sections {
 		}
 	}
 }
-
 $mesh_duplicate_sections = new Duplicate_Sections();
+$mesh_duplicate_sections->register_actions();
