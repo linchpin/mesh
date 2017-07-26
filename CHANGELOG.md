@@ -8,6 +8,8 @@
  - Fixed a bug where section and block background images were displayed before "update" / "publish"
  - Controls within Sections and Columns/Blocks are now extendable for developers.
  - Added support for scripts within urls within TinyMCE
+ - Added support for duplicating sections when duplicating a post using Duplicate Post Plugin
+ - Added support for duplicating sections when duplicating a post using Post Duplicator Plugin
 
 ## [1.1.7] - 2017-6-12
 
