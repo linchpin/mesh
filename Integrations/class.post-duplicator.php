@@ -44,7 +44,7 @@ class Post_Duplicator {
 		}
 
 		$mesh_template_duplicate = new Duplicate_Sections();
-		$mesh_template_duplicate->duplicate_sections( $original_id, $duplicate_id, false );
+		$mesh_template_duplicate->duplicate_sections( (int) $duplicate_id, (int) $original_id, false );
 	}
 }
 
