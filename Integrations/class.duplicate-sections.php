@@ -54,8 +54,6 @@ class Duplicate_Sections {
 			}
 		}
 
-		error_log( 'Duplicate ' . $source_post->ID . '  to ' . $new_post_id  );
-
 		$this->duplicate_children( $new_post_id, $source_post, $include_drafts );
 	}
 
@@ -70,8 +68,6 @@ class Duplicate_Sections {
 	 * @param bool     $include_drafts     Include Drafts
 	 */
 	function duplicate_children( $new_parent_post_id, $source_post, $include_drafts = false ) {
-
-		error_log( 'duplicate_children(new:'  . $new_parent_post_id . ', source:' . $source_post->ID . ');' );
 
 		$post_status = array(
 			'publish'
@@ -97,9 +93,6 @@ class Duplicate_Sections {
 			foreach ( $children as $child ) {
 				$this->duplicate_section( $new_parent_post_id, $child );
 			}
-
-		} else {
-			error_log("\t\t\tno children" );
 		}
 	}
 
@@ -160,8 +153,6 @@ class Duplicate_Sections {
 
 		// Update our new post with the correct slug and information.
 		wp_update_post( $new_post );
-
-		error_log( "\t\t\tDuplicate " . $post->post_type . " : " . $post->ID . ' to ' . $new_parent_post_id . ' as ' . $new_post_id );
 
 		do_action( 'mesh_duplicate_section', $new_post_id, $post );
 
