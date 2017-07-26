@@ -76,7 +76,7 @@ $Parsedown = new Parsedown();
 						echo $Parsedown->text( $readme ); // WPCS: ok.
 					}
 					?>
-					<?php elseif ( 'linchpin' === $active_tab ) : ?>
+                <?php elseif ( 'linchpin' === $active_tab ) : ?>
                     <h2><?php esc_html_e( 'Linchpin is a Digital Agency that specializes in WordPress', 'mesh' ); ?></h2>
 										<p><?php printf( __( 'We loving giving back to the WordPress community through Plugins, Tools/Utilities and through Organzing <a href="%s">WordPress Rhode Island</a> and WordCamp Rhode Island', 'mesh' ), esc_url( 'https://meetup.com/WordPressRI/' ) ); ?></p>
                     <p><?php printf( __( 'Check our our <a href="%s" target="_blank">site</a>. or visit our various profiles below or come say hi at a local event.', 'mesh' ), esc_url( 'https://linchpin.agency' ) ); ?></p>
@@ -86,6 +86,8 @@ $Parsedown = new Parsedown();
                         <dd><a href="https://www.facebook.com/linchpinagency" target="_blank">https://www.facebook.com/linchpinagency</a></dd>
                         <dd><a href="https://www.instagram.com/linchpinagency/" target="_blank">https://www.instagram.com/linchpinagency</a></dd>
                     </dl>
+                <?php else : ?>
+                    <?php do_action('mesh_setting_' . $active_tab ); ?>
 				<?php endif; ?>
             </div>
         </div>

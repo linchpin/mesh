@@ -16,12 +16,14 @@ if ( ! defined('ABSPATH' ) ) {
 }
 
 /**
- * Mesh_AJAX class.
+ * Class Yoast_SEO
+ * @package Mesh\Integrations
  */
 class Yoast_SEO {
 
 	/**
-	 * WordPress_Seo constructor.
+	 * Yoast_SEO constructor.
+	 *
 	 */
 	public function __construct() {
 		add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ) );

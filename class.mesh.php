@@ -218,6 +218,7 @@ class Mesh {
 		$in['paste_strip_class_attributes'] = 'none';
 		$in['paste_text_use_dialog']        = true;
 		$in['wpeditimage_disable_captions'] = true;
+		$in['allow_script_urls']            = true;
 		$in['plugins']                      = 'tabfocus,paste,media,wordpress,wpgallery,wplink';
 
 		// Only add in our editor styles if we have the file.
@@ -444,6 +445,29 @@ class Mesh {
 				update_post_meta( $section->ID, '_mesh_template', $template );
 			}
 
+			/**
+			 * Process Section Meta
+			 */
+			$default_section_meta = array(
+				'css_class',
+				'lp_equal',
+				'title_display',
+				'push_pull',
+				'collapse',
+				'blocks',
+				'post_title',
+				'post_status',
+				'template',
+				'menu_order',
+				'featured_image',
+			);
+
+			/**
+			 * This filter is used to remove or add elements to the default section meta
+			 * @todo "meta" related to a section
+			 */
+			$default_section_meta = apply_filters( 'mesh_default_section_meta_fields', $default_section_meta );
+
 			// Save CSS Classes.
 			$css_classes           = explode( ' ', $section_data['css_class'] );
 			$sanitized_css_classes = array();
@@ -458,6 +482,14 @@ class Mesh {
 				delete_post_meta( $section->ID, '_mesh_css_class' );
 			} else {
 				update_post_meta( $section->ID, '_mesh_css_class', $sanitized_css_classes );
+			}
+
+			$featured_image = $section_data['featured_image'];
+
+			if ( empty( $featured_image ) ) {
+				delete_post_meta( $section->ID, '_thumbnail_id' );
+			} else {
+				update_post_meta( $section->ID, '_thumbnail_id', (int) $featured_image );
 			}
 
 			// Save LP Equal.
@@ -491,6 +523,21 @@ class Mesh {
 				delete_post_meta( $section->ID, '_mesh_collapse' );
 			} else {
 				update_post_meta( $section->ID, '_mesh_collapse', $section_data['collapse'] );
+			}
+
+			// Process our custom meta
+			foreach( $section_data as $data_key => $data_field ) {
+				// Do not process default keys
+				if( in_array( $data_key, $default_section_meta ) ) {
+					continue;
+				}
+
+				// Save Custom Meta Field.
+				if ( empty( $section_data[ $data_key ] ) ) {
+					delete_post_meta( $section->ID, '_mesh_' . $data_key );
+				} else {
+					update_post_meta( $section->ID, '_mesh_' . $data_key, $section_data[ $data_key ] );
+				}
 			}
 
 			// Process the section's blocks.
@@ -774,6 +821,11 @@ class Mesh {
 		}
 
 		if ( ! is_singular() ) {
+			return;
+		}
+
+		// Do not show content on password protected posts
+		if ( post_password_required() ) {
 			return;
 		}
 
