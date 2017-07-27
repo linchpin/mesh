@@ -30,7 +30,9 @@ class Mesh_Integrations {
 
 		if ( ! empty( $this->integrations ) ) {
 			foreach ( $this->integrations as $file ) {
-				include_once $file;
+				if ( file_exists( $file ) ) {
+					include_once $file;
+				}
 			}
 		}
 	}
