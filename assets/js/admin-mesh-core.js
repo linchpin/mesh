@@ -71,6 +71,10 @@ mesh.admin = function ( $ ) {
 				// @since 1.1.3
 				.on('change', '#mesh-css_mode', self.display_foundation_options );
 
+			// @since 1.2
+			$(document)
+				.on( 'postbox-toggled', {event:event}, self.expand_section );
+
 			$sections = $( '.mesh-section' );
 
 			if ( $sections.length <= 1 ) {
@@ -131,8 +135,26 @@ mesh.admin = function ( $ ) {
 			});
 		},
 
+        /**
+		 * Expand targeted section
+		 *
+		 * @since 1.2
+		 *
+         * @param event The jQuery Event
+         * @param element The Object Being Expanded (typically postbox)
+         */
+		expand_section : function( event, element ) {
+
+            var $section = $(element),
+				$tinymce_editor = $section.find('.wp-editor-area');
+
+            if ( ! $section.hasClass( 'closed' ) ) {
+				blocks.rerender_blocks( $tinymce_editor );
+			}
+		},
+
 		/**
-		 * 1 click to expand sections
+		 * 1 click to expand all sections
 		 *
 		 * @since 0.3.0
 		 *
@@ -143,15 +165,12 @@ mesh.admin = function ( $ ) {
 			event.preventDefault();
 			event.stopPropagation();
 
-			$meta_box_container.find('.handlediv').each(function () {
-				if ( 'false' == $(this).attr('aria-expanded') ) {
-					$(this).trigger('click').promise(function() {
-						// Loop through all of our edits in the response
-						// reset our editors after clearing
-						var $tinymce_editors = $sections.find('.wp-editor-area');
+			$sections.each(function () {
+                var $handle = $(this).find('.handlediv');
 
-						blocks.rerender_blocks( $tinymce_editors );
-					});
+				if ( 'true' != $handle.attr('aria-expanded') ) {
+                    $handle.trigger('click');
+                    self.expand_section( event, $(this) );
 				}
 			} );
 		},
@@ -170,9 +189,12 @@ mesh.admin = function ( $ ) {
 				event.stopPropagation();
 			}
 
-			$meta_box_container.find('.handlediv').each(function () {
-				if ( 'true' == $(this).attr('aria-expanded') ) {
-					$(this).trigger('click');
+            $section_container.find('.handlediv').each(function () {
+
+            	var $this = $(this);
+
+				if ( 'true' == $this.attr('aria-expanded') || $this.hasClass('toggled') ) {
+					$this.trigger('click');
 				}
 			} );
 		},
@@ -218,7 +240,7 @@ mesh.admin = function ( $ ) {
 				}
 			}
 
-			$document.trigger( 'postbox-toggled', p );
+			self.expand_section( event, p.closest('.mesh-section') );
 		},
 
 		/**
@@ -348,18 +370,21 @@ mesh.admin = function ( $ ) {
 					$this.removeClass('active');
 
 					if ( $empty_msg.length ) {
-						$empty_msg.fadeOut('fast');
+						$empty_msg.fadeOut('fast').promise(function() {
+                            $('#description-wrap').remove();
+						});
 						$controls.fadeIn('fast');
 					}
-
-					var $handle = $response.find( '.handlediv' );
-
-					$handle.attr( 'aria-expanded', true ).on( 'click', self.toggle_collapse );
 
 					blocks.rerender_blocks( $tinymce_editors );
 
 					// Repopulate the sections cache so that the new section is included going forward.
 					$sections = $('.mesh-section', $section_container);
+
+                    var $handle = $response.find( '.handlediv' );
+
+                    $handle.attr( 'aria-expanded', true )
+                        .on( 'click', self.toggle_collapse );
 
 					setTimeout(function () {
 						mesh.pointers.show_pointer();
@@ -583,16 +608,22 @@ mesh.admin = function ( $ ) {
 
 			var $this = $(this);
 
+			if( $this.hasClass('disabled' ) ) {
+				return;
+			}
+
 			self.disable_controls( $meta_box_container );
 
 			$meta_box_container.addClass('mesh-is-ordering');
 
-			self.update_notifications( 'reorder', 'warning' );
+			// self.update_notifications( 'reorder', 'warning' );
 
-			$reorder_button.text( mesh_data.strings.save_order ).addClass('mesh-save-order button-primary').removeClass('mesh-section-reorder');
+			$reorder_button
+				.text( mesh_data.strings.save_order )
+				.addClass('mesh-save-order button-primary')
+				.removeClass('mesh-section-reorder');
 
 			self.collapse_all_sections();
-
 			$section_container.sortable();
 		},
 
@@ -641,8 +672,6 @@ mesh.admin = function ( $ ) {
 
 				$this.find('.section-menu-order').val( index );
 			});
-
-		//	response = self.save_section_ajax( section_ids, $reorder_spinner );
 		},
 
 		/**
@@ -664,7 +693,10 @@ mesh.admin = function ( $ ) {
 
 			self.enable_controls( $meta_box_container );
 
-			$reorder_button.text( mesh_data.strings.reorder ).addClass('mesh-section-reorder').removeClass('mesh-save-order button-primary');
+			$reorder_button
+				.text( mesh_data.strings.reorder )
+				.addClass('mesh-section-reorder')
+				.removeClass('mesh-save-order button-primary');
 
 			$( '.mesh-postbox', $section_container ).each( function( index ){
 				var $this = $(this);
@@ -952,13 +984,13 @@ mesh.admin = function ( $ ) {
 		 *
 		 * @since 1.1
 		 */
-		disable_controls : function( $tgt) {
+		disable_controls : function( $tgt ) {
 			$expand_button.addClass('disabled');
 			$add_button.addClass('disabled');
 			$collapse_button.addClass('disabled');
 			$reorder_button.addClass( 'disabled' );
 
-			var $postboxes = $( '.mesh-section', $meta_box_container );
+			var $postboxes = $( '.mesh-section', $section_container );
 
 			if ( $postboxes.length > 1 ) {
 				$reorder_button.removeClass( 'disabled' );
