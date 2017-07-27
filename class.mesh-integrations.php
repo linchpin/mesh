@@ -28,8 +28,10 @@ class Mesh_Integrations {
 	function __construct() {
 		$this->integrations = Mesh::scandir( LINCHPIN_MESH___PLUGIN_DIR . '/integrations', 'php', 0, false );
 
-		foreach ( $this->integrations as $file ) {
-			include_once $file;
+		if ( ! empty( $this->integrations ) ) {
+			foreach ( $this->integrations as $file ) {
+				include_once $file;
+			}
 		}
 	}
 }
