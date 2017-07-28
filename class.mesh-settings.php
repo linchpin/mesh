@@ -331,9 +331,10 @@ class Mesh_Settings {
 	static public function get_tabs() {
 		$tabs = array(
 			'settings'  => __( 'Settings',   'mesh' ),
-            'faq'       => __( 'About Mesh', 'mesh' ),
+            'about'       => __( 'About Mesh', 'mesh' ),
+            'new'  => __( 'Whats New', 'mesh' ),
             'changelog' => __( 'Change Log', 'mesh' ),
-            'linchpin'  => __( 'About Linchpin', 'mesh' ),
+
         );
 
 		return apply_filters( 'mesh_tabs', $tabs );
