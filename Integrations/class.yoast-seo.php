@@ -16,12 +16,14 @@ if ( ! defined('ABSPATH' ) ) {
 }
 
 /**
- * Mesh_AJAX class.
+ * Class Yoast_SEO
+ * @package Mesh\Integrations
  */
 class Yoast_SEO {
 
 	/**
-	 * WordPress_Seo constructor.
+	 * Yoast_SEO constructor.
+	 *
 	 */
 	public function __construct() {
 		add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ) );
@@ -43,10 +45,10 @@ class Yoast_SEO {
 
 		if ( ! is_plugin_active('wordpress-seo/wp-seo.php' ) &&
 		 ! is_plugin_active('wordpress-seo-premium/wp-seo-premium.php' ) ) {
-			return true;
+			return false;
 		}
 
-		return false;
+		return true;
 	}
 
 	/**

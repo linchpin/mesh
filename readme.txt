@@ -86,10 +86,16 @@ Or
 
 == Changelog ==
 
-= Unreleased =
+= Unreleased
+* Fixed a bug where reordering would stop that section from working properly until refresh.
 * Fixed a bug where collapsed sections could not be toggled open after a new section was added
 * Add support for Yoast SEO Page Content Analysis
 * Fixed a bug when excluding Mesh template related taxonomies from the generated sitemap
+* Fixed a bug where section and block background images were displayed before "update" / "publish"
+* Controls within Sections and Columns/Blocks are now extendable for developers.
+* Added support for scripts within urls within TinyMCE
+* Added support for duplicating sections when duplicating a post using Duplicate Post Plugin
+* Added support for duplicating sections when duplicating a post using Post Duplicator Plugin
 
 = 1.1.7 =
 * Confirmed 4.8 compatibility
