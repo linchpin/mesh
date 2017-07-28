@@ -17,8 +17,18 @@ $global-radius: .25rem;
   font-weight: 100;
 
   .mesh-logo {
-    width: 200px;
+    display: inline-block;
+    width: 250px;
     padding: 1rem 0;
+  }
+
+  .com-button {
+    display: inline-block;
+    float: right;
+    margin: 2.5rem 0;
+    a {
+      margin-bottom: 0 !important;
+    }
   }
 
   .clearfix {
@@ -83,7 +93,7 @@ $global-radius: .25rem;
   }
 
   .bold {
-    font-weight: bolder;
+    font-weight: 600;
   }
 
   .nav-tab-wrapper {
@@ -132,16 +142,19 @@ $global-radius: .25rem;
 
 // About Mesh
   .about-hero {
-    h1 {
-      padding: 6rem 5%;
-      color: $white-smoke;
-      width: 45%;
+    .hero-text {
+      padding: 3rem 5%;
+      width: 70%;
+      h1, h2, h3 {
+        color: $white-smoke;
+      }
     }
   }
 
-  .about-website-cta {
+  .green-bg {
     background-color: $caribbean-green;
     padding: 1px;
+
 
     h3 {
       color: $white-smoke;

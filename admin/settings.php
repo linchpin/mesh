@@ -33,8 +33,11 @@ require_once LINCHPIN_MESH___PLUGIN_DIR . '/lib/parsedown/Parsedown.php';
 $Parsedown = new Parsedown();
 ?>
 <div class="wrap" id="mesh-settings">
-    <img class="mesh-logo" src="<?php echo ( LINCHPIN_MESH___PLUGIN_URL . 'assets/images/mesh-full-logo-full-color@2x.png' ); ?>" alt="Mesh" />
-	<?php settings_errors( self::$plugin_name . '-notices' ); ?>
+    <div class="table">
+        <img class="mesh-logo table-cell" src="<?php echo ( LINCHPIN_MESH___PLUGIN_URL . 'assets/images/mesh-tagline-logo.png' ); ?>" alt="Mesh" />
+        <h3 class="com-button table-cell"><a  href="http://meshplugin.com" class="button">Visit MeshPlugin.com</a></h3>
+    </div>
+    <?php settings_errors( self::$plugin_name . '-notices' ); ?>
     <h2 class="nav-tab-wrapper">
 		<?php
 		foreach ( $tabs as $tab_slug => $tab_name ) :

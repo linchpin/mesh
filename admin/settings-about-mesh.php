@@ -12,18 +12,25 @@
         <div id="post-body" class="metabox-holder">
             <div id="postbox-container" class="postbox-container">
 			    <div class="about-hero" style="background-image: url('<?php echo ( LINCHPIN_MESH___PLUGIN_URL . 'assets/images/meshbackground@2x.png'); ?>');">
-                    <h1>A WordPress Page Builder, Simplified</h1>
+                    <div class="hero-text">
+                        <h1>Thank you for installing Mesh!</h1>
+                        <h3>Mesh is the most flexible way to add content to your WordPress site. It is a simple, responsive solution for adding <span class="bold">multiple sections of content</span> within WordPress pages, posts and custom post types.</h3>
+                    </div>
                 </div>
-                <div class="about-website-cta">
+                <div class="green-bg">
                     <div class="wrapper">
-                        <h3 class="light-weight"><a href="http://meshplugin.com" class="underline">Visit MeshPlugin.com</a> to see a full list of features and get all the information you need.</h3>
+                        <h3> <span class="bold">Getting Started: </span>Building your First Mesh Page </h3>
                     </div>
                 </div>
                 <div class="wrapper">
-                    <div class="thank-you">
-                        <h2>Thank you for installing Mesh!</h2>
-                        <h3>Mesh is the most flexible way to add content to your WordPress site. It is a simple, responsive solution for adding <span class="bold">multiple sections of content</span> within WordPress pages, posts and custom post types.</h3>
-                    </div>
+                    <h4 class="steps"><span class="bold">Step 1: </span> Enable Mesh</h4>
+                    <p>Head over to the <a href="#">settings</a> tab to enable Mesh on the pages you need.</p>
+
+                    <h4 class="steps"><span class="bold">Step 2: </span> Go to a Page/Post Where Mesh Has Been Enabled</h4>
+                    <p>Add mesh sections to your page/post</p>
+
+                    <h4 class="steps"><span class="bold">Step 3: </span> Follow the tool-tip steps </h4>
+                    <p>Let Mesh take it from here and get started building something amazing!</p>
 
                     <div class="grey-box-container">
                         <div class="grey-box fifty">

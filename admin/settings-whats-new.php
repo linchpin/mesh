@@ -12,44 +12,67 @@
     <div id="post-body" class="metabox-holder">
         <div id="postbox-container" class="postbox-container">
             <div class="about-hero" style="background-image: url('<?php echo ( LINCHPIN_MESH___PLUGIN_URL . 'assets/images/meshgreenbackground@2x.png'); ?>');">
-                <h1>Updates, Bug Fixes & New Releases</h1>
+                <div class="hero-text">
+                    <h1>Updates, Bug Fixes & New Releases</h1>
+                </div>
             </div>
-            <div class="about-website-cta version-info">
+            <div class="green-bg version-info">
                 <div class="wrapper">
-                    <h3 class="light-weight">Mesh Version 1.2   |   Released July 28th, 2017</h3>
+                    <h3 class="light-weight">Mesh Version 1.2   |   Released on this Date</h3>
                 </div>
             </div>
             <div class="wrapper">
                 <div class="new-feature-container">
 
-                    <p class="new-tag">New Feature</p>
+                    <p class="new-tag">New Features</p>
 
                     <div class="new-feature">
-                        <h4>New Feature Heading</h4>
-                        <p>Short description lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </p>
+                        <h4>Yoast SEO Page Ranking</h4>
+                        <p>Added support for Yoast SEO page analysis</p>
                     </div>
 
                     <div class="new-feature">
-                        <h4>New Feature Heading</h4>
-                        <p>Short description lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </p>
+                        <h4>Duplicate Post Support</h4>
+                        <p>Added support for duplicating sections when duplicating a post using <a href="https://wordpress.org/plugins/duplicate-post/">Duplicate Post</a> Plugin and <a href="https://wordpress.org/plugins/post-duplicator/">Post Duplicator</a> Plugin</p>
                     </div>
+
+                    <div class="new-feature">
+                        <h4>More Customization for Developers</h4>
+                        <p>Controls within Sections and Columns/Blocks are now extendable for developers.</p>
+                    </div>
+
                 </div>
                 <div class="update-container">
 
-                    <p class="new-tag">Update</p>
+                    <p class="new-tag">Updates</p>
 
                     <div class="update">
-                        <h4>Update Heading</h4>
-                        <p>Short description lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </p>
+                        <h4>TinyMCE Urls</h4>
+                        <p>Added support for scripts within urls within TinyMCE</p>
                     </div>
                 </div>
                 <div class="bug-fix-container">
 
-                    <p class="new-tag">Bug Fix</p>
+                    <p class="new-tag">Bug Fixes</p>
 
                     <div class="bug-fix">
-                        <h4>Bug Fix Heading</h4>
-                        <p>Short description lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </p>
+                        <h4>Reordering Fix</h4>
+                        <p>Fixed a bug where reordering would stop that section from working properly until refresh.</p>
+                    </div>
+
+                    <div class="bug-fix">
+                        <h4>Toggling Fix</h4>
+                        <p>Fixed a bug where collapsed sections could not be toggled open after a new section was added</p>
+                    </div>
+
+                    <div class="bug-fix">
+                        <h4>Generated Sitemap Fix</h4>
+                        <p>Fixed a bug when excluding Mesh template related taxonomies from the generated sitemap</p>
+                    </div>
+
+                    <div class="bug-fix">
+                        <h4>Update and Publish Fix</h4>
+                        <p>Fixed a bug where section and block background images were displayed before "update" / "publish"</p>
                     </div>
                 </div>
 
@@ -59,7 +82,7 @@
             <div class="grey-box-container">
                 <div class="grey-box fifty">
                     <div class="padding-box">
-                        <h4>Look under the hood on Github</h4>
+                        <h4>Visit GitHub</h4>
                         <p>The base Mesh Page Builder is fully open sourced on github. The team at <a href="https://linchpin.agency" target="_blank">Linchpin</a> actively manages and maintains the project. Take a look at the code, fork and submit pull requests or provide feedback/feature request right from github.</p>
                         <p class="no-margin"><a class="button" href="https://github.com/linchpin/mesh" target="_blank"> Help Us Build It Better </a></p>
                     </div>
@@ -67,9 +90,9 @@
 
                 <div class="grey-box fifty">
                     <div class="padding-box">
-                        <h4>Tell Us What You Think</h4>
-                        <p>Already a Mesh user? We are always open to feedback and would love to hear about your experience with Mesh.</p>
-                        <p class="no-margin"><a class="button" href="https://wordpress.org/support/plugin/mesh/reviews/" target="_blank"> Review Mesh</a></p>
+                        <h4>Follow Mesh!</h4>
+                        <p>See what we're up to on Twitter</p>
+                        <p class="no-margin"><a class="button" href="http://twitter.com/meshplugin" target="_blank"> Mesh Tweets</a></p>
                     </div>
                 </div>
             </div>
