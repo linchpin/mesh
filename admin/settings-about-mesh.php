@@ -25,19 +25,21 @@
                         <h3>Mesh is the most flexible way to add content to your WordPress site. It is a simple, responsive solution for adding <span class="bold">multiple sections of content</span> within WordPress pages, posts and custom post types.</h3>
                     </div>
 
-                    <div class="grey-box left">
-                        <div class="padding-box">
-                            <h4>Look under the hood on Github</h4>
-                            <p>The base Mesh Page Builder is fully open sourced on github. The team at <a href="https://linchpin.agency" target="_blank">Linchpin</a> actively manages and maintains the project. Take a look at the code, fork and submit pull requests or provide feedback/feature request right from github.</p>
-                            <p class="no-margin"><a class="button" href="https://github.com/linchpin/mesh" target="_blank"> Help Us Build It Better </a></p>
+                    <div class="grey-box-container">
+                        <div class="grey-box fifty">
+                            <div class="padding-box">
+                                <h4>Look under the hood on Github</h4>
+                                <p>The base Mesh Page Builder is fully open sourced on github. The team at <a href="https://linchpin.agency" target="_blank">Linchpin</a> actively manages and maintains the project. Take a look at the code, fork and submit pull requests or provide feedback/feature request right from github.</p>
+                                <p class="no-margin"><a class="button" href="https://github.com/linchpin/mesh" target="_blank"> Help Us Build It Better </a></p>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="grey-box right">
-                        <div class="padding-box">
-                            <h4>Tell Us What You Think</h4>
-                            <p>Already a Mesh user? We are always open to feedback and would love to hear about your experience with Mesh.</p>
-                            <p class="no-margin"><a class="button" href="https://wordpress.org/support/plugin/mesh/reviews/" target="_blank"> Review Mesh</a></p>
+                        <div class="grey-box fifty">
+                            <div class="padding-box">
+                                <h4>Tell Us What You Think</h4>
+                                <p>Already a Mesh user? We are always open to feedback and would love to hear about your experience with Mesh.</p>
+                                <p class="no-margin"><a class="button" href="https://wordpress.org/support/plugin/mesh/reviews/" target="_blank"> Review Mesh</a></p>
+                            </div>
                         </div>
                     </div>
 

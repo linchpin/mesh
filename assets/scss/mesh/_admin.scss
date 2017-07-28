@@ -9,7 +9,7 @@ $global-radius: .25rem;
 
 
 
-.settings_page_mesh, #about-mesh {
+.settings_page_mesh, #about-mesh, #whats-new {
   margin-top: -10px;
   background-color: $white-smoke;
   font-family: ingra-2, sans-serif;
@@ -48,7 +48,7 @@ $global-radius: .25rem;
 
   h4, .h4 {
     font-size: 18px;
-    font-weight: 400;
+    font-weight: 600;
     line-height: 1.3;
 
   }
@@ -152,6 +152,7 @@ $global-radius: .25rem;
       color: $white-smoke !important;
       border-bottom: 2px solid $white-smoke;
       transition: background-color 0.25s ease-out,color 0.25s ease-out;
+      font-weight: 600;
 
       &:hover, &:focus, &:active {
         color: $lochinvar !important;
@@ -168,17 +169,30 @@ $global-radius: .25rem;
     background-size: cover;
   }
 
+  .grey-box-container {
+    margin: 0 -1rem;
+  }
+
   .grey-box {
     width: 100%;
     margin: 1rem 0;
     display: inline-block;
     float: left;
-    background-color: white;
-    border-radius: $global-radius;
+
+    &.fifty {
+      width: 50%;
+      .padding-box {
+       margin: 0 1rem;
+      }
+    }
 
     .padding-box {
       padding: 1rem 2rem;
+      background-color: white;
+      border-radius: $global-radius;
+      min-height: 300px;
     }
+
 
     p {
       font-size: 16px;
@@ -194,5 +208,54 @@ $global-radius: .25rem;
   }
 
 // Whats New
+
+  .version-info {
+    background-color: white;
+    h3 {
+      color: $darker-blue;
+    }
+  }
+
+  .new-tag {
+    display: inline-block;
+    border-radius: $global-radius;
+    padding: .5rem .5rem .5rem;
+    border: 2px solid $cerise;
+    background-color: transparent;
+    color: $cerise;
+    font-weight: 700;
+  }
+  .new-feature-container {
+    margin: 2rem 0;
+    .new-feature {
+      margin: 1rem 0 2rem;
+      h4 {
+        margin: 0 !important;
+      }
+
+    }
+  }
+
+  .update-container {
+    margin: 2rem 0;
+    .update {
+      margin: 1rem 0 2rem;
+      h4 {
+        margin: 0 !important;
+      }
+
+    }
+  }
+
+  .bug-fix-container {
+    margin: 2rem 0;
+    .bug-fix {
+      margin: 1rem 0 2rem;
+      h4 {
+        margin: 0 !important;
+      }
+
+    }
+  }
 
 }
