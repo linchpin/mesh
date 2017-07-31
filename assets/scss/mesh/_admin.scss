@@ -1,4 +1,5 @@
 $cerise: #d43c9e;
+$dark-purple: #812d8f;
 $blue-gem: #2c0c82;
 $darker-blue: #1B0253;
 $caribbean-green: #00baa3;
@@ -96,6 +97,14 @@ $global-radius: .25rem;
     font-weight: 600;
   }
 
+  .color-white {
+    color: $white-smoke;
+  }
+
+  .color-darkpurple {
+    color: $dark-purple;
+  }
+
   .nav-tab-wrapper {
     a {
       color: $darker-blue;
@@ -151,14 +160,20 @@ $global-radius: .25rem;
     }
   }
 
+  .gray-bg {
+    background-color: #e5e5e5;
+    padding: 1px;
+    border-radius: 0 0 $global-radius $global-radius;
+  }
+
   .green-bg {
     background-color: $caribbean-green;
     padding: 1px;
+    border-radius: 0 0 $global-radius $global-radius;
 
 
-    h3 {
-      color: $white-smoke;
-      font-weight: 200 !important;
+    h2.light-weight {
+      font-weight: 200;
     }
 
     a.underline {
@@ -182,6 +197,18 @@ $global-radius: .25rem;
     background-size: cover;
   }
 
+  .fifty {
+    width: 50%;
+    display: inline-block;
+    float: left;
+
+    &.right {
+      float:right;
+      img {
+        float:right;
+      }
+    }
+  }
   .grey-box-container {
     margin: 0 -1rem;
   }
@@ -200,10 +227,10 @@ $global-radius: .25rem;
     }
 
     .padding-box {
-      padding: 1rem 2rem;
+      padding: 1.5rem;
       background-color: white;
       border-radius: $global-radius;
-      min-height: 300px;
+      //min-height: 300px;
     }
 
 
@@ -212,6 +239,52 @@ $global-radius: .25rem;
     }
 
   }
+
+  .about-box-icon {
+    @media only screen and (min-width: 40.063em) {
+      width: 20%;
+      float: left;
+      padding-right: 10px;
+      padding-bottom: 0;
+    }
+
+    @media only screen and (max-width: 750px) {
+      width: 30%;
+      float: none;
+      padding-bottom: 1.5rem;
+    }
+
+    @media only screen and (max-width: 640px) {
+      width: 20%;
+    }
+
+    @media only screen and (min-width: 64.063em) {
+      width: 15%;
+      padding-right: 20px;
+    }
+  }
+
+  .about-box-copy {
+    padding-left: 20%;
+
+    h4, p {
+      padding-left: 20px;
+    }
+
+    @media only screen and (min-width: 40.063em) {
+      padding-left: 20%;
+    }
+
+    @media only screen and (max-width: 750px) {
+      padding-left: 0;
+    }
+
+    @media only screen and (min-width: 64.063em) {
+      padding-left: 15%;
+    }
+
+  }
+
 
 // Change Log
 
@@ -240,8 +313,15 @@ $global-radius: .25rem;
   }
   .new-feature-container {
     margin: 2rem 0;
+
+    &.fifty {
+      margin: 0 !important;
+    }
     .new-feature {
       margin: 1rem 0 2rem;
+
+      img {
+      }
       h4 {
         margin: 0 !important;
       }

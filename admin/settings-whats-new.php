@@ -22,7 +22,7 @@
                 </div>
             </div>
             <div class="wrapper">
-                <div class="new-feature-container">
+                <div class="new-feature-container fifty">
 
                     <p class="new-tag">New Features</p>
 
@@ -33,7 +33,8 @@
 
                     <div class="new-feature">
                         <h4>Duplicate Post Support</h4>
-                        <p>Added support for duplicating sections when duplicating a post using <a href="https://wordpress.org/plugins/duplicate-post/">Duplicate Post</a> Plugin and <a href="https://wordpress.org/plugins/post-duplicator/">Post Duplicator</a> Plugin</p>
+                        <p>Added support for duplicating sections when duplicating a post using <a href="https://wordpress.org/plugins/duplicate-post/">Duplicate Post</a> Plugin or <a href="https://wordpress.org/plugins/post-duplicator/">Post Duplicator</a> Plugin</p>
+
                     </div>
 
                     <div class="new-feature">
@@ -42,6 +43,13 @@
                     </div>
 
                 </div>
+
+                <div class="fifty">
+                    <img src="#" alt="filler image"/>
+                </div>
+
+                <div class="clearfix"></div>
+
                 <div class="update-container">
 
                     <p class="new-tag">Updates</p>
@@ -51,6 +59,9 @@
                         <p>Added support for scripts within urls within TinyMCE</p>
                     </div>
                 </div>
+
+                <div class="clearfix"></div>
+
                 <div class="bug-fix-container">
 
                     <p class="new-tag">Bug Fixes</p>
@@ -90,12 +101,21 @@
 
                 <div class="grey-box fifty">
                     <div class="padding-box">
+                        <h4>Tell Us What You Think</h4>
+                        <p>How is Mesh working for you? We are always open to feedback and would love to hear about your experience with Mesh.</p>
+                        <p class="no-margin"><a class="button" href="https://wordpress.org/support/plugin/mesh/reviews/" target="_blank"> Review Mesh</a></p>
+                    </div>
+                </div>
+            </div>
+
+                <div class="grey-box">
+                    <div class="padding-box">
                         <h4>Follow Mesh!</h4>
                         <p>See what we're up to on Twitter</p>
                         <p class="no-margin"><a class="button" href="http://twitter.com/meshplugin" target="_blank"> Mesh Tweets</a></p>
                     </div>
                 </div>
-            </div>
+
 
             <div class="clearfix"></div>
 

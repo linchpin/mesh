@@ -17,37 +17,97 @@
                         <h3>Mesh is the most flexible way to add content to your WordPress site. It is a simple, responsive solution for adding <span class="bold">multiple sections of content</span> within WordPress pages, posts and custom post types.</h3>
                     </div>
                 </div>
-                <div class="green-bg">
+                <div class="gray-bg">
                     <div class="wrapper">
-                        <h3> <span class="bold">Getting Started: </span>Building your First Mesh Page </h3>
+                        <h2 class="color-darkpurple light-weight"> <span class="bold">Getting Started: </span>Building your First Mesh Page </h2>
                     </div>
                 </div>
+
+                <div class="clearfix"></div>
+
+
                 <div class="wrapper">
-                    <h4 class="steps"><span class="bold">Step 1: </span> Enable Mesh</h4>
-                    <p>Head over to the <a href="#">settings</a> tab to enable Mesh on the pages you need.</p>
+                    <div class="fifty">
+                        <h3 class="steps"><span class="bold">Step 1: </span> Enable Mesh</h3>
+                        <p>Head over to the <a href="/wp-admin/options-general.php?page=mesh&tab=settings" target="_blank" >settings</a> tab to enable Mesh on the pages you need.</p>
 
-                    <h4 class="steps"><span class="bold">Step 2: </span> Go to a Page/Post Where Mesh Has Been Enabled</h4>
-                    <p>Add mesh sections to your page/post</p>
+                        <div class="clearfix"></div>
 
-                    <h4 class="steps"><span class="bold">Step 3: </span> Follow the tool-tip steps </h4>
-                    <p>Let Mesh take it from here and get started building something amazing!</p>
+                        <h3 class="steps"><span class="bold">Step 2: </span> Go to a Page/Post Where Mesh Has Been Enabled</h3>
+                        <p>Add mesh sections to your page/post</p>
 
-                    <div class="grey-box-container">
+                        <div class="clearfix"></div>
+
+                        <h3 class="steps"><span class="bold">Step 3: </span> Follow the tool-tip steps </h3>
+                        <p>Let Mesh take it from here and get started building something amazing!</p>
+                    </div>
+
+                    <div class="fifty right">
+                        <img src="<?php echo ( LINCHPIN_MESH___PLUGIN_URL . 'assets/images/mesh-admin-comp2.gif'); ?>" alt="Enable Mesh" width="90%"/>
+                    </div>
+
+                </div>
+
+                <div class="clearfix"></div>
+
+
+                <div class="gray-bg">
+                    <div class="wrapper">
+                        <h2 class="color-darkpurple">The Perks of Mesh</h2>
+                    </div>
+                </div>
+
+                <div class="wrapper">
+
+                <div class="grey-box-container">
                         <div class="grey-box fifty">
                             <div class="padding-box">
-                                <h4>Look under the hood on Github</h4>
-                                <p>The base Mesh Page Builder is fully open sourced on github. The team at <a href="https://linchpin.agency" target="_blank">Linchpin</a> actively manages and maintains the project. Take a look at the code, fork and submit pull requests or provide feedback/feature request right from github.</p>
-                                <p class="no-margin"><a class="button" href="https://github.com/linchpin/mesh" target="_blank"> Help Us Build It Better </a></p>
+                                <div class="about-box-icon">
+                                    <img src="https://meshplugin.com/wp-content/uploads/2017/03/feature-easy-familiar-2.svg" />
+                                </div>
+                                <div class="about-box-copy">
+                                    <h4>Familiar &amp; Easy to Use</h4>
+                                    <p>Create content using an interface similar to default pages and posts in WordPress.</p>
+                                </div>
                             </div>
                         </div>
 
                         <div class="grey-box fifty">
                             <div class="padding-box">
-                                <h4>Tell Us What You Think</h4>
-                                <p>Already a Mesh user? We are always open to feedback and would love to hear about your experience with Mesh.</p>
-                                <p class="no-margin"><a class="button" href="https://wordpress.org/support/plugin/mesh/reviews/" target="_blank"> Review Mesh</a></p>
+                                <div class="about-box-icon">
+                                    <img src="https://meshplugin.com/wp-content/uploads/2017/03/feature-visualize.svg" />
+                                </div>
+                                <div class="about-box-copy">
+                                    <h4>Layout Your Content</h4>
+                                    <p>Easily build rows and columns of content without writing a line of code or editing templates.</p>
+                                </div>
                             </div>
                         </div>
+
+                        <div class="grey-box fifty">
+                            <div class="padding-box">
+                                <div class="about-box-icon">
+                                    <img src="https://meshplugin.com/wp-content/uploads/2017/03/feature-responsive.svg" />
+                                </div>
+                                <div class="about-box-copy">
+                                    <h4>Fully Responsive</h4>
+                                    <p>Rest easy knowing your content will display seamlessly across browsers and devices.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="grey-box fifty">
+                            <div class="padding-box">
+                                <div class="about-box-icon">
+                                    <img src="https://meshplugin.com/wp-content/uploads/2017/03/feature-plays-well.svg" />
+                                </div>
+                                <div class="about-box-copy">
+                                    <h4>Plays Well with Others</h4>
+                                    <p>Continually updated with hooks and filters to extend functionality. For a full list, check out <a href="https://github.com/linchpin/mesh" target="_blank" rel="noopener">Mesh on GitHub</a>.</p>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
 
                     <div class="clearfix"></div>
@@ -56,7 +116,15 @@
                         <h2><span class="bold">Getting Started:</span> Building your First Mesh Page</h2>
                         <h3></h3>
                     </div> -->
+                </div>
 
+                <div class="gray-bg">
+                    <div class="wrapper">
+                        <h2 class="color-darkpurple">The Company</h2>
+                    </div>
+                </div>
+
+                <div class="wrapper">
                     <div class="about-devs-container grey-box">
                         <div class="padding-box">
                             <h2> Meet The Developers</h2>
