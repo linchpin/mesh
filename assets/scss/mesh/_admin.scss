@@ -5,6 +5,7 @@ $darker-blue: #1B0253;
 $caribbean-green: #00baa3;
 $lochinvar: #2e9080;
 $white-smoke: #f5f5f5;
+$gray: #e8e8e8;
 $global-radius: .25rem;
 
 
@@ -12,7 +13,7 @@ $global-radius: .25rem;
 
 .settings_page_mesh, #about-mesh, #whats-new {
   margin-top: -10px;
-  background-color: $white-smoke;
+  background-color: white;
   font-family: ingra-2, sans-serif;
   font-style: normal;
   font-weight: 100;
@@ -90,7 +91,7 @@ $global-radius: .25rem;
   }
 
   .light-weight {
-    font-weight: 200;
+    font-weight: 200 !important;
   }
 
   .bold {
@@ -160,10 +161,20 @@ $global-radius: .25rem;
     }
   }
 
+  .negative-bg {
+    margin: 0 -22px;
+    padding: 0 22px;
+  }
+
   .gray-bg {
-    background-color: #e5e5e5;
+    background-color: $gray;
     padding: 1px;
     border-radius: 0 0 $global-radius $global-radius;
+
+    &.negative-bg {
+      margin: 0 -22px;
+      padding: 1px 22px;
+    }
   }
 
   .green-bg {
@@ -209,6 +220,7 @@ $global-radius: .25rem;
       }
     }
   }
+
   .grey-box-container {
     margin: 0 -1rem;
   }
@@ -228,7 +240,7 @@ $global-radius: .25rem;
 
     .padding-box {
       padding: 1.5rem;
-      background-color: white;
+      background-color: $white-smoke;
       border-radius: $global-radius;
       //min-height: 300px;
     }
@@ -283,6 +295,12 @@ $global-radius: .25rem;
       padding-left: 15%;
     }
 
+  }
+
+  .about-devs-container {
+    h3 {
+      margin: 0;
+    }
   }
 
 
