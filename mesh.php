@@ -21,7 +21,7 @@ if ( ! function_exists( 'add_action' ) ) {
 /**
  * Define all globals.
  */
-define( 'LINCHPIN_MESH_VERSION', '1.1.7' );
+define( 'LINCHPIN_MESH_VERSION', '1.2' );
 define( 'LINCHPIN_MESH_PLUGIN_NAME', __( 'Mesh', 'mesh' ) );
 define( 'LINCHPIN_MESH__MINIMUM_WP_VERSION', '4.0' );
 define( 'LINCHPIN_MESH___PLUGIN_URL', plugin_dir_url( __FILE__ ) );
@@ -45,8 +45,15 @@ include_once 'class.mesh-upgrades.php';
 include_once 'class.mesh-reponsive-grid.php';
 include_once 'class.mesh-integrations.php';
 
+if ( is_admin() ) {
+	include_once 'class.mesh-install.php';
+}
+
 $mesh          = new Mesh();
-$mesh_pointers = new Mesh_Admin_Pointers();
+
+if ( is_admin() ) {
+	$mesh_pointers = new Mesh_Admin_Pointers();
+}
 
 add_action( 'init', array( 'Mesh_Settings', 'init' ) );
 
@@ -54,7 +61,9 @@ add_action( 'init', array( 'Mesh_Settings', 'init' ) );
  * Flush rewrite rules when the plugin is activated.
  */
 function mesh_activation_hook() {
+	add_option( 'mesh_activation', true );
 	flush_rewrite_rules();
+	do_action( 'mesh_activate' );
 }
 
 register_activation_hook( __FILE__, 'mesh_activation_hook' );
@@ -64,6 +73,8 @@ register_activation_hook( __FILE__, 'mesh_activation_hook' );
  */
 function mesh_deactivation_hook() {
 	flush_rewrite_rules();
+
+	do_action( 'mesh_deactivate' );
 }
 register_deactivation_hook( __FILE__, 'mesh_deactivation_hook' );
 
