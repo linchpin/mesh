@@ -22,6 +22,10 @@ $global-radius: .25rem;
     display: inline-block;
     width: 250px;
     padding: 1rem 0;
+
+    @media screen and ('max-width: 580px'){
+      display: block;
+    }
   }
 
   .com-button {
@@ -30,6 +34,11 @@ $global-radius: .25rem;
     margin: 2.5rem 0;
     a {
       margin-bottom: 0 !important;
+    }
+
+    @media screen and ('max-width: 580px'){
+      display: block;
+      float: none;
     }
   }
 
@@ -98,6 +107,14 @@ $global-radius: .25rem;
     font-weight: 600;
   }
 
+  .inline {
+    display: inline;
+  }
+
+  .no-margin {
+    margin: 0 !important;
+  }
+
   .color-white {
     color: $white-smoke;
   }
@@ -115,6 +132,9 @@ $global-radius: .25rem;
         color: $caribbean-green;
         background-color: $white-smoke;
       }
+    }
+    @media screen and ('max-width: 580px'){
+      width: 100%;
     }
   }
 
@@ -213,10 +233,19 @@ $global-radius: .25rem;
     display: inline-block;
     float: left;
 
+    @media screen and ('max-width: 1100px') {
+      width: 100%;
+      float: none !important;
+    }
+
     &.right {
-      float:right;
+      float: right;
       img {
-        float:right;
+        float: right;
+        @media screen and ('max-width: 1100px') {
+          float: none;
+          margin: 0 5%;
+        }
       }
     }
   }
@@ -236,6 +265,11 @@ $global-radius: .25rem;
       .padding-box {
        margin: 0 1rem;
       }
+
+      @media screen and ('max-width: 1100px') {
+        width: 100%;
+        float: none !important;
+      }
     }
 
     .padding-box {
@@ -245,35 +279,24 @@ $global-radius: .25rem;
       //min-height: 300px;
     }
 
+    h4 {
+      margin: 0;
+    }
 
     p {
       font-size: 16px;
+      @media screen and ('max-width: 1100px') {
+        margin-bottom: 1rem;
+      }
     }
 
   }
 
   .about-box-icon {
-    @media only screen and (min-width: 40.063em) {
       width: 20%;
       float: left;
       padding-right: 10px;
       padding-bottom: 0;
-    }
-
-    @media only screen and (max-width: 750px) {
-      width: 30%;
-      float: none;
-      padding-bottom: 1.5rem;
-    }
-
-    @media only screen and (max-width: 640px) {
-      width: 20%;
-    }
-
-    @media only screen and (min-width: 64.063em) {
-      width: 15%;
-      padding-right: 20px;
-    }
   }
 
   .about-box-copy {
@@ -281,18 +304,6 @@ $global-radius: .25rem;
 
     h4, p {
       padding-left: 20px;
-    }
-
-    @media only screen and (min-width: 40.063em) {
-      padding-left: 20%;
-    }
-
-    @media only screen and (max-width: 750px) {
-      padding-left: 0;
-    }
-
-    @media only screen and (min-width: 64.063em) {
-      padding-left: 15%;
     }
 
   }
@@ -320,26 +331,39 @@ $global-radius: .25rem;
     }
   }
 
-  .new-tag {
-    display: inline-block;
-    border-radius: $global-radius;
-    padding: .5rem .5rem .5rem;
-    border: 2px solid $cerise;
-    background-color: transparent;
-    color: $cerise;
-    font-weight: 700;
+  .new-title {
+    img {
+      padding-right: 1rem;
+      height: 50px;
+      max-width: 60px;
+      line-height: 60px;
+      vertical-align: middle;
+    }
+
+    .new-tag {
+      line-height: 50px;
+      display: inline-block;
+      color: $cerise;
+      font-weight: 700;
+      margin: 0 !important;
+      vertical-align: middle;
+    }
   }
+
+  .new {
+    padding: 0 30px 0 70px;
+  }
+
   .new-feature-container {
-    margin: 2rem 0;
+    margin: 1rem 0;
 
     &.fifty {
       margin: 0 !important;
     }
+
     .new-feature {
       margin: 1rem 0 2rem;
 
-      img {
-      }
       h4 {
         margin: 0 !important;
       }
@@ -348,7 +372,7 @@ $global-radius: .25rem;
   }
 
   .update-container {
-    margin: 2rem 0;
+    margin: 1rem 0;
     .update {
       margin: 1rem 0 2rem;
       h4 {
@@ -359,7 +383,7 @@ $global-radius: .25rem;
   }
 
   .bug-fix-container {
-    margin: 2rem 0;
+    margin: 1rem 0;
     .bug-fix {
       margin: 1rem 0 2rem;
       h4 {

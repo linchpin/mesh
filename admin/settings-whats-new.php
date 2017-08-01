@@ -24,74 +24,76 @@
             <div class="wrapper">
                 <div class="new-feature-container fifty">
 
-                    <p class="new-tag">New Features</p>
+                    <div class="new-title">
+                        <img class="new-img" src="<?php echo ( LINCHPIN_MESH___PLUGIN_URL . 'assets/images/icon-new-feature.svg') ?>" alt="New Features"/>
+                        <h3 class="new-tag">New Features</h3>
+                    </div>
 
-                    <div class="new-feature">
+                    <div class="new new-feature">
                         <h4>Yoast SEO Page Ranking</h4>
                         <p>Added support for Yoast SEO page analysis</p>
                     </div>
 
-                    <div class="new-feature">
+                    <div class="new new-feature">
                         <h4>Duplicate Post Support</h4>
                         <p>Added support for duplicating sections when duplicating a post using <a href="https://wordpress.org/plugins/duplicate-post/">Duplicate Post</a> Plugin or <a href="https://wordpress.org/plugins/post-duplicator/">Post Duplicator</a> Plugin</p>
-
                     </div>
 
-                    <div class="new-feature">
+                    <div class="new new-feature">
                         <h4>More Customization for Developers</h4>
                         <p>The fields within Mesh sections and blocks (in the "More Options" and "More" areas, respectively) are now extendible by developers. This means developers can add their own fields easily. This also lays the groundwork for us to be able to add more great features to Mesh!</p>
                         <p>Two new filters were added, "mesh_section_controls" and "mesh_block_controls," which pass the controls as an array of fields. By hooking into this filter, you can add checkboxes, select/dropdowns, and text fields. More field types will be released in the future, allowing you to extend Mesh further.</p>
                     </div>
-
                 </div>
 
                 <div class="fifty">
-                    <img src="#" alt="filler image"/>
+                    <img src="http://www.jennybeaumont.com/wp-content/uploads/2015/03/placeholder.gif" alt="filler image"/>
                 </div>
 
                 <div class="clearfix"></div>
 
+                <div class="update-container fifty">
 
-                <div class="update-container">
+                    <div class="new-title">
+                        <img src="<?php echo ( LINCHPIN_MESH___PLUGIN_URL . 'assets/images/icon-updates.svg') ?>" alt="Updates"/>
+                        <h3 class="new-tag">Updates</h3>
+                    </div>
 
-                    <p class="new-tag">Updates</p>
-
-                    <div class="update">
+                    <div class="new update">
                         <h4>TinyMCE Urls</h4>
                         <p>Added support for scripts within urls within TinyMCE</p>
                     </div>
 
-                    <div class="clearfix"></div>
-
                 </div>
 
                 <div class="clearfix"></div>
 
-                <div class="bug-fix-container">
+                <div class="bug-fix-container fifty">
 
-                    <p class="new-tag">Bug Fixes</p>
+                    <div class="new-title">
+                        <img src="<?php echo ( LINCHPIN_MESH___PLUGIN_URL . 'assets/images/icon-bug.svg') ?>" alt="Bugs"/>
+                        <h3 class="new-tag">Bug Fixes</h3>
+                    </div>
 
-                    <div class="bug-fix">
+                    <div class="new bug-fix">
                         <h4>Reordering Fix</h4>
                         <p>Fixed a bug where reordering would stop that section from working properly until refresh.</p>
                     </div>
 
-                    <div class="bug-fix">
+                    <div class="new bug-fix">
                         <h4>Toggling Fix</h4>
                         <p>Fixed a bug where collapsed sections could not be toggled open after a new section was added</p>
                     </div>
 
-                    <div class="bug-fix">
+                    <div class="new bug-fix">
                         <h4>Generated Sitemap Fix</h4>
                         <p>Fixed a bug when excluding Mesh template related taxonomies from the generated sitemap</p>
                     </div>
 
-                    <div class="bug-fix">
+                    <div class="new bug-fix">
                         <h4>Update and Publish Fix</h4>
                         <p>Fixed a bug where section and block background images were displayed before "update" / "publish"</p>
                     </div>
-
-                    <div class="clearfix"></div>
 
                 </div>
 
@@ -101,26 +103,25 @@
             <div class="grey-box-container" data-equalizer="">
                 <div class="grey-box fifty">
                     <div class="padding-box" data-equalizer-watch="">
-                        <h3 class="bold">Visit GitHub</h3>
+                        <h3 class="bold no-margin">Visit GitHub</h3>
                         <p>The base Mesh Page Builder is fully open sourced on github. The team at <a href="https://linchpin.agency" target="_blank">Linchpin</a> actively manages and maintains the project. Take a look at the code, fork and submit pull requests or provide feedback/feature request right from github.</p>
-                        <p class="no-margin"><a class="button" href="https://github.com/linchpin/mesh" target="_blank"> Help Us Build It Better </a></p>
+                        <p class="no-margin"><a class="button no-margin" href="https://github.com/linchpin/mesh" target="_blank"> Help Us Build It Better </a></p>
                     </div>
                 </div>
 
                 <div class="grey-box fifty">
                     <div class="padding-box" data-equalizer-watch="">
-                        <h3 class="bold">Tell Us What You Think</h3>
+                        <h3 class="bold no-margin">Tell Us What You Think</h3>
                         <p>How is Mesh working for you? We are always open to feedback and would love to hear about your experience with Mesh.</p>
-                        <p class="no-margin"><a class="button" href="https://wordpress.org/support/plugin/mesh/reviews/" target="_blank"> Review Mesh</a></p>
+                        <p class="no-margin"><a class="button no-margin" href="https://wordpress.org/support/plugin/mesh/reviews/" target="_blank"> Review Mesh</a></p>
                     </div>
                 </div>
             </div>
 
                 <div class="grey-box">
                     <div class="padding-box">
-                        <h3 class="bold">Follow Mesh!</h3>
-                        <p>See what we're up to on Twitter</p>
-                        <p class="no-margin"><a class="button" href="http://twitter.com/meshplugin" target="_blank"> Mesh Tweets</a></p>
+                        <h3 class="bold inline">Follow Mesh! </h3>
+                        <h3 class="inline light-weight">Follow along and see what we're up to on <a href="https://twitter.com/linchpin_agency">Twitter</a>.</h3>
                     </div>
                 </div>
 
