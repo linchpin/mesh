@@ -1,3 +1,5 @@
+//Variables
+  //Colors
 $cerise: #d43c9e;
 $dark-purple: #812d8f;
 $blue-gem: #2c0c82;
@@ -6,11 +8,11 @@ $caribbean-green: #00baa3;
 $lochinvar: #2e9080;
 $white-smoke: #f5f5f5;
 $gray: #e8e8e8;
+  //Other Global items
 $global-radius: .25rem;
 
 
-
-
+//Top area
 .settings_page_mesh, #about-mesh, #whats-new {
   margin-top: -10px;
   background-color: white;
@@ -29,9 +31,8 @@ $global-radius: .25rem;
   }
 
   .com-button {
-    display: inline-block;
-    float: right;
-    margin: 2.5rem 0;
+    text-align: right;
+
     a {
       margin-bottom: 0 !important;
     }
@@ -42,6 +43,7 @@ $global-radius: .25rem;
     }
   }
 
+  //Global items
   .clearfix {
     clear:both;
   }
@@ -99,12 +101,24 @@ $global-radius: .25rem;
     }
   }
 
+  ul {
+    list-style-position: inside;
+  }
+
   .light-weight {
     font-weight: 200 !important;
   }
 
+  .center {
+    text-align: center;
+  }
+
   .bold {
     font-weight: 600;
+  }
+
+  .italic {
+    font-style: italic;
   }
 
   .inline {
@@ -115,6 +129,20 @@ $global-radius: .25rem;
     margin: 0 !important;
   }
 
+  .table {
+    display: table;
+    width: 100%;
+    .table-cell {
+      display:table-cell;
+      vertical-align: middle;
+      float: none;
+    }
+
+    &.new {
+      width: auto;
+    }
+  }
+
   .color-white {
     color: $white-smoke;
   }
@@ -123,6 +151,7 @@ $global-radius: .25rem;
     color: $dark-purple;
   }
 
+  // tabs
   .nav-tab-wrapper {
     a {
       color: $darker-blue;
@@ -152,7 +181,7 @@ $global-radius: .25rem;
     text-align: center;
     cursor: pointer;
     background-color: $caribbean-green;
-    color: $white-smoke;
+    color: white;
     height: auto !important;
     text-shadow: none;
     box-shadow: none;
@@ -171,7 +200,19 @@ $global-radius: .25rem;
 // Settings
 
 // About Mesh
-  .about-hero {
+  .about.hero {
+    background-image: url('../images/meshbackground@2x.png');
+    background-position: right center;
+    background-size: cover;
+  }
+
+  .whatsnew.hero {
+    background-image: url('../images/meshgreenbackground@2x.png');
+    background-position: right center;
+    background-size: cover;
+  }
+
+  .hero {
     .hero-text {
       padding: 3rem 5%;
       width: 70%;
@@ -179,6 +220,11 @@ $global-radius: .25rem;
         color: $white-smoke;
       }
     }
+  }
+
+  .wrapper {
+    width: 90%;
+    margin: 2rem 5%;
   }
 
   .negative-bg {
@@ -192,7 +238,6 @@ $global-radius: .25rem;
     border-radius: 0 0 $global-radius $global-radius;
 
     &.negative-bg {
-      margin: 0 -22px;
       padding: 1px 22px;
     }
   }
@@ -201,11 +246,6 @@ $global-radius: .25rem;
     background-color: $caribbean-green;
     padding: 1px;
     border-radius: 0 0 $global-radius $global-radius;
-
-
-    h2.light-weight {
-      font-weight: 200;
-    }
 
     a.underline {
       color: $white-smoke !important;
@@ -216,36 +256,22 @@ $global-radius: .25rem;
       &:hover, &:focus, &:active {
         color: $lochinvar !important;
         border-bottom: 2px solid $lochinvar;
-
       }
     }
   }
 
-  .wrapper {
-    width: 90%;
-    margin: 2rem 5%;
-    background-position: right center;
-    background-size: cover;
-  }
-
-  .fifty {
-    width: 50%;
-    display: inline-block;
-    float: left;
-
+  .right {
+    float: right;
     @media screen and ('max-width: 1100px') {
-      width: 100%;
-      float: none !important;
+      float: none;
+      margin: 0 5%;
     }
 
-    &.right {
+    img {
       float: right;
-      img {
-        float: right;
-        @media screen and ('max-width: 1100px') {
-          float: none;
-          margin: 0 5%;
-        }
+      @media screen and ('max-width: 1100px') {
+        float: none;
+        margin: 0 5%;
       }
     }
   }
@@ -253,44 +279,19 @@ $global-radius: .25rem;
   .grey-box-container {
     margin: 0 -1rem;
   }
-
-  .grey-box {
-    width: 100%;
-    margin: 1rem 0;
-    display: inline-block;
-    float: left;
-
-    &.fifty {
-      width: 50%;
-      .padding-box {
-       margin: 0 1rem;
-      }
-
-      @media screen and ('max-width: 1100px') {
-        width: 100%;
-        float: none !important;
-      }
-    }
-
-    .padding-box {
+    .grey-box {
+      margin: 1rem;
       padding: 1.5rem;
       background-color: $white-smoke;
       border-radius: $global-radius;
       //min-height: 300px;
-    }
-
-    h4 {
-      margin: 0;
-    }
-
-    p {
-      font-size: 16px;
-      @media screen and ('max-width: 1100px') {
-        margin-bottom: 1rem;
+      p {
+        font-size: 16px;
+        @media screen and ('max-width: 1100px') {
+          margin-bottom: 1rem;
+        }
       }
     }
-
-  }
 
   .about-box-icon {
       width: 20%;
@@ -308,12 +309,6 @@ $global-radius: .25rem;
 
   }
 
-  .about-devs-container {
-    h3 {
-      margin: 0;
-    }
-  }
-
 
 // Change Log
 
@@ -321,6 +316,7 @@ $global-radius: .25rem;
     @extend .h2;
     padding: 16px 0 8px;
   }
+
 
 // Whats New
 
@@ -350,47 +346,33 @@ $global-radius: .25rem;
     }
   }
 
-  .new {
-    padding: 0 30px 0 70px;
-  }
+  .new-feature-container, .update-container, .bug-fix-container {
+      margin: 1rem 0;
 
-  .new-feature-container {
-    margin: 1rem 0;
+      .new-feature, .update, .bug-fix {
+        margin: 1rem 0 2rem;
+       }
 
-    &.fifty {
-      margin: 0 !important;
-    }
+      .new {
+        padding-left: 50px;
 
-    .new-feature {
-      margin: 1rem 0 2rem;
-
-      h4 {
-        margin: 0 !important;
+        [class^="mesh-columns-"] {
+          padding: 0 20px;
+        }
       }
-
-    }
   }
 
-  .update-container {
-    margin: 1rem 0;
-    .update {
-      margin: 1rem 0 2rem;
-      h4 {
-        margin: 0 !important;
-      }
+}
 
-    }
+// UPDATE Notification
+.mesh-update-notice {
+  width: auto !important;
+  padding: 10px 38px;
+  border-left-color: $cerise;
+  img {
+    max-width:100px !important;
+    float:left;
+    margin-right:10px;
+    padding-right: 38px;
   }
-
-  .bug-fix-container {
-    margin: 1rem 0;
-    .bug-fix {
-      margin: 1rem 0 2rem;
-      h4 {
-        margin: 0 !important;
-      }
-
-    }
-  }
-
 }

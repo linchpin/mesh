@@ -106,14 +106,19 @@ class Mesh_Install {
 		$notifications = get_user_option( 'linchpin_mesh_notifications' );
 
 		if ( $mesh_settings !== false && empty ( $notifications['update-notice'] ) ) : ?>
-		<div style="border-left-color:#d43c9e;" data-type="update-notice" class="mesh-update-notice notice notice-info is-dismissible">
-			<p><img src="<?php echo esc_attr( LINCHPIN_MESH___PLUGIN_URL . 'assets/images/mesh-full-logo-full-color@2x.png' ); ?>" style="max-width:100px; float:left; margin-right:10px"><?php printf( __( 'Thanks for updating Mesh to v. (%s). We suggest checking out <a href="%s">what\'s new</a>', 'mesh' ),
-								  $mesh_version,
-					              admin_url( 'options-general.php?page=mesh&tab=new' ) ); ?></p>
-			<p>
-				
-				<?php esc_html_e( 'This release includes integrations with Yoast SEO, Popular Duplication Plugins and a bunch of other fixes','mesh' ); ?>
- 			</p>
+		<div class="mesh-update-notice notice notice-info is-dismissible table" data-type="update-notice">
+			<div class="table-cell">
+                <img src="<?php echo esc_attr( LINCHPIN_MESH___PLUGIN_URL . 'assets/images/mesh-full-logo-full-color@2x.png' ); ?>" >
+            </div>
+            <div class="table-cell">
+                <p class="no-margin"><?php printf( __( 'Thanks for updating Mesh to v. (%s). We suggest checking out <a href="%s">what\'s new</a>', 'mesh' ),
+                                      $mesh_version,
+                                      admin_url( 'options-general.php?page=mesh&tab=new' ) ); ?>
+                </p>
+                <p class="no-margin">
+                    <?php esc_html_e( 'This release includes integrations with Yoast SEO, Popular Duplication Plugins and a bunch of other fixes','mesh' ); ?>
+                </p>
+            </div>
 		</div>
 		<?php endif;
 	}
