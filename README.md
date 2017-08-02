@@ -1,3 +1,4 @@
+#add dummy text line to test Code Climate PR integration
 ![Mesh Banner Image](https://linchpin.agency/wp-content/uploads/2016/10/mesh-banner-github.jpg)
 # Mesh - Multiple Content Sections
 
