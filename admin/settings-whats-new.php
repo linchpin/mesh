@@ -96,7 +96,7 @@
             <div class="grey-box-container" data-equalizer="">
                 <div class="grey-box fifty">
                     <div class="padding-box" data-equalizer-watch="">
-                        <h3 class="bold no-margin">Visit GitHub</h3>
+                        <h3 class="bold no-margin"><?php esc_html_e( 'Visit GitHub' ); ?></h3>
                         <p>The base Mesh Page Builder is fully open sourced on github. The team at <a href="https://linchpin.agency" target="_blank">Linchpin</a> actively manages and maintains the project. Take a look at the code, fork and submit pull requests or provide feedback/feature request right from github.</p>
                         <p class="no-margin"><a class="button no-margin" href="https://github.com/linchpin/mesh" target="_blank"> Help Us Build It Better </a></p>
                     </div>
@@ -104,8 +104,8 @@
 
                 <div class="grey-box fifty">
                     <div class="padding-box" data-equalizer-watch="">
-                        <h3 class="bold no-margin">Tell Us What You Think</h3>
-                        <p>How is Mesh working for you? We are always open to feedback and would love to hear about your experience with Mesh.</p>
+                        <h3 class="bold no-margin"><?php esc_html_e( 'Tell Us What You Think' ); ?></h3>
+                        <p><?php esc_html_e( 'How is Mesh working for you? We are always open to feedback and would love to hear about your experience with Mesh.' ); ?></p>
                         <p class="no-margin"><a class="button no-margin" href="https://wordpress.org/support/plugin/mesh/reviews/" target="_blank"> Review Mesh</a></p>
                     </div>
                 </div>
@@ -113,7 +113,7 @@
 
                 <div class="grey-box">
                     <div class="padding-box">
-                        <h3 class="bold inline">Follow Mesh! </h3>
+                        <h3 class="bold inline"><?php esc_html_e( 'Follow Mesh!' ); ?></h3>
                         <h3 class="inline light-weight">Follow along and see what we're up to on <a href="https://twitter.com/linchpin_agency">Twitter</a>.</h3>
                     </div>
                 </div>
