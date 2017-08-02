@@ -35,7 +35,11 @@ $Parsedown = new Parsedown();
 <div class="wrap" id="mesh-settings">
     <div class="table">
         <img class="mesh-logo table-cell" src="<?php echo ( LINCHPIN_MESH___PLUGIN_URL . 'assets/images/mesh-tagline-logo.png' ); ?>" alt="Mesh" />
-        <h3 class="com-button table-cell"><a  href="http://meshplugin.com" class="button">Visit MeshPlugin.com</a></h3>
+        <h3 class="com-button table-cell">
+            <?php
+                printf( '<a  href="%s" class="button">Visit MeshPlugin.com</a>', esc_url( 'http://meshplugin.com' ) );
+            ?>
+        </h3>
         <div class="clearfix"></div>
     </div>
     <?php settings_errors( self::$plugin_name . '-notices' ); ?>

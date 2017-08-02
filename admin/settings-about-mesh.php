@@ -27,8 +27,8 @@
                 </div>
             </div>
 
-            <div class="wrapper mesh-row">
-                <div class="mesh-columns-6">
+            <div class="wrapper mesh-row table">
+                <div class="mesh-columns-6 table-cell">
                     <h3><?php esc_html_e('A Quick 2 Minute Primer', 'mesh' ); ?></h3>
                     <p class="steps"><strong><?php esc_html_e('Enable:', 'mesh' ) ;?></strong>
                         <?php printf( __( 'By default Mesh is only enabled Pages. If you you would like to enable mesh for other post types (including blog posts) head over to the <a href="%s">%s</a>.', 'mesh'),
@@ -37,18 +37,17 @@
                     </p>
                     <p><?php esc_html_e('Visit an existing page, post, custom post type or create a new one where Mesh has been enabled.', 'mesh' ); ?></p>
                     <p><?php esc_html_e( 'You will now see a new area below "The Editor".', 'Mesh' ); ?></p>
+
                     <img src="<?php echo ( LINCHPIN_MESH___PLUGIN_URL . 'assets/images/add-new-section.png'); ?>">
-                    <div class="clearfix"></div>
 
                     <h3 class="steps"><?php esc_html_e( 'Follow the Tool Tips', 'mesh' ); ?></h3>
                     <p><?php esc_html_e( 'The first time you create sections and blocks in mesh you will be presented with useful tool tips that will guide you along the way.', 'mesh' ); ?></p>
                 </div>
 
-                <div class="mesh-columns-6 right">
+                <div class="mesh-columns-6 right table-cell">
                     <img src="<?php echo ( LINCHPIN_MESH___PLUGIN_URL . 'assets/images/mesh-admin-comp2.gif'); ?>" alt="Enable Mesh" width="90%"/>
                 </div>
 
-                <div class="clearfix"></div>
             </div>
 
             <div class="gray-bg negative-bg">
@@ -64,7 +63,6 @@
 	                                <h4 class="no-margin"><?php esc_html_e( 'Familiar &amp; Easy to Use', 'mesh' ); ?></h4>
 	                                <p><?php esc_html_e( 'Create content using an interface similar to default pages and posts in WordPress.', 'mesh' ); ?></p>
 	                            </div>
-	                            <div class="clearfix"></div>
 	                        </div>
 	                    </div>
 
@@ -77,7 +75,6 @@
                                     <h4 class="no-margin"><?php esc_html_e( 'Layout Your Content', 'mesh' ); ?></h4>
                                     <p><?php esc_html_e('Easily build rows and columns of content without writing a line of code or editing templates.', 'mesh' ); ?></p>
                                 </div>
-                                <div class="clearfix"></div>
                             </div>
                         </div>
 
@@ -90,7 +87,6 @@
                                     <h4 class="no-margin"><?php esc_html_e( 'Fully Responsive', 'mesh' ); ?></h4>
                                     <p><?php esc_html_e( 'Rest easy knowing your content will display seamlessly across browsers and devices.', 'mesh' ); ?></p>
                                 </div>
-                                <div class="clearfix"></div>
                             </div>
                         </div>
 
@@ -106,11 +102,9 @@
 											esc_url( 'https://meshplugin.com/knowledge-base' ) ); ?>
 									</p>
                                 </div>
-                                <div class="clearfix"></div>
                             </div>
                         </div>
                     </div>
-                    <div class="clearfix"></div>
                 </div>
             </div>
 

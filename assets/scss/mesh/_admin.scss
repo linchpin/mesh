@@ -1,3 +1,5 @@
+//Variables
+  //Colors
 $cerise: #d43c9e;
 $dark-purple: #812d8f;
 $blue-gem: #2c0c82;
@@ -6,11 +8,11 @@ $caribbean-green: #00baa3;
 $lochinvar: #2e9080;
 $white-smoke: #f5f5f5;
 $gray: #e8e8e8;
+  //Other Global items
 $global-radius: .25rem;
 
 
-
-
+//Top area
 .settings_page_mesh, #about-mesh, #whats-new {
   margin-top: -10px;
   background-color: white;
@@ -97,6 +99,10 @@ $global-radius: .25rem;
     &:hover, &:focus, &:active {
       color: $lochinvar;
     }
+  }
+
+  ul {
+    list-style-position: inside;
   }
 
   .light-weight {
@@ -196,10 +202,16 @@ $global-radius: .25rem;
 // About Mesh
   .about.hero {
     background-image: url('../images/meshbackground@2x.png');
+    background-position: right center;
+    background-size: cover;
   }
+
   .whatsnew.hero {
     background-image: url('../images/meshgreenbackground@2x.png');
+    background-position: right center;
+    background-size: cover;
   }
+
   .hero {
     .hero-text {
       padding: 3rem 5%;
@@ -213,8 +225,6 @@ $global-radius: .25rem;
   .wrapper {
     width: 90%;
     margin: 2rem 5%;
-    background-position: right center;
-    background-size: cover;
   }
 
   .negative-bg {
@@ -228,7 +238,6 @@ $global-radius: .25rem;
     border-radius: 0 0 $global-radius $global-radius;
 
     &.negative-bg {
-      margin: 0 -22px;
       padding: 1px 22px;
     }
   }
@@ -256,8 +265,8 @@ $global-radius: .25rem;
     @media screen and ('max-width: 1100px') {
       float: none;
       margin: 0 5%;
-
     }
+
     img {
       float: right;
       @media screen and ('max-width: 1100px') {
@@ -266,7 +275,6 @@ $global-radius: .25rem;
       }
     }
   }
-
 
   .grey-box-container {
     margin: 0 -1rem;
@@ -284,7 +292,6 @@ $global-radius: .25rem;
         }
       }
     }
-
 
   .about-box-icon {
       width: 20%;
@@ -309,7 +316,6 @@ $global-radius: .25rem;
     @extend .h2;
     padding: 16px 0 8px;
   }
-
 
 
 // Whats New
@@ -356,4 +362,17 @@ $global-radius: .25rem;
       }
   }
 
+}
+
+// UPDATE Notification
+.mesh-update-notice {
+  width: auto !important;
+  padding: 10px 38px;
+  border-left-color: $cerise;
+  img {
+    max-width:100px !important;
+    float:left;
+    margin-right:10px;
+    padding-right: 38px;
+  }
 }
