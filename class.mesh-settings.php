@@ -56,7 +56,12 @@ class Mesh_Settings {
 	 */
 	public static function create_section() {
 		?>
-		<p><?php esc_html_e( 'Below are your settings for Mesh', 'mesh' ); ?></p>
+		<div class="gray-bg negative-bg">
+			<div class="wrapper">
+				<h2 class="color-darkpurple light-weight">
+					<span class="bold"><?php esc_html_e( 'Basic Settings', 'mesh' ); ?></h2>
+			</div>
+		</div>
 		<?php
 	}
 
@@ -65,7 +70,13 @@ class Mesh_Settings {
 	 */
 	public static function create_post_type_section() {
 		?>
-		<p><?php esc_html_e( 'Select the post types that allow Mesh.', 'mesh' ); ?></p>
+		<div class="gray-bg negative-bg">
+			<div class="wrapper">
+				<h2 class="color-darkpurple light-weight">
+					<span class="bold"><?php esc_html_e( 'Enable Mesh for the following Post Types', 'mesh' ); ?></h2>
+			</div>
+		</div>
+		<p><?php esc_html_e( 'Select the post types that allow Mesh functionality.', 'mesh' ); ?></p>
 		<?php
 	}
 
@@ -82,7 +93,7 @@ class Mesh_Settings {
 		// Default Settings Section.
 		add_settings_section(
 			'mesh_sections',
-			__( 'Mesh Configurations', 'mesh' ),
+			__( 'Basic Settings', 'mesh' ),
 			array( 'Mesh_Settings', 'create_section' ),
 			self::$settings_page
 		);
@@ -331,8 +342,8 @@ class Mesh_Settings {
 	static public function get_tabs() {
 		$tabs = array(
 			'settings'  => __( 'Settings',   'mesh' ),
-            'about'       => __( 'About Mesh', 'mesh' ),
-            'new'  => __( "What's New", 'mesh' ),
+            'about'     => __( 'About Mesh', 'mesh' ),
+            'new'       => __( "What's New", 'mesh' ),
             'changelog' => __( 'Change Log', 'mesh' ),
 
         );

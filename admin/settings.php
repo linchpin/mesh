@@ -32,20 +32,20 @@ require_once LINCHPIN_MESH___PLUGIN_DIR . '/lib/parsedown/Parsedown.php';
 
 $Parsedown = new Parsedown();
 ?>
-<div class="wrap" id="mesh-settings">
+<div class="mesh-wrap" id="mesh-settings">
     <div class="table">
         <img class="mesh-logo table-cell" src="<?php echo ( LINCHPIN_MESH___PLUGIN_URL . 'assets/images/mesh-tagline-logo.png' ); ?>" alt="Mesh" />
-        <h3 class="com-button table-cell"><a  href="http://meshplugin.com" class="button">Visit MeshPlugin.com</a></h3>
+        <h3 class="com-button table-cell"><a  href="https://meshplugin.com" class="button">Visit MeshPlugin.com</a></h3>
         <div class="clearfix"></div>
     </div>
-    <?php settings_errors( self::$plugin_name . '-notices' ); ?>
-    <h2 class="nav-tab-wrapper">
+	<?php settings_errors( self::$plugin_name . '-notices' ); ?>
+	<h2 class="nav-tab-wrapper">
 		<?php
 		foreach ( $tabs as $tab_slug => $tab_name ) :
 
 			$tab_url = add_query_arg( array(
 				'settings-updated' => false,
-				'tab'              => $tab_slug,
+				'tab'              => esc_attr( $tab_slug ),
 			) );
 
 			$active = ( $active_tab === $tab_slug ) ? ' nav-tab-active' : '';
