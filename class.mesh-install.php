@@ -26,15 +26,24 @@ class Mesh_Install {
 			return;
 		}
 
-		$is_first_install = $this->is_first_install();
-
-		if ( $is_first_install ) {
+		if ( get_option( 'mesh_settings' ) == false ) {
 			add_action( 'mesh_activate', array( $this, 'setup_first_install' ) );
-		} else {
-			add_action( 'admin_notices', array( $this, 'show_update_notice' ) );
 		}
 
+		add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ) );
+		add_action( 'admin_notices', array( $this, 'show_update_notice' ) );
 		add_action( 'admin_init', array( $this, 'show_welcome' ) );
+	}
+
+	/**
+	 * Enqueue our notifications, but really enqueue everything
+	 */
+	function admin_enqueue_scripts() {
+		wp_enqueue_script( 'admin-mesh-notifications', plugins_url( 'assets/js/admin-mesh-notifications.js', __FILE__ ), array(), LINCHPIN_MESH_VERSION, true );
+
+		wp_localize_script( 'admin-mesh-notifications', 'mesh_notifications', array(
+			'dismiss_nonce' => wp_create_nonce( 'mesh_dismiss_notification_nonce' ),
+		) );
 	}
 
 	/**
@@ -50,8 +59,8 @@ class Mesh_Install {
 			delete_option( 'mesh_activation' );
 
 			// Send new users to the welcome so they learn how to use mesh.
-			if ( ! isset( $_GET['activate-multi'] ) ) {
-				wp_redirect( admin_url( 'options-general.php?page=mesh&tab=faq' ) );
+			if ( ! isset( $_GET['activate-multi'] ) && get_option( 'mesh_settings' ) === false ) {
+				wp_redirect( admin_url( 'options-general.php?page=mesh&tab=about' ) );
 				exit;
 			}
 		}
@@ -62,8 +71,15 @@ class Mesh_Install {
 	 *
 	 * @return bool
 	 */
-	private function is_first_install() {
-		return ( get_option( 'mesh_settings' ) === false );
+	public function is_first_install() {
+
+		if ( $options = get_option( 'mesh_settings' ) ) {
+			if ( ! empty( $options ) ) {
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 	/**
@@ -87,8 +103,10 @@ class Mesh_Install {
 		$mesh_version = get_option( 'mesh_version' );
 		$mesh_settings = get_option( 'mesh_settings' );
 
-		if( ! empty( $mesh_settings ) && ! empty ( $mesh_settings['update_dismissed'] ) ) : ?>
-		<div style="border-left-color:#d43c9e;" class="notice notice-info is-dismissible">
+		$notifications = get_user_option( 'linchpin_mesh_notifications' );
+
+		if ( $mesh_settings !== false && empty ( $notifications['update-notice'] ) ) : ?>
+		<div style="border-left-color:#d43c9e;" data-type="update-notice" class="mesh-update-notice notice notice-info is-dismissible">
 			<p><img src="<?php echo esc_attr( LINCHPIN_MESH___PLUGIN_URL . 'assets/images/mesh-full-logo-full-color@2x.png' ); ?>" style="max-width:100px; float:left; margin-right:10px"><?php printf( __( 'Thanks for updating Mesh to v. (%s). We suggest checking out <a href="%s">what\'s new</a>', 'mesh' ),
 								  $mesh_version,
 					              admin_url( 'options-general.php?page=mesh&tab=new' ) ); ?></p>
