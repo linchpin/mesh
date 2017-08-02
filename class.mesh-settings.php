@@ -332,7 +332,7 @@ class Mesh_Settings {
 		$tabs = array(
 			'settings'  => __( 'Settings',   'mesh' ),
             'about'       => __( 'About Mesh', 'mesh' ),
-            'new'  => __( 'Whats New', 'mesh' ),
+            'new'  => __( "What's New", 'mesh' ),
             'changelog' => __( 'Change Log', 'mesh' ),
 
         );

@@ -36,6 +36,7 @@ $Parsedown = new Parsedown();
     <div class="table">
         <img class="mesh-logo table-cell" src="<?php echo ( LINCHPIN_MESH___PLUGIN_URL . 'assets/images/mesh-tagline-logo.png' ); ?>" alt="Mesh" />
         <h3 class="com-button table-cell"><a  href="http://meshplugin.com" class="button">Visit MeshPlugin.com</a></h3>
+        <div class="clearfix"></div>
     </div>
     <?php settings_errors( self::$plugin_name . '-notices' ); ?>
     <h2 class="nav-tab-wrapper">
