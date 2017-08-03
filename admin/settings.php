@@ -70,7 +70,7 @@ $Parsedown = new Parsedown();
                         <?php include_once( LINCHPIN_MESH___PLUGIN_DIR . '/admin/settings-meta-box-display.php' ); ?>
                     </div>
 				<?php elseif ( 'changelog' === $active_tab ) : ?>
-					<span class="changelog">
+					<div class="changelog">
                         <?php
 					$changelog_path = LINCHPIN_MESH___PLUGIN_DIR . '/CHANGELOG.md';
 
@@ -79,7 +79,7 @@ $Parsedown = new Parsedown();
 						echo $Parsedown->text( $changelog ); // WPCS: ok.
 					}
 					?>
-                    </span>
+                    </div>
 				<?php elseif ( 'about' === $active_tab ) : ?>
                     <?php include_once( LINCHPIN_MESH___PLUGIN_DIR . '/admin/settings-about-mesh.php' ); ?>
                 <?php elseif ( 'new' === $active_tab ) : ?>
