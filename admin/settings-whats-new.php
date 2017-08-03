@@ -1,9 +1,11 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: smalloy
- * Date: 7/27/17
- * Time: 12:22 PM
+ * Updates, Bug Fixes and News Template
+ *
+ * @since 1.2
+ *
+ * @package    Mesh
+ * @subpackage MeshAdmin
  */
 
 ?>
@@ -70,7 +72,7 @@
 	                        <p><?php esc_html_e( 'Added in a better starting point for first time users', 'mesh' ); ?></p>
 
 	                        <h4 class="no-margin"><?php esc_html_e( 'Improved TinyMCE Support', 'mesh' ); ?></h4>
-                            <p><?php esc_html_e( 'We had some reports from users regarding issues using the keywork javascript within tags so we within TinyMCE', 'mesh' ); ?></p>
+                            <p><?php esc_html_e( 'We had some reports from users regarding issues using the keyword "javascript" within html tags so now our filters match default WordPress TinyMCE filters.', 'mesh' ); ?></p>
                         </div>
                     </div>
 

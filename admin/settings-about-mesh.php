@@ -20,7 +20,7 @@
             <div class="gray-bg negative-bg">
                 <div class="wrapper">
                     <h2 class="color-darkpurple light-weight">
-	                    <?php printf('<span class="bold">%s</span> %s',
+	                    <?php printf(__( '<span class="bold">%s</span> %s', 'mesh' ),
 											esc_html( 'Getting Started:' ),
 											esc_html( 'Using Mesh with your Content' ) ); ?>
                     </h2>
@@ -113,28 +113,25 @@
                     <div class="grey-box no-margin">
                         <p class="no-margin">
                             <?php
-                            printf( '<a href="%s">Linchpin</a> is a Digital Agency that specializes in WordPress. 
+                            printf( __( '<a href="%s">Linchpin</a> is a Digital Agency that specializes in WordPress. 
                                 Committed to contributing to the WordPress community, Linchpin has released several 
                                 <a href="%s">plugins</a> on WordPress.org. Linchpin is also an active member in 
                                 their local WordPress communities, not only leading the <a href="%s">WordPress 
                                 Rhode Island Meetup</a> group for several years, but also organizing, volunteering, 
-                                speaking at or sponsoring local WordCamp conferences in the greater New England area.',
+                                speaking at or sponsoring local WordCamp conferences in the greater New England area.', 'mesh' ),
                                 esc_url( 'https://linchpin.agency' ),
                                 esc_url( 'https://profiles.wordpress.org/linchpin_agency/' ),
                                 esc_url( 'https://www.meetup.com/WordPressRI/' )  );
                             ?>
                         </p>
-
                         <p>
-                            <?php
-                            printf( 'Check out our <a href="%s">site</a>, connect with us or come say hi at a local event.', esc_url( 'http://linchpin.agency' ) );
-                            ?>
+                            <?php printf( __( 'Check out our <a href="%s">site</a>, connect with us or come say hi at a local event.', 'mesh' ), esc_url( 'https://linchpin.agency' ) ); ?>
                         </p>
-
-                        <p class="no-margin"><?php printf( '<a href="%s">%s</a>', esc_url( 'http://linchpin.agency' ), esc_html( 'Linchpin.Agency' ) ); ?>   |   <?php printf( '<a href="%s">%s</a>', esc_url( 'https://jetpack.pro/profile/linchpin/' ), esc_html( 'Jetpack.pro' ) ); ?>   |   <?php printf( '<a href="%s">%s</a>', esc_url( 'https://facebook.com/linchpinagency' ), esc_html( 'Facebook' ) ); ?>  |   <?php printf( '<a href="%s">%s</a>', esc_url( 'https://twitter.com/linchpin_agency' ), esc_html( 'Twitter' ) ); ?>   |   <?php printf( '<a href="%s">%s</a>', esc_url( 'https://www.instagram.com/linchpinagency/' ), esc_html( 'Instagram' ) ); ?></p>
+                        <p class="no-margin"><?php printf( __( '<a href="%s">%s</a>', 'mesh' ), esc_url( 'https://linchpin.agency' ), esc_html( 'Linchpin' ) ); ?>   |   <?php printf( __( '<a href="%s">%s</a>', 'true' ), esc_url( 'https://jetpack.pro/profile/linchpin/' ), esc_html( 'jetpack.pro' ) ); ?>   |   <?php printf( '<a href="%s">%s</a>', esc_url( 'https://facebook.com/linchpinagency' ), esc_html( 'Facebook' ) ); ?>  |   <?php printf( __( '<a href="%s">%s</a>', 'mesh' ), esc_url( 'https://twitter.com/linchpin_agency' ), esc_html( 'Twitter' ) ); ?>   |   <?php printf( __( '<a href="%s">%s</a>', 'mesh' ), esc_url( 'https://www.instagram.com/linchpinagency/' ), esc_html( 'Instagram' ) ); ?></p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
