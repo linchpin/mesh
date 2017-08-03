@@ -31,17 +31,17 @@
                 <div class="mesh-columns-6 table-cell">
                     <h3><?php esc_html_e('A Quick 2 Minute Primer', 'mesh' ); ?></h3>
                     <p class="steps"><strong><?php esc_html_e('Enable:', 'mesh' ) ;?></strong>
-                        <?php printf( __( 'By default Mesh is only enabled Pages. If you you would like to enable mesh for other post types (including blog posts) head over to the <a href="%s">%s</a>.', 'mesh'),
+                        <?php printf( __( 'By default Mesh is only enabled Pages. If you you would like to enable Mesh for other post types (including blog posts) head over to the <a href="%s">%s</a>.', 'mesh'),
 	                       admin_url( '/options-general.php?page=mesh&tab=settings' ),
 	                       esc_html__( 'settings', 'mesh' ) ); ?>
                     </p>
                     <p><?php esc_html_e('Visit an existing page, post, custom post type or create a new one where Mesh has been enabled.', 'mesh' ); ?></p>
                     <p><?php esc_html_e( 'You will now see a new area below "The Editor".', 'Mesh' ); ?></p>
 
-                    <img src="<?php echo ( LINCHPIN_MESH___PLUGIN_URL . 'assets/images/add-new-section.png'); ?>" alt="Add New Mesh Section" height="40%">
+                    <img src="<?php echo ( LINCHPIN_MESH___PLUGIN_URL . 'assets/images/add-new-section2.png'); ?>" alt="Add New Mesh Section" height="40%">
 
                     <h3 class="steps"><?php esc_html_e( 'Follow the Tool Tips', 'mesh' ); ?></h3>
-                    <p><?php esc_html_e( 'The first time you create sections and blocks in mesh you will be presented with useful tool tips that will guide you along the way.', 'mesh' ); ?></p>
+                    <p><?php esc_html_e( 'The first time you create sections and blocks in Mesh you will be presented with useful tool tips that will guide you along the way.', 'mesh' ); ?></p>
                 </div>
 
                 <div class="mesh-columns-6 right table-cell">
@@ -97,7 +97,7 @@
                                 <div class="about-box-copy">
                                     <h4 class="no-margin"><?php esc_html_e( 'Plays Well with Others', 'mesh' ); ?></h4>
                                     <p>
-										<?php printf( __( 'Continually updated with hooks and filters to extend functionality. For a full list, check out <a href="%s" target="_blank" rel="noopener">meshplugin.com</a>.', 'mesh'),
+										<?php printf( __( 'Continually updated with hooks and filters to extend functionality. For a full list, check out <a href="%s" target="_blank" rel="noopener">MeshPlugin.com</a>.', 'mesh'),
 											esc_url( 'https://meshplugin.com/knowledge-base' ) ); ?>
 									</p>
                                 </div>
@@ -110,7 +110,7 @@
             <div class="wrapper mesh-row">
                 <h2 class="color-darkpurple light-weight"><?php esc_html_e('About the Team Behind Mesh', 'mesh' ); ?></h2>
                 <div class="about-devs-container mesh-columns-12">
-                    <div class="grey-box no-margin">
+                    <div class="grey-box no-margin linchpin-logo">
                         <p class="no-margin">
                             <?php
                             printf( '<a href="%s">Linchpin</a> is a Digital Agency that specializes in WordPress. 

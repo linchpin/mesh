@@ -37,7 +37,7 @@ $Parsedown = new Parsedown();
         <img class="mesh-logo table-cell" src="<?php echo ( LINCHPIN_MESH___PLUGIN_URL . 'assets/images/mesh-tagline-logo.png' ); ?>" alt="Mesh" />
         <h3 class="com-button table-cell">
             <?php
-                printf( __( '<a href="%s" class="button">%s</a>', 'mesh' ), esc_url( 'https://meshplugin.com' ), esc_html( 'Visit MeshPlugin.com' ) );
+                printf( __( '<a href="%s" class="button" target="_blank">%s</a>', 'mesh' ), esc_url( 'https://meshplugin.com' ), esc_html( 'Visit MeshPlugin.com' ) );
             ?>
         </h3>
 
