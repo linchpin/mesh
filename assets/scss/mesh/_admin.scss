@@ -13,13 +13,7 @@ $global-radius: .25rem;
 
 
 //Top area
-.settings_page_mesh, #about-mesh, #whats-new, #settings {
-  margin-top: -10px;
-  background-color: white;
-  font-family: ingra-2, sans-serif;
-  font-style: normal;
-  font-weight: 100;
-
+.settings_page_mesh {
   .mesh-logo {
     display: inline-block;
     width: 250px;
@@ -28,17 +22,26 @@ $global-radius: .25rem;
 
   .com-button {
     text-align: right;
-    padding-left: .5rem;
+    padding-left: 20px;
+    padding-right: 20px;
 
     a {
       margin-bottom: 0 !important;
     }
 
-    @media screen and ('max-width: 580px'){
+    @media screen and ('max-width: 580px') {
       display: block;
       float: none;
     }
   }
+}
+
+.settings_page_mesh, #about-mesh, #whats-new, #settings {
+  margin-top: -10px;
+  background-color: white;
+  font-family: ingra-2, sans-serif;
+  font-style: normal;
+  font-weight: 100;
 
   //Global items
   .clearfix {
@@ -230,8 +233,15 @@ $global-radius: .25rem;
   }
 
   .negative-bg {
-    margin: 0 -22px !important;
+    margin: 0 0 0 -22px !important;
     padding: 0 22px;
+
+    @media screen and ('max-width: 782px'){
+      margin: 0 -10px !important;
+      padding: 0 10px;
+
+    }
+
   }
 
   .gray-bg {
@@ -371,15 +381,22 @@ $global-radius: .25rem;
 
 // UPDATE Notification
 .mesh-update-notice {
-  width: auto !important;
   padding: 10px 38px;
   border-left-color: $cerise;
-  margin: 25px 20px 0 2px;
+  margin: 25px 20px 0 2px ;
   img {
     max-width:100px !important;
     float:left;
-    margin:10px;
     padding-right: 38px;
+  }
+  .table {
+    display: table;
+    width: 100%;
+    .table-cell {
+      display: table-cell;
+      vertical-align: middle;
+
+    }
   }
 }
 
