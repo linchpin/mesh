@@ -1,15 +1,15 @@
 //Variables
   //Colors
-$cerise: #d43c9e;
-$dark-purple: #812d8f;
-$blue-gem: #2c0c82;
-$darker-blue: #1B0253;
-$caribbean-green: #00baa3;
-$lochinvar: #2e9080;
-$white-smoke: #f5f5f5;
-$gray: #e8e8e8;
+    $cerise: #d43c9e;
+    $dark-purple: #812d8f;
+    $blue-gem: #2c0c82;
+    $darker-blue: #1B0253;
+    $caribbean-green: #00baa3;
+    $lochinvar: #2e9080;
+    $white-smoke: #f5f5f5;
+    $gray: #e8e8e8;
   //Other Global items
-$global-radius: .25rem;
+    $global-radius: .25rem;
 
 
 //Top area
@@ -334,6 +334,9 @@ $global-radius: .25rem;
   .about-devs-container {
     p {
       font-size: 16px;
+    }
+    img{
+      padding-top: 15px;
     }
   }
 

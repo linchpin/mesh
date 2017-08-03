@@ -128,6 +128,7 @@
                             <?php printf( __( 'Check out our <a href="%s">site</a>, connect with us or come say hi at a local event.', 'mesh' ), esc_url( 'https://linchpin.agency' ) ); ?>
                         </p>
                         <p class="no-margin"><?php printf( __( '<a href="%s">%s</a>', 'mesh' ), esc_url( 'https://linchpin.agency' ), esc_html( 'Linchpin' ) ); ?>   |   <?php printf( __( '<a href="%s">%s</a>', 'true' ), esc_url( 'https://jetpack.pro/profile/linchpin/' ), esc_html( 'jetpack.pro' ) ); ?>   |   <?php printf( '<a href="%s">%s</a>', esc_url( 'https://facebook.com/linchpinagency' ), esc_html( 'Facebook' ) ); ?>  |   <?php printf( __( '<a href="%s">%s</a>', 'mesh' ), esc_url( 'https://twitter.com/linchpin_agency' ), esc_html( 'Twitter' ) ); ?>   |   <?php printf( __( '<a href="%s">%s</a>', 'mesh' ), esc_url( 'https://www.instagram.com/linchpinagency/' ), esc_html( 'Instagram' ) ); ?></p>
+                        <img src="<?php echo ( LINCHPIN_MESH___PLUGIN_URL . 'assets/images/linchpin-logo-lockup-fill-gray.svg'); ?>" width="200px" />
                     </div>
                 </div>
             </div>
