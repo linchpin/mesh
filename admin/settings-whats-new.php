@@ -66,7 +66,10 @@
 
                     <div class="new update mesh-row no-margin">
                         <div class="mesh-columns-12">
-                            <h4 class="no-margin"><?php esc_html_e( 'TinyMCE Urls', 'mesh' ); ?></h4>
+	                        <h4 class="no-margin"><?php esc_html_e( 'Better Onboarding Process', 'mesh' ); ?></h4>
+	                        <p><?php esc_html_e( 'Added in a better starting point for first time users', 'mesh' ); ?></p>
+
+	                        <h4 class="no-margin"><?php esc_html_e( 'Improved TinyMCE Support', 'mesh' ); ?></h4>
                             <p><?php esc_html_e( 'We had some reports from users regarding issues using the keywork javascript within tags so we within TinyMCE', 'mesh' ); ?></p>
                         </div>
                     </div>
