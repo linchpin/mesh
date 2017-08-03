@@ -20,8 +20,6 @@ mesh.notifications = function ( $ ) {
 
             self = mesh.notifications;
 
-            console.log('init');
-
             $body
                 .on('click', '.mesh-update-notice .notice-dismiss', self.dismissNotification );
         },
