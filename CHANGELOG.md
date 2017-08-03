@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+ - Remove trailing whitespace from row class
+ - Remove checks for equalizer in the 1 column template
  - Fixed a bug where reordering would stop that section from working properly until refresh.
  - Fixed a bug where collapsed sections could not be toggled open after a new section was added
  - Added support for Yoast SEO page analysis

@@ -28,8 +28,14 @@ class Mesh_Integrations {
 	function __construct() {
 		$this->integrations = Mesh::scandir( LINCHPIN_MESH___PLUGIN_DIR . '/integrations', 'php', 0, false );
 
-		foreach ( $this->integrations as $file ) {
-			include_once $file;
+		if ( ! empty( $this->integrations ) ) {
+			foreach ( $this->integrations as $file ) {
+				if ( file_exists( $file ) ) {
+					include_once $file;
+				} else {
+					error_log( sprintf( '%s %s', __( 'Mesh - Unable to locate integration: ', 'mesh' ), $file ) );
+				}
+			}
 		}
 	}
 }
