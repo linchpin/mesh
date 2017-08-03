@@ -48,7 +48,7 @@
                             <div class="new-feature">
                                 <h4 class="no-margin"><?php esc_html_e( 'Multiple Duplicate Post Plugins are Now Supported', 'mesh' ); ?></h4>
                                 <p><?php esc_html_e('With every release of Mesh we want to make sure it is more of a benefit to our users.','mesh' ); ?>
-                                    <?php esc_html_e('Mesh will now duplicate all Sections and Blocks when duplicating a page/post/custom post-types using the following popular plugins.', 'mesh' );?></p>
+                                    <?php esc_html_e('Mesh will now duplicate all Sections and Blocks when duplicating a page/post/custom post-types using the following popular plugins:', 'mesh' );?></p>
                                 <ul>
                                     <li><a href="https://wordpress.org/plugins/duplicate-post/" target="_blank" rel="noopener noreferrer"><?php esc_html_e( 'Duplicate Post', 'mesh' ); ?></a></li>
                                     <li><a href="https://wordpress.org/plugins/post-duplicator/" target="_blank" rel="noopener noreferrer"><?php esc_html_e( 'Post Duplicator', 'mesh' ); ?></a></li>
@@ -77,7 +77,7 @@
                         <div class="mesh-columns-12">
                             <div class="update">
                                 <h4 class="no-margin"><?php esc_html_e( 'Better Onboarding Process', 'mesh' ); ?></h4>
-                                <p><?php esc_html_e( 'Added in a better starting point for first time users', 'mesh' ); ?></p>
+                                <p><?php esc_html_e( 'Added in a better starting point for first time users.', 'mesh' ); ?></p>
                             </div>
                             <div class="update">
                                 <h4 class="no-margin"><?php esc_html_e( 'Improved TinyMCE Support', 'mesh' ); ?></h4>

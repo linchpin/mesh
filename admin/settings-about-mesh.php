@@ -110,7 +110,7 @@
             <div class="wrapper mesh-row">
                 <h2 class="color-darkpurple light-weight"><?php esc_html_e('About the Team Behind Mesh', 'mesh' ); ?></h2>
                 <div class="about-devs-container mesh-columns-12">
-                    <div class="grey-box no-margin linchpin-logo">
+                    <div class="no-margin">
                         <p class="no-margin">
                             <?php
                             printf( __( '<a href="%s">Linchpin</a> is a Digital Agency that specializes in WordPress. 
