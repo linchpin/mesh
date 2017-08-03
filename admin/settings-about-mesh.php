@@ -38,7 +38,7 @@
                     <p><?php esc_html_e('Visit an existing page, post, custom post type or create a new one where Mesh has been enabled.', 'mesh' ); ?></p>
                     <p><?php esc_html_e( 'You will now see a new area below "The Editor".', 'Mesh' ); ?></p>
 
-                    <img src="<?php echo ( LINCHPIN_MESH___PLUGIN_URL . 'assets/images/add-new-section.png'); ?>">
+                    <img src="<?php echo ( LINCHPIN_MESH___PLUGIN_URL . 'assets/images/add-new-section.png'); ?>" alt="Add New Mesh Section" height="40%">
 
                     <h3 class="steps"><?php esc_html_e( 'Follow the Tool Tips', 'mesh' ); ?></h3>
                     <p><?php esc_html_e( 'The first time you create sections and blocks in mesh you will be presented with useful tool tips that will guide you along the way.', 'mesh' ); ?></p>
@@ -47,7 +47,6 @@
                 <div class="mesh-columns-6 right table-cell">
                     <img src="<?php echo ( LINCHPIN_MESH___PLUGIN_URL . 'assets/images/mesh-admin-comp2.gif'); ?>" alt="Enable Mesh" width="90%"/>
                 </div>
-
             </div>
 
             <div class="gray-bg negative-bg">

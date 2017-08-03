@@ -44,7 +44,7 @@ $Parsedown = new Parsedown();
         <div class="clearfix"></div>
     </div>
 	<?php settings_errors( self::$plugin_name . '-notices' ); ?>
-	<h2 class="nav-tab-wrapper">
+	<h2 class="nav-tab-wrapper negative-bg">
 		<?php
 		foreach ( $tabs as $tab_slug => $tab_name ) :
 
@@ -66,7 +66,9 @@ $Parsedown = new Parsedown();
         <div id="post-body" class="metabox-holder">
             <div id="postbox-container" class="postbox-container">
 				<?php if ( 'settings' === $active_tab ) : ?>
-					<?php include_once( LINCHPIN_MESH___PLUGIN_DIR . '/admin/settings-meta-box-display.php' ); ?>
+                    <div id="settings">
+                        <?php include_once( LINCHPIN_MESH___PLUGIN_DIR . '/admin/settings-meta-box-display.php' ); ?>
+                    </div>
 				<?php elseif ( 'changelog' === $active_tab ) : ?>
 					<span class="changelog">
                         <?php

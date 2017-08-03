@@ -12,9 +12,9 @@ if ( ! function_exists( 'add_action' ) ) {
 	exit;
 }
 ?>
-<form action="options.php" method="POST">
-	<div class="about-hero negative-bg" style="background-image: url('<?php echo ( LINCHPIN_MESH___PLUGIN_URL . 'assets/images/meshbackground@2x.png'); ?>');">
-		<div class="hero-text">
+<form action="options.php" class="settings-form" method="POST">
+    <div class="about hero negative-bg">
+        <div class="hero-text">
 			<h1><?php esc_html_e( 'Mesh Settings', 'mesh' ); ?></h1>
 		</div>
 	</div>

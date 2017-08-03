@@ -13,7 +13,7 @@ $global-radius: .25rem;
 
 
 //Top area
-.settings_page_mesh, #about-mesh, #whats-new {
+.settings_page_mesh, #about-mesh, #whats-new, #settings {
   margin-top: -10px;
   background-color: white;
   font-family: ingra-2, sans-serif;
@@ -24,14 +24,11 @@ $global-radius: .25rem;
     display: inline-block;
     width: 250px;
     padding: 1rem 0;
-
-    @media screen and ('max-width: 580px'){
-      display: block;
-    }
   }
 
   .com-button {
     text-align: right;
+    padding-left: .5rem;
 
     a {
       margin-bottom: 0 !important;
@@ -161,6 +158,10 @@ $global-radius: .25rem;
         color: $caribbean-green;
         background-color: $white-smoke;
       }
+
+      &:first-child {
+        margin-left: 22px;
+      }
     }
     @media screen and ('max-width: 580px'){
       width: 100%;
@@ -197,7 +198,8 @@ $global-radius: .25rem;
   }
 
 
-// Settings
+
+
 
 // About Mesh
   .about.hero {
@@ -228,7 +230,7 @@ $global-radius: .25rem;
   }
 
   .negative-bg {
-    margin: 0 -22px;
+    margin: 0 -22px !important;
     padding: 0 22px;
   }
 
@@ -262,14 +264,14 @@ $global-radius: .25rem;
 
   .right {
     float: right;
-    @media screen and ('max-width: 1100px') {
+    @media screen and ('max-width: 1023px') {
       float: none;
       margin: 0 5%;
     }
 
     img {
       float: right;
-      @media screen and ('max-width: 1100px') {
+      @media screen and ('max-width: 1023px') {
         float: none;
         margin: 0 5%;
       }
@@ -287,7 +289,7 @@ $global-radius: .25rem;
       //min-height: 300px;
       p {
         font-size: 16px;
-        @media screen and ('max-width: 1100px') {
+        @media screen and ('max-width: 1023px') {
           margin-bottom: 1rem;
         }
       }
@@ -298,6 +300,9 @@ $global-radius: .25rem;
       float: left;
       padding-right: 10px;
       padding-bottom: 0;
+    img {
+      max-width: 100px;
+    }
   }
 
   .about-box-copy {
@@ -374,5 +379,26 @@ $global-radius: .25rem;
     float:left;
     margin-right:10px;
     padding-right: 38px;
+  }
+}
+
+// Settings
+#settings {
+  h2 {
+    display: none !important;
+    &.color-darkpurple {
+      display: inline-block !important;
+    }
+  }
+  form.settings-form {
+    .form-table {
+      width: 90%;
+      margin: 2rem 5%;
+    }
+
+    .submit {
+      width: 90%;
+      margin: 2rem 5%;
+    }
   }
 }

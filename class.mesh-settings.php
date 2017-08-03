@@ -59,7 +59,8 @@ class Mesh_Settings {
 		<div class="gray-bg negative-bg">
 			<div class="wrapper">
 				<h2 class="color-darkpurple light-weight">
-					<span class="bold"><?php esc_html_e( 'Basic Settings', 'mesh' ); ?></h2>
+					<?php esc_html_e( 'Basic Settings', 'mesh' ); ?>
+                </h2>
 			</div>
 		</div>
 		<?php
@@ -73,10 +74,13 @@ class Mesh_Settings {
 		<div class="gray-bg negative-bg">
 			<div class="wrapper">
 				<h2 class="color-darkpurple light-weight">
-					<span class="bold"><?php esc_html_e( 'Enable Mesh for the following Post Types', 'mesh' ); ?></h2>
+					<?php esc_html_e( 'Enable Mesh for the following Post Types', 'mesh' ); ?>
+                </h2>
 			</div>
 		</div>
+        <div class="wrapper">
 		<p><?php esc_html_e( 'Select the post types that allow Mesh functionality.', 'mesh' ); ?></p>
+        </div>
 		<?php
 	}
 
