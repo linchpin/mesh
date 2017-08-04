@@ -6,8 +6,11 @@
  *
  * This integration does not have any toggles or settings.
  *
+ * @package    Mesh
+ * @subpackage Integrations
  * @since 1.2
  */
+
 namespace Mesh\Integrations;
 
 if ( ! defined( 'ABSPATH' ) ) {

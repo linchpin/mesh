@@ -4,6 +4,8 @@
  *
  * This integration does not have any toggles or settings.
  *
+ * @package    Mesh
+ * @subpackage Integrations
  * @since 1.2
  */
 namespace Mesh\Integrations;
@@ -158,8 +160,6 @@ class Duplicate_Sections {
 
 		do_action( 'mesh_duplicate_section', $new_post_id, $post );
 
-		// $this->duplicate_children( $new_post_id, $post );
-
 		$parent_post_type = get_post_type( $post->post_parent );
 
 		if ( $post->post_parent && 'mesh_section' !== $parent_post_type ) {
@@ -185,7 +185,6 @@ class Duplicate_Sections {
 			$taxonomies = get_object_taxonomies( $post->post_type );
 
 			foreach ( $taxonomies as $taxonomy ) {
-
 				$post_terms = wp_get_object_terms( $post->ID, $taxonomy, array( 'orderby' => 'term_order' ) );
 				$terms = array();
 				$term_length = count( $post_terms );

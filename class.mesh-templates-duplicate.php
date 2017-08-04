@@ -39,7 +39,7 @@ class Mesh_Templates_Duplicate {
 	 *
 	 * @param int  $template_id    Template ID.
 	 * @param int  $post_id        Target Post ID.
-	 * @param bool $include_drafts Do we include drafts?
+	 * @param bool $include_drafts Include drafts.
 	 *
 	 * @return string
 	 */
@@ -77,7 +77,7 @@ class Mesh_Templates_Duplicate {
 	 *
 	 * @param int    $new_id         New Post ID.
 	 * @param object $template_post  Original Post Object.
-	 * @param bool   $include_drafts Include Drafts
+	 * @param bool   $include_drafts Include Drafts.
 	 *
 	 * @return array $duplicate_children Array of IDs
 	 */
@@ -97,7 +97,7 @@ class Mesh_Templates_Duplicate {
 			'post_status'    => $post_status,
 			'post_parent'    => $template_post->ID,
 			'order_by'       => 'menu_order',
-			'order'          => 'ASC'
+			'order'          => 'ASC',
 		) );
 
 		$duplicated_children = array();

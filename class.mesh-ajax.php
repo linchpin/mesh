@@ -244,8 +244,8 @@ class Mesh_AJAX {
 			if ( empty( $sections ) ) {
 
 				// Clear Post terms related to templates.
-				wp_set_object_terms( $post_id, NULL, 'mesh_template_types' );
-				wp_set_object_terms( $post_id, NULL, 'mesh_template_usage' );
+				wp_set_object_terms( $post_id, null, 'mesh_template_types' );
+				wp_set_object_terms( $post_id, null, 'mesh_template_usage' );
 
 				include LINCHPIN_MESH___PLUGIN_DIR . 'admin/sections-empty.php';
 				exit;
@@ -258,15 +258,15 @@ class Mesh_AJAX {
 	}
 
 	/**
-	 * Save the order of sections after drag and drop reordering
+	 * Save the order of sections after drag and drop reordering.
 	 *
 	 * @since 1.0
 	 */
 	function mesh_update_order() {
 		check_ajax_referer( 'mesh_reorder_section_nonce', 'mesh_reorder_section_nonce' );
 
-		$post_id     = (int) $_POST['mesh_post_id']; // WPCS: XSS ok, sanitization ok
-		$section_ids = array_values( array_map( 'intval', $_POST['mesh_section_ids'] ) ); // WPCS: XSS ok, sanitization ok
+		$post_id     = (int) $_POST['mesh_post_id']; // WPCS: XSS ok, sanitization ok.
+		$section_ids = array_values( array_map( 'intval', $_POST['mesh_section_ids'] ) ); // WPCS: XSS ok, sanitization ok.
 
 		if ( empty( $post_id ) || empty( $section_ids ) ) {
 			wp_die( -1 );

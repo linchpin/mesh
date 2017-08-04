@@ -35,7 +35,7 @@ class Mesh_Admin_Pointers {
 	/**
 	 * Add pointer data to mesh_data->strings
 	 *
-	 * @param array $strings Array of our l10n strings
+	 * @param array $localized_data Array of our l10n strings.
 	 *
 	 * @return array
 	 */
@@ -86,7 +86,8 @@ class Mesh_Admin_Pointers {
 
 	/**
 	 * Register our WP Pointers for display
-	 * @param $p
+	 *
+	 * @param array $p Array of Pointers.
 	 *
 	 * @return mixed
 	 */

@@ -32,27 +32,27 @@ class Duplicate_Post {
 		add_action( 'dp_duplicate_page', array( $this, 'duplicate_mesh_sections' ), 99, 3 );
 		add_action( 'dp_duplicate_post', array( $this, 'duplicate_mesh_sections' ), 99, 3 );
 
-		add_action ( 'duplicate_post_pre_copy', array( $this, 'skip_mesh_sections' ) );
-		add_action ( 'duplicate_post_post_copy', array( $this, 'skip_mesh_sections' ) );
+		add_action( 'duplicate_post_pre_copy', array( $this, 'skip_mesh_sections' ) );
+		add_action( 'duplicate_post_post_copy', array( $this, 'skip_mesh_sections' ) );
 	}
 
 	/**
+	 * Determine if we should skip the sections or not
+	 *
 	 * @return bool
 	 */
 	public function skip_mesh_sections() {
 		global $post;
 
-		// if ( $post->post_type == 'mesh_section' ) {
-
-		// }
-
 		return false;
 	}
 
 	/**
-	 * @param int      $new_post_id
-	 * @param /WP_Post $post
-	 * @param string   $status
+	 * Duplicate the sections of the original Post.
+	 *
+	 * @param int      $new_post_id New Post ID After duplication.
+	 * @param /WP_Post $post        Original Post.
+	 * @param string   $status      Post Status of the new post.
 	 */
 	public function duplicate_mesh_sections( $new_post_id, $post, $status ) {
 

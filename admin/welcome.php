@@ -1,8 +1,12 @@
 <?php
 /**
  * Welcome template
+ *
  * @package Mesh
+ * #since 1.1.5
+ *
  */
+
 $classes = 'welcome-panel';
 
 $option = get_user_meta( get_current_user_id(), 'show_mesh_template_panel', true );

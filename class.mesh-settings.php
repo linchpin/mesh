@@ -71,8 +71,6 @@ class Mesh_Settings {
 
 	/**
 	 * Add all of our settings from the API
-	 *
-	 *
 	 */
 	public static function settings_init() {
 
@@ -112,9 +110,11 @@ class Mesh_Settings {
 			)
 		);
 
-		// Option: Foundation Version
-		// Add an option for Foundation Version
-		// @since 1.1.3
+		/*
+		 * Option: Foundation Version
+		 * Add an option for Foundation Version
+		 * @since 1.1.3
+		 */
 		$foundation_version = array(
 			array( 'label' => __( 'Foundation 5', 'mesh' ), 'value' => '' ),
 			array( 'label' => __( 'Foundation 6', 'mesh' ), 'value' => 6 ),
@@ -147,7 +147,7 @@ class Mesh_Settings {
 				$post_type_object = get_post_type_object( $post_type );
 
 				// Skip any of the following post types and post types that ARE NOT public.
-				if ( in_array( $post_type, array( 'revision', 'nav_menu_item', 'attachment', 'mesh_template' ) ) || ! $post_type_object->public ) {
+				if ( in_array( $post_type, array( 'revision', 'nav_menu_item', 'attachment', 'mesh_template' ), true ) || ! $post_type_object->public ) {
 					continue;
 				}
 
@@ -175,7 +175,7 @@ class Mesh_Settings {
 
 		$default_tab = self::get_default_tab_slug();
 
-		$active_tab = isset( $_GET[ 'tab' ] ) && array_key_exists( $_GET['tab'], $tabs ) ? $_GET[ 'tab' ] : $default_tab;
+		$active_tab = isset( $_GET['tab'] ) && array_key_exists( $_GET['tab'], $tabs ) ? $_GET['tab'] : $default_tab;
 
 		include_once( LINCHPIN_MESH___PLUGIN_DIR . '/admin/settings.php' );
 	}
@@ -188,11 +188,10 @@ class Mesh_Settings {
 
 	/**
 	 * Build out our settings fields as needed.
+	 * Echos our field html.
 	 *
 	 * @since 1.0.0
 	 * @param object $args An Object of our field customizations.
-	 *
-	 * @return void Echos our field html.
 	 */
 	public static function add_textfield( $args ) {
 
@@ -257,7 +256,7 @@ class Mesh_Settings {
 	/**
 	 * Create a checkbox field.
 	 *
-	 * @param $args
+	 * @param array $args Customizations.
 	 */
 	public static function add_checkbox( $args ) {
 
@@ -292,9 +291,9 @@ class Mesh_Settings {
 	}
 
 	/**
-	 * Allow filtering of the settings tabs
+	 * Allow filtering of the settings tabs.
 	 *
-	 * @param $default_settings
+	 * @param array $default_settings Default Settings Array.
 	 *
 	 * @return array
 	 */
@@ -331,10 +330,10 @@ class Mesh_Settings {
 	static public function get_tabs() {
 		$tabs = array(
 			'settings'  => __( 'Settings',   'mesh' ),
-            'faq'       => __( 'About Mesh', 'mesh' ),
-            'changelog' => __( 'Change Log', 'mesh' ),
-            'linchpin'  => __( 'About Linchpin', 'mesh' ),
-        );
+			'faq'       => __( 'About Mesh', 'mesh' ),
+			'changelog' => __( 'Change Log', 'mesh' ),
+			'linchpin'  => __( 'About Linchpin', 'mesh' ),
+		);
 
 		return apply_filters( 'mesh_tabs', $tabs );
 	}

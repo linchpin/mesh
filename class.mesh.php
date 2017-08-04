@@ -302,7 +302,7 @@ class Mesh {
 	}
 
 	/**
-	 * edit_form_advanced function.
+	 * Edit form.
 	 *
 	 * @access public
 	 *
@@ -399,7 +399,7 @@ class Mesh {
 		$saving_section_via_ajax = false;
 		$ajax_section_id         = 0;
 
-		if ( ! empty( $_POST['action'] ) && 'mesh_save_section' == $_POST['action'] ) {
+		if ( ! empty( $_POST['action'] ) && 'mesh_save_section' === $_POST['action'] ) {
 			$saving_section_via_ajax = true;
 			$ajax_section_id         = (int) $_POST['mesh_section_id'];
 		}
@@ -419,7 +419,7 @@ class Mesh {
 
 			$status = sanitize_post_field( 'post_status', $section_data['post_status'], $post_id, 'attribute' );
 
-			if ( ! in_array( $status, array( 'publish', 'draft' ) ) ) {
+			if ( ! in_array( $status, array( 'publish', 'draft' ), true ) ) {
 				$status = 'draft';
 			}
 
@@ -524,10 +524,10 @@ class Mesh {
 				update_post_meta( $section->ID, '_mesh_collapse', $section_data['collapse'] );
 			}
 
-			// Process our custom meta
-			foreach( $section_data as $data_key => $data_field ) {
-				// Do not process default keys
-				if( in_array( $data_key, $default_section_meta ) ) {
+			// Process our custom meta.
+			foreach ( $section_data as $data_key => $data_field ) {
+				// Do not process default keys.
+				if ( in_array( $data_key, $default_section_meta, true ) ) {
 					continue;
 				}
 
@@ -585,10 +585,7 @@ class Mesh {
 					update_post_meta( $block_id, '_mesh_offset', $offset );
 				}
 
-				/**
-				 * @todo: optimize this loop into a utility method
-				 */
-
+				// @todo: optimize this loop into a utility method
 				$block_css_class = $section_data['blocks'][ $block_id ]['css_class'];
 
 				// Save CSS Classes.
@@ -789,11 +786,11 @@ class Mesh {
 	}
 
 	/**
-	 * post_class function.
+	 * Update post classes.
 	 *
 	 * Filter custom classes to section container
 	 *
-	 * @param array $classes
+	 * @param array $classes CSS Class array.
 	 *
 	 * @return array
 	 */
@@ -823,7 +820,7 @@ class Mesh {
 			return;
 		}
 
-		// Do not show content on password protected posts
+		// Do not show content on password protected posts.
 		if ( post_password_required() ) {
 			return;
 		}
@@ -834,7 +831,7 @@ class Mesh {
 	}
 
 	/**
-	 * admin_enqueue_scripts function.
+	 * Enqueue Admin scripts function.
 	 *
 	 * @access public
 	 * @return void
@@ -844,7 +841,7 @@ class Mesh {
 
 		$mesh_screens = array( 'post', 'edit', 'settings_page_mesh' );
 
-		if ( ! in_array( $current_screen->base, $mesh_screens ) ) {
+		if ( ! in_array( $current_screen->base, $mesh_screens, true ) ) {
 			return;
 		}
 
@@ -946,10 +943,10 @@ class Mesh {
 	/**
 	 * Scan directory for files.
 	 *
-	 * @param string $path
-	 * @param null   $extensions
-	 * @param int    $depth
-	 * @param string $relative_path
+	 * @param string $path          Path to file.
+	 * @param null   $extensions    Allow file extensions.
+	 * @param int    $depth         Depth to search within directory structure.
+	 * @param string $relative_path Use relative paths.
 	 *
 	 * @return array|bool
 	 */

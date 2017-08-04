@@ -121,8 +121,8 @@ class Mesh_Controls {
 					'type'           => 'select',
 					'css_classes'    => array( 'mesh-choose-layout' ),
 					'validation_cb'  => false,
-                    'options_cb'     => array( $this, 'get_template_options' ),
-                    'id'             => 'mesh-sections-template-' . $section->ID,
+					'options_cb'     => array( $this, 'get_template_options' ),
+					'id'             => 'mesh-sections-template-' . $section->ID,
 				),
 				'display-title' => array(
 					'label'          => __( 'Display Title', 'mesh' ),
@@ -180,7 +180,7 @@ class Mesh_Controls {
 		<ul class="small-block-grid-1 medium-block-grid-4">
 		<?php
 
-		foreach( $controls as $key => $control ) {
+		foreach ( $controls as $key => $control ) {
 
 			$display_control = true;
 
@@ -213,7 +213,9 @@ class Mesh_Controls {
                             <input type="checkbox" name="mesh-sections[<?php echo esc_attr( $section->ID ); ?>][<?php echo esc_attr( $underscore_key ); ?>]" class="<?php echo esc_attr( $css_classes ); ?>" value="1" <?php checked( $current ); ?> />
                         <?php break;
 						case 'select' :
-						case 'dropdown' : ?>
+						case 'dropdown' :
+							// @todo inline control structure that needs updating.
+							?>
 							<select name="mesh-sections[<?php echo esc_attr( $section->ID ); ?>][<?php echo esc_attr( $underscore_key ); ?>]" class="<?php echo esc_attr( $css_classes ); ?>"<?php echo isset( $control['id'] ) ? 'id="' . esc_attr( $control['id'] ) .'"' : ''; ?><?php if ( isset( $control['multiple'] ) && $control['multiple'] ) echo ' multiple'; ?>>
                                 <?php
 
@@ -386,8 +388,9 @@ class Mesh_Controls {
 }
 
 /**
- * @param int  $post_id
- * @param bool $echo
+ * Build out the attributes passed to each section
+ * @param int  $post_id Current Post ID.
+ * @param bool $echo    Echo the post or not.
  * @since 1.2
  *
  * @return string
@@ -400,10 +403,9 @@ function mesh_section_attributes( $post_id = 0, $echo = true ) {
 		$post_id  = $post->ID;
 	}
 
-	/**
+	/*
 	 * Process Section Meta
 	 */
-
 	$default_section_meta = array(
 		'_mesh_css_class',
 		'_mesh_lp_equal',
@@ -466,9 +468,9 @@ function mesh_section_attributes( $post_id = 0, $echo = true ) {
 /**
  * Public functions to call classes
  *
- * @param object  $section Current Section
- * @param array   $blocks  Our Sections Current Block
- * @param bool    $visible Show visible options?
+ * @param object $section Current Section.
+ * @param array  $blocks  Our Sections Current Block.
+ * @param bool   $visible Show visible options.
  *
  * @since 1.2
  */
@@ -480,7 +482,8 @@ function mesh_section_controls( $section, $blocks, $visible ) {
 /**
  * Public functions to call classes
  *
- * @param array $block Our Current Block.
+ * @param array $block          Our Current Block.
+ * @param array $section_blocks Blocks within the current section.
  *
  * @since 1.2
  */

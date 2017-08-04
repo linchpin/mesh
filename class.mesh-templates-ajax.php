@@ -32,9 +32,9 @@ class Mesh_Templates_AJAX {
 	}
 
 	/**
-	 * Apply our template changes across all posts that reference this template
-     *
-     * @since 1.1
+	 * Apply our template changes across all posts that reference this template.
+	 *
+	 * @since 1.1
 	 */
 	function apply_template_changes() {
 
@@ -50,12 +50,12 @@ class Mesh_Templates_AJAX {
 
 		if ( empty( $current_template ) ) {
 		    wp_die( -1 );
-        }
+		}
 
 		$available_post_types = get_option( 'mesh_post_types', array() );
 
 		$template_references = new WP_Query( array(
-            'post_type' => $available_post_types,
+			'post_type' => $available_post_types,
 			'tax_query' => array(
 				'relation' => 'AND',
 				array(
@@ -73,9 +73,9 @@ class Mesh_Templates_AJAX {
 
 		if ( ! $template_references->have_posts() ) {
 		    wp_die( -1 );
-        }
+		}
 
-		/**
+		/*
 		 * @todo loop through all of our posts and get all the child sections.
          *
   		 * while( $template_references->have_posts() ) {
@@ -88,8 +88,8 @@ class Mesh_Templates_AJAX {
 
 	/**
 	 * Close our welcome panel if the user doesn't want to see it anymore.
-     *
-     * @since 1.1
+	 *
+	 * @since 1.1
 	 */
 	function update_welcome_panel() {
 
@@ -225,11 +225,11 @@ class Mesh_Templates_AJAX {
 		exit;
 	}
 
-    /**
+	/**
 	 * This should delete the entire child set of Mesh Sections.
-     *
-     * @since 1.1
-     */
+	 *
+	 * @since 1.1
+	 */
 	function remove_template() {
 		check_ajax_referer( 'mesh_choose_template_nonce', 'mesh_choose_template_nonce' );
 
@@ -240,9 +240,9 @@ class Mesh_Templates_AJAX {
 
 	/**
 	 * Remove "Reference" term from template's parent Post.
-     * This allows for the mesh section layout, order and sizing to be editable.
-     *
-     * @since 1.1
+	 * This allows for the mesh section layout, order and sizing to be editable.
+	 *
+	 * @since 1.1
 	 */
 	function change_template_type() {
 		check_ajax_referer( 'mesh_choose_template_nonce', 'mesh_choose_template_nonce' );
@@ -260,9 +260,9 @@ class Mesh_Templates_AJAX {
 		if ( ! empty( $current_post ) ) {
 			Mesh::edit_page_form( $current_post );
 			wp_die();
-        }
+		}
 
-        wp_die( -1 );
+		wp_die( -1 );
 	}
 }
 
