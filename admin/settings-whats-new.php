@@ -18,9 +18,9 @@
                     <h1><?php esc_html_e('Updates, Bug Fixes & New Releases', 'mesh' ); ?></h1>
                 </div>
             </div>
-            <div class="gray-bg negative-bg">
+            <div class="gray-bg negative-bg versioninfo">
                 <div class="wrapper">
-                    <h2 class="light-weight"><?php printf( 'Mesh Version %s | Released %s', esc_html( get_option('mesh_version') ), __( 'Aug 1, 2017' ) ); ?></h2>
+                    <h2 class="light-weight"><?php printf( 'Mesh Version %s <span class="green-pipe">|</span> Released %s', esc_html( get_option('mesh_version') ), __( 'Aug 1, 2017' ) ); ?></h2>
                 </div>
             </div>
             <div class="wrapper">
@@ -36,19 +36,19 @@
 
                         <div class="mesh-columns-6 right">
                             <img class="right" src="<?php echo ( LINCHPIN_MESH___PLUGIN_URL . 'assets/images/yoast-readability-scoring.png') ?>" alt="<?php esc_attr_e('Yoast Readability Scoring', 'mesh' ); ?>"/>
-                            <p class="caption italic no-margin"><?php esc_html_e( 'Yoast now takes into account the text in your Mesh sections!' ); ?></p>
+                            <p class="caption italic no-margin"><?php esc_html_e( 'Yoast now takes into account the copy in your Mesh sections.' ); ?></p>
                         </div>
 
                         <div class="mesh-columns-6">
                             <div class="new-feature">
                                 <h4 class="no-margin"><?php esc_html_e( 'Better Yoast Integration', 'mesh' ); ?></h4>
-                                <p><?php esc_html_e('We\'ve added support for Yoast SEO page analysis tool. Now, any time any new Sections and/or Content Blocks are created using Mesh they will be taken into account within Yoast\'s page Readability analysis tools.' , 'mesh' ); ?></p>
+                                <p><?php esc_html_e('We\'ve added support for the Yoast SEO page analysis tool. Now, any time any new sections and/or Content blocks are created using Mesh they will be taken into account within Yoast\'s page Readability analysis tools.' , 'mesh' ); ?></p>
                             </div>
 
                             <div class="new-feature">
                                 <h4 class="no-margin"><?php esc_html_e( 'Multiple Duplicate Post Plugins are Now Supported', 'mesh' ); ?></h4>
                                 <p><?php esc_html_e('With every release of Mesh we want to make sure it is more of a benefit to our users.','mesh' ); ?>
-                                    <?php esc_html_e('Mesh will now duplicate all Sections and Blocks when duplicating a page/post/custom post-types using the following popular plugins:', 'mesh' );?></p>
+                                    <?php esc_html_e('Mesh will now duplicate all sections and blocks when duplicating a page/post/custom post type using the following popular plugins:', 'mesh' );?></p>
                                 <ul>
                                     <li><a href="https://wordpress.org/plugins/duplicate-post/" target="_blank" rel="noopener noreferrer"><?php esc_html_e( 'Duplicate Post', 'mesh' ); ?></a></li>
                                     <li><a href="https://wordpress.org/plugins/post-duplicator/" target="_blank" rel="noopener noreferrer"><?php esc_html_e( 'Post Duplicator', 'mesh' ); ?></a></li>
@@ -118,7 +118,7 @@
                             printf( 'The base Mesh Page Builder is fully open sourced on GitHub. The team at 
                                     <a href="%s" target="_blank">Linchpin</a> actively manages and maintains 
                                     the project. Take a look at the code, fork and submit pull requests or 
-                                    provide feedback/feature request right from GitHub.',
+                                    provide feedback/feature requests right from GitHub.',
                                     esc_url('https://linchpin.agency') );
                             ?>
                         </p>

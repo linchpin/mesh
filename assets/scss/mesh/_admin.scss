@@ -359,10 +359,16 @@
 
 // Whats New
 
-  .version-info {
-    background-color: white;
-    h3 {
+  .versioninfo {
+    h2 {
       color: $darker-blue;
+    }
+
+    .green-pipe {
+      padding: 0 10px;
+      color: $lochinvar;
+      vertical-align: top;
+      line-height: 33px;
     }
   }
 

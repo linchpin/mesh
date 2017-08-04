@@ -31,7 +31,7 @@
                 <div class="mesh-columns-6 table-cell">
                     <h3><?php esc_html_e('A Quick 2 Minute Primer', 'mesh' ); ?></h3>
                     <p class="steps"><strong><?php esc_html_e('Enable:', 'mesh' ) ;?></strong>
-                        <?php printf( __( 'By default Mesh is only enabled Pages. If you you would like to enable Mesh for other post types (including blog posts) head over to the <a href="%s">%s</a>.', 'mesh'),
+                        <?php printf( __( 'By default Mesh is only enabled on Pages. If you you would like to enable Mesh for other post types (including blog posts) head over to the <a href="%s">%s</a>.', 'mesh'),
 	                       admin_url( '/options-general.php?page=mesh&tab=settings' ),
 	                       esc_html__( 'settings', 'mesh' ) ); ?>
                     </p>
@@ -71,7 +71,7 @@
                                     <img src="<?php echo ( LINCHPIN_MESH___PLUGIN_URL . 'assets/images/feature-visualize.svg'); ?>" />
                                 </div>
                                 <div class="about-box-copy">
-                                    <h4 class="no-margin"><?php esc_html_e( 'Layout Your Content', 'mesh' ); ?></h4>
+                                    <h4 class="no-margin"><?php esc_html_e( 'Lay Out Your Content', 'mesh' ); ?></h4>
                                     <p><?php esc_html_e('Easily build rows and columns of content without writing a line of code or editing templates.', 'mesh' ); ?></p>
                                 </div>
                             </div>
