@@ -3,15 +3,15 @@
  * Integrate with Duplicate Post plugin in order to copy
  * Mesh content when a post is created.
  *
- * Plugin https://duplicate-post.lopo.it/docs/developers-guide/actions/dp_duplicate_post/
+ * Plugin https://duplicate-post.lopo.it/docs/developers-guide/actions/dp_duplicate_post/ url.
  *
  * This integration does not have any toggles or settings.
  *
  * @package    Mesh
  * @subpackage Integrations
  * @since 1.2
- *
  */
+
 namespace Mesh\Integrations;
 
 if ( ! defined( 'ABSPATH' ) ) {

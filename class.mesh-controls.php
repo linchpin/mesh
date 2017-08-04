@@ -68,8 +68,8 @@ class Mesh_Controls {
 		$templates = mesh_locate_template_files();
 		$options = array();
 
-		foreach ( $templates as $key => $value ) {
-		    $options[ $key ] = $templates[ $key ]['file'];
+		foreach ( $templates as $template_key => $value ) {
+			$options[ $template_key ] = $templates[ $template_key ]['file'];
 		}
 
 		return $options;
@@ -85,16 +85,16 @@ class Mesh_Controls {
 	 */
 	function get_offset_options( $block, $section_blocks ) {
 
-	    $default_block_columns = 12 / $section_blocks;
-	    $block_columns = get_post_meta( $block->ID, '_mesh_column_width', true );
+		$default_block_columns = 12 / $section_blocks;
+		$block_columns = get_post_meta( $block->ID, '_mesh_column_width', true );
 
-	    if ( empty( $block_columns ) ) {
+		if ( empty( $block_columns ) ) {
 			$block_columns = $default_block_columns;
 		}
 
-	    $offsets_available = $block_columns - 3;
+		$offsets_available = $block_columns - 3;
 
-	    $options = array();
+		$options = array();
 
 		for ( $i = 0; $i <= $offsets_available; $i++ ) {
 			$options[ $i ] = $i;
@@ -180,7 +180,7 @@ class Mesh_Controls {
 		<ul class="small-block-grid-1 medium-block-grid-4">
 		<?php
 
-		foreach ( $controls as $key => $control ) {
+		foreach ( $controls as $control_key => $control ) {
 
 			$display_control = true;
 
@@ -201,65 +201,80 @@ class Mesh_Controls {
 
 			$css_classes = implode( ' ', $css_classes );
 
-			$underscore_key = str_replace( '-', '_', $key );
+			$underscore_key = str_replace( '-', '_', $control_key );
 			$current        = get_post_meta( $section->ID, '_mesh_' . esc_attr( $underscore_key ), true );
 			?>
-            <li class="mesh-section-control-<?php echo esc_attr( $key ); ?>">
-                <label for="mesh-section[<?php echo esc_attr( $section->ID ); ?>][<?php echo esc_attr( $underscore_key ); ?>]">
-                    <?php esc_html_e( $control['label'] ); ?>
+			<li class="mesh-section-control-<?php echo esc_attr( $control_key ); ?>">
+				<label for="mesh-section[<?php echo esc_attr( $section->ID ); ?>][<?php echo esc_attr( $underscore_key ); ?>]">
+					<?php echo esc_html( $control['label'] ); ?>
 					<?php
 					switch ( $control['type'] ) {
-						case 'checkbox' : ?>
-                            <input type="checkbox" name="mesh-sections[<?php echo esc_attr( $section->ID ); ?>][<?php echo esc_attr( $underscore_key ); ?>]" class="<?php echo esc_attr( $css_classes ); ?>" value="1" <?php checked( $current ); ?> />
-                        <?php break;
-						case 'select' :
-						case 'dropdown' :
+						case 'checkbox':
+					?>
+							<input type="checkbox" name="mesh-sections[<?php echo esc_attr( $section->ID ); ?>][<?php echo esc_attr( $underscore_key ); ?>]" class="<?php echo esc_attr( $css_classes ); ?>" value="1" <?php checked( $current ); ?> />
+						<?php
+							break;
+						case 'select':
+						case 'dropdown':
 							// @todo inline control structure that needs updating.
-							?>
-							<select name="mesh-sections[<?php echo esc_attr( $section->ID ); ?>][<?php echo esc_attr( $underscore_key ); ?>]" class="<?php echo esc_attr( $css_classes ); ?>"<?php echo isset( $control['id'] ) ? 'id="' . esc_attr( $control['id'] ) .'"' : ''; ?><?php if ( isset( $control['multiple'] ) && $control['multiple'] ) echo ' multiple'; ?>>
-                                <?php
+							$multiple = '';
+							$control_id = '';
+							if ( isset( $control['id'] ) ) {
+								$control_id = sprintf( 'id="%s"', esc_attr( $control['id'] ) );
+							}
 
-								// @todo this needs to be cleaned up to meet wpcs
-								$options = ( ! empty( $control['options_cb'] ) && is_callable( $control['options_cb'] ) )
-								? call_user_func_array( $control['options_cb'], array( $section, $blocks ) )
-								: $control['options'];
+							if ( isset( $control['multiple'] ) && $control['multiple'] ) {
+								$multiple = 'multiple';
+							}
+						?>
+						<select <?php echo $control_id; // WPCS xss okay. ?> name="mesh-sections[<?php echo esc_attr( $section->ID ); ?>][<?php echo esc_attr( $underscore_key ); ?>]" class="<?php echo esc_attr( $css_classes ); ?>" <?php echo $multiple; // WPCS xss okay. ?>>
+						<?php
 
-								foreach ( $options as $option_key => $value ) {
-									printf( '<option value="%1$s" %2$s>%3$s</option>', esc_attr( $option_key ), selected( esc_attr( $current ), esc_attr( $key ), false ), esc_attr( $value ) );
-								}
+						// @todo this needs to be cleaned up to meet wpcs
+						$options = ( ! empty( $control['options_cb'] ) && is_callable( $control['options_cb'] ) )
+						? call_user_func_array( $control['options_cb'], array( $section, $blocks ) )
+						: $control['options'];
+
+						foreach ( $options as $option_key => $value ) {
+							printf( '<option value="%1$s" %2$s>%3$s</option>', esc_attr( $option_key ), selected( esc_attr( $current ), esc_attr( $option_key ), false ), esc_attr( $value ) );
+						}
+						?>
+						</select>
+						<?php
+							break;
+						case 'media':
+						?>
+						<div class="mesh-section-background">
+							<div class="choose-image">
+							<?php
+							$featured_image_id = get_post_thumbnail_id( $section->ID );
+							if ( empty( $featured_image_id ) ) :
 								?>
-                            </select>
-                        <?php
-						break;
-	                    case 'media' : ?>
-                            <div class="mesh-section-background">
-                                <div class="choose-image">
-				                    <?php $featured_image_id = get_post_thumbnail_id( $section->ID );
-
-				                    if ( empty( $featured_image_id ) ) : ?>
-                                        <a class="mesh-featured-image-choose"><?php esc_attr_e( 'Set Background Image', 'mesh' ); ?></a>
-				                    <?php else : ?>
-					                    <?php $featured_image = wp_get_attachment_image_src( $featured_image_id, array( 160, 60 ) ); ?>
-                                        <a class="mesh-featured-image-choose right" data-mesh-featured-image="<?php echo esc_attr( $featured_image_id ); ?>"><img src="<?php echo esc_attr( $featured_image[0] ); ?>" /></a>
-                                        <a class="mesh-featured-image-trash dashicons-before dashicons-dismiss" data-mesh-featured-image="<?php echo esc_attr( $featured_image_id ); ?>"></a>
-				                    <?php endif; ?>
-
-				                    <input type="hidden" name="mesh-sections[<?php echo esc_attr( $section->ID ); ?>][<?php echo esc_attr( $underscore_key ); ?>]" value="<?php echo esc_attr( $featured_image_id ); ?>" />
-                                </div>
-                            </div>
-		                    <?php
-		                    break;
-						case 'input' :
-						case 'text' :
-						default : ?>
-                            <input type="text" name="mesh-sections[<?php echo esc_attr( $section->ID ); ?>][<?php echo esc_attr( $underscore_key ); ?>]" class="<?php echo esc_attr( $css_classes ); ?>" value="<?php echo esc_attr( get_post_meta( $section->ID, '_mesh_' . esc_attr( $underscore_key ), true ) ); ?>" />
-                            <?php
-						break;
-					} ?>
-                </label>
-            </li>
-            <?php
-		} ?>
+								<a class="mesh-featured-image-choose"><?php esc_attr_e( 'Set Background Image', 'mesh' ); ?></a>
+							<?php else : ?>
+								<?php $featured_image = wp_get_attachment_image_src( $featured_image_id, array( 160, 60 ) ); ?>
+								<a class="mesh-featured-image-choose right" data-mesh-featured-image="<?php echo esc_attr( $featured_image_id ); ?>"><img src="<?php echo esc_attr( $featured_image[0] ); ?>" /></a>
+								<a class="mesh-featured-image-trash dashicons-before dashicons-dismiss" data-mesh-featured-image="<?php echo esc_attr( $featured_image_id ); ?>"></a>
+							<?php endif; ?>
+							<input type="hidden" name="mesh-sections[<?php echo esc_attr( $section->ID ); ?>][<?php echo esc_attr( $underscore_key ); ?>]" value="<?php echo esc_attr( $featured_image_id ); ?>" />
+							</div>
+						</div>
+						<?php
+							break;
+						case 'input':
+						case 'text':
+						default:
+						?>
+							<input type="text" name="mesh-sections[<?php echo esc_attr( $section->ID ); ?>][<?php echo esc_attr( $underscore_key ); ?>]" class="<?php echo esc_attr( $css_classes ); ?>" value="<?php echo esc_attr( get_post_meta( $section->ID, '_mesh_' . esc_attr( $underscore_key ), true ) ); ?>" />
+						<?php
+							break;
+					}
+				?>
+				</label>
+			</li>
+		<?php
+		}
+		?>
 		</ul>
 		<?php
 	}
@@ -282,9 +297,9 @@ class Mesh_Controls {
 				'validation_cb'  => false,
 				'options_cb'     => array( $this, 'get_offset_options' ),
 				'show_on_cb'     => array( $this, 'show_offset' ),
-				),
+			),
 			'css-class' => array(
-				'label'	         => __( 'CSS Class', 'mesh' ),
+				'label'          => __( 'CSS Class', 'mesh' ),
 				'type'           => 'text',
 				'css_classes'    => array( 'mesh-section-class' ),
 				'validation_cb'  => false,
@@ -301,7 +316,7 @@ class Mesh_Controls {
 		$block_grid = ( ( 4 - $section_blocks ) < 1 ) ? 1 : ( 4 - $section_blocks );
 		printf( '<ul class="small-block-grid-1 medium-block-grid-%s">', esc_attr( $block_grid ) );
 
-		foreach ( $controls as $key => $control ) {
+		foreach ( $controls as $controls_key => $control ) {
 			$display_control = true;
 
 			if ( ! empty( $control['show_on_cb'] ) && is_callable( $control['show_on_cb'] ) ) {
@@ -321,27 +336,36 @@ class Mesh_Controls {
 			}
 
 			$css_classes = implode( ' ', $css_classes );
-			$underscore_key = str_replace( '-', '_', $key );
+			$underscore_key = str_replace( '-', '_', $controls_key );
 			$current        = get_post_meta( $block->ID, '_mesh_' . esc_attr( $underscore_key ), true );
 			?>
-            <li class="mesh-section-control-<?php echo esc_attr( $key ); ?>">
-                <label for="mesh-section[<?php echo esc_attr( $block->ID ); ?>][<?php echo esc_attr( $underscore_key ); ?>]">
-					<?php
+			<li class="mesh-section-control-<?php echo esc_attr( $controls_key ); ?>">
+				<label for="mesh-section[<?php echo esc_attr( $block->ID ); ?>][<?php echo esc_attr( $underscore_key ); ?>]">
+						<?php
 					if ( isset( $control['label'] ) ) {
 						echo esc_html( $control['label'] );
 					}
 					?>
 					<?php
 					switch ( $control['type'] ) {
-						case 'checkbox' : ?>
-                            <input type="checkbox" name="mesh-sections[<?php echo esc_attr( $block->post_parent ); ?>][blocks][<?php echo esc_attr( $block->ID ); ?>][<?php echo esc_attr( $underscore_key ); ?>]" class="<?php echo esc_attr( $css_classes ); ?>" value="1" <?php checked( $current ); ?> />
+						case 'checkbox':
+							?>
+							<input type="checkbox" name="mesh-sections[<?php echo esc_attr( $block->post_parent ); ?>][blocks][<?php echo esc_attr( $block->ID ); ?>][<?php echo esc_attr( $underscore_key ); ?>]" class="<?php echo esc_attr( $css_classes ); ?>" value="1" <?php checked( $current ); ?> />
 							<?php
 							break;
-						case 'select' :
-						case 'dropdown' :
-							// @todo select needs inline control structures removed.
+						case 'select':
+						case 'dropdown':
+							$multiple = '';
+							$control_id = '';
+							if ( isset( $control['id'] ) ) {
+								$control_id = sprintf( 'id="%s"', esc_attr( $control['id'] ) );
+							}
+
+							if ( isset( $control['multiple'] ) && $control['multiple'] ) {
+								$multiple = 'multiple';
+							}
 						?>
-                            <select name="mesh-sections[<?php echo esc_attr( $block->post_parent ); ?>][blocks][<?php echo esc_attr( $block->ID ); ?>][<?php echo esc_attr( $underscore_key ); ?>]" class="<?php echo esc_attr( $css_classes ); ?>"<?php echo isset( $control['id'] ) ? 'id="' . esc_attr( $control['id'] ) .'"' : ''; ?><?php if ( isset( $control['multiple'] ) && $control['multiple'] ) echo ' multiple'; ?>>
+							<select <?php echo $control_id; // Input var okay. ?> name="mesh-sections[<?php echo esc_attr( $block->post_parent ); ?>][blocks][<?php echo esc_attr( $block->ID ); ?>][<?php echo esc_attr( $underscore_key ); ?>]" class="<?php echo esc_attr( $css_classes ); ?>"<?php echo esc_attr( $multiple ); ?>>
 								<?php
 								$options = ( ! empty( $control['options_cb'] ) && is_callable( $control['options_cb'] ) )
 									? call_user_func_array( $control['options_cb'], array( $block, $section_blocks ) )
@@ -351,38 +375,42 @@ class Mesh_Controls {
 									printf( '<option value="%1$s" %2$s>%3$s</option>', esc_attr( $optionkey ), selected( esc_attr( $current ), esc_attr( $optionkey ), false ), esc_attr( $value ) );
 								}
 								?>
-                            </select>
+							</select>
 							<?php
 							break;
-						case 'media' : ?>
-                            <div class="mesh-section-background">
-                                <div class="choose-image">
-		                            <?php $featured_image_id = get_post_thumbnail_id( $block->ID );
-
-		                            if ( empty( $featured_image_id ) ) : ?>
-                                        <a class="mesh-block-featured-image-choose"><?php esc_attr_e( 'Set Background Image', 'mesh' ); ?></a>
-		                            <?php else : ?>
-			                            <?php $featured_image = wp_get_attachment_image_src( $featured_image_id, array( 160, 60 ) ); ?>
-                                        <a class="mesh-block-featured-image-choose right" data-mesh-block-featured-image="<?php echo esc_attr( $featured_image_id ); ?>"><img src="<?php echo esc_attr( $featured_image[0] ); ?>" /></a>
-                                        <a class="mesh-block-featured-image-trash dashicons-before dashicons-dismiss" data-mesh-block-featured-image="<?php echo esc_attr( $featured_image_id ); ?>"></a>
-		                            <?php endif; ?>
-                                </div>
-                            </div>
-                            <?php
-							break;
-						case 'input' :
-						case 'text' :
-						default : ?>
-                            <input type="text" name="mesh-sections[<?php echo esc_attr( $block->post_parent ); ?>][blocks][<?php echo esc_attr( $block->ID ); ?>][<?php echo esc_attr( $underscore_key ); ?>]" class="<?php echo esc_attr( $css_classes ); ?>" value="<?php echo esc_attr( get_post_meta( $block->ID, '_mesh_' . esc_attr( $underscore_key ), true ) ); ?>" />
+						case 'media':
+						?>
+							<div class="mesh-section-background">
+								<div class="choose-image">
+									<?php
+									$featured_image_id = get_post_thumbnail_id( $block->ID );
+									if ( empty( $featured_image_id ) ) :
+									?>
+										<a class="mesh-block-featured-image-choose"><?php esc_attr_e( 'Set Background Image', 'mesh' ); ?></a>
+									<?php else : ?>
+										<?php $featured_image = wp_get_attachment_image_src( $featured_image_id, array( 160, 60 ) ); ?>
+										<a class="mesh-block-featured-image-choose right" data-mesh-block-featured-image="<?php echo esc_attr( $featured_image_id ); ?>"><img src="<?php echo esc_attr( $featured_image[0] ); ?>" /></a>
+										<a class="mesh-block-featured-image-trash dashicons-before dashicons-dismiss" data-mesh-block-featured-image="<?php echo esc_attr( $featured_image_id ); ?>"></a>
+									<?php endif; ?>
+								</div>
+							</div>
 							<?php
+							break;
+						case 'input':
+						case 'text':
+						default:
+						?>
+						<input type="text" name="mesh-sections[<?php echo esc_attr( $block->post_parent ); ?>][blocks][<?php echo esc_attr( $block->ID ); ?>][<?php echo esc_attr( $underscore_key ); ?>]" class="<?php echo esc_attr( $css_classes ); ?>" value="<?php echo esc_attr( get_post_meta( $block->ID, '_mesh_' . esc_attr( $underscore_key ), true ) ); ?>" />
+						<?php
 							break;
 					}
 					?>
-                </label>
-            </li>
+				</label>
+			</li>
 			<?php
-		} ?>
-        </ul>
+		}
+		?>
+		</ul>
 		<?php
 	}
 }
@@ -423,6 +451,7 @@ function mesh_section_attributes( $post_id = 0, $echo = true ) {
 
 	/**
 	 * This filter is used to remove or add elements to the default section meta
+	 *
 	 * @todo "meta" related to a section
 	 */
 	$default_section_meta = apply_filters( 'mesh_default_section_meta_fields', $default_section_meta );

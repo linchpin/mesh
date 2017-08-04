@@ -270,9 +270,10 @@ class Mesh_Templates {
 	 *
 	 * Used in the post list and the add new section process
 	 *
-	 * $sections array Our sections to build out.
+	 * @param array $sections Our sections to build out.
 	 *
 	 * @since 1.1
+	 * @return array
 	 */
 	function create_template_preview( $sections ) {
 		$count = 0;

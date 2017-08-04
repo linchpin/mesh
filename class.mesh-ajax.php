@@ -41,11 +41,17 @@ class Mesh_AJAX {
 	function mesh_add_section() {
 		check_ajax_referer( 'mesh_add_section_nonce', 'mesh_add_section_nonce' );
 
-		$post_id = (int) $_POST['mesh_post_id']; // WPCS: sanitization ok.
-		$menu_order = (int) $_POST['mesh_section_count']; // WPCS: sanitization ok.
+		$post_id = 0;
+		$menu_order = 0;
 
-		if ( empty( $post_id ) ) {
+		if ( ! isset( $_POST['mesh_post_id'] ) ) { // Input var okay.
 			wp_die( -1 );
+		} else {
+			$post_id = absint( $_POST['mesh_post_id'] ); // Input var okay.
+		}
+
+		if ( isset( $_POST['mesh_section_count'] ) ) { // Input var okay.
+			$menu_order = absint( $_POST['mesh_section_count'] ); // Input var okay.
 		}
 
 		$section_args = array(
@@ -343,7 +349,11 @@ class Mesh_AJAX {
 
 		$user_id = get_current_user_id();
 
-		$notification_type = sanitize_title( wp_unslash( $_POST['mesh_notification_type'] ) );  // WPCS: input var okay.
+		if ( ! isset( $_POST['mesh_notification_type'] ) || empty( $_POST['mesh_notification_type'] ) ) { // Input var okay.
+			return;
+		}
+
+		$notification_type = sanitize_title( wp_unslash( $_POST['mesh_notification_type'] ) ); // Input var okay.
 
 		$notifications = maybe_unserialize( get_user_option( 'linchpin_mesh_notifications', $user_id ) );
 

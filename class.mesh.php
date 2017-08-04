@@ -159,14 +159,14 @@ class Mesh {
 	 * @param array  $option Option we're saving.
 	 * @param mixed  $value  Value to save.
 	 *
-	 * @return void|mixed
+	 * @return mixed
 	 */
 	function set_screen_option( $status, $option, $value ) {
 		if ( 'linchpin_mesh_section_kitchensink' === $option ) {
 			return $value;
 		}
 
-		return;
+		return '';
 	}
 
 	/**
@@ -383,11 +383,11 @@ class Mesh {
 			return;
 		}
 
-		if ( ! isset( $_POST['mesh_content_sections_nonce'] ) || ! wp_verify_nonce( $_POST['mesh_content_sections_nonce'], 'mesh_content_sections_nonce' ) ) {
+		if ( ! isset( $_POST['mesh_content_sections_nonce'] ) || ! wp_verify_nonce( sanitize_key( $_POST['mesh_content_sections_nonce'] ), 'mesh_content_sections_nonce' ) ) { // Input var okay. WPCS: CSRF okay.
 			return;
 		}
 
-		if ( empty( $_POST['mesh-sections'] ) ) {
+		if ( ! isset( $_POST['mesh-sections'] ) || empty( $_POST['mesh-sections'] ) ) { // Input var okay.
 			return;
 		}
 
@@ -399,9 +399,13 @@ class Mesh {
 		$saving_section_via_ajax = false;
 		$ajax_section_id         = 0;
 
-		if ( ! empty( $_POST['action'] ) && 'mesh_save_section' === $_POST['action'] ) {
+		if ( ( ( isset( $_POST['action'] ) && isset( $_POST['mesh_section_id'] ) ) && ! empty( $_POST['action'] ) ) && 'mesh_save_section' === sanitize_text_field( wp_unslash( $_POST['action'] ) ) ) { // Input var okay.
 			$saving_section_via_ajax = true;
-			$ajax_section_id         = (int) $_POST['mesh_section_id'];
+			$ajax_section_id         = wp_unslash( absint( $_POST['mesh_section_id'] ) ); // Input var okay.
+		}
+
+		if ( ! isset( $_POST['mesh-sections'] ) ) {
+			return;
 		}
 
 		foreach ( $_POST['mesh-sections'] as $section_id => $section_data ) {
@@ -428,7 +432,7 @@ class Mesh {
 				'post_title'   => sanitize_text_field( $section_data['post_title'] ),
 				'post_content' => '', // Sections don't have content.
 				'post_status'  => $status,
-				'menu_order'   => ( empty( $section_data['menu_order'] ) ) ? $count : $section_data['menu_order'],
+				'menu_order'   => ( empty( $section_data['menu_order'] ) ) ? $count : absint( $section_data['menu_order'] ),
 			);
 
 			wp_update_post( $updates );
@@ -827,7 +831,7 @@ class Mesh {
 
 		$sections = mesh_display_sections( $wp_query->post->ID, false );
 
-		echo apply_filters( 'mesh_loop_end', $sections, $wp_query->post->ID ); // WPCS: ok.
+		echo apply_filters( 'mesh_loop_end', wp_kses( $sections, mesh_get_allowed_html() ), $wp_query->post->ID ); // WPCS sanitization okay.
 	}
 
 	/**

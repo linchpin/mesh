@@ -56,7 +56,7 @@ class Mesh_Templates_AJAX {
 
 		$template_references = new WP_Query( array(
 			'post_type' => $available_post_types,
-			'tax_query' => array(
+			'tax_query' => array( // WPCS: slow query ok.
 				'relation' => 'AND',
 				array(
 					'taxonomy' => 'mesh_template_types',

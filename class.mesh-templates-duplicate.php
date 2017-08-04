@@ -127,7 +127,7 @@ class Mesh_Templates_Duplicate {
 	 * @param object $post      Post Object.
 	 * @param string $parent_id Parent Post ID.
 	 *
-	 * @return int|void|WP_Error
+	 * @return int|mixed|WP_Error
 	 */
 	function duplicate_section( $post, $parent_id = '' ) {
 

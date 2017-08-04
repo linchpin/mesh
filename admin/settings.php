@@ -64,7 +64,7 @@ $parsedown = new Parsedown();
 
 					if ( file_exists( $changelog_path ) ) {
 						$changelog = file_get_contents( $changelog_path, true );
-						echo $parsedown->text( $changelog ); // WPCS: ok.
+						echo wp_kses_post( $parsedown->text( $changelog ) ); // WPCS: ok.
 					}
 					?>
 				<?php elseif ( 'faq' === $active_tab ) : ?>
@@ -73,7 +73,7 @@ $parsedown = new Parsedown();
 
 					if ( file_exists( $readme_path ) ) {
 						$readme = file_get_contents( $readme_path, true );
-						echo $parsedown->text( $readme ); // WPCS: ok.
+						echo wp_kses_post( $parsedown->text( $readme ) ); // WPCS: ok.
 					}
 					?>
                 <?php elseif ( 'linchpin' === $active_tab ) : ?>

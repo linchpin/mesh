@@ -286,9 +286,9 @@ function mesh_add_section_admin_markup( $section, $closed = false, $return = fal
 /**
  * Retrieve Mesh sections.
  *
- * @param int    $post_id        Post ID.
- * @param string $return_type    Object Return Type.
- * @param array  $statuses       Statuses to query.
+ * @param int|string $post_id        Post ID.
+ * @param string     $return_type    Object Return Type.
+ * @param array      $statuses       Statuses to query.
  *
  * @return array|WP_Query
  */

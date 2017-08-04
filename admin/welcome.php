@@ -3,8 +3,7 @@
  * Welcome template
  *
  * @package Mesh
- * #since 1.1.5
- *
+ * @since 1.1.5
  */
 
 $classes = 'welcome-panel';
