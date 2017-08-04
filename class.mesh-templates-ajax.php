@@ -102,7 +102,7 @@ class Mesh_Templates_AJAX {
 		update_user_meta( get_current_user_id(), 'show_mesh_template_panel', empty( $_POST['visible'] ) ? 0 : 1 );
 
 		wp_die( 1 );
-    }
+	}
 
 	/**
 	 * Select a template from the mesh_template post type

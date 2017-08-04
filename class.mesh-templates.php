@@ -34,7 +34,7 @@ class Mesh_Templates {
 	 */
 	function __construct() {
 		add_action( 'init', array( $this, 'init' ) );
-		add_action( 'save_post', array( $this, 'save_post', ), 20, 2 ); // This saving should happen later to make sure our data is available.
+		add_action( 'save_post', array( $this, 'save_post' ), 20, 2 ); // This saving should happen later to make sure our data is available.
 
 		// Columns.
 		add_action( 'manage_mesh_template_posts_custom_column', array( $this, 'add_layout_column' ), 10, 2 );
@@ -112,7 +112,7 @@ class Mesh_Templates {
 			'rewrite' => false,
 		) );
 
-		// Using an extra variable for the array to support PHP 5.4
+		// Using an extra variable for the array to support PHP 5.4.
 		$mesh_post_types_array = get_option( 'mesh_post_types', array() );
 		$mesh_post_types = array_keys( $mesh_post_types_array );
 		$available_post_types = array_merge( array( 'mesh_template' ), $mesh_post_types );
@@ -209,7 +209,6 @@ class Mesh_Templates {
 			$mesh_layout_preview = $this->create_template_preview( $_POST['mesh-sections'] );
 		}
 
-
 		if ( ! empty( $mesh_layout_preview ) ) {
 			update_post_meta( $post_id, '_mesh_template_layout', $mesh_layout_preview );
 			wp_insert_term( $post->post_title, 'mesh_template_usage', array(
@@ -232,8 +231,9 @@ class Mesh_Templates {
 	 *
 	 * @since 1.1
 	 * @param int    $section_id       ID of section.
-	 * @param array  $mesh_layout_meta Array of our sections within our template
-	 * @param object $section          Single object of our new build.
+	 * @param array  $mesh_layout_meta Array of our sections within our template.
+	 * @param object $section_data     Single object of our new build.
+	 * @return array
 	 */
 	function update_template_single_section_preview( $section_id, $mesh_layout_meta, $section_data ) {
 
@@ -244,12 +244,12 @@ class Mesh_Templates {
 			$blocks = $section_data['blocks'];
 		}
 
-		$mesh_layout_meta[ sanitize_title( 'row-' . $section_id ) ]['blocks'] = array(); // reset
+		$mesh_layout_meta[ sanitize_title( 'row-' . $section_id ) ]['blocks'] = array(); // Reset blocks array.
 
 		foreach ( $blocks as $block_id => $block_data ) {
 			$block = get_post( (int) $block_id );
 
-			if ( empty( $block ) || 'publish' != get_post_status( $block ) || 'mesh_section' !== $block->post_type || $section_id !== $block->post_parent ) {
+			if ( empty( $block ) || 'publish' !== get_post_status( $block ) || 'mesh_section' !== $block->post_type || $section_id !== $block->post_parent ) {
 				continue;
 			}
 
@@ -306,7 +306,7 @@ class Mesh_Templates {
 			foreach ( $blocks as $block_id => $block_data ) {
 				$block = get_post( (int) $block_id );
 
-				if ( empty( $block ) || 'publish' != get_post_status( $block ) || 'mesh_section' !== $block->post_type || $section->ID !== $block->post_parent ) {
+				if ( empty( $block ) || 'publish' !== get_post_status( $block ) || 'mesh_section' !== $block->post_type || $section->ID !== $block->post_parent ) {
 					continue;
 				}
 

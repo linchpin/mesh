@@ -41,8 +41,8 @@ class Mesh_AJAX {
 	function mesh_add_section() {
 		check_ajax_referer( 'mesh_add_section_nonce', 'mesh_add_section_nonce' );
 
-		$post_id = (int) $_POST['mesh_post_id']; // WPCS: sanitization ok
-		$menu_order = (int) $_POST['mesh_section_count']; // WPCS: sanitization ok
+		$post_id = (int) $_POST['mesh_post_id']; // WPCS: sanitization ok.
+		$menu_order = (int) $_POST['mesh_section_count']; // WPCS: sanitization ok.
 
 		if ( empty( $post_id ) ) {
 			wp_die( -1 );
@@ -89,7 +89,7 @@ class Mesh_AJAX {
 
 		// Only apply if the filter hasn't been removed.
 		if ( has_filter( 'wpautop' ) ) {
-			$section_data[ 'post_content' ] = wpautop( $section_data[ 'post_content' ] );
+			$section_data['post_content'] = wpautop( $section_data['post_content'] );
 		}
 
 		// Only need certain arguments to be passed on.
@@ -152,10 +152,12 @@ class Mesh_AJAX {
 		}
 
 		ob_start();
-		// This block count is determined by the selected template above.
-		// It's important to pass this to the admin to control if a
-		// section's blocks have a post_status of publish or draft.
 
+		/*
+		 * This block count is determined by the selected template above.
+		 * It's important to pass this to the admin to control if a
+		 * section's blocks have a post_status of publish or draft.
+		 */
 		include( LINCHPIN_MESH___PLUGIN_DIR . '/admin/section-inside.php' );
 		$output = ob_get_contents();
 

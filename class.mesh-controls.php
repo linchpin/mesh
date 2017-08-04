@@ -389,6 +389,7 @@ class Mesh_Controls {
 
 /**
  * Build out the attributes passed to each section
+ *
  * @param int  $post_id Current Post ID.
  * @param bool $echo    Echo the post or not.
  * @since 1.2

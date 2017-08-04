@@ -8,6 +8,7 @@
  * @subpackage Integrations
  * @since 1.2
  */
+
 namespace Mesh\Integrations;
 
 use \WP_Query;
