@@ -13,7 +13,7 @@
 
 
 //Top area
-.settings_page_mesh {
+.settings_page_mesh #wpcontent {
   .mesh-logo {
     display: inline-block;
     width: 250px;
@@ -36,7 +36,7 @@
   }
 }
 
-.settings_page_mesh #wpcontent, #about-mesh, #whats-new, #settings {
+.settings_page_mesh #wpcontent, #about-mesh, #whats-new, #settings{
   margin-top: -10px;
   background-color: white;
   font-family: ingra-2, sans-serif;
@@ -90,7 +90,7 @@
 
   }
 
-  a {
+  #wpbody a {
     text-decoration: none;
     color: $caribbean-green;
     font-weight: bolder;
