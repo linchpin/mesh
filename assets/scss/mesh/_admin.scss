@@ -90,7 +90,7 @@
 
   }
 
-  #wpbody a {
+  #wpbody :not(.update-nag) a {
     text-decoration: none;
     color: $caribbean-green;
     font-weight: bolder;
@@ -158,11 +158,11 @@
   // tabs
   .nav-tab-wrapper {
     a {
-      color: $darker-blue;
+      color: $darker-blue !important;
       border-radius: .25rem .25rem 0 0;
       &.nav-tab-active {
         border-bottom: 1px solid transparent !important;
-        color: $caribbean-green;
+        color: $caribbean-green !important;
         background-color: $white-smoke;
       }
 
@@ -184,12 +184,13 @@
     border-radius: .25rem;
     transition: background-color 0.25s ease-out,color 0.25s ease-out;
     font-size: 1rem;
-    font-weight: 700;
+    font-family: ingra-2, sans-serif;
+    font-weight: 700 !important;
     line-height: 1;
     text-align: center;
     cursor: pointer;
     background-color: $caribbean-green;
-    color: white;
+    color: white !important;
     height: auto !important;
     text-shadow: none;
     box-shadow: none;
