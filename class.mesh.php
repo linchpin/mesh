@@ -96,14 +96,16 @@ class Mesh {
 
 		add_filter( 'get_edit_post_link', array( $this, 'get_edit_post_link' ), 10, 3 );
 
-		// @since 1.1.3
+		// @since 1.1.3 ok wpcs
 		add_action( 'after_setup_theme', array( $this, 'after_theme_setup' ) );
 	}
 
 	/**
-	 * @param string $link
-	 * @param int    $post_id
-	 * @param string $context
+	 * Get the edit post links
+	 *
+	 * @param string $link    The link we are manipulating.
+	 * @param int    $post_id Post ID.
+	 * @param string $context Link context.
 	 *
 	 * @return mixed
 	 */
@@ -127,10 +129,10 @@ class Mesh {
 		$id = ( ! empty( $parents ) ) ? $parents[ count( $parents ) - 1 ] : $post->post_parent;
 
 		if ( 'mesh_section' !== get_post_type( $id ) ) {
-			return '#'; // get_edit_post_link( $id );
+			return '#';
 		}
 
-		return '#'; // get_edit_post_link();
+		return '#';
 	}
 
 	/**
@@ -138,9 +140,6 @@ class Mesh {
 	 */
 	function output_debug_post_info() {
 		global $post;
-
-		if ( 'mesh_section' === $post->post_type && true === LINCHPIN_MESH_DEBUG_MODE ) {
-		}
 	}
 
 	/**

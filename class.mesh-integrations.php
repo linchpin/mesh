@@ -18,7 +18,9 @@ if ( ! function_exists( 'add_action' ) ) {
 class Mesh_Integrations {
 
 	/**
-	 * @var
+	 * Store our integration
+	 *
+	 * @var array
 	 */
 	private $integrations;
 

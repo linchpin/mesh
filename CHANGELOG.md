@@ -1,18 +1,24 @@
 #Change Log For Mesh
 
-## Unreleased
+## [1.2.0] - 2017-8-04
 
+### Files
  - Remove trailing whitespace from row class
  - Remove checks for equalizer in the 1 column template
  - Fixed a bug where reordering would stop that section from working properly until refresh.
  - Fixed a bug where collapsed sections could not be toggled open after a new section was added
- - Added support for Yoast SEO page analysis
  - Fixed a bug when excluding Mesh template related taxonomies from the generated sitemap
  - Fixed a bug where section and block background images were displayed before "update" / "publish"
  - Controls within Sections and Columns/Blocks are now extendable for developers.
+ 
+### Added
+ - Added support for Yoast SEO page analysis
  - Added support for scripts within urls within TinyMCE
  - Added support for duplicating sections when duplicating a post using Duplicate Post Plugin
  - Added support for duplicating sections when duplicating a post using Post Duplicator Plugin
+ 
+### Updated
+ - A bunch of little things under the hood you probably wont notice
 
 ## [1.1.7] - 2017-6-12
 

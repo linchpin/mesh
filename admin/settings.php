@@ -30,7 +30,7 @@ if ( ! function_exists( 'add_action' ) ) {
  */
 require_once LINCHPIN_MESH___PLUGIN_DIR . '/lib/parsedown/Parsedown.php';
 
-$Parsedown = new Parsedown();
+$parsedown = new Parsedown();
 ?>
 <div class="wrap" id="mesh-settings">
     <h2><?php echo esc_html( get_admin_page_title() ); ?> </h2>
@@ -64,7 +64,7 @@ $Parsedown = new Parsedown();
 
 					if ( file_exists( $changelog_path ) ) {
 						$changelog = file_get_contents( $changelog_path, true );
-						echo $Parsedown->text( $changelog ); // WPCS: ok.
+						echo $parsedown->text( $changelog ); // WPCS: ok.
 					}
 					?>
 				<?php elseif ( 'faq' === $active_tab ) : ?>
@@ -73,7 +73,7 @@ $Parsedown = new Parsedown();
 
 					if ( file_exists( $readme_path ) ) {
 						$readme = file_get_contents( $readme_path, true );
-						echo $Parsedown->text( $readme ); // WPCS: ok.
+						echo $parsedown->text( $readme ); // WPCS: ok.
 					}
 					?>
                 <?php elseif ( 'linchpin' === $active_tab ) : ?>
@@ -87,7 +87,7 @@ $Parsedown = new Parsedown();
                         <dd><a href="https://www.instagram.com/linchpinagency/" target="_blank">https://www.instagram.com/linchpinagency</a></dd>
                     </dl>
                 <?php else : ?>
-                    <?php do_action('mesh_setting_' . $active_tab ); ?>
+                    <?php do_action( 'mesh_setting_' . $active_tab ); ?>
 				<?php endif; ?>
             </div>
         </div>

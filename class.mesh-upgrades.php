@@ -84,7 +84,7 @@ class Mesh_Upgrades {
 		foreach ( $this->post_types as $post_type ) {
 			$post_type_object = get_post_type_object( $post_type );
 
-			if ( in_array( $post_type, array( 'revision', 'nav_menu_item', 'attachment' ) ) || ! $post_type_object->public ) {
+			if ( in_array( $post_type, array( 'revision', 'nav_menu_item', 'attachment' ), true ) || ! $post_type_object->public ) {
 				continue;
 			}
 

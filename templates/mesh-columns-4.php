@@ -14,8 +14,8 @@
 ?>
 <section <?php post_class() ?> <?php mesh_section_background(); ?>>
 	<?php
-        $title_display = get_post_meta( get_the_ID(), '_mesh_title_display', true );
-        $collapse_column_spacing = get_post_meta( get_the_ID(), '_mesh_collapse', true );
+		$title_display = get_post_meta( get_the_ID(), '_mesh_title_display', true );
+		$collapse_column_spacing = get_post_meta( get_the_ID(), '_mesh_collapse', true );
 
 	    $row_class = ( ! empty( $collapse_column_spacing ) ) ? 'row collapse' : 'row';
 	    $lp_equal = get_post_meta( get_the_ID(), '_mesh_lp_equal', true );

@@ -1,14 +1,18 @@
 <?php
-    $classes = 'welcome-panel';
+/**
+ * Welcome template
+ * @package Mesh
+ */
+$classes = 'welcome-panel';
 
-    $option = get_user_meta( get_current_user_id(), 'show_mesh_template_panel', true );
+$option = get_user_meta( get_current_user_id(), 'show_mesh_template_panel', true );
 
-    // 1 = show, 0 = hide.
-    $show = ( '' === $option ) ? 1 : (int) $option;
+// 1 = show, 0 = hide.
+$show = ( '' === $option ) ? 1 : (int) $option;
 
-    if ( ! $show ) {
-	    $classes .= ' hidden';
-    }
+if ( ! $show ) {
+	$classes .= ' hidden';
+}
 
 ?>
 <div id="mesh-template-welcome-panel" class="<?php echo esc_attr( $classes ); ?>">

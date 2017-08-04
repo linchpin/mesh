@@ -1,6 +1,8 @@
 <?php
 /**
  * Handle uninstalling the plugin
+ *
+ * @package Mesh
  */
 
 if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) || ! WP_UNINSTALL_PLUGIN || dirname( WP_UNINSTALL_PLUGIN ) != dirname( plugin_basename( __FILE__ ) ) ) {
@@ -8,8 +10,7 @@ if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) || ! WP_UNINSTALL_PLUGIN || dirname( WP_
 	exit;
 }
 
-// Delete all Mesh Settings
+// Delete all Mesh Settings.
+// @todo Delete all Mesh Content Section Posts and Mesh Templates.
 delete_option( 'mesh_settings' );
 delete_option( 'mesh_post_types' );
-
-// @todo Delete all Mesh Content Section Posts and Mesh Templates.

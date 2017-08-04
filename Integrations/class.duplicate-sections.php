@@ -5,13 +5,12 @@
  * This integration does not have any toggles or settings.
  *
  * @since 1.2
- *
  */
 namespace Mesh\Integrations;
 
 use \WP_Query;
 
-if ( ! defined('ABSPATH' ) ) {
+if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
@@ -26,6 +25,9 @@ class Duplicate_Sections {
 	 */
 	function __construct() {}
 
+	/**
+	 * Register all actions.
+	 */
 	function register_actions() {
 		// Duplicate Post Meta.
 		add_action( 'mesh_duplicate_section', array( $this, 'duplicate_post_meta' ), 10, 2 );
@@ -40,16 +42,16 @@ class Duplicate_Sections {
 	/**
 	 * Duplicate all the template's sections
 	 *
-	 * @param int         $new_post_id        Target Post ID.
-	 * @param object|int  $source_post        Original Post Or ID.
-	 * @param bool        $include_drafts     Do we include drafts?
+	 * @param int        $new_post_id    Target Post ID.
+	 * @param object|int $source_post    Original Post Or ID.
+	 * @param bool       $include_drafts Include drafts or not.
 	 */
 	function duplicate_sections( $new_post_id, $source_post, $include_drafts = false ) {
 
 		if ( is_int( $source_post ) ) {
 			$source_post = get_post( $source_post );
 
-			if ( ! $source_post ) { // If we don't have a post return
+			if ( ! $source_post ) { // If we don't have a post return.
 				return;
 			}
 		}
@@ -65,7 +67,7 @@ class Duplicate_Sections {
 	 *
 	 * @param int      $new_parent_post_id New Post ID.
 	 * @param \WP_Post $source_post        Source Post Object.
-	 * @param bool     $include_drafts     Include Drafts
+	 * @param bool     $include_drafts     Include Drafts or not.
 	 */
 	function duplicate_children( $new_parent_post_id, $source_post, $include_drafts = false ) {
 
