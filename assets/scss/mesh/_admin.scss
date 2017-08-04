@@ -433,6 +433,18 @@
 
     }
   }
+
+  a {
+    text-decoration: none;
+    color: $caribbean-green;
+    font-weight: bolder;
+    transition: background-color 0.25s ease-out,color 0.25s ease-out;
+
+    &:hover, &:focus, &:active {
+      color: $lochinvar;
+    }
+
+  }
 }
 
 // Settings
