@@ -45,4 +45,5 @@ if ( (int) $section_blocks > 1 ) :
 endif;
 if ( (int) $section_blocks > 1 && (int) $section_blocks < 4 ) : ?>
 	<div class="wp-slider column-slider mesh-hide-for-small" data-mesh-blocks="<?php echo esc_attr( $section_blocks ); ?>" data-mesh-columns="<?php echo esc_attr( wp_json_encode( $block_sizes ) ); ?>"><span class="ui-slider-handle ui-state-default ui-corner-all fade-in-on-create hide" tabindex="0"></span></div>
-<?php endif;
+<?php
+endif;

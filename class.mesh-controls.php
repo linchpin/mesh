@@ -134,7 +134,7 @@ class Mesh_Controls {
 			),
 			'more_options' => array(
 				'css-class' => array(
-					'label'	         => __( 'CSS Class', 'mesh' ),
+					'label'          => __( 'CSS Class', 'mesh' ),
 					'type'           => 'text',
 					'css_classes'    => array( 'mesh-section-class' ),
 					'show_on_cb'     => false,
@@ -190,7 +190,7 @@ class Mesh_Controls {
 			}
 
 			if ( ! $display_control ) {
-			    continue;
+				continue;
 			}
 
 			if ( ! empty( $control['css_classes'] ) && is_array( $control['css_classes'] ) ) {
@@ -341,7 +341,7 @@ class Mesh_Controls {
 			?>
 			<li class="mesh-section-control-<?php echo esc_attr( $controls_key ); ?>">
 				<label for="mesh-section[<?php echo esc_attr( $block->ID ); ?>][<?php echo esc_attr( $underscore_key ); ?>]">
-						<?php
+					<?php
 					if ( isset( $control['label'] ) ) {
 						echo esc_html( $control['label'] );
 					}

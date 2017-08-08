@@ -19,6 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 /**
  * Class Post_Duplicator
+ *
  * @package Mesh\Integrations
  */
 class Post_Duplicator {

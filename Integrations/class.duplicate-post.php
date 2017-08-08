@@ -20,6 +20,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 /**
  * Class Duplicate_Posts
+ *
  * @package Mesh\Integrations
  */
 class Duplicate_Post {

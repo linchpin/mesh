@@ -19,6 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 /**
  * Class Yoast_SEO
+ *
  * @package Mesh\Integrations
  */
 class Yoast_SEO {

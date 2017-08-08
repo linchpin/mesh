@@ -19,6 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 /**
  * Class Duplicate_Section
+ *
  * @package Mesh\Integrations
  */
 class Duplicate_Sections {
@@ -75,7 +76,7 @@ class Duplicate_Sections {
 	function duplicate_children( $new_parent_post_id, $source_post, $include_drafts = false ) {
 
 		$post_status = array(
-			'publish'
+			'publish',
 		);
 
 		if ( false !== $include_drafts ) {
@@ -129,7 +130,7 @@ class Duplicate_Sections {
 		$new_date = current_time( 'Y-m-d H:i:s' );
 
 		if ( empty( $new_parent_post_id ) ) {
-			return $new_post_parent_id = $post->post_parent;
+			$new_post_parent_id = $post->post_parent;
 		}
 
 		$new_post = array(
@@ -186,7 +187,9 @@ class Duplicate_Sections {
 			$taxonomies = get_object_taxonomies( $post->post_type );
 
 			foreach ( $taxonomies as $taxonomy ) {
-				$post_terms = wp_get_object_terms( $post->ID, $taxonomy, array( 'orderby' => 'term_order' ) );
+				$post_terms = wp_get_object_terms( $post->ID, $taxonomy, array(
+					'orderby' => 'term_order',
+				) );
 				$terms = array();
 				$term_length = count( $post_terms );
 

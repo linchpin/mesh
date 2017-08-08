@@ -10,16 +10,23 @@
  */
 
 ?>
-<section <?php post_class() ?> <?php mesh_section_background(); ?>>
+<section <?php post_class(); ?> <?php mesh_section_background(); ?>>
 	<?php
-		$title_display = get_post_meta( get_the_ID(), '_mesh_title_display', true );
-		$collapse_column_spacing = get_post_meta( get_the_ID(), '_mesh_collapse', true );
+	$title_display = get_post_meta( get_the_ID(), '_mesh_title_display', true );
+	$collapse_column_spacing = get_post_meta( get_the_ID(), '_mesh_collapse', true );
 
-	    $row_class = ( ! empty( $collapse_column_spacing ) ) ? 'row collapse' : 'row';
-	    $lp_equal = get_post_meta( get_the_ID(), '_mesh_lp_equal', true );
+	$row_class = ( ! empty( $collapse_column_spacing ) ) ? 'row collapse' : 'row';
+	$lp_equal = get_post_meta( get_the_ID(), '_mesh_lp_equal', true );
+
+	$equalize = '';
+	$equalize_watch = '';
+
+	if ( ! empty( $lp_equal ) ) {
+		$equalize = ' data-equalizer data-equalize-on="medium"';
+		$equalize_watch = ' data-equalizer-watch';
+	}
 	?>
-    
-    <div class="<?php echo esc_attr( $row_class ); ?>"<?php if ( ! empty( $lp_equal ) ) : ?> data-equalizer data-equalize-on="medium"<?php endif; ?>>
+	<div class="<?php echo esc_attr( $row_class ); ?>"<?php echo $equalize; // WPCS: sanitization ok. ?>>
 		<?php if ( ! empty( $title_display ) && 'no block title' !== strtolower( get_the_title() ) ) : ?>
 			<div class="small-12 columns title-row">
 				<h2 class="entry-title"><?php the_title(); ?></h2>
@@ -32,21 +39,23 @@
 			$column_width = (int) get_post_meta( $block->ID, '_mesh_column_width', true );
 
 			$block_class_args = array(
-			    'push_pull'        => $push_pull,
+				'push_pull'        => $push_pull,
 				'total_columns'    => count( $blocks ),
 				'column_width'     => (int) get_post_meta( $block->ID, '_mesh_column_width', true ),
 				'column_index'     => $i,
 				'collapse_spacing' => ( ! empty( $collapse_column_spacing ) ) ? 'collapse' : '',
-		    );
+			);
 			?>
-            <div <?php mesh_block_class( $block->ID, $block_class_args ); ?><?php if ( ! empty( $lp_equal ) ) : ?> data-equalizer-watch<?php endif; ?> <?php mesh_section_background( $block->ID ); ?>>
-				<?php if ( ! empty( $block->post_title ) && 'no column title' !== strtolower( $block->post_title ) ) : ?>
-					<h3 class="entry-subtitle"><?php echo apply_filters( 'the_title', $block->post_title ); ?></h3>
-				<?php endif; ?>
 
+			<div <?php mesh_block_class( $block->ID, $block_class_args ); ?><?php echo $equalize_watch; // WPCS: sanitization ok. ?> <?php mesh_section_background( $block->ID ); ?>>
+				<?php if ( ! empty( $block->post_title ) && 'no column title' !== strtolower( $block->post_title ) ) : ?>
+					<h3 class="entry-subtitle"><?php echo apply_filters( 'the_title', sanitize_title( $block->post_title ) ); ?></h3>
+				<?php endif; ?>
 				<?php echo apply_filters( 'the_content', $block->post_content ); ?>
 			</div>
-		<?php $i++;
-		endforeach; ?>
+		<?php
+			$i++;
+		endforeach;
+		?>
 	</div>
 </section>

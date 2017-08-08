@@ -112,21 +112,21 @@ function mesh_block_class( $block_id, $args = array() ) {
 
 		$push_or_pull = '';
 
-	    if ( 2 === (int) $args['total_columns'] ) {
+		if ( 2 === (int) $args['total_columns'] ) {
 
-	        switch ( (int) $args['column_index'] ) {
-				case 0 :
-				    $push_or_pull = 'push';
-				break;
-				case 1 :
-				    $push_or_pull = 'pull';
-				break;
+			switch ( (int) $args['column_index'] ) {
+				case 0:
+					$push_or_pull = 'push';
+					break;
+				case 1:
+					$push_or_pull = 'pull';
+					break;
 			}
 
 			if ( ! empty( $push_or_pull ) ) {
-	            $classes[] = $grid['columns']['medium'] . '-' . $push_or_pull . '-' . ( $args['max_columns'] - $args['column_width'] );
+				$classes[] = $grid['columns']['medium'] . '-' . $push_or_pull . '-' . ( $args['max_columns'] - $args['column_width'] );
 			}
-	    }
+		}
 	}
 
 	// Merge our block classes (from the input field).
@@ -138,7 +138,7 @@ function mesh_block_class( $block_id, $args = array() ) {
 	$classes = array_map( 'sanitize_html_class', $classes );
 	$classes = array_unique( $classes );
 
-	echo 'class="' . join( ' ', $classes ) . '"'; // WPCS: ok.
+	echo 'class="' . join( ' ', $classes ) . '"'; // WPCS: sanitization ok.
 }
 
 /**
@@ -155,7 +155,7 @@ function mesh_get_files( $type = null, $depth = 0, $search_parent = false, $dire
 	$files = (array) Mesh::scandir( $directory, $type, $depth );
 
 	if ( $search_parent && $this->parent() ) {
-	    $files += (array) Mesh::scandir( $directory, $type, $depth );
+		$files += (array) Mesh::scandir( $directory, $type, $depth );
 	}
 
 	return $files;
@@ -175,21 +175,25 @@ function mesh_locate_template_files() {
 
 	$plugin_template_files = (array) mesh_get_files( 'php', 1, false, LINCHPIN_MESH___PLUGIN_DIR . 'templates/' );
 
+	$wp_filesystem = new WP_Filesystem_Base();
+
 	// Loop through our local plugin templates.
 	foreach ( $plugin_template_files as $plugin_file => $plugin_file_full_path ) {
 
-	    // Skip the file if it doesn't exist.
-	    if ( ! file_exists( $plugin_file_full_path ) ) {
-	        continue;
+		// Skip the file if it doesn't exist.
+		if ( ! file_exists( $plugin_file_full_path ) ) {
+			continue;
 		}
 
-		if ( ! preg_match( '|Mesh Template:(.*)$|mi', file_get_contents( $plugin_file_full_path ), $header ) ) {
+		$template_contents = file_get_contents( $plugin_file_full_path );
+
+		if ( ! preg_match( '|Mesh Template:(.*)$|mi', $template_contents, $header ) ) {
 			continue;
 		}
 
 		$section_templates[ $plugin_file ]['file'] = _cleanup_header_comment( $header[1] );
 
-		if ( preg_match( '/Mesh Template Blocks: ?([0-9]{1,2})$/mi', file_get_contents( $plugin_file_full_path ), $block_header ) ) {
+		if ( preg_match( '/Mesh Template Blocks: ?([0-9]{1,2})$/mi', $template_contents, $block_header ) ) {
 			$section_templates[ $plugin_file ]['blocks'] = $block_header[1];
 		}
 	}
@@ -199,13 +203,15 @@ function mesh_locate_template_files() {
 	// Loop through our theme templates. This should be made into utility method.
 	foreach ( $files as $file => $full_path ) {
 
-		if ( ! preg_match( '|Mesh Template:(.*)$|mi', file_get_contents( $full_path ), $header ) ) {
+		$file_contents = file_get_contents( $full_path );
+
+		if ( ! preg_match( '|Mesh Template:(.*)$|mi', $file_contents, $header ) ) {
 			continue;
 		}
 
 		$section_templates[ $file ]['file'] = _cleanup_header_comment( $header[1] );
 
-		if ( preg_match( '/Mesh Template Blocks: ?([0-9]{1,2})$/mi', file_get_contents( $full_path ), $block_header ) ) {
+		if ( preg_match( '/Mesh Template Blocks: ?([0-9]{1,2})$/mi', $file_contents, $block_header ) ) {
 			$section_templates[ $file ]['blocks'] = (int) $block_header[1];
 		}
 	}
@@ -254,7 +260,9 @@ function mesh_add_section_admin_markup( $section, $closed = false, $return = fal
 	$templates = mesh_locate_template_files();
 
 	// Make sure we always have a template.
-	if ( ! $selected_template = get_post_meta( $section->ID, '_mesh_template', true ) ) {
+	$selected_template = get_post_meta( $section->ID, '_mesh_template', true );
+
+	if ( empty( $selected_template ) ) {
 		$selected_template = 'mesh-columns-1.php';
 	}
 
@@ -310,10 +318,10 @@ function mesh_get_sections( $post_id = '', $return_type = 'array', $statuses = a
 	);
 
 	if ( isset( $_GET['preview_id'] ) && isset( $_GET['preview_nonce'] ) ) {
-		$id = (int) $_GET['preview_id'];
+		$id = intval( $_GET['preview_id'] );
 
-		if ( false === wp_verify_nonce( $_GET['preview_nonce'], 'post_preview_' . $id ) ) {
-	        wp_die( esc_html__( 'Sorry, you are not allowed to preview drafts.', 'mesh' ) );
+		if ( false === wp_verify_nonce( sanitize_key( $_GET['preview_nonce'] ), 'post_preview_' . $id ) ) {
+			wp_die( esc_html__( 'Sorry, you are not allowed to preview drafts.', 'mesh' ) );
 		}
 
 		$args['post_status'] = array_merge( $args['post_status'], array( 'draft' ) );
@@ -322,14 +330,11 @@ function mesh_get_sections( $post_id = '', $return_type = 'array', $statuses = a
 	$content_sections = new WP_Query( $args );
 
 	switch ( $return_type ) {
-		case 'query' :
+		case 'query':
 			return $content_sections;
-			break;
-
-		case 'array' :
-		default      :
+		case 'array':
+		default:
 			return $content_sections->posts;
-			break;
 	}
 }
 
@@ -353,7 +358,9 @@ function the_mesh_content( $post_id = '' ) {
 		return;
 	}
 
-	if ( ! $template = get_post_meta( $post_id, '_mesh_template', true ) ) {
+	$template = get_post_meta( $post_id, '_mesh_template', true );
+
+	if ( empty( $template ) ) {
 		$template = 'mesh-columns-1.php';
 	}
 
@@ -427,7 +434,7 @@ function mesh_display_sections( $post_id = '', $echo = true ) {
 	if ( true === $echo ) {
 		if ( $mesh_section_query->have_posts() ) {
 			while ( $mesh_section_query->have_posts() ) {
-			    $mesh_section_query->the_post();
+				$mesh_section_query->the_post();
 				the_mesh_content();
 			}
 			wp_reset_postdata();
@@ -469,11 +476,11 @@ function mesh_get_section_blocks( $section_id, $post_status = 'publish', $number
 		'post_parent' => (int) $section_id,
 	);
 
-	if ( isset( $_GET['preview_id'] ) && isset( $_GET['preview_nonce'] ) ) {
-		$id = (int) $_GET['preview_id']; // WPCS escape ok.
+	if ( isset( $_GET['preview_id'] ) && isset( $_GET['preview_nonce'] ) ) { // Input var okay.
+		$id = intval( $_GET['preview_id'] ); // WPCS: Input var okay, sanitization ok.
 
-		if ( false === wp_verify_nonce( $_GET['preview_nonce'], 'post_preview_' . $id ) ) {
-	        wp_die( esc_html__( 'Sorry, you are not allowed to preview drafts.', 'mesh' ) );
+		if ( false === wp_verify_nonce( sanitize_key( $_GET['preview_nonce'] ), 'post_preview_' . $id ) ) { // WPCS: Input var okay, sanitization ok.
+			wp_die( esc_html__( 'Sorry, you are not allowed to preview drafts.', 'mesh' ) );
 		}
 
 		// Make sure $post_status is an array.
@@ -577,8 +584,8 @@ function mesh_maybe_create_section_blocks( $section, $number_needed = 0 ) {
 		$total = $count;
 
 		while ( $total > $number_needed ) {
-	        wp_update_post(array(
-		        'ID' => $blocks[ $total - 1 ]->ID,
+			wp_update_post( array(
+				'ID' => $blocks[ $total - 1 ]->ID,
 				'post_status' => 'draft',
 			) );
 
@@ -626,7 +633,9 @@ function mesh_section_background( $post_id = 0, $echo = true, $size_large = 'lar
 
 		$backgrounds = array();
 
-		$mesh_options       = get_option( 'mesh_settings', array( 'foundation_version' => 5 ) );
+		$mesh_options       = get_option( 'mesh_settings', array(
+			'foundation_version' => 5,
+		) );
 
 		$foundation_version = (int) $mesh_options['foundation_version'];
 		$css_mode           = $mesh_options['css_mode'];
@@ -649,10 +658,10 @@ function mesh_section_background( $post_id = 0, $echo = true, $size_large = 'lar
 			}
 
 			switch ( $foundation_version ) {
-				case 6 :
+				case 6:
 					$interchange_format = '[%s, %s]';
 					break;
-				default :
+				default:
 					$interchange_format = '[%s, (%s)]';
 			}
 
@@ -667,7 +676,9 @@ function mesh_section_background( $post_id = 0, $echo = true, $size_large = 'lar
 						$backgrounds[] = sprintf( $interchange_format, $default_image_url[0], 'default' );
 					}
 
-					if ( $small_image_url = wp_get_attachment_image_src( get_post_thumbnail_id( $post_id ), $size_medium ) ) {
+					$small_image_url = wp_get_attachment_image_src( get_post_thumbnail_id( $post_id ), $size_medium );
+
+					if ( ! empty( $small_image_url ) ) {
 						if ( ! empty( $small_image_url[0] ) && '' !== $small_image_url[0] ) {
 							if ( ! in_array( $small_image_url[0], $background_urls, true ) ) {
 								$background_urls[] = $small_image_url[0];
@@ -676,7 +687,9 @@ function mesh_section_background( $post_id = 0, $echo = true, $size_large = 'lar
 						}
 					}
 
-					if ( $medium_image_url = wp_get_attachment_image_src( get_post_thumbnail_id( $post_id ), $size_medium ) ) {
+					$medium_image_url = wp_get_attachment_image_src( get_post_thumbnail_id( $post_id ), $size_medium );
+
+					if ( ! empty( $medium_image_url ) ) {
 						if ( ! empty( $medium_image_url[0] ) && '' !== $medium_image_url[0] ) {
 							if ( ! in_array( $medium_image_url[0], $background_urls, true ) ) {
 								$background_urls[] = $medium_image_url[0];
@@ -685,7 +698,9 @@ function mesh_section_background( $post_id = 0, $echo = true, $size_large = 'lar
 						}
 					}
 
-					if ( $large_image_url = wp_get_attachment_image_src( get_post_thumbnail_id( $post_id ), $size_large ) ) {
+					$large_image_url = wp_get_attachment_image_src( get_post_thumbnail_id( $post_id ), $size_large );
+
+					if ( ! empty( $large_image_url ) ) {
 						if ( ! empty( $large_image_url[0] ) && '' !== $large_image_url[0] ) {
 							if ( ! in_array( $large_image_url[0], $background_urls, true ) ) {
 								$background_urls[] = $large_image_url[0];
@@ -694,7 +709,9 @@ function mesh_section_background( $post_id = 0, $echo = true, $size_large = 'lar
 						}
 					}
 
-					if ( $xlarge_image_url = wp_get_attachment_image_src( get_post_thumbnail_id( $post_id ), $size_xlarge ) ) {
+					$xlarge_image_url = wp_get_attachment_image_src( get_post_thumbnail_id( $post_id ), $size_xlarge );
+
+					if ( ! empty( $xlarge_image_url ) ) {
 						if ( ! empty( $xlarge_image_url[0] ) && '' !== $xlarge_image_url[0] ) {
 							if ( ! in_array( $xlarge_image_url[0], $background_urls, true ) ) {
 								$background_urls[] = $xlarge_image_url[0];

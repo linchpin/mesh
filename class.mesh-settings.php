@@ -87,10 +87,22 @@ class Mesh_Settings {
 
 		// Option : CSS Mode.
 		$css_mode = array(
-			array( 'label' => __( 'Use Mesh CSS', 'mesh' ), 'value' => 0 ),
-			array( 'label' => __( 'Disable Mesh CSS', 'mesh' ), 'value' => -1 ),
-			array( 'label' => __( 'Use Foundation built into my theme', 'mesh' ), 'value' => 1 ),
-			array( 'label' => __( 'Use Bootstrap', 'mesh' ), 'value' => 2 ),
+			array(
+				'label' => __( 'Use Mesh CSS', 'mesh' ),
+				'value' => 0,
+			),
+			array(
+				'label' => __( 'Disable Mesh CSS', 'mesh' ),
+				'value' => -1,
+			),
+			array(
+				'label' => __( 'Use Foundation built into my theme', 'mesh' ),
+				'value' => 1,
+			),
+			array(
+				'label' => __( 'Use Bootstrap', 'mesh' ),
+				'value' => 2,
+			),
 		);
 
 		// Allow filtering of available css_mode options.
@@ -116,8 +128,14 @@ class Mesh_Settings {
 		 * @since 1.1.3
 		 */
 		$foundation_version = array(
-			array( 'label' => __( 'Foundation 5', 'mesh' ), 'value' => '' ),
-			array( 'label' => __( 'Foundation 6', 'mesh' ), 'value' => 6 ),
+			array(
+				'label' => __( 'Foundation 5', 'mesh' ),
+				'value' => '',
+			),
+			array(
+				'label' => __( 'Foundation 6', 'mesh' ),
+				'value' => 6,
+			),
 		);
 
 		add_settings_field(
@@ -135,7 +153,9 @@ class Mesh_Settings {
 		);
 
 		// Add an option for each post type.
-		if ( $post_types = get_post_types() ) {
+		$post_types = get_post_types();
+
+		if ( ! empty( $post_types ) ) {
 			add_settings_section(
 				'mesh_post_type_section',
 				__( 'Post Types', 'mesh' ),
@@ -208,8 +228,8 @@ class Mesh_Settings {
 		// Parse incoming $args into an array and merge it with $defaults.
 		$args = wp_parse_args( $args, $defaults );
 
-		$options = get_option( 'mesh_settings' ); ?>
-
+		$options = get_option( 'mesh_settings' );
+		?>
 		<?php if ( ! empty( $args['description'] ) ) : ?>
 			<p class="description"><?php echo esc_html( $args['description'] ); ?></p>
 		<?php endif; ?>

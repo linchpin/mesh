@@ -47,15 +47,15 @@ $parsedown = new Parsedown();
 			$active = ( $active_tab === $tab_slug ) ? ' nav-tab-active' : '';
 
 			?>
-            <a href="<?php echo esc_url( $tab_url ); ?>" title="<?php echo esc_attr( $tab_name ); ?>" class="nav-tab <?php echo esc_attr( $active ); ?>">
+			<a href="<?php echo esc_url( $tab_url ); ?>" title="<?php echo esc_attr( $tab_name ); ?>" class="nav-tab <?php echo esc_attr( $active ); ?>">
 				<?php echo esc_html( $tab_name ); ?>
-            </a>
+			</a>
 		<?php endforeach; ?>
-    </h2>
+	</h2>
 
-    <div id="poststuff">
-        <div id="post-body" class="metabox-holder">
-            <div id="postbox-container" class="postbox-container">
+	<div id="poststuff">
+		<div id="post-body" class="metabox-holder">
+			<div id="postbox-container" class="postbox-container">
 				<?php if ( 'settings' === $active_tab ) : ?>
 					<?php include_once( LINCHPIN_MESH___PLUGIN_DIR . '/admin/settings-meta-box-display.php' ); ?>
 				<?php elseif ( 'changelog' === $active_tab ) : ?>
@@ -76,20 +76,20 @@ $parsedown = new Parsedown();
 						echo wp_kses_post( $parsedown->text( $readme ) ); // WPCS: ok.
 					}
 					?>
-                <?php elseif ( 'linchpin' === $active_tab ) : ?>
-                    <h2><?php esc_html_e( 'Linchpin is a Digital Agency that specializes in WordPress', 'mesh' ); ?></h2>
-										<p><?php printf( __( 'We loving giving back to the WordPress community through Plugins, Tools/Utilities and through Organzing <a href="%s">WordPress Rhode Island</a> and WordCamp Rhode Island', 'mesh' ), esc_url( 'https://meetup.com/WordPressRI/' ) ); ?></p>
-                    <p><?php printf( __( 'Check our our <a href="%s" target="_blank">site</a>. or visit our various profiles below or come say hi at a local event.', 'mesh' ), esc_url( 'https://linchpin.agency' ) ); ?></p>
-                    <dl>
-                        <dd><a href="https://jetpack.pro/profile/linchpin/" target="_blank">https://jetpack.pro/profile/linchpin/</a></dd>
-                        <dd><a href="https://twitter.com/linchpin_agency" target="_blank">https://twitter.com/linchpin_agency</a></dd>
-                        <dd><a href="https://www.facebook.com/linchpinagency" target="_blank">https://www.facebook.com/linchpinagency</a></dd>
-                        <dd><a href="https://www.instagram.com/linchpinagency/" target="_blank">https://www.instagram.com/linchpinagency</a></dd>
-                    </dl>
-                <?php else : ?>
-                    <?php do_action( 'mesh_setting_' . $active_tab ); ?>
+				<?php elseif ( 'linchpin' === $active_tab ) : ?>
+					<h2><?php esc_html_e( 'Linchpin is a Digital Agency that specializes in WordPress', 'mesh' ); ?></h2>
+					<p><?php printf( __( 'We loving giving back to the WordPress community through Plugins, Tools/Utilities and through Organzing <a href="%s">WordPress Rhode Island</a> and WordCamp Rhode Island', 'mesh' ), esc_url( 'https://meetup.com/WordPressRI/' ) ); ?></p>
+					<p><?php printf( __( 'Check our our <a href="%s" target="_blank">site</a>. or visit our various profiles below or come say hi at a local event.', 'mesh' ), esc_url( 'https://linchpin.agency' ) ); ?></p>
+					<dl>
+						<dd><a href="https://jetpack.pro/profile/linchpin/" target="_blank">https://jetpack.pro/profile/linchpin/</a></dd>
+						<dd><a href="https://twitter.com/linchpin_agency" target="_blank">https://twitter.com/linchpin_agency</a></dd>
+						<dd><a href="https://www.facebook.com/linchpinagency" target="_blank">https://www.facebook.com/linchpinagency</a></dd>
+						<dd><a href="https://www.instagram.com/linchpinagency/" target="_blank">https://www.instagram.com/linchpinagency</a></dd>
+					</dl>
+				<?php else : ?>
+					<?php do_action( 'mesh_setting_' . $active_tab ); ?>
 				<?php endif; ?>
-            </div>
-        </div>
-    </div>
+			</div>
+		</div>
+	</div>
 </div>

@@ -84,7 +84,7 @@ class Mesh_Templates_Duplicate {
 	function duplicate_children( $new_id, $template_post, $include_drafts = false ) {
 
 		$post_status = array(
-			'publish'
+			'publish',
 		);
 
 		if ( $include_drafts ) {
@@ -148,13 +148,15 @@ class Mesh_Templates_Duplicate {
 
 		$new_date = current_time( 'Y-m-d H:i:s' );
 
+		$new_post_parent = empty( $parent_id ) ? $post->post_parent : $parent_id;
+
 		$new_post = array(
 			'menu_order'     => $post->menu_order,
 			'post_author'    => $post->post_author,
 			'post_content'   => $post->post_content,
 			'post_excerpt'   => $post->post_excerpt,
 			'post_mime_type' => $post->post_mime_type,
-			'post_parent'    => $new_post_parent = empty( $parent_id ) ? $post->post_parent : $parent_id,
+			'post_parent'    => $new_post_parent,
 			'post_status'    => $status, // Always set a published section to draft. Exclude attachments.
 			'post_title'     => $post->post_title,
 			'post_type'      => $post->post_type,
@@ -206,7 +208,11 @@ class Mesh_Templates_Duplicate {
 
 			foreach ( $taxonomies as $taxonomy ) {
 
-				$post_terms = wp_get_object_terms( $post->ID, $taxonomy, array( 'orderby' => 'term_order' ) );
+				$post_terms = wp_get_object_terms( $post->ID, $taxonomy,
+					array(
+						'orderby' => 'term_order',
+					)
+				);
 				$terms = array();
 				$term_length = count( $post_terms );
 
