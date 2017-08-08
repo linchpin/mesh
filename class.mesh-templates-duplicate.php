@@ -45,9 +45,10 @@ class Mesh_Templates_Duplicate {
 	 */
 	function duplicate_sections( $template_id, $post_id, $include_drafts ) {
 
-		$template_id = (int) $template_id;
+		$template_id = absint( $template_id );
+		$template_post = get_post( $template_id );
 
-		if ( $template_post = get_post( $template_id ) ) {
+		if ( ! empty( $template_post ) ) {
 
 			$children = $this->duplicate_children( $post_id, $template_post, $include_drafts );
 
@@ -62,11 +63,11 @@ class Mesh_Templates_Duplicate {
 				return $markup;
 
 			} else {
-				return 'created nothing';
+				return __( 'created nothing', 'mesh' );
 			}
 		}
 
-		return 'no template found';
+		return __( 'no template found', 'mesh' );
 	}
 
 	/**

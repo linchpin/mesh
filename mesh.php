@@ -175,8 +175,6 @@ function mesh_locate_template_files() {
 
 	$plugin_template_files = (array) mesh_get_files( 'php', 1, false, LINCHPIN_MESH___PLUGIN_DIR . 'templates/' );
 
-	$wp_filesystem = new WP_Filesystem_Base();
-
 	// Loop through our local plugin templates.
 	foreach ( $plugin_template_files as $plugin_file => $plugin_file_full_path ) {
 
