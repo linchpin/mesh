@@ -363,7 +363,7 @@ class Mesh {
 				<?php endforeach; ?>
 			</div>
 
-			<div class="notice below-h2 mesh-row mesh-main-ua-row bottom<?php if ( empty( $content_sections ) ) : ?> hide<?php endif; ?>">
+			<div class="notice below-h2 mesh-row mesh-main-ua-row bottom<?php echo esc_attr( $hide ); ?>">
 				<div class="mesh-columns-12 columns text-right">
 					<?php include LINCHPIN_MESH___PLUGIN_DIR . 'admin/controls.php'; ?>
 				</div>

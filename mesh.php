@@ -421,7 +421,9 @@ function mesh_display_sections( $post_id = '', $echo = true ) {
 		return '';
 	}
 
-	if ( ! $mesh_section_query = mesh_get_sections( $post_id, 'query' ) ) {
+	$mesh_section_query = mesh_get_sections( $post_id, 'query' );
+
+	if ( empty( $mesh_section_query ) ) {
 		return '';
 	}
 

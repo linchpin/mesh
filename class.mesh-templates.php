@@ -368,10 +368,9 @@ class Mesh_Templates {
 	function add_layout_column( $column, $post_id ) {
 
 		switch ( $column ) {
-			case 'mesh_template_uses' :
-
+			case 'mesh_template_uses':
 				$template_post = get_post( $post_id, array(
-					'field'	=> 'slug',
+					'field' => 'slug',
 				) );
 
 				$template_usage = get_term_by( 'slug', $template_post->post_name, 'mesh_template_usage' );
@@ -379,7 +378,7 @@ class Mesh_Templates {
 				echo esc_html( (int) $template_usage->count );
 
 				break;
-			case 'layout' :
+			case 'layout':
 
 				$layout = get_post_meta( $post_id, '_mesh_template_layout', true );
 
@@ -417,14 +416,11 @@ function mesh_get_templates( $return_type = 'array', $statuses = array( 'publish
 	) );
 
 	switch ( $return_type ) {
-		case 'query' :
+		case 'query':
 			return $template_query;
-			break;
-
-		case 'array' :
-		default      :
+		case 'array':
+		default:
 			return $template_query->posts;
-			break;
 	}
 }
 

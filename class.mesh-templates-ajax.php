@@ -49,7 +49,7 @@ class Mesh_Templates_AJAX {
 		$current_template = get_post( $post_id );
 
 		if ( empty( $current_template ) ) {
-		    wp_die( -1 );
+			wp_die( -1 );
 		}
 
 		$available_post_types = get_option( 'mesh_post_types', array() );
@@ -72,7 +72,7 @@ class Mesh_Templates_AJAX {
 		) );
 
 		if ( ! $template_references->have_posts() ) {
-		    wp_die( -1 );
+			wp_die( -1 );
 		}
 
 		/*
@@ -187,14 +187,17 @@ class Mesh_Templates_AJAX {
 	function choose_template() {
 		check_ajax_referer( 'mesh_choose_template_nonce', 'mesh_choose_template_nonce' );
 
-		$post_id            = ( isset( $_POST['mesh_post_id'] ) && '' !== $_POST['mesh_post_id'] ) ? (int) $_POST['mesh_post_id'] : 0;
-		$mesh_template_id   = ( isset( $_POST['mesh_template_id'] ) ) ? (int) $_POST['mesh_template_id'] : 0;
-		$mesh_template_type = ( isset( $_POST['mesh_template_type'] ) ) ? sanitize_title( $_POST['mesh_template_type'] ) : '';
+		$post_id            = ( isset( $_POST['mesh_post_id'] ) && '' !== $_POST['mesh_post_id'] ) ? absint( $_POST['mesh_post_id'] ) : 0; // Input var okay.
+		$mesh_template_id   = ( isset( $_POST['mesh_template_id'] ) ) ? absint( $_POST['mesh_template_id'] ) : 0; // Input var okay.
+		$mesh_template_type = ( isset( $_POST['mesh_template_type'] ) ) ? sanitize_title( $_POST['mesh_template_type'] ) : ''; // WPCS: Input var okay, sanitization ok.
 
 		if ( ! current_user_can( 'edit_post', $mesh_template_id ) || empty( $post_id ) || empty( $mesh_template_id ) ) {
 			wp_die( -1 );
 		}
-		if ( $mesh_template = get_post( $mesh_template_id ) ) {
+
+		$mesh_template = get_post( $mesh_template_id );
+
+		if ( ! empty( $mesh_template ) ) {
 
 			// Apply template type to our taxonomy that tracks template usage.
 			wp_set_object_terms( $post_id, array( $mesh_template->post_name ), 'mesh_template_usage', false );
@@ -233,7 +236,7 @@ class Mesh_Templates_AJAX {
 	function remove_template() {
 		check_ajax_referer( 'mesh_choose_template_nonce', 'mesh_choose_template_nonce' );
 
-		$post_id = ( isset( $_POST['mesh_post_id'] ) && '' !== $_POST['mesh_post_id'] ) ? (int) $_POST['mesh_post_id'] : 0;
+		$post_id = ( isset( $_POST['mesh_post_id'] ) && '' !== $_POST['mesh_post_id'] ) ? absint( $_POST['mesh_post_id'] ) : 0; // Input var okay.
 
 		$sections = mesh_get_sections( $post_id );
 	}
@@ -247,7 +250,7 @@ class Mesh_Templates_AJAX {
 	function change_template_type() {
 		check_ajax_referer( 'mesh_choose_template_nonce', 'mesh_choose_template_nonce' );
 
-		$post_id = ( isset( $_POST['mesh_post_id'] ) && '' !== $_POST['mesh_post_id'] ) ? (int) $_POST['mesh_post_id'] : 0;
+		$post_id = ( isset( $_POST['mesh_post_id'] ) && '' !== $_POST['mesh_post_id'] ) ? absint( $_POST['mesh_post_id'] ) : 0; // Input var okay.
 
 		if ( ! current_user_can( 'edit_post', $post_id ) || empty( $post_id ) ) {
 			wp_die( -1 );
