@@ -12,7 +12,7 @@ mesh.admin = function ( $ ) {
 		$meta_box_container = $('#mesh-container'),
 		$section_container  = $('#mesh-sections-container'),
 		$description        = $('#mesh-description'),
-		$equalize           = $('.mesh_section [data-equalizer]'),
+		$equalize           = $('[data-equalizer]'),
 		$sections,
 		media_frames        = [],
 
@@ -81,7 +81,7 @@ mesh.admin = function ( $ ) {
 				$reorder_button.addClass( 'disabled' );
 			}
 
-			if ( 'undefined' == typeof Foundation ) {
+			if ( $equalize.length ) {
 				$equalize.each( self.mesh_equalize );
 			}
 

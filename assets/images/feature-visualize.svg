@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="-3690 1284 64.225 56">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: url(#linear-gradient);
+      }
+
+      .cls-2 {
+        fill: #32b7a1;
+      }
+
+      .cls-3 {
+        fill: #ddd;
+      }
+    </style>
+    <linearGradient id="linear-gradient" x1="0.272" y1="-0.15" x2="0.768" y2="1.33" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#c447a1"/>
+      <stop offset="1" stop-color="#2e0b84"/>
+    </linearGradient>
+  </defs>
+  <g id="share" transform="translate(-3628 1340) rotate(180)">
+    <path id="Subtraction_3" data-name="Subtraction 3" class="cls-1" d="M3740.212-1676.434a12.091,12.091,0,0,1-12.012-12.141,12.091,12.091,0,0,1,12.012-12.142,12.092,12.092,0,0,1,12.013,12.142A12.091,12.091,0,0,1,3740.212-1676.434Zm0-19.374a7.241,7.241,0,0,0-7.233,7.233,7.241,7.241,0,0,0,7.233,7.233,7.241,7.241,0,0,0,7.233-7.233A7.241,7.241,0,0,0,3740.212-1695.808Z" transform="translate(-3690.225 1700.717)"/>
+    <path id="Subtraction_2" data-name="Subtraction 2" class="cls-1" d="M3740.212-1601a12.091,12.091,0,0,1-12.012-12.141,12.091,12.091,0,0,1,12.012-12.142,12.092,12.092,0,0,1,12.013,12.142A12.091,12.091,0,0,1,3740.212-1601Zm0-19.374a7.241,7.241,0,0,0-7.233,7.233,7.241,7.241,0,0,0,7.233,7.233,7.241,7.241,0,0,0,7.233-7.233A7.241,7.241,0,0,0,3740.212-1620.375Z" transform="translate(-3690.225 1657)"/>
+    <rect id="Rectangle_481" data-name="Rectangle 481" class="cls-2" width="36" height="7" transform="translate(33.775 53) rotate(180)"/>
+    <rect id="Rectangle_482" data-name="Rectangle 482" class="cls-2" width="36" height="7" transform="translate(33.775 21) rotate(180)"/>
+    <rect id="Rectangle_483" data-name="Rectangle 483" class="cls-3" width="23" height="7" transform="translate(33.775 42) rotate(180)"/>
+    <rect id="Rectangle_484" data-name="Rectangle 484" class="cls-3" width="23" height="7" transform="translate(33.775 10) rotate(180)"/>
+  </g>
+</svg>
