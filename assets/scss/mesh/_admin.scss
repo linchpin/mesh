@@ -1,0 +1,473 @@
+//Variables
+  //Colors
+    $cerise: #d43c9e;
+    $dark-purple: #812d8f;
+    $blue-gem: #2c0c82;
+    $darker-blue: #1B0253;
+    $caribbean-green: #00baa3;
+    $lochinvar: #2e9080;
+    $white-smoke: #f5f5f5;
+    $gray: #e8e8e8;
+  //Other Global items
+    $global-radius: .25rem;
+
+
+//Top area
+.settings_page_mesh #wpcontent {
+  .mesh-logo {
+    display: inline-block;
+    width: 250px;
+    padding: 1rem 0;
+  }
+
+  .com-button {
+    text-align: right;
+    padding-left: 20px;
+    padding-right: 20px;
+
+    a {
+      margin-bottom: 0 !important;
+    }
+
+    @media screen and ('max-width: 580px') {
+      display: block;
+      float: none;
+    }
+  }
+}
+
+.settings_page_mesh #wpcontent, #about-mesh, #whats-new, #settings{
+  margin-top: -10px;
+  background-color: white;
+  font-family: ingra-2, sans-serif;
+  font-style: normal;
+  font-weight: 100;
+
+  //Global items
+  .clearfix {
+    clear:both;
+  }
+
+  h1, .h1 {
+    font-size: 32px;
+    font-weight: 600;
+    line-height: 1.6;
+  }
+
+  h2, .h2, #poststuff h2 {
+    font-size: 26px;
+    font-weight: 600;
+    padding-left: 0 !important;
+    line-height: 1.5;
+
+  }
+
+  h3, .h3 {
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 1.4;
+
+  }
+
+  h4, .h4 {
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 1.3;
+
+  }
+
+  h5, .h5 {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.2;
+
+  }
+
+  h6, .h6 {
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 1.2;
+
+  }
+
+  #wpbody :not(.update-nag) a {
+    text-decoration: none;
+    color: $caribbean-green;
+    font-weight: bolder;
+    transition: background-color 0.25s ease-out,color 0.25s ease-out;
+
+    &:hover, &:focus, &:active {
+      color: $lochinvar;
+    }
+  }
+
+  .light-weight {
+    font-weight: 200 !important;
+  }
+
+  .center {
+    text-align: center;
+  }
+
+  .bold {
+    font-weight: 600;
+  }
+
+  .italic {
+    font-style: italic;
+  }
+
+  .caption {
+    padding-top:.25rem;
+    padding-bottom: .5rem;
+    font-style: italic;
+    opacity: .7;
+    font-size: 95%;
+  }
+
+  .inline {
+    display: inline;
+  }
+
+  .no-margin {
+    margin: 0 !important;
+  }
+
+  .table {
+    display: table;
+    width: 100%;
+    .table-cell {
+      display:table-cell;
+      vertical-align: middle;
+      float: none;
+    }
+
+    &.new {
+      width: auto;
+    }
+  }
+
+  .color-white {
+    color: $white-smoke;
+  }
+
+  .color-darkpurple {
+    color: $dark-purple;
+  }
+
+  // tabs
+  .nav-tab-wrapper {
+    a {
+      color: $darker-blue !important;
+      border-radius: .25rem .25rem 0 0;
+      &.nav-tab-active {
+        border-bottom: 1px solid transparent !important;
+        color: $caribbean-green !important;
+        background-color: $white-smoke;
+      }
+
+      &:first-child {
+        margin-left: 22px;
+      }
+    }
+    @media screen and ('max-width: 580px'){
+      width: 100%;
+    }
+  }
+
+  //buttons
+  input[type="submit"], .button, .button-primary {
+    margin: 0 0 1rem 0;
+    padding: 0.85em 1em;
+    -webkit-appearance: none;
+    border: 1px solid transparent;
+    border-radius: .25rem;
+    transition: background-color 0.25s ease-out,color 0.25s ease-out;
+    font-size: 1rem;
+    font-family: ingra-2, sans-serif;
+    font-weight: 700 !important;
+    line-height: 1;
+    text-align: center;
+    cursor: pointer;
+    background-color: $caribbean-green;
+    color: white !important;
+    height: auto !important;
+    text-shadow: none;
+    box-shadow: none;
+    -webkit-box-shadow: none;
+
+    &:hover, &:focus, &:active {
+      background-color: #009e8b;
+      color: $white-smoke;
+      border: 1px solid transparent;
+      box-shadow: none !important;
+      -webkit-box-shadow: none !important;
+    }
+  }
+
+
+
+
+
+// About Mesh
+  .about.hero {
+    background-image: url('../images/meshbackground@2x.png');
+    background-position: right center;
+    background-size: cover;
+  }
+
+  .whatsnew.hero {
+    background-image: url('../images/meshgreenbackground@2x.png');
+    background-position: right center;
+    background-size: cover;
+  }
+
+  .hero {
+    .hero-text {
+      padding: 3rem 5%;
+      width: 70%;
+
+      h1, h2, h3 {
+        color: $white-smoke;
+      }
+
+      h3 {
+        font-weight: 300 !important;
+      }
+    }
+  }
+
+  .wrapper {
+    width: 90%;
+    margin: 2rem 5%;
+  }
+
+  .negative-bg {
+    margin: 0 0 0 -22px !important;
+    padding: 0 22px;
+
+    @media screen and ('max-width: 782px'){
+      margin: 0 -10px !important;
+      padding: 0 10px;
+
+    }
+
+  }
+
+  .gray-bg {
+    background-color: $gray;
+    padding: 1px;
+    border-radius: 0 0 $global-radius $global-radius;
+
+    &.negative-bg {
+      padding: 1px 22px;
+    }
+  }
+
+  .green-bg {
+    background-color: $caribbean-green;
+    padding: 1px;
+    border-radius: 0 0 $global-radius $global-radius;
+
+    a.underline {
+      color: $white-smoke !important;
+      border-bottom: 2px solid $white-smoke;
+      transition: background-color 0.25s ease-out,color 0.25s ease-out;
+      font-weight: 600;
+
+      &:hover, &:focus, &:active {
+        color: $lochinvar !important;
+        border-bottom: 2px solid $lochinvar;
+      }
+    }
+  }
+
+  .right {
+    float: right;
+    @media screen and ('max-width: 1023px') {
+      float: none;
+    }
+
+    img {
+      float: right;
+      @media screen and ('max-width: 1023px') {
+        float: none;
+      }
+    }
+  }
+
+  .grey-box-container {
+    margin: 0 -1rem;
+  }
+    .grey-box {
+      margin: 1rem;
+      padding: 1.5rem;
+      background-color: $white-smoke;
+      border-radius: $global-radius;
+      //min-height: 300px;
+      p {
+        font-size: 16px;
+        @media screen and ('max-width: 1023px') {
+          margin-bottom: 1rem;
+        }
+      }
+    }
+
+  .about-box-icon {
+      width: 20%;
+      float: left;
+      padding-right: 10px;
+      padding-bottom: 0;
+    img {
+      max-width: 100px;
+    }
+  }
+
+  .about-box-copy {
+    padding-left: 20%;
+
+    h4, p {
+      padding-left: 20px;
+    }
+
+  }
+
+  .about-devs-container {
+    p {
+      font-size: 16px;
+    }
+    img{
+      padding-top: 15px;
+    }
+  }
+
+
+// Change Log
+
+  #poststuff #postbox-container .changelog h2 {
+    @extend .h2;
+    padding: 16px 0 8px;
+  }
+
+  .changelog {
+    width: 90%;
+    margin: 0 5%;
+
+    ul {
+      margin-left: 25px;
+    }
+  }
+
+// Whats New
+
+  .versioninfo {
+    h2 {
+      color: $darker-blue;
+    }
+
+    .green-pipe {
+      padding: 0 10px;
+      color: $lochinvar;
+      vertical-align: top;
+      line-height: 33px;
+    }
+  }
+
+  .new-title {
+    img {
+      padding-right: 1rem;
+      height: 45px;
+      max-width: 45px;
+      line-height: 45px;
+      vertical-align: middle;
+    }
+
+    .new-tag {
+      line-height: 45px;
+      display: inline-block;
+      color: $cerise;
+      font-weight: 700;
+      margin: 0 !important;
+      vertical-align: middle;
+    }
+  }
+
+  .new-feature-container, .update-container, .bug-fix-container {
+      margin: 1rem 0;
+
+      .new-feature, .update, .bug-fix {
+        margin: 1rem 0 2rem;
+       }
+
+      .new {
+        padding-left: 45px;
+
+        [class^="mesh-columns-"] {
+          padding: 0 20px;
+        }
+
+        ul {
+          margin-left: 25px;
+        }
+      }
+  }
+
+}
+
+// UPDATE Notification
+.mesh-update-notice {
+  padding: 10px 38px;
+  border-left-color: $cerise;
+  margin: 25px 20px 0 2px ;
+  img {
+    max-width:100px !important;
+    float:left;
+    padding-right: 38px;
+  }
+  .table {
+    display: table;
+    width: 100%;
+    .table-cell {
+      display: table-cell;
+      vertical-align: middle;
+
+    }
+  }
+
+  a {
+    text-decoration: none;
+    color: $caribbean-green;
+    font-weight: bolder;
+    transition: background-color 0.25s ease-out,color 0.25s ease-out;
+
+    &:hover, &:focus, &:active {
+      color: $lochinvar;
+    }
+
+  }
+}
+
+// Settings
+#settings {
+  h2 {
+    display: none !important;
+    &.color-darkpurple {
+      display: inline-block !important;
+    }
+  }
+  form.settings-form {
+    .form-table {
+      width: 90%;
+      margin: 2rem 5%;
+    }
+
+    .submit {
+      width: 90%;
+      margin: 2rem 5%;
+    }
+  }
+
+  input[type=checkbox]:checked:before {
+    color: $cerise;
+  }
+}
