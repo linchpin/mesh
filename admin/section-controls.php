@@ -46,5 +46,6 @@ global $post;
 	/**
 	 * Add the ability to add controls after
 	 */
-	do_action( 'mesh_section_add_controls_after' ); ?>
+	do_action( 'mesh_section_add_controls_after' );
+	?>
 </div>

@@ -407,7 +407,7 @@ function the_mesh_content( $post_id = '' ) {
  * @param string $post_id Post ID.
  * @param bool   $echo    Echo the sections or not.
  *
- * @return string|void
+ * @return string
  */
 function mesh_display_sections( $post_id = '', $echo = true ) {
 	global $post, $mesh_section_query;
@@ -450,6 +450,7 @@ function mesh_display_sections( $post_id = '', $echo = true ) {
 		}
 		$output = ob_get_contents();
 		ob_end_clean();
+
 		return $output;
 	}
 }
@@ -611,6 +612,8 @@ function mesh_maybe_create_section_blocks( $section, $number_needed = 0 ) {
  * Utility Method to add a background to a section
  *
  * @todo This should be disabled if the user selects to NOT use foundation.
+ * @todo There is definitely a need for some optimization here. Lots of code duplication that could use
+ *       a utility method or two.
  *
  * @param int    $post_id     PostID of the Section.
  * @param bool   $echo        Echo the output or not.

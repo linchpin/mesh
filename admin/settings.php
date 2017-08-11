@@ -33,9 +33,9 @@ require_once LINCHPIN_MESH___PLUGIN_DIR . '/lib/parsedown/Parsedown.php';
 $parsedown = new Parsedown();
 ?>
 <div class="wrap" id="mesh-settings">
-    <h2><?php echo esc_html( get_admin_page_title() ); ?> </h2>
+	<h2><?php echo esc_html( get_admin_page_title() ); ?> </h2>
 	<?php settings_errors( self::$plugin_name . '-notices' ); ?>
-    <h2 class="nav-tab-wrapper">
+	<h2 class="nav-tab-wrapper">
 		<?php
 		foreach ( $tabs as $tab_slug => $tab_name ) :
 
@@ -78,8 +78,18 @@ $parsedown = new Parsedown();
 					?>
 				<?php elseif ( 'linchpin' === $active_tab ) : ?>
 					<h2><?php esc_html_e( 'Linchpin is a Digital Agency that specializes in WordPress', 'mesh' ); ?></h2>
-					<p><?php printf( __( 'We loving giving back to the WordPress community through Plugins, Tools/Utilities and through Organzing <a href="%s">WordPress Rhode Island</a> and WordCamp Rhode Island', 'mesh' ), esc_url( 'https://meetup.com/WordPressRI/' ) ); ?></p>
-					<p><?php printf( __( 'Check our our <a href="%s" target="_blank">site</a>. or visit our various profiles below or come say hi at a local event.', 'mesh' ), esc_url( 'https://linchpin.agency' ) ); ?></p>
+					<p>
+						<?php
+						/* translators: 1: Url WordPressRI Meetuyp */
+						printf( __( 'We loving giving back to the WordPress community through Plugins, Tools/Utilities and through Organzing <a href="%s">WordPress Rhode Island</a> and WordCamp Rhode Island', 'mesh' ), esc_url( 'https://meetup.com/WordPressRI/' ) );
+						?>
+					</p>
+					<p>
+						<?php
+						/* translators: 1: Url to linchpin website */
+						printf( __( 'Check our our <a href="%s" target="_blank">site</a>. or visit our various profiles below or come say hi at a local event.', 'mesh' ), esc_url( 'https://linchpin.agency' ) );
+						?>
+					</p>
 					<dl>
 						<dd><a href="https://jetpack.pro/profile/linchpin/" target="_blank">https://jetpack.pro/profile/linchpin/</a></dd>
 						<dd><a href="https://twitter.com/linchpin_agency" target="_blank">https://twitter.com/linchpin_agency</a></dd>

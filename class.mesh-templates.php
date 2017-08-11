@@ -379,7 +379,6 @@ class Mesh_Templates {
 
 				break;
 			case 'layout':
-
 				$layout = get_post_meta( $post_id, '_mesh_template_layout', true );
 
 				if ( empty( $layout ) ) {
