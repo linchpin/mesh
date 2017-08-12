@@ -56,7 +56,13 @@ class Mesh_Settings {
 	 */
 	public static function create_section() {
 		?>
-		<p><?php esc_html_e( 'Below are your settings for Mesh', 'mesh' ); ?></p>
+		<div class="gray-bg negative-bg">
+			<div class="wrapper">
+				<h2 class="color-darkpurple light-weight">
+					<?php esc_html_e( 'Basic Settings', 'mesh' ); ?>
+				</h2>
+			</div>
+		</div>
 		<?php
 	}
 
@@ -65,7 +71,17 @@ class Mesh_Settings {
 	 */
 	public static function create_post_type_section() {
 		?>
-		<p><?php esc_html_e( 'Select the post types that allow Mesh.', 'mesh' ); ?></p>
+		<div class="gray-bg negative-bg">
+			<div class="wrapper">
+				<h2 class="color-darkpurple light-weight">
+					<?php esc_html_e( 'Enable Mesh for the following Post Types', 'mesh' ); ?>
+				</h2>
+			</div>
+		</div>
+		<div class="wrapper">
+			<p><?php esc_html_e( 'Select the post types that allow Mesh functionality.', 'mesh' ); ?></p>
+		</div>
+
 		<?php
 	}
 
@@ -350,9 +366,9 @@ class Mesh_Settings {
 	static public function get_tabs() {
 		$tabs = array(
 			'settings'  => __( 'Settings',   'mesh' ),
-			'faq'       => __( 'About Mesh', 'mesh' ),
+			'about'     => __( 'About Mesh', 'mesh' ),
+			'new'       => __( "What's New", 'mesh' ),
 			'changelog' => __( 'Change Log', 'mesh' ),
-			'linchpin'  => __( 'About Linchpin', 'mesh' ),
 		);
 
 		return apply_filters( 'mesh_tabs', $tabs );

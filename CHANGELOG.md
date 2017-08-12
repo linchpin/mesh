@@ -2,7 +2,7 @@
 
 ## [1.2.0] - 2017-8-04
 
-### Files
+### Fixes
  - Remove trailing whitespace from row class
  - Remove checks for equalizer in the 1 column template
  - Fixed a bug where reordering would stop that section from working properly until refresh.
@@ -10,14 +10,16 @@
  - Fixed a bug when excluding Mesh template related taxonomies from the generated sitemap
  - Fixed a bug where section and block background images were displayed before "update" / "publish"
  - Controls within Sections and Columns/Blocks are now extendable for developers.
+ - More security hardening for potential XSS and CSRF.
  
 ### Added
  - Added support for Yoast SEO page analysis
  - Added support for scripts within urls within TinyMCE
- - Added support for duplicating sections when duplicating a post using Duplicate Post Plugin
- - Added support for duplicating sections when duplicating a post using Post Duplicator Plugin
+ - Added support for duplicating sections of a post using "Duplicate Post" Plugin
+ - Added support for duplicating sections of a post using "Post Duplicator" Plugin
  
 ### Updated
+ - WordPress Coding Coding Standards
  - A bunch of little things under the hood you probably wont notice
 
 ## [1.1.7] - 2017-6-12

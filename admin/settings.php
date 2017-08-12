@@ -38,7 +38,7 @@ $parsedown = new Parsedown();
 		<h3 class="com-button table-cell">
 		<?php
 			// translators: %1$s: Mesh Website URL %2$s: Visit CTA. WPCS: xss ok.
-			printf( __( '<a href="%1$s" class="button" target="_blank">%2$s</a>', 'mesh' ), esc_url( 'https://meshplugin.com' ), esc_html__( 'Visit MeshPlugin.com', 'mesh' ) ); // WPCS: xss ok.
+			printf( wp_kses_post( __( '<a href="%1$s" class="button" target="_blank">%2$s</a>', 'mesh' ) ), esc_url( 'https://meshplugin.com' ), esc_html__( 'Visit MeshPlugin.com', 'mesh' ) ); // WPCS: xss ok.
 		?>
 		</h3>
 		<div class="clearfix"></div>
@@ -66,9 +66,9 @@ $parsedown = new Parsedown();
 		<div id="post-body" class="metabox-holder">
 			<div id="postbox-container" class="postbox-container">
 				<?php if ( 'settings' === $active_tab ) : ?>
-				<div id="settings">
-					<?php include_once( LINCHPIN_MESH___PLUGIN_DIR . '/admin/settings-meta-box-display.php' ); ?>
-				</div>
+					<div id="settings">
+						<?php include_once( LINCHPIN_MESH___PLUGIN_DIR . '/admin/settings-meta-box-display.php' ); ?>
+					</div>
 				<?php elseif ( 'changelog' === $active_tab ) : ?>
 					<div class="changelog">
 					<?php
