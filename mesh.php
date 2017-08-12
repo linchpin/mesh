@@ -326,10 +326,10 @@ function mesh_get_sections( $post_id = '', $return_type = 'array', $statuses = a
 		'post_status'    => $statuses,
 	);
 
-	if ( isset( $_GET['preview_id'] ) && isset( $_GET['preview_nonce'] ) ) {
-		$id = intval( $_GET['preview_id'] );
+	if ( isset( $_GET['preview_id'] ) && isset( $_GET['preview_nonce'] ) ) { // WPCS: input var okay.
+		$id = intval( $_GET['preview_id'] ); // WPCS: input var okay, sanitization ok.
 
-		if ( false === wp_verify_nonce( sanitize_key( $_GET['preview_nonce'] ), 'post_preview_' . $id ) ) {
+		if ( false === wp_verify_nonce( sanitize_key( $_GET['preview_nonce'] ), 'post_preview_' . $id ) ) { // WPCS: input var okay.
 			wp_die( esc_html__( 'Sorry, you are not allowed to preview drafts.', 'mesh' ) );
 		}
 

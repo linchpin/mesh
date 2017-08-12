@@ -97,11 +97,11 @@ class Mesh_AJAX {
 			wp_die( -1 );
 		}
 
-		if ( ! isset( $_POST['mesh_section_data'] ) ) {
+		if ( ! isset( $_POST['mesh_section_data'] ) ) { // WPCS: input var okay.
 			wp_die( -1 );
 		}
 
-		$mesh_section_data = wp_unslash( $_POST['mesh_section_data'] );
+		$mesh_section_data = wp_unslash( $_POST['mesh_section_data'] ); // WPCS: input var okay.
 
 		parse_str( $mesh_section_data, $passed_args );
 
@@ -122,12 +122,12 @@ class Mesh_AJAX {
 			),
 		);
 
-		$_POST = array_merge( $_POST, $new_data );
+		$_POST = array_merge( $_POST, $new_data ); // WPCS: input var okay.
 
 		$section_args = array(
 			'ID'         => $section->ID,
-			'post_title' => sanitize_text_field( wp_unslash( $_POST['mesh-sections'][ $section->ID ]['post_title'] ) ), // Input var okay.
-			'menu_order' => (int) intval( wp_unslash( $_POST['mesh-sections'][ $section->ID ]['menu_order'] ) ), // Input var okay.
+			'post_title' => sanitize_text_field( wp_unslash( $_POST['mesh-sections'][ $section->ID ]['post_title'] ) ), // WPCS: input var okay.
+			'menu_order' => intval( wp_unslash( $_POST['mesh-sections'][ $section->ID ]['menu_order'] ) ), // WPCS: input var okay.
 		);
 
 		wp_update_post( $section_args );

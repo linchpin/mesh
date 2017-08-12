@@ -45,9 +45,9 @@
 				'collapse_spacing' => ( ! empty( $collapse_column_spacing ) ) ? 'collapse' : '',
 			);
 			?>
-			<div <?php mesh_block_class( $block->ID, $block_class_args ); ?><?php echo $equalize_watch; // WPCS: sanitization ok. ?> <?php mesh_section_background( $block->ID ); ?>>
+			<div <?php mesh_block_class( $block->ID, $block_class_args ); ?><?php echo esc_attr( $equalize_watch ); ?> <?php mesh_section_background( $block->ID ); ?>>
 				<?php if ( ! empty( $block->post_title ) && 'no column title' !== strtolower( $block->post_title ) ) : ?>
-					<h3 class="entry-subtitle"><?php echo apply_filters( 'the_title', $block->post_title ); ?></h3>
+					<h3 class="entry-subtitle"><?php echo esc_html( apply_filters( 'the_title', $block->post_title ) ); ?></h3>
 				<?php
 					$title_displayed = true;
 					endif;

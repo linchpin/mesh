@@ -13,8 +13,8 @@ if ( ! function_exists( 'add_action' ) ) {
 }
 ?>
 <form action="options.php" class="settings-form" method="POST">
-    <div class="about hero negative-bg">
-        <div class="hero-text">
+	<div class="about hero negative-bg">
+		<div class="hero-text">
 			<h1><?php esc_html_e( 'Mesh Settings', 'mesh' ); ?></h1>
 		</div>
 	</div>

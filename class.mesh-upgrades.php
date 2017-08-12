@@ -58,7 +58,10 @@ class Mesh_Upgrades {
 	 * Upgrade to version 1.0 by ensuring the default post types are selected.
 	 */
 	function version_1_0() {
-		if ( $settings = get_option( 'mesh_post_types' ) ) {
+
+		$settings = get_option( 'mesh_post_types' );
+
+		if ( ! empty( $settings ) ) {
 			return;
 		}
 

@@ -365,7 +365,7 @@ class Mesh_Controls {
 								$multiple = 'multiple';
 							}
 						?>
-							<select <?php echo $control_id; // Input var okay. ?> name="mesh-sections[<?php echo esc_attr( $block->post_parent ); ?>][blocks][<?php echo esc_attr( $block->ID ); ?>][<?php echo esc_attr( $underscore_key ); ?>]" class="<?php echo esc_attr( $css_classes ); ?>"<?php echo esc_attr( $multiple ); ?>>
+							<select <?php echo $control_id; // WPCS: XSS ok, sanitization ok. ?> name="mesh-sections[<?php echo esc_attr( $block->post_parent ); ?>][blocks][<?php echo esc_attr( $block->ID ); ?>][<?php echo esc_attr( $underscore_key ); ?>]" class="<?php echo esc_attr( $css_classes ); ?>"<?php echo esc_attr( $multiple ); ?>>
 								<?php
 								$options = ( ! empty( $control['options_cb'] ) && is_callable( $control['options_cb'] ) )
 									? call_user_func_array( $control['options_cb'], array( $block, $section_blocks ) )

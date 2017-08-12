@@ -185,11 +185,11 @@ class Mesh_Templates {
 			return;
 		}
 
-		if ( ! isset( $_POST['mesh_content_sections_nonce'] ) || ! wp_verify_nonce( $_POST['mesh_content_sections_nonce'], 'mesh_content_sections_nonce' )  ) {
+		if ( ! isset( $_POST['mesh_content_sections_nonce'] ) || ! wp_verify_nonce( sanitize_key( wp_unslash( $_POST['mesh_content_sections_nonce'] ) ), 'mesh_content_sections_nonce' ) ) { // WPCS: input var okay.
 			return;
 		}
 
-		if ( empty( $_POST['mesh-sections'] ) ) {
+		if ( empty( $_POST['mesh-sections'] ) ) { // WPCS: input var okay.
 			return;
 		}
 
@@ -198,15 +198,15 @@ class Mesh_Templates {
 		if ( ( defined( 'DOING_AJAX' ) && DOING_AJAX ) ) {
 			$mesh_layout_post_meta = get_post_meta( $post_id, '_mesh_template_layout', true );
 
-			$single_mesh_section = (array) $_POST['mesh-sections'];
+			$single_mesh_section = (array) wp_unslash( $_POST['mesh-sections'] ); // WPCS: input var okay, sanitization ok.
 
 			$first_mesh_section_key = key( $single_mesh_section );
-			$single_mesh_section = array_shift( $_POST['mesh-sections'] );
+			$single_mesh_section = array_shift( wp_unslash( $_POST['mesh-sections'] ) ); // WPCS: input var okay. sanitization ok.
 
 			$mesh_layout_preview = $this->update_template_single_section_preview( $first_mesh_section_key, $mesh_layout_post_meta, $single_mesh_section );
 
 		} else {
-			$mesh_layout_preview = $this->create_template_preview( $_POST['mesh-sections'] );
+			$mesh_layout_preview = $this->create_template_preview( wp_unslash( $_POST['mesh-sections'] ) ); // WPCS: input var okay, sanitization ok.
 		}
 
 		if ( ! empty( $mesh_layout_preview ) ) {
@@ -305,14 +305,14 @@ class Mesh_Templates {
 			}
 
 			foreach ( $blocks as $block_id => $block_data ) {
-				$block = get_post( (int) $block_id );
+				$block = get_post( intval( $block_id ) );
 
 				if ( empty( $block ) || 'publish' !== get_post_status( $block ) || 'mesh_section' !== $block->post_type || $section->ID !== $block->post_parent ) {
 					continue;
 				}
 
-				$offset = (int) $section_data['blocks'][ sanitize_title( $block_id ) ]['offset'];
-				$columns = (int) $section_data['blocks'][ sanitize_title( $block_id ) ]['columns'];
+				$offset = intval( $section_data['blocks'][ sanitize_title( $block_id ) ]['offset'] );
+				$columns = intval( $section_data['blocks'][ sanitize_title( $block_id ) ]['columns'] );
 
 				$mesh_layout[ sanitize_title( 'row-' . $section_id ) ]['blocks'][] = array(
 					'columns' => $columns - $offset,

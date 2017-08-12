@@ -219,7 +219,7 @@ class Mesh {
 		$in['paste_text_use_dialog']        = true;
 		$in['wpeditimage_disable_captions'] = true;
 		$in['allow_script_urls']            = true;
-		$in['plugins']                      = 'tabfocus,paste,media,wordpress,wpgallery,wplink';
+		$in['plugins']                      = 'tabfocus,paste,media,wordpress,wpgallery,wplink'; // WPCS: spelling ok.
 
 		// Only add in our editor styles if we have the file.
 		if ( file_exists( get_template_directory_uri() . '/editor-style.css' ) ) {
@@ -852,7 +852,7 @@ class Mesh {
 
 		$sections = mesh_display_sections( $wp_query->post->ID, false );
 
-		echo apply_filters( 'mesh_loop_end', wp_kses( $sections, mesh_get_allowed_html() ), $wp_query->post->ID ); // WPCS: sanitization ok.
+		echo apply_filters( 'mesh_loop_end', wp_kses( $sections, mesh_get_allowed_html() ), $wp_query->post->ID ); // WPCS: XSS ok, sanitization ok.
 	}
 
 	/**

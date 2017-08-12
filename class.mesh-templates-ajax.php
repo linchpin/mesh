@@ -99,7 +99,7 @@ class Mesh_Templates_AJAX {
 			wp_die( - 1 );
 		}
 
-		update_user_meta( get_current_user_id(), 'show_mesh_template_panel', empty( $_POST['visible'] ) ? 0 : 1 );
+		update_user_meta( get_current_user_id(), 'show_mesh_template_panel', empty( $_POST['visible'] ) ? 0 : 1 ); // input var okay, WPCS slow query ok.
 
 		wp_die( 1 );
 	}
@@ -115,7 +115,7 @@ class Mesh_Templates_AJAX {
 
 		check_ajax_referer( 'mesh_choose_template_nonce', 'mesh_choose_template_nonce' );
 
-		if ( ! current_user_can( 'edit_post', (int) $_POST['mesh_post_id'] ) ) {
+		if ( ! isset( $_POST['mesh_post_id'] ) || ! current_user_can( 'edit_post', intval( $_POST['mesh_post_id'] ) ) ) { // WPCS: input var okay.
 			wp_die();
 		}
 

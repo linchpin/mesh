@@ -38,7 +38,7 @@
 					<?php endif; ?>
 
 					<?php
-						echo apply_filters( 'the_content', $block->post_content ); // @todo what sanitization is best suited here?
+						echo wp_kses( apply_filters( 'the_content', $block->post_content ), mesh_get_allowed_html() );
 					?>
 				</div>
 			<?php

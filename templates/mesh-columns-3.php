@@ -29,7 +29,7 @@
 	}
 	?>
 
-	<div class="<?php echo esc_attr( $row_class ); ?>"<?php echo $equalize; // WPCS: sanitization ok. ?>>
+	<div class="<?php echo esc_attr( $row_class ); ?>"<?php echo esc_attr( $equalize ); ?>>
 		<?php if ( ! empty( $title_display ) && 'no block title' !== strtolower( get_the_title() ) ) : ?>
 			<div class="small-12 columns title-row">
 				<h2 class="entry-title"><?php the_title(); ?></h2>
@@ -46,11 +46,11 @@
 				'collapse_spacing' => ( ! empty( $collapse_column_spacing ) ) ? 'collapse' : '',
 			);
 			?>
-			<div <?php mesh_block_class( $block->ID, $block_class_args ); ?><?php echo $equalize_watch; // WPCS: sanitization ok. ?> <?php mesh_section_background( $block->ID ); ?>>
+			<div <?php mesh_block_class( $block->ID, $block_class_args ); ?><?php echo esc_attr( $equalize_watch ); ?> <?php mesh_section_background( $block->ID ); ?>>
 				<?php if ( ! empty( $block->post_title ) && 'no column title' !== strtolower( $block->post_title ) ) : ?>
-					<h3 class="entry-subtitle"><?php echo apply_filters( 'the_title', $block->post_title ); ?></h3>
+					<h3 class="entry-subtitle"><?php echo esc_html( apply_filters( 'the_title', $block->post_title ) ); ?></h3>
 				<?php endif; ?>
-				<?php echo apply_filters( 'the_content', $block->post_content ); ?>
+				<?php echo wp_kses( apply_filters( 'the_content', $block->post_content ), mesh_get_allowed_html() ); ?>
 			</div>
 		<?php
 			$i++;

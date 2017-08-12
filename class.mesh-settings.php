@@ -195,7 +195,7 @@ class Mesh_Settings {
 
 		$default_tab = self::get_default_tab_slug();
 
-		$active_tab = isset( $_GET['tab'] ) && array_key_exists( sanitize_text_field( wp_unslash( $_GET['tab'] ) ), $tabs ) ? sanitize_text_field( wp_unslash( $_GET['tab'] ) ) : $default_tab; // Input var okay.
+		$active_tab = isset( $_GET['tab'] ) && array_key_exists( sanitize_text_field( wp_unslash( $_GET['tab'] ) ), $tabs ) ? sanitize_text_field( wp_unslash( $_GET['tab'] ) ) : $default_tab; // WPCS: input var okay, CSRF ok.
 
 		include_once( LINCHPIN_MESH___PLUGIN_DIR . '/admin/settings.php' );
 	}

@@ -60,7 +60,7 @@ $parsedown = new Parsedown();
 				<?php echo esc_html( $tab_name ); ?>
 			</a>
 		<?php endforeach; ?>
-    </h2>
+	</h2>
 
 	<div id="poststuff">
 		<div id="post-body" class="metabox-holder">
