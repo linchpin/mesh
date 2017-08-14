@@ -60,7 +60,7 @@ class Mesh_Settings {
 			<div class="wrapper">
 				<h2 class="color-darkpurple light-weight">
 					<?php esc_html_e( 'Basic Settings', 'mesh' ); ?>
-                </h2>
+				</h2>
 			</div>
 		</div>
 		<?php
@@ -75,19 +75,18 @@ class Mesh_Settings {
 			<div class="wrapper">
 				<h2 class="color-darkpurple light-weight">
 					<?php esc_html_e( 'Enable Mesh for the following Post Types', 'mesh' ); ?>
-                </h2>
+				</h2>
 			</div>
 		</div>
-        <div class="wrapper">
-		<p><?php esc_html_e( 'Select the post types that allow Mesh functionality.', 'mesh' ); ?></p>
-        </div>
+		<div class="wrapper">
+			<p><?php esc_html_e( 'Select the post types that allow Mesh functionality.', 'mesh' ); ?></p>
+		</div>
+
 		<?php
 	}
 
 	/**
 	 * Add all of our settings from the API
-	 *
-	 *
 	 */
 	public static function settings_init() {
 
@@ -97,17 +96,29 @@ class Mesh_Settings {
 		// Default Settings Section.
 		add_settings_section(
 			'mesh_sections',
-			__( 'Basic Settings', 'mesh' ),
+			__( 'Mesh Configurations', 'mesh' ),
 			array( 'Mesh_Settings', 'create_section' ),
 			self::$settings_page
 		);
 
 		// Option : CSS Mode.
 		$css_mode = array(
-			array( 'label' => __( 'Use Mesh CSS', 'mesh' ), 'value' => 0 ),
-			array( 'label' => __( 'Disable Mesh CSS', 'mesh' ), 'value' => -1 ),
-			array( 'label' => __( 'Use Foundation built into my theme', 'mesh' ), 'value' => 1 ),
-			array( 'label' => __( 'Use Bootstrap', 'mesh' ), 'value' => 2 ),
+			array(
+				'label' => __( 'Use Mesh CSS', 'mesh' ),
+				'value' => 0,
+			),
+			array(
+				'label' => __( 'Disable Mesh CSS', 'mesh' ),
+				'value' => -1,
+			),
+			array(
+				'label' => __( 'Use Foundation built into my theme', 'mesh' ),
+				'value' => 1,
+			),
+			array(
+				'label' => __( 'Use Bootstrap', 'mesh' ),
+				'value' => 2,
+			),
 		);
 
 		// Allow filtering of available css_mode options.
@@ -127,12 +138,20 @@ class Mesh_Settings {
 			)
 		);
 
-		// Option: Foundation Version
-		// Add an option for Foundation Version
-		// @since 1.1.3
+		/*
+		 * Option: Foundation Version
+		 * Add an option for Foundation Version
+		 * @since 1.1.3
+		 */
 		$foundation_version = array(
-			array( 'label' => __( 'Foundation 5', 'mesh' ), 'value' => '' ),
-			array( 'label' => __( 'Foundation 6', 'mesh' ), 'value' => 6 ),
+			array(
+				'label' => __( 'Foundation 5', 'mesh' ),
+				'value' => '',
+			),
+			array(
+				'label' => __( 'Foundation 6', 'mesh' ),
+				'value' => 6,
+			),
 		);
 
 		add_settings_field(
@@ -150,7 +169,9 @@ class Mesh_Settings {
 		);
 
 		// Add an option for each post type.
-		if ( $post_types = get_post_types() ) {
+		$post_types = get_post_types();
+
+		if ( ! empty( $post_types ) ) {
 			add_settings_section(
 				'mesh_post_type_section',
 				__( 'Post Types', 'mesh' ),
@@ -162,7 +183,7 @@ class Mesh_Settings {
 				$post_type_object = get_post_type_object( $post_type );
 
 				// Skip any of the following post types and post types that ARE NOT public.
-				if ( in_array( $post_type, array( 'revision', 'nav_menu_item', 'attachment', 'mesh_template' ) ) || ! $post_type_object->public ) {
+				if ( in_array( $post_type, array( 'revision', 'nav_menu_item', 'attachment', 'mesh_template' ), true ) || ! $post_type_object->public ) {
 					continue;
 				}
 
@@ -190,7 +211,7 @@ class Mesh_Settings {
 
 		$default_tab = self::get_default_tab_slug();
 
-		$active_tab = isset( $_GET[ 'tab' ] ) && array_key_exists( $_GET['tab'], $tabs ) ? $_GET[ 'tab' ] : $default_tab;
+		$active_tab = isset( $_GET['tab'] ) && array_key_exists( sanitize_text_field( wp_unslash( $_GET['tab'] ) ), $tabs ) ? sanitize_text_field( wp_unslash( $_GET['tab'] ) ) : $default_tab; // WPCS: input var okay, CSRF ok.
 
 		include_once( LINCHPIN_MESH___PLUGIN_DIR . '/admin/settings.php' );
 	}
@@ -203,11 +224,10 @@ class Mesh_Settings {
 
 	/**
 	 * Build out our settings fields as needed.
+	 * Echos our field html.
 	 *
 	 * @since 1.0.0
 	 * @param object $args An Object of our field customizations.
-	 *
-	 * @return void Echos our field html.
 	 */
 	public static function add_textfield( $args ) {
 
@@ -224,8 +244,8 @@ class Mesh_Settings {
 		// Parse incoming $args into an array and merge it with $defaults.
 		$args = wp_parse_args( $args, $defaults );
 
-		$options = get_option( 'mesh_settings' ); ?>
-
+		$options = get_option( 'mesh_settings' );
+		?>
 		<?php if ( ! empty( $args['description'] ) ) : ?>
 			<p class="description"><?php echo esc_html( $args['description'] ); ?></p>
 		<?php endif; ?>
@@ -272,7 +292,7 @@ class Mesh_Settings {
 	/**
 	 * Create a checkbox field.
 	 *
-	 * @param $args
+	 * @param array $args Customizations.
 	 */
 	public static function add_checkbox( $args ) {
 
@@ -307,9 +327,9 @@ class Mesh_Settings {
 	}
 
 	/**
-	 * Allow filtering of the settings tabs
+	 * Allow filtering of the settings tabs.
 	 *
-	 * @param $default_settings
+	 * @param array $default_settings Default Settings Array.
 	 *
 	 * @return array
 	 */
@@ -346,11 +366,10 @@ class Mesh_Settings {
 	static public function get_tabs() {
 		$tabs = array(
 			'settings'  => __( 'Settings',   'mesh' ),
-            'about'     => __( 'About Mesh', 'mesh' ),
-            'new'       => __( "What's New", 'mesh' ),
-            'changelog' => __( 'Change Log', 'mesh' ),
-
-        );
+			'about'     => __( 'About Mesh', 'mesh' ),
+			'new'       => __( "What's New", 'mesh' ),
+			'changelog' => __( 'Change Log', 'mesh' ),
+		);
 
 		return apply_filters( 'mesh_tabs', $tabs );
 	}

@@ -58,7 +58,10 @@ class Mesh_Upgrades {
 	 * Upgrade to version 1.0 by ensuring the default post types are selected.
 	 */
 	function version_1_0() {
-		if ( $settings = get_option( 'mesh_post_types' ) ) {
+
+		$settings = get_option( 'mesh_post_types' );
+
+		if ( ! empty( $settings ) ) {
 			return;
 		}
 
@@ -73,7 +76,7 @@ class Mesh_Upgrades {
 		foreach ( $this->post_types as $post_type ) {
 			$post_type_object = get_post_type_object( $post_type );
 
-			if ( in_array( $post_type, array( 'revision', 'nav_menu_item', 'attachment' ) ) || ! $post_type_object->public ) {
+			if ( in_array( $post_type, array( 'revision', 'nav_menu_item', 'attachment' ), true ) || ! $post_type_object->public ) {
 				continue;
 			}
 

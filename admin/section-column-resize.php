@@ -15,18 +15,21 @@ if ( ! function_exists( 'add_action' ) ) {
 }
 
 // If the template doesn't have any blocks make sure it has 1.
-if ( ! $section_blocks = (int) $templates[ $selected_template ]['blocks'] ) {
+$section_blocks = intval( $templates[ $selected_template ]['blocks'] );
+
+if ( 0 === $section_blocks ) {
 	$section_blocks = 1;
 }
-if ( (int) $section_blocks > 1 ) :
 
-	$default_block_columns = 12 / $section_blocks;
+$block_sizes = array();
 
-	// Loop through the blocks needed for this template.
+if ( $section_blocks > 1 ) {
+
+	$default_block_columns = 12 / $section_blocks; // @todo should 12 be filterable to create different grid sizes?
+
 	$block_increment = 0;
 
-	$block_sizes = array();
-
+	// Loop through the blocks needed for this template.
 	while ( $block_increment < $section_blocks ) {
 
 		$block_columns = get_post_meta( $blocks[ $block_increment ]->ID, '_mesh_column_width', true );
@@ -34,15 +37,17 @@ if ( (int) $section_blocks > 1 ) :
 		// Get how wide our column is.
 		// If no width is defined fall back to the default for that template.
 		// If no blocks are defined fall back to a 12 column.
-		if ( empty( $block_columns ) || 1 === $templates[ $selected_template ]['blocks'] ) {
+		if ( empty( $block_columns ) || 1 === absint( $templates[ $selected_template ]['blocks'] ) ) {
 			$block_columns = $default_block_columns;
 		}
 
-		$block_sizes[] = (int) $block_columns;
+		$block_sizes[] = intval( $block_columns );
 
 		$block_increment++;
 	}
-endif;
-if ( (int) $section_blocks > 1 && (int) $section_blocks < 4 ) : ?>
+}
+
+if ( $section_blocks > 1 && $section_blocks < 4 ) : ?>
 	<div class="wp-slider column-slider mesh-hide-for-small" data-mesh-blocks="<?php echo esc_attr( $section_blocks ); ?>" data-mesh-columns="<?php echo esc_attr( wp_json_encode( $block_sizes ) ); ?>"><span class="ui-slider-handle ui-state-default ui-corner-all fade-in-on-create hide" tabindex="0"></span></div>
-<?php endif;
+<?php
+endif;

@@ -2,22 +2,24 @@
 /**
  * Integrate with Duplicate Post plugin in order to copy
  * Mesh content when a post is created.
- *
  * https://duplicate-post.lopo.it/docs/developers-guide/actions/dp_duplicate_post/
  *
  * This integration does not have any toggles or settings.
  *
+ * @package    Mesh
+ * @subpackage Integrations
  * @since 1.2
- *
  */
+
 namespace Mesh\Integrations;
 
-if ( ! defined('ABSPATH' ) ) {
+if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
 /**
  * Class Post_Duplicator
+ *
  * @package Mesh\Integrations
  */
 class Post_Duplicator {
@@ -26,16 +28,18 @@ class Post_Duplicator {
 	 * Duplicate_Posts constructor.
 	 *
 	 * Attach post duplication.
-	 *
 	 */
 	public function __construct() {
 		add_action( 'mtphr_post_duplicator_created', array( $this, 'duplicate_mesh_sections' ), 99, 3 );
 	}
 
 	/**
-	 * @param int      $original_id
-	 * @param int      $duplicate_id
-	 * @param array    $settings
+	 * Duplicate mesh sections.
+	 *
+	 * @param int   $original_id Original ID.
+	 * @param int   $duplicate_id Duplicated ID.
+	 * @param array $settings Any additional settings.
+	 * @since 1.2
 	 */
 	public function duplicate_mesh_sections( $original_id, $duplicate_id, $settings = array() ) {
 

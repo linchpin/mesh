@@ -60,13 +60,12 @@ if ( ! function_exists( 'add_action' ) ) {
 					<div class="block-header">
 						<div class="mesh-row mesh-row-title mesh-block-title-row">
                             <?php
-                            $offsets_available = $block_columns - 3;
+							$offsets_available = $block_columns - 3;
 
-                            if ( $block_offset > $offsets_available ) {
-                                $block_offset = 0;
-                            }
-                            ?>
-
+							if ( $block_offset > $offsets_available ) {
+								$block_offset = 0;
+							}
+							?>
                             <div class="mesh-columns-12 mesh-block-options-toggle-container">
                                 <span class="the-mover hndle ui-sortable-handle left mesh-hide-for-small"><span></span></span>
                                 <div class="mesh-clean-edit left mesh-column-title-container">
@@ -123,7 +122,7 @@ if ( ! function_exists( 'add_action' ) ) {
 					if ( ! empty( $revisions ) ) : ?>
 						<div class="misc-pub-section misc-pub-revisions">
 							<?php esc_attr_e( 'Revisions: ', 'mesh' ); ?>
-							<a class="hide-if-no-js" href="<?php echo esc_url( get_edit_post_link( reset( $revisions )->ID ) ); ?>"><b><?php echo number_format_i18n( count( $revisions ) ); ?></b> <span class="screen-reader-text"><?php esc_html_e( 'Browse revisions', 'mesh' ); ?></span></a>
+							<a class="hide-if-no-js" href="<?php echo esc_url( get_edit_post_link( reset( $revisions )->ID ) ); ?>"><b><?php echo esc_html( number_format_i18n( count( $revisions ) ) ); ?></b> <span class="screen-reader-text"><?php esc_html_e( 'Browse revisions', 'mesh' ); ?></span></a>
 						</div>
 					<?php endif; ?>
 					<input type="hidden" class="column-width" name="mesh-sections[<?php echo esc_attr( $section->ID ); ?>][blocks][<?php echo esc_attr( $blocks[ $block_increment ]->ID ); ?>][columns]" value="<?php echo esc_attr( $block_columns ); ?>"/>

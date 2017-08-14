@@ -26,7 +26,7 @@ class Mesh_Install {
 			return;
 		}
 
-		if ( get_option( 'mesh_settings' ) == false ) {
+		if ( get_option( 'mesh_settings' ) === false ) {
 			add_action( 'mesh_activate', array( $this, 'setup_first_install' ) );
 		}
 
@@ -54,13 +54,13 @@ class Mesh_Install {
 	 */
 	function show_welcome() {
 
-		if ( is_admin() && get_option( 'mesh_activation' ) == true ) {
+		if ( is_admin() && get_option( 'mesh_activation' ) === true ) {
 
 			delete_option( 'mesh_activation' );
 
 			// Send new users to the welcome so they learn how to use mesh.
-			if ( ! isset( $_GET['activate-multi'] ) && get_option( 'mesh_settings' ) === false ) {
-				wp_redirect( admin_url( 'options-general.php?page=mesh&tab=about' ) );
+			if ( ! isset( $_GET['activate-multi'] ) && get_option( 'mesh_settings' ) === false ) { // WPCS: CSRF ok, input var okay.
+				wp_safe_redirect( admin_url( 'options-general.php?page=mesh&tab=about' ) );
 				exit;
 			}
 		}
@@ -73,10 +73,10 @@ class Mesh_Install {
 	 */
 	public function is_first_install() {
 
-		if ( $options = get_option( 'mesh_settings' ) ) {
-			if ( ! empty( $options ) ) {
-				return false;
-			}
+		$options = get_option( 'mesh_settings' );
+
+		if ( ! empty( $options ) ) {
+			return false;
 		}
 
 		return true;
@@ -88,7 +88,7 @@ class Mesh_Install {
 	public function setup_first_install() {
 
 		$options = get_option( 'mesh_settings' );
-		$options[ 'first_activated_on' ] = time();
+		$options['first_activated_on'] = time();
 
 		update_option( 'mesh_settings', $options );
 	}
@@ -97,7 +97,6 @@ class Mesh_Install {
 	 * Show the update notification
 	 *
 	 * @since 1.2
-	 *
 	 */
 	public function show_update_notice() {
 		$mesh_version = get_option( 'mesh_version' );
@@ -105,24 +104,30 @@ class Mesh_Install {
 
 		$notifications = get_user_option( 'linchpin_mesh_notifications' );
 
-		if ( $mesh_settings !== false && empty ( $notifications['update-notice'] ) ) : ?>
+		if ( false !== $mesh_settings && empty( $notifications['update-notice'] ) ) : ?>
 		<div class="mesh-update-notice notice notice-info is-dismissible" data-type="update-notice">
 			<div class="table">
-                <div class="table-cell">
-                    <img src="<?php echo esc_attr( LINCHPIN_MESH___PLUGIN_URL . 'assets/images/mesh-full-logo-full-color@2x.png' ); ?>" >
-                </div>
-                <div class="table-cell">
-                    <p class="no-margin"><?php printf( __( 'Thanks for updating Mesh to v. (%s). We suggest checking out <a href="%s">what\'s new</a>', 'mesh' ),
-                                          $mesh_version,
-                                          admin_url( 'options-general.php?page=mesh&tab=new' ) ); ?>
-                    </p>
-                    <p class="no-margin">
-                        <?php esc_html_e( 'This release includes integrations with Yoast SEO, Popular Duplication Plugins and a bunch of other fixes','mesh' ); ?>
-                    </p>
-                </div>
-            </div>
+				<div class="table-cell">
+					<img src="<?php echo esc_attr( LINCHPIN_MESH___PLUGIN_URL . 'assets/images/mesh-full-logo-full-color@2x.png' ); ?>" >
+				</div>
+				<div class="table-cell">
+					<p class="no-margin">
+						<?php
+						// translators: %1$s: Version Number %2$s: Link to what's new tab.
+						printf( wp_kses_post( __( 'Thanks for updating Mesh to v. (%1$s). We suggest checking out <a href="%2$s">what\'s new</a>', 'mesh' ) ),
+							esc_html( $mesh_version ),
+							esc_url( admin_url( 'options-general.php?page=mesh&tab=new' ) )
+						);
+					?>
+					</p>
+					<p class="no-margin">
+					<?php esc_html_e( 'This release includes integrations with Yoast SEO, Popular Duplication Plugins and a bunch of other fixes','mesh' ); ?>
+					</p>
+				</div>
+			</div>
 		</div>
-		<?php endif;
+		<?php
+		endif;
 	}
 }
 

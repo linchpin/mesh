@@ -6,24 +6,26 @@
  *
  * This integration does not have any toggles or settings.
  *
+ * @package    Mesh
+ * @subpackage Integrations
  * @since 1.2
- *
  */
+
 namespace Mesh\Integrations;
 
-if ( ! defined('ABSPATH' ) ) {
+if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
 /**
  * Class Yoast_SEO
+ *
  * @package Mesh\Integrations
  */
 class Yoast_SEO {
 
 	/**
 	 * Yoast_SEO constructor.
-	 *
 	 */
 	public function __construct() {
 		add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ) );
@@ -43,8 +45,8 @@ class Yoast_SEO {
 	 */
 	public function is_yoast_seo_active() {
 
-		if ( ! is_plugin_active('wordpress-seo/wp-seo.php' ) &&
-		 ! is_plugin_active('wordpress-seo-premium/wp-seo-premium.php' ) ) {
+		if ( ! is_plugin_active( 'wordpress-seo/wp-seo.php' ) &&
+		 ! is_plugin_active( 'wordpress-seo-premium/wp-seo-premium.php' ) ) {
 			return false;
 		}
 
@@ -56,11 +58,11 @@ class Yoast_SEO {
 	 *
 	 * @since 1.2
 	 *
-	 * @param $page_hook
+	 * @param string $page_hook Page we're hooking into.
 	 */
 	public function admin_enqueue_scripts( $page_hook ) {
 
-		if ( $page_hook !== 'post.php' && $page_hook !== 'post-new.php' ) {
+		if ( 'post.php' !== $page_hook && 'post-new.php' !== $page_hook ) {
 			return;
 		}
 
@@ -72,11 +74,11 @@ class Yoast_SEO {
 		$current_screen = get_current_screen();
 		$current_post_type = get_post_type_object( $current_screen->post_type );
 
-		if ( ! in_array( $current_screen->base, $mesh_screens ) ) {
+		if ( ! in_array( $current_screen->base, $mesh_screens, true ) ) {
 			return;
 		}
 
-		if ( $current_post_type->public === false ) {
+		if ( false === $current_post_type->public ) {
 			return;
 		}
 
@@ -103,7 +105,7 @@ class Yoast_SEO {
 			'mesh_template_types',
 		);
 
-		if ( in_array( $taxonomy_name, $excluded_taxonomies ) ) {
+		if ( in_array( $taxonomy_name, $excluded_taxonomies, true ) ) {
 			return true;
 		}
 

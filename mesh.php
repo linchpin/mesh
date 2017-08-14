@@ -3,7 +3,7 @@
  * Plugin Name: Mesh
  * Plugin URI: http://linchpin.agency/wordpress-plugins/mesh
  * Description: Adds multiple sections for content on a post by post basis. Mesh also has settings to enable it for specific post types
- * Version: 1.1.7
+ * Version: 1.2
  * Text Domain: mesh
  * Domain Path: /languages
  * Author: Linchpin
@@ -85,18 +85,18 @@ register_deactivation_hook( __FILE__, 'mesh_deactivation_hook' );
  *
  * @since 1.1
  *
- * @param int   $block_id
- * @param array $args
+ * @param int   $block_id Block ID.
+ * @param array $args     Passed arguments.
  */
 function mesh_block_class( $block_id, $args = array() ) {
 
 	$defaults = array(
 		'push_pull'        => false,
-        'collapse_spacing' => false,
+		'collapse_spacing' => false,
 		'total_columns'    => 1,
-        'max_columns'      => apply_filters( 'mesh_max_columns', 12 ),
-        'column_index'     => -1,
-        'column_width'     => 12,
+		'max_columns'      => apply_filters( 'mesh_max_columns', 12 ),
+		'column_index'     => -1,
+		'column_width'     => 12,
 	);
 
 	$args = wp_parse_args( $args, $defaults );
@@ -123,21 +123,21 @@ function mesh_block_class( $block_id, $args = array() ) {
 
 		$push_or_pull = '';
 
-	    if ( 2 === (int) $args['total_columns'] ) {
+		if ( 2 === (int) $args['total_columns'] ) {
 
-	        switch ( (int) $args['column_index'] ) {
-                case 0 :
-	                $push_or_pull = 'push';
-                break;
-                case 1 :
-                    $push_or_pull = 'pull';
-                break;
-            }
+			switch ( (int) $args['column_index'] ) {
+				case 0:
+					$push_or_pull = 'push';
+					break;
+				case 1:
+					$push_or_pull = 'pull';
+					break;
+			}
 
-            if ( ! empty( $push_or_pull ) ) {
-	            $classes[] = $grid['columns']['medium'] . '-' . $push_or_pull . '-' . ( $args['max_columns'] - $args['column_width'] );
-            }
-	    }
+			if ( ! empty( $push_or_pull ) ) {
+				$classes[] = $grid['columns']['medium'] . '-' . $push_or_pull . '-' . ( $args['max_columns'] - $args['column_width'] );
+			}
+		}
 	}
 
 	// Merge our block classes (from the input field).
@@ -146,10 +146,10 @@ function mesh_block_class( $block_id, $args = array() ) {
 		$classes = array_merge( $classes, $block_css_class );
 	}
 
-    $classes = array_map( 'sanitize_html_class', $classes );
-    $classes = array_unique( $classes );
+	$classes = array_map( 'sanitize_html_class', $classes );
+	$classes = array_unique( $classes );
 
-	echo 'class="' . join( ' ', $classes ) . '"'; // WPCS: ok
+	echo 'class="' . join( ' ', $classes ) . '"'; // WPCS: sanitization ok.
 }
 
 /**
@@ -166,7 +166,7 @@ function mesh_get_files( $type = null, $depth = 0, $search_parent = false, $dire
 	$files = (array) Mesh::scandir( $directory, $type, $depth );
 
 	if ( $search_parent && $this->parent() ) {
-	    $files += (array) Mesh::scandir( $directory, $type, $depth );
+		$files += (array) Mesh::scandir( $directory, $type, $depth );
 	}
 
 	return $files;
@@ -189,18 +189,20 @@ function mesh_locate_template_files() {
 	// Loop through our local plugin templates.
 	foreach ( $plugin_template_files as $plugin_file => $plugin_file_full_path ) {
 
-	    // Skip the file if it doesn't exist.
-	    if ( ! file_exists( $plugin_file_full_path ) ) {
-	        continue;
-        }
+		// Skip the file if it doesn't exist.
+		if ( ! file_exists( $plugin_file_full_path ) ) {
+			continue;
+		}
 
-		if ( ! preg_match( '|Mesh Template:(.*)$|mi', file_get_contents( $plugin_file_full_path ), $header ) ) {
+		$template_contents = file_get_contents( $plugin_file_full_path );
+
+		if ( ! preg_match( '|Mesh Template:(.*)$|mi', $template_contents, $header ) ) {
 			continue;
 		}
 
 		$section_templates[ $plugin_file ]['file'] = _cleanup_header_comment( $header[1] );
 
-		if ( preg_match( '/Mesh Template Blocks: ?([0-9]{1,2})$/mi', file_get_contents( $plugin_file_full_path ), $block_header ) ) {
+		if ( preg_match( '/Mesh Template Blocks: ?([0-9]{1,2})$/mi', $template_contents, $block_header ) ) {
 			$section_templates[ $plugin_file ]['blocks'] = $block_header[1];
 		}
 	}
@@ -210,18 +212,18 @@ function mesh_locate_template_files() {
 	// Loop through our theme templates. This should be made into utility method.
 	foreach ( $files as $file => $full_path ) {
 
-		if ( ! preg_match( '|Mesh Template:(.*)$|mi', file_get_contents( $full_path ), $header ) ) {
+		$file_contents = file_get_contents( $full_path );
+
+		if ( ! preg_match( '|Mesh Template:(.*)$|mi', $file_contents, $header ) ) {
 			continue;
 		}
 
 		$section_templates[ $file ]['file'] = _cleanup_header_comment( $header[1] );
 
-		if ( preg_match( '/Mesh Template Blocks: ?([0-9]{1,2})$/mi', file_get_contents( $full_path ), $block_header ) ) {
+		if ( preg_match( '/Mesh Template Blocks: ?([0-9]{1,2})$/mi', $file_contents, $block_header ) ) {
 			$section_templates[ $file ]['blocks'] = (int) $block_header[1];
 		}
 	}
-
-
 
 	/**
 	 * Filter list of page templates for a theme.
@@ -267,7 +269,9 @@ function mesh_add_section_admin_markup( $section, $closed = false, $return = fal
 	$templates = mesh_locate_template_files();
 
 	// Make sure we always have a template.
-	if ( ! $selected_template = get_post_meta( $section->ID, '_mesh_template', true ) ) {
+	$selected_template = get_post_meta( $section->ID, '_mesh_template', true );
+
+	if ( empty( $selected_template ) ) {
 		$selected_template = 'mesh-columns-1.php';
 	}
 
@@ -299,16 +303,16 @@ function mesh_add_section_admin_markup( $section, $closed = false, $return = fal
 /**
  * Retrieve Mesh sections.
  *
- * @param int    $post_id        Post ID.
- * @param string $return_type    Object Return Type.
- * @param array  $statuses       Statuses to query.
+ * @param int|string $post_id        Post ID.
+ * @param string     $return_type    Object Return Type.
+ * @param array      $statuses       Statuses to query.
  *
  * @return array|WP_Query
  */
 function mesh_get_sections( $post_id = '', $return_type = 'array', $statuses = array( 'publish' ) ) {
 
-	// If no Post ID fall back to the current global ID
-	if( empty( $post_id ) ) {
+	// If no Post ID fall back to the current global ID.
+	if ( empty( $post_id ) ) {
 		global $post;
 		$post_id = $post->ID;
 	}
@@ -322,26 +326,24 @@ function mesh_get_sections( $post_id = '', $return_type = 'array', $statuses = a
 		'post_status'    => $statuses,
 	);
 
-    if ( isset($_GET['preview_id']) && isset($_GET['preview_nonce']) ) {
-        $id = (int) $_GET['preview_id'];
+	if ( isset( $_GET['preview_id'] ) && isset( $_GET['preview_nonce'] ) ) { // WPCS: input var okay.
+		$id = intval( $_GET['preview_id'] ); // WPCS: input var okay, sanitization ok.
 
-        if ( false === wp_verify_nonce( $_GET['preview_nonce'], 'post_preview_' . $id ) )
-            wp_die( __( 'Sorry, you are not allowed to preview drafts.', 'mesh' ) );
+		if ( false === wp_verify_nonce( sanitize_key( $_GET['preview_nonce'] ), 'post_preview_' . $id ) ) { // WPCS: input var okay.
+			wp_die( esc_html__( 'Sorry, you are not allowed to preview drafts.', 'mesh' ) );
+		}
 
-        $args['post_status'] = array_merge( $args['post_status'], array( 'draft' ) );
-    }
+		$args['post_status'] = array_merge( $args['post_status'], array( 'draft' ) );
+	}
 
 	$content_sections = new WP_Query( $args );
 
 	switch ( $return_type ) {
-		case 'query' :
+		case 'query':
 			return $content_sections;
-			break;
-
-		case 'array' :
-		default      :
+		case 'array':
+		default:
 			return $content_sections->posts;
-			break;
 	}
 }
 
@@ -365,7 +367,9 @@ function the_mesh_content( $post_id = '' ) {
 		return;
 	}
 
-	if ( ! $template = get_post_meta( $post_id, '_mesh_template', true ) ) {
+	$template = get_post_meta( $post_id, '_mesh_template', true );
+
+	if ( empty( $template ) ) {
 		$template = 'mesh-columns-1.php';
 	}
 
@@ -414,7 +418,7 @@ function the_mesh_content( $post_id = '' ) {
  * @param string $post_id Post ID.
  * @param bool   $echo    Echo the sections or not.
  *
- * @return string|void
+ * @return string
  */
 function mesh_display_sections( $post_id = '', $echo = true ) {
 	global $post, $mesh_section_query;
@@ -428,7 +432,9 @@ function mesh_display_sections( $post_id = '', $echo = true ) {
 		return '';
 	}
 
-	if ( ! $mesh_section_query = mesh_get_sections( $post_id, 'query' ) ) {
+	$mesh_section_query = mesh_get_sections( $post_id, 'query' );
+
+	if ( empty( $mesh_section_query ) ) {
 		return '';
 	}
 
@@ -439,7 +445,7 @@ function mesh_display_sections( $post_id = '', $echo = true ) {
 	if ( true === $echo ) {
 		if ( $mesh_section_query->have_posts() ) {
 			while ( $mesh_section_query->have_posts() ) {
-			    $mesh_section_query->the_post();
+				$mesh_section_query->the_post();
 				the_mesh_content();
 			}
 			wp_reset_postdata();
@@ -455,6 +461,7 @@ function mesh_display_sections( $post_id = '', $echo = true ) {
 		}
 		$output = ob_get_contents();
 		ob_end_clean();
+
 		return $output;
 	}
 }
@@ -466,35 +473,34 @@ function mesh_display_sections( $post_id = '', $echo = true ) {
  *
  * @param  int    $section_id  Post ID of the target Section.
  * @param  string $post_status Post Status of the target Section.
- * @param  int    $number_needed
+ * @param  int    $number_needed The amount of blocks needed.
  *
  * @return array
  */
 function mesh_get_section_blocks( $section_id, $post_status = 'publish', $number_needed = 50 ) {
 
 	$args = array(
-        'post_type' => 'mesh_section',
-        'post_status' => $post_status,
-        'posts_per_page' => $number_needed,
-        'orderby' => 'menu_order',
-        'order' => 'ASC',
-        'post_parent' => (int) $section_id,
-    );
+		'post_type' => 'mesh_section',
+		'post_status' => $post_status,
+		'posts_per_page' => $number_needed,
+		'orderby' => 'menu_order',
+		'order' => 'ASC',
+		'post_parent' => (int) $section_id,
+	);
 
-    if ( isset( $_GET['preview_id'] ) && isset( $_GET['preview_nonce'] ) ) {
-        $id = (int) $_GET['preview_id'];
+	if ( isset( $_GET['preview_id'] ) && isset( $_GET['preview_nonce'] ) ) { // Input var okay.
+		$id = intval( $_GET['preview_id'] ); // WPCS: Input var okay, sanitization ok.
 
-        if ( false === wp_verify_nonce( $_GET['preview_nonce'], 'post_preview_' . $id ) ) {
-	        wp_die( __( 'Sorry, you are not allowed to preview drafts.', 'mesh' ) );
-        }
+		if ( false === wp_verify_nonce( sanitize_key( $_GET['preview_nonce'] ), 'post_preview_' . $id ) ) { // WPCS: Input var okay, sanitization ok.
+			wp_die( esc_html__( 'Sorry, you are not allowed to preview drafts.', 'mesh' ) );
+		}
 
-        // Make sure $post_status is an array
-        $args['post_status'] = is_array( $args['post_status'] ) ? $args['post_status'] : array( $args['post_status'] );
+		// Make sure $post_status is an array.
+		$args['post_status'] = is_array( $args['post_status'] ) ? $args['post_status'] : array( $args['post_status'] );
+		$args['post_status'] = array_merge( $args['post_status'], array( 'draft' ) );
+	}
 
-        $args['post_status'] = array_merge( $args['post_status'], array( 'draft' ) );
-    }
-
-    $content_blocks = new WP_Query( $args );
+	$content_blocks = new WP_Query( $args );
 
 	if ( $content_blocks->have_posts() ) {
 		return $content_blocks->posts;
@@ -511,10 +517,10 @@ function mesh_get_section_blocks( $section_id, $post_status = 'publish', $number
  *
  * @since 1.1
  *
- * @param object $section
- * @param int    $number_needed
+ * @param object $section       Section.
+ * @param int    $number_needed Amount of columns to create.
  *
- * @return array|void
+ * @return array
  */
 function mesh_cleanup_section_blocks( $section, $number_needed = 0 ) {
 
@@ -545,7 +551,6 @@ function mesh_cleanup_section_blocks( $section, $number_needed = 0 ) {
 	return mesh_maybe_create_section_blocks( $section, $number_needed );
 }
 
-
 /**
  * Make sure a section has a certain number of blocks
  *
@@ -560,7 +565,7 @@ function mesh_cleanup_section_blocks( $section, $number_needed = 0 ) {
 function mesh_maybe_create_section_blocks( $section, $number_needed = 0 ) {
 
 	if ( empty( $section ) ) {
-		return;
+		return array();
 	}
 
 	$blocks = mesh_get_section_blocks( $section->ID, array( 'publish', 'draft' ) );
@@ -569,37 +574,38 @@ function mesh_maybe_create_section_blocks( $section, $number_needed = 0 ) {
 
 	if ( $count < $number_needed ) {
 
-        // Create enough blocks to fill the section.
-        while ( $count < $number_needed ) {
-            wp_insert_post( array(
-                'post_type'   => 'mesh_section',
-                'post_status' => $section->post_status,
-                'post_title'  => __( 'No Column Title', 'mesh' ),
-                'post_parent' => $section->ID,
-                'menu_order'  => ( $start + $count ),
-                'post_name'   => 'section-' . $section->ID . '-block-' . ( $start + $count ),
-            ) );
+		// Create enough blocks to fill the section.
+		while ( $count < $number_needed ) {
+			wp_insert_post( array(
+				'post_type'   => 'mesh_section',
+				'post_status' => $section->post_status,
+				'post_title'  => __( 'No Column Title', 'mesh' ),
+				'post_parent' => $section->ID,
+				'menu_order'  => ( $start + $count ),
+				'post_name'   => 'section-' . $section->ID . '-block-' . ( $start + $count ),
+			) );
 
-            ++$count;
-        }
+			++$count;
+		}
 
-        // If we have more blocks than we need. Set the extras to draft and make sure the
-        // blocks that should be visible match the status of the parent section.
+		/*
+		 * If we have more blocks than we need. Set the extras to draft and make sure the
+		 * blocks that should be visible match the status of the parent section.
+		 */
 	} else {
 		$total = $count;
 
 		while ( $total > $number_needed ) {
-	        wp_update_post(array(
-	                'ID' => $blocks[ $total - 1 ]->ID,
-                    'post_status' => 'draft',
-                ) );
+			wp_update_post( array(
+				'ID' => $blocks[ $total - 1 ]->ID,
+				'post_status' => 'draft',
+			) );
 
 			$total--;
-        }
+		}
 
-        // Set the rest to what we need.
-
-        $start = 0;
+		// Set the rest to what we need.
+		$start = 0;
 		while ( $start < $number_needed ) {
 			wp_update_post(array(
 				'ID' => $blocks[ $start ]->ID,
@@ -608,7 +614,7 @@ function mesh_maybe_create_section_blocks( $section, $number_needed = 0 ) {
 
 			$start++;
 		}
-    }
+	}
 
 	return mesh_get_section_blocks( $section->ID, array( 'publish', 'draft' ), $number_needed );
 }
@@ -617,13 +623,15 @@ function mesh_maybe_create_section_blocks( $section, $number_needed = 0 ) {
  * Utility Method to add a background to a section
  *
  * @todo This should be disabled if the user selects to NOT use foundation.
- *
+ * @todo There is definitely a need for some optimization here. Lots of code duplication that could use
+ *       a utility method or two.
  *
  * @param int    $post_id     PostID of the Section.
  * @param bool   $echo        Echo the output or not.
  * @param string $size_large  The name of the Thumbnail for our Large image used by Interchange.
  * @param string $size_medium The name of the Thumbnail for our Medium image used by Interchange.
- * @param string $size_xlarge The name of the Thumbnail for our Medium image used by Interchange.
+ * @param string $size_xlarge The name of the Thumbnail for our XLarge image used by Interchange.
+ * @param string $size_small  The name of the Thumbnail for our small image used by Interchange.
  *
  * @return array|string
  */
@@ -639,11 +647,12 @@ function mesh_section_background( $post_id = 0, $echo = true, $size_large = 'lar
 
 		$backgrounds = array();
 
-		$mesh_options       = get_option( 'mesh_settings', array( 'foundation_version' => 5 ) );
+		$mesh_options       = get_option( 'mesh_settings', array(
+			'foundation_version' => 5,
+		) );
 
-		$foundation_version = (int) $mesh_options[ 'foundation_version' ];
-
-		$css_mode           = $mesh_options[ 'css_mode' ];
+		$foundation_version = (int) $mesh_options['foundation_version'];
+		$css_mode           = $mesh_options['css_mode'];
 
 		$default_bg_size = apply_filters( 'mesh_default_bg_size', 'mesh-background' );
 		$size_medium     = apply_filters( 'mesh_small_bg_size', $size_small );
@@ -663,56 +672,64 @@ function mesh_section_background( $post_id = 0, $echo = true, $size_large = 'lar
 			}
 
 			switch ( $foundation_version ) {
-				case 6 :
+				case 6:
 					$interchange_format = '[%s, %s]';
 					break;
-				default :
+				default:
 					$interchange_format = '[%s, (%s)]';
 			}
 
 			$background_urls = array();
 
 			if ( ! empty( $default_image_url ) ) {
-				if ( ! empty( $default_image_url[ 0 ] ) && '' !== $default_image_url[ 0 ] ) {
+				if ( ! empty( $default_image_url[0] ) && '' !== $default_image_url[0] ) {
 
-					// foundation 6 doesn't use default
+					// Foundation 6 doesn't use default.
 					if ( 6 !== $foundation_version ) {
-						$background_urls[] = $default_image_url[ 0 ];
-						$backgrounds[] = sprintf( $interchange_format, $default_image_url[ 0 ], 'default' );
+						$background_urls[] = $default_image_url[0];
+						$backgrounds[] = sprintf( $interchange_format, $default_image_url[0], 'default' );
 					}
 
-					if ( $small_image_url = wp_get_attachment_image_src( get_post_thumbnail_id( $post_id ), $size_medium ) ) {
-						if ( ! empty( $small_image_url[ 0 ] ) && '' !== $small_image_url[ 0 ] ) {
-							if ( ! in_array( $small_image_url[0], $background_urls ) ) {
-								$background_urls[] = $small_image_url[ 0 ];
-								$backgrounds[] = sprintf( $interchange_format, $small_image_url[ 0 ], 'small' );
+					$small_image_url = wp_get_attachment_image_src( get_post_thumbnail_id( $post_id ), $size_medium );
+
+					if ( ! empty( $small_image_url ) ) {
+						if ( ! empty( $small_image_url[0] ) && '' !== $small_image_url[0] ) {
+							if ( ! in_array( $small_image_url[0], $background_urls, true ) ) {
+								$background_urls[] = $small_image_url[0];
+								$backgrounds[] = sprintf( $interchange_format, $small_image_url[0], 'small' );
 							}
 						}
 					}
 
-					if ( $medium_image_url = wp_get_attachment_image_src( get_post_thumbnail_id( $post_id ), $size_medium ) ) {
-						if ( ! empty( $medium_image_url[ 0 ] ) && '' !== $medium_image_url[ 0 ] ) {
-							if ( ! in_array( $medium_image_url[0], $background_urls ) ) {
-								$background_urls[] = $medium_image_url[ 0 ];
-								$backgrounds[]     = sprintf( $interchange_format, $medium_image_url[ 0 ], 'medium' );
+					$medium_image_url = wp_get_attachment_image_src( get_post_thumbnail_id( $post_id ), $size_medium );
+
+					if ( ! empty( $medium_image_url ) ) {
+						if ( ! empty( $medium_image_url[0] ) && '' !== $medium_image_url[0] ) {
+							if ( ! in_array( $medium_image_url[0], $background_urls, true ) ) {
+								$background_urls[] = $medium_image_url[0];
+								$backgrounds[]     = sprintf( $interchange_format, $medium_image_url[0], 'medium' );
 							}
 						}
 					}
 
-					if ( $large_image_url = wp_get_attachment_image_src( get_post_thumbnail_id( $post_id ), $size_large ) ) {
-						if ( ! empty( $large_image_url[ 0 ] ) && '' !== $large_image_url[ 0 ] ) {
-							if ( ! in_array( $large_image_url[0], $background_urls ) ) {
-								$background_urls[] = $large_image_url[ 0 ];
-								$backgrounds[] = sprintf( $interchange_format, $large_image_url[ 0 ], 'large' );
+					$large_image_url = wp_get_attachment_image_src( get_post_thumbnail_id( $post_id ), $size_large );
+
+					if ( ! empty( $large_image_url ) ) {
+						if ( ! empty( $large_image_url[0] ) && '' !== $large_image_url[0] ) {
+							if ( ! in_array( $large_image_url[0], $background_urls, true ) ) {
+								$background_urls[] = $large_image_url[0];
+								$backgrounds[] = sprintf( $interchange_format, $large_image_url[0], 'large' );
 							}
 						}
 					}
 
-					if ( $xlarge_image_url = wp_get_attachment_image_src( get_post_thumbnail_id( $post_id ), $size_xlarge ) ) {
-						if ( ! empty( $xlarge_image_url[ 0 ] ) && '' !== $xlarge_image_url[ 0 ] ) {
-							if ( ! in_array( $xlarge_image_url[0], $background_urls ) ) {
-								$background_urls[] = $xlarge_image_url[ 0 ];
-								$backgrounds[] = sprintf( $interchange_format, $xlarge_image_url[ 0 ], 'xlarge' );
+					$xlarge_image_url = wp_get_attachment_image_src( get_post_thumbnail_id( $post_id ), $size_xlarge );
+
+					if ( ! empty( $xlarge_image_url ) ) {
+						if ( ! empty( $xlarge_image_url[0] ) && '' !== $xlarge_image_url[0] ) {
+							if ( ! in_array( $xlarge_image_url[0], $background_urls, true ) ) {
+								$background_urls[] = $xlarge_image_url[0];
+								$backgrounds[] = sprintf( $interchange_format, $xlarge_image_url[0], 'xlarge' );
 							}
 						}
 					}
@@ -731,7 +748,7 @@ function mesh_section_background( $post_id = 0, $echo = true, $size_large = 'lar
 		}
 
 		if ( '' !== $default_image_url[0] ) {
-			$style .= ' style="background-image: url(' . esc_url( $default_image_url[ 0 ] ) . ');"';
+			$style .= ' style="background-image: url(' . esc_url( $default_image_url[0] ) . ');"';
 		}
 	}
 

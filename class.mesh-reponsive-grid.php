@@ -52,7 +52,9 @@ class Mesh_Responsive_Grid {
 	);
 
 	/**
-	 * @param string $grid_system
+	 * Get the current responsive grid systems we support
+	 *
+	 * @param string $grid_system Responsive grid are we using.
 	 *
 	 * @return mixed
 	 */

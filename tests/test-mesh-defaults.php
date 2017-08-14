@@ -23,5 +23,4 @@ class Mesh_Defaults extends WP_UnitTestCase {
 		$this->assertTrue( defined( 'LINCHPIN_MESH___PLUGIN_DIR' ) );
 		$this->assertTrue( defined( 'LINCHPIN_MESH_DEBUG_MODE' ) );
 	}
-
 }
