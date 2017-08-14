@@ -47,7 +47,7 @@ class Mesh_AJAX {
 		if ( ! isset( $_POST['mesh_post_id'] ) ) { // Input var okay.
 			wp_die( -1 );
 		} else {
-			$post_id = absint( $_POST['mesh_post_id'] ); // Input var okay.
+			$post_id = intval( $_POST['mesh_post_id'] ); // Input var okay.
 		}
 
 		if ( isset( $_POST['mesh_section_count'] ) ) { // Input var okay.
@@ -142,7 +142,7 @@ class Mesh_AJAX {
 		check_ajax_referer( 'mesh_choose_layout_nonce', 'mesh_choose_layout_nonce' );
 
 		if ( isset( $_POST['mesh_section_id'] ) ) { // Input var okay.
-			$section_id = absint( $_POST['mesh_section_id'] ); // Input var okay.
+			$section_id = intval( $_POST['mesh_section_id'] ); // Input var okay.
 		}
 
 		if ( empty( $section_id ) || ! current_user_can( 'edit_post', $section_id ) ) {
