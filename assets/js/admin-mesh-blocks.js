@@ -267,18 +267,17 @@ mesh.blocks = function ( $ ) {
 
                         // Clean up the proto id which appears in some of the wp_editor generated HTML
 
-                        var block_html = $(this).closest('.block-content').html(),
-                            pattern = /\[post_mesh\-section\-editor\-[0-9]+\]/;
-                        block_html = block_html.replace(new RegExp(proto_id, 'g'), editor_id);
-                        block_html = block_html.replace(new RegExp(pattern, 'g'), '[post_content]');
+                        var block_html = $(this).closest('.block-content').html();
+
+                        block_html = block_html.replace(new RegExp('id="'+proto_id+'"', 'g'), 'id="'+editor_id+'"');
 
                         $block_content.html(block_html);
 
                         // This needs to be initialized, so we need to get the options from the proto
-                        if (proto_id && typeof tinyMCEPreInit.mceInit[proto_id] !== 'undefined') {
-                            mce_options = $.extend(true, {}, tinyMCEPreInit.mceInit[proto_id]);
-                            mce_options.body_class = mce_options.body_class.replace(proto_id, editor_id);
-                            mce_options.selector = mce_options.selector.replace(proto_id, editor_id);
+                        if ( proto_id && typeof tinyMCEPreInit.mceInit[ proto_id ] !== 'undefined' ) {
+                            mce_options = $.extend( true, {}, tinyMCEPreInit.mceInit[ proto_id ] );
+                            mce_options.body_class = mce_options.body_class.replace( proto_id, editor_id );
+                            mce_options.selector = mce_options.selector.replace( proto_id, editor_id );
                             mce_options.wp_skip_init = false;
                             mce_options.plugins = 'lists,media,paste,tabfocus,wordpress,wpautoresize,wpeditimage,wpgallery,wplink,wptextpattern,wpview';
                             mce_options.block_formats = 'Paragraph=p; Heading 3=h3; Heading 4=h4';
@@ -287,7 +286,7 @@ mesh.blocks = function ( $ ) {
                             mce_options.toolbar3 = '';
                             mce_options.toolbar4 = '';
 
-                            tinyMCEPreInit.mceInit[editor_id] = mce_options;
+                            tinyMCEPreInit.mceInit[ editor_id ] = mce_options;
                         } else {
                             // TODO: No data to work with, this should throw some sort of error
                             return;
@@ -339,6 +338,10 @@ mesh.blocks = function ( $ ) {
                     $block_content.find('.switch-tmce').trigger('click');
                 }
             });
+
+            if( typeof mesh.integrations.yoast != 'undefined' ) {
+                mesh.integrations.yoast.addMeshSections();
+            }
         },
 
         mode_enabled: function( el ) {

@@ -33,20 +33,16 @@ mesh.frontend = function ( $ ) {
 				do_lp_equal = true;
 
 			// Foundation exists
-			} else if ( 'object' == typeof( Foundation ) ) {
+			} else {
 
-				// Foundation's equalize is not turned on
-				if ( 'function' != typeof( Foundation.Equalizer ) && undefined == typeof( Foundation.libs ) ) {
+				var foundation_version = Foundation.version.slice(0,1);
+
+				if ( '6' == foundation_version && 'function' != typeof( Foundation.Equalizer ) ) {
 					do_lp_equal = true;
-				} else {
-					// Not Foundation 6 and has Foundation 5 equalizer object
-					if ( 'function' != typeof ( Foundation.Equalizer ) && 'object' == typeof( Foundation.libs.equalizer ) ) {
+				}
 
-						// Foundation 5 equalize function is not available
-						if ( 'function' != typeof( Foundation.libs.equalizer.equalize ) ) {
-							do_lp_equal = true;
-						}
-					}
+				if ( '5' == foundation_version && 'function' != typeof( Foundation.libs.equalizer.equalize ) ) {
+					do_lp_equal = true;
 				}
 			}
 

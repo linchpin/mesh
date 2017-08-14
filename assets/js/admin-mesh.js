@@ -531,18 +531,17 @@ mesh.blocks = function ( $ ) {
 
                         // Clean up the proto id which appears in some of the wp_editor generated HTML
 
-                        var block_html = $(this).closest('.block-content').html(),
-                            pattern = /\[post_mesh\-section\-editor\-[0-9]+\]/;
-                        block_html = block_html.replace(new RegExp(proto_id, 'g'), editor_id);
-                        block_html = block_html.replace(new RegExp(pattern, 'g'), '[post_content]');
+                        var block_html = $(this).closest('.block-content').html();
+
+                        block_html = block_html.replace(new RegExp('id="'+proto_id+'"', 'g'), 'id="'+editor_id+'"');
 
                         $block_content.html(block_html);
 
                         // This needs to be initialized, so we need to get the options from the proto
-                        if (proto_id && typeof tinyMCEPreInit.mceInit[proto_id] !== 'undefined') {
-                            mce_options = $.extend(true, {}, tinyMCEPreInit.mceInit[proto_id]);
-                            mce_options.body_class = mce_options.body_class.replace(proto_id, editor_id);
-                            mce_options.selector = mce_options.selector.replace(proto_id, editor_id);
+                        if ( proto_id && typeof tinyMCEPreInit.mceInit[ proto_id ] !== 'undefined' ) {
+                            mce_options = $.extend( true, {}, tinyMCEPreInit.mceInit[ proto_id ] );
+                            mce_options.body_class = mce_options.body_class.replace( proto_id, editor_id );
+                            mce_options.selector = mce_options.selector.replace( proto_id, editor_id );
                             mce_options.wp_skip_init = false;
                             mce_options.plugins = 'lists,media,paste,tabfocus,wordpress,wpautoresize,wpeditimage,wpgallery,wplink,wptextpattern,wpview';
                             mce_options.block_formats = 'Paragraph=p; Heading 3=h3; Heading 4=h4';
@@ -551,7 +550,7 @@ mesh.blocks = function ( $ ) {
                             mce_options.toolbar3 = '';
                             mce_options.toolbar4 = '';
 
-                            tinyMCEPreInit.mceInit[editor_id] = mce_options;
+                            tinyMCEPreInit.mceInit[ editor_id ] = mce_options;
                         } else {
                             // TODO: No data to work with, this should throw some sort of error
                             return;
@@ -603,6 +602,10 @@ mesh.blocks = function ( $ ) {
                     $block_content.find('.switch-tmce').trigger('click');
                 }
             });
+
+            if( typeof mesh.integrations.yoast != 'undefined' ) {
+                mesh.integrations.yoast.addMeshSections();
+            }
         },
 
         mode_enabled: function( el ) {
@@ -1127,6 +1130,7 @@ mesh.templates = function ( $ ) {
 } ( jQuery );
 ;
 var mesh = mesh || {};
+	mesh.integrations = mesh.integrations || {}; // @since 1.2 store integrations.
 
 mesh.admin = function ( $ ) {
 
@@ -1139,7 +1143,7 @@ mesh.admin = function ( $ ) {
 		$meta_box_container = $('#mesh-container'),
 		$section_container  = $('#mesh-sections-container'),
 		$description        = $('#mesh-description'),
-		$equalize           = $('.mesh_section [data-equalizer]'),
+		$equalize           = $('[data-equalizer]'),
 		$sections,
 		media_frames        = [],
 
@@ -1198,13 +1202,17 @@ mesh.admin = function ( $ ) {
 				// @since 1.1.3
 				.on('change', '#mesh-css_mode', self.display_foundation_options );
 
+			// @since 1.2
+			$(document)
+				.on( 'postbox-toggled', {event:event}, self.expand_section );
+
 			$sections = $( '.mesh-section' );
 
 			if ( $sections.length <= 1 ) {
 				$reorder_button.addClass( 'disabled' );
 			}
 
-			if ( 'undefined' == typeof Foundation ) {
+			if ( $equalize.length ) {
 				$equalize.each( self.mesh_equalize );
 			}
 
@@ -1258,8 +1266,26 @@ mesh.admin = function ( $ ) {
 			});
 		},
 
+        /**
+		 * Expand targeted section
+		 *
+		 * @since 1.2
+		 *
+         * @param event The jQuery Event
+         * @param element The Object Being Expanded (typically postbox)
+         */
+		expand_section : function( event, element ) {
+
+            var $section = $(element),
+				$tinymce_editor = $section.find('.wp-editor-area');
+
+            if ( ! $section.hasClass( 'closed' ) ) {
+				blocks.rerender_blocks( $tinymce_editor );
+			}
+		},
+
 		/**
-		 * 1 click to expand sections
+		 * 1 click to expand all sections
 		 *
 		 * @since 0.3.0
 		 *
@@ -1270,15 +1296,12 @@ mesh.admin = function ( $ ) {
 			event.preventDefault();
 			event.stopPropagation();
 
-			$meta_box_container.find('.handlediv').each(function () {
-				if ( 'false' == $(this).attr('aria-expanded') ) {
-					$(this).trigger('click').promise(function() {
-						// Loop through all of our edits in the response
-						// reset our editors after clearing
-						var $tinymce_editors = $sections.find('.wp-editor-area');
+			$sections.each(function () {
+                var $handle = $(this).find('.handlediv');
 
-						blocks.rerender_blocks( $tinymce_editors );
-					});
+				if ( 'true' != $handle.attr('aria-expanded') ) {
+                    $handle.trigger('click');
+                    self.expand_section( event, $(this) );
 				}
 			} );
 		},
@@ -1297,9 +1320,12 @@ mesh.admin = function ( $ ) {
 				event.stopPropagation();
 			}
 
-			$meta_box_container.find('.handlediv').each(function () {
-				if ( 'true' == $(this).attr('aria-expanded') ) {
-					$(this).trigger('click');
+            $section_container.find('.handlediv').each(function () {
+
+            	var $this = $(this);
+
+				if ( 'true' == $this.attr('aria-expanded') || $this.hasClass('toggled') ) {
+					$this.trigger('click');
 				}
 			} );
 		},
@@ -1314,6 +1340,7 @@ mesh.admin = function ( $ ) {
 		 * @param event
 		 */
 		toggle_collapse : function( event ) {
+
 			var $el = $( this ),
 				p = $el.parent( '.postbox' ),
 				id = p.attr( 'id' ),
@@ -1344,7 +1371,7 @@ mesh.admin = function ( $ ) {
 				}
 			}
 
-			$document.trigger( 'postbox-toggled', p );
+			self.expand_section( event, p.closest('.mesh-section') );
 		},
 
 		/**
@@ -1360,10 +1387,13 @@ mesh.admin = function ( $ ) {
 			event.preventDefault();
 			event.stopPropagation();
 
-			var $this      = $(this),
-				$spinner   = $this.siblings('.spinner'),
-				$section   = $this.parents('.mesh-section'),
-				section_id = $section.attr('data-mesh-section-id');
+			var $this         = $(this),
+                temp_val      = $(this).val(),
+				$spinner      = $this.siblings('.spinner'),
+				$section      = $this.parents('.mesh-section'),
+				section_id    = $section.attr('data-mesh-section-id'),
+                $more_options = $section.find('.mesh-section-meta').find( '.mesh-more-section-options' ),
+                tab_open      = $more_options.hasClass( 'toggled' );
 
 			if ( $this.hasClass('disabled') ) {
 				return false;
@@ -1377,26 +1407,37 @@ mesh.admin = function ( $ ) {
 				action                  : 'mesh_choose_layout',
 				mesh_post_id             : mesh_data.post_id,
 				mesh_section_id          : section_id,
-				mesh_section_layout      : $(this).val(),
+				mesh_section_layout      : temp_val,
 				mesh_choose_layout_nonce : mesh_data.choose_layout_nonce
 			}, function( response ) {
 				if ( response ) {
 
-					var $response        = $( response ),
-						$tinymce_editors,
-						$layout          = $( '#mesh-sections-editor-' + section_id );
+                    var $response = $(response),
+                        $tinymce_editors,
+                        $section = $('#mesh-section-' + section_id);
 
-					$tinymce_editors = $section.find('.wp-editor-area');
+                    $tinymce_editors = $section.find('.wp-editor-area');
 
                     // @todo this should be done more efficiently later: Needed for Firefox but will be fixed
                     // once consolidated. Can't clear html before removing or tinymce throws an error
-					$tinymce_editors.each( function() {
-						if ( parseInt( tinymce.majorVersion ) >= 4 ) {
-							tinymce.execCommand( 'mceRemoveEditor', false, $(this).prop('id') );
-						}
-					});
+                    $tinymce_editors.each(function () {
+                        if (parseInt(tinymce.majorVersion) >= 4) {
+                            tinymce.execCommand('mceRemoveEditor', false, $(this).prop('id'));
+                        }
+                    });
 
-					$layout.html('').append( $response );
+                    // Store current display
+
+                    $response.find('.mesh-choose-layout').val(temp_val); // Set our newly render html to the properly layout.
+
+					// End display reset
+
+                    $section.find('.inside').html('').append( $response );
+
+                    if ( tab_open ) {
+                        $section.find( '.mesh-more-section-options' ).addClass( 'toggled' );
+                        $section.find( '.mesh-section-meta-dropdown' ).removeClass('hide').show();
+                    }
 					
 					// Loop through all of our edits in the response
 					// reset our editors after clearing
@@ -1429,7 +1470,8 @@ mesh.admin = function ( $ ) {
 			section_count = $sections.length;
 
 			var $this = $(this),
-				$spinner = $this.find('.spinner');
+				$spinner = $this.find('.spinner'),
+                $meshSectionsContainer = $('#mesh-sections-container');
 
 			if ( $this.hasClass('disabled') ) {
 				return false;
@@ -1459,18 +1501,21 @@ mesh.admin = function ( $ ) {
 					$this.removeClass('active');
 
 					if ( $empty_msg.length ) {
-						$empty_msg.fadeOut('fast');
+						$empty_msg.fadeOut('fast').promise(function() {
+                            $('#description-wrap').remove();
+						});
 						$controls.fadeIn('fast');
 					}
-
-					var $handle = $section_container.find( '.handlediv' );
-
-					$handle.attr( 'aria-expanded', true ).on( 'click', self.toggle_collapse );
 
 					blocks.rerender_blocks( $tinymce_editors );
 
 					// Repopulate the sections cache so that the new section is included going forward.
 					$sections = $('.mesh-section', $section_container);
+
+                    var $handle = $response.find( '.handlediv' );
+
+                    $handle.attr( 'aria-expanded', true )
+                        .on( 'click', self.toggle_collapse );
 
 					setTimeout(function () {
 						mesh.pointers.show_pointer();
@@ -1478,9 +1523,28 @@ mesh.admin = function ( $ ) {
 
 					self.enable_controls( $meta_box_container );
 
+                    $meta_box_container.trigger("mesh:add_section");
+
 				} else {
 					$spinner.removeClass('is-active');
 				}
+
+                var windowBottom = $(window).height() + $(window).scrollTop(),
+                    meshBottom = $meshSectionsContainer.offset().top + $meshSectionsContainer.outerHeight(true),
+                    scrollTiming = ( ( meshBottom - windowBottom ) * .5 );
+
+					if ( 1000 > scrollTiming ) {
+						scrollTiming = 1000;
+					}
+
+                    if ( 3000 < scrollTiming ) {
+                        scrollTiming = 3000;
+                    }
+
+
+                $('html, body').animate({
+                    scrollTop: $meshSectionsContainer.offset().top + $meshSectionsContainer.outerHeight(true) - $(window).height()
+                }, scrollTiming );
 			});
 		},
 
@@ -1536,7 +1600,8 @@ mesh.admin = function ( $ ) {
 			var $button            = $(this),
 				$button_container  = $button.parent(),
 				$spinner           = $button_container.find( '.spinner' ),
-				$current_section   = $button.closest( '.mesh-section' ),
+                $saved_status      = $button_container.find( '.saved-status-icon' ),
+                $current_section   = $button.closest( '.mesh-section' ),
 				$post_status_field = $current_section.find( '.mesh-section-status' ),
 				section_id         = $current_section.attr( 'data-mesh-section-id' );
 
@@ -1549,9 +1614,11 @@ mesh.admin = function ( $ ) {
 					// Make sure we have an editor and we aren't in text view.
 					if( editor && ! editor.hidden ) {
 
-						content = editor.getContent({format: 'raw'});
+						content = editor.getContent();
+
 						$('#' + editorID).val(content);
 					}
+				
 			});
 
 			var	form_data = $current_section.parents( 'form' ).serialize(),
@@ -1572,8 +1639,11 @@ mesh.admin = function ( $ ) {
 
 				$button.removeClass( 'disabled' );
 				$spinner.removeClass( 'is-active' );
+                $saved_status.addClass("is-active").delay(2000).queue(function(){
+                    $(this).removeClass("is-active").dequeue();
+                });
 
-				if ( response ) {
+                if ( response ) {
 
 					var $publish_draft = $current_section.find( '.mesh-section-publish, .mesh-section-save-draft' );
 
@@ -1617,7 +1687,7 @@ mesh.admin = function ( $ ) {
 				mesh_post_id: mesh_data.post_id,
 				mesh_section_id: section_id,
 				mesh_remove_section_nonce: mesh_data.remove_section_nonce
-			}, function( response){
+			}, function( response ){
 				if ( '1' === response ) {
 					$postbox.fadeOut(400, function () {
 						$postbox.remove();
@@ -1633,18 +1703,21 @@ mesh.admin = function ( $ ) {
 				} else {
 
 					var $response = $(response),
-						$empty_msg = $('.empty-sections-message'),
-						$controls = $('.mesh-main-ua-row');
+						$controls = $('.mesh-main-ua-row'),
+						$description = $('#mesh-description');
 
-					$section_container.append($response);
+					// Add either the empty message or visible sections.
+                    if ( response.indexOf( 'mesh-empty-actions' ) === -1 ) {
+                        $section_container.append( $response );
+                    }
 
-					$postbox.fadeOut(400, function () {
+                    $postbox.fadeOut(400, function () {
 						$postbox.remove();
-					});
 
-					if ($empty_msg.length) {
-						$empty_msg.fadeOut('fast');
-					}
+                        if ( response.indexOf( 'mesh-empty-actions' ) > 0 ) {
+                            $description.html('').append( $response ).show();
+                        }
+					});
 
 					$controls.fadeOut('fast');
 
@@ -1666,16 +1739,22 @@ mesh.admin = function ( $ ) {
 
 			var $this = $(this);
 
+			if( $this.hasClass('disabled' ) ) {
+				return;
+			}
+
 			self.disable_controls( $meta_box_container );
 
 			$meta_box_container.addClass('mesh-is-ordering');
 
-			self.update_notifications( 'reorder', 'warning' );
+			// self.update_notifications( 'reorder', 'warning' );
 
-			$reorder_button.text( mesh_data.strings.save_order ).addClass('mesh-save-order button-primary').removeClass('mesh-section-reorder');
+			$reorder_button
+				.text( mesh_data.strings.save_order )
+				.addClass('mesh-save-order button-primary')
+				.removeClass('mesh-section-reorder');
 
 			self.collapse_all_sections();
-
 			$section_container.sortable();
 		},
 
@@ -1724,10 +1803,6 @@ mesh.admin = function ( $ ) {
 
 				$this.find('.section-menu-order').val( index );
 			});
-
-			console.log( section_ids );
-
-		//	response = self.save_section_ajax( section_ids, $reorder_spinner );
 		},
 
 		/**
@@ -1749,7 +1824,10 @@ mesh.admin = function ( $ ) {
 
 			self.enable_controls( $meta_box_container );
 
-			$reorder_button.text( mesh_data.strings.reorder ).addClass('mesh-section-reorder').removeClass('mesh-save-order button-primary');
+			$reorder_button
+				.text( mesh_data.strings.reorder )
+				.addClass('mesh-section-reorder')
+				.removeClass('mesh-save-order button-primary');
 
 			$( '.mesh-postbox', $section_container ).each( function( index ){
 				var $this = $(this);
@@ -1874,29 +1952,20 @@ mesh.admin = function ( $ ) {
 			event.preventDefault();
 			event.stopPropagation();
 
-			var $button       = $(this),
-				$section      = $button.parents('.mesh-postbox'),
-				section_id    = parseInt( $section.attr('data-mesh-section-id') );
+			var $button       = $(this);
 
-			$.post( ajaxurl, {
-				'action': 'mesh_update_featured_image',
-				'mesh_section_id'  : parseInt( section_id ),
-				'mesh_featured_image_nonce' : mesh_data.featured_image_nonce
-			}, function( response ) {
-				if ( response != -1 ) {
-
-					if ( $button.prev().hasClass('right') && ! $button.prev().hasClass('button') ) {
-						if ( ! $button.parents('.block-background-container') ) {
-							$button.prev().toggleClass( 'button right' );
-						} else {
-							$button.prev().toggleClass( 'right' ).attr('data-mesh-block-featured-image', '' );
-						}
-					}
-
-					$button.prev().text( mesh_data.strings.add_image );
-					$button.remove();
+			if ( $button.prev().hasClass('right') && ! $button.prev().hasClass('button') ) {
+				if ( ! $button.parents('.block-background-container') ) {
+					$button.prev().toggleClass( 'button right' );
+				} else {
+					$button.prev().toggleClass( 'right' ).attr('data-mesh-block-featured-image', '' );
 				}
-			});
+			}
+
+			$button.siblings('input[type="hidden"]').val('');
+
+			$button.prev().text( mesh_data.strings.add_image );
+			$button.remove();
 		},
 
 		/**
@@ -1953,29 +2022,23 @@ mesh.admin = function ( $ ) {
 						'class' : 'mesh-featured-image-trash dashicons-before dashicons-dismiss'
 					});
 
-				$.post( ajaxurl, {
-	                'action': 'mesh_update_featured_image',
-	                'mesh_section_id'  : parseInt( section_id ),
-	                'mesh_image_id' : parseInt( media_attachment.id ),
-	                'mesh_featured_image_nonce' : mesh_data.featured_image_nonce
-	            }, function( response ) {
-					if ( response != -1 ) {
-						current_image = media_attachment.id;
+				current_image = media_attachment.id;
 
-						var $img = $('<img />', {
-							src : media_attachment.url
-						});
+				var $img = $('<img />', {
+					src : media_attachment.url
+				});
 
-						$button
-							.html( $img )
-							.attr('data-mesh-section-featured-image', parseInt( media_attachment.id ) )
-							.after( $trash );
+				$button
+					.html( $img )
+					.attr('data-mesh-section-featured-image', parseInt( media_attachment.id ) )
+					.after( $trash );
 
-						if ( $button.hasClass('button') && ! $button.hasClass('right') ) {
-							$button.toggleClass( 'button right' );
-						}
-					}
-	            });
+				// Add selected attachment id to input
+				$button.siblings('input[type="hidden"]').val( media_attachment.id );
+
+				if ( $button.hasClass('button') && ! $button.hasClass('right') ) {
+					$button.toggleClass( 'button right' );
+				}
 	        });
 
 	        // Now that everything has been set, let's open up the frame.
@@ -2052,13 +2115,13 @@ mesh.admin = function ( $ ) {
 		 *
 		 * @since 1.1
 		 */
-		disable_controls : function( $tgt) {
+		disable_controls : function( $tgt ) {
 			$expand_button.addClass('disabled');
 			$add_button.addClass('disabled');
 			$collapse_button.addClass('disabled');
 			$reorder_button.addClass( 'disabled' );
 
-			var $postboxes = $( '.mesh-section', $meta_box_container );
+			var $postboxes = $( '.mesh-section', $section_container );
 
 			if ( $postboxes.length > 1 ) {
 				$reorder_button.removeClass( 'disabled' );

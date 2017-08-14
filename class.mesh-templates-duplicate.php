@@ -37,18 +37,20 @@ class Mesh_Templates_Duplicate {
 	/**
 	 * Duplicate all the template's sections
 	 *
-	 * @param int $template_id Template ID.
-	 * @param int $post_id     Target Post ID.
+	 * @param int  $template_id    Template ID.
+	 * @param int  $post_id        Target Post ID.
+	 * @param bool $include_drafts Include drafts.
 	 *
 	 * @return string
 	 */
-	function duplicate_sections( $template_id, $post_id ) {
+	function duplicate_sections( $template_id, $post_id, $include_drafts ) {
 
-		$template_id = (int) $template_id;
+		$template_id = absint( $template_id );
+		$template_post = get_post( $template_id );
 
-		if ( $template_post = get_post( $template_id ) ) {
+		if ( ! empty( $template_post ) ) {
 
-			$children = $this->duplicate_children( $post_id, $template_post );
+			$children = $this->duplicate_children( $post_id, $template_post, $include_drafts );
 
 			if ( ! empty( $children ) ) {
 
@@ -61,11 +63,11 @@ class Mesh_Templates_Duplicate {
 				return $markup;
 
 			} else {
-				return 'created nothing';
+				return __( 'created nothing', 'mesh' );
 			}
 		}
 
-		return 'no template found';
+		return __( 'no template found', 'mesh' );
 	}
 
 	/**
@@ -74,20 +76,29 @@ class Mesh_Templates_Duplicate {
 	 *
 	 * @thanks https://plugins.svn.wordpress.org/duplicate-post/
 	 *
-	 * @param int    $new_id        New Post ID.
-	 * @param object $template_post Original Post Object.
+	 * @param int    $new_id         New Post ID.
+	 * @param object $template_post  Original Post Object.
+	 * @param bool   $include_drafts Include Drafts.
 	 *
 	 * @return array $duplicate_children Array of IDs
 	 */
-	function duplicate_children( $new_id, $template_post ) {
+	function duplicate_children( $new_id, $template_post, $include_drafts = false ) {
+
+		$post_status = array(
+			'publish',
+		);
+
+		if ( $include_drafts ) {
+			$post_status[] = 'draft';
+		}
 
 		$children = new WP_Query( array(
 			'post_type'      => array( 'mesh_section', 'attachment' ),
 			'posts_per_page' => apply_filters( 'mesh_templates_per_page', 50 ),
-			'post_status'    => array( 'publish' ),
+			'post_status'    => $post_status,
 			'post_parent'    => $template_post->ID,
 			'order_by'       => 'menu_order',
-			'order'          => 'ASC'
+			'order'          => 'ASC',
 		) );
 
 		$duplicated_children = array();
@@ -117,7 +128,7 @@ class Mesh_Templates_Duplicate {
 	 * @param object $post      Post Object.
 	 * @param string $parent_id Parent Post ID.
 	 *
-	 * @return int|void|WP_Error
+	 * @return int|mixed|WP_Error
 	 */
 	function duplicate_section( $post, $parent_id = '' ) {
 
@@ -136,7 +147,9 @@ class Mesh_Templates_Duplicate {
 			$status = 'publish';
 		}
 
-		$new_date = date( 'Y-m-d H:i:s' );
+		$new_date = current_time( 'Y-m-d H:i:s' );
+
+		$new_post_parent = empty( $parent_id ) ? $post->post_parent : $parent_id;
 
 		$new_post = array(
 			'menu_order'     => $post->menu_order,
@@ -144,7 +157,7 @@ class Mesh_Templates_Duplicate {
 			'post_content'   => $post->post_content,
 			'post_excerpt'   => $post->post_excerpt,
 			'post_mime_type' => $post->post_mime_type,
-			'post_parent'    => $new_post_parent = empty( $parent_id ) ? $post->post_parent : $parent_id,
+			'post_parent'    => $new_post_parent,
 			'post_status'    => $status, // Always set a published section to draft. Exclude attachments.
 			'post_title'     => $post->post_title,
 			'post_type'      => $post->post_type,
@@ -196,7 +209,11 @@ class Mesh_Templates_Duplicate {
 
 			foreach ( $taxonomies as $taxonomy ) {
 
-				$post_terms = wp_get_object_terms( $post->ID, $taxonomy, array( 'orderby' => 'term_order' ) );
+				$post_terms = wp_get_object_terms( $post->ID, $taxonomy,
+					array(
+						'orderby' => 'term_order',
+					)
+				);
 				$terms = array();
 				$term_length = count( $post_terms );
 

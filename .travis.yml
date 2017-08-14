@@ -1,0 +1,61 @@
+language: php
+
+sudo: false
+dist: precise
+
+notifications:
+  email:
+    on_success: never
+    on_failure: change
+
+php:
+    - 5.3
+    - 5.4
+    - 5.6
+    - 7.0
+    - 7.1
+
+cache:
+  directories:
+    - $HOME/.composer/cache
+
+env:
+  - WP_VERSION=nightly
+  - WP_VERSION=latest
+  - WP_VERSION=4.7
+  - WP_VERSION=4.6
+  - WP_VERSION=4.5
+  - WP_VERSION=4.4
+  - WP_VERSION=4.3
+
+before_install:
+  - composer self-update
+
+install:
+  - composer install --prefer-dist
+
+before_script:
+  - export PATH="$HOME/.composer/vendor/bin:$PATH"
+  - |
+    if [[ ${TRAVIS_PHP_VERSION:0:2} == "7." ]]; then
+      composer global require "phpunit/phpunit=5.7.*"
+    else
+      composer global require "phpunit/phpunit=4.8.*"
+    fi
+  - git config --global user.email "travis-ci@codeclimate.com"
+  - git config --global user.name "Travis CI"
+  - bash bin/install-wp-tests.sh wordpress_test root '' localhost $WP_VERSION
+
+script:
+  - |
+    if [[ ! -z "$WP_VERSION" ]] ; then
+      phpunit
+      WP_MULTISITE=1 phpunit
+    fi
+
+after_script:
+  - ./bin/codeclimate.sh
+
+addons:
+  codeclimate:
+    repo_token: CODECLIMATE_REPO_TOKEN

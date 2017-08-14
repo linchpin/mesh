@@ -102,6 +102,42 @@
 		    color: $primary;
 		    margin-left: $input_padding_x;
 	    }
+
+		&.mesh-section-title-text {
+			max-width: 100%;
+			overflow: hidden;
+			padding-right: 28px;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+
+			&:after {
+				position: absolute;
+				right: 10px;
+				top: 3px;
+			}
+		}
+	}
+
+	&.mesh-column-title-container {
+		width: 100%;
+		width: calc(100% - 70px - 24px);
+
+		@media only screen and (max-width: 1023px) {
+			width: 100%;
+			max-width: 100%;
+		}
+
+		&.title-input-visible {
+			width: calc(100% - 32px);
+
+			input.mesh-clean-edit-element {
+				width: calc(100% - 55px);
+			}
+
+			& + .mesh-more-section-options {
+				display: none;
+			}
+		}
 	}
 
 	.close-title-edit {
@@ -304,8 +340,10 @@
 		position: relative;
 
 		img {
-			height: 80px;
+			height: auto;
 			width: auto;
+			max-height: 80px;
+			max-width: 100%;
 		}
 
 		.mesh-featured-image-trash,
@@ -321,6 +359,12 @@
 	.mesh-featured-image-choose {
 		height: inherit;
 		line-height: 80px;
+	}
+
+	@media #{$mesh-medium-only} {
+		width: 100%;
+		clear: both;
+		margin-top: 1rem;
 	}
 }
 
@@ -340,6 +384,37 @@
 
 		&:before {
 			line-height: $input_height;
+		}
+	}
+
+	.mesh-update-status-container {
+		display: inline-block;
+		position: relative;
+
+		.saved-status-icon {
+			background-color: $green;
+			border-radius: 100%;
+			position: absolute;
+			top: 0;
+			right: 0;
+			height: 20px;
+			width: 20px;
+			margin: 4px 10px 0;
+			opacity: 0;
+			transition: opacity .5s;
+
+			&:before {
+				color: white;
+				position: absolute;
+				top: 1px;
+				left: -1px;
+			}
+
+			&.is-active {
+				display: block;
+				opacity: 1;
+				transition: opacity 0s;
+			}
 		}
 	}
 }
@@ -434,11 +509,11 @@
 
 	.column-slider {
 		position: absolute;
-	    left: 0px;
-	    right: 0px;
-	    top: 0px;
+	    left: 0;
+	    right: 0;
+	    top: 0;
+	  	bottom: 0;
 	    height: auto;
-	    bottom: 0px;
 	    border: none;
 
 	    &[data-mesh-blocks="2"] {

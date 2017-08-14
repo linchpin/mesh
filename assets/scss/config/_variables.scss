@@ -18,6 +18,7 @@ $block_padding:   10px;
 
 // 02. Colors
 $blue:         #009fd4;
+$green:        #46B450;
 $darkest-grey: #666;
 $dark-grey:    #ccc;
 $grey:         #dedede;
@@ -40,3 +41,4 @@ $global_easing: ease-out;
 // 04. Breakpoints
 $mesh-small: 'screen and (max-width: 1023px)';
 $mesh-medium-up: 'screen and (min-width: 1024px)';
+$mesh-medium-only: 'screen and (min-width: 1024px) and (max-width: 1279px)';

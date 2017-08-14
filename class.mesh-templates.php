@@ -34,7 +34,7 @@ class Mesh_Templates {
 	 */
 	function __construct() {
 		add_action( 'init', array( $this, 'init' ) );
-		add_action( 'save_post', array( $this, 'save_post', ), 20, 2 ); // This saving should happen later to make sure our data is available.
+		add_action( 'save_post', array( $this, 'save_post' ), 20, 2 ); // This saving should happen later to make sure our data is available.
 
 		// Columns.
 		add_action( 'manage_mesh_template_posts_custom_column', array( $this, 'add_layout_column' ), 10, 2 );
@@ -112,8 +112,8 @@ class Mesh_Templates {
 			'rewrite' => false,
 		) );
 
-		// Using an extra variable for the array to support PHP 5.4
-		$mesh_post_types_array = get_option( 'mesh_post_types' );
+		// Using an extra variable for the array to support PHP 5.4.
+		$mesh_post_types_array = get_option( 'mesh_post_types', array() );
 		$mesh_post_types = array_keys( $mesh_post_types_array );
 		$available_post_types = array_merge( array( 'mesh_template' ), $mesh_post_types );
 
@@ -152,8 +152,9 @@ class Mesh_Templates {
 				'menu_name'         => __( 'Mesh Template Type', 'mesh' ),
 			),
 			'show_ui' => LINCHPIN_MESH_DEBUG_MODE,
-			'query_var' => true,
 			'rewrite' => false,
+			'show_in_nav_menus' => false,
+			'show_in_rest' => false,
 			'show_admin_column' => false, // @todo this should be added back in, in a later version.
 		) );
 	}
@@ -184,11 +185,11 @@ class Mesh_Templates {
 			return;
 		}
 
-		if ( ! isset( $_POST['mesh_content_sections_nonce'] ) || ! wp_verify_nonce( $_POST['mesh_content_sections_nonce'], 'mesh_content_sections_nonce' )  ) {
+		if ( ! isset( $_POST['mesh_content_sections_nonce'] ) || ! wp_verify_nonce( sanitize_key( wp_unslash( $_POST['mesh_content_sections_nonce'] ) ), 'mesh_content_sections_nonce' ) ) { // WPCS: input var okay.
 			return;
 		}
 
-		if ( empty( $_POST['mesh-sections'] ) ) {
+		if ( empty( $_POST['mesh-sections'] ) ) { // WPCS: input var okay.
 			return;
 		}
 
@@ -197,17 +198,16 @@ class Mesh_Templates {
 		if ( ( defined( 'DOING_AJAX' ) && DOING_AJAX ) ) {
 			$mesh_layout_post_meta = get_post_meta( $post_id, '_mesh_template_layout', true );
 
-			$single_mesh_section = (array) $_POST['mesh-sections'];
+			$single_mesh_section = (array) wp_unslash( $_POST['mesh-sections'] ); // WPCS: input var okay, sanitization ok.
 
 			$first_mesh_section_key = key( $single_mesh_section );
-			$single_mesh_section = array_shift( $_POST['mesh-sections'] );
+			$single_mesh_section = array_shift( wp_unslash( $_POST['mesh-sections'] ) ); // WPCS: input var okay. sanitization ok.
 
 			$mesh_layout_preview = $this->update_template_single_section_preview( $first_mesh_section_key, $mesh_layout_post_meta, $single_mesh_section );
 
 		} else {
-			$mesh_layout_preview = $this->create_template_preview( $_POST['mesh-sections'] );
+			$mesh_layout_preview = $this->create_template_preview( wp_unslash( $_POST['mesh-sections'] ) ); // WPCS: input var okay, sanitization ok.
 		}
-
 
 		if ( ! empty( $mesh_layout_preview ) ) {
 			update_post_meta( $post_id, '_mesh_template_layout', $mesh_layout_preview );
@@ -231,8 +231,9 @@ class Mesh_Templates {
 	 *
 	 * @since 1.1
 	 * @param int    $section_id       ID of section.
-	 * @param array  $mesh_layout_meta Array of our sections within our template
-	 * @param object $section          Single object of our new build.
+	 * @param array  $mesh_layout_meta Array of our sections within our template.
+	 * @param object $section_data     Single object of our new build.
+	 * @return array
 	 */
 	function update_template_single_section_preview( $section_id, $mesh_layout_meta, $section_data ) {
 
@@ -243,12 +244,12 @@ class Mesh_Templates {
 			$blocks = $section_data['blocks'];
 		}
 
-		$mesh_layout_meta[ sanitize_title( 'row-' . $section_id ) ]['blocks'] = array(); // reset
+		$mesh_layout_meta[ sanitize_title( 'row-' . $section_id ) ]['blocks'] = array(); // Reset blocks array.
 
 		foreach ( $blocks as $block_id => $block_data ) {
 			$block = get_post( (int) $block_id );
 
-			if ( empty( $block ) || 'publish' != get_post_status( $block ) || 'mesh_section' !== $block->post_type || $section_id !== $block->post_parent ) {
+			if ( empty( $block ) || 'publish' !== get_post_status( $block ) || 'mesh_section' !== $block->post_type || $section_id !== $block->post_parent ) {
 				continue;
 			}
 
@@ -269,9 +270,10 @@ class Mesh_Templates {
 	 *
 	 * Used in the post list and the add new section process
 	 *
-	 * $sections array Our sections to build out.
+	 * @param array $sections Our sections to build out.
 	 *
 	 * @since 1.1
+	 * @return array
 	 */
 	function create_template_preview( $sections ) {
 		$count = 0;
@@ -303,14 +305,14 @@ class Mesh_Templates {
 			}
 
 			foreach ( $blocks as $block_id => $block_data ) {
-				$block = get_post( (int) $block_id );
+				$block = get_post( intval( $block_id ) );
 
-				if ( empty( $block ) || 'publish' != get_post_status( $block ) || 'mesh_section' !== $block->post_type || $section->ID !== $block->post_parent ) {
+				if ( empty( $block ) || 'publish' !== get_post_status( $block ) || 'mesh_section' !== $block->post_type || $section->ID !== $block->post_parent ) {
 					continue;
 				}
 
-				$offset = (int) $section_data['blocks'][ sanitize_title( $block_id ) ]['offset'];
-				$columns = (int) $section_data['blocks'][ sanitize_title( $block_id ) ]['columns'];
+				$offset = intval( $section_data['blocks'][ sanitize_title( $block_id ) ]['offset'] );
+				$columns = intval( $section_data['blocks'][ sanitize_title( $block_id ) ]['columns'] );
 
 				$mesh_layout[ sanitize_title( 'row-' . $section_id ) ]['blocks'][] = array(
 					'columns' => $columns - $offset,
@@ -366,19 +368,17 @@ class Mesh_Templates {
 	function add_layout_column( $column, $post_id ) {
 
 		switch ( $column ) {
-			case 'mesh_template_uses' :
-
+			case 'mesh_template_uses':
 				$template_post = get_post( $post_id, array(
-					'field'	=> 'slug',
+					'field' => 'slug',
 				) );
 
 				$template_usage = get_term_by( 'slug', $template_post->post_name, 'mesh_template_usage' );
 
-				esc_html_e( (int) $template_usage->count );
+				echo esc_html( (int) $template_usage->count );
 
 				break;
-			case 'layout' :
-
+			case 'layout':
 				$layout = get_post_meta( $post_id, '_mesh_template_layout', true );
 
 				if ( empty( $layout ) ) {
@@ -415,14 +415,11 @@ function mesh_get_templates( $return_type = 'array', $statuses = array( 'publish
 	) );
 
 	switch ( $return_type ) {
-		case 'query' :
+		case 'query':
 			return $template_query;
-			break;
-
-		case 'array' :
-		default      :
+		case 'array':
+		default:
 			return $template_query->posts;
-			break;
 	}
 }
 

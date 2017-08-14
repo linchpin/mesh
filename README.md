@@ -66,9 +66,18 @@ function add_multiple_content_sections( $the_content ) {
 * `add_filter( 'mesh_loop_end', $section_html_content );` 
 
 ##### Filters added 1.1.3
-* `add_filter( 'mesh_default_bg_size', $size );`   
+* `add_filter( 'mesh_default_bg_size', $size );`
+
+##### Filters added 1.1.5
+* `add_filter( 'mesh_tiny_mce_before_init', $init_options )`
+* `add_filter( 'mesh_tiny_mce_options', $options )`
+
+##### Actions added 1.1.5
+* `add_action( 'mesh_section_add_before_misc_actions' )`
+* `add_action( 'mesh_section_add_misc_actions_before' )`
+* `add_action( 'mesh_section_add_misc_actions_after' )`
 
 ### Recognition
 
-* We're utilizing the [PHP Markdown Lib](https://github.com/michelf/php-markdown) by Michel Fortin @michelf
+* We're utilizing the [Parsedown Lib](https://github.com/erusev/parsedown) by Emanuil Rusev @erusev
 * Found some help along the way [draggable editors](https://github.com/alleyinteractive/wordpress-fieldmanager/blob/master/js/richtext.js#L58-L95) by @danielbachhuber

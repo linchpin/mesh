@@ -1,20 +1,95 @@
-##Change Log For Mesh
+#Change Log For Mesh
 
-## [1.1.4] - 2016-12-23
+## [1.2.0] - 2017-8-04
+
+### Fixes
+ - Remove trailing whitespace from row class
+ - Remove checks for equalizer in the 1 column template
+ - Fixed a bug where reordering would stop that section from working properly until refresh.
+ - Fixed a bug where collapsed sections could not be toggled open after a new section was added
+ - Fixed a bug when excluding Mesh template related taxonomies from the generated sitemap
+ - Fixed a bug where section and block background images were displayed before "update" / "publish"
+ - Controls within Sections and Columns/Blocks are now extendable for developers.
+ - More security hardening for potential XSS and CSRF.
+ 
+### Added
+ - Added support for Yoast SEO page analysis
+ - Added support for scripts within urls within TinyMCE
+ - Added support for duplicating sections of a post using "Duplicate Post" Plugin
+ - Added support for duplicating sections of a post using "Post Duplicator" Plugin
+ 
+### Updated
+ - WordPress Coding Coding Standards
+ - A bunch of little things under the hood you probably wont notice
+
+## [1.1.7] - 2017-6-12
+
+ - Confirmed 4.8 compatibility
+ - Fix for issue within "content" being replaced when it shouldn't be
+ - Fix for duplicated sections not applying the proper date.
+
+## [1.1.6] - 2017-4-10
 
 ### Fixed
- - Selected background images were not displaying within admin until refresh.
+ - Fixed undefined index `foundation_version`.
+ - Fix bug for `.row` max-width being set to `rem-calc(1200)`
+ - Fix issue within visual editors within blocks. The html was being saved instead of the raw data. wpautop filter should still be applied if available.
+ - Hot fix bug with Foundation interchange conflict
+ - Setup Code Climate and Code Climate test coverage reporting.
+ - Fix PHP warnings when retrieving `mesh_post_types` when it is not yet set.
+ - Include mesh.js.map in Grunt build
+
+### Added
+ - Introduce a `CONTRIBUTING.md` file.
+ - Add a `.travis.yml` file to automate our unit tests.
+ - Add `addtextdomain` task to the Grunt configuration.
+ - Add `JSON` files to Code Climate grading.
+ - Add `node_modules` folder to the `.gitignore`.
+
+### Updated
+ - Update unit test install scripts.
+ - Changed `esc_attr_e()` and `esc_html_()` calls to `echo esc_attr()` and
+ - `echo esc_html()` when containing a variable.
+ - Remove `makepot` task from the Grunt configuration.
+ - Exclude the `Michelf` library from Code Climate scanning.
+ - Remove `languages` folder.
+ - Replace `Michelf` library with `Parsedown`
+
+## [1.1.5] - 2017-2-6
+
+### Fixed
+ - Fixed equalize options should not show if the section is only 1 column wide.
+ - Fixed some minor typos.
+ - Fixed minor display issue that occurred when removing all Mesh sections on a post.
+
+### Added
+ - Ability to filter `mesh_tiny_mce_before_init` to allow even more extended option filtering
+ - Default support for interchange using Mesh even if your theme isn't built on Foundation
+ - Actions mesh_section_add_before_misc_actions and mesh_section_add_misc_actions for more customization.
+ - Ability to preview sections that are not published yet.
+
+### Updated
+ - Mesh templates default to "starter" mesh_template_type upon creation
+
+## [1.1.4] - 2016-12-21
+
+### Fixed
+ - Selected/uploaded background images were not displaying within admin until refresh.
  - Fixed Mesh Template order consistenty when closing.
  - Fixed block resizing was broken in some instances.
+ - Fixed Mesh titles displaying outside of their container if the title is too long
+
+### Added
+ - Window will now scroll to the newest block when adding a new section.
 
 ## [1.1.3] - 2016-11-17
 
 ### Fixed
  - Interchange on section and block background images
  - Fixed minor typo in the previous changelog
- 
+
 ### Added
- - Exclude mesh template taxonomies from being added to the WordPress SEO sitemap.xml
+ - Exclude Mesh template taxonomies from being added to the WordPress SEO sitemap.xml
  - Equalizer minimum breakpoint support for Foundation 6
  - The ability to select which version of Foundation your theme is using (Defaults to Foundation 5)
  - `mesh-background` custom image size (1920 x 1080) by default.
@@ -48,7 +123,7 @@
  - Better "in progress and busy" state of page building.
  - New Welcome message on Mesh Templates Post List to help guide users
  - Initial implementation for documentation generation.
- 
+
 ### Fixed
  - Typo in Mesh settings text field utility method.
  - Offset now displays properly within Post Edit screen on page load.
@@ -61,11 +136,11 @@
  - Fixed When going from more to less columns you can now trash unused columns. (Thanks for the find @kelter)
  - Some formatting issues in the readme.
  - If you added a section then immediately tried to resize a JS error would occur to do aria checks.
- 
+
 ### Updated
  - Some localization strings needed sprucing up (old MCS references).
  - Some style updates (notifications, tighted up soe visuals for consistency).
- 
+
 ## [1.0.5] - 2016-08-08
 
 ### Fixed

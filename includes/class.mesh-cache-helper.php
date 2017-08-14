@@ -25,12 +25,13 @@ class Mesh_Cache_Helper {
 
 	/**
 	 * Get prefix for use with wp_cache_set. Allows all cache in a group to be invalidated at once.
+	 *
 	 * @param  string $group
 	 * @return string
 	 */
 	public static function get_cache_prefix( $group ) {
-		// Get cache key - uses cache key wc_orders_cache_prefix to invalidate when needed
-		$prefix = wp_cache_get( 'wc_' . $group . '_cache_prefix', $group );
+		// Get cache key - uses cache key mesh_section_cache_prefix to invalidate when needed.
+		$prefix = wp_cache_get( 'mesh_' . $group . '_cache_prefix', $group );
 
 		if ( false === $prefix ) {
 			$prefix = 1;
@@ -100,14 +101,14 @@ class Mesh_Cache_Helper {
 	}
 
 	/**
-	 * Get the page name/id for a WC page.
-	 * @param  string $wc_page
+	 * Get the page name/id for a Mesh page.
+	 * @param  string $mesh_page
 	 * @return array
 	 */
 	private static function get_page_uris( $mesh_page ) {
 		$mesh_page_uris = array();
 
-		if ( ( $page_id = wc_get_page_id( $mesh_page ) ) && $page_id > 0 && ( $page = get_post( $page_id ) ) ) {
+		if ( ( $page_id = mesh_get_page_id( $mesh_page ) ) && $page_id > 0 && ( $page = get_post( $page_id ) ) ) {
 			$mesh_page_uris[] = 'p=' . $page_id;
 			$mesh_page_uris[] = '/' . $page->post_name . '/';
 		}

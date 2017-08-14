@@ -14,21 +14,25 @@
 if ( ! function_exists( 'add_action' ) ) {
 	exit;
 }
+
+$is_active = '';
+
+if ( ! empty( $default_template ) ) {
+	$is_active = ' active';
+}
 ?>
-<div class="mesh-template-layout<?php if ( ! empty( $default_template ) ) : ?> active<?php endif; ?>">
+<div class="mesh-template-layout <?php echo esc_attr( $is_active ); ?>">
 	<?php foreach ( $layout as $key => $row ) : ?>
 		<div class="mesh-row">
 			<?php
 			$offsets_available = 9;
-
 			$section_blocks = $row['blocks'];
-
-			$default_block_columns = 12 / count( $section_blocks );
-
-			// Loop through the blocks needed for this template.
+			$block_count = count( $section_blocks );
+			$default_block_columns = 12 / $block_count;
 			$block_increment = 0;
 
-			while ( $block_increment < count( $section_blocks ) ) :
+			// Loop through the blocks needed for this template.
+			while ( $block_increment < $block_count ) :
 
 				if ( empty( $section_blocks[ $block_increment ] ) ) {
 					continue;
@@ -52,19 +56,37 @@ if ( ! function_exists( 'add_action' ) ) {
 
 				?>
 
-				<div class="mesh-section-block mesh-columns-<?php esc_attr_e( $block_columns ); ?> columns">
+				<div class="mesh-section-block mesh-columns-<?php echo esc_attr( $block_columns ); ?> columns">
 					<div class="block">
-						<div class="block-content <?php if ( 4 !== $section_blocks && $block_offset ) { esc_attr_e( ' mesh-has-offset mesh-offset-' . $block_offset ); } ?>">
+						<?php
+
+						$offset = '';
+
+						if ( 4 !== $section_blocks && $block_offset ) {
+							$offset = ' mesh-has-offset mesh-offset-' . $block_offset;
+						}
+						?>
+						<div class="block-content <?php esc_attr( $offset ); ?>">
 						</div>
 					</div>
 				</div>
-				<?php $block_increment++;
-			endwhile; ?>
+				<?php
+				$block_increment++;
+			endwhile;
+			?>
 		</div>
 	<?php endforeach; ?>
 
 	<?php if ( ! empty( $mesh_template_selectable ) && ! empty( $mesh_template_id ) && ! empty( $mesh_template_title ) ) : ?>
-		<label for="mesh_template_<?php esc_attr_e( $mesh_template_id ); ?>"><?php esc_html_e( $mesh_template_title ); ?></label>
-		<input id="mesh_template_<?php esc_attr_e( $mesh_template_id ); ?>" class="mesh-template" type="radio" name="mesh_template" value="<?php esc_attr_e( $mesh_template_id ); ?>" <?php if ( ! empty( $default_template ) ) : ?> checked<?php endif; ?> />
+		<label for="mesh_template_<?php echo esc_attr( $mesh_template_id ); ?>"><?php echo esc_html( $mesh_template_title ); ?></label>
+		<?php
+
+		$checked = '';
+
+		if ( ! empty( $default_template ) ) {
+			$checked = 'checked';
+		}
+		?>
+		<input id="mesh_template_<?php echo esc_attr( $mesh_template_id ); ?>" class="mesh-template" type="radio" name="mesh_template" value="<?php echo esc_attr( $mesh_template_id ); ?>" <?php echo esc_attr( $checked ); ?> />
 	<?php endif; ?>
 </div>

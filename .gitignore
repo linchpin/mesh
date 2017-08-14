@@ -1,0 +1,5 @@
+build/*
+vendor
+docs
+composer.lock
+node_modules

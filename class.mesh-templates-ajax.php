@@ -32,9 +32,9 @@ class Mesh_Templates_AJAX {
 	}
 
 	/**
-	 * Apply our template changes across all posts that reference this template
-     *
-     * @since 1.1
+	 * Apply our template changes across all posts that reference this template.
+	 *
+	 * @since 1.1
 	 */
 	function apply_template_changes() {
 
@@ -49,14 +49,14 @@ class Mesh_Templates_AJAX {
 		$current_template = get_post( $post_id );
 
 		if ( empty( $current_template ) ) {
-		    wp_die( -1 );
-        }
+			wp_die( -1 );
+		}
 
 		$available_post_types = get_option( 'mesh_post_types', array() );
 
 		$template_references = new WP_Query( array(
-            'post_type' => $available_post_types,
-			'tax_query' => array(
+			'post_type' => $available_post_types,
+			'tax_query' => array( // WPCS: slow query ok.
 				'relation' => 'AND',
 				array(
 					'taxonomy' => 'mesh_template_types',
@@ -72,10 +72,10 @@ class Mesh_Templates_AJAX {
 		) );
 
 		if ( ! $template_references->have_posts() ) {
-		    wp_die( -1 );
-        }
+			wp_die( -1 );
+		}
 
-		/**
+		/*
 		 * @todo loop through all of our posts and get all the child sections.
          *
   		 * while( $template_references->have_posts() ) {
@@ -88,8 +88,8 @@ class Mesh_Templates_AJAX {
 
 	/**
 	 * Close our welcome panel if the user doesn't want to see it anymore.
-     *
-     * @since 1.1
+	 *
+	 * @since 1.1
 	 */
 	function update_welcome_panel() {
 
@@ -99,10 +99,10 @@ class Mesh_Templates_AJAX {
 			wp_die( - 1 );
 		}
 
-		update_user_meta( get_current_user_id(), 'show_mesh_template_panel', empty( $_POST['visible'] ) ? 0 : 1 );
+		update_user_meta( get_current_user_id(), 'show_mesh_template_panel', empty( $_POST['visible'] ) ? 0 : 1 ); // input var okay, WPCS slow query ok.
 
 		wp_die( 1 );
-    }
+	}
 
 	/**
 	 * Select a template from the mesh_template post type
@@ -115,7 +115,7 @@ class Mesh_Templates_AJAX {
 
 		check_ajax_referer( 'mesh_choose_template_nonce', 'mesh_choose_template_nonce' );
 
-		if ( ! current_user_can( 'edit_post', (int) $_POST['mesh_post_id'] ) ) {
+		if ( ! isset( $_POST['mesh_post_id'] ) || ! current_user_can( 'edit_post', intval( $_POST['mesh_post_id'] ) ) ) { // WPCS: input var okay.
 			wp_die();
 		}
 
@@ -187,14 +187,18 @@ class Mesh_Templates_AJAX {
 	function choose_template() {
 		check_ajax_referer( 'mesh_choose_template_nonce', 'mesh_choose_template_nonce' );
 
-		$post_id            = ( isset( $_POST['mesh_post_id'] ) && '' !== $_POST['mesh_post_id'] ) ? (int) $_POST['mesh_post_id'] : 0;
-		$mesh_template_id   = ( isset( $_POST['mesh_template_id'] ) ) ? (int) $_POST['mesh_template_id'] : 0;
-		$mesh_template_type = ( isset( $_POST['mesh_template_type'] ) ) ? sanitize_title( $_POST['mesh_template_type'] ) : '';
+		$post_id            = ( isset( $_POST['mesh_post_id'] ) && '' !== $_POST['mesh_post_id'] ) ? absint( $_POST['mesh_post_id'] ) : 0; // Input var okay.
+		$mesh_template_id   = ( isset( $_POST['mesh_template_id'] ) ) ? absint( $_POST['mesh_template_id'] ) : 0; // Input var okay.
+		$mesh_template_type = ( isset( $_POST['mesh_template_type'] ) ) ? sanitize_title( $_POST['mesh_template_type'] ) : ''; // WPCS: Input var okay, sanitization ok.
 
 		if ( ! current_user_can( 'edit_post', $mesh_template_id ) || empty( $post_id ) || empty( $mesh_template_id ) ) {
 			wp_die( -1 );
 		}
-		if ( $mesh_template = get_post( $mesh_template_id ) ) {
+
+		$mesh_template = get_post( $mesh_template_id );
+
+		if ( ! empty( $mesh_template ) ) {
+
 			// Apply template type to our taxonomy that tracks template usage.
 			wp_set_object_terms( $post_id, array( $mesh_template->post_name ), 'mesh_template_usage', false );
 
@@ -206,6 +210,9 @@ class Mesh_Templates_AJAX {
 
 			if ( in_array( $mesh_template_type, $template_terms, true ) ) {
 				wp_set_object_terms( $post_id, $mesh_template_type, 'mesh_template_types', false );
+			} else {
+				// Default make a theme a starter.
+				wp_set_object_terms( $post_id, 'starter', 'mesh_template_types', false );
 			}
 
 			$mesh_templates_duplicate = new Mesh_Templates_Duplicate();
@@ -221,29 +228,29 @@ class Mesh_Templates_AJAX {
 		exit;
 	}
 
-    /**
+	/**
 	 * This should delete the entire child set of Mesh Sections.
-     *
-     * @since 1.1
-     */
+	 *
+	 * @since 1.1
+	 */
 	function remove_template() {
 		check_ajax_referer( 'mesh_choose_template_nonce', 'mesh_choose_template_nonce' );
 
-		$post_id = ( isset( $_POST['mesh_post_id'] ) && '' !== $_POST['mesh_post_id'] ) ? (int) $_POST['mesh_post_id'] : 0;
+		$post_id = ( isset( $_POST['mesh_post_id'] ) && '' !== $_POST['mesh_post_id'] ) ? absint( $_POST['mesh_post_id'] ) : 0; // Input var okay.
 
 		$sections = mesh_get_sections( $post_id );
 	}
 
 	/**
 	 * Remove "Reference" term from template's parent Post.
-     * This allows for the mesh section layout, order and sizing to be editable.
-     *
-     * @since 1.1
+	 * This allows for the mesh section layout, order and sizing to be editable.
+	 *
+	 * @since 1.1
 	 */
 	function change_template_type() {
 		check_ajax_referer( 'mesh_choose_template_nonce', 'mesh_choose_template_nonce' );
 
-		$post_id = ( isset( $_POST['mesh_post_id'] ) && '' !== $_POST['mesh_post_id'] ) ? (int) $_POST['mesh_post_id'] : 0;
+		$post_id = ( isset( $_POST['mesh_post_id'] ) && '' !== $_POST['mesh_post_id'] ) ? absint( $_POST['mesh_post_id'] ) : 0; // Input var okay.
 
 		if ( ! current_user_can( 'edit_post', $post_id ) || empty( $post_id ) ) {
 			wp_die( -1 );
@@ -256,9 +263,9 @@ class Mesh_Templates_AJAX {
 		if ( ! empty( $current_post ) ) {
 			Mesh::edit_page_form( $current_post );
 			wp_die();
-        }
+		}
 
-        wp_die( -1 );
+		wp_die( -1 );
 	}
 }
 

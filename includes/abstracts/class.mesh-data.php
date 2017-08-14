@@ -1,6 +1,7 @@
 <?php
 /**
- * Beginning of a CRUD system implemented in WooCommerce 2.6 & 2.7
+ * Beginning of a CRUD system
+ *
  * Adapted from...
  * https://woocommerce.wordpress.com/2016/10/27/the-new-crud-classes-in-woocommerce-2-7/
  */
@@ -12,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Abstract WC Data Class
+ * Abstract Mesh Data Class
  *
  * Implemented by classes using the same CRUD(s) pattern.
  *
@@ -25,30 +26,35 @@ abstract class Mesh_Data {
 
 	/**
 	 * ID for this object.
+	 *
 	 * @var int
 	 */
 	protected $id = 0;
 
 	/**
 	 * Core data for this object. Name value pairs (name + default value).
+	 *
 	 * @var array
 	 */
 	protected $data = array();
 
 	/**
 	 * Core data changes for this object.
+	 *
 	 * @var array
 	 */
 	protected $changes = array();
 
 	/**
 	 * This is false until the object is read from the DB.
+	 *
 	 * @var bool
 	 */
 	protected $object_read = false;
 
 	/**
 	 * This is the name of this object type.
+	 *
 	 * @var string
 	 */
 	protected $object_type = 'data';
@@ -57,18 +63,21 @@ abstract class Mesh_Data {
 	 * Extra data for this object. Name value pairs (name + default value).
 	 * Used as a standard way for sub classes (like product types) to add
 	 * additional information to an inherited class.
+	 *
 	 * @var array
 	 */
 	protected $extra_data = array();
 
 	/**
 	 * Set to _data on construct so we can track and reset data if needed.
+	 *
 	 * @var array
 	 */
 	protected $default_data = array();
 
 	/**
 	 * Contains a reference to the data store for this class.
+	 *
 	 * @var object
 	 */
 	protected $data_store;
@@ -76,18 +85,21 @@ abstract class Mesh_Data {
 	/**
 	 * Stores meta in cache for future reads.
 	 * A group must be set to to enable caching.
+	 *
 	 * @var string
 	 */
 	protected $cache_group = '';
 
 	/**
 	 * Stores additonal meta data.
+	 *
 	 * @var array
 	 */
 	protected $meta_data = null;
 
 	/**
 	 * Default constructor.
+	 *
 	 * @param int|object|array $read ID to load from the DB (optional) or already queried data.
 	 */
 	public function __construct( $read = 0 ) {
@@ -106,6 +118,7 @@ abstract class Mesh_Data {
 
 	/**
 	 * Returns the unique ID for this object.
+	 *
 	 * @return int
 	 */
 	public function get_id() {
@@ -115,8 +128,8 @@ abstract class Mesh_Data {
 	/**
 	 * Delete an object, set the ID to 0, and return result.
 	 *
-	 * @param  bool $force_delete
-	 * @return bool result
+	 * @param  bool $force_delete Force the deletion of data.
+	 * @return bool result        Sucess|Fail.
 	 */
 	public function delete( $force_delete = false ) {
 		if ( $this->data_store ) {
@@ -148,18 +161,27 @@ abstract class Mesh_Data {
 
 	/**
 	 * Change data to JSON format.
+	 *
 	 * @return string Data in JSON format.
 	 */
 	public function __toString() {
-		return json_encode( $this->get_data() );
+		return wp_json_encode( $this->get_data() );
 	}
 
 	/**
 	 * Returns all data for this object.
+	 *
 	 * @return array
 	 */
 	public function get_data() {
-		return array_merge( array( 'id' => $this->get_id() ), $this->data, array( 'meta_data' => $this->get_meta_data() ) );
+		return array_merge(
+			array(
+				'id' => $this->get_id(),
+			),
+			$this->data, array(
+				'meta_data' => $this->get_meta_data(),
+			)
+		);
 	}
 
 	/**
@@ -202,6 +224,7 @@ abstract class Mesh_Data {
 
 	/**
 	 * Get Meta Data by Key.
+	 *
 	 * @since  1.2.0
 	 * @param  string $key
 	 * @param  bool $single return first found meta with key, or all with $key
@@ -230,6 +253,7 @@ abstract class Mesh_Data {
 
 	/**
 	 * Set all meta data from array.
+	 *
 	 * @since 1.2.0
 	 * @param array $data Key/Value pairs
 	 */
@@ -269,6 +293,7 @@ abstract class Mesh_Data {
 
 	/**
 	 * Update meta data by key or ID, if provided.
+	 *
 	 * @since 2.6.0
 	 * @param  string $key
 	 * @param  string $value
@@ -289,6 +314,7 @@ abstract class Mesh_Data {
 
 	/**
 	 * Delete meta data.
+	 *
 	 * @since 1.2.0
 	 * @param array $key Meta key
 	 */
@@ -303,6 +329,7 @@ abstract class Mesh_Data {
 
 	/**
 	 * Delete meta data.
+	 *
 	 * @since 1.2.0
 	 * @param int $mid Meta ID
 	 */
@@ -365,6 +392,7 @@ abstract class Mesh_Data {
 
 		if ( ! $cache_loaded ) {
 			$raw_meta_data   = $this->data_store->read_meta( $this );
+
 			if ( $raw_meta_data ) {
 				foreach ( $raw_meta_data as $meta ) {
 					$this->meta_data[] = (object) array(
@@ -374,7 +402,7 @@ abstract class Mesh_Data {
 					);
 				}
 
-				if ( ! empty( $this->cache_group ) &&  ! empty( $cache_key ) ) {
+				if ( ! empty( $this->cache_group ) && ! empty( $cache_key ) ) {
 					wp_cache_set( $cache_key, $this->meta_data, $this->cache_group );
 				}
 			}
@@ -383,6 +411,7 @@ abstract class Mesh_Data {
 
 	/**
 	 * Update Meta Data in the database.
+	 *
 	 * @since 1.2.0
 	 */
 	public function save_meta_data() {
@@ -411,6 +440,7 @@ abstract class Mesh_Data {
 
 	/**
 	 * Set ID.
+	 *
 	 * @param int $id
 	 */
 	public function set_id( $id ) {
@@ -428,6 +458,7 @@ abstract class Mesh_Data {
 
 	/**
 	 * Set object read property.
+	 *
 	 * @param boolean $read
 	 */
 	public function set_object_read( $read = true ) {
@@ -436,6 +467,7 @@ abstract class Mesh_Data {
 
 	/**
 	 * Get object read property.
+	 *
 	 * @return boolean
 	 */
 	public function get_object_read() {

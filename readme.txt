@@ -1,9 +1,9 @@
-=== Mesh - Multiple Content Sections ===
-Contributors: linchpin_agency, aware, maxinacube, desrosj, nateallen, ebeltram, lulu5588
+=== Mesh - Page Builder ===
+Contributors: linchpin_agency, aware, maxinacube, desrosj, nateallen, ebeltram, lulu5588, fischfood
 Tags: linchpin, sections, content, page builder, page builder plugin, design, wysiwyg, home page builder, template builder, layout builder, responsive, landing page builder, website builder, site builder, drag and drop builder, editor, page layout, visual editor, foundation, bootstrap
 Requires at least: 4.0
-Tested up to: 4.6.1
-Stable tag: 1.1.3
+Tested up to: 4.8
+Stable tag: 1.2.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -59,60 +59,24 @@ Or
 1. Click **Add New** under Plugins in your WordPress install.
 1. Click **Upload Plugin** and select the zip file containing the plugin
 
-
-== Frequently Asked Questions ==
-
-= Can I use Mesh on other post types? =
-Any post type that is publicly available within your WordPress install can be enabled to support Mesh. Under **Settings** > **Mesh** you can see all post types available to you. Only Pages are Mesh enabled by default.
-
-= Can I add my own controls? =
-We're working on the ability to tie in extra controls to Columns and Sections.
-
-= Adding a function to your page template(s) =
-`
-<?php
-if ( function_exists( 'mesh_display_sections' ) ) {
-    mesh_display_sections();
-}
-?>
- `
-
-= Using add_filter to append content to "the_content" =
-`
-<?php
-add_action( 'the_content', 'add_multiple_content_sections' );
-function add_multiple_content_sections( $the_content ) {
-    $the_content .= mesh_get_sections();
-    return $the_content;
-} ?>
-`
-
-= Using add_filter to set change default size for background images =
-`
-<?php
-add_filter( 'mesh_default_bg_size', 'hatch_mesh_default_bg_size' );
-
-function hatch_mesh_default_bg_size( $size ) {
-    // default $size = 'mesh-background' will fall back to 'full'.
-
-	return 'large';
-}
-
-?>
-`
-
 = Available Filters =
-* `add_filter( 'mesh_content_css', get_stylesheet_directory_uri() . '/css/admin-editor.css' , 'editor_path' ),`
+* `add_filter( 'mesh_content_css', get_stylesheet_directory_uri() . '/css/admin-editor.css' , 'editor_path' );`
 * `add_filter( 'mesh_section_templates', $section_templates );`
 * `add_filter( 'mesh_tabs', $tabs );`
 * `add_filter( 'mesh_css_mode', $css_mode );` Allow filtering of available css_mode options
 * `add_filter( 'mesh_allowed_html', array_merge_recursive( $post_allowed, $mesh_allowed );` Filter allowed HTML within MCS
 * `add_filter( 'mesh_admin_pointers-' . $screen_id, array() );`
-
 * `add_filter( 'mesh_default_bg_size', $size );`
 * `add_filter( 'mesh_large_bg_size', $size );`
 * `add_filter( 'mesh_medium_bg_size', $size );`
 * `add_filter( 'mesh_xlarge_bg_size', $size );`
+* `add_filter( 'mesh_tiny_mce_before_init', $init_options );`
+* `add_filter( 'mesh_tiny_mce_options', $mesh_tiny_mce_options );`
+
+= Available Actions =
+* `add_action( 'mesh_section_add_before_misc_actions' )`
+* `add_action( 'mesh_section_add_misc_actions_before' )`
+* `add_action( 'mesh_section_add_misc_actions_after' )`
 
 == Screenshots ==
 
@@ -122,19 +86,68 @@ function hatch_mesh_default_bg_size( $size ) {
 
 == Changelog ==
 
-= 1.1.4=
-* Fixed selected background images were not displaying within admin until refresh.
-* Fixed Mesh Template order consistenty when closing.
-* Fixed Block resizing was broken in some instances.
+= Unreleased
+* Fixed a bug where reordering would stop that section from working properly until refresh.
+* Fixed a bug where collapsed sections could not be toggled open after a new section was added
+* Add support for Yoast SEO Page Content Analysis
+* Fixed a bug when excluding Mesh template related taxonomies from the generated sitemap
+* Fixed a bug where section and block background images were displayed before "update" / "publish"
+* Controls within Sections and Columns/Blocks are now extendable for developers.
+* Added support for scripts within urls within TinyMCE
+* Added support for duplicating sections when duplicating a post using Duplicate Post Plugin
+* Added support for duplicating sections when duplicating a post using Post Duplicator Plugin
 
-= 1.1.3=
+= 1.1.7 =
+* Confirmed 4.8 compatibility
+* Fix for issue within "content" being replaced when it shouldn't be
+* Fix for duplicated sections not applying the proper date.
+
+= 1.1.6 =
+* Fixed undefined index `foundation_version`.
+* Fix bug for `.row` max-width being set to `rem-calc(1200)`
+* Fix issue within visual editors within blocks. The html was being saved instead of the raw data. wpautop filter should still be applied if available.
+* Hot fix bug with Foundation interchange conflict
+* Setup Code Climate and Code Climate test coverage reporting.
+* Fixed PHP warnings when retrieving `mesh_post_types` when it is not yet set.
+* Include mesh.js.map in Grunt build
+* Introduce a `CONTRIBUTING.md` file.
+* Added a `.travis.yml` file to automate our unit tests.
+* Added `addtextdomain` task to the Grunt configuration.
+* Added `JSON` files to Code Climate grading.
+* Added `node_modules` folder to the `.gitignore`.
+* Update unit test install scripts.
+* Changed `esc_attr_e()` and `esc_html_()` calls to `echo esc_attr()` and
+* `echo esc_html()` when containing a variable.
+* Remove `makepot` task from the Grunt configuration.
+* Exclude the `Michelf` library from Code Climate scanning.
+* Remove `languages` folder.
+* Replace Michelf library with Parsedown
+
+= 1.1.5 =
+* Fixed equalize options should not show if the section is only 1 column wide.
+* Fixed some minor typos.
+* Fixed minor display issue that occurred when removing all Mesh sections on a post.
+* Added ability to filter `mesh_tiny_mce_before_init` to allow even more extended option filtering
+* Added default support for interchange using Mesh even if your theme isn't built on Foundation
+* Added actions mesh_section_add_before_misc_actions and mesh_section_add_misc_actions for more customization.
+* Added ability to preview sections that are not published yet.
+* Updated templates to default to "starter" mesh_template_type taxonomy term
+
+= 1.1.4 =
+* Fixed selected/upload background images were not displaying within admin until refresh.
+* Fixed Mesh Template order consistently when closing.
+* Fixed Block resizing was broken in some instances.
+* Fixed Mesh titles displaying outside of their container if the title is too long
+* Added Window will now scroll to the newest block when adding a new section.
+
+= 1.1.3 =
 * Added exclusion for Mesh Template taxonomies when using WordPress / Yoast SEO
 * Added the ability to select which version of Foundation your theme is using (Defaults to Foundation 5)
 * Added mesh-background custom image size (1920 x 1080) by default.
 * Added filters to define what images sizes will be used by interchange.
 * Fixed interchange on section and block background images
 
-= 1.1.2=
+= 1.1.2 =
 * Fixed compatability issue with PHP 5.4 (Thanks @missmuttly anf @tecbrat)
 
 = 1.1.1 =
