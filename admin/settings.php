@@ -30,12 +30,21 @@ if ( ! function_exists( 'add_action' ) ) {
  */
 require_once LINCHPIN_MESH___PLUGIN_DIR . '/lib/parsedown/Parsedown.php';
 
-$Parsedown = new Parsedown();
+$parsedown = new Parsedown();
 ?>
-<div class="wrap" id="mesh-settings">
-    <h2><?php echo esc_html( get_admin_page_title() ); ?> </h2>
+<div class="mesh-wrap" id="mesh-settings">
+	<div class="table">
+		<img class="mesh-logo table-cell" src="<?php echo esc_url( LINCHPIN_MESH___PLUGIN_URL . 'assets/images/mesh-tagline-logo.png' ); ?>" alt="<?php esc_attr_e( 'Mesh', 'mesh' ); ?>" />
+		<h3 class="com-button table-cell">
+		<?php
+			// translators: %1$s: Mesh Website URL %2$s: Visit CTA. WPCS: xss ok.
+			printf( wp_kses_post( __( '<a href="%1$s" class="button" target="_blank">%2$s</a>', 'mesh' ) ), esc_url( 'https://meshplugin.com' ), esc_html__( 'Visit MeshPlugin.com', 'mesh' ) ); // WPCS: xss ok.
+		?>
+		</h3>
+		<div class="clearfix"></div>
+	</div>
 	<?php settings_errors( self::$plugin_name . '-notices' ); ?>
-    <h2 class="nav-tab-wrapper">
+	<h2 class="nav-tab-wrapper negative-bg">
 		<?php
 		foreach ( $tabs as $tab_slug => $tab_name ) :
 
@@ -47,47 +56,40 @@ $Parsedown = new Parsedown();
 			$active = ( $active_tab === $tab_slug ) ? ' nav-tab-active' : '';
 
 			?>
-            <a href="<?php echo esc_url( $tab_url ); ?>" title="<?php echo esc_attr( $tab_name ); ?>" class="nav-tab <?php echo esc_attr( $active ); ?>">
+			<a href="<?php echo esc_url( $tab_url ); ?>" title="<?php echo esc_attr( $tab_name ); ?>" class="nav-tab <?php echo esc_attr( $active ); ?>">
 				<?php echo esc_html( $tab_name ); ?>
-            </a>
+			</a>
 		<?php endforeach; ?>
-    </h2>
+	</h2>
 
-    <div id="poststuff">
-        <div id="post-body" class="metabox-holder">
-            <div id="postbox-container" class="postbox-container">
+	<div id="poststuff">
+		<div id="post-body" class="metabox-holder">
+			<div id="postbox-container" class="postbox-container">
 				<?php if ( 'settings' === $active_tab ) : ?>
-					<?php include_once( LINCHPIN_MESH___PLUGIN_DIR . '/admin/settings-meta-box-display.php' ); ?>
+					<div id="settings">
+						<?php include_once( LINCHPIN_MESH___PLUGIN_DIR . '/admin/settings-meta-box-display.php' ); ?>
+					</div>
 				<?php elseif ( 'changelog' === $active_tab ) : ?>
+					<div class="changelog">
 					<?php
 					$changelog_path = LINCHPIN_MESH___PLUGIN_DIR . '/CHANGELOG.md';
 
 					if ( file_exists( $changelog_path ) ) {
 						$changelog = file_get_contents( $changelog_path, true );
-						echo $Parsedown->text( $changelog ); // WPCS: ok.
-					}
-					?>
-				<?php elseif ( 'faq' === $active_tab ) : ?>
-					<?php
-					$readme_path = LINCHPIN_MESH___PLUGIN_DIR . '/README.md';
 
-					if ( file_exists( $readme_path ) ) {
-						$readme = file_get_contents( $readme_path, true );
-						echo $Parsedown->text( $readme ); // WPCS: ok.
+						// WPCS: sanitization ok.
+						echo wp_kses_post( $parsedown->text( $changelog ) );
 					}
 					?>
-					<?php elseif ( 'linchpin' === $active_tab ) : ?>
-                    <h2><?php esc_html_e( 'Linchpin is a Digital Agency that specializes in WordPress', 'mesh' ); ?></h2>
-										<p><?php printf( __( 'We loving giving back to the WordPress community through Plugins, Tools/Utilities and through Organzing <a href="%s">WordPress Rhode Island</a> and WordCamp Rhode Island', 'mesh' ), esc_url( 'https://meetup.com/WordPressRI/' ) ); ?></p>
-                    <p><?php printf( __( 'Check our our <a href="%s" target="_blank">site</a>. or visit our various profiles below or come say hi at a local event.', 'mesh' ), esc_url( 'https://linchpin.agency' ) ); ?></p>
-                    <dl>
-                        <dd><a href="https://jetpack.pro/profile/linchpin/" target="_blank">https://jetpack.pro/profile/linchpin/</a></dd>
-                        <dd><a href="https://twitter.com/linchpin_agency" target="_blank">https://twitter.com/linchpin_agency</a></dd>
-                        <dd><a href="https://www.facebook.com/linchpinagency" target="_blank">https://www.facebook.com/linchpinagency</a></dd>
-                        <dd><a href="https://www.instagram.com/linchpinagency/" target="_blank">https://www.instagram.com/linchpinagency</a></dd>
-                    </dl>
+					</div>
+				<?php elseif ( 'about' === $active_tab ) : ?>
+					<?php include_once( LINCHPIN_MESH___PLUGIN_DIR . '/admin/settings-about-mesh.php' ); ?>
+				<?php elseif ( 'new' === $active_tab ) : ?>
+					<?php include_once( LINCHPIN_MESH___PLUGIN_DIR . '/admin/settings-whats-new.php' ); ?>
+				<?php else : ?>
+					<?php do_action( 'mesh_setting_' . $active_tab ); ?>
 				<?php endif; ?>
-            </div>
-        </div>
-    </div>
+			</div>
+		</div>
+	</div>
 </div>

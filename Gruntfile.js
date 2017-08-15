@@ -92,6 +92,7 @@ module.exports = function(grunt) {
                     'assets/js/admin-mesh-blocks.js',
                     'assets/js/admin-mesh-templates.js',
                     'assets/js/admin-mesh-core.js',
+                    'assets/js/integrations/*.js',
                     'assets/js/mesh-frontend.js',
                     'assets/js/mesh-frontend-interchange.js'
                 ],
@@ -103,7 +104,7 @@ module.exports = function(grunt) {
         copy: {
             main: {
                 files: [
-                    {expand: true, src: ['admin/*'], dest: 'build/mesh/trunk/'},
+                    {expand: true, src: ['admin/**'], dest: 'build/mesh/trunk/'},
                     {expand: true, src: ['assets/**', '!assets/scss/**'], dest: 'build/mesh/trunk/'},
                     {expand: true, src: ['lib/**'], dest: 'build/mesh/trunk/'},
                     {expand: true, src: ['templates/**'], dest: 'build/mesh/trunk/'},
@@ -122,4 +123,4 @@ module.exports = function(grunt) {
     grunt.registerTask( 'scripts', [ 'concat', 'uglify' ] );
     grunt.registerTask( 'build', [ 'addtextdomain', 'scripts', 'sass', 'copy' ] );
     grunt.registerTask( 'default', [ 'scripts', 'sass', 'watch' ] );
-}
+};

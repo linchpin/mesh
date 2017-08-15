@@ -18,21 +18,6 @@ if ( ! function_exists( 'add_action' ) ) {
 class Mesh_Upgrades {
 
 	/**
-	 * Store our available post types.
-	 *
-	 * @since 1.1.0
-	 * @var $post_types;
-	 */
-	private $post_types;
-
-	/**
-	 * Get all of our available post types
-	 */
-	private function get_post_types() {
-
-	}
-
-	/**
 	 * Mesh_Upgrades constructor.
 	 */
 	function __construct() {
@@ -63,13 +48,20 @@ class Mesh_Upgrades {
 		if ( version_compare( $GLOBALS['mesh_current_version'], '1.1.7', '<' ) ) {
 			$this->version_1_1_7();
 		}
+
+		if ( version_compare( $GLOBALS['mesh_current_version'], '1.2.0', '<' ) ) {
+			$this->version_1_2_0();
+		}
 	}
 
 	/**
 	 * Upgrade to version 1.0 by ensuring the default post types are selected.
 	 */
 	function version_1_0() {
-		if ( $settings = get_option( 'mesh_post_types' ) ) {
+
+		$settings = get_option( 'mesh_post_types' );
+
+		if ( ! empty( $settings ) ) {
 			return;
 		}
 
@@ -84,7 +76,7 @@ class Mesh_Upgrades {
 		foreach ( $this->post_types as $post_type ) {
 			$post_type_object = get_post_type_object( $post_type );
 
-			if ( in_array( $post_type, array( 'revision', 'nav_menu_item', 'attachment' ) ) || ! $post_type_object->public ) {
+			if ( in_array( $post_type, array( 'revision', 'nav_menu_item', 'attachment' ), true ) || ! $post_type_object->public ) {
 				continue;
 			}
 
@@ -151,11 +143,19 @@ class Mesh_Upgrades {
 	}
 
 	/**
-	 * Nothing to update here, just the version to 1.1.6
+	 * Nothing to update here, just the version to 1.1.7
 	 */
 	function version_1_1_7() {
 		update_option( 'mesh_version', '1.1.7' );
 		$GLOBALS['mesh_current_version'] = '1.1.7';
+	}
+
+	/**
+	 * Updated the installation process for 1.2 to be more informative.
+	 */
+	function version_1_2_0() {
+		update_option( 'mesh_version', '1.2' );
+		$GLOBALS['mesh_current_version'] = '1.2';
 	}
 }
 
