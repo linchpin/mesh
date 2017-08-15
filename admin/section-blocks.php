@@ -59,7 +59,7 @@ if ( ! function_exists( 'add_action' ) ) {
 				<div class="block" id="mesh-block-editor-<?php echo esc_attr( $blocks[ $block_increment ]->ID ); ?>" data-mesh-block-id="<?php echo esc_attr( $blocks[ $block_increment ]->ID ); ?>">
 					<div class="block-header">
 						<div class="mesh-row mesh-row-title mesh-block-title-row">
-                            <?php
+							<?php
 							$offsets_available = $block_columns - 3;
 
 							if ( $block_offset > $offsets_available ) {
