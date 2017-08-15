@@ -1,4 +1,4 @@
-![Mesh Banner Image](https://linchpin.agency/wp-content/uploads/2016/10/mesh-banner-github.jpg)
+![Mesh Banner Image](https://linchpin.agency/wp-content/uploads/2017/04/banner-1544x500.png)
 # Mesh - Multiple Content Sections
 
 A WordPress page builder, simplified. Get the most flexibility to display content by adding multiple content sections within Pages, Posts, or Custom Post Types.
