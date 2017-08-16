@@ -13,9 +13,10 @@ if ( ! function_exists( 'add_action' ) ) {
 	exit;
 }
 
+$total_blocks = mesh_get_section_blocks( $section->ID, array( 'publish', 'draft' ) );
 ?>
 <?php
-if ( ! empty( $selected_template ) && count( $blocks ) > $templates[ $selected_template ]['blocks'] ) :
+if ( ! empty( $selected_template ) && count( $total_blocks ) > $templates[ $selected_template ]['blocks'] ) :
 ?>
 	<?php if ( empty( $mesh_notifications['moreblocks'] ) ) : ?>
 		<div id="mesh-warnings-<?php echo esc_attr( $section->ID ); ?>" class="description notice notice-info below-h2 mesh-row" data-type="moreblocks">
