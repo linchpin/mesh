@@ -189,6 +189,9 @@ mesh.blocks = function ( $ ) {
                     post_data.blocks[ block_id.toString() ] = column_value;
                 }
             } );
+
+
+			self.rerender_blocks( $columns.find('.wp-editor-area') );
         },
 
         /**
@@ -572,7 +575,21 @@ mesh.blocks = function ( $ ) {
                     return false;
                 }
             });
+        },
+
+        /**
+         * Get our cached content
+         *
+         * @since 1.2
+         * @param block_id
+         * @return string
+         */
+        get_block_cache : function( block_id ) {
+            // get the block ID from the local cache
+
+            return ''; // cached content for the block
         }
+
     };
 
 } ( jQuery );

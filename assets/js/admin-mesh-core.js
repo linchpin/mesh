@@ -945,6 +945,9 @@ mesh.admin = function ( $ ) {
 			event.preventDefault();
 			event.stopPropagation();
 
+            var	$current_section   = $(this).closest( '.mesh-section' ),
+				form_data = $current_section.parents( 'form' ).serialize();
+
 			var $this = $(this),
 				$postbox = $this.parents('.mesh-postbox'),
 				section_id = $postbox.attr( 'data-mesh-section-id' );
@@ -955,8 +958,10 @@ mesh.admin = function ( $ ) {
 				action: 'mesh_trash_hidden_blocks',
 				mesh_post_id: mesh_data.post_id,
 				mesh_section_id: section_id,
-				mesh_choose_layout_nonce: mesh_data.choose_layout_nonce
-			}, function( response){
+				mesh_section_data: form_data,
+				mesh_choose_layout_nonce: mesh_data.choose_layout_nonce,
+                mesh_save_section_nonce: mesh_data.save_section_nonce
+			}, function( response ){
 				if ( '1' === response ) {
 
 					var $notice = $postbox.find('.description.notice');
