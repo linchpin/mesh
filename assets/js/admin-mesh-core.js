@@ -268,6 +268,22 @@ mesh.admin = function ( $ ) {
 				return false;
 			}
 
+			var $tinymce_editors = blocks.get_tinymce_editors( $section );
+
+            $tinymce_editors.each(function() {
+
+                var tinyMCE_content = '',
+                    editorID = $(this).prop('id'),
+                    editor = tinymce.get( editorID );
+
+                // Make sure we have an editor and we aren't in text view.
+                if ( editor && ! editor.hidden ) {
+                    tinyMCE_content = editor.getContent();
+                }
+
+                blocks.set_block_cache( editorID, tinyMCE_content );
+			});
+
 			$spinner.addClass('is-active');
 
 			self.disable_controls( $section );
@@ -290,6 +306,7 @@ mesh.admin = function ( $ ) {
                     // @todo this should be done more efficiently later: Needed for Firefox but will be fixed
                     // once consolidated. Can't clear html before removing or tinymce throws an error
                     $tinymce_editors.each(function () {
+
                         if (parseInt(tinymce.majorVersion) >= 4) {
                             tinymce.execCommand('mceRemoveEditor', false, $(this).prop('id'));
                         }

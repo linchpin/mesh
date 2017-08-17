@@ -11,7 +11,8 @@ mesh.blocks = function ( $ ) {
     var $body = $('body'),
         // Instance of our block controller
         self,
-        admin;
+        admin,
+        block_cache = {};
 
     return {
 
@@ -276,6 +277,8 @@ mesh.blocks = function ( $ ) {
 
                         $block_content.html(block_html);
 
+
+
                         // This needs to be initialized, so we need to get the options from the proto
                         if ( proto_id && typeof tinyMCEPreInit.mceInit[ proto_id ] !== 'undefined' ) {
                             mce_options = $.extend( true, {}, tinyMCEPreInit.mceInit[ proto_id ] );
@@ -298,6 +301,7 @@ mesh.blocks = function ( $ ) {
 
                     try {
                         if ( 'html' !== mesh.blocks.mode_enabled( this ) ) {
+
                             if ( parseInt( tinymce.majorVersion ) >= 4 ) {
                                 tinymce.execCommand( 'mceRemoveEditor', false, editor_id );
                             }
@@ -337,8 +341,31 @@ mesh.blocks = function ( $ ) {
                         console.log( e );
                     }
 
+                    console.log( self.get_block_cache( editor_id ) );
+
                     // @todo This is kinda hacky. See about switching this out @aware
                     $block_content.find('.switch-tmce').trigger('click');
+
+                    /*
+                     * Cache
+                     */
+                    if ( typeof tinymce !== 'undefined' ) {
+                        var editor = tinymce.get( editor_id ),
+                            cached_block_content = self.get_block_cache(editor_id);
+
+                        console.log( editor_id );
+                        console.log( editor );
+
+                        // Make sure we have an editor and we have cache for it.
+                        // Once the cache is
+                        if ( editor && ! editor.hidden && cached_block_content ) {
+                            editor.setContent(cached_block_content);
+
+                            self.delete_block_cache(editor_id);
+                        } else {
+                            editor.val( cached_block_content );
+                        }
+                    }
                 }
             });
 
@@ -578,16 +605,61 @@ mesh.blocks = function ( $ ) {
         },
 
         /**
-         * Get our cached content
+         * Save block cached content when changes are made within a block.
+         *
+         * @since 1.2
+         * @param block_id
+         * @param cache_content
+         * @return boolean
+         */
+        set_block_cache : function( block_id, cache_content ) {
+
+            if( ! block_id || ! cache_content ) {
+                return false;
+            }
+
+            block_cache[ block_id ] = cache_content;
+
+            return true;
+        },
+
+        /**
+         * Get block cached content
          *
          * @since 1.2
          * @param block_id
          * @return string
          */
         get_block_cache : function( block_id ) {
-            // get the block ID from the local cache
 
-            return ''; // cached content for the block
+            if( block_cache[ block_id ] ) {
+                return block_cache[ block_id ]; // get the block ID from the local cache.
+            }
+
+            return ''; // cached content for the block.
+        },
+
+        /**
+         * Get all the editors within a container/section.
+         *
+         * @since 1.2
+         * @param object $container
+         */
+        get_tinymce_editors : function( $container ) {
+            return $container.find('.wp-editor-area');
+        },
+
+        /**
+         * Delete specific block cached content
+         *
+         * @since 1.2
+         * @param block_id
+         * @return string
+         */
+        delete_block_cache : function( block_id ) {
+            if( block_cache[ block_id ] ) {
+                delete block_cache[block_id];
+            }
         }
 
     };
