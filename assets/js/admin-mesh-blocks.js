@@ -359,7 +359,9 @@ mesh.blocks = function ($) {
 								self.delete_block_cache(editor_id);
 							}
 						} else {
-							editor.val(cached_block_content);
+							if(cached_block_content) {
+								editor.val(cached_block_content);
+							}
 						}
 					}
 				}
