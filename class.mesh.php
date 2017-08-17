@@ -591,7 +591,7 @@ class Mesh {
 				}
 
 				// Save Column Offset.
-				$offset = (int) $section_data['blocks'][ $block_id ]['offset'];
+				$offset = absint( $section_data['blocks'][ $block_id ]['offset'] );
 
 				if ( empty( $offset ) ) {
 					delete_post_meta( $block_id, '_mesh_offset' );

@@ -201,8 +201,8 @@ class Mesh_AJAX {
 	function mesh_trash_hidden_blocks() {
 		check_ajax_referer( 'mesh_choose_layout_nonce', 'mesh_choose_layout_nonce' );
 
-		if ( isset( $_POST['mesh_section_id'] ) ) { // Input var okay.
-			$section_id = absint( $_POST['mesh_section_id'] ); // Input var okay.
+		if ( isset( $_POST['mesh_section_id'] ) ) { // WPCS: Input var okay.
+			$section_id = absint( $_POST['mesh_section_id'] ); // WPCS: Input var okay.
 		} else {
 			wp_die( -1 );
 		}
@@ -211,9 +211,16 @@ class Mesh_AJAX {
 			wp_die( -1 );
 		}
 
+		if ( ! isset( $_POST['mesh_section_data'] ) ) { // WPCS: Input var okay.
+			wp_die( -1 );
+		}
+
+		// Save our section before we trash anything.
+		$this->mesh_save_section();
+
 		$selected_template = get_post_meta( $section_id, '_mesh_template', true );
 
-		$templates     = mesh_get_templates();
+		$templates     = mesh_locate_template_files();
 		$number_needed = $templates[ $selected_template ]['blocks'];
 		$blocks        = mesh_get_section_blocks( $section_id, array(
 			'publish',
