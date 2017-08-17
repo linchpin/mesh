@@ -25,7 +25,7 @@ We have added a few hooks to extend the functionality of Mesh and will continue 
 
 = Features =
 * Add unlimited Content Sections on a page by page basis
-* Easy to Choose and manage Column layout for each Section
+* Easy to Choose and manage Column layout for each Section as you build your pages
 * Use the Visual or Text editor to create your content in each Column
 * Add media, shortcodes into any Column just like "The Editor"
 * All content is searchable in SEO and within your website.
