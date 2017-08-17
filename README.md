@@ -5,6 +5,8 @@ A WordPress page builder, simplified. Get the most flexibility to display conten
 
 [![Build Status](https://travis-ci.org/linchpin/mesh.svg?branch=master)](https://travis-ci.org/linchpin/mesh) [![Code Climate](https://codeclimate.com/github/linchpin/mesh/badges/gpa.svg)](https://codeclimate.com/github/linchpin/mesh)
 
+**Latest Release 1.2** on August 17th 2017. You can get the stable release in the master branch or install from [wordpress.org/plugins/mesh](https://wordpress.org/plugins/mesh)
+
 ## What is Mesh?
 
 Mesh is the easiest way to add additional content to your Page, Post, or Custom Post Type in a responsive grid system. Adding a Mesh Section creates a new row on your page below the default WordPress content. Each Section can be divided into 1 to 4 Columns, providing Visual/Text editors for each Column. Give your Sections and Columns titles, drag to rearrange, add background images to Columns or an entire Section, then Publish your Section or save it as a Draft until your content is just right.
@@ -13,7 +15,7 @@ Efficient and unobtrusive, Mesh was designed to simply extend the functionality 
 
 #### Responsive Out-of-the-Box
 
-Mesh is currently built off of [Foundation](http://foundation.zurb.com)'s grid but will soon have support for Bootstrap and custom frameworks as well. All grid styles can also be easily disabled.
+Mesh is currently utilizes [Foundation](http://foundation.zurb.com)'s grid but will soon have support for Bootstrap and custom frameworks as well. All grid styles can also be easily disabled.
 
 #### Familiar and Easy to Use
 
@@ -35,7 +37,7 @@ As of 1.2 you can now add your own controls to the system. Documentation coming 
 Yes
 
 #### For more information
-Please visit https://meshplugin.com/knowledgebase/
+Please visit [Our knowlebase](https://meshplugin.com/knowledgebase/)
 
 ### Recognition
 
