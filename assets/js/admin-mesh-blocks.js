@@ -341,8 +341,6 @@ mesh.blocks = function ( $ ) {
                         console.log( e );
                     }
 
-                    console.log( self.get_block_cache( editor_id ) );
-
                     // @todo This is kinda hacky. See about switching this out @aware
                     $block_content.find('.switch-tmce').trigger('click');
 
@@ -352,9 +350,6 @@ mesh.blocks = function ( $ ) {
                     if ( typeof tinymce !== 'undefined' ) {
                         var editor = tinymce.get( editor_id ),
                             cached_block_content = self.get_block_cache(editor_id);
-
-                        console.log( editor_id );
-                        console.log( editor );
 
                         // Make sure we have an editor and we have cache for it.
                         // Once the cache is
