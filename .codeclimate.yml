@@ -15,7 +15,7 @@ exclude_paths:
 - "assets/js/admin-mesh.min.js"
 - "assets/js/mesh.js"
 - "assets/js/mesh.min.js"
-- "assets/js/mesh-frontned-interchange.js"
+- "assets/js/mesh-frontend-interchange.js"
 
 engines:
   csslint:
