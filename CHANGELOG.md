@@ -1,6 +1,6 @@
 #Change Log For Mesh
 
-## [1.2.0] - 2017-8-04
+## [1.2.0] - 2017-8-17
 
 ### Fixes
  - Remove trailing whitespace from row class
@@ -11,16 +11,23 @@
  - Fixed a bug where section and block background images were displayed before "update" / "publish"
  - Controls within Sections and Columns/Blocks are now extendable for developers.
  - More security hardening for potential XSS and CSRF.
- 
+ - Fixed a bug where trashing unused blocks was more aggressive than it should be. Simma down nah.
+ - Fixed a pesky bug what would delete your content if you changed column count before saving.
+  - A bunch of little things under the hood you probably wont notice
+  
 ### Added
- - Added support for Yoast SEO page analysis
- - Added support for scripts within urls within TinyMCE
+ - First time users will now have an improved onboarding process.
+ - Existing users will now be presented with a notification to view *"What's new"*
+ - Added support for Yoast SEO page analysis.
+ - Added support for scripts within urls within TinyMCE.
  - Added support for duplicating sections of a post using "Duplicate Post" Plugin
  - Added support for duplicating sections of a post using "Post Duplicator" Plugin
- 
+ - First implementation of block caching layer.
+
 ### Updated
  - WordPress Coding Coding Standards
- - A bunch of little things under the hood you probably wont notice
+ - Improved build process.
+ - Improved code analysis process within codeclimate
 
 ## [1.1.7] - 2017-6-12
 

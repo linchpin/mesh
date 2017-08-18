@@ -251,7 +251,7 @@ function mesh_locate_template_files() {
  * @param bool  $closed  Display the section closed by default.
  * @param bool  $return  Return the value instead of echo.
  *
- * @return mixed|void|string Prints the markup of the admin panel
+ * @return mixed|bool|string Prints the markup of the admin panel
  */
 function mesh_add_section_admin_markup( $section, $closed = false, $return = false ) {
 	if ( ! is_admin() ) {

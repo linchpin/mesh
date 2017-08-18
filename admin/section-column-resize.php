@@ -23,7 +23,7 @@ if ( 0 === $section_blocks ) {
 
 $block_sizes = array();
 
-if ( (int) $section_blocks > 1 ) {
+if ( $section_blocks > 1 ) {
 
 	$default_block_columns = 12 / $section_blocks; // @todo should 12 be filterable to create different grid sizes?
 
@@ -37,13 +37,13 @@ if ( (int) $section_blocks > 1 ) {
 		// Get how wide our column is.
 		// If no width is defined fall back to the default for that template.
 		// If no blocks are defined fall back to a 12 column.
-		if ( empty( $block_columns ) || 1 === $templates[ $selected_template ]['blocks'] ) {
+		if ( empty( $block_columns ) || 1 === absint( $templates[ $selected_template ]['blocks'] ) ) {
 			$block_columns = $default_block_columns;
 		}
 
-		$block_sizes[] = (int) $block_columns;
+		$block_sizes[] = intval( $block_columns );
 
-		$block_increment ++;
+		$block_increment++;
 	}
 }
 

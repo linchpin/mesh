@@ -31,7 +31,7 @@ $safe_content = array(
 			<div class="gray-bg negative-bg versioninfo">
 				<div class="wrapper">
 					<h2 class="light-weight">
-						<?php printf( 'Mesh Version %s <span class="green-pipe">|</span> Released %s', esc_html( get_option( 'mesh_version' ) ), esc_html__( 'Aug 12, 2017' ) ); ?></h2>
+						<?php printf( 'Mesh Version %s <span class="green-pipe">|</span> Released %s', esc_html( get_option( 'mesh_version' ) ), esc_html__( 'Aug 17th, 2017', 'mesh' ) ); ?></h2>
 				</div>
 			</div>
 			<div class="wrapper">
@@ -142,8 +142,8 @@ $safe_content = array(
 
 					<div class="mesh-columns-6">
 						<div class="grey-box" data-equalizer-watch="">
-							<h3 class="bold no-margin"><?php esc_html_e( 'Tell Us What You Think' ); ?></h3>
-							<p><?php esc_html_e( 'How is Mesh working for you? We are always open to feedback and would love to hear about your experience with Mesh.' ); ?></p>
+							<h3 class="bold no-margin"><?php esc_html_e( 'Tell Us What You Think', 'mesh' ); ?></h3>
+							<p><?php esc_html_e( 'How is Mesh working for you? We are always open to feedback and would love to hear about your experience with Mesh.', 'mesh' ); ?></p>
 							<p class="no-margin">
 								<?php
 								// translators: %s review url.
@@ -159,7 +159,7 @@ $safe_content = array(
 				<div class="grey-box-container mesh-row">
 					<div class="mesh-columns-12">
 						<div class="grey-box">
-							<h3 class="bold inline"><?php esc_html_e( 'Follow Mesh! ' ); ?></h3>
+							<h3 class="bold inline"><?php esc_html_e( 'Follow Mesh! ', 'mesh' ); ?></h3>
 							<h3 class="inline light-weight">
 								<?php
 								// translators: %s Mesh Twitter.

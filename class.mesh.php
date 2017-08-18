@@ -97,7 +97,7 @@ class Mesh {
 
 		add_filter( 'get_edit_post_link', array( $this, 'get_edit_post_link' ), 10, 3 );
 
-		// @since 1.1.3 ok wpcs
+		// @since 1.1.3.
 		add_action( 'after_setup_theme', array( $this, 'after_theme_setup' ) );
 	}
 
@@ -591,7 +591,7 @@ class Mesh {
 				}
 
 				// Save Column Offset.
-				$offset = (int) $section_data['blocks'][ $block_id ]['offset'];
+				$offset = absint( $section_data['blocks'][ $block_id ]['offset'] );
 
 				if ( empty( $offset ) ) {
 					delete_post_meta( $block_id, '_mesh_offset' );
