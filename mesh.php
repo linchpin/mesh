@@ -36,13 +36,18 @@ define( 'LINCHPIN_MESH_DEBUG_MODE', false );
 
 $GLOBALS['mesh_current_version'] = get_option( 'mesh_version', '0.0' ); // Get our current Mesh Version.
 
+include_once 'includes/class.mesh-data-exception.php';
+include_once 'includes/class.mesh-cache-helper.php';
+include_once 'includes/abstracts/class-mesh-data.php';
+include_once 'includes/abstracts/class.mesh-section.php';
+
 include_once 'class.mesh-settings.php';
 include_once 'class.mesh-controls.php';
 include_once 'class.mesh-templates.php';
 include_once 'class.mesh-pointers.php';
 include_once 'class.mesh.php';
 include_once 'class.mesh-upgrades.php';
-include_once 'class.mesh-reponsive-grid.php';
+include_once 'class.mesh-responsive-grid.php';
 include_once 'class.mesh-integrations.php';
 
 if ( is_admin() ) {

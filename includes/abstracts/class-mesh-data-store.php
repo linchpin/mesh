@@ -4,6 +4,10 @@
  *
  * Adapted from...
  * https://woocommerce.wordpress.com/2016/10/27/the-new-crud-classes-in-woocommerce-2-7/
+ *
+ * @since 1.3
+ * @package Mesh
+ * @subpackage CRUD
  */
 
 namespace includes\abstracts;
@@ -15,7 +19,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Abstract Mesh Data Class
  *
- * Implemented by classes using the same CRUD(s) pattern.
+ * Implemented by classes using the same CRUD(s) pattern. This abstract should be pretty simplistic
+ * compared to something like WooCommerce. There aren't as many complexities in functionality.
+ *
+ * Store Child sections and blocks within a blog of post meta.
+ *
  *
  * @version  1.2.0
  * @package  Mesh/Abstracts
@@ -39,29 +47,13 @@ abstract class Mesh_Data {
 	protected $data = array();
 
 	/**
-	 * Core data changes for this object.
-	 *
-	 * @var array
-	 */
-	protected $changes = array();
-
-	/**
-	 * This is false until the object is read from the DB.
-	 *
-	 * @var bool
-	 */
-	protected $object_read = false;
-
-	/**
-	 * This is the name of this object type.
-	 *
 	 * @var string
 	 */
-	protected $object_type = 'data';
+	protected $data_type = 'data';
 
 	/**
 	 * Extra data for this object. Name value pairs (name + default value).
-	 * Used as a standard way for sub classes (like product types) to add
+	 * Used as a standard way for sub classes (like block types) to add
 	 * additional information to an inherited class.
 	 *
 	 * @var array
@@ -74,21 +66,6 @@ abstract class Mesh_Data {
 	 * @var array
 	 */
 	protected $default_data = array();
-
-	/**
-	 * Contains a reference to the data store for this class.
-	 *
-	 * @var object
-	 */
-	protected $data_store;
-
-	/**
-	 * Stores meta in cache for future reads.
-	 * A group must be set to to enable caching.
-	 *
-	 * @var string
-	 */
-	protected $cache_group = '';
 
 	/**
 	 * Stores additonal meta data.
@@ -107,16 +84,6 @@ abstract class Mesh_Data {
 	}
 
 	/**
-	 * Get the data store.
-	 *
-	 * @since 1.2.0
-	 * @return object
-	 */
-	public function get_data_store() {
-		return $this->data_store;
-	}
-
-	/**
 	 * Returns the unique ID for this object.
 	 *
 	 * @return int
@@ -132,12 +99,6 @@ abstract class Mesh_Data {
 	 * @return bool result        Sucess|Fail.
 	 */
 	public function delete( $force_delete = false ) {
-		if ( $this->data_store ) {
-			$this->data_store->delete( $this, array( 'force_delete' => $force_delete ) );
-			$this->set_id( 0 );
-			return true;
-		}
-		return false;
 	}
 
 	/**
@@ -146,17 +107,17 @@ abstract class Mesh_Data {
 	 * @return int
 	 */
 	public function save() {
-		if ( $this->data_store ) {
-			// Trigger action before saving to the DB. Use a pointer to adjust object props before save.
-			do_action( 'mesh_before_' . $this->object_type . '_object_save', $this, $this->data_store );
 
-			if ( $this->get_id() ) {
-				$this->data_store->update( $this );
-			} else {
-				$this->data_store->create( $this );
-			}
-			return $this->get_id();
+		// Trigger action before saving to the DB. Use a pointer to adjust object props before save.
+		do_action( 'mesh_before_' . $this->data_type . '_object_save', $this );
+
+		if ( $this->get_id() ) {
+			$this->update( $this );
+		} else {
+			$this->create( $this );
 		}
+
+		return $this->get_id();
 	}
 
 	/**
@@ -294,10 +255,10 @@ abstract class Mesh_Data {
 	/**
 	 * Update meta data by key or ID, if provided.
 	 *
-	 * @since 2.6.0
-	 * @param  string $key
-	 * @param  string $value
-	 * @param  int $meta_id
+	 * @since 1.3.0
+	 * @param  string     $key
+	 * @param  string     $value
+	 * @param  int|string $meta_id
 	 */
 	public function update_meta_data( $key, $value, $meta_id = '' ) {
 		$this->maybe_read_meta_data();
@@ -315,7 +276,7 @@ abstract class Mesh_Data {
 	/**
 	 * Delete meta data.
 	 *
-	 * @since 1.2.0
+	 * @since 1.3.0
 	 * @param array $key Meta key
 	 */
 	public function delete_meta_data( $key ) {
@@ -368,43 +329,19 @@ abstract class Mesh_Data {
 			return;
 		}
 
-		if ( ! $this->data_store ) {
-			return;
-		}
+		$raw_meta_data   = $this->data_store->read_meta( $this );
 
-		if ( ! empty( $this->cache_group ) ) {
-			$cache_key = Mesh_Cache_Helper::get_cache_prefix( $this->cache_group ) . 'object_meta_' . $this->get_id();
-		}
-
-		if ( ! $force_read ) {
-			if ( ! empty( $this->cache_group ) ) {
-
-				if ( ! empty( $cache_key ) ) {
-					$cached_meta = wp_cache_get( $cache_key, $this->cache_group );
-
-					if ( false !== $cached_meta ) {
-						$this->meta_data = $cached_meta;
-						$cache_loaded    = true;
-					}
-				}
+		if ( $raw_meta_data ) {
+			foreach ( $raw_meta_data as $meta ) {
+				$this->meta_data[] = (object) array(
+					'id'    => (int) $meta->meta_id,
+					'key'   => $meta->meta_key,
+					'value' => maybe_unserialize( $meta->meta_value ),
+				);
 			}
-		}
 
-		if ( ! $cache_loaded ) {
-			$raw_meta_data   = $this->data_store->read_meta( $this );
-
-			if ( $raw_meta_data ) {
-				foreach ( $raw_meta_data as $meta ) {
-					$this->meta_data[] = (object) array(
-						'id'    => (int) $meta->meta_id,
-						'key'   => $meta->meta_key,
-						'value' => maybe_unserialize( $meta->meta_value ),
-					);
-				}
-
-				if ( ! empty( $this->cache_group ) && ! empty( $cache_key ) ) {
-					wp_cache_set( $cache_key, $this->meta_data, $this->cache_group );
-				}
+			if ( ! empty( $this->cache_group ) && ! empty( $cache_key ) ) {
+				wp_cache_set( $cache_key, $this->meta_data, $this->cache_group );
 			}
 		}
 	}
@@ -429,10 +366,6 @@ abstract class Mesh_Data {
 			} else {
 				$this->data_store->update_meta( $this, $meta );
 			}
-		}
-
-		if ( ! empty( $this->cache_group ) ) {
-			Mesh_Cache_Helper::incr_cache_prefix( $this->cache_group );
 		}
 
 		$this->read_meta_data( true );

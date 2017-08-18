@@ -25,13 +25,13 @@ class Mesh_Data_Exception extends Exception {
 	/**
 	 * Setup exception.
 	 *
-	 * error code - machine-readable, e.g. `mesh_invalid_product_id`
-	 * error message - friendly message, e.g. 'Product ID is invalid'
-	 * http status code - proper HTTP status code to respond with, e.g. 400
+	 * Error code - machine-readable, e.g. `mesh_invalid_product_id`.
+	 * Error message - friendly message, e.g. 'Product ID is invalid'
+	 * HTTP status code - proper HTTP status code to respond with, e.g. 400
 	 *
-	 * @param string $error_code
-	 * @param string $error_message user-friendly translated error message
-	 * @param int $http_status_code HTTP status code to respond with
+	 * @param string $error_code       Error Code.
+	 * @param string $error_message    User-friendly translated error message.
+	 * @param int    $http_status_code HTTP status code to respond with.
 	 */
 	public function __construct( $error_code, $error_message, $http_status_code = 400 ) {
 		$this->error_code = $error_code;
@@ -40,6 +40,7 @@ class Mesh_Data_Exception extends Exception {
 
 	/**
 	 * Returns the error code
+	 *
 	 * @return string
 	 */
 	public function getErrorCode() {

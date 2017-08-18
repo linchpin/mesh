@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Legacy product contains all deprecated methods for this class and can be
  * removed in the future.
  */
-include_once( 'class.mesh-data.php' );
+include_once( 'class-mesh-data.php' );
 
 /**
  * Abstract Section Class
@@ -28,12 +28,6 @@ class Mesh_Section extends Mesh_Data {
 	protected $post_type = 'mesh_section';
 
 	/**
-	 * Cache group.
-	 * @var string
-	 */
-	protected $cache_group = 'sections';
-
-	/**
 	 * Stores product data.
 	 *
 	 * @var array
@@ -41,23 +35,12 @@ class Mesh_Section extends Mesh_Data {
 	protected $data = array(
 		'name'               => '',
 		'slug'               => '',
-		'date_created'       => '',
-		'date_modified'      => '',
 		'status'             => false,
 		'description'        => '',
 		'short_description'  => '',
 		'parent_id'          => 0,
 		'menu_order'         => 0,
-		'category_ids'       => array(),
-		'tag_ids'            => array(),
 	);
-
-	/**
-	 * Supported features such as 'ajax_add_to_cart'.
-	 *
-	 * @var array
-	 */
-	protected $supports = array();
 
 	/**
 	 * Get the product if ID is passed, otherwise the product is new and empty.
@@ -152,28 +135,6 @@ class Mesh_Section extends Mesh_Data {
 	}
 
 	/**
-	 * Get product created date.
-	 *
-	 * @since 1.2.0
-	 * @param  string $context
-	 * @return string Timestamp.
-	 */
-	public function get_date_created( $context = 'view' ) {
-		return $this->get_prop( 'date_created', $context );
-	}
-
-	/**
-	 * Get section modified date.
-	 *
-	 * @since 1.2.0
-	 * @param  string $context
-	 * @return string Timestamp.
-	 */
-	public function get_date_modified( $context = 'view' ) {
-		return $this->get_prop( 'date_modified', $context );
-	}
-
-	/**
 	 * Get section status.
 	 *
 	 * @since 1.2.0
@@ -193,17 +154,6 @@ class Mesh_Section extends Mesh_Data {
 	 */
 	public function get_description( $context = 'view' ) {
 		return $this->get_prop( 'description', $context );
-	}
-
-	/**
-	 * Get product short description.
-	 *
-	 * @since 1.2.0
-	 * @param  string $context
-	 * @return string
-	 */
-	public function get_short_description( $context = 'view' ) {
-		return $this->get_prop( 'short_description', $context );
 	}
 
 	/**
