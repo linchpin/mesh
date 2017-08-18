@@ -6,15 +6,16 @@ exclude_paths:
 - vendor/
 - bower_components/
 - js/vendor/
+- lib/
 - ".sass-cache/"
 - "*.min.css"
 - "*.min.js"
 - "**.css"
-- "js/assets/admin-mesh.js"
-- "js/assets/admin-mesh.min.js"
-- "js/assets/mesh.js"
-- "js/assets/mesh.min.js"
-- "lib/Michelf/"
+- "assets/js/admin-mesh.js"
+- "assets/js/admin-mesh.min.js"
+- "assets/js/mesh.js"
+- "assets/js/mesh.min.js"
+- "assets/js/mesh-frontend-interchange.js"
 
 engines:
   csslint:

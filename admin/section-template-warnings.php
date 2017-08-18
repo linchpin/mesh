@@ -13,10 +13,11 @@ if ( ! function_exists( 'add_action' ) ) {
 	exit;
 }
 
+$total_blocks = mesh_get_section_blocks( $section->ID, array( 'publish', 'draft' ) );
 ?>
 <?php
-
-if ( ! empty( $selected_template ) && count( $blocks ) > $templates[ $selected_template ]['blocks'] ) : ?>
+if ( ! empty( $selected_template ) && count( $total_blocks ) > $templates[ $selected_template ]['blocks'] ) :
+?>
 	<?php if ( empty( $mesh_notifications['moreblocks'] ) ) : ?>
 		<div id="mesh-warnings-<?php echo esc_attr( $section->ID ); ?>" class="description notice notice-info below-h2 mesh-row" data-type="moreblocks">
 			<div class="mesh-columns-8 columns">
@@ -24,9 +25,9 @@ if ( ! empty( $selected_template ) && count( $blocks ) > $templates[ $selected_t
 				<br/>
 				<?php esc_html_e( 'Increase the column number to access that content. Or...', 'mesh' ); ?>
 			</div>
-            <div class="mesh-columns-4 columns">
-                <a href="#" class="right button secondary mesh-trash-extra-blocks"><span class="dashicons dashicons-trash"></span><?php esc_html_e( 'Trash Hidden Columns', 'mesh' ); ?></a>
-            </div>
+			<div class="mesh-columns-4 columns">
+				<a href="#" class="right button secondary mesh-trash-extra-blocks"><span class="dashicons dashicons-trash"></span><?php esc_html_e( 'Trash Hidden Columns', 'mesh' ); ?></a>
+			</div>
 		</div>
 	<?php endif; ?>
 	<?php

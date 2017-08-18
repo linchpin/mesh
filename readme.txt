@@ -2,8 +2,8 @@
 Contributors: linchpin_agency, aware, maxinacube, desrosj, nateallen, ebeltram, lulu5588, fischfood
 Tags: linchpin, sections, content, page builder, page builder plugin, design, wysiwyg, home page builder, template builder, layout builder, responsive, landing page builder, website builder, site builder, drag and drop builder, editor, page layout, visual editor, foundation, bootstrap
 Requires at least: 4.0
-Tested up to: 4.8
-Stable tag: 1.1.7
+Tested up to: 4.8.1
+Stable tag: 1.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -25,13 +25,13 @@ We have added a few hooks to extend the functionality of Mesh and will continue 
 
 = Features =
 * Add unlimited Content Sections on a page by page basis
-* Choose a 1, 2, 3, or 4 Column layout for each Section
+* Easy to Choose and manage Column layout for each Section as you build your pages
 * Use the Visual or Text editor to create your content in each Column
-* Add media or forms into any Column
-* Section content is searchable
-* Sections work with [Jetpack's Related Posts](https://jetpack.com/support/related-posts/) feature!)
+* Add media, shortcodes into any Column just like "The Editor"
+* All content is searchable in SEO and within your website.
+* Work with [Jetpack's Related Posts](https://jetpack.com/support/related-posts/) feature!)
 * Drag to adjust Column widths
-* Drag to reorder Columns within a Section (horizontally) and Sections within your Page or Post (vertically)
+* Drag and drop reorder Columns within a Section (horizontally) and Sections within your Page or Post (vertically)
 * Add an offset before a Column (not available in 4 column layouts)
 * Add custom CSS classes to an entire Section or a specific Column (This works great in tandem with [Jetpack's Custom CSS](https://jetpack.com/support/custom-css/) feature!)
 * Click to apply built-in styling options like Collapse Padding, Push/Pull, and Equalize
@@ -40,6 +40,8 @@ We have added a few hooks to extend the functionality of Mesh and will continue 
 * Utilizes page editing functionality you are already familiar with in the WordPress admin
 * Visual cues in the editors help represent how your content will be displayed on the frontend (ie: column widths, gutters, offsets)
 * Enable Mesh Sections on Pages, Posts, and/or any custom post types within the settings (Pages enabled by default)
+* Mesh section content will be analyized by Yoast Page scoring
+* Works with popular page/post duplication plugins
 
 = Our clients love Mesh, so we thought everyone else might too! =
 We first developed Mesh as a tool for our clients to use so they could better self manage their content; in-turn saving them money on support hours. They love it so much we have continued to improve upon it, add new features, and are now proud to present it to the WordPress Community at large!
@@ -59,24 +61,9 @@ Or
 1. Click **Add New** under Plugins in your WordPress install.
 1. Click **Upload Plugin** and select the zip file containing the plugin
 
-= Available Filters =
-* `add_filter( 'mesh_content_css', get_stylesheet_directory_uri() . '/css/admin-editor.css' , 'editor_path' );`
-* `add_filter( 'mesh_section_templates', $section_templates );`
-* `add_filter( 'mesh_tabs', $tabs );`
-* `add_filter( 'mesh_css_mode', $css_mode );` Allow filtering of available css_mode options
-* `add_filter( 'mesh_allowed_html', array_merge_recursive( $post_allowed, $mesh_allowed );` Filter allowed HTML within MCS
-* `add_filter( 'mesh_admin_pointers-' . $screen_id, array() );`
-* `add_filter( 'mesh_default_bg_size', $size );`
-* `add_filter( 'mesh_large_bg_size', $size );`
-* `add_filter( 'mesh_medium_bg_size', $size );`
-* `add_filter( 'mesh_xlarge_bg_size', $size );`
-* `add_filter( 'mesh_tiny_mce_before_init', $init_options );`
-* `add_filter( 'mesh_tiny_mce_options', $mesh_tiny_mce_options );`
+= Available Hooks =
 
-= Available Actions =
-* `add_action( 'mesh_section_add_before_misc_actions' )`
-* `add_action( 'mesh_section_add_misc_actions_before' )`
-* `add_action( 'mesh_section_add_misc_actions_after' )`
+Learn more about available hooks (filters and actions) by visiting the mesh our [knowledgebase](https://meshplugin.com/knowledgebase_category/hooks-filters/).
 
 == Screenshots ==
 
@@ -85,6 +72,29 @@ Or
 3. Mesh templates and welcome.
 
 == Changelog ==
+
+= 1.2 =
+* Remove trailing whitespace from row class
+* Remove checks for equalizer in the 1 column template
+* Fixed a bug where reordering would stop that section from working properly until refresh.
+* Fixed a bug where collapsed sections could not be toggled open after a new section was added
+* Fixed a bug when excluding Mesh template related taxonomies from the generated sitemap
+* Fixed a bug where section and block background images were displayed before "update" / "publish"
+* Controls within Sections and Columns/Blocks are now extendable for developers.
+* More security hardening for potential XSS and CSRF.
+* Fixed a bug where trashing unused blocks was more aggressive than it should be. Simma down nah.
+* Fixed a pesky bug what would delete your content if you changed column count before saving.
+* A bunch of little things under the hood you probably wont notice
+* First time users will now have an improved onboarding process.
+* Existing users will now be presented with a notification to view *"What's new"*
+* Added support for Yoast SEO page analysis.
+* Added support for scripts within urls within TinyMCE.
+* Added support for duplicating sections of a post using "Duplicate Post" Plugin
+* Added support for duplicating sections of a post using "Post Duplicator" Plugin
+* First implementation of block caching layer.
+* WordPress Coding Coding Standards
+* Improved build process.
+* Improved code analysis process within codeclimate
 
 = 1.1.7 =
 * Confirmed 4.8 compatibility

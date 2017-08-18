@@ -20,6 +20,7 @@ class Mesh {
 
 	/**
 	 * Store all our TinyMCE Editors
+	 *
 	 * @var array
 	 */
 	public $tinymce_editors = array();
@@ -96,17 +97,16 @@ class Mesh {
 
 		add_filter( 'get_edit_post_link', array( $this, 'get_edit_post_link' ), 10, 3 );
 
-		// Exclude certain taxonomies for WordPress SEO / Yoast.
-		add_filter( 'wpseo_sitemap_exclude_taxonomy', array( $this, 'wpseo_sitemap_exclude_taxonomy' ) );
-
-		// @since 1.1.3
+		// @since 1.1.3.
 		add_action( 'after_setup_theme', array( $this, 'after_theme_setup' ) );
 	}
 
 	/**
-	 * @param string $link
-	 * @param int    $post_id
-	 * @param string $context
+	 * Get the edit post links
+	 *
+	 * @param string $link    The link we are manipulating.
+	 * @param int    $post_id Post ID.
+	 * @param string $context Link context.
 	 *
 	 * @return mixed
 	 */
@@ -130,10 +130,10 @@ class Mesh {
 		$id = ( ! empty( $parents ) ) ? $parents[ count( $parents ) - 1 ] : $post->post_parent;
 
 		if ( 'mesh_section' !== get_post_type( $id ) ) {
-			return '#'; // get_edit_post_link( $id );
+			return '#';
 		}
 
-		return '#'; // get_edit_post_link();
+		return '#';
 	}
 
 	/**
@@ -141,9 +141,6 @@ class Mesh {
 	 */
 	function output_debug_post_info() {
 		global $post;
-
-		if ( 'mesh_section' === $post->post_type && true === LINCHPIN_MESH_DEBUG_MODE ) {
-		}
 	}
 
 	/**
@@ -163,14 +160,14 @@ class Mesh {
 	 * @param array  $option Option we're saving.
 	 * @param mixed  $value  Value to save.
 	 *
-	 * @return void|mixed
+	 * @return mixed
 	 */
 	function set_screen_option( $status, $option, $value ) {
 		if ( 'linchpin_mesh_section_kitchensink' === $option ) {
 			return $value;
 		}
 
-		return;
+		return '';
 	}
 
 	/**
@@ -221,7 +218,8 @@ class Mesh {
 		$in['paste_strip_class_attributes'] = 'none';
 		$in['paste_text_use_dialog']        = true;
 		$in['wpeditimage_disable_captions'] = true;
-		$in['plugins']                      = 'tabfocus,paste,media,wordpress,wpgallery,wplink';
+		$in['allow_script_urls']            = true;
+		$in['plugins']                      = 'tabfocus,paste,media,wordpress,wpgallery,wplink'; // WPCS: spelling ok.
 
 		// Only add in our editor styles if we have the file.
 		if ( file_exists( get_template_directory_uri() . '/editor-style.css' ) ) {
@@ -299,13 +297,16 @@ class Mesh {
 	 */
 	function admin_init() {
 		if ( false === get_option( 'mesh_version' ) ) {
-			update_option( 'mesh_post_types', array( 'page' => 1, 'mesh_template' => 1 ) );
+			update_option( 'mesh_post_types', array(
+				'page' => 1,
+				'mesh_template' => 1,
+			) );
 			update_option( 'mesh_version', LINCHPIN_MESH_VERSION );
 		}
 	}
 
 	/**
-	 * edit_form_advanced function.
+	 * Edit form.
 	 *
 	 * @access public
 	 *
@@ -328,7 +329,13 @@ class Mesh {
 		?>
 		<div id="mesh-container" class="<?php echo esc_attr( $post->post_type ); ?>">
 			<?php wp_nonce_field( 'mesh_content_sections_nonce', 'mesh_content_sections_nonce' ); ?>
-			<div class="notice below-h2 mesh-row mesh-main-ua-row<?php if ( empty( $content_sections ) ) : ?> hide<?php endif; ?>">
+			<?php
+			$hide = '';
+			if ( empty( $content_sections ) ) {
+				$hide = ' hide';
+			}
+			?>
+			<div class="notice below-h2 mesh-row mesh-main-ua-row<?php echo esc_attr( $hide ); ?>">
 				<div class="mesh-columns-3 columns">
 					<p class="title mesh-admin-title"><?php esc_html_e( 'Mesh', 'mesh' ); ?></p>
 				</div>
@@ -356,7 +363,7 @@ class Mesh {
 				<?php endforeach; ?>
 			</div>
 
-			<div class="notice below-h2 mesh-row mesh-main-ua-row bottom<?php if ( empty( $content_sections ) ) : ?> hide<?php endif; ?>">
+			<div class="notice below-h2 mesh-row mesh-main-ua-row bottom<?php echo esc_attr( $hide ); ?>">
 				<div class="mesh-columns-12 columns text-right">
 					<?php include LINCHPIN_MESH___PLUGIN_DIR . 'admin/controls.php'; ?>
 				</div>
@@ -386,11 +393,11 @@ class Mesh {
 			return;
 		}
 
-		if ( ! isset( $_POST['mesh_content_sections_nonce'] ) || ! wp_verify_nonce( $_POST['mesh_content_sections_nonce'], 'mesh_content_sections_nonce' ) ) {
+		if ( ! isset( $_POST['mesh_content_sections_nonce'] ) || ! wp_verify_nonce( sanitize_key( $_POST['mesh_content_sections_nonce'] ), 'mesh_content_sections_nonce' ) ) { // Input var okay. WPCS: CSRF okay.
 			return;
 		}
 
-		if ( empty( $_POST['mesh-sections'] ) ) {
+		if ( ! isset( $_POST['mesh-sections'] ) || empty( $_POST['mesh-sections'] ) ) { // Input var okay.
 			return;
 		}
 
@@ -402,12 +409,16 @@ class Mesh {
 		$saving_section_via_ajax = false;
 		$ajax_section_id         = 0;
 
-		if ( ! empty( $_POST['action'] ) && 'mesh_save_section' == $_POST['action'] ) {
+		if ( ( ( isset( $_POST['action'] ) && isset( $_POST['mesh_section_id'] ) ) && ! empty( $_POST['action'] ) ) && 'mesh_save_section' === sanitize_text_field( wp_unslash( $_POST['action'] ) ) ) { // Input var okay.
 			$saving_section_via_ajax = true;
-			$ajax_section_id         = (int) $_POST['mesh_section_id'];
+			$ajax_section_id         = wp_unslash( absint( $_POST['mesh_section_id'] ) ); // Input var okay.
 		}
 
-		foreach ( $_POST['mesh-sections'] as $section_id => $section_data ) {
+		if ( ! isset( $_POST['mesh-sections'] ) ) { // Input var okay.
+			return;
+		}
+
+		foreach ( $_POST['mesh-sections'] as $section_id => $section_data ) { // Input var okay. sanitization ok.
 
 			// If using AJAX, make sure we only update the section we want to save.
 			if ( $saving_section_via_ajax && $ajax_section_id !== $section_id ) {
@@ -422,7 +433,7 @@ class Mesh {
 
 			$status = sanitize_post_field( 'post_status', $section_data['post_status'], $post_id, 'attribute' );
 
-			if ( ! in_array( $status, array( 'publish', 'draft' ) ) ) {
+			if ( ! in_array( $status, array( 'publish', 'draft' ), true ) ) {
 				$status = 'draft';
 			}
 
@@ -431,7 +442,7 @@ class Mesh {
 				'post_title'   => sanitize_text_field( $section_data['post_title'] ),
 				'post_content' => '', // Sections don't have content.
 				'post_status'  => $status,
-				'menu_order'   => ( empty( $section_data['menu_order'] ) ) ? $count : $section_data['menu_order'],
+				'menu_order'   => ( empty( $section_data['menu_order'] ) ) ? $count : absint( $section_data['menu_order'] ),
 			);
 
 			wp_update_post( $updates );
@@ -447,6 +458,29 @@ class Mesh {
 				update_post_meta( $section->ID, '_mesh_template', $template );
 			}
 
+			/**
+			 * Process Section Meta
+			 */
+			$default_section_meta = array(
+				'css_class',
+				'lp_equal',
+				'title_display',
+				'push_pull',
+				'collapse',
+				'blocks',
+				'post_title',
+				'post_status',
+				'template',
+				'menu_order',
+				'featured_image',
+			);
+
+			/*
+			 * This filter is used to remove or add elements to the default section meta
+			 * @todo "meta" related to a section
+			 */
+			$default_section_meta = apply_filters( 'mesh_default_section_meta_fields', $default_section_meta );
+
 			// Save CSS Classes.
 			$css_classes           = explode( ' ', $section_data['css_class'] );
 			$sanitized_css_classes = array();
@@ -461,6 +495,14 @@ class Mesh {
 				delete_post_meta( $section->ID, '_mesh_css_class' );
 			} else {
 				update_post_meta( $section->ID, '_mesh_css_class', $sanitized_css_classes );
+			}
+
+			$featured_image = $section_data['featured_image'];
+
+			if ( empty( $featured_image ) ) {
+				delete_post_meta( $section->ID, '_thumbnail_id' );
+			} else {
+				update_post_meta( $section->ID, '_thumbnail_id', (int) $featured_image );
 			}
 
 			// Save LP Equal.
@@ -494,6 +536,21 @@ class Mesh {
 				delete_post_meta( $section->ID, '_mesh_collapse' );
 			} else {
 				update_post_meta( $section->ID, '_mesh_collapse', $section_data['collapse'] );
+			}
+
+			// Process our custom meta.
+			foreach ( $section_data as $data_key => $data_field ) {
+				// Do not process default keys.
+				if ( in_array( $data_key, $default_section_meta, true ) ) {
+					continue;
+				}
+
+				// Save Custom Meta Field.
+				if ( empty( $section_data[ $data_key ] ) ) {
+					delete_post_meta( $section->ID, '_mesh_' . $data_key );
+				} else {
+					update_post_meta( $section->ID, '_mesh_' . $data_key, $section_data[ $data_key ] );
+				}
 			}
 
 			// Process the section's blocks.
@@ -534,7 +591,7 @@ class Mesh {
 				}
 
 				// Save Column Offset.
-				$offset = (int) $section_data['blocks'][ $block_id ]['offset'];
+				$offset = absint( $section_data['blocks'][ $block_id ]['offset'] );
 
 				if ( empty( $offset ) ) {
 					delete_post_meta( $block_id, '_mesh_offset' );
@@ -542,10 +599,7 @@ class Mesh {
 					update_post_meta( $block_id, '_mesh_offset', $offset );
 				}
 
-				/**
-				 * @todo: optimize this loop into a utility method
-				 */
-
+				// @todo: optimize this loop into a utility method
 				$block_css_class = $section_data['blocks'][ $block_id ]['css_class'];
 
 				// Save CSS Classes.
@@ -659,7 +713,9 @@ class Mesh {
 		}
 
 		foreach ( $sections as $section ) {
-			if ( $blocks = mesh_get_sections( $section->ID, 'array', array( 'any' ) ) ) {
+			$blocks = mesh_get_sections( $section->ID, 'array', array( 'any' ) );
+
+			if ( ! empty( $blocks ) ) {
 				foreach ( $blocks as $block ) {
 					wp_trash_post( $block->ID );
 				}
@@ -689,7 +745,10 @@ class Mesh {
 		}
 
 		foreach ( $sections as $section ) {
-			if ( $blocks = mesh_get_sections( $section->ID, 'array', array( 'publish', 'draft', 'trash' ) ) ) {
+
+			$blocks = mesh_get_sections( $section->ID, 'array', array( 'publish', 'draft', 'trash' ) );
+
+			if ( ! empty( $blocks ) ) {
 				foreach ( $blocks as $block ) {
 					wp_delete_post( $block->ID );
 				}
@@ -719,7 +778,10 @@ class Mesh {
 		}
 
 		foreach ( $sections as $section ) {
-			if ( $blocks = mesh_get_sections( $section->ID, 'array', array( 'trash' ) ) ) {
+
+			$blocks = mesh_get_sections( $section->ID, 'array', array( 'trash' ) );
+
+			if ( ! empty( $blocks ) ) {
 				foreach ( $blocks as $block ) {
 					wp_untrash_post( $block->ID );
 				}
@@ -746,16 +808,19 @@ class Mesh {
 	}
 
 	/**
-	 * post_class function.
+	 * Update post classes.
 	 *
 	 * Filter custom classes to section container
 	 *
-	 * @param array $classes
+	 * @param array $classes CSS Class array.
 	 *
 	 * @return array
 	 */
 	function post_class( $classes ) {
-		if ( $custom_class = get_post_meta( get_the_ID(), '_mesh_css_class', true ) ) {
+
+		$custom_class = get_post_meta( get_the_ID(), '_mesh_css_class', true );
+
+		if ( ! empty( $custom_class ) ) {
 			$classes[] = esc_attr( $custom_class );
 		}
 
@@ -780,13 +845,18 @@ class Mesh {
 			return;
 		}
 
+		// Do not show content on password protected posts.
+		if ( post_password_required() ) {
+			return;
+		}
+
 		$sections = mesh_display_sections( $wp_query->post->ID, false );
 
-		echo apply_filters( 'mesh_loop_end', $sections, $wp_query->post->ID ); // WPCS: ok.
+		echo apply_filters( 'mesh_loop_end', wp_kses( $sections, mesh_get_allowed_html() ), $wp_query->post->ID ); // WPCS: XSS ok, sanitization ok.
 	}
 
 	/**
-	 * admin_enqueue_scripts function.
+	 * Enqueue Admin scripts function.
 	 *
 	 * @access public
 	 * @return void
@@ -796,7 +866,7 @@ class Mesh {
 
 		$mesh_screens = array( 'post', 'edit', 'settings_page_mesh' );
 
-		if ( ! in_array( $current_screen->base, $mesh_screens ) ) {
+		if ( ! in_array( $current_screen->base, $mesh_screens, true ) ) {
 			return;
 		}
 
@@ -898,10 +968,10 @@ class Mesh {
 	/**
 	 * Scan directory for files.
 	 *
-	 * @param string $path
-	 * @param null   $extensions
-	 * @param int    $depth
-	 * @param string $relative_path
+	 * @param string $path          Path to file.
+	 * @param null   $extensions    Allow file extensions.
+	 * @param int    $depth         Depth to search within directory structure.
+	 * @param string $relative_path Use relative paths.
 	 *
 	 * @return array|bool
 	 */
@@ -997,30 +1067,6 @@ class Mesh {
 			'p'      => array(),
 			'br'     => array(),
 		);
-	}
-
-	/**
-	 * Filter to exclude the taxonomy from the XML sitemap.
-	 *
-	 * @since 1.1.3
-	 *
-	 * @param boolean $exclude       Defaults to false.
-	 * @param string  $taxonomy_name Name of the taxonomy to exclude.
-	 *
-	 * @return boolean
-	 */
-	public function wpseo_sitemap_exclude_taxonomy( $exclude = false, $taxonomy_name ) {
-
-		$excluded_taxonomies = array(
-			'mesh_template_usage',
-			'mesh_template_types',
-		);
-
-		if ( in_array( $taxonomy_name, $excluded_taxonomies ) ) {
-			return true;
-		}
-
-		return false;
 	}
 
 	/**
