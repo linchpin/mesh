@@ -58,7 +58,7 @@ $safe_content = array(
 					<p><?php esc_html_e( 'Visit an existing page, post, custom post type or create a new one where Mesh has been enabled.', 'mesh' ); ?></p>
 					<p><?php esc_html_e( 'You will now see a new area below "The Editor".', 'mesh' ); ?></p>
 
-					<img src="<?php echo esc_url( LINCHPIN_MESH___PLUGIN_URL . 'assets/images/add-new-section2.png' ); ?>" alt="<?php esc_attr_e( 'Add New Mesh Section' ); ?>" height="40%">
+					<img src="<?php echo esc_url( LINCHPIN_MESH___PLUGIN_URL . 'assets/images/add-new-section2.png' ); ?>" alt="<?php esc_attr_e( 'Add New Mesh Section', 'mesh' ); ?>" height="40%">
 
 					<h3 class="steps"><?php esc_html_e( 'Follow the Tool Tips', 'mesh' ); ?></h3>
 					<p><?php esc_html_e( 'The first time you create sections and blocks in Mesh you will be presented with useful tool tips that will guide you along the way.', 'mesh' ); ?></p>
