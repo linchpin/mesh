@@ -388,12 +388,12 @@ function the_mesh_content( $post_id = '' ) {
 			 * Add in a default template just in case one the default templates have been deleted.
 			 */
 			?>
-			<div <?php post_class(); ?>>
-				<h3 title="<?php the_title_attribute(); ?>"><?php the_title(); ?></h3>
-				<div class="entry">
+            <div <?php post_class(); ?>>
+                <h3 title="<?php the_title_attribute(); ?>"><?php the_title(); ?></h3>
+                <div class="entry">
 					<?php the_content(); ?>
-				</div>
-			</div>
+                </div>
+            </div>
 			<?php
 		}
 	}
@@ -802,7 +802,7 @@ function mesh_get_allowed_html() {
 		),
 		'section' => array(
 			'data-interchange' => true,
-        ),
+		),
 		'span' => array(
 			'class' => true,
 			'style' => true,
