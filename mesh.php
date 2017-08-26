@@ -388,12 +388,12 @@ function the_mesh_content( $post_id = '' ) {
 			 * Add in a default template just in case one the default templates have been deleted.
 			 */
 			?>
-			<div <?php post_class(); ?>>
-				<h3 title="<?php the_title_attribute(); ?>"><?php the_title(); ?></h3>
-				<div class="entry">
+            <div <?php post_class(); ?>>
+                <h3 title="<?php the_title_attribute(); ?>"><?php the_title(); ?></h3>
+                <div class="entry">
 					<?php the_content(); ?>
-				</div>
-			</div>
+                </div>
+            </div>
 			<?php
 		}
 	}
@@ -811,54 +811,54 @@ function mesh_get_allowed_html() {
 			'data-lp-equal-items' => true,
 			'data-lp-equal-children' => true,
 		),
-        'input' => array(
-            'align' => true,
-            'type' => true,
-            'name' => true,
-            'class' => true,
-            'id' => true,
-            'list' => true,
-            'name' => true,
-            'value' => true,
-            'required' => true,
-            'placeholder' => true,
-            'checked' => true,
-            'disabled' => true,
-            'max' => true,
-            'min' => true,
-            'maxlength' => true,
-            'size' => true,
-            'hidden' => true,
-            'aria-required' => true,
-            'aria-labelledby' => true,
-            'aria-invalid' => true,
+		'input' => array(
+			'align' => true,
+			'type' => true,
+			'name' => true,
+			'class' => true,
+			'id' => true,
+			'list' => true,
+			'name' => true,
+			'value' => true,
+			'required' => true,
+			'placeholder' => true,
+			'checked' => true,
+			'disabled' => true,
+			'max' => true,
+			'min' => true,
+			'maxlength' => true,
+			'size' => true,
+			'hidden' => true,
+			'aria-required' => true,
+			'aria-labelledby' => true,
+			'aria-invalid' => true,
 			'aria-checked' => true,
 		),
 		'option' => array(
-            'value' => true,
-        ),
-        'textarea' => array(
-            'maxlength' => true,
+			'value' => true,
+		),
+		'textarea' => array(
+			'maxlength' => true,
 			'placeholder' => true,
 			'required' => true,
 			'aria-required' => true,
 			'aria-labelledby' => true,
 			'aria-invalid' => true,
-        ),
-        'select' => array(
+		),
+		'select' => array(
 			'name' => true,
-            'disabled' => true,
-            'multiple' => true,
-            'required' => true,
-            'size' => true,
+			'disabled' => true,
+			'multiple' => true,
+			'required' => true,
+			'size' => true,
 			'aria-required' => true,
 			'aria-labelledby' => true,
 			'aria-invalid' => true,
-        ),
-        'fieldset' => array(
-            'name' => true,
-            'disabled' => true,
-        ),
+		),
+		'fieldset' => array(
+			'name' => true,
+			'disabled' => true,
+		),
 	) );
 
 	$post_allowed = wp_kses_allowed_html( 'post' );

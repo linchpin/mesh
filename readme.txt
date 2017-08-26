@@ -73,6 +73,9 @@ Learn more about available hooks (filters and actions) by visiting the mesh our 
 
 == Changelog ==
 
+= 1.2.1 =
+* Include form elements in Mesh allowed HTML
+
 = 1.2 =
 * Remove trailing whitespace from row class
 * Remove checks for equalizer in the 1 column template
