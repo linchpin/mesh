@@ -149,7 +149,7 @@ function mesh_block_class( $block_id, $args = array() ) {
 	$classes = array_map( 'sanitize_html_class', $classes );
 	$classes = array_unique( $classes );
 
-	echo 'class="' . join( ' ', $classes ) . '"'; // WPCS: sanitization ok.
+	echo 'class="' . join( ' ', $classes ) . '"'; // WPCS: XSS ok, sanitization ok.
 }
 
 /**
@@ -388,12 +388,12 @@ function the_mesh_content( $post_id = '' ) {
 			 * Add in a default template just in case one the default templates have been deleted.
 			 */
 			?>
-            <div <?php post_class(); ?>>
-                <h3 title="<?php the_title_attribute(); ?>"><?php the_title(); ?></h3>
-                <div class="entry">
+			<div <?php post_class(); ?>>
+				<h3 title="<?php the_title_attribute(); ?>"><?php the_title(); ?></h3>
+				<div class="entry">
 					<?php the_content(); ?>
-                </div>
-            </div>
+				</div>
+			</div>
 			<?php
 		}
 	}
@@ -818,7 +818,6 @@ function mesh_get_allowed_html() {
 			'class' => true,
 			'id' => true,
 			'list' => true,
-			'name' => true,
 			'value' => true,
 			'required' => true,
 			'placeholder' => true,
