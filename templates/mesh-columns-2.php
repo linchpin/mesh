@@ -51,8 +51,7 @@
 				<?php if ( ! empty( $block->post_title ) && 'no column title' !== strtolower( $block->post_title ) ) : ?>
 					<h3 class="entry-subtitle"><?php echo esc_html( $block->post_title ); ?></h3>
 				<?php endif; ?>
-				<?php $block_content = wp_kses( $block->post_content, mesh_get_allowed_html() ); ?>
-				<?php echo apply_filters( 'the_content', $block->post_content ); // WPCS: xss ok. ?>
+				<?php echo apply_filters( 'the_content', $block->post_content ); ?>
 			</div>
 		<?php
 			$i++;
