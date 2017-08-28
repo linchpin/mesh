@@ -122,6 +122,10 @@ class Mesh_Upgrades {
 	 */
 	function update_version( $version ) {
 
+		if ( empty( $version ) ) {
+			return;
+		}
+
 		$version = sanitize_text_field( $version );
 
 		update_option( 'mesh_version', $version );
