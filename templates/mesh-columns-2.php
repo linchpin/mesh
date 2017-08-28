@@ -37,7 +37,10 @@
 		<?php $i = 0; foreach ( $blocks as $block ) : ?>
 			<?php
 			$column_width = (int) get_post_meta( $block->ID, '_mesh_column_width', true );
-			$push_pull = (bool) get_post_meta( $block->ID, '_mesh_push_pull', true );
+
+			if ( ! isset( $push_pull ) ) {
+				$push_pull = false;
+			}
 
 			$block_class_args = array(
 				'push_pull'        => $push_pull,
