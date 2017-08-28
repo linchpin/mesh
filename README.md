@@ -5,7 +5,7 @@ A WordPress page builder, simplified. Get the most flexibility to display conten
 
 [![Build Status](https://travis-ci.org/linchpin/mesh.svg?branch=master)](https://travis-ci.org/linchpin/mesh) [![Code Climate](https://codeclimate.com/github/linchpin/mesh/badges/gpa.svg)](https://codeclimate.com/github/linchpin/mesh)
 
-**Latest Release 1.2** on August 17th 2017. You can get the stable release in the master branch or install from [wordpress.org/plugins/mesh](https://wordpress.org/plugins/mesh)
+**Latest Release 1.2.1** on August 28th 2017. You can get the stable release in the master branch or install from [wordpress.org/plugins/mesh](https://wordpress.org/plugins/mesh)
 
 ## What is Mesh?
 
@@ -37,7 +37,7 @@ As of 1.2 you can now add your own controls to the system. Documentation coming 
 Yes
 
 #### For more information
-Please visit [Our knowlebase](https://meshplugin.com/knowledgebase/)
+Please visit [Our knowledgebase](https://meshplugin.com/knowledgebase/)
 
 ### Recognition
 
