@@ -12,7 +12,22 @@
  */
 
 ?>
+
+<?php
+/**
+ * Add the ability to add markup before Mesh section
+ */
+do_action( 'mesh_section_before' );
+?>
+
 <section <?php post_class(); ?> <?php mesh_section_background(); ?>>
+	<?php
+	/**
+	 * Add the ability to add markup before Mesh row
+	 */
+	do_action( 'mesh_row_before' );
+	?>
+
 	<?php
 	$title_display = get_post_meta( get_the_ID(), '_mesh_title_display', true );
 	$collapse_column_spacing = get_post_meta( get_the_ID(), '_mesh_collapse', true );
@@ -56,4 +71,18 @@
 			</div>
 		<?php endforeach; ?>
 	</div>
+
+	<?php
+	/**
+	 * Add the ability to add markup after Mesh row
+	 */
+	do_action( 'mesh_row_after' );
+	?>
 </section>
+
+<?php
+/**
+ * Add the ability to add markup after Mesh section
+ */
+do_action( 'mesh_section_after' );
+?>
