@@ -17,14 +17,16 @@
 /**
  * Add the ability to add markup before Mesh section
  */
-do_action( 'mesh_section_before' ); ?>
+do_action( 'mesh_section_before' );
+?>
 
 <section <?php post_class(); ?> <?php mesh_section_background(); ?>>
 	<?php
 	/**
 	 * Add the ability to add markup before Mesh row
 	 */
-	do_action( 'mesh_row_before' ); ?>
+	do_action( 'mesh_row_before' );
+	?>
 
 	<?php
 	$title_display = get_post_meta( get_the_ID(), '_mesh_title_display', true );
@@ -75,11 +77,13 @@ do_action( 'mesh_section_before' ); ?>
 	/**
 	 * Add the ability to add markup after Mesh row
 	 */
-	do_action( 'mesh_row_after' ); ?>
+	do_action( 'mesh_row_after' );
+	?>
 </section>
 
 <?php
 /**
  * Add the ability to add markup after Mesh section
  */
-do_action( 'mesh_section_after' ); ?>
+do_action( 'mesh_section_after' );
+?>
