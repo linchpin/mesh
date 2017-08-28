@@ -3,12 +3,15 @@
 ## [1.2.1] - 2017-8-27
 
 ### Fixes
+
 - Include data-interchange in Mesh allowed HTML on section elements
 - Fixed up some undefined indexes.
 
 ## [1.2.0] - 2017-8-17
 
-### Fixes - Remove trailing whitespace from row class
+### Fixes
+
+- Remove trailing whitespace from row class
 - Remove checks for equalizer in the 1 column template
 - Fixed a bug where reordering would stop that section from working properly until refresh.
 - Fixed a bug where collapsed sections could not be toggled open after a new section was added
@@ -21,6 +24,7 @@
 - A bunch of little things under the hood you probably wont notice
   
 ### Added
+
 - First time users will now have an improved onboarding process.
 - Existing users will now be presented with a notification to view *"What's new"*
 - Added support for Yoast SEO page analysis.
@@ -30,6 +34,7 @@
 - First implementation of block caching layer.
 
 ### Updated
+
 - WordPress Coding Coding Standards
 - Improved build process.
 - Improved code analysis process within codeclimate
@@ -43,6 +48,7 @@
 ## [1.1.6] - 2017-4-10
 
 ### Fixed
+
 - Fixed undefined index `foundation_version`.
 - Fix bug for `.row` max-width being set to `rem-calc(1200)`
 - Fix issue within visual editors within blocks. The html was being saved instead of the raw data. wpautop filter should still be applied if available.
