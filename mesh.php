@@ -800,6 +800,9 @@ function mesh_get_allowed_html() {
 			'data-lp-equal-items' => true,
 			'data-lp-equal-children' => true,
 		),
+		'section' => array(
+			'data-interchange' => true,
+		),
 		'span' => array(
 			'class' => true,
 			'style' => true,

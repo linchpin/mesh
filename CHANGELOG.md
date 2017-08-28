@@ -1,5 +1,10 @@
 #Change Log For Mesh
 
+## [1.2.1]
+
+### Fixes
+ - Include data-interchange in Mesh allowed HTML on section elements
+
 ## [1.2.0] - 2017-8-17
 
 ### Fixes
