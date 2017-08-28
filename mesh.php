@@ -149,7 +149,7 @@ function mesh_block_class( $block_id, $args = array() ) {
 	$classes = array_map( 'sanitize_html_class', $classes );
 	$classes = array_unique( $classes );
 
-	echo 'class="' . join( ' ', $classes ) . '"'; // WPCS: sanitization ok.
+	echo 'class="' . join( ' ', $classes ) . '"'; // WPCS: XSS ok, sanitization ok.
 }
 
 /**
@@ -813,6 +813,53 @@ function mesh_get_allowed_html() {
 			'data-lp-equal' => true,
 			'data-lp-equal-items' => true,
 			'data-lp-equal-children' => true,
+		),
+		'input' => array(
+			'align' => true,
+			'type' => true,
+			'name' => true,
+			'class' => true,
+			'id' => true,
+			'list' => true,
+			'value' => true,
+			'required' => true,
+			'placeholder' => true,
+			'checked' => true,
+			'disabled' => true,
+			'max' => true,
+			'min' => true,
+			'maxlength' => true,
+			'size' => true,
+			'hidden' => true,
+			'aria-required' => true,
+			'aria-labelledby' => true,
+			'aria-invalid' => true,
+			'aria-checked' => true,
+		),
+		'option' => array(
+			'value' => true,
+		),
+		'textarea' => array(
+			'maxlength' => true,
+			'placeholder' => true,
+			'required' => true,
+			'aria-required' => true,
+			'aria-labelledby' => true,
+			'aria-invalid' => true,
+		),
+		'select' => array(
+			'name' => true,
+			'disabled' => true,
+			'multiple' => true,
+			'required' => true,
+			'size' => true,
+			'aria-required' => true,
+			'aria-labelledby' => true,
+			'aria-invalid' => true,
+		),
+		'fieldset' => array(
+			'name' => true,
+			'disabled' => true,
 		),
 	) );
 
