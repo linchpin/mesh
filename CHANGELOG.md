@@ -8,6 +8,10 @@
 - Fixed up some undefined indexes.
 - Include form elements in Mesh allowed HTML
 
+### Added
+
+- Added hooks to Mesh templates
+
 ## [1.2.0] - 2017-8-17
 
 ### Fixes

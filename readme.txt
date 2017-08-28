@@ -77,6 +77,7 @@ Learn more about available hooks (filters and actions) by visiting the mesh our 
 * Include form elements in Mesh allowed HTML
 * Include data-interchange in Mesh allowed HTML on section elements
 * Fix for undefined indexes
+* Added hooks to Mesh templates
 
 = 1.2 =
 * Remove trailing whitespace from row class
