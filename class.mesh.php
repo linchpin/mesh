@@ -852,7 +852,7 @@ class Mesh {
 
 		$sections = mesh_display_sections( $wp_query->post->ID, false );
 
-		echo apply_filters( 'mesh_loop_end', wp_kses( $sections, mesh_get_allowed_html() ), $wp_query->post->ID ); // WPCS: XSS ok, sanitization ok.
+		echo apply_filters( 'mesh_loop_end', $sections, $wp_query->post->ID ); // WPCS: XSS ok, sanitization ok.
 	}
 
 	/**

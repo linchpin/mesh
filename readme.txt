@@ -74,6 +74,7 @@ Learn more about available hooks (filters and actions) by visiting the mesh our 
 == Changelog ==
 
 = 1.2.1 =
+* Include form elements in Mesh allowed HTML
 * Include data-interchange in Mesh allowed HTML on section elements
 
 = 1.2 =

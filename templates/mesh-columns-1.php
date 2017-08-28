@@ -36,9 +36,8 @@
 					<?php if ( ! empty( $block->post_title ) && 'no column title' !== strtolower( $block->post_title ) ) : ?>
 						<h3 class="entry-subtitle"><?php echo esc_html( apply_filters( 'the_title', $block->post_title ) ); ?></h3>
 					<?php endif; ?>
-
 					<?php
-						echo wp_kses( apply_filters( 'the_content', $block->post_content ), mesh_get_allowed_html() );
+						echo apply_filters( 'the_content', $block->post_content );
 					?>
 				</div>
 			<?php

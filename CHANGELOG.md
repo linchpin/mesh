@@ -3,6 +3,7 @@
 ## [1.2.1]
 
 ### Fixes
+ - Include form elements in Mesh allowed HTML
  - Include data-interchange in Mesh allowed HTML on section elements
 
 ## [1.2.0] - 2017-8-17
