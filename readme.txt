@@ -75,6 +75,7 @@ Learn more about available hooks (filters and actions) by visiting the mesh our 
 
 = 1.2.1 =
 * Include data-interchange in Mesh allowed HTML on section elements
+* Fix for undefined indexes
 
 = 1.2 =
 * Remove trailing whitespace from row class
