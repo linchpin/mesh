@@ -6,6 +6,7 @@
 
 - Include data-interchange in Mesh allowed HTML on section elements
 - Fixed up some undefined indexes.
+- Include form elements in Mesh allowed HTML
 
 ## [1.2.0] - 2017-8-17
 
