@@ -1234,6 +1234,10 @@ mesh.admin = function ($) {
 		$sections,
 		media_frames = [],
 
+		// Settings
+
+		FADE_SPEED = 100,
+
 		// Container References for Admin(self) / Block
 		self,
 		blocks,
@@ -1241,6 +1245,7 @@ mesh.admin = function ($) {
 		templates,
 		section_count;
 
+	/*** @return object */
 	return {
 
 		/**
@@ -1322,6 +1327,7 @@ mesh.admin = function ($) {
 		 * Add notifications to our section
 		 *
 		 * @param $layout
+		 * @returns void
 		 */
 		setup_notifications: function ($layout) {
 			// Make notices dismissible
@@ -1345,8 +1351,8 @@ mesh.admin = function ($) {
 					}, function (response) {
 					});
 
-					$this.fadeTo(100, 0, function () {
-						$(this).slideUp(100, function () {
+					$this.fadeTo( FADE_SPEED, 0, function () {
+						$(this).slideUp( FADE_SPEED, function () {
 							$(this).remove();
 						});
 					});
@@ -1359,8 +1365,9 @@ mesh.admin = function ($) {
 		 *
 		 * @since 1.2
 		 *
-		 * @param event The jQuery Event
-		 * @param element The Object Being Expanded (typically postbox)
+		 * @param {event}  event  The jQuery Event.
+		 * @param {object} element The Object Being Expanded (typically postbox).
+		 * @return void
 		 */
 		expand_section: function (event, element) {
 
@@ -1377,7 +1384,7 @@ mesh.admin = function ($) {
 		 *
 		 * @since 0.3.0
 		 *
-		 * @param event
+		 * @param {event} event Click Event.
 		 */
 		expand_all_sections: function (event) {
 
@@ -1399,7 +1406,8 @@ mesh.admin = function ($) {
 		 *
 		 * @since 1.0.0
 		 *
-		 * @param event
+		 * @param {event} event Click Event.
+		 * @return void
 		 */
 		collapse_all_sections: function (event) {
 
@@ -1426,6 +1434,7 @@ mesh.admin = function ($) {
 		 * @since 1.1
 		 *
 		 * @param event
+		 * @return void
 		 */
 		toggle_collapse: function (event) {
 
@@ -1467,7 +1476,7 @@ mesh.admin = function ($) {
 		 *
 		 * @since 0.1.0
 		 *
-		 * @param event
+		 * @param {event} event Click Event.
 		 * @returns {boolean}
 		 */
 		choose_layout: function (event) {
@@ -2176,7 +2185,8 @@ mesh.admin = function ($) {
 		 *
 		 * @since 1.1
 		 *
-		 * @param event
+		 * @param {event} event
+		 * @returns void
 		 */
 		trash_extra_blocks: function (event) {
 			event.preventDefault();
@@ -2225,6 +2235,7 @@ mesh.admin = function ($) {
 		 * by another action.
 		 *
 		 * @since 1.1
+		 * @param {element} $tgt Selected Element.
 		 */
 		disable_controls: function ($tgt) {
 			$expand_button.addClass('disabled');
@@ -2247,6 +2258,8 @@ mesh.admin = function ($) {
 		 * Enable all controls
 		 *
 		 * @since 1.1
+		 * @param {element} $tgt Click Event
+		 * @return void
 		 */
 		enable_controls: function ($tgt) {
 			$expand_button.removeClass('disabled');
@@ -2268,7 +2281,8 @@ mesh.admin = function ($) {
 		 * Allow the usage of Foundation 5 or 6 interchange
 		 *
 		 * @since 1.1.3
-		 * @param event
+		 * @param {event} event Change Event
+		 * @return void
 		 */
 		display_foundation_options: function (event) {
 

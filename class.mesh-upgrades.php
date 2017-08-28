@@ -29,28 +29,19 @@ class Mesh_Upgrades {
 	 */
 	function admin_init() {
 
-		if ( version_compare( $GLOBALS['mesh_current_version'], '1.0' , '<' ) ) {
-			$this->version_1_0();
-		}
+		if ( isset( $GLOBALS['mesh_current_version'] ) ) {
+			if ( version_compare( $GLOBALS['mesh_current_version'], '1.0', '<' ) ) {
+				$this->version_1_0();
+			}
 
-		if ( version_compare( $GLOBALS['mesh_current_version'], '1.0.5', '<' ) ) {
-			$this->version_1_0_5();
-		}
+			if ( version_compare( $GLOBALS['mesh_current_version'], '1.1.0', '<' ) ) {
+				$this->version_1_1();
+			}
 
-		if ( version_compare( $GLOBALS['mesh_current_version'], '1.1.0', '<' ) ) {
-			$this->version_1_1();
-		}
-
-		if ( version_compare( $GLOBALS['mesh_current_version'], '1.1.6', '<' ) ) {
-			$this->version_1_1_6();
-		}
-
-		if ( version_compare( $GLOBALS['mesh_current_version'], '1.1.7', '<' ) ) {
-			$this->version_1_1_7();
-		}
-
-		if ( version_compare( $GLOBALS['mesh_current_version'], '1.2.0', '<' ) ) {
-			$this->version_1_2_0();
+			// Latest Version.
+			if ( version_compare( $GLOBALS['mesh_current_version'], '1.2.1', '<' ) ) {
+				$this->update_version( '1.2.1' );
+			}
 		}
 	}
 
@@ -87,16 +78,7 @@ class Mesh_Upgrades {
 			update_option( 'mesh_post_types', $default_post_types );
 		}
 
-		update_option( 'mesh_version', '1.0' );
-		$GLOBALS['mesh_current_version'] = '1.0';
-	}
-
-	/**
-	 * Nothing to update here, just the version.
-	 */
-	function version_1_0_5() {
-		update_option( 'mesh_version', '1.0.5' );
-		$GLOBALS['mesh_current_version'] = '1.0.5';
+		$this->update_version( '1.0' );
 	}
 
 	/**
@@ -130,32 +112,24 @@ class Mesh_Upgrades {
 		wp_insert_term( 'reference', 'mesh_template_types' );
 		wp_insert_term( 'starter', 'mesh_template_types' );
 
-		update_option( 'mesh_version', '1.1' );
-		$GLOBALS['mesh_current_version'] = '1.1';
+		$this->update_version( '1.1' );
 	}
 
 	/**
-	 * Nothing to update here, just the version to 1.1.6
+	 * Utility method to update version numbers
+	 *
+	 * @param string $version Version # to save.
 	 */
-	function version_1_1_6() {
-		update_option( 'mesh_version', '1.1.6' );
-		$GLOBALS['mesh_current_version'] = '1.1.6';
-	}
+	function update_version( $version ) {
 
-	/**
-	 * Nothing to update here, just the version to 1.1.7
-	 */
-	function version_1_1_7() {
-		update_option( 'mesh_version', '1.1.7' );
-		$GLOBALS['mesh_current_version'] = '1.1.7';
-	}
+		if ( empty( $version ) ) {
+			return;
+		}
 
-	/**
-	 * Updated the installation process for 1.2 to be more informative.
-	 */
-	function version_1_2_0() {
-		update_option( 'mesh_version', '1.2' );
-		$GLOBALS['mesh_current_version'] = '1.2';
+		$version = sanitize_text_field( $version );
+
+		update_option( 'mesh_version', $version );
+		$GLOBALS['mesh_current_version'] = $version;
 	}
 }
 

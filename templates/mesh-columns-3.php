@@ -12,7 +12,22 @@
  */
 
 ?>
+
+<?php
+/**
+ * Add the ability to add markup before Mesh section
+ */
+do_action( 'mesh_section_before' );
+?>
+
 <section <?php post_class(); ?> <?php mesh_section_background(); ?>>
+	<?php
+	/**
+	 * Add the ability to add markup before Mesh row
+	 */
+	do_action( 'mesh_row_before' );
+	?>
+
 	<?php
 	$title_display = get_post_meta( get_the_ID(), '_mesh_title_display', true );
 	$collapse_column_spacing = get_post_meta( get_the_ID(), '_mesh_collapse', true );
@@ -50,11 +65,25 @@
 				<?php if ( ! empty( $block->post_title ) && 'no column title' !== strtolower( $block->post_title ) ) : ?>
 					<h3 class="entry-subtitle"><?php echo esc_html( apply_filters( 'the_title', $block->post_title ) ); ?></h3>
 				<?php endif; ?>
-				<?php echo wp_kses( apply_filters( 'the_content', $block->post_content ), mesh_get_allowed_html() ); ?>
+				<?php echo apply_filters( 'the_content', $block->post_content ); ?>
 			</div>
 		<?php
 			$i++;
 			endforeach;
 		?>
 	</div>
+
+	<?php
+	/**
+	 * Add the ability to add markup after Mesh row
+	 */
+	do_action( 'mesh_row_after' );
+	?>
 </section>
+
+<?php
+/**
+ * Add the ability to add markup after Mesh section
+ */
+do_action( 'mesh_section_after' );
+?>

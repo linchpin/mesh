@@ -852,7 +852,7 @@ class Mesh {
 
 		$sections = mesh_display_sections( $wp_query->post->ID, false );
 
-		echo apply_filters( 'mesh_loop_end', wp_kses( $sections, mesh_get_allowed_html() ), $wp_query->post->ID ); // WPCS: XSS ok, sanitization ok.
+		echo apply_filters( 'mesh_loop_end', $sections, $wp_query->post->ID ); // WPCS: XSS ok, sanitization ok.
 	}
 
 	/**
@@ -954,7 +954,12 @@ class Mesh {
 	 */
 	function wp_enqueue_styles() {
 		$mesh_options = get_option( 'mesh_settings' );
-		$css_mode     = (int) $mesh_options['css_mode'];
+
+		if ( ! empty( $mesh_options['css_mode'] ) ) {
+			$css_mode = intval( $mesh_options['css_mode'] );
+		} else {
+			$css_mode = 0;
+		}
 
 		if ( -1 === $css_mode ) {
 			return;
