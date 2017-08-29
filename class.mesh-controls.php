@@ -124,7 +124,7 @@ class Mesh_Controls {
 					'options_cb'     => array( $this, 'get_template_options' ),
 					'id'             => 'mesh-sections-template-' . $section->ID,
 				),
-				'display-title' => array(
+				'title-display' => array(
 					'label'          => __( 'Display Title', 'mesh' ),
 					'type'           => 'checkbox',
 					'css_classes'    => array( 'mesh-section-show-title' ),
