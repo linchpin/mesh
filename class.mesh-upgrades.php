@@ -39,8 +39,8 @@ class Mesh_Upgrades {
 			}
 
 			// Latest Version.
-			if ( version_compare( $GLOBALS['mesh_current_version'], '1.2.1', '<' ) ) {
-				$this->update_version( '1.2.1' );
+			if ( version_compare( $GLOBALS['mesh_current_version'], '1.2.2', '<' ) ) {
+				$this->update_version( '1.2.2' );
 			}
 		}
 	}
