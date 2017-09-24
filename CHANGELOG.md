@@ -4,7 +4,7 @@
 
 ### Fixes
 
-- Fixed an issue with an incorrect ID for the display section title checkbox
+- Fixed bug causing 'Show Title' checkbox to not work correctly
 
 ### Updated
 
