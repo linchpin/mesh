@@ -1,4 +1,15 @@
-#Change Log For Mesh
+# Change Log For Mesh
+
+## [1.2.2] - 2017-9-24
+
+### Fixes
+
+- Fixed an issue with an incorrect ID for the display section title checkbox
+
+### Updated
+
+- Minor Code Climate configuration changes.
+- Minor formatting changes for markdown linting.
 
 ## [1.2.1] - 2017-8-27
 
@@ -18,24 +29,34 @@
 
 - Remove trailing whitespace from row class
 - Remove checks for equalizer in the 1 column template
-- Fixed a bug where reordering would stop that section from working properly until refresh.
-- Fixed a bug where collapsed sections could not be toggled open after a new section was added
-- Fixed a bug when excluding Mesh template related taxonomies from the generated sitemap
-- Fixed a bug where section and block background images were displayed before "update" / "publish"
-- Controls within Sections and Columns/Blocks are now extendable for developers.
+- Fixed a bug where reordering would stop that section from working properly
+ until refresh.
+- Fixed a bug where collapsed sections could not be toggled open after a new
+ section was added
+- Fixed a bug when excluding Mesh template related taxonomies from the
+ generated sitemap
+- Fixed a bug where section and block background images were displayed before
+ "update" / "publish"
+- Controls within Sections and Columns/Blocks are now extendable for
+developers.
 - More security hardening for potential XSS and CSRF.
-- Fixed a bug where trashing unused blocks was more aggressive than it should be. Simma down nah.
-- Fixed a pesky bug what would delete your content if you changed column count before saving.
+- Fixed a bug where trashing unused blocks was more aggressive than it should
+ be. Simma down nah.
+- Fixed a pesky bug what would delete your content if you changed column count
+ before saving.
 - A bunch of little things under the hood you probably wont notice
   
 ### Added
 
 - First time users will now have an improved onboarding process.
-- Existing users will now be presented with a notification to view *"What's new"*
+- Existing users will now be presented with a notification to view 
+*"What's new"*
 - Added support for Yoast SEO page analysis.
 - Added support for scripts within urls within TinyMCE.
-- Added support for duplicating sections of a post using "Duplicate Post" Plugin
-- Added support for duplicating sections of a post using "Post Duplicator" Plugin
+- Added support for duplicating sections of a post using "Duplicate Post"
+ Plugin
+- Added support for duplicating sections of a post using "Post Duplicator"
+ Plugin
 - First implementation of block caching layer.
 
 ### Updated
@@ -46,9 +67,14 @@
 
 ## [1.1.7] - 2017-6-12
 
-- Confirmed 4.8 compatibility
+### Fixed
+
 - Fix for issue within "content" being replaced when it shouldn't be
 - Fix for duplicated sections not applying the proper date.
+
+### Updated
+
+- Confirmed 4.8 compatibility
 
 ## [1.1.6] - 2017-4-10
 
@@ -56,7 +82,8 @@
 
 - Fixed undefined index `foundation_version`.
 - Fix bug for `.row` max-width being set to `rem-calc(1200)`
-- Fix issue within visual editors within blocks. The html was being saved instead of the raw data. wpautop filter should still be applied if available.
+- Fix issue within visual editors within blocks. The html was being saved
+ instead of the raw data. wpautop filter should still be applied if available.
 - Hot fix bug with Foundation interchange conflict
 - Setup Code Climate and Code Climate test coverage reporting.
 - Fix PHP warnings when retrieving `mesh_post_types` when it is not yet set.
@@ -86,13 +113,17 @@
 
 - Fixed equalize options should not show if the section is only 1 column wide.
 - Fixed some minor typos.
-- Fixed minor display issue that occurred when removing all Mesh sections on a post.
+- Fixed minor display issue that occurred when removing all Mesh sections on a
+ post.
 
 ### Added
 
-- Ability to filter `mesh_tiny_mce_before_init` to allow even more extended option filtering
-- Default support for interchange using Mesh even if your theme isn't built on Foundation
-- Actions mesh_section_add_before_misc_actions and mesh_section_add_misc_actions for more customization.
+- Ability to filter `mesh_tiny_mce_before_init` to allow even more extended
+ option filtering
+- Default support for interchange using Mesh even if your theme isn't built on
+ Foundation
+- Actions mesh_section_add_before_misc_actions and
+ mesh_section_add_misc_actions for more customization.
 - Ability to preview sections that are not published yet.
 
 ### Updated
@@ -103,10 +134,12 @@
 
 ### Fixed
 
-- Selected/uploaded background images were not displaying within admin until refresh.
+- Selected/uploaded background images were not displaying within admin until
+ refresh.
 - Fixed Mesh Template order consistenty when closing.
 - Fixed block resizing was broken in some instances.
-- Fixed Mesh titles displaying outside of their container if the title is too long
+- Fixed Mesh titles displaying outside of their container if the title is too
+ long
 
 ### Added
 
@@ -121,9 +154,11 @@
 
 ### Added
 
-- Exclude Mesh template taxonomies from being added to the WordPress SEO sitemap.xml
+- Exclude Mesh template taxonomies from being added to the WordPress SEO
+ sitemap.xml
 - Equalizer minimum breakpoint support for Foundation 6
-- The ability to select which version of Foundation your theme is using (Defaults to Foundation 5)
+- The ability to select which version of Foundation your theme is using
+ (Defaults to Foundation 5)
 - `mesh-background` custom image size (1920 x 1080) by default.
 - Filters to define what images sizes will be used by interchange.
 
@@ -154,9 +189,11 @@
 - You can now create reusable templates.
 - Templates are excluded from Yoast SEO admin shenanigans by default.
 - Preliminary remove Mesh Settings on Uninstall.
-- You can now filter how many mesh_templates `mesh_templates_per_page` are queried if you have a lot of templates (More than 50)
+- You can now filter how many mesh_templates `mesh_templates_per_page` are
+ queried if you have a lot of templates (More than 50)
 - Better version tracking and upgrade process.
-- You can now filter the output of `mesh_loop_end`. An example would be to stop the default output of mesh_display_sections.
+- You can now filter the output of `mesh_loop_end`. An example would be to stop
+ the default output of mesh_display_sections.
 - Better "in progress and busy" state of page building.
 - New Welcome message on Mesh Templates Post List to help guide users
 - Initial implementation for documentation generation.
@@ -165,15 +202,20 @@
 
 - Typo in Mesh settings text field utility method.
 - Offset now displays properly within Post Edit screen on page load.
-- When setting an offset to 7,8 or 9 on single column (12) visual did not match what was being stored in post_meta.
+- When setting an offset to 7,8 or 9 on single column (12) visual did not match
+ what was being stored in post_meta.
 - Minor security improvements.
-- Now running Mesh admin sections through wp_kses with a custom set of whitelisted elements and attributes.
-- After deleting all sections within a post you had to refresh the pages before you could get your controls back.
+- Now running Mesh admin sections through wp_kses with a custom set of
+ whitelisted elements and attributes.
+- After deleting all sections within a post you had to refresh the pages before
+ you could get your controls back.
 - New sections could not toggle post box collapse with out a page refresh.
 - Ordering of sections was being lost when updating a post.
-- Fixed When going from more to less columns you can now trash unused columns. (Thanks for the find @kelter)
+- Fixed When going from more to less columns you can now trash unused columns.
+ (Thanks for the find @kelter)
 - Some formatting issues in the readme.
-- If you added a section then immediately tried to resize a JS error would occur to do aria checks.
+- If you added a section then immediately tried to resize a JS error would
+ occur to do aria checks.
 
 ### Updated
 
@@ -184,15 +226,19 @@
 
 ### Fixed
 
-- README.md and CHANGELOG.md not pulling into settings page. Thanks @nate-allen [mesh-25]
-- Column "More" Options UI is very tight and overlaps. Thanks @nate-allen [mesh-18]
+- README.md and CHANGELOG.md not pulling into settings page.
+ Thanks @nate-allen [mesh-25]
+- Column "More" Options UI is very tight and overlaps.
+ Thanks @nate-allen [mesh-18]
 
 ## [1.0.4] - 2016-08-04
 
 ### Fixed
 
-- Javascript error was thrown if the user had any columns within text view when saving. [mesh-21]
-- Templates were missing the ability for the first column to have an offset. [mesh-5]
+- Javascript error was thrown if the user had any columns within text view when
+ saving. [mesh-21]
+- Templates were missing the ability for the first column to have an
+ offset. [mesh-5]
 - Post Type enabling wasn't working properly. [mesh-19]
 
 ## [1.0.3] - 2016-05-15
@@ -229,14 +275,18 @@
 
 - Change the name of Multiple Content Sections to Mesh for public release.
 - Finalized Name change for public release.
-- Removed unneeded realtime ajax calls that resulted in unwanted publishing of content
+- Removed unneeded realtime ajax calls that resulted in unwanted publishing
+ of content
 - Massive overhaul of admin CSS for public release.
-- Completely reworked interface for public release for more WordPress core consistency and ease of use (More to come)
+- Completely reworked interface for public release for more WordPress core
+ consistency and ease of use (More to come)
 
 ### Fixed
 
-- TinyMCE now works better. Using a fix seen here https://github.com/alleyinteractive/wordpress-fieldmanager/blob/master/js/richtext.js#L58-L95
-- TinyMCE options are now consistent when displaying new and existing block editors
+- TinyMCE now works better. Using a fix seen here
+ https://github.com/alleyinteractive/wordpress-fieldmanager/blob/master/js/richtext.js#L58-L95
+- TinyMCE options are now consistent when displaying new and existing
+ block editors
 
 ### Added
 
@@ -256,7 +306,8 @@
 
 ### Fixed
 
-- Blocks had issues selecting a background once the blocks code was separated out.
+- Blocks had issues selecting a background once the blocks code was separated
+ out.
 
 ## [0.4.4] - 2015-10-3
 
@@ -266,13 +317,15 @@
 
 ### Updated
 
-- Separated section controls into a different template for more flexible expansion later on.
+- Separated section controls into a different template for more flexible
+ expansion later on.
 
 ## [0.4.3.1] - 2015-09-21
 
 ### Fixed
 
-- Made sure that a block always matches the parent section when being created (publish|draft) etc
+- Made sure that a block always matches the parent section when being created
+ (publish|draft) etc
 
 ## [0.4.3] - 2015-09-21
 
@@ -291,7 +344,8 @@
 ### Added
 
 - Checking if a page is private before displaying it to the end user.
-- Created logic to display the title of a section either above the blocks or within a specific block
+- Created logic to display the title of a section either above the blocks or
+ within a specific block
 
 ### Fixed
 
@@ -341,7 +395,8 @@
 
 ### Fixed
 
-- Cleaned up Post Type labels used when exporting content using the WordPress export tools (now shows "Section")
+- Cleaned up Post Type labels used when exporting content using the WordPress
+ export tools (now shows "Section")
 
 ## [0.3.7]
 
@@ -365,7 +420,8 @@
 
 ## [0.3.5]
 
-#### Significant Release. Probably breaks backwards compatibility with internal releases.
+#### Significant Release. Probably breaks backwards compatibility with internal
+ releases.
 
 ### Added
 
@@ -377,7 +433,8 @@
 
 ### Updated
 
-- Better redrawing of editable areas after reordering (of drawers and sections) is complete
+- Better redrawing of editable areas after reordering (of drawers and sections)
+ is complete
 - Additional Security hardening prior to public release
 
 ## [0.3.0]
@@ -405,7 +462,8 @@
 
 ### Added
 
-- Added feature to store data from multiple content sections within "the_content" of the parent post. This allows content within Multiple Content Sections to show up within the WordPress search results.
+- Added feature to store data from multiple content sections within "the_content"
+ of the parent post. This allows content within Multiple Content Sections to show up within the WordPress search results.
 - Added ability to select templates
 - Added ability to upload media to sections
 

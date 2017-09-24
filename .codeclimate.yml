@@ -16,6 +16,7 @@ exclude_paths:
 - "assets/js/mesh.js"
 - "assets/js/mesh.min.js"
 - "assets/js/mesh-frontend-interchange.js"
+- "assets/js/admin-mesh-limitslider.js"
 
 engines:
   csslint:
