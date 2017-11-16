@@ -73,6 +73,10 @@ Learn more about available hooks (filters and actions) by visiting the mesh our 
 
 == Changelog ==
 
+= 1.2.3 =
+* Added hooks
+* Added field for custom Section ID
+
 = 1.2.2 =
 * Fixed bug causing 'Show Title' checkbox to not work correctly
 * Minor Code Climate configuration changes.
