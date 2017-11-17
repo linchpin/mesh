@@ -463,6 +463,7 @@ class Mesh {
 			 */
 			$default_section_meta = array(
 				'css_class',
+				'row_class',
 				'lp_equal',
 				'title_display',
 				'push_pull',
@@ -481,7 +482,7 @@ class Mesh {
 			 */
 			$default_section_meta = apply_filters( 'mesh_default_section_meta_fields', $default_section_meta );
 
-			// Save CSS Classes.
+			// Save Section CSS Classes.
 			$css_classes           = explode( ' ', $section_data['css_class'] );
 			$sanitized_css_classes = array();
 
@@ -497,6 +498,23 @@ class Mesh {
 				update_post_meta( $section->ID, '_mesh_css_class', $sanitized_css_classes );
 			}
 
+			// Save Row CSS Classes.
+			$row_classes           = explode( ' ', $section_data['row_class'] );
+			$sanitized_row_classes = array();
+
+			foreach ( $row_classes as $css ) {
+				$sanitized_row_classes[] = sanitize_html_class( $css );
+			}
+
+			$sanitized_row_classes = implode( ' ', $sanitized_row_classes );
+
+			if ( empty( $sanitized_row_classes ) ) {
+				delete_post_meta( $section->ID, '_mesh_row_class' );
+			} else {
+				update_post_meta( $section->ID, '_mesh_row_class', $sanitized_row_classes );
+			}
+
+			// Save Featured Image
 			$featured_image = $section_data['featured_image'];
 
 			if ( empty( $featured_image ) ) {

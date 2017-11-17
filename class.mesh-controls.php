@@ -134,9 +134,16 @@ class Mesh_Controls {
 			),
 			'more_options' => array(
 				'css-class' => array(
-					'label'          => __( 'CSS Class', 'mesh' ),
+					'label'          => __( 'Section Class', 'mesh' ),
 					'type'           => 'text',
 					'css_classes'    => array( 'mesh-section-class' ),
+					'show_on_cb'     => false,
+					'validation_cb'  => false,
+				),
+				'row-class' => array(
+					'label'          => __( 'Row Class', 'mesh' ),
+					'type'           => 'text',
+					'css_classes'    => array( 'mesh-row-class' ),
 					'show_on_cb'     => false,
 					'validation_cb'  => false,
 				),

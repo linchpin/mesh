@@ -29,8 +29,10 @@ do_action( 'mesh_section_before' );
 	<?php
 		$title_display = get_post_meta( get_the_ID(), '_mesh_title_display', true );
 		$collapse_column_spacing = get_post_meta( get_the_ID(), '_mesh_collapse', true );
+	    $custom_row_class = get_post_meta( get_the_ID(), '_mesh_row_class', true );
 
 		$row_class = ( ! empty( $collapse_column_spacing ) ) ? 'row collapse' : 'row';
+	    $row_class = ( ! empty( $custom_row_class ) ) ? $row_class . ' ' . $custom_row_class : $row_class;
 	?>
 
 	<div class="<?php echo esc_attr( $row_class ); ?>">
