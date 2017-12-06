@@ -1,5 +1,11 @@
 # Change Log For Mesh
 
+## [1.2.3] - 2017-11-13
+
+### Fixes
+
+- Fixed a javascript issue with FireFox
+
 ## [1.2.2] - 2017-9-24
 
 ### Fixes

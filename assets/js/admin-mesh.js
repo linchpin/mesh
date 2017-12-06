@@ -1295,8 +1295,11 @@ mesh.admin = function ($) {
 				.on('change', '#mesh-css_mode', self.display_foundation_options);
 
 			// @since 1.2
+
+			var event = ( typeof( event ) != 'undefined' ) ? event : '';
+
 			$(document)
-				.on('postbox-toggled', {event: event}, self.expand_section);
+				.on('postbox-toggled', {event: event}, self.expand_section );
 
 			$sections = $('.mesh-section');
 
@@ -1369,7 +1372,7 @@ mesh.admin = function ($) {
 		 * @param {object} element The Object Being Expanded (typically postbox).
 		 * @return void
 		 */
-		expand_section: function (event, element) {
+		expand_section: function ( event, element ) {
 
 			var $section = $(element),
 				$tinymce_editor = $section.find('.wp-editor-area');
