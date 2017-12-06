@@ -44,7 +44,7 @@ do_action( 'mesh_section_before' );
 	}
 	?>
 
-	<div class="<?php echo esc_attr( $row_class ); ?>"<?php echo esc_attr( $equalize ); ?>>
+	<div class="<?php echo esc_attr( $row_class ); ?>"<?php echo $equalize; ?>>
 		<?php if ( ! empty( $title_display ) && 'no block title' !== strtolower( get_the_title() ) ) : ?>
 			<div class="small-12 columns title-row">
 				<h2 class="entry-title"><?php the_title(); ?></h2>
