@@ -2,8 +2,8 @@
 Contributors: linchpin_agency, aware, maxinacube, desrosj, nateallen, ebeltram, lulu5588, fischfood
 Tags: linchpin, sections, content, page builder, page builder plugin, design, wysiwyg, home page builder, template builder, layout builder, responsive, landing page builder, website builder, site builder, drag and drop builder, editor, page layout, visual editor, foundation, bootstrap
 Requires at least: 4.0
-Tested up to: 4.8.2
-Stable tag: 1.2.2
+Tested up to: 4.9.1
+Stable tag: 1.2.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -73,9 +73,13 @@ Learn more about available hooks (filters and actions) by visiting the mesh our 
 
 == Changelog ==
 
-= 1.2.3 =
+= 1.2.4 =
 * Added hooks
 * Added field for custom Section ID
+
+= 1.2.3 =
+* Fixed a javascript issue with FireFox
+* Fixed an issue with Equalizer options being over sanitized.
 
 = 1.2.2 =
 * Fixed bug causing 'Show Title' checkbox to not work correctly

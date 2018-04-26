@@ -50,7 +50,7 @@ $mesh_element_attributes = implode( ' ', $mesh_element_attributes );
 	}
 	?>
 
-	<div class="<?php echo esc_attr( $row_class ); ?>"<?php echo esc_attr( $equalize ); // WPCS: sanitization ok. ?>>
+	<div class="<?php echo esc_attr( $row_class ); ?>"<?php echo $equalize; // WPCS: sanitization ok. ?>>
 		<?php if ( ! empty( $title_display ) && 'no block title' !== strtolower( get_the_title() ) ) : ?>
             <div class="<?php echo esc_attr( $title_class ); ?>">
 				<h2 class="entry-title"><?php the_title(); ?></h2>
@@ -73,7 +73,8 @@ $mesh_element_attributes = implode( ' ', $mesh_element_attributes );
 				'collapse_spacing' => ( ! empty( $collapse_column_spacing ) ) ? 'collapse' : '',
 			);
 			?>
-			<div <?php mesh_block_class( $block->ID, $block_class_args ); ?><?php echo esc_attr( $equalize_watch ); ?> <?php mesh_section_background( $block->ID ); ?> <?php echo $mesh_element_attributes; ?>>
+
+			<div <?php mesh_block_class( $block->ID, $block_class_args ); ?><?php echo esc_attr( $equalize_watch ); ?> <?php mesh_section_background( $block->ID ); ?> <?php echo esc_html( $mesh_element_attributes ); ?>>
 				<?php if ( ! empty( $block->post_title ) && 'no column title' !== strtolower( $block->post_title ) ) : ?>
 					<h3 class="entry-subtitle"><?php echo esc_html( apply_filters( 'the_title', $block->post_title ) ); ?></h3>
 				<?php

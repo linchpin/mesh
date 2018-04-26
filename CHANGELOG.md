@@ -1,6 +1,6 @@
 # Change Log For Mesh
 
-## [1.2.3] - 2017-11-16
+## [Unreleased]
 
 ### Added
 
@@ -17,6 +17,13 @@
   - mesh_column_attributes
   
 - Added field for custom Section ID, Section ID defaults to mesh-section-{post_id}
+
+## [1.2.3] - 2017-12-06
+
+### Fixes
+
+- Fixed a javascript issue with FireFox
+- Fixed an issue with Equalizer options being over sanitized.
 
 ## [1.2.2] - 2017-9-24
 
