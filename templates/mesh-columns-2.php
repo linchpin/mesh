@@ -41,7 +41,7 @@ do_action( 'mesh_section_before' );
 		$equalize_watch = ' data-equalizer-watch';
 	}
 	?>
-	<div class="<?php echo esc_attr( $row_class ); ?>"<?php echo esc_attr( $equalize ); ?>>
+	<div class="<?php echo esc_attr( $row_class ); ?>"<?php echo $equalize; // WPCS: sanitization ok. ?>>
 		<?php if ( ! empty( $title_display ) && 'no block title' !== strtolower( get_the_title() ) ) : ?>
 			<div class="small-12 columns title-row">
 				<h2 class="entry-title"><?php the_title(); ?></h2>
@@ -66,7 +66,7 @@ do_action( 'mesh_section_before' );
 			);
 			?>
 
-			<div <?php mesh_block_class( $block->ID, $block_class_args ); ?><?php echo esc_attr( $equalize_watch ); ?> <?php mesh_section_background( $block->ID ); ?>>
+			<div <?php mesh_block_class( $block->ID, $block_class_args ); ?><?php echo $equalize_watch; ?> <?php mesh_section_background( $block->ID ); ?>>
 				<?php if ( ! empty( $block->post_title ) && 'no column title' !== strtolower( $block->post_title ) ) : ?>
 					<h3 class="entry-subtitle"><?php echo esc_html( $block->post_title ); ?></h3>
 				<?php endif; ?>

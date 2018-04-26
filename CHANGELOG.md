@@ -1,5 +1,12 @@
 # Change Log For Mesh
 
+## [1.2.3] - 2017-12-06
+
+### Fixes
+
+- Fixed a javascript issue with FireFox
+- Fixed an issue with Equalizer options being over sanitized.
+
 ## [1.2.2] - 2017-9-24
 
 ### Fixes
