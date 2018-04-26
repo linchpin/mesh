@@ -46,7 +46,7 @@ class Mesh_Settings {
 	 */
 	public static function add_admin_menu() {
 		add_options_page( LINCHPIN_MESH_PLUGIN_NAME, LINCHPIN_MESH_PLUGIN_NAME, 'manage_options', self::$settings_page, array( 'Mesh_Settings', 'add_options_page' ) );
-		add_submenu_page( 'edit.php?post_type=mesh_template', __( 'Settings', 'mesh' ), __( 'Settings', 'mesh' ), 'manage_options', 'options-general.php?page=mesh' );
+		add_submenu_page( 'edit.php?post_type=mesh_template', esc_html__( 'Settings', 'mesh' ), esc_html__( 'Settings', 'mesh' ), 'manage_options', 'options-general.php?page=mesh' );
 	}
 
 	/**
@@ -96,7 +96,7 @@ class Mesh_Settings {
 		// Default Settings Section.
 		add_settings_section(
 			'mesh_sections',
-			__( 'Mesh Configurations', 'mesh' ),
+			esc_html__( 'Mesh Configurations', 'mesh' ),
 			array( 'Mesh_Settings', 'create_section' ),
 			self::$settings_page
 		);
@@ -104,19 +104,19 @@ class Mesh_Settings {
 		// Option : CSS Mode.
 		$css_mode = array(
 			array(
-				'label' => __( 'Use Mesh CSS', 'mesh' ),
+				'label' => esc_html__( 'Use Mesh CSS', 'mesh' ),
 				'value' => 0,
 			),
 			array(
-				'label' => __( 'Disable Mesh CSS', 'mesh' ),
+				'label' => esc_html__( 'Disable Mesh CSS', 'mesh' ),
 				'value' => -1,
 			),
 			array(
-				'label' => __( 'Use Foundation built into my theme', 'mesh' ),
+				'label' => esc_html__( 'Use Foundation built into my theme', 'mesh' ),
 				'value' => 1,
 			),
 			array(
-				'label' => __( 'Use Bootstrap', 'mesh' ),
+				'label' => esc_html__( 'Use Bootstrap', 'mesh' ),
 				'value' => 2,
 			),
 		);
@@ -126,14 +126,14 @@ class Mesh_Settings {
 
 		add_settings_field(
 			'css_mode',
-			__( 'CSS Settings', 'mesh' ),
+			esc_html__( 'CSS Settings', 'mesh' ),
 			array( 'Mesh_Settings', 'add_select' ),
 			self::$settings_page,
 			'mesh_sections',
 			array(
 				'field' => 'css_mode',
-				'label' => __( 'CSS', 'mesh' ),
-				'description' => __( 'Choose whether or not to enqueue CSS with Mesh.', 'mesh' ),
+				'label' => esc_html__( 'CSS', 'mesh' ),
+				'description' => esc_html__( 'Choose whether or not to enqueue CSS with Mesh.', 'mesh' ),
 				'options' => $css_mode,
 			)
 		);
@@ -145,25 +145,25 @@ class Mesh_Settings {
 		 */
 		$foundation_version = array(
 			array(
-				'label' => __( 'Foundation 5', 'mesh' ),
+				'label' => esc_html__( 'Foundation 5', 'mesh' ),
 				'value' => '',
 			),
 			array(
-				'label' => __( 'Foundation 6', 'mesh' ),
+				'label' => esc_html__( 'Foundation 6', 'mesh' ),
 				'value' => 6,
 			),
 		);
 
 		add_settings_field(
 			'foundation_version',
-			__( 'Foundation Version', 'mesh' ),
+			esc_html__( 'Foundation Version', 'mesh' ),
 			array( 'Mesh_Settings', 'add_select' ),
 			self::$settings_page,
 			'mesh_sections',
 			array(
 				'field' => 'foundation_version',
-				'label' => __( 'Foundation Version', 'mesh' ),
-				'description' => __( 'Choose which version of Foundation you are using. Foundation 5 and 6 have subtle yet important differences when it comes to markup for components like interchange that Mesh utilizes.', 'mesh' ),
+				'label' => esc_html__( 'Foundation Version', 'mesh' ),
+				'description' => esc_html__( 'Choose which version of Foundation you are using. Foundation 5 and 6 have subtle yet important differences when it comes to markup for components like interchange that Mesh utilizes.', 'mesh' ),
 				'options' => $foundation_version,
 			)
 		);
@@ -174,7 +174,7 @@ class Mesh_Settings {
 		if ( ! empty( $post_types ) ) {
 			add_settings_section(
 				'mesh_post_type_section',
-				__( 'Post Types', 'mesh' ),
+				esc_html__( 'Post Types', 'mesh' ),
 				array( 'Mesh_Settings', 'create_post_type_section' ),
 				self::$settings_page
 			);
@@ -283,7 +283,15 @@ class Mesh_Settings {
 		<label for="mesh-<?php echo esc_attr( $args['field'] ); ?>"><?php echo esc_html( $args['label'] ); ?></label>
 		<select id="mesh-<?php echo esc_attr( $args['field'] ); ?>" name="mesh_settings[<?php echo esc_attr( $args['field'] ); ?>]">
 			<?php foreach ( $select_options as $option ) : ?>
-				<option value="<?php echo esc_attr( $option['value'] ); ?>" <?php selected( $options[ $args['field'] ], $option['value'] ); ?>><?php echo esc_html( $option['label'] ); ?></option>
+				<?php
+
+				$selected = '';
+
+				if ( ! empty( $options[ $args['field'] ] ) ) {
+					$selected = selected( $options[ $args['field'] ], $option['value'], false );
+				}
+				?>
+				<option value="<?php echo esc_attr( $option['value'] ); ?>" <?php echo esc_html( $selected ); ?>><?php echo esc_html( $option['label'] ); ?></option>
 			<?php endforeach; ?>
 		</select>
 		<?php
@@ -365,10 +373,10 @@ class Mesh_Settings {
 	 */
 	static public function get_tabs() {
 		$tabs = array(
-			'settings'  => __( 'Settings',   'mesh' ),
-			'about'     => __( 'About Mesh', 'mesh' ),
-			'new'       => __( "What's New", 'mesh' ),
-			'changelog' => __( 'Change Log', 'mesh' ),
+			'settings'  => esc_html__( 'Settings',   'mesh' ),
+			'about'     => esc_html__( 'About Mesh', 'mesh' ),
+			'new'       => esc_html__( "What's New", 'mesh' ),
+			'changelog' => esc_html__( 'Change Log', 'mesh' ),
 		);
 
 		return apply_filters( 'mesh_tabs', $tabs );
