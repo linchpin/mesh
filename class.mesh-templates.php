@@ -114,22 +114,27 @@ class Mesh_Templates {
 
 		// Using an extra variable for the array to support PHP 5.4.
 		$mesh_post_types_array = get_option( 'mesh_post_types', array() );
-		$mesh_post_types = array_keys( $mesh_post_types_array );
+		$mesh_post_types = array();
+
+		if ( ! empty( $mesh_post_types_array ) ) {
+			$mesh_post_types = array_keys( $mesh_post_types_array );
+		}
+
 		$available_post_types = array_merge( array( 'mesh_template' ), $mesh_post_types );
 
 		register_taxonomy( 'mesh_template_usage', $available_post_types, array(
 			'labels' => array(
-				'name'              => _x( 'Mesh Template', 'Mesh Template', 'mesh' ),
-				'singular_name'     => _x( 'Mesh Template', 'Mesh Template', 'mesh' ),
-				'search_items'      => __( 'Search Mesh Template Usage', 'mesh' ),
-				'all_items'         => __( 'All Mesh Template Usage', 'mesh' ),
-				'parent_item'       => __( 'Parent Mesh Template Usage', 'mesh' ),
-				'parent_item_colon' => __( 'Parent Mesh Template Usage:', 'mesh' ),
-				'edit_item'         => __( 'Edit Mesh Template Usage', 'mesh' ),
-				'update_item'       => __( 'Update Mesh Template Usage', 'mesh' ),
-				'add_new_item'      => __( 'Add New Mesh Template Usage', 'mesh' ),
-				'new_item_name'     => __( 'New Mesh Template Usage Name', 'mesh' ),
-				'menu_name'         => __( 'Mesh Template Usage', 'mesh' ),
+				'name'              => esc_html_x( 'Mesh Template', 'Mesh Template', 'mesh' ),
+				'singular_name'     => esc_html_x( 'Mesh Template', 'Mesh Template', 'mesh' ),
+				'search_items'      => esc_html__( 'Search Mesh Template Usage', 'mesh' ),
+				'all_items'         => esc_html__( 'All Mesh Template Usage', 'mesh' ),
+				'parent_item'       => esc_html__( 'Parent Mesh Template Usage', 'mesh' ),
+				'parent_item_colon' => esc_html__( 'Parent Mesh Template Usage:', 'mesh' ),
+				'edit_item'         => esc_html__( 'Edit Mesh Template Usage', 'mesh' ),
+				'update_item'       => esc_html__( 'Update Mesh Template Usage', 'mesh' ),
+				'add_new_item'      => esc_html__( 'Add New Mesh Template Usage', 'mesh' ),
+				'new_item_name'     => esc_html__( 'New Mesh Template Usage Name', 'mesh' ),
+				'menu_name'         => esc_html__( 'Mesh Template Usage', 'mesh' ),
 			),
 			'show_ui' => LINCHPIN_MESH_DEBUG_MODE,
 			'query_var' => true,
@@ -139,17 +144,17 @@ class Mesh_Templates {
 
 		register_taxonomy( 'mesh_template_types', $available_post_types, array(
 			'labels' => array(
-				'name'              => _x( 'Mesh Template Type', 'Mesh Template Type', 'mesh' ),
-				'singular_name'     => _x( 'Mesh Template Type', 'Mesh Template Type', 'mesh' ),
-				'search_items'      => __( 'Search Mesh Template Types', 'mesh' ),
-				'all_items'         => __( 'All Mesh Template Types', 'mesh' ),
-				'parent_item'       => __( 'Parent Mesh Template Types', 'mesh' ),
-				'parent_item_colon' => __( 'Parent Mesh Template Types:', 'mesh' ),
-				'edit_item'         => __( 'Edit Mesh Template Type', 'mesh' ),
-				'update_item'       => __( 'Update Mesh Template Type', 'mesh' ),
-				'add_new_item'      => __( 'Add New Mesh Template Type', 'mesh' ),
-				'new_item_name'     => __( 'New Mesh Template Type Name', 'mesh' ),
-				'menu_name'         => __( 'Mesh Template Type', 'mesh' ),
+				'name'              => esc_html_x( 'Mesh Template Type', 'Mesh Template Type', 'mesh' ),
+				'singular_name'     => esc_html_x( 'Mesh Template Type', 'Mesh Template Type', 'mesh' ),
+				'search_items'      => esc_html__( 'Search Mesh Template Types', 'mesh' ),
+				'all_items'         => esc_html__( 'All Mesh Template Types', 'mesh' ),
+				'parent_item'       => esc_html__( 'Parent Mesh Template Types', 'mesh' ),
+				'parent_item_colon' => esc_html__( 'Parent Mesh Template Types:', 'mesh' ),
+				'edit_item'         => esc_html__( 'Edit Mesh Template Type', 'mesh' ),
+				'update_item'       => esc_html__( 'Update Mesh Template Type', 'mesh' ),
+				'add_new_item'      => esc_html__( 'Add New Mesh Template Type', 'mesh' ),
+				'new_item_name'     => esc_html__( 'New Mesh Template Type Name', 'mesh' ),
+				'menu_name'         => esc_html__( 'Mesh Template Type', 'mesh' ),
 			),
 			'show_ui' => LINCHPIN_MESH_DEBUG_MODE,
 			'rewrite' => false,
