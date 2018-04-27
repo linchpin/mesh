@@ -86,12 +86,37 @@ class Mesh_Settings {
 	}
 
 	/**
+	 * Validate that the user has enabled a post type
+	 *
+	 * @since 1.2.4
+	 * @param $input
+	 *
+	 * @return $input
+	 */
+	public static function validate_mesh_post_types( $input ) {
+		$message = '';
+		$type = '';
+
+		if ( null !== $input ) {
+			$message = esc_html__( 'Mesh Settings Saved.', 'mesh' );
+			$type = 'updated';
+		} else {
+			$message = esc_html__( 'Mesh Settings Saved. You have disabled all post types. We suggest disabling the plugin if it is no longer needed', 'mesh' );
+			$type = 'updated';
+		}
+
+		add_settings_error( 'mesh_post_types', 'mesh_post_types_notice', $message, $type );
+
+		return $input;
+	}
+
+	/**
 	 * Add all of our settings from the API
 	 */
 	public static function settings_init() {
 
 		register_setting( self::$settings_page, 'mesh_settings' );
-		register_setting( self::$settings_page, 'mesh_post_types' );
+		register_setting( self::$settings_page, 'mesh_post_types', array( 'Mesh_Settings', 'validate_mesh_post_types' ) );
 
 		// Default Settings Section.
 		add_settings_section(
