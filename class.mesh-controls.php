@@ -140,6 +140,13 @@ class Mesh_Controls {
 					'show_on_cb'     => false,
 					'validation_cb'  => false,
 				),
+				'section-id' => array(
+                    'label'         => __( 'Section ID', 'mesh' ),
+                    'type'          => 'text',
+                    'css_classes'   => array( 'mesh-section-id' ),
+                    'show_on_cb'    => false,
+                    'validation_cb' => false,
+                ),
 				'collapse' => array(
 					'label'          => __( 'Collapse Padding', 'mesh' ),
 					'type'           => 'checkbox',
@@ -520,4 +527,35 @@ function mesh_section_controls( $section, $blocks, $visible ) {
 function mesh_block_controls( $block, $section_blocks ) {
 	$mesh_controls = new Mesh_Controls();
 	$mesh_controls->mesh_block_controls( $block, $section_blocks );
+}
+
+/**
+ * Build out extra element attributes
+ *
+ * @param int  $post_id Current Post ID.
+ * @since 1.2.3
+ *
+ * @return string
+ */
+function get_mesh_element_attributes( $post_id = 0 ) {
+	global $post;
+
+	if ( empty( $post_id ) ) {
+		$post_id  = $post->ID;
+	}
+
+	$post_parent_id   = wp_get_post_parent_id( $post_id );
+	$parent_post_type = get_post_type( $post_parent_id );
+
+	$element_attributes = array();
+
+	if ( 'mesh_section' != $parent_post_type ) {
+	    $section_id = get_post_meta( $post_id, '_mesh_section_id', true );
+	    $section_id = ( ! empty( $section_id ) ) ? $section_id : 'mesh-section-' . $post_id;
+	    $section_id = 'id="' . $section_id . '"';
+
+	    $element_attributes[] = $section_id;
+    }
+
+    return $element_attributes;
 }

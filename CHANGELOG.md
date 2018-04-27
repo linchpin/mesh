@@ -1,5 +1,23 @@
 # Change Log For Mesh
 
+## [Unreleased]
+
+### Added
+
+- Added actions
+  - mesh_controls_before
+  - mesh_controls_after
+  - mesh_sections_before
+  - mesh_sections_after
+  - mesh_columns_before
+  - mesh_columns_after
+  
+- Added filters
+  - mesh_row_attributes
+  - mesh_column_attributes
+  
+- Added field for custom Section ID, Section ID defaults to mesh-section-{post_id}
+
 ## [1.2.3] - 2017-12-06
 
 ### Fixes

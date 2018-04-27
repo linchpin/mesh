@@ -443,6 +443,8 @@ function mesh_display_sections( $post_id = '', $echo = true ) {
 	}
 
 	if ( true === $echo ) {
+	    do_action( 'mesh_sections_before' );
+
 		if ( $mesh_section_query->have_posts() ) {
 			while ( $mesh_section_query->have_posts() ) {
 				$mesh_section_query->the_post();
@@ -450,8 +452,13 @@ function mesh_display_sections( $post_id = '', $echo = true ) {
 			}
 			wp_reset_postdata();
 		}
+
+		do_action( 'mesh_sections_after' );
 	} else {
 		ob_start();
+
+		do_action( 'mesh_sections_before' );
+
 		if ( $mesh_section_query->have_posts() ) {
 			while ( $mesh_section_query->have_posts() ) {
 				$mesh_section_query->the_post();
@@ -459,6 +466,9 @@ function mesh_display_sections( $post_id = '', $echo = true ) {
 			}
 			wp_reset_postdata();
 		}
+
+		do_action( 'mesh_sections_after' );
+
 		$output = ob_get_contents();
 		ob_end_clean();
 

@@ -336,11 +336,11 @@ class Mesh {
 			}
 			?>
 			<div class="notice below-h2 mesh-row mesh-main-ua-row<?php echo esc_attr( $hide ); ?>">
-				<div class="mesh-columns-3 columns">
+				<div class="mesh-columns-2 columns">
 					<p class="title mesh-admin-title"><?php esc_html_e( 'Mesh', 'mesh' ); ?></p>
 				</div>
 
-				<div class="mesh-columns-9 columns text-right">
+				<div class="mesh-columns-10 columns text-right">
 					<?php include LINCHPIN_MESH___PLUGIN_DIR . 'admin/controls.php'; ?>
 				</div>
 			</div>
@@ -463,6 +463,7 @@ class Mesh {
 			 */
 			$default_section_meta = array(
 				'css_class',
+				'section_id',
 				'lp_equal',
 				'title_display',
 				'push_pull',
@@ -496,6 +497,18 @@ class Mesh {
 			} else {
 				update_post_meta( $section->ID, '_mesh_css_class', $sanitized_css_classes );
 			}
+
+
+			// Save Section ID
+			$mesh_section_id = $section_data['section_id'];
+			$mesh_section_id = sanitize_html_class( $mesh_section_id );
+
+			if ( empty( $mesh_section_id ) ) {
+				delete_post_meta( $section->ID, '_mesh_section_id' );
+			} else {
+				update_post_meta( $section->ID, '_mesh_section_id', $mesh_section_id );
+			}
+
 
 			$featured_image = $section_data['featured_image'];
 
