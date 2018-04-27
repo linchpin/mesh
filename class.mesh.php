@@ -202,8 +202,12 @@ class Mesh {
 
 		global $post;
 
+		if ( empty( $post ) ) {
+			return $in;
+		}
+
 		// Exclude the default editor from our customizations.
-		if ( '#content' === $in['selector'] ) {
+		if ( isset( $in['selector'] ) && '#content' === $in['selector'] ) {
 			return $in;
 		}
 
