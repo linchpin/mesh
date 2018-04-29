@@ -39,8 +39,8 @@ class Mesh_Upgrades {
 			}
 
 			// Latest Version.
-			if ( version_compare( $GLOBALS['mesh_current_version'], '1.2.3', '<' ) ) {
-				$this->update_version( '1.2.3' );
+			if ( version_compare( $GLOBALS['mesh_current_version'], '1.2.4', '<' ) ) {
+				$this->version_1_2_4();
 			}
 		}
 	}
@@ -113,6 +113,27 @@ class Mesh_Upgrades {
 		wp_insert_term( 'starter', 'mesh_template_types' );
 
 		$this->update_version( '1.1' );
+	}
+
+	/**
+	 * Upgrade to version 1.2.4
+	 *
+	 * Add css_mode as a default option that is saved. By default the css_mode should
+	 * be set to 0 and it should output on the front end.
+	 */
+	function version_1_2_4() {
+
+		$mesh_options = get_option( 'mesh_settings', array(
+			'css_mode' => 0,
+		) );
+
+		if ( empty( $mesh_options['css_mode'] ) ) {
+			$mesh_options['css_mode'] = 0;
+		}
+
+		update_option( 'mesh_settings', $mesh_options );
+
+		$this->update_version( '1.2.4' );
 	}
 
 	/**
