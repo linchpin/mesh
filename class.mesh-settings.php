@@ -52,14 +52,15 @@ class Mesh_Settings {
 	/**
 	 * Create our settings section
 	 *
+	 * @param $args
 	 * @since 1.0.0
 	 */
-	public static function create_section() {
+	public static function create_section( $args ) {
 		?>
 		<div class="gray-bg negative-bg">
 			<div class="wrapper">
 				<h2 class="color-darkpurple light-weight">
-					<?php esc_html_e( 'Basic Settings', 'mesh' ); ?>
+					<?php echo esc_html( $args['title'] ); ?>
 				</h2>
 			</div>
 		</div>
@@ -107,6 +108,8 @@ class Mesh_Settings {
 
 		add_settings_error( 'mesh_post_types', 'mesh_post_types_notice', $message, $type );
 
+		$input['mesh_template'] = '1'; // Always make sure we have a mesh_template in our options
+
 		return $input;
 	}
 
@@ -121,7 +124,7 @@ class Mesh_Settings {
 		// Default Settings Section.
 		add_settings_section(
 			'mesh_sections',
-			esc_html__( 'Mesh Configurations', 'mesh' ),
+			esc_html__( 'Basic Settings', 'mesh' ),
 			array( 'Mesh_Settings', 'create_section' ),
 			self::$settings_page
 		);
@@ -219,12 +222,38 @@ class Mesh_Settings {
 					self::$settings_page,
 					'mesh_post_type_section',
 					array(
-						'post_type' => $post_type_object->name,
-						'name' => $post_type_object->labels->name,
+						'field'    => $post_type_object->name,
+						'name'    => $post_type_object->labels->name,
+						'options' => 'mesh_post_types',
 					)
 				);
 			}
 		}
+
+		// Uninstall Option
+
+		// Default Settings Section.
+		add_settings_section(
+			'mesh_uninstall',
+			esc_html__( 'Mesh Uninstall', 'mesh' ),
+			array( 'Mesh_Settings', 'create_section' ),
+			self::$settings_page
+		);
+
+		add_settings_field(
+			'mesh_uninstall',
+			esc_html__( 'Remove All Data on Uninstall?', 'mesh' ),
+			array( 'Mesh_Settings', 'add_checkbox' ),
+			self::$settings_page,
+			'mesh_uninstall',
+			array(
+				'options'     => 'mesh_settings',
+				'field'       => 'uninstall',
+				'label'       => esc_html__( 'Uninstall', 'mesh' ),
+				'type'        => $post_type_object->name,
+				'name'        => $post_type_object->labels->name,
+			)
+		);
 	}
 
 	/**
@@ -336,16 +365,20 @@ class Mesh_Settings {
 			'class'       => '',
 			'description' => '',
 			'label'       => '',
+			'options'     => '', // @since 1.2.4
 		);
 
 		// Parse incoming $args into an array and merge it with $defaults.
 		$args = wp_parse_args( $args, $defaults );
 
-		$options = get_option( 'mesh_post_types' );
+		if ( empty( $args['options'] ) ) { // If we don't have any option, die early.
+			return;
+		}
 
+		$options = get_option( $args['options'] );
 		$checked = false;
 
-		if ( ! empty( $options[ $args['post_type'] ] ) ) {
+		if ( ! empty( $options[ $args['field'] ] ) ) {
 			$checked = true;
 		}
 		?>
@@ -354,7 +387,7 @@ class Mesh_Settings {
 			<p class="description"><?php echo esc_html( $args['description'] ); ?></p>
 		<?php endif; ?>
 
-		<input type="checkbox" class="<?php echo esc_attr( $args['class'] ); ?>" name="mesh_post_types[<?php echo esc_attr( $args['post_type'] ); ?>]" value="1" <?php checked( $checked ); ?>>
+		<input type="checkbox" class="<?php echo esc_attr( $args['class'] ); ?>" name="<?php echo esc_attr( $args['options'] ); ?>[<?php echo esc_attr( $args['field'] ); ?>]" value="1" <?php checked( $checked ); ?>>
 
 		<?php
 	}
