@@ -1,13 +1,13 @@
 <?php
 /**
  * Plugin Name: Mesh
- * Plugin URI: http://linchpin.agency/wordpress-plugins/mesh
+ * Plugin URI: https://meshplugin.com?utm_source=mesh&utm_medium=plugin-admin-page&utm_campaign=wp-plugin
  * Description: Adds multiple sections for content on a post by post basis. Mesh also has settings to enable it for specific post types
  * Version: 1.2.4
  * Text Domain: mesh
  * Domain Path: /languages
  * Author: Linchpin
- * Author URI: http://linchpin.agency/?utm_source=mesh&utm_medium=plugin-admin-page&utm_campaign=wp-plugin
+ * Author URI: https://linchpin.agency/?utm_source=mesh&utm_medium=plugin-admin-page&utm_campaign=wp-plugin
  * License: GPLv2 or later
  *
  * @package Mesh
