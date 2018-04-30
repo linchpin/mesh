@@ -43,17 +43,17 @@ class Mesh {
 
 		$this->template_data = array(
 			'mesh-columns-1.php' => array(
-				'label'  => __( '1 Columns', 'mesh' ),
+				'label'  => esc_html__( '1 Columns', 'mesh' ),
 				'blocks' => 1,
 				'widths' => array( 12 ),
 			),
 			'mesh-columns-2.php' => array(
-				'label'  => __( '2 Columns', 'mesh' ),
+				'label'  => esc_html__( '2 Columns', 'mesh' ),
 				'blocks' => 2,
 				'widths' => array( 6, 6 ),
 			),
 			'mesh-columns-3.php' => array(
-				'label'  => __( '3 Columns', 'mesh' ),
+				'label'  => esc_html__( '3 Columns', 'mesh' ),
 				'blocks' => 3,
 				'widths' => array( 4, 4, 4 ),
 			),
@@ -183,7 +183,7 @@ class Mesh {
 		}
 
 		$args = array(
-			'label'   => __( 'Show Extra Mesh Section Controls?', 'mesh' ),
+			'label'   => esc_html__( 'Show Extra Mesh Section Controls?', 'mesh' ),
 			'default' => 0,
 			'option'  => 'linchpin_mesh_section_kitchensink',
 		);
@@ -252,26 +252,26 @@ class Mesh {
 		load_plugin_textdomain( 'mesh', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
 
 		$labels = array(
-			'name'               => _x( 'Content Section', 'Content Section', 'mesh' ),
-			'singular_name'      => _x( 'Content Section', 'Content Section', 'mesh' ),
-			'menu_name'          => __( 'Content Section', 'mesh' ),
-			'name_admin_bar'     => __( 'Content Section', 'mesh' ),
-			'parent_item_colon'  => __( 'Parent Content Section:', 'mesh' ),
-			'all_items'          => __( 'All Content Sections', 'mesh' ),
-			'add_new_item'       => __( 'Add New Content Section', 'mesh' ),
-			'add_new'            => __( 'Add New', 'mesh' ),
-			'new_item'           => __( 'New Content Section', 'mesh' ),
-			'edit_item'          => __( 'Edit Content Section', 'mesh' ),
-			'update_item'        => __( 'Update Content Section', 'mesh' ),
-			'view_item'          => __( 'View Content Section', 'mesh' ),
-			'search_items'       => __( 'Search Content Sections', 'mesh' ),
-			'not_found'          => __( 'Not found', 'mesh' ),
-			'not_found_in_trash' => __( 'Not found in Trash', 'mesh' ),
+			'name'               => esc_html_x( 'Content Section', 'Content Section', 'mesh' ),
+			'singular_name'      => esc_html_x( 'Content Section', 'Content Section', 'mesh' ),
+			'menu_name'          => esc_html__( 'Content Section', 'mesh' ),
+			'name_admin_bar'     => esc_html__( 'Content Section', 'mesh' ),
+			'parent_item_colon'  => esc_html__( 'Parent Content Section:', 'mesh' ),
+			'all_items'          => esc_html__( 'All Content Sections', 'mesh' ),
+			'add_new_item'       => esc_html__( 'Add New Content Section', 'mesh' ),
+			'add_new'            => esc_html__( 'Add New', 'mesh' ),
+			'new_item'           => esc_html__( 'New Content Section', 'mesh' ),
+			'edit_item'          => esc_html__( 'Edit Content Section', 'mesh' ),
+			'update_item'        => esc_html__( 'Update Content Section', 'mesh' ),
+			'view_item'          => esc_html__( 'View Content Section', 'mesh' ),
+			'search_items'       => esc_html__( 'Search Content Sections', 'mesh' ),
+			'not_found'          => esc_html__( 'Not found', 'mesh' ),
+			'not_found_in_trash' => esc_html__( 'Not found in Trash', 'mesh' ),
 		);
 
 		register_post_type( 'mesh_section', array(
-			'label'               => __( 'Content Section', 'mesh' ),
-			'description'         => __( 'Content Section', 'mesh' ),
+			'label'               => esc_html__( 'Content Section', 'mesh' ),
+			'description'         => esc_html__( 'Content Section', 'mesh' ),
 			'labels'              => $labels,
 			'public'              => false,
 			'hierarchical'        => true,
@@ -659,7 +659,7 @@ class Mesh {
 				$blocks = mesh_get_section_blocks( $p->ID );
 
 				foreach ( $blocks as $block ) {
-					if ( ! empty( $block->post_title ) && __( 'No Column Title', 'mesh' ) !== $block->post_title ) {
+					if ( ! empty( $block->post_title ) && esc_html__( 'No Column Title', 'mesh' ) !== $block->post_title ) {
 						$section_content[] = strip_tags( $block->post_title );
 					}
 
@@ -685,7 +685,7 @@ class Mesh {
 					continue;
 				}
 
-				if ( ! empty( $p->post_title ) && __( 'No Section Title', 'mesh' ) !== $p->post_title ) {
+				if ( ! empty( $p->post_title ) && esc_html__( 'No Section Title', 'mesh' ) !== $p->post_title ) {
 					$page_content_sections[] = strip_tags( $p->post_title );
 				}
 
@@ -904,22 +904,22 @@ class Mesh {
 		), '1.0', true );
 
 		$strings = array(
-			'reorder_warn'                    => __( 'Be sure to save the order of your sections once your changes are complete.', 'mesh' ),
-			'description'                     => __( 'Mesh allow you to easily break up your page into different blocks of content/markup.', 'mesh' ),
-			'add_image'                       => __( 'Set Background Image', 'mesh' ),
-			'remove_image'                    => __( 'Remove Background', 'mesh' ),
-			'expand_all'                      => __( 'Expand All', 'mesh' ),
-			'collapse_all'                    => __( 'Collapse All', 'mesh' ),
-			'default_title'                   => __( 'No Section Title', 'mesh' ),
-			'select_section_bg'               => __( 'Select Section Background', 'mesh' ),
-			'select_bg'                       => __( 'Select Background', 'mesh' ),
-			'select_block_bg'                 => __( 'Select Column Background', 'mesh' ),
-			'published'                       => __( 'Status: Published', 'mesh' ),
-			'draft'                           => __( 'Status: Draft', 'mesh' ),
-			'confirm_remove'                  => __( 'Are you sure you want to remove this section?', 'mesh' ),
-			'save_order'                      => __( 'Save Order', 'mesh' ),
-			'reorder'                         => __( 'Reorder Sections', 'mesh' ),
-			'confirm_template_section_update' => __( 'Apply template changes to posts/pages?', 'mesh' ),
+			'reorder_warn'                    => esc_html__( 'Be sure to save the order of your sections once your changes are complete.', 'mesh' ),
+			'description'                     => esc_html__( 'Mesh allow you to easily break up your page into different blocks of content/markup.', 'mesh' ),
+			'add_image'                       => esc_html__( 'Set Background Image', 'mesh' ),
+			'remove_image'                    => esc_html__( 'Remove Background', 'mesh' ),
+			'expand_all'                      => esc_html__( 'Expand All', 'mesh' ),
+			'collapse_all'                    => esc_html__( 'Collapse All', 'mesh' ),
+			'default_title'                   => esc_html__( 'No Section Title', 'mesh' ),
+			'select_section_bg'               => esc_html__( 'Select Section Background', 'mesh' ),
+			'select_bg'                       => esc_html__( 'Select Background', 'mesh' ),
+			'select_block_bg'                 => esc_html__( 'Select Column Background', 'mesh' ),
+			'published'                       => esc_html__( 'Status: Published', 'mesh' ),
+			'draft'                           => esc_html__( 'Status: Draft', 'mesh' ),
+			'confirm_remove'                  => esc_html__( 'Are you sure you want to remove this section?', 'mesh' ),
+			'save_order'                      => esc_html__( 'Save Order', 'mesh' ),
+			'reorder'                         => esc_html__( 'Reorder Sections', 'mesh' ),
+			'confirm_template_section_update' => esc_html__( 'Apply template changes to posts/pages?', 'mesh' ),
 		);
 
 		$strings = apply_filters( 'mesh_strings', $strings ); // Allow filtering of localization strings.

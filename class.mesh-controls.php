@@ -117,7 +117,7 @@ class Mesh_Controls {
 		$controls = array(
 			'visible_options' => array(
 				'template' => array(
-					'label'          => __( 'Columns', 'mesh' ),
+					'label'          => esc_html__( 'Columns', 'mesh' ),
 					'type'           => 'select',
 					'css_classes'    => array( 'mesh-choose-layout' ),
 					'validation_cb'  => false,
@@ -125,7 +125,7 @@ class Mesh_Controls {
 					'id'             => 'mesh-sections-template-' . $section->ID,
 				),
 				'title-display' => array(
-					'label'          => __( 'Display Title', 'mesh' ),
+					'label'          => esc_html__( 'Display Title', 'mesh' ),
 					'type'           => 'checkbox',
 					'css_classes'    => array( 'mesh-section-show-title' ),
 					'show_on_cb'     => false,
@@ -134,28 +134,28 @@ class Mesh_Controls {
 			),
 			'more_options' => array(
 				'css-class' => array(
-					'label'          => __( 'CSS Class', 'mesh' ),
+					'label'          => esc_html__( 'CSS Class', 'mesh' ),
 					'type'           => 'text',
 					'css_classes'    => array( 'mesh-section-class' ),
 					'show_on_cb'     => false,
 					'validation_cb'  => false,
 				),
 				'section-id' => array(
-                    'label'         => __( 'Section ID', 'mesh' ),
+                    'label'         => esc_html__( 'Section ID', 'mesh' ),
                     'type'          => 'text',
                     'css_classes'   => array( 'mesh-section-id' ),
                     'show_on_cb'    => false,
                     'validation_cb' => false,
                 ),
 				'collapse' => array(
-					'label'          => __( 'Collapse Padding', 'mesh' ),
+					'label'          => esc_html__( 'Collapse Padding', 'mesh' ),
 					'type'           => 'checkbox',
 					'css_classes'    => array( 'mesh-section-collapse-input' ),
 					'show_on_cb'     => false,
 					'validation_cb'  => false,
 				),
 				'push-pull' => array(
-					'label'          => __( 'Push Pull', 'mesh' ),
+					'label'          => esc_html__( 'Push Pull', 'mesh' ),
 					'type'           => 'checkbox',
 					'css_classes'    => array( 'mesh-section-push' ),
 					'show_on_cb'     => array( $this, 'show_push_pull' ),
@@ -163,11 +163,11 @@ class Mesh_Controls {
 				),
 				'featured_image' => array(
 					'type' => 'media',
-					'label' => __( 'Featured Image', 'mesh' ),
+					'label' => esc_html__( 'Featured Image', 'mesh' ),
 					'css_classes' => '',
 				),
 				'lp-equal' => array(
-					'label'          => __( 'Equalize', 'mesh' ),
+					'label'          => esc_html__( 'Equalize', 'mesh' ),
 					'type'           => 'checkbox',
 					'css_classes'    => 'mesh-section-equalize',
 					'show_on_cb'     => array( $this, 'show_equalize' ),
@@ -298,7 +298,7 @@ class Mesh_Controls {
 
 		$controls = array(
 			'offset' => array(
-				'label'          => __( 'Offset', 'mesh' ),
+				'label'          => esc_html__( 'Offset', 'mesh' ),
 				'type'           => 'select',
 				'css_classes'    => array( 'mesh-column-offset' ),
 				'validation_cb'  => false,
@@ -306,7 +306,7 @@ class Mesh_Controls {
 				'show_on_cb'     => array( $this, 'show_offset' ),
 			),
 			'css-class' => array(
-				'label'          => __( 'CSS Class', 'mesh' ),
+				'label'          => esc_html__( 'CSS Class', 'mesh' ),
 				'type'           => 'text',
 				'css_classes'    => array( 'mesh-section-class' ),
 				'validation_cb'  => false,
