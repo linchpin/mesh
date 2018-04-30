@@ -323,6 +323,10 @@ class Mesh {
 	public static function edit_page_form( $post ) {
 		$allowed_post_types = get_option( 'mesh_post_types' );
 
+		if ( empty( $allowed_post_types ) ) {
+			return;
+		}
+
 		if ( ! array_key_exists( $post->post_type, $allowed_post_types ) ) {
 			return;
 		}
@@ -985,6 +989,7 @@ class Mesh {
 				wp_enqueue_style( 'mesh-grid-foundation', plugins_url( 'assets/css/mesh-grid-foundation.css', __FILE__ ), array(), LINCHPIN_MESH_VERSION );
 			}
 		}
+
 	}
 
 	/**
