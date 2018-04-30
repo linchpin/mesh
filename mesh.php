@@ -3,7 +3,7 @@
  * Plugin Name: Mesh
  * Plugin URI: http://linchpin.agency/wordpress-plugins/mesh
  * Description: Adds multiple sections for content on a post by post basis. Mesh also has settings to enable it for specific post types
- * Version: 1.2.3
+ * Version: 1.2.4
  * Text Domain: mesh
  * Domain Path: /languages
  * Author: Linchpin
