@@ -77,26 +77,26 @@ class Mesh_Templates {
 	function init() {
 
 		$labels = array(
-			'name'                => _x( 'Mesh Templates', 'Mesh Templates', 'mesh' ),
-			'singular_name'       => _x( 'Mesh Template', 'Mesh Template', 'mesh' ),
-			'menu_name'           => __( 'Mesh', 'mesh' ),
-			'name_admin_bar'      => __( 'Mesh Template', 'mesh' ),
-			'parent_item_colon'   => __( 'Parent Mesh Template:', 'mesh' ),
-			'all_items'           => __( 'Mesh Templates', 'mesh' ),
-			'add_new_item'        => __( 'Add New Mesh Template', 'mesh' ),
-			'add_new'             => __( 'Add Template', 'mesh' ),
-			'new_item'            => __( 'New Mesh Template', 'mesh' ),
-			'edit_item'           => __( 'Edit Mesh Template', 'mesh' ),
-			'update_item'         => __( 'Update Mesh Template', 'mesh' ),
-			'view_item'           => __( 'View Mesh Template', 'mesh' ),
-			'search_items'        => __( 'Search Mesh Templates', 'mesh' ),
-			'not_found'           => __( 'Not found', 'mesh' ),
-			'not_found_in_trash'  => __( 'Not found in Trash', 'mesh' ),
+			'name'                => esc_html_x( 'Mesh Templates', 'Mesh Templates', 'mesh' ),
+			'singular_name'       => esc_html_x( 'Mesh Template', 'Mesh Template', 'mesh' ),
+			'menu_name'           => esc_html__( 'Mesh', 'mesh' ),
+			'name_admin_bar'      => esc_html__( 'Mesh Template', 'mesh' ),
+			'parent_item_colon'   => esc_html__( 'Parent Mesh Template:', 'mesh' ),
+			'all_items'           => esc_html__( 'Mesh Templates', 'mesh' ),
+			'add_new_item'        => esc_html__( 'Add New Mesh Template', 'mesh' ),
+			'add_new'             => esc_html__( 'Add Template', 'mesh' ),
+			'new_item'            => esc_html__( 'New Mesh Template', 'mesh' ),
+			'edit_item'           => esc_html__( 'Edit Mesh Template', 'mesh' ),
+			'update_item'         => esc_html__( 'Update Mesh Template', 'mesh' ),
+			'view_item'           => esc_html__( 'View Mesh Template', 'mesh' ),
+			'search_items'        => esc_html__( 'Search Mesh Templates', 'mesh' ),
+			'not_found'           => esc_html__( 'Not found', 'mesh' ),
+			'not_found_in_trash'  => esc_html__( 'Not found in Trash', 'mesh' ),
 		);
 
 		register_post_type( 'mesh_template', array(
-			'label'               => __( 'Mesh Template', 'mesh' ),
-			'description'         => __( 'Mesh Template', 'mesh' ),
+			'label'               => esc_html__( 'Mesh Template', 'mesh' ),
+			'description'         => esc_html__( 'Mesh Template', 'mesh' ),
 			'labels'              => $labels,
 			'public' => false,
 			'hierarchical' => true,
@@ -351,7 +351,7 @@ class Mesh_Templates {
 				$date = $columns['date'];
 
 				unset( $columns['date'] );
-				$columns['layout'] = __( 'Layout', 'mesh' );
+				$columns['layout'] = esc_html__( 'Layout', 'mesh' );
 				$columns['title']  = $title;
 				$columns['mesh_template_uses'] = 'Uses';
 				$columns['taxonomy-mesh_template_usage'] = 'Template';
@@ -380,7 +380,11 @@ class Mesh_Templates {
 
 				$template_usage = get_term_by( 'slug', $template_post->post_name, 'mesh_template_usage' );
 
-				echo esc_html( (int) $template_usage->count );
+				if ( false === $template_usage ) {
+					echo esc_html( 0 );
+				} else {
+					echo esc_html( (int) $template_usage->count );
+				}
 
 				break;
 			case 'layout':

@@ -1,13 +1,13 @@
 <?php
 /**
  * Plugin Name: Mesh
- * Plugin URI: http://linchpin.agency/wordpress-plugins/mesh
+ * Plugin URI: https://meshplugin.com?utm_source=mesh&utm_medium=plugin-admin-page&utm_campaign=wp-plugin
  * Description: Adds multiple sections for content on a post by post basis. Mesh also has settings to enable it for specific post types
- * Version: 1.2.3
+ * Version: 1.2.4
  * Text Domain: mesh
  * Domain Path: /languages
  * Author: Linchpin
- * Author URI: http://linchpin.agency/?utm_source=mesh&utm_medium=plugin-admin-page&utm_campaign=wp-plugin
+ * Author URI: https://linchpin.agency/?utm_source=mesh&utm_medium=plugin-admin-page&utm_campaign=wp-plugin
  * License: GPLv2 or later
  *
  * @package Mesh
@@ -21,8 +21,8 @@ if ( ! function_exists( 'add_action' ) ) {
 /**
  * Define all globals.
  */
-define( 'LINCHPIN_MESH_VERSION', '1.2.3' );
-define( 'LINCHPIN_MESH_PLUGIN_NAME', __( 'Mesh', 'mesh' ) );
+define( 'LINCHPIN_MESH_VERSION', '1.2.4' );
+define( 'LINCHPIN_MESH_PLUGIN_NAME', esc_html__( 'Mesh', 'mesh' ) );
 define( 'LINCHPIN_MESH__MINIMUM_WP_VERSION', '4.0' );
 define( 'LINCHPIN_MESH___PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 define( 'LINCHPIN_MESH___PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
@@ -589,7 +589,7 @@ function mesh_maybe_create_section_blocks( $section, $number_needed = 0 ) {
 			wp_insert_post( array(
 				'post_type'   => 'mesh_section',
 				'post_status' => $section->post_status,
-				'post_title'  => __( 'No Column Title', 'mesh' ),
+				'post_title'  => esc_html__( 'No Column Title', 'mesh' ),
 				'post_parent' => $section->ID,
 				'menu_order'  => ( $start + $count ),
 				'post_name'   => 'section-' . $section->ID . '-block-' . ( $start + $count ),

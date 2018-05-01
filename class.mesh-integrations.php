@@ -35,7 +35,7 @@ class Mesh_Integrations {
 				if ( file_exists( $file ) ) {
 					include_once $file;
 				} else {
-					error_log( sprintf( '%s %s', __( 'Mesh - Unable to locate integration: ', 'mesh' ), $file ) );
+					error_log( sprintf( '%s %s', esc_html__( 'Mesh - Unable to locate integration: ', 'mesh' ), $file ) );
 				}
 			}
 		}

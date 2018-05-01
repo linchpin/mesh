@@ -56,7 +56,7 @@ class Mesh_AJAX {
 
 		$section_args = array(
 			'post_type'   => 'mesh_section',
-			'post_title'  => __( 'No Section Title', 'mesh' ),
+			'post_title'  => esc_html__( 'No Section Title', 'mesh' ),
 			'post_status' => 'draft',
 			'post_parent' => $post_id,
 			'menu_order'  => $menu_order,

@@ -117,7 +117,7 @@ class Mesh_Controls {
 		$controls = array(
 			'visible_options' => array(
 				'template' => array(
-					'label'          => __( 'Columns', 'mesh' ),
+					'label'          => esc_html__( 'Columns', 'mesh' ),
 					'type'           => 'select',
 					'css_classes'    => array( 'mesh-choose-layout' ),
 					'validation_cb'  => false,
@@ -125,7 +125,7 @@ class Mesh_Controls {
 					'id'             => 'mesh-sections-template-' . $section->ID,
 				),
 				'title-display' => array(
-					'label'          => __( 'Display Title', 'mesh' ),
+					'label'          => esc_html__( 'Display Title', 'mesh' ),
 					'type'           => 'checkbox',
 					'css_classes'    => array( 'mesh-section-show-title' ),
 					'show_on_cb'     => false,
@@ -133,41 +133,43 @@ class Mesh_Controls {
 				),
 			),
 			'more_options' => array(
+				'section-id' => array(
+					'label'         => esc_html__( 'Section ID', 'mesh' ),
+					'type'          => 'text',
+					'css_classes'   => array( 'mesh-section-id' ),
+					'show_on_cb'    => false,
+					'validation_cb' => false,
+				),
 				'css-class' => array(
-					'label'          => __( 'CSS Class', 'mesh' ),
+					'label'          => esc_html__( 'Section Class', 'mesh' ),
 					'type'           => 'text',
 					'css_classes'    => array( 'mesh-section-class' ),
 					'show_on_cb'     => false,
 					'validation_cb'  => false,
 				),
-				'section-id' => array(
-                    'label'         => __( 'Section ID', 'mesh' ),
-                    'type'          => 'text',
-                    'css_classes'   => array( 'mesh-section-id' ),
-                    'show_on_cb'    => false,
-                    'validation_cb' => false,
-                ),
+				'row-class' => array(
+					'label'          => esc_html__( 'Row Class', 'mesh' ),
+					'type'           => 'text',
+					'css_classes'    => array( 'mesh-row-class' ),
+					'show_on_cb'     => false,
+					'validation_cb'  => false,
+				),
 				'collapse' => array(
-					'label'          => __( 'Collapse Padding', 'mesh' ),
+					'label'          => esc_html__( 'Collapse Padding', 'mesh' ),
 					'type'           => 'checkbox',
 					'css_classes'    => array( 'mesh-section-collapse-input' ),
 					'show_on_cb'     => false,
 					'validation_cb'  => false,
 				),
 				'push-pull' => array(
-					'label'          => __( 'Push Pull', 'mesh' ),
+					'label'          => esc_html__( 'Push Pull', 'mesh' ),
 					'type'           => 'checkbox',
 					'css_classes'    => array( 'mesh-section-push' ),
 					'show_on_cb'     => array( $this, 'show_push_pull' ),
 					'validation_cb'  => false,
 				),
-				'featured_image' => array(
-					'type' => 'media',
-					'label' => __( 'Featured Image', 'mesh' ),
-					'css_classes' => '',
-				),
 				'lp-equal' => array(
-					'label'          => __( 'Equalize', 'mesh' ),
+					'label'          => esc_html__( 'Equalize', 'mesh' ),
 					'type'           => 'checkbox',
 					'css_classes'    => 'mesh-section-equalize',
 					'show_on_cb'     => array( $this, 'show_equalize' ),
@@ -180,11 +182,13 @@ class Mesh_Controls {
 
 		if ( $visible ) {
 			$controls = $controls['visible_options'];
+			$container_class = 'inline-block-list mesh-section-meta-visible-list';
 		} else {
 			$controls = $controls['more_options'];
+			$container_class = 'small-block-grid-1 medium-block-grid-4';
 		}
 		?>
-		<ul class="small-block-grid-1 medium-block-grid-4">
+		<ul class="<?php esc_attr_e( $container_class ); ?>">
 		<?php
 
 		foreach ( $controls as $control_key => $control ) {
@@ -249,25 +253,6 @@ class Mesh_Controls {
 						</select>
 						<?php
 							break;
-						case 'media':
-						?>
-						<div class="mesh-section-background">
-							<div class="choose-image">
-							<?php
-							$featured_image_id = get_post_thumbnail_id( $section->ID );
-							if ( empty( $featured_image_id ) ) :
-								?>
-								<a class="mesh-featured-image-choose"><?php esc_attr_e( 'Set Background Image', 'mesh' ); ?></a>
-							<?php else : ?>
-								<?php $featured_image = wp_get_attachment_image_src( $featured_image_id, array( 160, 60 ) ); ?>
-								<a class="mesh-featured-image-choose right" data-mesh-featured-image="<?php echo esc_attr( $featured_image_id ); ?>"><img src="<?php echo esc_attr( $featured_image[0] ); ?>" /></a>
-								<a class="mesh-featured-image-trash dashicons-before dashicons-dismiss" data-mesh-featured-image="<?php echo esc_attr( $featured_image_id ); ?>"></a>
-							<?php endif; ?>
-							<input type="hidden" name="mesh-sections[<?php echo esc_attr( $section->ID ); ?>][<?php echo esc_attr( $underscore_key ); ?>]" value="<?php echo esc_attr( $featured_image_id ); ?>" />
-							</div>
-						</div>
-						<?php
-							break;
 						case 'input':
 						case 'text':
 						default:
@@ -298,7 +283,7 @@ class Mesh_Controls {
 
 		$controls = array(
 			'offset' => array(
-				'label'          => __( 'Offset', 'mesh' ),
+				'label'          => esc_html__( 'Offset', 'mesh' ),
 				'type'           => 'select',
 				'css_classes'    => array( 'mesh-column-offset' ),
 				'validation_cb'  => false,
@@ -306,7 +291,7 @@ class Mesh_Controls {
 				'show_on_cb'     => array( $this, 'show_offset' ),
 			),
 			'css-class' => array(
-				'label'          => __( 'CSS Class', 'mesh' ),
+				'label'          => esc_html__( 'CSS Class', 'mesh' ),
 				'type'           => 'text',
 				'css_classes'    => array( 'mesh-section-class' ),
 				'validation_cb'  => false,

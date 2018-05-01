@@ -39,6 +39,8 @@ class Mesh_Settings {
 	public static function init() {
 		add_action( 'admin_menu', array( 'Mesh_Settings', 'add_admin_menu' ) );
 		add_action( 'admin_init', array( 'Mesh_Settings', 'settings_init' ) );
+
+		add_filter( 'plugin_action_links', array( 'Mesh_Settings', 'add_settings_link' ), 10, 5 );
 	}
 
 	/**
@@ -47,6 +49,26 @@ class Mesh_Settings {
 	public static function add_admin_menu() {
 		add_options_page( LINCHPIN_MESH_PLUGIN_NAME, LINCHPIN_MESH_PLUGIN_NAME, 'manage_options', self::$settings_page, array( 'Mesh_Settings', 'add_options_page' ) );
 		add_submenu_page( 'edit.php?post_type=mesh_template', esc_html__( 'Settings', 'mesh' ), esc_html__( 'Settings', 'mesh' ), 'manage_options', 'options-general.php?page=mesh' );
+	}
+
+	public static function add_settings_link( $actions, $plugin_file ) {
+		static $plugin;
+
+		if ( ! isset( $plugin ) ) {
+			$plugin = 'mesh/mesh.php';
+		}
+
+		if ( $plugin === $plugin_file ) {
+
+			$settings  = array( 'settings' => '<a href="options-general.php?page=mesh">' . esc_html__( 'Settings', 'mesh' ) . '</a>' );
+			$site_link = array( 'faq' => '<a href="https://meshplugin.com/knowledgebase/" target="_blank">' . esc_html__( 'FAQ', 'mesh' ) . '</a>');
+
+			$actions = array_merge( $settings, $actions );
+			$actions = array_merge( $site_link, $actions );
+
+		}
+
+		return $actions;
 	}
 
 	/**
