@@ -415,7 +415,15 @@
         }
       }
   }
+}
 
+.mesh-columns-3 {
+  .insert-media {
+    font-size:0;
+  }
+  .wp-media-buttons-icon {
+    margin: -8px 0 0 0!important;
+  }
 }
 
 // UPDATE Notification

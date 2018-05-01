@@ -74,7 +74,7 @@ if ( ! function_exists( 'add_action' ) ) {
                                     <span class="handle-title mesh-section-title-text mesh-column-title-text"><?php echo esc_attr( $blocks[ $block_increment ]->post_title ); ?></span>
                                 </div>
 
-                                <a href="#" class="slide-toggle-element mesh-more-section-options right slide-toggle-meta-dropdown mesh-hide-for-small" data-toggle=".mesh-block-meta-dropdown-<?php echo esc_attr( $blocks[ $block_increment ]->ID ); ?>"><?php esc_html_e( 'More', 'mesh' ); ?></a>
+								<a href="#" class="slide-toggle-element mesh-more-section-options right slide-toggle-meta-dropdown mesh-hide-for-small" data-toggle=".mesh-block-meta-dropdown-<?php echo esc_attr( $blocks[ $block_increment ]->ID ); ?>"><span class="screen-reader-text"><?php esc_html_e( 'More', 'mesh' ); ?></span></a>
                             </div>
 
                             <div class="mesh-columns-12 mesh-block-meta-dropdown mesh-block-meta-dropdown-<?php echo esc_attr( $blocks[ $block_increment ]->ID ); ?> hide">
