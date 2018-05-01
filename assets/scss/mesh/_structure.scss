@@ -56,6 +56,23 @@
 	}
 }
 
+.mesh-more-section-options {
+  &:before {
+	-moz-osx-font-smoothing: grayscale;
+	border: none;
+	content: "\f111";
+	display: block;
+	font: 18px/1 dashicons;
+	padding: 0;
+	text-align: center;
+	text-decoration: none !important;
+	text-indent: 0;
+	left: 6px;
+	position: absolute;
+	top: 6px;
+  }
+}
+
 .mesh-clean-edit {
 	margin-left: 5px;
 	position: relative;
@@ -283,12 +300,39 @@
 		left: -$inside_padding;
 		right: -$inside_padding;
 	};
+
+	input,
+	select {
+		display: block;
+		margin: 0;
+		max-width: 100%;
+	}
+
+	input[type="checkbox"] {
+		margin-top: 4px;
+	}
 }
 
 .mesh-section-meta {
 	border-bottom: 1px solid $grey;
 	position: relative;
     background-color: $super-light-grey;
+
+	input,
+	select {
+		display: inline-block;
+	}
+
+	.mesh-section-meta-visible-list {
+		[class*="mesh-section-control"] {
+			line-height: 28px;
+			margin-right: 6px !important;
+		}
+
+		input[type="checkbox"] {
+			margin-top: 0;
+		}
+	}
 }
 
 .slide-toggle-meta-dropdown {
@@ -299,7 +343,7 @@
 	line-height: $base;
 	padding: $base * .5;
 	text-decoration: none;
-
+    padding-left: 22px;
 	position: absolute;
 	right: $base * .75;
 	bottom: -1px;
@@ -366,6 +410,12 @@
 		clear: both;
 		margin-top: 1rem;
 	}
+}
+
+.mesh-section-control-title-display,
+.mesh-section-control-template {
+  margin-bottom:0!important;
+  padding-bottom:0!important;
 }
 
 // 05. Section Footer
@@ -482,6 +532,16 @@
 		background-color: $light-grey;
 		margin-top: 0;
 		padding: .75rem;
+
+		input,
+		select {
+			display: block;
+			margin: 0;
+		}
+
+		input[type="checkbox"] {
+			margin-top: 4px;
+		}
 	}
 
 	.mesh-columns-3,
@@ -557,7 +617,7 @@
 	}
 
 	> .mesh-row {
-		margin: 0 (-$base);
+		margin: 0 (-$base * .75);
 
 	  &.notice {
 		margin: 5px -7px 0 -7px;

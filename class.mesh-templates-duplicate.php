@@ -63,11 +63,11 @@ class Mesh_Templates_Duplicate {
 				return $markup;
 
 			} else {
-				return __( 'created nothing', 'mesh' );
+				return esc_html__( 'created nothing', 'mesh' );
 			}
 		}
 
-		return __( 'no template found', 'mesh' );
+		return esc_html__( 'no template found', 'mesh' );
 	}
 
 	/**

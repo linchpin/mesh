@@ -1,5 +1,34 @@
 # Change Log For Mesh
 
+## [1.2.4] - 2017-05-01
+
+### Fixes
+
+- Fixed a few undefined indexes
+- Fixed a few conflicts with gutenberg (This is not full compatiblity with Gutenberg)
+- Fixed an issue where Mesh Templates could potentially lost the ability to add Mesh Sections
+
+### Added
+- Added the ability to define and ID for each Mesh Section and Block for more customization!
+- Added actions
+  - mesh_controls_before
+  - mesh_controls_after
+  - mesh_sections_before
+  - mesh_sections_after
+  - mesh_columns_before
+  - mesh_columns_after  
+- Added filters
+  - mesh_row_attributes
+  - mesh_column_attributes
+- Added field for custom Section ID, Section ID defaults to mesh-section-{post_id}
+- Added preliminary support for Gutenberg (AKA No conflicts)
+- Added new uninstall process that will clear out Mesh Templates, Sections and Terms
+
+#### Updated
+
+- Updated Foundation 6.X data attribute tag support
+- CSS slightly.
+
 ## [1.2.3] - 2017-12-06
 
 ### Fixes

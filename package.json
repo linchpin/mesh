@@ -1,8 +1,8 @@
 {
   "name": "mesh",
-  "version": "1.2.1",
+  "version": "1.2.4",
   "license": "GPL-2.0",
-  "respository": "https://github.com/linchpinagency/mesh",
+  "respository": "https://github.com/linchpin/mesh",
   "author": "Linchpin <sayhi@linchpin.agency> (https://linchpin.agency)",
   "devDependencies": {
     "grunt": "~0.4.1",
