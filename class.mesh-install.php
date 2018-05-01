@@ -54,12 +54,16 @@ class Mesh_Install {
 	 */
 	function show_welcome() {
 
-		if ( is_admin() && get_option( 'mesh_activation' ) === true ) {
+		if ( is_admin() && 1 === intval( get_option( 'mesh_activation' ) ) ) {
 
 			delete_option( 'mesh_activation' );
 
+			$mesh_section_count = wp_count_posts( 'mesh_section' );
+
+			$mesh_sections = $mesh_section_count->publish + $mesh_section_count->draft + $mesh_section_count->trash + $mesh_section_count->auto_draft;
+
 			// Send new users to the welcome so they learn how to use mesh.
-			if ( ! isset( $_GET['activate-multi'] ) && get_option( 'mesh_settings' ) === false ) { // WPCS: CSRF ok, input var okay.
+			if ( ! isset( $_GET['activate-multi'] ) && 0 === $mesh_sections ) { // WPCS: CSRF ok, input var okay.
 				wp_safe_redirect( admin_url( 'options-general.php?page=mesh&tab=about' ) );
 				exit;
 			}
