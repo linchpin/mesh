@@ -56,6 +56,23 @@
 	}
 }
 
+.mesh-more-section-options {
+  &:before {
+	-moz-osx-font-smoothing: grayscale;
+	border: none;
+	content: "\f111";
+	display: block;
+	font: 18px/1 dashicons;
+	padding: 0;
+	text-align: center;
+	text-decoration: none !important;
+	text-indent: 0;
+	left: 6px;
+	position: absolute;
+	top: 6px;
+  }
+}
+
 .mesh-clean-edit {
 	margin-left: 5px;
 	position: relative;
@@ -309,7 +326,7 @@
 	line-height: $base;
 	padding: $base * .5;
 	text-decoration: none;
-
+    padding-left: 22px;
 	position: absolute;
 	right: $base * .75;
 	bottom: -1px;
@@ -376,6 +393,12 @@
 		clear: both;
 		margin-top: 1rem;
 	}
+}
+
+.mesh-section-control-title-display,
+.mesh-section-control-template {
+  margin-bottom:0!important;
+  padding-bottom:0!important;
 }
 
 // 05. Section Footer

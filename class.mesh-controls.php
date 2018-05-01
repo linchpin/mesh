@@ -117,7 +117,7 @@ class Mesh_Controls {
 		$controls = array(
 			'visible_options' => array(
 				'template' => array(
-					'label'          => __( 'Columns', 'mesh' ),
+					'label'          => esc_html__( 'Columns', 'mesh' ),
 					'type'           => 'select',
 					'css_classes'    => array( 'mesh-choose-layout' ),
 					'validation_cb'  => false,
@@ -125,7 +125,7 @@ class Mesh_Controls {
 					'id'             => 'mesh-sections-template-' . $section->ID,
 				),
 				'title-display' => array(
-					'label'          => __( 'Display Title', 'mesh' ),
+					'label'          => esc_html__( 'Display Title', 'mesh' ),
 					'type'           => 'checkbox',
 					'css_classes'    => array( 'mesh-section-show-title' ),
 					'show_on_cb'     => false,
@@ -134,35 +134,42 @@ class Mesh_Controls {
 			),
 			'more_options' => array(
 				'css-class' => array(
-					'label'          => __( 'Section Class', 'mesh' ),
+					'label'          => esc_html__( 'Section Class', 'mesh' ),
 					'type'           => 'text',
 					'css_classes'    => array( 'mesh-section-class' ),
 					'show_on_cb'     => false,
 					'validation_cb'  => false,
 				),
 				'row-class' => array(
-					'label'          => __( 'Row Class', 'mesh' ),
+					'label'          => esc_html__( 'Row Class', 'mesh' ),
 					'type'           => 'text',
 					'css_classes'    => array( 'mesh-row-class' ),
 					'show_on_cb'     => false,
 					'validation_cb'  => false,
 				),
+				'section-id' => array(
+                    'label'         => esc_html__( 'Section ID', 'mesh' ),
+                    'type'          => 'text',
+                    'css_classes'   => array( 'mesh-section-id' ),
+                    'show_on_cb'    => false,
+                    'validation_cb' => false,
+                ),
 				'collapse' => array(
-					'label'          => __( 'Collapse Padding', 'mesh' ),
+					'label'          => esc_html__( 'Collapse Padding', 'mesh' ),
 					'type'           => 'checkbox',
 					'css_classes'    => array( 'mesh-section-collapse-input' ),
 					'show_on_cb'     => false,
 					'validation_cb'  => false,
 				),
 				'push-pull' => array(
-					'label'          => __( 'Push Pull', 'mesh' ),
+					'label'          => esc_html__( 'Push Pull', 'mesh' ),
 					'type'           => 'checkbox',
 					'css_classes'    => array( 'mesh-section-push' ),
 					'show_on_cb'     => array( $this, 'show_push_pull' ),
 					'validation_cb'  => false,
 				),
 				'lp-equal' => array(
-					'label'          => __( 'Equalize', 'mesh' ),
+					'label'          => esc_html__( 'Equalize', 'mesh' ),
 					'type'           => 'checkbox',
 					'css_classes'    => 'mesh-section-equalize',
 					'show_on_cb'     => array( $this, 'show_equalize' ),
@@ -274,7 +281,7 @@ class Mesh_Controls {
 
 		$controls = array(
 			'offset' => array(
-				'label'          => __( 'Offset', 'mesh' ),
+				'label'          => esc_html__( 'Offset', 'mesh' ),
 				'type'           => 'select',
 				'css_classes'    => array( 'mesh-column-offset' ),
 				'validation_cb'  => false,
@@ -282,7 +289,7 @@ class Mesh_Controls {
 				'show_on_cb'     => array( $this, 'show_offset' ),
 			),
 			'css-class' => array(
-				'label'          => __( 'CSS Class', 'mesh' ),
+				'label'          => esc_html__( 'CSS Class', 'mesh' ),
 				'type'           => 'text',
 				'css_classes'    => array( 'mesh-section-class' ),
 				'validation_cb'  => false,
@@ -503,4 +510,35 @@ function mesh_section_controls( $section, $blocks, $visible ) {
 function mesh_block_controls( $block, $section_blocks ) {
 	$mesh_controls = new Mesh_Controls();
 	$mesh_controls->mesh_block_controls( $block, $section_blocks );
+}
+
+/**
+ * Build out extra element attributes
+ *
+ * @param int  $post_id Current Post ID.
+ * @since 1.2.3
+ *
+ * @return string
+ */
+function get_mesh_element_attributes( $post_id = 0 ) {
+	global $post;
+
+	if ( empty( $post_id ) ) {
+		$post_id  = $post->ID;
+	}
+
+	$post_parent_id   = wp_get_post_parent_id( $post_id );
+	$parent_post_type = get_post_type( $post_parent_id );
+
+	$element_attributes = array();
+
+	if ( 'mesh_section' != $parent_post_type ) {
+	    $section_id = get_post_meta( $post_id, '_mesh_section_id', true );
+	    $section_id = ( ! empty( $section_id ) ) ? $section_id : 'mesh-section-' . $post_id;
+	    $section_id = 'id="' . $section_id . '"';
+
+	    $element_attributes[] = $section_id;
+    }
+
+    return $element_attributes;
 }

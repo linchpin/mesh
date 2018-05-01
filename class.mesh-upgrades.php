@@ -39,8 +39,8 @@ class Mesh_Upgrades {
 			}
 
 			// Latest Version.
-			if ( version_compare( $GLOBALS['mesh_current_version'], '1.2.2', '<' ) ) {
-				$this->update_version( '1.2.2' );
+			if ( version_compare( $GLOBALS['mesh_current_version'], '1.2.4', '<' ) ) {
+				$this->version_1_2_4();
 			}
 		}
 	}
@@ -62,7 +62,9 @@ class Mesh_Upgrades {
 			return;
 		}
 
-		$default_post_types = array();
+		$default_post_types = array(
+			'mesh_template' => 1,
+		);
 
 		foreach ( $this->post_types as $post_type ) {
 			$post_type_object = get_post_type_object( $post_type );
@@ -113,6 +115,34 @@ class Mesh_Upgrades {
 		wp_insert_term( 'starter', 'mesh_template_types' );
 
 		$this->update_version( '1.1' );
+	}
+
+	/**
+	 * Upgrade to version 1.2.4
+	 *
+	 * Add css_mode as a default option that is saved. By default the css_mode should
+	 * be set to 0 and it should output on the front end.
+	 *
+	 * Make sure mesh templates are also enabled by default.
+	 */
+	function version_1_2_4() {
+
+		$mesh_options = get_option( 'mesh_settings', array(
+			'css_mode' => 0,
+		) );
+
+		if ( empty( $mesh_options['css_mode'] ) ) {
+			$mesh_options['css_mode'] = 0;
+		}
+
+		update_option( 'mesh_settings', $mesh_options );
+
+		// If for some reason we DO NOT have mesh_template enabled be sure we enable it again.
+		$available_post_types = get_option( 'mesh_post_types', array() );
+		$available_post_types['mesh_template'] = 1;
+		update_option( 'mesh_post_types', $available_post_types );
+
+		$this->update_version( '1.2.4' );
 	}
 
 	/**

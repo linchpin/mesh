@@ -2,8 +2,8 @@
 Contributors: linchpin_agency, aware, maxinacube, desrosj, nateallen, ebeltram, lulu5588, fischfood
 Tags: linchpin, sections, content, page builder, page builder plugin, design, wysiwyg, home page builder, template builder, layout builder, responsive, landing page builder, website builder, site builder, drag and drop builder, editor, page layout, visual editor, foundation, bootstrap
 Requires at least: 4.0
-Tested up to: 4.8.2
-Stable tag: 1.2.2
+Tested up to: 4.9.5
+Stable tag: 1.2.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -72,6 +72,22 @@ Learn more about available hooks (filters and actions) by visiting the mesh our 
 3. Mesh templates and welcome.
 
 == Changelog ==
+
+= 1.2.4 =
+* Added more filters and action hooks for developers
+* Added field for custom Section ID, Section ID defaults to mesh-section-{post_id}
+* Added preliminary support for Gutenberg (AKA No conflicts)
+* Added field for custom Section ID
+* Added new uninstall process that will clear out Mesh Templates, Sections and Terms
+* Fixed a few undefined indexes
+* Fixed a few conflicts with gutenberg (This is not full compatiblity with Gutenberg)
+* Fixed an issue where Mesh Templates could potentially lost the ability to add Mesh Sections
+* Updated Foundation 6.X data attribute tag support
+* Updated CSS slightly.
+
+= 1.2.3 =
+* Fixed a javascript issue with FireFox
+* Fixed an issue with Equalizer options being over sanitized.
 
 = 1.2.2 =
 * Fixed bug causing 'Show Title' checkbox to not work correctly

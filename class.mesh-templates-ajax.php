@@ -150,7 +150,7 @@ class Mesh_Templates_AJAX {
 				include LINCHPIN_MESH___PLUGIN_DIR . 'admin/template-layout-preview.php';
 			}
 
-			$mesh_template_title = __( 'Blank Template', 'mesh' );
+			$mesh_template_title = esc_html__( 'Blank Template', 'mesh' );
 			$mesh_template_id    = 'blank';
 			$layout              = array();
 			$layout['row-blank']['blocks'][] = array(

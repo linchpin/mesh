@@ -39,6 +39,8 @@ class Mesh_Settings {
 	public static function init() {
 		add_action( 'admin_menu', array( 'Mesh_Settings', 'add_admin_menu' ) );
 		add_action( 'admin_init', array( 'Mesh_Settings', 'settings_init' ) );
+
+		add_filter( 'plugin_action_links', array( 'Mesh_Settings', 'add_settings_link' ), 10, 5 );
 	}
 
 	/**
@@ -46,20 +48,41 @@ class Mesh_Settings {
 	 */
 	public static function add_admin_menu() {
 		add_options_page( LINCHPIN_MESH_PLUGIN_NAME, LINCHPIN_MESH_PLUGIN_NAME, 'manage_options', self::$settings_page, array( 'Mesh_Settings', 'add_options_page' ) );
-		add_submenu_page( 'edit.php?post_type=mesh_template', __( 'Settings', 'mesh' ), __( 'Settings', 'mesh' ), 'manage_options', 'options-general.php?page=mesh' );
+		add_submenu_page( 'edit.php?post_type=mesh_template', esc_html__( 'Settings', 'mesh' ), esc_html__( 'Settings', 'mesh' ), 'manage_options', 'options-general.php?page=mesh' );
+	}
+
+	public static function add_settings_link( $actions, $plugin_file ) {
+		static $plugin;
+
+		if ( ! isset( $plugin ) ) {
+			$plugin = 'mesh/mesh.php';
+		}
+
+		if ( $plugin === $plugin_file ) {
+
+			$settings  = array( 'settings' => '<a href="options-general.php?page=mesh">' . esc_html__( 'Settings', 'mesh' ) . '</a>' );
+			$site_link = array( 'faq' => '<a href="https://meshplugin.com/knowledgebase/" target="_blank">' . esc_html__( 'FAQ', 'mesh' ) . '</a>');
+
+			$actions = array_merge( $settings, $actions );
+			$actions = array_merge( $site_link, $actions );
+
+		}
+
+		return $actions;
 	}
 
 	/**
 	 * Create our settings section
 	 *
+	 * @param $args
 	 * @since 1.0.0
 	 */
-	public static function create_section() {
+	public static function create_section( $args ) {
 		?>
 		<div class="gray-bg negative-bg">
 			<div class="wrapper">
 				<h2 class="color-darkpurple light-weight">
-					<?php esc_html_e( 'Basic Settings', 'mesh' ); ?>
+					<?php echo esc_html( $args['title'] ); ?>
 				</h2>
 			</div>
 		</div>
@@ -86,17 +109,44 @@ class Mesh_Settings {
 	}
 
 	/**
+	 * Validate that the user has enabled a post type
+	 *
+	 * @since 1.2.4
+	 * @param $input
+	 *
+	 * @return $input
+	 */
+	public static function validate_mesh_post_types( $input ) {
+		$message = '';
+		$type = '';
+
+		if ( null !== $input ) {
+			$message = esc_html__( 'Mesh Settings Saved.', 'mesh' );
+			$type = 'updated';
+		} else {
+			$message = esc_html__( 'Mesh Settings Saved. You have disabled all post types. We suggest disabling the plugin if it is no longer needed', 'mesh' );
+			$type = 'updated';
+		}
+
+		add_settings_error( 'mesh_post_types', 'mesh_post_types_notice', $message, $type );
+
+		$input['mesh_template'] = '1'; // Always make sure we have a mesh_template in our options
+
+		return $input;
+	}
+
+	/**
 	 * Add all of our settings from the API
 	 */
 	public static function settings_init() {
 
 		register_setting( self::$settings_page, 'mesh_settings' );
-		register_setting( self::$settings_page, 'mesh_post_types' );
+		register_setting( self::$settings_page, 'mesh_post_types', array( 'Mesh_Settings', 'validate_mesh_post_types' ) );
 
 		// Default Settings Section.
 		add_settings_section(
 			'mesh_sections',
-			__( 'Mesh Configurations', 'mesh' ),
+			esc_html__( 'Basic Settings', 'mesh' ),
 			array( 'Mesh_Settings', 'create_section' ),
 			self::$settings_page
 		);
@@ -104,19 +154,19 @@ class Mesh_Settings {
 		// Option : CSS Mode.
 		$css_mode = array(
 			array(
-				'label' => __( 'Use Mesh CSS', 'mesh' ),
+				'label' => esc_html__( 'Use Mesh CSS', 'mesh' ),
 				'value' => 0,
 			),
 			array(
-				'label' => __( 'Disable Mesh CSS', 'mesh' ),
+				'label' => esc_html__( 'Disable Mesh CSS', 'mesh' ),
 				'value' => -1,
 			),
 			array(
-				'label' => __( 'Use Foundation built into my theme', 'mesh' ),
+				'label' => esc_html__( 'Use Foundation built into my theme', 'mesh' ),
 				'value' => 1,
 			),
 			array(
-				'label' => __( 'Use Bootstrap', 'mesh' ),
+				'label' => esc_html__( 'Use Bootstrap', 'mesh' ),
 				'value' => 2,
 			),
 		);
@@ -126,14 +176,14 @@ class Mesh_Settings {
 
 		add_settings_field(
 			'css_mode',
-			__( 'CSS Settings', 'mesh' ),
+			esc_html__( 'CSS Settings', 'mesh' ),
 			array( 'Mesh_Settings', 'add_select' ),
 			self::$settings_page,
 			'mesh_sections',
 			array(
 				'field' => 'css_mode',
-				'label' => __( 'CSS', 'mesh' ),
-				'description' => __( 'Choose whether or not to enqueue CSS with Mesh.', 'mesh' ),
+				'label' => esc_html__( 'CSS', 'mesh' ),
+				'description' => esc_html__( 'Choose whether or not to enqueue CSS with Mesh.', 'mesh' ),
 				'options' => $css_mode,
 			)
 		);
@@ -145,25 +195,25 @@ class Mesh_Settings {
 		 */
 		$foundation_version = array(
 			array(
-				'label' => __( 'Foundation 5', 'mesh' ),
+				'label' => esc_html__( 'Foundation 5', 'mesh' ),
 				'value' => '',
 			),
 			array(
-				'label' => __( 'Foundation 6', 'mesh' ),
+				'label' => esc_html__( 'Foundation 6', 'mesh' ),
 				'value' => 6,
 			),
 		);
 
 		add_settings_field(
 			'foundation_version',
-			__( 'Foundation Version', 'mesh' ),
+			esc_html__( 'Foundation Version', 'mesh' ),
 			array( 'Mesh_Settings', 'add_select' ),
 			self::$settings_page,
 			'mesh_sections',
 			array(
 				'field' => 'foundation_version',
-				'label' => __( 'Foundation Version', 'mesh' ),
-				'description' => __( 'Choose which version of Foundation you are using. Foundation 5 and 6 have subtle yet important differences when it comes to markup for components like interchange that Mesh utilizes.', 'mesh' ),
+				'label' => esc_html__( 'Foundation Version', 'mesh' ),
+				'description' => esc_html__( 'Choose which version of Foundation you are using. Foundation 5 and 6 have subtle yet important differences when it comes to markup for components like interchange that Mesh utilizes.', 'mesh' ),
 				'options' => $foundation_version,
 			)
 		);
@@ -174,7 +224,7 @@ class Mesh_Settings {
 		if ( ! empty( $post_types ) ) {
 			add_settings_section(
 				'mesh_post_type_section',
-				__( 'Post Types', 'mesh' ),
+				esc_html__( 'Post Types', 'mesh' ),
 				array( 'Mesh_Settings', 'create_post_type_section' ),
 				self::$settings_page
 			);
@@ -194,12 +244,38 @@ class Mesh_Settings {
 					self::$settings_page,
 					'mesh_post_type_section',
 					array(
-						'post_type' => $post_type_object->name,
-						'name' => $post_type_object->labels->name,
+						'field'    => $post_type_object->name,
+						'name'    => $post_type_object->labels->name,
+						'options' => 'mesh_post_types',
 					)
 				);
 			}
 		}
+
+		// Uninstall Option
+
+		// Default Settings Section.
+		add_settings_section(
+			'mesh_uninstall',
+			esc_html__( 'Mesh Uninstall', 'mesh' ),
+			array( 'Mesh_Settings', 'create_section' ),
+			self::$settings_page
+		);
+
+		add_settings_field(
+			'mesh_uninstall',
+			esc_html__( 'Remove All Data on Uninstall?', 'mesh' ),
+			array( 'Mesh_Settings', 'add_checkbox' ),
+			self::$settings_page,
+			'mesh_uninstall',
+			array(
+				'options'     => 'mesh_settings',
+				'field'       => 'uninstall',
+				'label'       => esc_html__( 'Uninstall', 'mesh' ),
+				'type'        => $post_type_object->name,
+				'name'        => $post_type_object->labels->name,
+			)
+		);
 	}
 
 	/**
@@ -283,7 +359,15 @@ class Mesh_Settings {
 		<label for="mesh-<?php echo esc_attr( $args['field'] ); ?>"><?php echo esc_html( $args['label'] ); ?></label>
 		<select id="mesh-<?php echo esc_attr( $args['field'] ); ?>" name="mesh_settings[<?php echo esc_attr( $args['field'] ); ?>]">
 			<?php foreach ( $select_options as $option ) : ?>
-				<option value="<?php echo esc_attr( $option['value'] ); ?>" <?php selected( $options[ $args['field'] ], $option['value'] ); ?>><?php echo esc_html( $option['label'] ); ?></option>
+				<?php
+
+				$selected = '';
+
+				if ( ! empty( $options[ $args['field'] ] ) ) {
+					$selected = selected( $options[ $args['field'] ], $option['value'], false );
+				}
+				?>
+				<option value="<?php echo esc_attr( $option['value'] ); ?>" <?php echo esc_html( $selected ); ?>><?php echo esc_html( $option['label'] ); ?></option>
 			<?php endforeach; ?>
 		</select>
 		<?php
@@ -303,16 +387,20 @@ class Mesh_Settings {
 			'class'       => '',
 			'description' => '',
 			'label'       => '',
+			'options'     => '', // @since 1.2.4
 		);
 
 		// Parse incoming $args into an array and merge it with $defaults.
 		$args = wp_parse_args( $args, $defaults );
 
-		$options = get_option( 'mesh_post_types' );
+		if ( empty( $args['options'] ) ) { // If we don't have any option, die early.
+			return;
+		}
 
+		$options = get_option( $args['options'] );
 		$checked = false;
 
-		if ( ! empty( $options[ $args['post_type'] ] ) ) {
+		if ( ! empty( $options[ $args['field'] ] ) ) {
 			$checked = true;
 		}
 		?>
@@ -321,7 +409,7 @@ class Mesh_Settings {
 			<p class="description"><?php echo esc_html( $args['description'] ); ?></p>
 		<?php endif; ?>
 
-		<input type="checkbox" class="<?php echo esc_attr( $args['class'] ); ?>" name="mesh_post_types[<?php echo esc_attr( $args['post_type'] ); ?>]" value="1" <?php checked( $checked ); ?>>
+		<input type="checkbox" class="<?php echo esc_attr( $args['class'] ); ?>" name="<?php echo esc_attr( $args['options'] ); ?>[<?php echo esc_attr( $args['field'] ); ?>]" value="1" <?php checked( $checked ); ?>>
 
 		<?php
 	}
@@ -365,10 +453,10 @@ class Mesh_Settings {
 	 */
 	static public function get_tabs() {
 		$tabs = array(
-			'settings'  => __( 'Settings',   'mesh' ),
-			'about'     => __( 'About Mesh', 'mesh' ),
-			'new'       => __( "What's New", 'mesh' ),
-			'changelog' => __( 'Change Log', 'mesh' ),
+			'settings'  => esc_html__( 'Settings',   'mesh' ),
+			'about'     => esc_html__( 'About Mesh', 'mesh' ),
+			'new'       => esc_html__( "What's New", 'mesh' ),
+			'changelog' => esc_html__( 'Change Log', 'mesh' ),
 		);
 
 		return apply_filters( 'mesh_tabs', $tabs );

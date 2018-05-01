@@ -121,7 +121,7 @@ class Mesh_Install {
 					?>
 					</p>
 					<p class="no-margin">
-					<?php esc_html_e( 'This release includes integrations with Yoast SEO, Popular Duplication Plugins and a bunch of other fixes','mesh' ); ?>
+					<?php esc_html_e( "We've focused on maintenance, even more developer flexibility, a better uninstall process and more!",'mesh' ); ?>
 					</p>
 				</div>
 			</div>

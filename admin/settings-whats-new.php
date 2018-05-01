@@ -25,13 +25,13 @@ $safe_content = array(
 		<div id="postbox-container" class="postbox-container">
 			<div class="whatsnew hero negative-bg">
 				<div class="hero-text">
-					<h1><?php echo esc_html__( 'Updates, Bug Fixes & New Releases', 'mesh' ); ?></h1>
+					<h1><?php echo esc_html__( 'Bug Fixes, Maintenance and New Features', 'mesh' ); ?></h1>
 				</div>
 			</div>
 			<div class="gray-bg negative-bg versioninfo">
 				<div class="wrapper">
 					<h2 class="light-weight">
-						<?php printf( 'Mesh Version %s <span class="green-pipe">|</span> Released %s', esc_html( get_option( 'mesh_version' ) ), esc_html__( 'Aug 28th, 2017', 'mesh' ) ); ?></h2>
+						<?php printf( 'Mesh Version %s <span class="green-pipe">|</span> Released %s', esc_html( get_option( 'mesh_version' ) ), esc_html__( 'Apr 30th, 2018', 'mesh' ) ); ?></h2>
 				</div>
 			</div>
 			<div class="wrapper">
@@ -44,31 +44,24 @@ $safe_content = array(
 
 					<div class="new mesh-row">
 
-						<div class="mesh-columns-6 right">
-							<img class="right" src="<?php echo esc_url( LINCHPIN_MESH___PLUGIN_URL . 'assets/images/yoast-readability-scoring.png' ); ?>" alt="<?php esc_attr_e( 'Yoast Readability Scoring', 'mesh' ); ?>"/>
-							<p class="caption italic no-margin"><?php esc_html_e( 'Yoast now takes into account the copy in your Mesh sections.', 'mesh' ); ?></p>
-						</div>
-
-						<div class="mesh-columns-6">
+						<div class="mesh-columns-12">
 							<div class="new-feature">
-								<h4 class="no-margin"><?php esc_html_e( 'Better Yoast Integration', 'mesh' ); ?></h4>
-								<p><?php esc_html_e( 'We\'ve added support for the Yoast SEO page analysis tool. Now, any time any new sections and/or Content blocks are created using Mesh they will be taken into account within Yoast\'s page Readability analysis tools.', 'mesh' ); ?></p>
-							</div>
-
-							<div class="new-feature">
-								<h4 class="no-margin"><?php esc_html_e( 'Multiple Duplicate Post Plugins are Now Supported', 'mesh' ); ?></h4>
-								<p><?php esc_html_e( 'With every release of Mesh we want to make sure it is more of a benefit to our users.', 'mesh' ); ?>
-									<?php esc_html_e( 'Mesh will now duplicate all sections and blocks when duplicating a page/post/custom post type using the following popular plugins:', 'mesh' ); ?></p>
+								<h4 class="no-margin"><?php esc_html_e( 'Customize Mesh Even Further', 'mesh' ); ?></h4>
+								<p><?php esc_html_e( 'We\'ve added a ton of hooks for filtering, mesh section and block options.', 'mesh' ); ?></p>
+								<h5>Actions</h5>
 								<ul>
-									<li><a href="https://wordpress.org/plugins/duplicate-post/" target="_blank" rel="noopener noreferrer"><?php esc_html_e( 'Duplicate Post', 'mesh' ); ?></a></li>
-									<li><a href="https://wordpress.org/plugins/post-duplicator/" target="_blank" rel="noopener noreferrer"><?php esc_html_e( 'Post Duplicator', 'mesh' ); ?></a></li>
+									<li>mesh_controls_before</li>
+									<li>mesh_controls_after</li>
+									<li>mesh_sections_before</li>
+									<li>mesh_sections_after</li>
+									<li>mesh_columns_before</li>
+									<li>mesh_columns_after</li>
 								</ul>
-							</div>
-
-							<div class="new-feature">
-								<h4 class="no-margin"><?php esc_html_e( 'More Customization for Developers', 'mesh' ); ?></h4>
-								<p><?php esc_html_e( 'The fields within Mesh sections and blocks (in the "More Options" and "More" areas, respectively) are now extendible by developers. This means developers can add their own fields easily. This also lays the groundwork for us to be able to add more great features to Mesh!', 'mesh' ); ?></p>
-								<p><?php esc_html_e( 'Two new filters were added, "mesh_section_controls" and "mesh_block_controls," which pass the controls as an array of fields. By hooking into this filter, you can add checkboxes, select/dropdowns, and text fields. More field types will be released in the future, allowing you to extend Mesh further.', 'mesh' ); ?></p>
+								<h5>Filters</h5>
+								<ul>
+									<li>mesh_row_attributes</li>
+									<li>mesh_column_attributes</li>
+								</ul>
 							</div>
 						</div>
 					</div>
@@ -83,12 +76,8 @@ $safe_content = array(
 					<div class="new mesh-row no-margin">
 						<div class="mesh-columns-12">
 							<div class="update">
-								<h4 class="no-margin"><?php esc_html_e( 'Better Onboarding Process', 'mesh' ); ?></h4>
-								<p><?php esc_html_e( 'Added in a better starting point for first time users.', 'mesh' ); ?></p>
-							</div>
-							<div class="update">
-								<h4 class="no-margin"><?php esc_html_e( 'Improved TinyMCE Support', 'mesh' ); ?></h4>
-								<p><?php esc_html_e( 'We had some reports from users regarding issues using the keyword "javascript" within html tags so now our filters match default WordPress TinyMCE filters.', 'mesh' ); ?></p>
+								<h4 class="no-margin"><?php esc_html_e( 'Updating CSS', 'mesh' ); ?></h4>
+								<p><?php esc_html_e( 'Cleaning up some CSS to make things more consistent.', 'mesh' ); ?></p>
 							</div>
 						</div>
 					</div>
@@ -107,10 +96,9 @@ $safe_content = array(
 							<div class="bug-fix">
 								<h5 class="no-margin"><?php esc_html_e( 'While features are great, stability and bug fixes are equally important. Below are some of the items we tackled this release:', 'mesh' ); ?></h5>
 								<ul>
-									<li><?php esc_html_e( 'Fixed a bug where reordering would stop that section from working properly until refresh', 'mesh' ); ?></li>
-									<li><?php esc_html_e( 'Fixed a bug where collapsed sections could not be toggled open after a new section was added', 'mesh' ); ?></li>
-									<li><?php esc_html_e( 'Fixed a bug when excluding Mesh template related taxonomies from the generated sitemap', 'mesh' ); ?></li>
-									<li><?php esc_html_e( 'Fixed a bug where section and block background images were displayed before "update" / "publish"', 'mesh' ); ?></li>
+									<li><?php esc_html_e( 'Fixed a few undefined indexes', 'mesh' ); ?></li>
+									<li><?php esc_html_e( 'Fixed a few conflicts with gutenberg (This is not full compatiblity with Gutenberg)', 'mesh' ); ?></li>
+									<li><?php esc_html_e( 'Fixed an issue where Mesh Templates could potentially lost the ability to add Mesh Sections', 'mesh' ); ?></li>
 								</ul>
 							</div>
 						</div>
