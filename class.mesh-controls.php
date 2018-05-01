@@ -133,6 +133,13 @@ class Mesh_Controls {
 				),
 			),
 			'more_options' => array(
+				'section-id' => array(
+					'label'         => esc_html__( 'Section ID', 'mesh' ),
+					'type'          => 'text',
+					'css_classes'   => array( 'mesh-section-id' ),
+					'show_on_cb'    => false,
+					'validation_cb' => false,
+				),
 				'css-class' => array(
 					'label'          => esc_html__( 'Section Class', 'mesh' ),
 					'type'           => 'text',
@@ -147,13 +154,6 @@ class Mesh_Controls {
 					'show_on_cb'     => false,
 					'validation_cb'  => false,
 				),
-				'section-id' => array(
-                    'label'         => esc_html__( 'Section ID', 'mesh' ),
-                    'type'          => 'text',
-                    'css_classes'   => array( 'mesh-section-id' ),
-                    'show_on_cb'    => false,
-                    'validation_cb' => false,
-                ),
 				'collapse' => array(
 					'label'          => esc_html__( 'Collapse Padding', 'mesh' ),
 					'type'           => 'checkbox',
@@ -182,11 +182,13 @@ class Mesh_Controls {
 
 		if ( $visible ) {
 			$controls = $controls['visible_options'];
+			$container_class = 'inline-block-list mesh-section-meta-visible-list';
 		} else {
 			$controls = $controls['more_options'];
+			$container_class = 'small-block-grid-1 medium-block-grid-4';
 		}
 		?>
-		<ul class="small-block-grid-1 medium-block-grid-4">
+		<ul class="<?php esc_attr_e( $container_class ); ?>">
 		<?php
 
 		foreach ( $controls as $control_key => $control ) {

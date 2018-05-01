@@ -305,6 +305,7 @@
 	select {
 		display: block;
 		margin: 0;
+		max-width: 100%;
 	}
 
 	input[type="checkbox"] {
@@ -316,6 +317,22 @@
 	border-bottom: 1px solid $grey;
 	position: relative;
     background-color: $super-light-grey;
+
+	input,
+	select {
+		display: inline-block;
+	}
+
+	.mesh-section-meta-visible-list {
+		[class*="mesh-section-control"] {
+			line-height: 28px;
+			margin-right: 6px !important;
+		}
+
+		input[type="checkbox"] {
+			margin-top: 0;
+		}
+	}
 }
 
 .slide-toggle-meta-dropdown {
