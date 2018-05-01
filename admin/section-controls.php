@@ -26,7 +26,7 @@ global $post;
 </div>
 
 <div class="mesh-section-meta-dropdown mesh-section-meta-dropdown-<?php echo esc_attr( $section->ID ); ?> mesh-row hide">
-	<div class="mesh-columns-12 mesh-table">
+	<div class="mesh-columns-9 mesh-table">
 		<div class="mesh-row mesh-table-footer">
 			<?php
 
@@ -41,6 +41,31 @@ global $post;
 			<?php endif; ?>
 		</div>
 	</div>
+
+    <div class="mesh-columns-3 mesh-table">
+        <div class="mesh-row mesh-table-footer">
+			<?php
+			if ( ! has_term( 'reference', 'mesh_template_types', $post ) ) : ?>
+
+                <div class="mesh-section-background">
+                    <div class="choose-image">
+						<?php
+						$featured_image_id = get_post_thumbnail_id( $section->ID );
+						if ( empty( $featured_image_id ) ) :
+							?>
+                            <a class="mesh-featured-image-choose"><?php esc_attr_e( 'Set Background Image', 'mesh' ); ?></a>
+						<?php else : ?>
+							<?php $featured_image = wp_get_attachment_image_src( $featured_image_id, array( 160, 60 ) ); ?>
+                            <a class="mesh-featured-image-choose right" data-mesh-featured-image="<?php echo esc_attr( $featured_image_id ); ?>"><img src="<?php echo esc_attr( $featured_image[0] ); ?>" /></a>
+                            <a class="mesh-featured-image-trash dashicons-before dashicons-dismiss" data-mesh-featured-image="<?php echo esc_attr( $featured_image_id ); ?>"></a>
+						<?php endif; ?>
+                        <input type="hidden" name="mesh-sections[<?php echo esc_attr( $section->ID ); ?>][<?php echo esc_attr( 'featured_image' ); ?>]" value="<?php echo esc_attr( $featured_image_id ); ?>" />
+                    </div>
+                </div>
+
+			<?php endif; ?>
+        </div>
+    </div>
 	<?php
 
 	/**
