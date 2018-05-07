@@ -407,7 +407,8 @@ mesh.blocks = function ($) {
 				$section = $button.parents('.block'),
 				section_id = parseInt($section.attr('data-mesh-block-id')),
 				frame_id = 'mesh-background-select-' + section_id,
-				current_image = $button.attr('data-mesh-block-featured-image');
+				current_image = $button.attr('data-mesh-block-featured-image'),
+                $parent_container = $button.parents('.mesh-section-background');
 
 			admin.media_frames = admin.media_frames || [];
 
@@ -462,6 +463,8 @@ mesh.blocks = function ($) {
 							.html('<img src="' + media_attachment.url + '" />')
 							.attr('data-mesh-block-featured-image', parseInt(media_attachment.id))
 							.after($trash);
+
+                        $parent_container.addClass('has-background-set');
 					}
 				});
 			});
@@ -484,7 +487,8 @@ mesh.blocks = function ($) {
 
 			var $button = $(this),
 				$section = $button.parents('.block'),
-				section_id = parseInt($section.attr('data-mesh-block-id'));
+				section_id = parseInt($section.attr('data-mesh-block-id')),
+                $parent_container = $button.parents('.mesh-section-background');
 
 			$.post(ajaxurl, {
 				'action': 'mesh_update_featured_image',
@@ -493,7 +497,9 @@ mesh.blocks = function ($) {
 			}, function (response) {
 				if (response != -1) {
 					$button.prev().text(mesh_data.strings.add_image);
+                    $button.prev().toggleClass('right');
 					$button.remove();
+                    $parent_container.removeClass('has-background-set');
 				}
 			});
 		},

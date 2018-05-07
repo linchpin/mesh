@@ -47,12 +47,15 @@ global $post;
 			<?php
 			if ( ! has_term( 'reference', 'mesh_template_types', $post ) ) : ?>
 
-                <div class="mesh-section-background">
+                <?php
+				$featured_image_id = get_post_thumbnail_id( $section->ID );
+				$section_background_class = 'mesh-section-background';
+				$section_background_class = ( ! empty( $featured_image_id ) ) ? $section_background_class . ' has-background-set' : $section_background_class;
+                ?>
+
+                <div class="<?php esc_attr_e( $section_background_class ); ?>">
                     <div class="choose-image">
-						<?php
-						$featured_image_id = get_post_thumbnail_id( $section->ID );
-						if ( empty( $featured_image_id ) ) :
-							?>
+						<?php if ( empty( $featured_image_id ) ) : ?>
                             <a class="mesh-featured-image-choose"><?php esc_attr_e( 'Set Background Image', 'mesh' ); ?></a>
 						<?php else : ?>
 							<?php $featured_image = wp_get_attachment_image_src( $featured_image_id, array( 160, 60 ) ); ?>
