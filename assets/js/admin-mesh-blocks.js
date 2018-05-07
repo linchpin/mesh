@@ -473,36 +473,35 @@ mesh.blocks = function ($) {
 			admin.media_frames[frame_id].open();
 		},
 
-		/**
-		 * Remove selected background from our block
-		 *
-		 * @since 0.3.6
-		 *
-		 * @param event
+
+        /**
+         * Remove selected background from our block
+         *
+         * @since 0.3.6
+         *
+         * @param event
 		 */
-		remove_background: function (event) {
+		remove_background : function ( event ) {
 
-			event.preventDefault();
-			event.stopPropagation();
+            event.preventDefault();
+            event.stopPropagation();
 
-			var $button = $(this),
-				$section = $button.parents('.block'),
-				section_id = parseInt($section.attr('data-mesh-block-id')),
-                $parent_container = $button.parents('.mesh-section-background');
+            var $button = $(this);
 
-			$.post(ajaxurl, {
-				'action': 'mesh_update_featured_image',
-				'mesh_section_id': parseInt(section_id),
-				'mesh_featured_image_nonce': mesh_data.featured_image_nonce
-			}, function (response) {
-				if (response != -1) {
-					$button.prev().text(mesh_data.strings.add_image);
-                    $button.prev().toggleClass('right');
-					$button.remove();
-                    $parent_container.removeClass('has-background-set');
-				}
-			});
+            if ($button.prev().hasClass('right') && !$button.prev().hasClass('button')) {
+                if (!$button.parents('.block-background-container')) {
+                    $button.prev().toggleClass('button right');
+                } else {
+                    $button.prev().toggleClass('right').attr('data-mesh-block-featured-image', '');
+                }
+            }
+
+            $button.siblings('input[type="hidden"]').val('');
+
+            $button.prev().text(mesh_data.strings.add_image);
+            $button.remove();
 		},
+
 
 		show_field: function (event) {
 			event.preventDefault();
