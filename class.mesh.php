@@ -533,7 +533,7 @@ class Mesh {
 				update_post_meta( $section->ID, '_mesh_section_id', $mesh_section_id );
 			}
       
-      // Save Featured Image      
+            // Save Featured Image
 			$featured_image = $section_data['featured_image'];
 
 			if ( empty( $featured_image ) ) {
@@ -653,6 +653,15 @@ class Mesh {
 					delete_post_meta( $block_id, '_mesh_css_class' );
 				} else {
 					update_post_meta( $block_id, '_mesh_css_class', $sanitized_css_classes );
+				}
+
+				// Save Featured Image
+				$featured_image = $block_data['featured_image'];
+
+				if ( empty( $featured_image ) ) {
+					delete_post_meta( $block_id, '_thumbnail_id' );
+				} else {
+					update_post_meta( $block_id, '_thumbnail_id', (int) $featured_image );
 				}
 			}
 		}
