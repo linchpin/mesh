@@ -330,7 +330,7 @@ class Mesh_Templates {
 	}
 
 	/**
-	 * Add Layout Column Title and also reorder out columns
+	 * Add Layout Column Title and also reorder our columns
 	 *
 	 * @since 1.1
 	 * @param int $columns The columns in the admin to iterate through.

@@ -547,7 +547,7 @@ mesh.admin = function ($) {
 
 					var $publish_draft = $current_section.find('.mesh-section-publish, .mesh-section-save-draft');
 
-					if ('publish' == $post_status_field.val()) {
+					if ( 'publish' === $post_status_field.val() ) {
 						$button.removeClass('hidden');
 						$publish_draft.addClass('hidden');
 					} else {

@@ -96,7 +96,7 @@ function mesh_block_class( $block_id, $args = array() ) {
 		'total_columns'    => 1,
 		'max_columns'      => apply_filters( 'mesh_max_columns', 12 ),
 		'column_index'     => -1,
-		'column_width'     => 12,
+		'column_width'     => apply_filters( 'mesh_column_width', 12 ),
 	);
 
 	$args = wp_parse_args( $args, $defaults );
@@ -139,6 +139,8 @@ function mesh_block_class( $block_id, $args = array() ) {
 			}
 		}
 	}
+
+	$classes = apply_filters( 'mesh_column_classes', $classes );
 
 	// Merge our block classes (from the input field).
 	if ( ! empty( $block_css_class ) ) {

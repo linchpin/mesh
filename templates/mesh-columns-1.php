@@ -31,14 +31,13 @@ $mesh_element_attributes = implode( ' ', $mesh_element_attributes );
 	?>
 
 	<?php
-		$title_display = get_post_meta( get_the_ID(), '_mesh_title_display', true );
-		$collapse_column_spacing = get_post_meta( get_the_ID(), '_mesh_collapse', true );
+
+		$title_display = get_post_meta( get_the_ID(), '_mesh_title_display', true );$collapse_column_spacing = get_post_meta( get_the_ID(), '_mesh_collapse', true );
 	  $custom_row_class = get_post_meta( get_the_ID(), '_mesh_row_class', true );
 
-		$row_class = ( ! empty( $collapse_column_spacing ) ) ? 'row collapse' : 'row';
+	  $row_class = ( ! empty( $collapse_column_spacing ) ) ? 'row collapse' : 'row';
 	  $row_class = ( ! empty( $custom_row_class ) ) ? $row_class . ' ' . $custom_row_class : $row_class;
-		
-    $title_class = array( 'small-12', 'columns', 'title-row' );
+	  $title_class = array( 'small-12', 'columns', 'title-row' );
 	  $title_class = apply_filters( 'mesh_section_title_css_classes', $title_class );
 	  $title_class = implode( ' ', $title_class );
 	?>

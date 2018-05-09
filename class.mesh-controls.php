@@ -13,6 +13,32 @@
 class Mesh_Controls {
 
 	/**
+	 * @var array
+	 */
+	private $block_settings = array();
+
+	/**
+	 * Mesh_Controls constructor.
+	 */
+	function __construct() {
+		$this->block_settings = array(
+			'push_pull'        => false,
+			'collapse_spacing' => false,
+			'total_columns'    => 1,
+			'max_columns'      => apply_filters( 'mesh_max_columns', 12 ),
+			'column_index'     => -1,
+			'column_width'     => apply_filters( 'mesh_column_width', 12 ),
+		);
+	}
+
+	/**
+	 * @return array
+	 */
+	public function get_block_settings() {
+		return $this->block_settings;
+	}
+
+	/**
 	 * Only show equalize when the count of our blocks is greater than 1
 	 *
 	 * @param \WP_Post|int $section Our current section.
@@ -47,7 +73,10 @@ class Mesh_Controls {
 	 * @return bool
 	 */
 	function show_offset( $block, $section_blocks ) {
-		$default_block_columns = 12 / $section_blocks;
+
+		$_block_settings = $this->get_block_settings();
+
+		$default_block_columns = $_block_settings['max_columns'] / $section_blocks;
 		$block_columns = get_post_meta( $block->ID, '_mesh_column_width', true );
 
 		if ( empty( $block_columns ) ) {
@@ -76,7 +105,7 @@ class Mesh_Controls {
 	}
 
 	/**
-	 * Dipsplay our options.
+	 * Display our offset options.
 	 *
 	 * @param \WP_Post $block          Block.
 	 * @param int      $section_blocks Count of our blocks.
@@ -85,7 +114,10 @@ class Mesh_Controls {
 	 */
 	function get_offset_options( $block, $section_blocks ) {
 
-		$default_block_columns = 12 / $section_blocks;
+		$_block_settings = $this->get_block_settings();
+
+		$default_block_columns = $_block_settings['max_columns'] / $section_blocks;
+
 		$block_columns = get_post_meta( $block->ID, '_mesh_column_width', true );
 
 		if ( empty( $block_columns ) ) {
@@ -101,6 +133,42 @@ class Mesh_Controls {
 		}
 
 		return $options;
+	}
+
+
+	/**
+	 * Build out a dropdown for our available columns.
+	 *
+	 * @param $block
+	 * @param $section_blocks
+	 *
+	 * @return array
+	 */
+	function get_columns( $block, $section_blocks ) {
+
+		$_block_settings = $this->get_block_settings();
+
+		$block_columns = $_block_settings['max_columns'];
+
+		$options = array();
+
+		for ( $i = 3; $i <= $block_columns; $i++ ) {
+			$options[ $i ] = $i;
+		}
+
+		return $options;
+	}
+
+	/**
+	 * Display our centered options.
+	 *
+	 * @param \WP_Post $block          Block.
+	 * @param int      $section_blocks Count of our blocks.
+	 *
+	 * @return boolean
+	 */
+	function show_centered( $block, $section_blocks ) {
+		return  ( 1 === $section_blocks );
 	}
 
 	/**
@@ -128,6 +196,24 @@ class Mesh_Controls {
 					'label'          => esc_html__( 'Display Title', 'mesh' ),
 					'type'           => 'checkbox',
 					'css_classes'    => array( 'mesh-section-show-title' ),
+					'show_on_cb'     => false,
+					'validation_cb'  => false,
+				),
+				'size' => array(
+					'label'          => esc_html__( 'Size', 'mesh' ),
+					'type'           => 'dropdown',
+					'css_classes'    => array( 'mesh-section-display-size' ),
+					'options'     => array(
+						esc_html__( 'Small', 'mesh' ),
+						esc_html__( 'Medium', 'mesh' ),
+						esc_html__( 'Large', 'mesh' ),
+						esc_html__( 'X-Large', 'mesh' ),
+					),
+				),
+				'small-full-width' => array(
+					'label'          => esc_html__( 'Full Width?', 'mesh' ),
+					'type'           => 'checkbox',
+					'css_classes'    => array( 'mesh-section-show-title mesh-hide' ),
 					'show_on_cb'     => false,
 					'validation_cb'  => false,
 				),
@@ -188,7 +274,7 @@ class Mesh_Controls {
 			$container_class = 'small-block-grid-1 medium-block-grid-4';
 		}
 		?>
-		<ul class="<?php esc_attr_e( $container_class ); ?>">
+		<ul class="<?php echo esc_attr( $container_class ); ?>">
 		<?php
 
 		foreach ( $controls as $control_key => $control ) {
@@ -296,10 +382,31 @@ class Mesh_Controls {
 				'css_classes'    => array( 'mesh-section-class' ),
 				'validation_cb'  => false,
 			),
+			'centered' => array(
+				'label'          => esc_html__( 'Centered', 'mesh' ),
+				'type'           => 'checkbox',
+				'css_classes'    => array( 'mesh-section-centered' ),
+				'show_on_cb'     => array( $this, 'show_centered' ),
+				'validation_cb'  => false,
+			),
 			'featured_image' => array(
 				'type' => 'media',
 				'label' => '',
 				'css_classes'    => array( 'mesh-section-class' ),
+			),
+			'columns' => array(
+				'label'          => esc_html__( 'Columns', 'mesh' ),
+				'type'           => 'dropdown',
+				'css_classes'    => array( 'mesh-block-columns', 'column-width' ),
+				//'show_on_cb'     => array( $this, 'show_centered' ),
+				'validation_cb'  => false,
+				'options_cb'     => array( $this, 'get_columns' ),
+			),
+			'menu_order' => array(
+				'label'          => esc_html__( 'Menu Order', 'mesh' ),
+				'type'           => 'hidden',
+				'css_classes'    => array( 'block-menu-order' ),
+				'validation_cb'  => false,
 			),
 		);
 
@@ -327,9 +434,14 @@ class Mesh_Controls {
 				}
 			}
 
-			$css_classes = implode( ' ', $css_classes );
+			$css_classes    = implode( ' ', $css_classes );
 			$underscore_key = str_replace( '-', '_', $controls_key );
 			$current        = get_post_meta( $block->ID, '_mesh_' . esc_attr( $underscore_key ), true );
+
+			if ( 'columns' === $underscore_key && empty( $current ) ) {
+				$current = $this->block_settings['max_columns'];
+			}
+
 			?>
 			<li class="mesh-section-control-<?php echo esc_attr( $controls_key ); ?>">
 				<label for="mesh-section[<?php echo esc_attr( $block->ID ); ?>][<?php echo esc_attr( $underscore_key ); ?>]">
@@ -388,9 +500,13 @@ class Mesh_Controls {
 							</div>
 							<?php
 							break;
+						case 'hidden': ?>
+							<input type="text" name="mesh-sections[<?php echo esc_attr( $block->post_parent ); ?>][blocks][<?php echo esc_attr( $block->ID ); ?>][<?php echo esc_attr( $underscore_key ); ?>]" class="<?php echo esc_attr( $css_classes ); ?>" value="<?php echo esc_attr( get_post_meta( $block->ID, '_mesh_' . esc_attr( $underscore_key ), true ) ); ?>" />
+							<?php
+							break;
 						case 'input':
 						case 'text':
-						default:
+						default :
 						?>
 						<input type="text" name="mesh-sections[<?php echo esc_attr( $block->post_parent ); ?>][blocks][<?php echo esc_attr( $block->ID ); ?>][<?php echo esc_attr( $underscore_key ); ?>]" class="<?php echo esc_attr( $css_classes ); ?>" value="<?php echo esc_attr( get_post_meta( $block->ID, '_mesh_' . esc_attr( $underscore_key ), true ) ); ?>" />
 						<?php
