@@ -36,10 +36,24 @@ mesh.blocks = function ($) {
 				.on('blur', '.mesh-clean-edit-element:not(select)', self.hide_field)
 				.on('click', '.close-title-edit', self.hide_field)
 				.on('click', '.slide-toggle-element', self.slide_toggle_element)
-				.on('change', '.mesh-column-offset', self.display_offset);
+				.on('change', '.mesh-column-offset', self.display_offset)
+				.on('change', 'input.mesh-section-centered', self.display_centered);
 
-			self.setup_resize_slider();
+			self.setup_resizing();
 			self.setup_sortable();
+		},
+
+		display_centered: function ( event ) {
+
+			var $tgt = $(this),
+				$section = $tgt.parents('.mesh-section-block'),
+				$center_class = 'mesh-block-centered';
+
+			if ( $tgt.is(':checked') ) {
+                $section.addClass( $center_class );
+			} else {
+                $section.removeClass( $center_class );
+			}
 		},
 
 		/**
@@ -73,7 +87,7 @@ mesh.blocks = function ($) {
 					$column_slider.fadeOut('fast');
 
 					$('.mesh-section-block:not(.ui-sortable-placeholder)', this).each(function () {
-						column_order.push($(this).attr('class'));
+						column_order.push( $(this).attr('class') );
 					});
 				},
 
@@ -113,15 +127,22 @@ mesh.blocks = function ($) {
 		 * @param ui
 		 * @since 1.0.0
 		 */
-		change_block_widths: function (event, ui) {
-			var $tgt = $(event.target),
-				$columns = $tgt.parent().parent().parent().find('.mesh-editor-blocks').find('.mesh-row:first .columns').addClass('dragging'),
+		change_block_widths: function ( event, ui ) {
+
+            var $tgt = $(event.target);
+
+			if ( typeof( ui ) === 'undefined' ) {
+				ui = {};
+				ui.values = [ parseInt( $tgt.val() ) ];
+			}
+
+			var $columns = $tgt.parents('.mesh-section').find('.mesh-editor-blocks').find('.mesh-row:first .columns').addClass('dragging'),
 				column_length = $columns.length,
-				column_total = 12,
+				column_total = parseInt( mesh_data.max_columns ),
 				column_values = [],
 				slider_values = ui.values,
 				post_data = {
-					post_id: parseInt(mesh_data.post_id),
+					post_id: parseInt( mesh_data.post_id ),
 					section_id: parseInt($tgt.closest('.mesh-section').attr('data-mesh-section-id')),
 					blocks: {}
 				};
@@ -131,7 +152,7 @@ mesh.blocks = function ($) {
 			// -> col 1 = val1 = 3
 			// -> col 2 = (val2 - val1) = (9 - 3) = 6
 			// -> col 3 = (avail - val2) = (12 - 9) = 3
-			if (3 == column_length) {
+			if ( 3 === column_length ) {
 				for (var i = 0; i <= column_length; i++) {
 					switch (i) {
 						case 0:
@@ -153,9 +174,13 @@ mesh.blocks = function ($) {
 			// If returned value is [4]
 			// -> col 1 = val1 = 4
 			// -> col 2 = (avail - val1) = (12 - 4) = 8
-			if (2 == column_length) {
-				column_values.push(slider_values[0]);
-				column_values.push(column_total - slider_values[0]);
+			if ( 2 === column_length ) {
+				column_values.push( slider_values[0] );
+				column_values.push( column_total - slider_values[0] );
+			}
+
+			if ( 1 === column_length ) {
+				column_values.push( $tgt.val() );
 			}
 
 			// Custom class removal based on regex pattern
@@ -173,7 +198,7 @@ mesh.blocks = function ($) {
 				$offset_select.children('option').remove();
 
 				for (var i = 0; i <= max_offset; i++) {
-					$offset_select.append($('<option></option>').attr('value', i).text(i));
+					$offset_select.append( $('<option></option>').attr('value', i).text(i) );
 				}
 
 				if (selected_offset > max_offset) {
@@ -185,20 +210,26 @@ mesh.blocks = function ($) {
 				// Reset column width classes and save post data
 				$this.addClass('mesh-columns-' + column_value);
 
-				if (block_id && column_values[index]) {
+				if ( block_id && column_values[index] ) {
 					$column_input.val(column_value);
-					post_data.blocks[block_id.toString()] = column_value;
+					post_data.blocks[ block_id.toString() ] = column_value;
 				}
 			});
 
-
 			self.rerender_blocks($columns.find('.wp-editor-area'));
+		},
+
+		setup_resizing : function() {
+			$body.on( 'change', '.mesh-block-columns', self.change_block_widths );
+			self.setup_resize_slider();
 		},
 
 		/**
 		 * Setup Resize Slider
 		 */
 		setup_resize_slider: function () {
+
+			var column_spacing = [];
 
 			$('.column-slider').addClass('ui-slider-horizontal').each(function () {
 				var $this = $(this),
@@ -208,7 +239,7 @@ mesh.blocks = function ($) {
 					data = {
 						range: is_range,
 						min: 0,
-						max: 12,
+						max: parseInt( mesh_data.max_columns ),
 						step: 1,
 						left: 3,
 						right: 9,

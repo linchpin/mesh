@@ -483,6 +483,8 @@ class Mesh {
 				'template',
 				'menu_order',
 				'featured_image',
+				'centered',
+				'columns',
 			);
 
 			/*
@@ -506,7 +508,7 @@ class Mesh {
 			} else {
 				update_post_meta( $section->ID, '_mesh_css_class', $sanitized_css_classes );
 			}
-      
+
 			// Save Row CSS Classes.
 			$row_classes           = explode( ' ', $section_data['row_class'] );
 			$sanitized_row_classes = array();
@@ -532,8 +534,8 @@ class Mesh {
 			} else {
 				update_post_meta( $section->ID, '_mesh_section_id', $mesh_section_id );
 			}
-      
-            // Save Featured Image
+
+			// Save Featured Image.
 			$featured_image = $section_data['featured_image'];
 
 			if ( empty( $featured_image ) ) {
@@ -573,6 +575,13 @@ class Mesh {
 				delete_post_meta( $section->ID, '_mesh_collapse' );
 			} else {
 				update_post_meta( $section->ID, '_mesh_collapse', $section_data['collapse'] );
+			}
+
+			// Save Centered.
+			if ( empty( $section_data['centered'] ) ) {
+				delete_post_meta( $section->ID, '_mesh_centered' );
+			} else {
+				update_post_meta( $section->ID, '_mesh_centered', $section_data['centered'] );
 			}
 
 			// Process our custom meta.
@@ -621,7 +630,7 @@ class Mesh {
 				$block_column_width = (int) $section_data['blocks'][ $block_id ]['columns'];
 
 				// If we don't have a column width defined or we are using a 1 column layout clear our saved widths.
-				if ( empty( $block_column_width ) || 'mesh-columns-1.php' === $template ) {
+				if ( empty( $block_column_width ) ) {
 					delete_post_meta( $block_id, '_mesh_column_width' );
 				} else {
 					update_post_meta( $block_id, '_mesh_column_width', $block_column_width );
@@ -654,6 +663,19 @@ class Mesh {
 				} else {
 					update_post_meta( $block_id, '_mesh_css_class', $sanitized_css_classes );
 				}
+
+				// Blocks Center
+				if ( ! isset( $section_data['blocks'][ $block_id ]['centered'] ) ) {
+					$block_centered = false;
+				} else {
+					$block_centered = true;
+				}
+
+				if ( false === $block_centered ) {
+					delete_post_meta( $block_id, '_mesh_centered' );
+				} else {
+					update_post_meta( $block_id, '_mesh_centered', $block_centered );
+        }
 
 				// Save Featured Image
 				$featured_image = $block_data['featured_image'];
@@ -954,6 +976,7 @@ class Mesh {
 			'post_type'             => ! is_null( $post ) ? $post->post_type : $current_screen->post_type,
 			'site_uri'              => site_url(),
 			'screen'                => $current_screen->base,
+			'max_columns'           => apply_filters( 'mesh_max_columns', 12 ),
 			'choose_layout_nonce'   => wp_create_nonce( 'mesh_choose_layout_nonce' ),
 			'remove_section_nonce'  => wp_create_nonce( 'mesh_remove_section_nonce' ),
 			'add_section_nonce'     => wp_create_nonce( 'mesh_add_section_nonce' ),
