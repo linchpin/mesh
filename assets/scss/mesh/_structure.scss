@@ -237,6 +237,7 @@
 
 // 02. No Sections
 #mesh-description {
+	margin-bottom: 10px;
 	padding: {
 		bottom: $base * 2;
 		top: $base * 2;
@@ -379,11 +380,32 @@
 }
 
 .mesh-section-background {
+	background: {
+		color: $super-light-grey;
+		image: url('../images/image-placeholder-small.svg');
+		position: 50% 0;
+		repeat: no-repeat;
+	};
+	border: 1px solid $grey;
+	float: right;
+	max-width: 200px;
+	text-align: center;
+	width: 100%;
+
+	&.has-background-set {
+		background: {
+			color: transparent;
+			image: none;
+		};
+		width: auto;
+	}
+
 	.choose-image {
 		height: 80px;
 		position: relative;
 
 		img {
+			display: block;
 			height: auto;
 			width: auto;
 			max-height: 80px;
@@ -400,7 +422,8 @@
 		}
 	}
 
-	.mesh-featured-image-choose {
+	.mesh-featured-image-choose,
+	.mesh-block-featured-image-choose{
 		height: inherit;
 		line-height: 80px;
 	}
@@ -694,9 +717,8 @@
 
 .mesh-columns-12 .mesh-block-title-row {
   background-color: #f5f5f5;
-  border-bottom: 1px solid #dedede;
   position: relative;
-  padding: 4px 4px 0 0;
+  padding: 0 4px 0 0;
 }
 
 .block-content {
@@ -837,4 +859,8 @@
   	li {
 	  margin-left:10px;
 	}
+}
+
+.mesh-section-block .mesh-section-control-featured_image {
+	float: right;
 }

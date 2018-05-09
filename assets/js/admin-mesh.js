@@ -671,7 +671,8 @@ mesh.blocks = function ($) {
 				$section = $button.parents('.block'),
 				section_id = parseInt($section.attr('data-mesh-block-id')),
 				frame_id = 'mesh-background-select-' + section_id,
-				current_image = $button.attr('data-mesh-block-featured-image');
+				current_image = $button.attr('data-mesh-block-featured-image'),
+                $parent_container = $button.parents('.mesh-section-background');
 
 			admin.media_frames = admin.media_frames || [];
 
@@ -726,6 +727,8 @@ mesh.blocks = function ($) {
 							.html('<img src="' + media_attachment.url + '" />')
 							.attr('data-mesh-block-featured-image', parseInt(media_attachment.id))
 							.after($trash);
+
+                        $parent_container.addClass('has-background-set');
 					}
 				});
 			});
@@ -746,7 +749,7 @@ mesh.blocks = function ($) {
 
             event.preventDefault();
             event.stopPropagation();
-
+      
             var $button = $(this);
 
             if ($button.prev().hasClass('right') && !$button.prev().hasClass('button')) {
@@ -761,7 +764,6 @@ mesh.blocks = function ($) {
 
             $button.prev().text(mesh_data.strings.add_image);
             $button.remove();
-
 		},
 
 
@@ -2073,7 +2075,8 @@ mesh.admin = function ($) {
 			event.preventDefault();
 			event.stopPropagation();
 
-			var $button = $(this);
+			var $button = $(this),
+				$parent_container = $button.parents('.mesh-section-background');
 
 			if ($button.prev().hasClass('right') && !$button.prev().hasClass('button')) {
 				if (!$button.parents('.block-background-container')) {
@@ -2087,6 +2090,7 @@ mesh.admin = function ($) {
 
 			$button.prev().text(mesh_data.strings.add_image);
 			$button.remove();
+            $parent_container.removeClass('has-background-set');
 		},
 
 		/**
@@ -2102,7 +2106,8 @@ mesh.admin = function ($) {
 				$section = $button.parents('.mesh-postbox'),
 				section_id = parseInt($section.attr('data-mesh-section-id')),
 				frame_id = 'mesh-background-select-' + section_id,
-				current_image = $button.attr('data-mesh-section-featured-image');
+				current_image = $button.attr('data-mesh-section-featured-image'),
+				$parent_container = $button.parents('.mesh-section-background');
 
 			// If the frame already exists, re-open it.
 			if (media_frames[frame_id]) {
@@ -2153,6 +2158,8 @@ mesh.admin = function ($) {
 					.html($img)
 					.attr('data-mesh-section-featured-image', parseInt(media_attachment.id))
 					.after($trash);
+
+                $parent_container.addClass('has-background-set');
 
 				// Add selected attachment id to input
 				$button.siblings('input[type="hidden"]').val(media_attachment.id);
