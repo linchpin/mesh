@@ -665,7 +665,6 @@ class Mesh {
 				}
 
 				// Blocks Center
-
 				if ( ! isset( $section_data['blocks'][ $block_id ]['centered'] ) ) {
 					$block_centered = false;
 				} else {
@@ -676,6 +675,15 @@ class Mesh {
 					delete_post_meta( $block_id, '_mesh_centered' );
 				} else {
 					update_post_meta( $block_id, '_mesh_centered', $block_centered );
+        }
+
+				// Save Featured Image
+				$featured_image = $block_data['featured_image'];
+
+				if ( empty( $featured_image ) ) {
+					delete_post_meta( $block_id, '_thumbnail_id' );
+				} else {
+					update_post_meta( $block_id, '_thumbnail_id', (int) $featured_image );
 				}
 			}
 		}
