@@ -10,8 +10,10 @@
 
 ### Added
 - You can now center blocks within single column sections ( any width smaller than 12 columns )
-- Developers will find section and block controls have even more flexability (documenation to come soon)
+- You can now set the width of a single column section to any width you want (higher than 3 columns by default)
+- Developers will find section and block controls have even more flexibility (documenation to come soon)
 - Better css when hovering a dragable column.
+- You can now define your own max columns using the `mesh_max_columns` filter
 
 ### Updated
 - CSS Slightly
