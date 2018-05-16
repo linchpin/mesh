@@ -37,6 +37,7 @@ define( 'LINCHPIN_MESH_DEBUG_MODE', false );
 $GLOBALS['mesh_current_version'] = get_option( 'mesh_version', '0.0' ); // Get our current Mesh Version.
 
 include_once 'class.mesh-settings.php';
+include_once 'class.mesh-input.php';
 include_once 'class.mesh-controls.php';
 include_once 'class.mesh-templates.php';
 include_once 'class.mesh-pointers.php';

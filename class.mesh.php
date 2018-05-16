@@ -535,7 +535,6 @@ class Mesh {
 				update_post_meta( $section->ID, '_mesh_section_id', $mesh_section_id );
 			}
 
-      
             // Save Featured Image
 			$featured_image = $section_data['featured_image'];
 
@@ -628,7 +627,7 @@ class Mesh {
 
 				wp_update_post( $updates );
 
-				$block_column_width = (int) $section_data['blocks'][ $block_id ]['columns'];
+				$block_column_width = (int) $section_data['blocks'][ $block_id ]['column_width'];
 
 				// If we don't have a column width defined or we are using a 1 column layout clear our saved widths.
 				if ( empty( $block_column_width ) ) {
@@ -677,9 +676,13 @@ class Mesh {
 				} else {
 					update_post_meta( $block_id, '_mesh_centered', $block_centered );
 				}
-				
+
 				// Save Featured Image
-				$featured_image = $block_data['featured_image'];
+				$featured_image = '';
+
+				if ( isset( $block_data['featured_image'] ) && '' !== $block_data['featured_image'] ) {
+					$featured_image = $block_data['featured_image'];
+				}
 
 				if ( empty( $featured_image ) ) {
 					delete_post_meta( $block_id, '_thumbnail_id' );

@@ -645,6 +645,11 @@
 	  &.notice {
 		margin: 5px -7px 0 -7px;
 	  }
+
+	  // Do not show column controls when dealing with multiple blocks
+	  &.multiple-blocks .mesh-section-control-columns {
+		display:none;
+	  }
 	}
 
 	.columns {
