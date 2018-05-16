@@ -269,8 +269,7 @@ class Mesh_Controls {
 			$display_control = true;
 
 			if ( ! empty( $control['show_on_cb'] ) && is_callable( $control['show_on_cb'] ) ) {
-
-				$display_control = call_user_func_array( $control['show_on_cb'], array() );
+				$display_control = call_user_func_array( $control['show_on_cb'], array( $section, $blocks ) );
 			}
 
 			if ( ! $display_control ) {
