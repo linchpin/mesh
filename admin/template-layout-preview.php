@@ -38,7 +38,7 @@ if ( ! empty( $default_template ) ) {
 					continue;
 				}
 
-				$block_columns = $section_blocks[ $block_increment ]['columns'];
+				$block_columns = $section_blocks[ $block_increment ][LINCHPIN_MESH__COLUMN_CLASS_NAME];
 
 				/**
 				 * Get how wide our column is. If no width is defined fall back to the default for that template.

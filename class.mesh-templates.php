@@ -259,10 +259,10 @@ class Mesh_Templates {
 			}
 
 			$offset = (int) $section_data['blocks'][ sanitize_title( $block_id ) ]['offset'];
-			$columns = (int) $section_data['blocks'][ sanitize_title( $block_id ) ]['columns'];
+			$columns = (int) $section_data['blocks'][ sanitize_title( $block_id ) ][LINCHPIN_MESH__COLUMN_CLASS_NAME];
 
 			$mesh_layout_meta[ sanitize_title( 'row-' . $section_id ) ]['blocks'][] = array(
-				'columns' => $columns - $offset,
+				LINCHPIN_MESH__COLUMN_CLASS_NAME => $columns - $offset,
 				'offset' => $offset,
 			);
 		}
@@ -317,10 +317,10 @@ class Mesh_Templates {
 				}
 
 				$offset = intval( $section_data['blocks'][ sanitize_title( $block_id ) ]['offset'] );
-				$columns = intval( $section_data['blocks'][ sanitize_title( $block_id ) ]['columns'] );
+				$columns = intval( $section_data['blocks'][ sanitize_title( $block_id ) ][LINCHPIN_MESH__COLUMN_CLASS_NAME] );
 
 				$mesh_layout[ sanitize_title( 'row-' . $section_id ) ]['blocks'][] = array(
-					'columns' => $columns - $offset,
+					LINCHPIN_MESH__COLUMN_CLASS_NAME => $columns - $offset,
 					'offset' => $offset,
 				);
 			}

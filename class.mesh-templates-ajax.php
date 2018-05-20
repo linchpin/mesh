@@ -154,7 +154,7 @@ class Mesh_Templates_AJAX {
 			$mesh_template_id    = 'blank';
 			$layout              = array();
 			$layout['row-blank']['blocks'][] = array(
-				'columns' => 12,
+				LINCHPIN_MESH__COLUMN_CLASS_NAME => 12,
 				'offset' => 0,
 			);
 			$default_template = true;

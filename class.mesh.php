@@ -618,7 +618,7 @@ class Mesh {
 
 				wp_update_post( $updates );
 
-				$block_column_width = (int) $section_data['blocks'][ $block_id ]['columns'];
+				$block_column_width = (int) $section_data['blocks'][ $block_id ][LINCHPIN_MESH__COLUMN_CLASS_NAME];
 
 				// If we don't have a column width defined or we are using a 1 column layout clear our saved widths.
 				if ( empty( $block_column_width ) || 'mesh-columns-1.php' === $template ) {

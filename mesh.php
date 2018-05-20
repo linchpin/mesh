@@ -27,6 +27,9 @@ define( 'LINCHPIN_MESH__MINIMUM_WP_VERSION', '4.0' );
 define( 'LINCHPIN_MESH___PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 define( 'LINCHPIN_MESH___PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 
+//define( 'LINCHPIN_MESH__ROW_CLASS_NAME', 'grid-x' );
+//define( 'LINCHPIN_MESH__COLUMN_CLASS_NAME', 'cell' );
+
 /**
  * Debug will set show_ui to true on most post types that are typically hidden.
  *
@@ -56,6 +59,22 @@ if ( is_admin() ) {
 }
 
 add_action( 'init', array( 'Mesh_Settings', 'init' ) );
+
+
+$mesh_options_flex   = get_option( 'mesh_settings');
+
+$foundation_flexbox_version = (string) $mesh_options_flex['foundation_flexbox_version'];
+
+switch ( $foundation_flexbox_version ) {
+	case 'xy':
+		define( 'LINCHPIN_MESH__ROW_CLASS_NAME', 'grid-x' );
+		define( 'LINCHPIN_MESH__COLUMN_CLASS_NAME', 'cell' );
+		break;
+	default:
+		define( 'LINCHPIN_MESH__ROW_CLASS_NAME', 'row' );
+		define( 'LINCHPIN_MESH__COLUMN_CLASS_NAME', 'columns' );
+}
+
 
 /**
  * Flush rewrite rules when the plugin is activated.
@@ -110,13 +129,13 @@ function mesh_block_class( $block_id, $args = array() ) {
 
 	$classes = array(
 		$grid['columns_class'],
-		$grid['columns']['small'] . '-' . $args['max_columns'],
+		$grid[LINCHPIN_MESH__COLUMN_CLASS_NAME]['small'] . '-' . $args['max_columns'],
 	);
 
-	$classes[] = $grid['columns']['medium'] . '-' . ( (int) $args['column_width'] - $block_offset );
+	$classes[] = $grid[LINCHPIN_MESH__COLUMN_CLASS_NAME]['medium'] . '-' . ( (int) $args['column_width'] - $block_offset );
 
 	if ( $block_offset ) {
-		$classes[] = $grid['columns']['medium'] . '-' . $grid['offset'] . '-' . $block_offset;
+		$classes[] = $grid[LINCHPIN_MESH__COLUMN_CLASS_NAME]['medium'] . '-' . $grid['offset'] . '-' . $block_offset;
 	}
 
 	if ( ! empty( $args['push_pull'] ) ) {
@@ -135,7 +154,7 @@ function mesh_block_class( $block_id, $args = array() ) {
 			}
 
 			if ( ! empty( $push_or_pull ) ) {
-				$classes[] = $grid['columns']['medium'] . '-' . $push_or_pull . '-' . ( $args['max_columns'] - $args['column_width'] );
+				$classes[] = $grid[LINCHPIN_MESH__COLUMN_CLASS_NAME]['medium'] . '-' . $push_or_pull . '-' . ( $args['max_columns'] - $args['column_width'] );
 			}
 		}
 	}
