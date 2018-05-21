@@ -19,10 +19,6 @@ global $post;
 
 $reference_template = has_term( 'reference', 'mesh_template_types', $post );
 
-if ( ! $reference_template ) {
-	include LINCHPIN_MESH___PLUGIN_DIR . 'admin/section-column-resize.php';
-}
-
 // If the template doesn't have any blocks make sure it has 1.
 if ( ! $section_blocks = (int) $templates[ $selected_template ]['blocks'] ) {
 	$section_blocks = 1;
@@ -48,7 +44,12 @@ $remaining_columns = $block_settings['max_columns'];
 
 ?>
 <div class="mesh-row<?php echo esc_attr( $multiple_child_blocks_class ); ?>" data-section-blocks="<?php echo esc_attr( $section_blocks ); ?>">
+
 	<?php
+
+	if ( ! $reference_template ) {
+		include LINCHPIN_MESH___PLUGIN_DIR . 'admin/section-column-resize.php';
+	}
 
 	while ( $block_increment < $section_blocks ) :
 
@@ -98,7 +99,9 @@ $remaining_columns = $block_settings['max_columns'];
 							}
 							?>
 							<div class="mesh-columns-12 mesh-block-options-toggle-container">
-								<span class="the-mover hndle ui-sortable-handle left mesh-hide-for-small"><span></span></span>
+								<span class="the-mover hndle ui-sortable-handle left mesh-hide-for-small">
+									<span></span>
+								</span>
 								<div class="mesh-clean-edit left mesh-column-title-container">
 									<input id="<?php echo esc_attr( 'mesh-sections-' . $section->ID . '-' . $blocks[ $block_increment ]->ID . '-title' ); ?>" type="text" class="mesh-column-title mesh-clean-edit-element widefat left" name="mesh-sections[<?php echo esc_attr( $section->ID ); ?>][blocks][<?php echo esc_attr( $blocks[ $block_increment ]->ID ); ?>][post_title]" value="<?php echo esc_attr( $blocks[ $block_increment ]->post_title ); ?>"/>
 									<span class="close-title-edit left"><?php esc_html_e( 'Done', 'mesh' ); ?></span>

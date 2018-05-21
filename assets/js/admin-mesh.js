@@ -307,19 +307,6 @@ mesh.blocks = function ($) {
 			self.setup_sortable();
 		},
 
-		display_centered: function ( event ) {
-
-			var $tgt = $(this),
-				$section = $tgt.parents('.mesh-section-block'),
-				$center_class = 'mesh-block-centered';
-
-			if ( $tgt.is(':checked') ) {
-                $section.addClass( $center_class );
-			} else {
-                $section.removeClass( $center_class );
-			}
-		},
-
 		/**
 		 * Setup sorting of blocks in the admin
 		 *
@@ -543,64 +530,31 @@ mesh.blocks = function ($) {
 
 			$tinymce_editors.each(function () {
 				var editor_id = $(this).prop('id'),
-					proto_id,
-					mce_options = [],
+                    proto_id = 'content',
+					mce_options = $.extend( true, {}, mesh_data.tinymce_options ), // get our localized options
+					column_width,
 					qt_options = [];
 
-				if (typeof tinymce !== 'undefined') {
+				column_width = $(this).closest('.mesh-section-block').find('.mesh-block-columns').val();
+
+				if ( column_width <= 4 ) {
+                    mce_options.toolbar1 = 'bold,italic,bullist,numlist,link,wp_adv';
+                    mce_options.toolbar2 = 'hr,alignleft,aligncenter,alignright,alignjustify,formatselect,underline,strikethrough,forecolor,pastetext,removeformat ';
+				}
+
+                if ( typeof tinymce !== 'undefined' ) {
 
 					// Reset our editors if we have any
 					if (parseInt(tinymce.majorVersion) >= 4) {
-						tinymce.execCommand('mceRemoveEditor', false, editor_id);
+						tinymce.execCommand( 'mceRemoveEditor', false, editor_id );
 					}
 
 					var $block_content = $(this).closest('.block-content');
 
-					/**
-					 * Props to @danielbachuber for a shove in the right direction to have movable editors in the
-					 * wp-admin
-					 *
-					 * https://github.com/alleyinteractive/wordpress-fieldmanager/blob/master/js/richtext.js#L58-L95
-					 */
-					if (typeof tinyMCEPreInit.mceInit[editor_id] === 'undefined') {
-						proto_id = 'content';
-
-						// Clean up the proto id which appears in some of the wp_editor generated HTML
-
-						var block_html = $(this).closest('.block-content').html();
-
-						block_html = block_html.replace(new RegExp('id="' + proto_id + '"', 'g'), 'id="' + editor_id + '"');
-
-						$block_content.html(block_html);
-
-
-						// This needs to be initialized, so we need to get the options from the proto
-						if (proto_id && typeof tinyMCEPreInit.mceInit[proto_id] !== 'undefined') {
-							mce_options = $.extend(true, {}, tinyMCEPreInit.mceInit[proto_id]);
-							mce_options.body_class = mce_options.body_class.replace(proto_id, editor_id);
-							mce_options.selector = mce_options.selector.replace(proto_id, editor_id);
-							mce_options.wp_skip_init = false;
-							mce_options.plugins = 'lists,media,paste,tabfocus,wordpress,wpautoresize,wpeditimage,wpgallery,wplink,wptextpattern,wpview';
-							mce_options.block_formats = 'Paragraph=p; Heading 3=h3; Heading 4=h4';
-							mce_options.toolbar1 = 'bold,italic,bullist,numlist,hr,alignleft,aligncenter,alignright,alignjustify,link,wp_adv ';
-							mce_options.toolbar2 = 'formatselect,underline,strikethrough,forecolor,pastetext,removeformat ';
-							mce_options.toolbar3 = '';
-							mce_options.toolbar4 = '';
-
-							tinyMCEPreInit.mceInit[editor_id] = mce_options;
-						} else {
-							// TODO: No data to work with, this should throw some sort of error
-							return;
-						}
-					}
+					self.create_editor( editor_id, mce_options, $block_content );
 
 					try {
-						if ('html' !== mesh.blocks.mode_enabled(this)) {
-
-							if (parseInt(tinymce.majorVersion) >= 4) {
-								tinymce.execCommand('mceRemoveEditor', false, editor_id);
-							}
-
+						if ('html' !== mesh.blocks.mode_enabled(this) ) {
 							$(this).closest('.wp-editor-wrap').on('click.wp-editor', function () {
 								if (this.id) {
 									window.wpActiveEditor = this.id.slice(3, -5);
@@ -613,11 +567,9 @@ mesh.blocks = function ($) {
 
 					try {
 
-						proto_id = 'content';
+						if ( proto_id && typeof tinyMCEPreInit.qtInit[proto_id] !== 'undefined' ) {
 
-						if (proto_id && typeof tinyMCEPreInit.qtInit[proto_id] !== 'undefined') {
-							qt_options = $.extend(true, {}, tinyMCEPreInit.qtInit[proto_id]);
-
+							qt_options = tinyMCEPreInit.qtInit[proto_id];
 							qt_options.id = qt_options.id.replace(proto_id, editor_id);
 
 							tinyMCEPreInit.qtInit[editor_id] = qt_options;
@@ -643,18 +595,20 @@ mesh.blocks = function ($) {
 					 * Cache
 					 */
 					if (typeof tinymce !== 'undefined') {
+
 						var editor = tinymce.get(editor_id),
 							cached_block_content = self.get_block_cache(editor_id);
 
 						// Make sure we have an editor and we have cache for it.
 						// Once the cache is
-						if (editor && !editor.hidden) {
-							if (cached_block_content) {
+						if ( editor && ! editor.hidden ) {
+
+							if ( cached_block_content ) {
 								editor.setContent(cached_block_content);
 								self.delete_block_cache(editor_id);
 							}
 						} else {
-							if(cached_block_content) {
+							if( cached_block_content ) {
 								editor.val(cached_block_content);
 							}
 						}
@@ -662,7 +616,7 @@ mesh.blocks = function ($) {
 				}
 			});
 
-			if (typeof mesh.integrations.yoast != 'undefined') {
+			if (typeof mesh.integrations.yoast !== 'undefined') {
 				mesh.integrations.yoast.addMeshSections();
 			}
 		},
@@ -768,7 +722,6 @@ mesh.blocks = function ($) {
 			admin.media_frames[frame_id].open();
 		},
 
-
         /**
          * Remove selected background from our block
          *
@@ -797,7 +750,11 @@ mesh.blocks = function ($) {
             $button.remove();
 		},
 
-
+        /**
+         * Show input field
+         *
+         * @param event
+         */
 		show_field: function (event) {
 			event.preventDefault();
 			event.stopPropagation();
@@ -811,6 +768,11 @@ mesh.blocks = function ($) {
 			$(this).addClass('title-input-visible');
 		},
 
+        /**
+         * Hide input field
+         *
+         * @param event
+         */
 		hide_field: function (event) {
 			event.preventDefault();
 			event.stopPropagation();
@@ -818,6 +780,11 @@ mesh.blocks = function ($) {
 			$(this).parent().removeClass('title-input-visible');
 		},
 
+        /**
+         * Toggle Slide click
+         *
+         * @param event
+         */
 		slide_toggle_element: function (event) {
 			event.preventDefault();
 			event.stopPropagation();
@@ -829,13 +796,18 @@ mesh.blocks = function ($) {
 			$this.toggleClass('toggled');
 		},
 
+        /**
+         *
+         * @param event
+         */
 		display_offset: function (event) {
-			var offset = $(this).val(),
-				$block = $(this).parents('.block-header').next('.block-content');
+			var $this  = $(this),
+                offset = parseInt( $this.val() ),
+				$block = $this.parents('.block-header').next('.block-content');
 
 			$block.removeClass('mesh-has-offset mesh-offset-1 mesh-offset-2 mesh-offset-3 mesh-offset-4 mesh-offset-5 mesh-offset-6 mesh-offset-7 mesh-offset-8 mesh-offset-9');
 
-			if (parseInt(offset)) {
+			if ( offset ) {
 				$block.addClass('mesh-has-offset mesh-offset-' + offset);
 			}
 		},
@@ -922,31 +894,21 @@ mesh.blocks = function ($) {
 			return true;
 		},
 
-		/**
-		 * Get block cached content
-		 *
-		 * @since 1.2
-		 * @param block_id
-		 * @return string
-		 */
-		get_block_cache: function (block_id) {
+        /**
+         * Get block cached content
+         *
+         * @since 1.2
+         * @param block_id
+         * @return string
+         */
+        get_block_cache: function (block_id) {
 
-			if (block_cache[block_id]) {
-				return block_cache[block_id]; // get the block ID from the local cache.
-			}
+            if (block_cache[block_id]) {
+                return block_cache[block_id]; // get the block ID from the local cache.
+            }
 
-			return ''; // cached content for the block.
-		},
-
-		/**
-		 * Get all the editors within a container/section.
-		 *
-		 * @since 1.2
-		 * @param object $container
-		 */
-		get_tinymce_editors: function ($container) {
-			return $container.find('.wp-editor-area');
-		},
+            return ''; // cached content for the block.
+        },
 
 		/**
 		 * Delete specific block cached content
@@ -959,7 +921,77 @@ mesh.blocks = function ($) {
 			if (block_cache[block_id]) {
 				delete block_cache[block_id];
 			}
-		}
+		},
+
+        /**
+         * Get all the editors within a container/section.
+         *
+         * @since 1.2
+         *
+         * @param $container
+         * @return {*}
+         */
+        get_tinymce_editors: function ($container) {
+            return $container.find('.wp-editor-area');
+        },
+
+        /**
+		 * Create an editor within our block.
+         *
+         * Props to @danielbachuber for a shove in the right direction to have movable editors in the
+         * wp-admin
+         *
+         * https://github.com/alleyinteractive/wordpress-fieldmanager/blob/master/js/richtext.js#L58-L95
+         *
+		 * @since 1.2.5
+         * @param editor_id
+         * @param mce_options
+         * @param $block_content
+         */
+		create_editor : function( editor_id, mce_options, $block_content ) {
+
+           	if ( typeof tinyMCEPreInit.mceInit[editor_id] === 'undefined' ) {
+
+                var proto_id = 'content',
+                    block_html = $block_content.html();
+
+                // Clean up the proto id which appears in some of the wp_editor generated HTML
+                block_html = block_html.replace(new RegExp('id="' + proto_id + '"', 'g'), 'id="' + editor_id + '"');
+
+                $block_content.html(block_html);
+
+                // This needs to be initialized, so we need to get the options from the proto
+                if ( proto_id && typeof tinyMCEPreInit.mceInit[proto_id] !== 'undefined') {
+
+                    mce_options = $.extend( true, {}, tinyMCEPreInit.mceInit[proto_id], mce_options );
+                    mce_options.body_class = mce_options.body_class.replace(proto_id, editor_id);
+                    mce_options.selector = mce_options.selector.replace(proto_id, editor_id);
+                }
+            } else {
+                mce_options = $.extend( true, {}, tinyMCEPreInit.mceInit[editor_id], mce_options );
+			}
+
+            tinyMCEPreInit.mceInit[editor_id] = mce_options;
+		},
+
+        /**
+         * Toggling block centering
+         *
+         * @since 1.2.5
+         * @param event
+         */
+        display_centered: function ( event ) {
+
+            var $tgt = $(this),
+                $section = $tgt.parents('.mesh-section-block'),
+                $center_class = 'mesh-block-centered';
+
+            if ( $tgt.is(':checked') ) {
+                $section.addClass( $center_class );
+            } else {
+                $section.removeClass( $center_class );
+            }
+        }
 	};
 
 }(jQuery);
