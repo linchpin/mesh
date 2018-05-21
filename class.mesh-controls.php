@@ -348,7 +348,6 @@ class Mesh_Controls {
 				'css_classes'    => array( 'mesh-column-offset' ),
 				'validation_cb'  => false,
 				'options_cb'     => array( $this, 'get_offset_options' ),
-				'show_on_cb'     => array( $this, 'show_offset' ),
 			),
 			'css-class' => array(
 				'label'          => esc_html__( 'CSS Class', 'mesh' ),
