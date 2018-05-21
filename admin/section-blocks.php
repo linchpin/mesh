@@ -15,30 +15,41 @@ if ( ! function_exists( 'add_action' ) ) {
 $mesh_controls = new Mesh_Controls();
 $block_settings = $mesh_controls->get_block_settings();
 
-?>
-<div class="mesh-row">
-	<?php
-	global $post;
+global $post;
 
-	$reference_template = has_term( 'reference', 'mesh_template_types', $post );
+$reference_template = has_term( 'reference', 'mesh_template_types', $post );
+
+// If the template doesn't have any blocks make sure it has 1.
+if ( ! $section_blocks = (int) $templates[ $selected_template ]['blocks'] ) {
+	$section_blocks = 1;
+	$multiple_child_blocks_class = '';
+} else {
+	$multiple_child_blocks_class = ' multiple-blocks';
+}
+
+if ( 1 === $section_blocks ) {
+	$multiple_child_blocks_class = '';
+} else {
+	$multiple_child_blocks_class = ' multiple-blocks';
+}
+
+$offsets_available = 9;
+
+$default_block_columns = $block_settings['max_columns'] / $section_blocks;
+
+// Loop through the blocks needed for this template.
+$block_increment = 0;
+
+$remaining_columns = $block_settings['max_columns'];
+
+?>
+<div class="mesh-row<?php echo esc_attr( $multiple_child_blocks_class ); ?>" data-section-blocks="<?php echo esc_attr( $section_blocks ); ?>">
+
+	<?php
 
 	if ( ! $reference_template ) {
 		include LINCHPIN_MESH___PLUGIN_DIR . 'admin/section-column-resize.php';
 	}
-
-	// If the template doesn't have any blocks make sure it has 1.
-	if ( ! $section_blocks = (int) $templates[ $selected_template ]['blocks'] ) {
-		$section_blocks = 1;
-	}
-
-	$offsets_available = 9;
-
-	$default_block_columns = $block_settings['max_columns'] / $section_blocks;
-
-	// Loop through the blocks needed for this template.
-	$block_increment = 0;
-
-	$remaining_columns = $block_settings['max_columns'];
 
 	while ( $block_increment < $section_blocks ) :
 
@@ -88,7 +99,9 @@ $block_settings = $mesh_controls->get_block_settings();
 							}
 							?>
 							<div class="mesh-columns-12 mesh-block-options-toggle-container">
-								<span class="the-mover hndle ui-sortable-handle left mesh-hide-for-small"><span></span></span>
+								<span class="the-mover hndle ui-sortable-handle left mesh-hide-for-small">
+									<span></span>
+								</span>
 								<div class="mesh-clean-edit left mesh-column-title-container">
 									<input id="<?php echo esc_attr( 'mesh-sections-' . $section->ID . '-' . $blocks[ $block_increment ]->ID . '-title' ); ?>" type="text" class="mesh-column-title mesh-clean-edit-element widefat left" name="mesh-sections[<?php echo esc_attr( $section->ID ); ?>][blocks][<?php echo esc_attr( $blocks[ $block_increment ]->ID ); ?>][post_title]" value="<?php echo esc_attr( $blocks[ $block_increment ]->post_title ); ?>"/>
 									<span class="close-title-edit left"><?php esc_html_e( 'Done', 'mesh' ); ?></span>
@@ -99,8 +112,40 @@ $block_settings = $mesh_controls->get_block_settings();
 							</div>
 
 							<div class="mesh-columns-12 mesh-block-meta-dropdown mesh-block-meta-dropdown-<?php echo esc_attr( $blocks[ $block_increment ]->ID ); ?> hide">
-								<div class="left mesh-columns-12">
+								<div class="left mesh-columns-9">
 									<?php mesh_block_controls( $blocks[ $block_increment ], $section_blocks ); ?>
+								</div>
+								<div class="mesh-columns-3 mesh-table">
+									<div class="mesh-row mesh-table-footer">
+										<?php
+										if ( ! has_term( 'reference', 'mesh_template_types', $post ) ) :
+
+											$featured_image_id = get_post_thumbnail_id( $blocks[ $block_increment ]->ID );
+											$section_background_class = 'mesh-section-background';
+											$section_background_class = ( ! empty( $featured_image_id ) ) ? $section_background_class . ' has-background-set' : $section_background_class;
+											?>
+
+											<div class="<?php echo esc_attr( $section_background_class ); ?>">
+												<div class="choose-image">
+													<?php if ( empty( $featured_image_id ) ) : ?>
+														<a class="mesh-featured-image-choose"><?php esc_attr_e( 'Set Background Image', 'mesh' ); ?></a>
+													<?php else : ?>
+														<?php
+														$featured_image = wp_get_attachment_image_src( $featured_image_id, array( 160, 60 ) );
+														?>
+														<a class="mesh-featured-image-choose right"
+														   data-mesh-featured-image="<?php echo esc_attr( $featured_image_id ); ?>"><img
+																	src="<?php echo esc_attr( $featured_image[ 0 ] ); ?>"/></a>
+														<a class="mesh-featured-image-trash dashicons-before dashicons-dismiss"
+														   data-mesh-featured-image="<?php echo esc_attr( $featured_image_id ); ?>"></a>
+													<?php endif; ?>
+													<input type="hidden"
+														   name="mesh-sections[<?php echo esc_attr( $section->ID ); ?>][blocks][<?php echo esc_attr( $blocks[ $block_increment ]->ID ); ?>][<?php echo esc_attr( 'featured_image' ); ?>]"
+														   value="<?php echo esc_attr( $featured_image_id ); ?>"/>
+												</div>
+											</div>
+										<?php endif; ?>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -109,10 +154,10 @@ $block_settings = $mesh_controls->get_block_settings();
 					<?php
 					$block_content_classes = array(
 						'block-content',
-						'mesh-has-offset',
 					);
 
 					if ( 4 !== $section_blocks && $block_offset ) {
+						$block_content_classes[] = 'mesh-has-offset';
 						$block_content_classes[] = 'mesh-offset-' . $block_offset;
 					}
 					?>

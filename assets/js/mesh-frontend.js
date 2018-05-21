@@ -58,25 +58,30 @@ mesh.frontend = function ( $ ) {
 			}
 		},
 
+        /**
+		 * Fire our initialization
+         */
 		mesh_equalize_init : function() {
 			$equalize.each( self.mesh_equalize );
 		},
 
+        /**
+		 * Equalize Sections
+         */
 		mesh_equalize : function() {
 
 			var $this     = $(this),
 				$childs   = $('[data-equalizer-watch]', $this),
 				eq_height = 0;
 
-			$childs.each(function() {
-				$(this).removeInlineStyle( 'height' );
-			});
+			$childs
+				.each(function() {
+					$(this).removeInlineStyle( 'height' );
+				}).each( function() {
+					var this_height = $(this).height();
 
-			$childs.each( function() {
-				var this_height = $(this).height();
-
-				eq_height = this_height > eq_height ? this_height : eq_height;
-			}).height(eq_height);
+					eq_height = this_height > eq_height ? this_height : eq_height;
+				}).height(eq_height);
 
 		}
 	};

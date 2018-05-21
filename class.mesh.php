@@ -535,7 +535,7 @@ class Mesh {
 				update_post_meta( $section->ID, '_mesh_section_id', $mesh_section_id );
 			}
 
-			// Save Featured Image.
+            // Save Featured Image
 			$featured_image = $section_data['featured_image'];
 
 			if ( empty( $featured_image ) ) {
@@ -627,7 +627,7 @@ class Mesh {
 
 				wp_update_post( $updates );
 
-				$block_column_width = (int) $section_data['blocks'][ $block_id ]['columns'];
+				$block_column_width = (int) $section_data['blocks'][ $block_id ]['column_width'];
 
 				// If we don't have a column width defined or we are using a 1 column layout clear our saved widths.
 				if ( empty( $block_column_width ) ) {
@@ -675,10 +675,14 @@ class Mesh {
 					delete_post_meta( $block_id, '_mesh_centered' );
 				} else {
 					update_post_meta( $block_id, '_mesh_centered', $block_centered );
-        }
+				}
 
 				// Save Featured Image
-				$featured_image = $block_data['featured_image'];
+				$featured_image = '';
+
+				if ( isset( $block_data['featured_image'] ) && '' !== $block_data['featured_image'] ) {
+					$featured_image = $block_data['featured_image'];
+				}
 
 				if ( empty( $featured_image ) ) {
 					delete_post_meta( $block_id, '_thumbnail_id' );
@@ -969,6 +973,18 @@ class Mesh {
 			'confirm_template_section_update' => esc_html__( 'Apply template changes to posts/pages?', 'mesh' ),
 		);
 
+		$tinymce_defaults = array(
+			'wp_skip_init' => false,
+			'plugins' => 'lists,media,paste,tabfocus,wordpress,wpautoresize,wpeditimage,wpgallery,wplink,wptextpattern,wpview',
+			'block_formats' => 'Paragraph=p; Heading 3=h3; Heading 4=h4',
+			'toolbar1' => 'bold,italic,bullist,numlist,hr,alignleft,aligncenter,alignright,alignjustify,link,wp_adv ',
+			'toolbar2' => 'formatselect,underline,strikethrough,forecolor,pastetext,removeformat ',
+			'toolbar3' => '',
+			'toolbar4' => '',
+		);
+
+		$tinymce_defaults = apply_filters( 'mesh_tinymce_defaults', $tinymce_defaults );
+
 		$strings = apply_filters( 'mesh_strings', $strings ); // Allow filtering of localization strings.
 
 		$localized_data = array(
@@ -988,6 +1004,7 @@ class Mesh {
 			'choose_template_nonce' => wp_create_nonce( 'mesh_choose_template_nonce' ),
 			'content_css'           => apply_filters( 'mesh_content_css', get_stylesheet_directory_uri() . '/css/admin-editor.css', 'editor_path' ),
 			'strings'               => $strings,
+			'tinymce_options'       => $tinymce_defaults,
 		);
 
 		$localized_data = apply_filters( 'mesh_data', $localized_data ); // Allow filtering of the entire localized dataset.

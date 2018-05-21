@@ -1,5 +1,23 @@
 # Change Log For Mesh
 
+## [1.2.5] - Unreleased
+
+### Fixes
+
+- Quality of life fixes for UI.
+- Background images can now be removed on blocks!
+- Tons of refactoring for section and block option customization
+
+### Added
+- You can now center blocks within single column sections ( any width smaller than 12 columns )
+- You can now set the width of a single column section to any width you want (higher than 3 columns by default)
+- Developers will find section and block controls have even more flexibility (documenation to come soon)
+- Better css when hovering a dragable column.
+- You can now define your own max columns using the `mesh_max_columns` filter
+
+### Updated
+- CSS Slightly
+
 ## [1.2.4] - 2017-05-01
 
 ### Fixes

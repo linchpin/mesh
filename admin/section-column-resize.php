@@ -56,3 +56,5 @@ if ( $section_blocks > 1 && $section_blocks < 4 ) : ?>
 	</div>
 <?php
 endif;
+
+$block_increment = 0;
