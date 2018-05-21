@@ -217,6 +217,36 @@ class Mesh_Settings {
 				'options' => $foundation_version,
 			)
 		);
+		
+		/*
+				 * Option: Foundation Flexbox Version
+				 * Add an option for Foundation Flexbox Version - Flexbox or XY-grid
+				 * @since 1.2.5
+				 */
+				$foundation_flexbox_version = array(
+					array(
+						'label' => esc_html__( 'Flexbox', 'mesh' ),
+						'value' => '',
+					),
+					array(
+						'label' => esc_html__( 'XY-grid', 'mesh' ),
+						'value' => 'xy',
+					),
+				);
+		
+				add_settings_field(
+					'foundation_flexbox_version',
+					esc_html__( 'Foundation Flexbox Version', 'mesh' ),
+					array( 'Mesh_Settings', 'add_select' ),
+					self::$settings_page,
+					'mesh_sections',
+					array(
+						'field' => 'foundation_flexbox_version',
+						'label' => esc_html__( 'Foundation Flexbox Version', 'mesh' ),
+						'description' => esc_html__( 'Choose which version of Foundation Flexbox you are using: Flexbox or XY-grid. Foundation 6.4.0 introduced new class names for row and columns: grid-x and cell.', 'mesh' ),
+						'options' => $foundation_flexbox_version,
+					)
+				);
 
 		// Add an option for each post type.
 		$post_types = get_post_types();

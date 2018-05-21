@@ -28,7 +28,7 @@ class Mesh_Responsive_Grid {
 	 */
 	private static $grid_systems = array(
 		'foundation' => array(
-			'columns' => array(
+			LINCHPIN_MESH__COLUMN_CLASS_NAME => array(
 				'small' => 'small',
 				'medium' => 'medium',
 				'large' => 'large',
@@ -37,10 +37,10 @@ class Mesh_Responsive_Grid {
 			),
 			'offset' => 'offset',
 			'centered' => 'centered',
-			'columns_class' => 'columns',
+			'columns_class' => LINCHPIN_MESH__COLUMN_CLASS_NAME,
 		),
 		'bootstrap' => array(
-			'columns' => array(
+			LINCHPIN_MESH__COLUMN_CLASS_NAME => array(
 				'x-small' => 'col-xs',
 				'small' => 'col-sm',
 				'medium' => 'col-md',
