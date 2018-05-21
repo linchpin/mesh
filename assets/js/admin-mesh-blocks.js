@@ -207,7 +207,9 @@ mesh.blocks = function ($) {
 		},
 
 		setup_resizing : function() {
-			$body.on( 'change', '.mesh-block-columns', self.change_block_widths );
+			$body
+				.on( 'change', '.mesh-block-columns', self.change_block_widths );
+
 			self.setup_resize_slider();
 		},
 
@@ -234,8 +236,9 @@ mesh.blocks = function ($) {
 						start: function () {
 							$this.css('z-index', 1000);
 						},
-						stop: function () {
+						stop: function (event, ui) {
 							$this.css('z-index', '').find('.ui-slider-handle').css('z-index', 1000);
+							self.notify_user(event, ui);
 						},
 						slide: self.change_block_widths
 					};
@@ -255,6 +258,23 @@ mesh.blocks = function ($) {
 			});
 		},
 
+        /**
+		 * Notify the user on some ui changes
+		 *
+         * @param event
+         * @param ui
+         */
+		notify_user : function( event, ui ) {
+            var $tgt = $(event.target),
+            	$columns = $tgt.parents('.mesh-section').find('.mesh-editor-blocks').find('.mesh-row:first .columns').removeClass('dragging');
+
+            $columns.each(function() {
+            	$(this).removeClass('mesh-small-block');
+			});
+
+
+        },
+
 		/**
 		 * Render Block after reorder or change.
 		 *
@@ -267,15 +287,19 @@ mesh.blocks = function ($) {
 			$tinymce_editors.each(function () {
 				var editor_id = $(this).prop('id'),
                     proto_id = 'content',
+					$block = $(this).closest('.mesh-section-block'),
 					mce_options = $.extend( true, {}, mesh_data.tinymce_options ), // get our localized options
 					column_width,
 					qt_options = [];
 
-				column_width = $(this).closest('.mesh-section-block').find('.mesh-block-columns').val();
+				column_width = $block.find('.mesh-block-columns').val();
 
 				if ( column_width <= 4 ) {
+					$block.addClass('mesh-small-block');
                     mce_options.toolbar1 = 'bold,italic,bullist,numlist,link,wp_adv';
                     mce_options.toolbar2 = 'hr,alignleft,aligncenter,alignright,alignjustify,formatselect,underline,strikethrough,forecolor,pastetext,removeformat ';
+				} else {
+                    $block.removeClass('mesh-small-block');
 				}
 
                 if ( typeof tinymce !== 'undefined' ) {

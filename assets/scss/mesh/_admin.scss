@@ -441,6 +441,19 @@
   text-decoration: none;
 }
 
+.mesh-section-block {
+  .mce-widget.mce-btn.mce-last {
+    transition: border 2s;
+    border-color:transparent;
+  }
+
+  &.mesh-small-block {
+    .mce-widget.mce-btn.mce-last {
+      border-color: $blue;
+    }
+  }
+}
+
 // UPDATE Notification
 .mesh-update-notice {
   padding: 10px 38px;
