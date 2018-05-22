@@ -386,6 +386,7 @@
 		position: 50% 0;
 		repeat: no-repeat;
 	};
+    overflow:hidden;
 	border: 1px solid $grey;
 	float: right;
 	max-width: 200px;
@@ -523,6 +524,10 @@
 	.block {
 		border: 1px solid $grey;
 	    background: #fcfcfc;
+
+	    &.ui-hover-state {
+		  border-color: $darkest-grey;
+		}
 
 	    .wp-editor-wrap {
 		  padding-top:6px;

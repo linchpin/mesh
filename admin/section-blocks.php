@@ -115,7 +115,7 @@ $remaining_columns = $block_settings['max_columns'];
 								<div class="left mesh-columns-9">
 									<?php mesh_block_controls( $blocks[ $block_increment ], $section_blocks ); ?>
 								</div>
-								<div class="mesh-columns-3 mesh-table">
+								<div class="mesh-columns-3 mesh-table mesh-background">
 									<div class="mesh-row mesh-table-footer">
 										<?php
 										if ( ! has_term( 'reference', 'mesh_template_types', $post ) ) :

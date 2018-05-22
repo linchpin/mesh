@@ -37,7 +37,12 @@ mesh.blocks = function ($) {
 				.on('click', '.close-title-edit', self.hide_field)
 				.on('click', '.slide-toggle-element', self.slide_toggle_element)
 				.on('change', '.mesh-column-offset', self.display_offset)
-				.on('change', 'input.mesh-section-centered', self.display_centered);
+				.on('change', 'input.mesh-section-centered', self.display_centered)
+				.on('mouseenter', '.the-mover', function() {
+					$(this).closest('.block').addClass('ui-hover-state');
+				}).on('mouseleave', '.the-mover', function() {
+					$(this).closest('.block').removeClass('ui-hover-state');
+				});
 
 			self.setup_resizing();
 			self.setup_sortable();
@@ -51,7 +56,7 @@ mesh.blocks = function ($) {
 		setup_sortable: function () {
 			var column_order = [];
 
-			$('.mesh-editor-blocks .mesh-row').sortable({
+			$('.mesh-editor-blocks > .mesh-row[data-section-blocks]').sortable({
 				// OPTIONS
 				axis: 'x',
 				cursor: 'move',
@@ -267,12 +272,6 @@ mesh.blocks = function ($) {
 		notify_user : function( event, ui ) {
             var $tgt = $(event.target),
             	$columns = $tgt.parents('.mesh-section').find('.mesh-editor-blocks').find('.mesh-row:first .columns').removeClass('dragging');
-
-            $columns.each(function() {
-            	$(this).removeClass('mesh-small-block');
-			});
-
-
         },
 
 		/**
