@@ -19,7 +19,7 @@ $total_blocks = mesh_get_section_blocks( $section->ID, array( 'publish', 'draft'
 if ( ! empty( $selected_template ) && count( $total_blocks ) > $templates[ $selected_template ]['blocks'] ) :
 ?>
 	<?php if ( empty( $mesh_notifications['moreblocks'] ) ) : ?>
-		<div id="mesh-warnings-<?php echo esc_attr( $section->ID ); ?>" class="description notice notice-info below-h2 mesh-row" data-type="moreblocks">
+		<div id="mesh-warnings-<?php echo esc_attr( $section->ID ); ?>" class="description notice notice-info below-h2 mesh-row collapse" data-type="moreblocks">
 			<div class="mesh-columns-8 columns">
 				<?php esc_html_e( 'The number of columns selected is causing some content to be hidden.', 'mesh' ); ?>
 				<br/>

@@ -386,6 +386,7 @@
 		position: 50% 0;
 		repeat: no-repeat;
 	};
+    overflow:hidden;
 	border: 1px solid $grey;
 	float: right;
 	max-width: 200px;
@@ -524,6 +525,10 @@
 		border: 1px solid $grey;
 	    background: #fcfcfc;
 
+	    &.ui-hover-state {
+		  border-color: $darkest-grey;
+		}
+
 	    .wp-editor-wrap {
 		  padding-top:6px;
 		}
@@ -643,7 +648,7 @@
 		margin: 0 (-$base * .75);
 
 	  &.notice {
-		margin: 5px -7px 0 -7px;
+		margin: 5px -3px 0 -3px;
 	  }
 
 	  // Do not show column controls when dealing with multiple blocks
@@ -656,6 +661,12 @@
 		padding: 0 $block_padding;
 		position: relative;
 		z-index: 11;
+	}
+
+	.collapse {
+	  .columns {
+		padding:0;
+	  }
 	}
 
     .mesh-columns-12.columns {
@@ -718,6 +729,16 @@
 
 .mesh-block-title-row {
 	margin-bottom: 0;
+}
+
+.notice {
+  .mesh-trash-extra-blocks {
+	margin: 4px -6px 0 0 !important;
+
+	.dashicons-trash {
+	  margin:2px 2px 0 0;
+	}
+  }
 }
 
 .mesh-columns-12 .mesh-block-title-row {

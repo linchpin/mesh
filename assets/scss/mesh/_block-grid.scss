@@ -1,7 +1,7 @@
 [class*="block-grid-"] {
   display: block;
   padding: 0;
-  margin: 0 -0.55556rem;
+  margin: 0;
 
   &:before,
   &:after {
@@ -19,6 +19,10 @@
     float: left;
     height: auto;
     padding: 0 0.55556rem 1.11111rem;
+
+    input[type="text"] {
+      width:100%;
+    }
 
     &.hidden {
       display:none;
