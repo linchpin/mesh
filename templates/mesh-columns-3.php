@@ -20,7 +20,7 @@
 do_action( 'mesh_section_before' );
 ?>
 
-<section <?php post_class(); ?> <?php mesh_section_background(); ?> <?php mesh_section_attributes(); ?>>
+<section <?php post_class( 'mesh_section' ); ?> <?php mesh_section_background(); ?> <?php mesh_section_attributes(); ?>>
 	<?php
 	/**
 	 * Add the ability to add markup before Mesh row
@@ -29,13 +29,16 @@ do_action( 'mesh_section_before' );
 	?>
 
 	<?php
-	$title_display = get_post_meta( get_the_ID(), '_mesh_title_display', true );
+
+	$title_display           = get_post_meta( get_the_ID(), '_mesh_title_display', true );
 	$collapse_column_spacing = get_post_meta( get_the_ID(), '_mesh_collapse', true );
+	$collapse_column_spacing = ( ! empty( $collapse_column_spacing ) ) ? 'collapse' : '';
+
 	?>
 
-	<div class="<?php echo esc_attr( $row_class ); ?>"<?php mesh_row_attributes(); ?>>
+	<div <?php mesh_row_class(); ?> <?php mesh_row_attributes(); ?>>
 		<?php if ( ! empty( $title_display ) && 'no block title' !== strtolower( get_the_title() ) ) : ?>
-			<div class="<?php echo esc_attr( $title_class ); ?>">
+			<div class="<?php echo esc_attr( mesh_get_title_class() ); ?>">
 				<h2 class="entry-title"><?php the_title(); ?></h2>
 			</div>
 		<?php endif; ?>
@@ -43,26 +46,23 @@ do_action( 'mesh_section_before' );
 		<?php do_action( 'mesh_columns_before' ); ?>
 
 		<?php $blocks = mesh_get_section_blocks( get_the_ID() ); ?>
+
 		<?php $i = 0; foreach ( $blocks as $block ) : ?>
 			<?php
 			$block_class_args = array(
 				'total_columns'    => count( $blocks ),
-				'column_width'     => (int) get_post_meta( $block->ID, '_mesh_column_width', true ),
-				'column_index'     => $i,
-				'collapse_spacing' => ( ! empty( $collapse_column_spacing ) ) ? 'collapse' : '',
+				'column_index'     => $i++,
+				'collapse_spacing' => $collapse_column_spacing,
 			);
 			?>
 
-			<div <?php mesh_block_class( $block->ID, $block_class_args ); ?><?php echo esc_attr( $equalize_watch ); ?> <?php mesh_section_background( $block->ID ); ?> <?php mesh_row_attributes( $block->ID ); ?>>
+			<div <?php mesh_block_class( $block->ID, $block_class_args ); ?> <?php mesh_section_background( $block->ID ); ?> <?php mesh_column_attributes( $block->ID ); ?>>
 				<?php if ( ! empty( $block->post_title ) && 'no column title' !== strtolower( $block->post_title ) ) : ?>
 					<h3 class="entry-subtitle"><?php echo esc_html( apply_filters( 'the_title', $block->post_title ) ); ?></h3>
 				<?php endif; ?>
-				<?php echo apply_filters( 'the_content', $block->post_content ); ?>
+				<?php echo apply_filters( 'the_content', $block->post_content ); // WPCS: XSS ok. ?>
 			</div>
-		<?php
-			$i++;
-			endforeach;
-		?>
+		<?php endforeach; ?>
 
 		<?php do_action( 'mesh_columns_after' ); ?>
 	</div>
@@ -80,4 +80,3 @@ do_action( 'mesh_section_before' );
  * Add the ability to add markup after Mesh section
  */
 do_action( 'mesh_section_after' );
-?>
