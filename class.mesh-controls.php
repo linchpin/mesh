@@ -354,6 +354,7 @@ class Mesh_Controls {
 				'css_classes'    => array( 'mesh-column-offset' ),
 				'validation_cb'  => false,
 				'options_cb'     => array( $this, 'get_offset_options' ),
+				'show_on_cb'     => array( $this, 'show_offset' ),
 			),
 			'centered' => array(
 				'label'          => esc_html__( 'Centered', 'mesh' ),

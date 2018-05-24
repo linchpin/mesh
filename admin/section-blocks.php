@@ -85,6 +85,10 @@ $remaining_columns = $block_settings['max_columns'];
 			$block_classes[] = 'mesh-block-centered';
 		}
 
+		if ( intval( $block_columns ) < 4 ) {
+			$block_classes[] = 'mesh-small-block';
+		}
+
 		?>
 		<div class="<?php echo esc_attr( implode( ' ', $block_classes ) ); ?>" data-mesh-block-id="<?php echo esc_attr( $blocks[ $block_increment ]->ID ); ?>">
 			<div class="drop-target">
@@ -135,7 +139,7 @@ $remaining_columns = $block_settings['max_columns'];
 														?>
 														<a class="mesh-featured-image-choose right"
 														   data-mesh-featured-image="<?php echo esc_attr( $featured_image_id ); ?>"><img
-																	src="<?php echo esc_attr( $featured_image[ 0 ] ); ?>"/></a>
+																	src="<?php echo esc_attr( $featured_image[0] ); ?>"/></a>
 														<a class="mesh-featured-image-trash dashicons-before dashicons-dismiss"
 														   data-mesh-featured-image="<?php echo esc_attr( $featured_image_id ); ?>"></a>
 													<?php endif; ?>
@@ -164,20 +168,12 @@ $remaining_columns = $block_settings['max_columns'];
 					<div class="<?php echo esc_attr( implode( ' ', $block_content_classes ) ); ?>">
 						<?php
 
-						$tiny_mce_options = array(
-							'resize'                => false,
-							'wordpress_adv_hidden'  => true,
-							'add_unload_trigger'    => false,
-							'statusbar'             => true,
-							'autoresize_min_height' => 150,
-							'wp_autoresize_on'      => false,
-							'wpautop'               => true,
-							'plugins'               => 'lists,media,paste,tabfocus,wordpress,textcolor,wpautoresize,wpeditimage,wpgallery,wplink,wptextpattern,wpview',
-							'toolbar1'              => 'bold,italic,bullist,numlist,hr,alignleft,aligncenter,alignright,alignjustify,link,wp_adv',
-							'toolbar2'              => 'formatselect,underline,strikethrough,forecolor,pastetext,removeformat',
-						);
+						$tiny_mce_options = mesh_get_tinymce_defaults();
 
-						$tiny_mce_options = apply_filters( 'mesh_tiny_mce_options', $tiny_mce_options );
+						if ( intval( $block_columns ) < 4 ) {
+							$tiny_mce_options['toolbar1'] = $tiny_mce_options['small_toolbar1'];
+							$tiny_mce_options['toolbar2'] = $tiny_mce_options['small_toolbar2'];
+						}
 
 						wp_editor( apply_filters( 'content_edit_pre', $blocks[ $block_increment ]->post_content ), 'mesh-section-editor-' . $blocks[ $block_increment ]->ID, array(
 							'textarea_name' => 'mesh-sections[' . $section->ID . '][blocks][' . $blocks[ $block_increment ]->ID . '][post_content]',

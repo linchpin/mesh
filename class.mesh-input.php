@@ -205,10 +205,10 @@ class Mesh_Input {
 		ob_start();
 		?>
 		<input type="text"
-			   <?php esc_html( $args['input_id'] ); ?>
-			   name="<?php echo esc_attr( $args['input_name'] ); ?>"
-			   class="<?php echo esc_attr( implode( ' ', $args['input_css_classes'] ) ); ?>"
-			   value="<?php echo esc_attr( $value ); ?>" />
+				<?php esc_html( $args['input_id'] ); ?>
+				name="<?php echo esc_attr( $args['input_name'] ); ?>"
+				class="<?php echo esc_attr( implode( ' ', $args['input_css_classes'] ) ); ?>"
+				value="<?php echo esc_attr( $value ); ?>" />
 		<?php
 
 		$output = ob_get_contents();
@@ -261,7 +261,7 @@ class Mesh_Input {
 	 * @since 1.2.5
 	 *
 	 * @param       $args
-	 * @param       $value
+	 * @param       $input_value
 	 * @param bool  $echo
 	 * @param array $section
 	 * @param array $blocks
@@ -288,6 +288,10 @@ class Mesh_Input {
 			$options = ( ! empty( $args['options_cb'] ) && is_callable( $args['options_cb'] ) )
 				? call_user_func_array( $args['options_cb'], array( $section, $blocks ) )
 				: $args['options'];
+
+			if ( empty( $options ) ) {
+				return ''; // Return if we do not have any options passed
+			}
 
 			/**
 			 * Build out our <option> inputs and set the current select value if we have one.

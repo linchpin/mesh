@@ -511,3 +511,37 @@ function mesh_block_class( $block_id, $args = array() ) {
 
 	printf( 'class="%s"', join( ' ', $classes ) ); // WPCS: XSS ok, Sanitization ok.
 }
+
+/**
+ * Get our default options for tinymce
+ *
+ * @since 1.2.5
+ *
+ * @return array
+ */
+function mesh_get_tinymce_defaults() {
+	$tinymce_defaults = array(
+		'wp_skip_init'          => false,
+		'resize'                => false,
+		'wordpress_adv_hidden'  => true,
+		'add_unload_trigger'    => false,
+		'statusbar'             => true,
+		'autoresize_min_height' => 150,
+		'wp_autoresize_on'      => false,
+		'wpautop'               => true,
+		'plugins' => 'lists,media,paste,tabfocus,wordpress,textcolor,wpautoresize,wpeditimage,wpgallery,wplink,wptextpattern,wpview',
+		'block_formats' => 'Paragraph=p; Heading 3=h3; Heading 4=h4',
+		'toolbar1' => 'bold,italic,bullist,numlist,hr,alignleft,aligncenter,alignright,alignjustify,link,wp_adv ',
+		'toolbar2' => 'formatselect,underline,strikethrough,forecolor,pastetext,removeformat ',
+		'toolbar3' => '',
+		'toolbar4' => '',
+
+		// @since 1.2.5 Change which options are shown when we are viewing smaller columns
+		'small_toolbar1' => 'bold,italic,bullist,numlist,link,wp_adv ',
+		'small_toolbar2' => 'hr,alignleft,aligncenter,alignright,alignjustify,formatselect,underline,strikethrough,forecolor,pastetext,removeformat',
+	);
+
+	$tinymce_defaults = apply_filters( 'mesh_tiny_mce_options', $tinymce_defaults );
+
+	return $tinymce_defaults;
+}

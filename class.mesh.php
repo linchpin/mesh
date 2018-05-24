@@ -973,17 +973,7 @@ class Mesh {
 			'confirm_template_section_update' => esc_html__( 'Apply template changes to posts/pages?', 'mesh' ),
 		);
 
-		$tinymce_defaults = array(
-			'wp_skip_init' => false,
-			'plugins' => 'lists,media,paste,tabfocus,wordpress,wpautoresize,wpeditimage,wpgallery,wplink,wptextpattern,wpview',
-			'block_formats' => 'Paragraph=p; Heading 3=h3; Heading 4=h4',
-			'toolbar1' => 'bold,italic,bullist,numlist,hr,alignleft,aligncenter,alignright,alignjustify,link,wp_adv ',
-			'toolbar2' => 'formatselect,underline,strikethrough,forecolor,pastetext,removeformat ',
-			'toolbar3' => '',
-			'toolbar4' => '',
-		);
-
-		$tinymce_defaults = apply_filters( 'mesh_tinymce_defaults', $tinymce_defaults );
+		$tinymce_defaults = mesh_get_tinymce_defaults();
 
 		$strings = apply_filters( 'mesh_strings', $strings ); // Allow filtering of localization strings.
 

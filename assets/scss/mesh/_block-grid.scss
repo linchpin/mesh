@@ -43,6 +43,16 @@
       clear: both;
     }
   }
+
+  &.medium-block-grid-1 > li {
+    padding: 0;
+  }
+
+  @media #{$mesh-small} {
+    > li {
+      padding: 0;
+    }
+  }
 }
 
 @media #{$mesh-medium-up} {

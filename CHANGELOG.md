@@ -7,16 +7,28 @@
 - Quality of life fixes for UI.
 - Background images can now be removed on blocks!
 - Tons of refactoring for section and block option customization
+- Fixed offset selector being shown when it shouldn't be
 
 ### Added
 - You can now center blocks within single column sections ( any width smaller than 12 columns )
 - You can now set the width of a single column section to any width you want (higher than 3 columns by default)
-- Developers will find section and block controls have even more flexibility (documenation to come soon)
-- Better css when hovering a dragable column.
-- You can now define your own max columns using the `mesh_max_columns` filter
+- Developers will find section and block controls have even more flexibility (documentation to come soon)
+- Better css when hovering a draggable columns.
+- Moved and Refactored a ton of methods to be more organized (utilities.php)
+- Added a ton of new filters
+    - You can now define your own max columns using the `mesh_max_columns` filter
+    - Filter html attributes for sections, rows and columns, `mesh_element_attributes`
+    - Filter html attributes for sections `mesh_section_attributes`
+    - Filter html attributes for rows `mesh_row_attributes`
+    - Filter html attributes for columns `mesh_column_attributes`
+
 
 ### Updated
-- CSS Slightly
+- Tons of CSS refactoring to make the UI cleaner
+- Media and TinyMCE menus of each section now collapse when viewing smaller blocks for a better overall experience.
+- TinyMCE default settings are now shared between blocks built with php and javascript.
+-  
+
 
 ## [1.2.4] - 2017-05-01
 

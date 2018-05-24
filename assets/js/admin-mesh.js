@@ -559,8 +559,8 @@ mesh.blocks = function ($) {
 
 				if ( column_width <= 4 ) {
 					$block.addClass('mesh-small-block');
-                    mce_options.toolbar1 = 'bold,italic,bullist,numlist,link,wp_adv';
-                    mce_options.toolbar2 = 'hr,alignleft,aligncenter,alignright,alignjustify,formatselect,underline,strikethrough,forecolor,pastetext,removeformat ';
+                    mce_options.toolbar1 = mesh_data.tinymce_options.small_toolbar1;
+                    mce_options.toolbar2 = mesh_data.tinymce_options.small_toolbar2;
 				} else {
                     $block.removeClass('mesh-small-block');
 				}
