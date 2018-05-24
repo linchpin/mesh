@@ -109,8 +109,6 @@ function mesh_block_class( $block_id, $args = array() ) {
 	$block_css_class = get_post_meta( $block_id, '_mesh_css_class', true );
 	$block_offset    = (int) get_post_meta( $block_id, '_mesh_offset', true );
 
-	wp_die( print_r( $grid ) );
-
 	$classes = array(
 		$grid['columns_class'],
 		$grid['columns']['small'] . '-' . $args['max_columns'],
