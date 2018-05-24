@@ -535,7 +535,7 @@ class Mesh {
 				update_post_meta( $section->ID, '_mesh_section_id', $mesh_section_id );
 			}
 
-            // Save Featured Image
+			// Save Featured Image
 			$featured_image = $section_data['featured_image'];
 
 			if ( empty( $featured_image ) ) {
@@ -1029,7 +1029,20 @@ class Mesh {
 	 * @return void
 	 */
 	function wp_enqueue_scripts() {
-		wp_enqueue_script( 'mesh-frontend', plugins_url( 'assets/js/mesh.js', __FILE__ ), array( 'jquery' ), LINCHPIN_MESH_VERSION, true );
+
+		if ( ! empty( $mesh_options['css_mode'] ) ) {
+			$css_mode = intval( $mesh_options['css_mode'] );
+		} else {
+			$css_mode = 0;
+		}
+
+		if ( -1 === $css_mode ) {
+			return;
+		} else {
+			if ( 0 === $css_mode ) {
+				wp_enqueue_script( 'mesh-frontend', plugins_url( 'assets/js/mesh.js', __FILE__ ), array( 'jquery' ), LINCHPIN_MESH_VERSION, true );
+			}
+		}
 	}
 
 	/**
