@@ -24,7 +24,7 @@ $mesh_element_attributes = apply_filters( 'mesh_row_attributes', $mesh_element_a
 $mesh_element_attributes = implode( ' ', $mesh_element_attributes );
 ?>
 
-<section <?php post_class(); ?> <?php mesh_section_background(); ?> <?php echo $mesh_element_attributes; ?>>
+<section <?php post_class('mesh_section'); ?> <?php mesh_section_background(); ?> <?php echo $mesh_element_attributes; ?>>
 	<?php
 	/**
 	 * Add the ability to add markup before Mesh row

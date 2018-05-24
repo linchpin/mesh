@@ -74,7 +74,10 @@ mesh.admin = function ($) {
 				.on('change', 'select.mesh-clean-edit-element', self.change_select_title)
 
 				// @since 1.1.3
-				.on('change', '#mesh-css_mode', self.display_foundation_options);
+				.on('change', '#mesh-css_mode', self.display_foundation_options)
+
+				// @since 1.2.5
+        		.on('change', '#mesh-foundation_version', self.display_foundation_grid_options);
 
 			// @since 1.2
 
@@ -105,7 +108,7 @@ mesh.admin = function ($) {
 			self.setup_notifications($meta_box_container);
 
 			self.display_foundation_options();
-
+            self.display_foundation_grid_options();
 		},
 
 		/**
@@ -1078,14 +1081,39 @@ mesh.admin = function ($) {
 
 			var using_foundation = $('#mesh-css_mode').find('option:selected').val(),
 				$foundation_version = $('#mesh-foundation_version'),
-				$parent_row = $foundation_version.closest('tr');
+				$parent_row = $foundation_version.closest('tr'),
+                $foundation_grid_system = $('#mesh-grid_system'),
+                $foundation_grid_system_row = $foundation_grid_system.closest('tr');
 
 			if (parseInt(using_foundation) === 1) {
 				$parent_row.show();
 			} else {
 				$parent_row.hide();
+                $foundation_grid_system_row.hide();
+                $foundation_grid_system.val('');
 				$foundation_version.val('');
 			}
+		},
+
+        /**
+		 * Display our grid system options if we are using Foundation 6.4
+		 *
+		 * @since 1.2.5
+		 *
+         * @param event
+         */
+		display_foundation_grid_options: function(event) {
+            var using_foundation = $('#mesh-css_mode').find('option:selected').val(),
+                $foundation_version = $('#mesh-foundation_version'),
+				$foundation_grid_system = $('#mesh-grid_system'),
+            	$foundation_grid_system_row = $foundation_grid_system.closest('tr');
+
+            if ( parseInt( using_foundation ) === 1 && 6.4 === parseFloat( $foundation_version.val() ) ) {
+                $foundation_grid_system_row.show();
+            } else {
+                $foundation_grid_system_row.hide();
+                $foundation_grid_system.val('');
+            }
 		}
 	};
 }(jQuery);

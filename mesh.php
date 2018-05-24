@@ -36,6 +36,8 @@ define( 'LINCHPIN_MESH_DEBUG_MODE', false );
 
 $GLOBALS['mesh_current_version'] = get_option( 'mesh_version', '0.0' ); // Get our current Mesh Version.
 
+include_once 'includes/utilities.php';
+
 include_once 'class.mesh-settings.php';
 include_once 'class.mesh-input.php';
 include_once 'class.mesh-controls.php';
@@ -102,12 +104,12 @@ function mesh_block_class( $block_id, $args = array() ) {
 
 	$args = wp_parse_args( $args, $defaults );
 
-	$grid_system = apply_filters( 'mesh_grid_system', 'foundation' );
-
-	$grid = Mesh_Responsive_Grid::get_responsive_grid( $grid_system );
+	$grid = mesh_get_responsive_grid();
 
 	$block_css_class = get_post_meta( $block_id, '_mesh_css_class', true );
 	$block_offset    = (int) get_post_meta( $block_id, '_mesh_offset', true );
+
+	wp_die( print_r( $grid ) );
 
 	$classes = array(
 		$grid['columns_class'],
@@ -152,7 +154,7 @@ function mesh_block_class( $block_id, $args = array() ) {
 	$classes = array_map( 'sanitize_html_class', $classes );
 	$classes = array_unique( $classes );
 
-	echo 'class="' . join( ' ', $classes ) . '"'; // WPCS: XSS ok, sanitization ok.
+	printf( 'class="%s"', join( ' ', $classes ) ); // WPCS: XSS ok, sanitization ok.
 }
 
 /**
