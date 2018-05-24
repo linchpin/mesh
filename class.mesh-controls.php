@@ -342,18 +342,18 @@ class Mesh_Controls {
 	function mesh_block_controls( $block, $section_blocks ) {
 
 		$controls = array(
+			'css-class' => array(
+				'label'          => esc_html__( 'CSS Class', 'mesh' ),
+				'type'           => 'text',
+				'css_classes'    => array( 'mesh-section-class' ),
+				'validation_cb'  => false,
+			),
 			'offset' => array(
 				'label'          => esc_html__( 'Offset', 'mesh' ),
 				'type'           => 'select',
 				'css_classes'    => array( 'mesh-column-offset' ),
 				'validation_cb'  => false,
 				'options_cb'     => array( $this, 'get_offset_options' ),
-			),
-			'css-class' => array(
-				'label'          => esc_html__( 'CSS Class', 'mesh' ),
-				'type'           => 'text',
-				'css_classes'    => array( 'mesh-section-class' ),
-				'validation_cb'  => false,
 			),
 			'centered' => array(
 				'label'          => esc_html__( 'Centered', 'mesh' ),
