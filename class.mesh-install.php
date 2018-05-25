@@ -31,7 +31,6 @@ class Mesh_Install {
 		}
 
 		add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ) );
-		add_action( 'admin_notices', array( $this, 'show_update_notice' ) );
 		add_action( 'admin_init', array( $this, 'show_welcome' ) );
 	}
 
@@ -95,43 +94,6 @@ class Mesh_Install {
 		$options['first_activated_on'] = time();
 
 		update_option( 'mesh_settings', $options );
-	}
-
-	/**
-	 * Show the update notification
-	 *
-	 * @since 1.2
-	 */
-	public function show_update_notice() {
-		$mesh_version = get_option( 'mesh_version' );
-		$mesh_settings = get_option( 'mesh_settings' );
-
-		$notifications = get_user_option( 'linchpin_mesh_notifications' );
-
-		if ( false !== $mesh_settings && empty( $notifications['update-notice'] ) ) : ?>
-		<div class="mesh-update-notice notice notice-info is-dismissible" data-type="update-notice">
-			<div class="table">
-				<div class="table-cell">
-					<img src="<?php echo esc_attr( LINCHPIN_MESH___PLUGIN_URL . 'assets/images/mesh-full-logo-full-color@2x.png' ); ?>" >
-				</div>
-				<div class="table-cell">
-					<p class="no-margin">
-						<?php
-						// translators: %1$s: Version Number %2$s: Link to what's new tab.
-						printf( wp_kses_post( __( 'Thanks for updating Mesh to v. (%1$s). We suggest checking out <a href="%2$s">what\'s new</a>', 'mesh' ) ),
-							esc_html( $mesh_version ),
-							esc_url( admin_url( 'options-general.php?page=mesh&tab=new' ) )
-						);
-					?>
-					</p>
-					<p class="no-margin">
-					<?php esc_html_e( "We've focused on maintenance, even more developer flexibility, a better uninstall process and more!",'mesh' ); ?>
-					</p>
-				</div>
-			</div>
-		</div>
-		<?php
-		endif;
 	}
 }
 

@@ -21,7 +21,8 @@ class Mesh_Upgrades {
 	 * Mesh_Upgrades constructor.
 	 */
 	function __construct() {
-		add_action( 'admin_init', array( $this, 'admin_init' ) );
+		add_action( 'admin_init',    array( $this, 'admin_init' ) );
+		add_action( 'admin_notices', array( $this, 'show_update_notice' ) );
 	}
 
 	/**
@@ -44,7 +45,7 @@ class Mesh_Upgrades {
 
 			// Latest Version
 			if ( version_compare( $GLOBALS['mesh_current_version'], '1.2.5', '<' ) ) {
-				$this->update_version( '1.2.5' );
+				$this->version_1_2_5();
 			}
 		}
 	}
@@ -149,6 +150,17 @@ class Mesh_Upgrades {
 		$this->update_version( '1.2.4' );
 	}
 
+	function version_1_2_5() {
+
+		$notifications = get_user_option( 'linchpin_mesh_notifications' );
+
+		unset( $notifications['update-notice'] );
+
+		update_user_option( get_current_user_ID(), 'linchpin_mesh_notifications', $notifications );
+
+		$this->update_version( '1.2.5' );
+	}
+
 	/**
 	 * Utility method to update version numbers
 	 *
@@ -164,6 +176,20 @@ class Mesh_Upgrades {
 
 		update_option( 'mesh_version', $version );
 		$GLOBALS['mesh_current_version'] = $version;
+	}
+
+	/**
+	 * Show the update notification
+	 *
+	 * @since 1.2
+	 */
+	public function show_update_notice() {
+		$mesh_settings = get_option( 'mesh_settings' );
+		$notifications = get_user_option( 'linchpin_mesh_notifications' );
+
+		if ( false !== $mesh_settings && empty( $notifications['update-notice'] ) ) {
+			include LINCHPIN_MESH___PLUGIN_DIR . 'admin/upgrade-notice.php';
+		}
 	}
 }
 

@@ -360,7 +360,7 @@ class Mesh {
 			<?php else : ?>
 				<?php if ( empty( $mesh_notifications['intro'] ) ) : ?>
 					<div id="mesh-description" class="description collapse notice is-dismissible notice-info below-h2" data-type="intro">
-						<p><?php esc_html_e( 'Mesh allow you to easily break up your page into different blocks of content/markup.', 'mesh' ); ?></p>
+						<p><?php esc_html_e( 'Mesh allows you to easily break up your page into different blocks of content/markup.', 'mesh' ); ?></p>
 					</div>
 				<?php endif; ?>
 			<?php endif; ?>
