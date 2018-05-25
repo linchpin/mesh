@@ -88,7 +88,6 @@ $safe_content = array(
 							</div>
 						</div>
 					</div>
-
 				</div>
 
 				<div class="update-container ">

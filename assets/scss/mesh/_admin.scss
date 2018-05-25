@@ -454,7 +454,18 @@
     }
   }
 
+  // Smaller items that need more room to breathe
   &.mesh-small-block {
+    .small-block-grid-1 > li {
+      width:100%;
+      padding:0;
+    }
+
+    .mesh-section-background {
+      margin: 0 auto;
+      float: none;
+    }
+
     .mesh-background {
       width:100%;
     }

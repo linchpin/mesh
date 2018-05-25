@@ -417,7 +417,6 @@
 		.mesh-featured-image-trash,
 		.mesh-block-featured-image-trash {
 			text-decoration: none;
-
 			position: absolute;
 			right: 0;
 			top: 0;
@@ -605,6 +604,14 @@
 	    height: auto;
 	    border: none;
 
+	    .ui-slider-handle {
+		  &.ui-state-hover {
+			.inner-border {
+			  background-color:#00a0d2;
+			}
+		  }
+		}
+
 	    &[data-mesh-blocks="2"] {
 		    ~ .mesh-section-block {
 			    &:nth-of-type(2) {
@@ -619,6 +626,7 @@
 
 	    &[data-mesh-blocks="3"] {
 		    .ui-slider-handle {
+
 			    &:nth-of-type(1) {
 				    margin-left: -15px;
 			    }
@@ -675,7 +683,8 @@
 	}
 
 	.wp-slider .ui-slider-handle {
-		border-radius: 0;
+		border: none;
+	    background: none;
 		box-shadow: none;
 		box-sizing: border-box;
 		cursor: ew-resize;
@@ -687,17 +696,28 @@
 		bottom: 0;
 		z-index: 12;
 
+		.inner-border {
+		  width: 1px;
+		  position: absolute;
+		  background: $grey;
+		  top: 0;
+		  left: 48%;
+		  bottom: 0;
+		  z-index: 12;
+		}
+
 		&:before {
 			background-color: $primary;
 			border-radius: 50%;
+		    border: 2px solid white;
 			color: white;
 			line-height: $base * 2 - 12px;
 			height: $base * 2 - 12px;
 			width: $base * 2 - 12px;
 			text-align: center;
-
 			top: 50%;
 			margin-top: ( $base * 2 - 12px )/2;
+		  	z-index:14;
 		}
 	}
 
@@ -705,6 +725,22 @@
 	.ui-sortable {
 		.ui-sortable-helper .drop-target {
 			background-color: white;
+		}
+
+		&[data-section-blocks="1"] {
+		  .ui-sortable-handle {
+			display:none;
+		  }
+
+		  /*
+		  &.ui-sortable {
+			background-color: #fefefe;
+			background-image: url(../images/offset-pattern.png);
+		  } */
+
+		  .mesh-section-block {
+		  	transition: 500ms width ease;
+		  }
 		}
 
 		.ui-sortable-placeholder {
@@ -749,6 +785,9 @@
 }
 
 .block-content {
+
+  	transition: padding-left 500ms ease;
+
 	&.mesh-has-offset {
 		position: relative;
 

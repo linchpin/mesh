@@ -238,6 +238,9 @@ mesh.blocks = function ($) {
 						left: 3,
 						right: 9,
 						gap: 3,
+						create : function() {
+							$('.ui-slider-handle').remove('.inner-border').append('<span class="inner-border" />');
+						},
 						start: function () {
 							$this.css('z-index', 1000);
 						},
