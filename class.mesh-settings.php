@@ -135,6 +135,34 @@ class Mesh_Settings {
 		return $input;
 	}
 
+
+	/**
+	 * Get all of our foundation related grids
+	 *
+	 * @since 1.2.5
+	 *
+	 * @param $args
+	 *
+	 * @return array
+	 */
+	public static function get_foundation_grid_systems( $args ) {
+
+		$grid_systems = mesh_get_responsive_grid_systems();
+
+		$foundation_grid_systems = $grid_systems['foundation'];
+
+		$available_grids = array();
+
+		foreach ( $foundation_grid_systems as $key => $grid_system ) {
+			$available_grids[] = array(
+				'label' => $grid_system['name'],
+				'value' => $key,
+			);
+		}
+
+		return $available_grids;
+	}
+
 	/**
 	 * Add all of our settings from the API
 	 */
@@ -183,7 +211,7 @@ class Mesh_Settings {
 			array(
 				'field' => 'css_mode',
 				'label' => esc_html__( 'CSS', 'mesh' ),
-				'description' => esc_html__( 'Choose whether or not to enqueue CSS with Mesh.', 'mesh' ),
+				'description' => esc_html__( 'Choose whether or not to enqueue CSS with Mesh. You can also select which responsive framework you are using Foundation, Bootstrap or custom (using hooks)', 'mesh' ),
 				'options' => $css_mode,
 			)
 		);
@@ -202,7 +230,13 @@ class Mesh_Settings {
 				'label' => esc_html__( 'Foundation 6', 'mesh' ),
 				'value' => 6,
 			),
+			array(
+				'label' => esc_html__( 'Foundation 6.4.X', 'mesh' ),
+				'value' => 6.4,
+			),
 		);
+
+		$foundation_version = apply_filters( 'mesh_foundation_version', $foundation_version );
 
 		add_settings_field(
 			'foundation_version',
@@ -215,6 +249,23 @@ class Mesh_Settings {
 				'label' => esc_html__( 'Foundation Version', 'mesh' ),
 				'description' => esc_html__( 'Choose which version of Foundation you are using. Foundation 5 and 6 have subtle yet important differences when it comes to markup for components like interchange that Mesh utilizes.', 'mesh' ),
 				'options' => $foundation_version,
+			)
+		);
+
+		$mesh_grid_systems = mesh_get_responsive_grid_systems();
+
+		add_settings_field(
+			'grid_system',
+			esc_html__( 'Foundation Grid System', 'mesh' ),
+			array( 'Mesh_Settings', 'add_select' ),
+			self::$settings_page,
+			'mesh_sections',
+			array(
+				'field' => 'grid_system',
+				'label' => esc_html__( 'Foundation Grid System', 'mesh' ),
+				'description' => esc_html__( 'Choose which version of Foundation Flexbox you are using: Flexbox or XY-grid. Foundation 6.4.0 introduced new class names for row and columns: grid-x and cell.', 'mesh' ),
+				'options_cb' => array( 'Mesh_Settings', 'get_foundation_grid_systems' ),
+				'default' => 'float',
 			)
 		);
 
@@ -350,7 +401,11 @@ class Mesh_Settings {
 
 		$options = get_option( 'mesh_settings' );
 
-		$select_options = $args['options'];
+		// @since 1.2.5
+		// @todo this needs to be cleaned up to meet wpcs
+		$select_options = ( ! empty( $args['options_cb'] ) && is_callable( $args['options_cb'] ) )
+			? call_user_func_array( $args['options_cb'], $args )
+			: $args['options'];
 
 		?>
 		<?php if ( ! empty( $args['description'] ) ) : ?>
@@ -366,8 +421,13 @@ class Mesh_Settings {
 				if ( ! empty( $options[ $args['field'] ] ) ) {
 					$selected = selected( $options[ $args['field'] ], $option['value'], false );
 				}
+
+				// @since 1.2.5 If we don't have a selected option and we have a default value use that
+				if ( empty( $options[ $args['field'] ] ) && ( isset( $args['default'] ) && '' !== $args['default'] ) ) {
+					$selected = selected( $option['value'], $args['default'], false );
+				}
 				?>
-				<option value="<?php echo esc_attr( $option['value'] ); ?>" <?php echo esc_html( $selected ); ?>><?php echo esc_html( $option['label'] ); ?></option>
+				<option value="<?php echo esc_attr( $option['value'] ); ?>" <?php echo $selected; // XSS ok. ?>><?php echo esc_html( $option['label'] ); ?></option>
 			<?php endforeach; ?>
 		</select>
 		<?php

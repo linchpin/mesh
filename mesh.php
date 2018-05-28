@@ -3,7 +3,7 @@
  * Plugin Name: Mesh
  * Plugin URI: https://meshplugin.com?utm_source=mesh&utm_medium=plugin-admin-page&utm_campaign=wp-plugin
  * Description: Adds multiple sections for content on a post by post basis. Mesh also has settings to enable it for specific post types
- * Version: 1.2.4
+ * Version: 1.2.5
  * Text Domain: mesh
  * Domain Path: /languages
  * Author: Linchpin
@@ -21,7 +21,7 @@ if ( ! function_exists( 'add_action' ) ) {
 /**
  * Define all globals.
  */
-define( 'LINCHPIN_MESH_VERSION', '1.2.4' );
+define( 'LINCHPIN_MESH_VERSION', '1.2.5' );
 define( 'LINCHPIN_MESH_PLUGIN_NAME', esc_html__( 'Mesh', 'mesh' ) );
 define( 'LINCHPIN_MESH__MINIMUM_WP_VERSION', '4.0' );
 define( 'LINCHPIN_MESH___PLUGIN_URL', plugin_dir_url( __FILE__ ) );
@@ -36,7 +36,10 @@ define( 'LINCHPIN_MESH_DEBUG_MODE', false );
 
 $GLOBALS['mesh_current_version'] = get_option( 'mesh_version', '0.0' ); // Get our current Mesh Version.
 
+include_once 'includes/utilities.php';
+
 include_once 'class.mesh-settings.php';
+include_once 'class.mesh-input.php';
 include_once 'class.mesh-controls.php';
 include_once 'class.mesh-templates.php';
 include_once 'class.mesh-pointers.php';
@@ -77,80 +80,6 @@ function mesh_deactivation_hook() {
 	do_action( 'mesh_deactivate' );
 }
 register_deactivation_hook( __FILE__, 'mesh_deactivation_hook' );
-
-
-/**
- * Return the classes used to build our grid structure
- * Return a string of classes back to our block.
- *
- * @since 1.1
- *
- * @param int   $block_id Block ID.
- * @param array $args     Passed arguments.
- */
-function mesh_block_class( $block_id, $args = array() ) {
-
-	$defaults = array(
-		'push_pull'        => false,
-		'collapse_spacing' => false,
-		'total_columns'    => 1,
-		'max_columns'      => apply_filters( 'mesh_max_columns', 12 ),
-		'column_index'     => -1,
-		'column_width'     => 12,
-	);
-
-	$args = wp_parse_args( $args, $defaults );
-
-	$grid_system = apply_filters( 'mesh_grid_system', 'foundation' );
-
-	$grid = Mesh_Responsive_Grid::get_responsive_grid( $grid_system );
-
-	$block_css_class = get_post_meta( $block_id, '_mesh_css_class', true );
-	$block_offset    = (int) get_post_meta( $block_id, '_mesh_offset', true );
-
-	$classes = array(
-		$grid['columns_class'],
-		$grid['columns']['small'] . '-' . $args['max_columns'],
-	);
-
-	$classes[] = $grid['columns']['medium'] . '-' . ( (int) $args['column_width'] - $block_offset );
-
-	if ( $block_offset ) {
-		$classes[] = $grid['columns']['medium'] . '-' . $grid['offset'] . '-' . $block_offset;
-	}
-
-	if ( ! empty( $args['push_pull'] ) ) {
-
-		$push_or_pull = '';
-
-		if ( 2 === (int) $args['total_columns'] ) {
-
-			switch ( (int) $args['column_index'] ) {
-				case 0:
-					$push_or_pull = 'push';
-					break;
-				case 1:
-					$push_or_pull = 'pull';
-					break;
-			}
-
-			if ( ! empty( $push_or_pull ) ) {
-				$classes[] = $grid['columns']['medium'] . '-' . $push_or_pull . '-' . ( $args['max_columns'] - $args['column_width'] );
-			}
-		}
-	}
-
-	// Merge our block classes (from the input field).
-	if ( ! empty( $block_css_class ) ) {
-		$block_css_class = explode( ' ', $block_css_class );
-		$classes = array_merge( $classes, $block_css_class );
-	}
-
-	$classes = array_map( 'sanitize_html_class', $classes );
-	$classes = array_unique( $classes );
-
-	echo 'class="' . join( ' ', $classes ) . '"'; // WPCS: XSS ok, sanitization ok.
-}
 
 /**
  * Get files within our directory

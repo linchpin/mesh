@@ -22,7 +22,7 @@ engines:
   csslint:
     enabled: false
   duplication:
-    enabled: true
+    enabled: false
     config:
       languages:
       - javascript
@@ -33,7 +33,7 @@ engines:
   fixme:
     enabled: true
   markdownlint:
-    enabled: true
+    enabled: false
   phpcodesniffer:
     enabled: true
     config:

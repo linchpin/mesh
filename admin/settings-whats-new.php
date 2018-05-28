@@ -31,7 +31,7 @@ $safe_content = array(
 			<div class="gray-bg negative-bg versioninfo">
 				<div class="wrapper">
 					<h2 class="light-weight">
-						<?php printf( 'Mesh Version %s <span class="green-pipe">|</span> Released %s', esc_html( get_option( 'mesh_version' ) ), esc_html__( 'May 1st, 2018', 'mesh' ) ); ?></h2>
+						<?php printf( 'Mesh Version %s <span class="green-pipe">|</span> Released %s', esc_html( get_option( 'mesh_version' ) ), esc_html__( 'May 25th, 2018', 'mesh' ) ); ?></h2>
 				</div>
 			</div>
 			<div class="wrapper">
@@ -43,29 +43,51 @@ $safe_content = array(
 					</div>
 
 					<div class="new mesh-row">
-
-						<div class="mesh-columns-12">
+						<div class="mesh-columns-6">
 							<div class="new-feature">
-								<h4 class="no-margin"><?php esc_html_e( 'Customize Mesh Even Further', 'mesh' ); ?></h4>
-								<p><?php esc_html_e( 'We\'ve added a ton of hooks for filtering, mesh section and block options.', 'mesh' ); ?></p>
-								<h5>Actions</h5>
-								<ul>
-									<li>mesh_controls_before</li>
-									<li>mesh_controls_after</li>
-									<li>mesh_sections_before</li>
-									<li>mesh_sections_after</li>
-									<li>mesh_columns_before</li>
-									<li>mesh_columns_after</li>
-								</ul>
-								<h5>Filters</h5>
-								<ul>
-									<li>mesh_row_attributes</li>
-									<li>mesh_column_attributes</li>
-								</ul>
+								<h4 class="no-margin"><?php esc_html_e( 'Variable Width & Centered Single Columns', 'mesh' ); ?></h4>
+								<p><?php esc_html_e( 'Users now have the ability to define the width of a single column/block. Additionally you can also set if the column will center in it\'s parent (row/container)', 'mesh' ); ?></p>
+							</div>
+						</div>
+						<div class="mesh-columns-6">
+							Image should go here.
+						</div>
+					</div>
+
+					<div class="new mesh-row">
+						<div class="mesh-columns-6">
+							Images Goes Here
+						</div>
+						<div class="mesh-columns-6">
+							<div class="new-feature">
+								<h4 class="no-margin"><?php esc_html_e( 'Foundation: Float, Flex and XY Grid Compatible (Oh My!)', 'mesh' ); ?></h4>
+								<p><?php esc_html_e( "We've updated Mesh to support Foundation 6.4.x which includes support for Float Grid (Which foundation 5 and 6 use). Legacy Flex Grid and the newer XY Grid which is based on CSS Grid.", 'mesh' ); ?></p>
 							</div>
 						</div>
 					</div>
 
+					<div class="new mesh-row">
+						<div class="mesh-columns-12">
+							<div class="new-feature">
+								<h4 class="no-margin"><?php esc_html_e( 'Customize Mesh Even Further', 'mesh' ); ?></h4>
+								<p><?php esc_html_e( 'We\'ve added a even more hooks for extending mesh.', 'mesh' ); ?></p>
+								<h5><?php esc_html_e( 'Filters', 'mesh' ); ?></h5>
+								<ul>
+									<li><?php esc_html_e( 'You can now define your own max columns using the `mesh_max_columns` filter', 'mesh' ); ?></li>
+									<li><?php esc_html_e( 'Filter html attributes for sections, rows and columns, `mesh_element_attributes`', 'mesh' ); ?></li>
+									<li><?php esc_html_e( 'Filter html attributes for sections `mesh_section_attributes`', 'mesh' ); ?></li>
+									<li><?php esc_html_e( 'Filter html attributes for rows `mesh_row_attributes`', 'mesh' ); ?></li>
+									<li><?php esc_html_e( 'Filter html attributes for columns `mesh_column_attributes`', 'mesh' ); ?></li>
+									<li><?php esc_html_e( 'Filter css classes for rows `mesh_row_classes`', 'mesh' ); ?></li>
+									<li><?php esc_html_e( 'Filter css classes for title `mesh_section_title_css_classes`', 'mesh' ); ?></li>
+									<li><?php esc_html_e( 'Filter css classes for columns `mesh_column_classes`', 'mesh' ); ?></li>
+									<li><?php esc_html_e( 'Filter available responsive grid systems `mesh_responsive_grid_systems`', 'mesh' ); ?></li>
+									<li><?php esc_html_e( 'Filter available to override available foundation versions `mesh_foundation_version`', 'mesh' ); ?></li>
+									<li><?php esc_html_e( 'Filter to define the max columns of a given row `mesh_max_columns` Default remains 12', 'mesh' ); ?></li>
+								</ul>
+							</div>
+						</div>
+					</div>
 				</div>
 
 				<div class="update-container ">
@@ -81,7 +103,6 @@ $safe_content = array(
 							</div>
 						</div>
 					</div>
-
 				</div>
 
 				<div class="bug-fix-container mesh-row">
@@ -96,9 +117,10 @@ $safe_content = array(
 							<div class="bug-fix">
 								<h5 class="no-margin"><?php esc_html_e( 'While features are great, stability and bug fixes are equally important. Below are some of the items we tackled this release:', 'mesh' ); ?></h5>
 								<ul>
-									<li><?php esc_html_e( 'Fixed a few undefined indexes', 'mesh' ); ?></li>
-									<li><?php esc_html_e( 'Fixed a few conflicts with gutenberg (This is not full compatiblity with Gutenberg)', 'mesh' ); ?></li>
-									<li><?php esc_html_e( 'Fixed an issue where Mesh Templates could potentially lost the ability to add Mesh Sections', 'mesh' ); ?></li>
+									<li><?php esc_html_e( 'Quality of life fixes for UI.','mesh' ); ?></li>
+									<li><?php esc_html_e( 'Background images can now be removed on blocks!','mesh' ); ?></li>
+									<li><?php esc_html_e( 'Tons of refactoring for section and block option customization','mesh' ); ?></li>
+									<li><?php esc_html_e( 'Fixed offset selector being shown when it shouldn\'t be','mesh' ); ?></li>
 								</ul>
 							</div>
 						</div>

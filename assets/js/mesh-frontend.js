@@ -9,17 +9,17 @@ mesh.frontend = function ( $ ) {
 
 	var $body     = $('body'),
 		$window   = $(window),
-		$equalize = $('.mesh_section [data-equalizer]'),
+		$equalize = $('.mesh-row[data-equalizer]'),
 		do_lp_equal = false,
 
 		self;
 
 	$.fn.removeInlineStyle = function( style ) {
 		var search = new RegExp( style + '[^;]+;?', 'g' ),
-			styles = this.attr('style');
+			styles = $(this).attr('style');
 
         if ( styles !== undefined ) {
-	        this.attr('style', styles.replace( search, '' ) );
+	        $(this).attr('style', styles.replace( search, '' ) );
         }
 
         return this;
@@ -58,25 +58,27 @@ mesh.frontend = function ( $ ) {
 			}
 		},
 
+        /**
+		 * Fire our initialization
+         */
 		mesh_equalize_init : function() {
 			$equalize.each( self.mesh_equalize );
 		},
 
+        /**
+		 * Equalize Sections
+         */
 		mesh_equalize : function() {
-
 			var $this     = $(this),
-				$childs   = $('[data-equalizer-watch]', $this),
+				$childs   = $this.find('[data-equalizer-watch]'),
 				eq_height = 0;
 
-			$childs.each(function() {
-				$(this).removeInlineStyle( 'height' );
-			});
+			$childs.removeInlineStyle( 'height' )
+				.each( function() {
+					var this_height = $(this).height();
 
-			$childs.each( function() {
-				var this_height = $(this).height();
-
-				eq_height = this_height > eq_height ? this_height : eq_height;
-			}).height(eq_height);
+					eq_height = this_height > eq_height ? this_height : eq_height;
+				}).height(eq_height);
 
 		}
 	};
