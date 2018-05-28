@@ -571,7 +571,7 @@ function mesh_maybe_show_section_title( $post_id = '', $title = '' ) {
 		$title = $post->post_title;
 	}
 
-	if ( ! empty( $title ) && 'no block title' === strtolower( $title ) ) {
+	if ( ! empty( $title ) && 'no section title' === strtolower( $title ) ) {
 		return false;
 	}
 

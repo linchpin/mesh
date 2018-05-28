@@ -137,15 +137,11 @@ $remaining_columns = $block_settings['max_columns'];
 														<?php
 														$featured_image = wp_get_attachment_image_src( $featured_image_id, array( 160, 60 ) );
 														?>
-														<a class="mesh-featured-image-choose right"
-														   data-mesh-featured-image="<?php echo esc_attr( $featured_image_id ); ?>"><img
-																	src="<?php echo esc_attr( $featured_image[0] ); ?>"/></a>
-														<a class="mesh-featured-image-trash dashicons-before dashicons-dismiss"
-														   data-mesh-featured-image="<?php echo esc_attr( $featured_image_id ); ?>"></a>
+														<a class="mesh-featured-image-choose right" data-mesh-featured-image="<?php echo esc_attr( $featured_image_id ); ?>">
+															<img src="<?php echo esc_attr( $featured_image[0] ); ?>"/></a>
+														<a class="mesh-featured-image-trash dashicons-before dashicons-dismiss" data-mesh-featured-image="<?php echo esc_attr( $featured_image_id ); ?>"></a>
 													<?php endif; ?>
-													<input type="hidden"
-														   name="mesh-sections[<?php echo esc_attr( $section->ID ); ?>][blocks][<?php echo esc_attr( $blocks[ $block_increment ]->ID ); ?>][<?php echo esc_attr( 'featured_image' ); ?>]"
-														   value="<?php echo esc_attr( $featured_image_id ); ?>"/>
+													<input type="hidden" name="mesh-sections[<?php echo esc_attr( $section->ID ); ?>][blocks][<?php echo esc_attr( $blocks[ $block_increment ]->ID ); ?>][<?php echo esc_attr( 'featured_image' ); ?>]" value="<?php echo esc_attr( $featured_image_id ); ?>"/>
 												</div>
 											</div>
 										<?php endif; ?>
@@ -177,10 +173,10 @@ $remaining_columns = $block_settings['max_columns'];
 
 						wp_editor( apply_filters( 'content_edit_pre', $blocks[ $block_increment ]->post_content ), 'mesh-section-editor-' . $blocks[ $block_increment ]->ID, array(
 							'textarea_name' => 'mesh-sections[' . $section->ID . '][blocks][' . $blocks[ $block_increment ]->ID . '][post_content]',
-							'teeny' => true,
-							'tinymce' => $tiny_mce_options,
-							'editor_class' => 'mesh-wp-editor-area',
-							'quicktags' => array(
+							'teeny'         => true,
+							'tinymce'       => $tiny_mce_options,
+							'editor_class'  => 'mesh-wp-editor-area',
+							'quicktags'     => array(
 								'buttons' => 'strong,em,link,block,img,ul,ol,li',
 							),
 						) );
