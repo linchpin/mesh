@@ -47,6 +47,13 @@ class Mesh_Controls {
 	 * @return bool
 	 */
 	function show_equalize( $section = array(), $blocks = array() ) {
+
+		$grid = mesh_get_responsive_grid();
+
+		if ( 'XY Grid' === $grid['name'] ) {
+			return false;
+		}
+
 		return ( count( $blocks ) > 1 );
 	}
 
@@ -61,6 +68,13 @@ class Mesh_Controls {
 	 * @return bool
 	 */
 	function show_push_pull( $section = array(), $blocks = array() ) {
+
+		$grid = mesh_get_responsive_grid();
+
+		if ( 'XY Grid' === $grid['name'] ) {
+			return false;
+		}
+
 		return ( count( $blocks ) > 1 );
 	}
 

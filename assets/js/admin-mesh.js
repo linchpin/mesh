@@ -308,7 +308,7 @@ mesh.blocks = function ($) {
 					$(this).closest('.block').removeClass('ui-hover-state');
 				});
 
-			self.setup_resizing();
+			self.setup_resize_slider();
 			self.setup_sortable();
 		},
 
@@ -409,7 +409,7 @@ mesh.blocks = function ($) {
 			// -> col 2 = (val2 - val1) = (9 - 3) = 6
 			// -> col 3 = (avail - val2) = (12 - 9) = 3
 			if ( 3 === column_length ) {
-				for (var i = 0; i <= column_length; i++) {
+				for ( var i = 0; i <= column_length; i++ ) {
 					switch (i) {
 						case 0:
 							column_values.push(slider_values[i]);
@@ -471,15 +471,6 @@ mesh.blocks = function ($) {
 					post_data.blocks[ block_id.toString() ] = column_value;
 				}
 			});
-
-			self.rerender_blocks($columns.find('.wp-editor-area'));
-		},
-
-		setup_resizing : function() {
-			$body
-				.on( 'change', '.mesh-block-columns', self.change_block_widths );
-
-			self.setup_resize_slider();
 		},
 
 		/**
@@ -503,16 +494,34 @@ mesh.blocks = function ($) {
 						right: 9,
 						gap: 3,
 						create : function() {
-							$('.ui-slider-handle').remove('.inner-border').append('<span class="inner-border" />');
+							var $handle = $('.ui-slider-handle');
+
+							$handle.find('.inner-border').remove();
+                            $handle.append( $('<span class="inner-border" />' ) );
 						},
-						start: function () {
+						start: function ( event, ui ) {
 							$this.css('z-index', 1000);
+							var $tgt     = $(event.target),
+                                $columns = $tgt.parents('.mesh-section').find('.mesh-editor-blocks').find('.mesh-row:first .columns');
+
+                            $columns.each( function() {
+                                var $btns = $(this).find('.mce-first.mce-btn-group .mce-btn[role="button"]');
+                              		$btns.hide();
+
+                              		$($btns[0]).css('visibility', 'hidden').show();
+							});
 						},
 						stop: function (event, ui) {
 							$this.css('z-index', '').find('.ui-slider-handle').css('z-index', 1000);
 							self.notify_user(event, ui);
 						},
-						slide: self.change_block_widths
+						slide: self.change_block_widths,
+						change: function( event, ui ) {
+							var $tgt     = $(event.target),
+								$columns = $tgt.parents('.mesh-section').find('.mesh-editor-blocks').find('.mesh-row:first .columns');
+
+							self.rerender_blocks($columns.find('.wp-editor-area'));
+                        }
 					};
 
 				if (vals) {
@@ -548,7 +557,7 @@ mesh.blocks = function ($) {
 		 *
 		 * @param $tinymce_editors
 		 */
-		rerender_blocks: function ($tinymce_editors) {
+		rerender_blocks: function ( $tinymce_editors ) {
 
 			$tinymce_editors.each(function () {
 				var editor_id = $(this).prop('id'),
@@ -889,11 +898,11 @@ mesh.blocks = function ($) {
 
 					$swap_clone.css({'top': '', 'left': ''});
 
-					$this.append($swap_clone);
-					$swap_parent.append($tgt_clone);
+					$this.append( $swap_clone );
+					$swap_parent.append( $tgt_clone );
 
-					self.rerender_blocks($section.find('.wp-editor-area'));
-					self.save_order(section_id, event, ui);
+					self.rerender_blocks( $section.find('.wp-editor-area') );
+					self.save_order( section_id, event, ui );
 					self.setup_drag_drop();
 
 					return false;

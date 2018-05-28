@@ -43,6 +43,7 @@
 - Minor code formatting for codeclimate / WPCS
 - Minor security enhancements to escape admin related content on output
 - Minor JavaScript optimizations
+- Column resizing is now more responsive. Sections no longer redraw on every "slide", instead only redraw after a change occurs.
 
 ## [1.2.4] - 2017-05-01
 

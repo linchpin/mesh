@@ -213,11 +213,13 @@ function mesh_get_column_attributes( $post_id = '', $return_type = 'string' ) {
 	}
 
 	$column_attributes = mesh_get_element_attributes( $post_id, 'array' );
+	$grid = mesh_get_responsive_grid();
 
-	$lp_equal = get_post_meta( get_the_ID(), '_mesh_lp_equal', true );
-
-	if ( ! empty( $lp_equal ) ) {
-		$column_attributes['data-equalizer-watch'] = '';
+	if ( 'XY Grid' !== $grid['name'] ) {
+		$lp_equal = get_post_meta( get_the_ID(), '_mesh_lp_equal', true );
+		if ( ! empty( $lp_equal ) ) {
+			$column_attributes['data-equalizer-watch'] = '';
+		}
 	}
 
 	$column_attributes = apply_filters( 'mesh_column_attributes', $column_attributes );
@@ -398,7 +400,7 @@ function mesh_row_class( $class = '', $post_id = '' ) {
  *
  * @since 1.2.5
  *
- * @param int $post_id
+ * @param mixed $post_id
  *
  * @return string
  */
@@ -410,15 +412,12 @@ function mesh_get_title_class( $post_id = '' ) {
 		$post_id = $post->ID;
 	}
 
-	$mesh_options = get_option( 'mesh_settings' );
-
-	$grid_system = mesh_get_responsive_grid( $mesh_options['grid_system'] );
-
+	$grid_system   = mesh_get_responsive_grid();
 	$title_display = get_post_meta( $post_id, '_mesh_title_display', true );
 
 	$title_class = array(
 		'small-12', // @todo this should be filterable or part of the grid system
-		$grid_system['column_class'],
+		$grid_system['columns_class'],
 		'title-row',
 	);
 
@@ -453,10 +452,8 @@ function mesh_block_class( $block_id, $args = array() ) {
 		'column_width'     => apply_filters( 'mesh_column_width', 12 ),
 	);
 
-	$args = wp_parse_args( $args, $defaults );
-
-	$grid = mesh_get_responsive_grid();
-
+	$args            = wp_parse_args( $args, $defaults );
+	$grid            = mesh_get_responsive_grid();
 	$column_width    = (int) get_post_meta( $block_id, '_mesh_column_width', true );
 	$block_css_class = get_post_meta( $block_id, '_mesh_css_class', true );
 	$block_offset    = (int) get_post_meta( $block_id, '_mesh_offset', true );
@@ -503,7 +500,7 @@ function mesh_block_class( $block_id, $args = array() ) {
 	// Merge our block classes (from the input field).
 	if ( ! empty( $block_css_class ) ) {
 		$block_css_class = explode( ' ', $block_css_class );
-		$classes = array_merge( $classes, $block_css_class );
+		$classes         = array_merge( $classes, $block_css_class );
 	}
 
 	$classes = array_map( 'sanitize_html_class', $classes );
@@ -529,19 +526,71 @@ function mesh_get_tinymce_defaults() {
 		'autoresize_min_height' => 150,
 		'wp_autoresize_on'      => false,
 		'wpautop'               => true,
-		'plugins' => 'lists,media,paste,tabfocus,wordpress,textcolor,wpautoresize,wpeditimage,wpgallery,wplink,wptextpattern,wpview',
-		'block_formats' => 'Paragraph=p; Heading 3=h3; Heading 4=h4',
-		'toolbar1' => 'bold,italic,bullist,numlist,hr,alignleft,aligncenter,alignright,alignjustify,link,wp_adv ',
-		'toolbar2' => 'formatselect,underline,strikethrough,forecolor,pastetext,removeformat ',
-		'toolbar3' => '',
-		'toolbar4' => '',
+		'plugins'               => 'lists,media,paste,tabfocus,wordpress,textcolor,wpautoresize,wpeditimage,wpgallery,wplink,wptextpattern,wpview',
+		'block_formats'         => 'Paragraph=p; Heading 3=h3; Heading 4=h4',
+		'toolbar1'              => 'bold,italic,bullist,numlist,hr,alignleft,aligncenter,alignright,alignjustify,link,wp_adv ',
+		'toolbar2'              => 'formatselect,underline,strikethrough,forecolor,pastetext,removeformat ',
+		'toolbar3'              => '',
+		'toolbar4'              => '',
 
 		// @since 1.2.5 Change which options are shown when we are viewing smaller columns
-		'small_toolbar1' => 'bold,italic,bullist,numlist,link,wp_adv ',
-		'small_toolbar2' => 'hr,alignleft,aligncenter,alignright,alignjustify,formatselect,underline,strikethrough,forecolor,pastetext,removeformat',
+		'small_toolbar1'        => 'bold,italic,bullist,numlist,link,wp_adv ',
+		'small_toolbar2'        => 'hr,alignleft,aligncenter,alignright,alignjustify,formatselect,underline,strikethrough,forecolor,pastetext,removeformat',
 	);
 
 	$tinymce_defaults = apply_filters( 'mesh_tiny_mce_options', $tinymce_defaults );
 
 	return $tinymce_defaults;
+}
+
+/**
+ * Determine whether or not to show the title for a section or block
+ *
+ * @since 1.2.5
+ *
+ * @param string $post_id
+ * @param        $title
+ *
+ * @return bool
+ */
+function mesh_maybe_show_section_title( $post_id = '', $title = '' ) {
+
+	global $post;
+
+	if ( empty( $post_id ) ) {
+		$post_id = $post->ID;
+	}
+
+	$title_display = get_post_meta( $post_id, '_mesh_title_display', true );
+
+	if ( false === $title_display ) {
+		return false;
+	}
+
+	if ( empty( $title ) ) {
+		$title = $post->post_title;
+	}
+
+	if ( ! empty( $title ) && 'no block title' === strtolower( $title ) ) {
+		return false;
+	}
+
+	return true;
+}
+
+/**
+ * Determine if we should show our block title or not.
+ *
+ * @since 1.2.5
+ *
+ * @param string $title
+ *
+ * @return bool
+ */
+function mesh_maybe_show_block_title( $title = '' ) {
+	if ( ! empty( $title ) && 'no column title' === strtolower( $title ) ) {
+		return false;
+	}
+
+	return true;
 }

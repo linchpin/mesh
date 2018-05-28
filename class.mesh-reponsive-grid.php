@@ -84,71 +84,71 @@ class Mesh_Responsive_Grid {
 	public static function get_grid_systems() {
 
 		self::$grid_systems = array(
-			'css' => array( // @since 1.2.5
-				'columns' => array(
-					'small' => 'small',
-					'medium' => 'medium',
-					'large' => 'large',
-					'x-large' => 'x-large',
+			'css'        => array( // @since 1.2.5
+				'columns'       => array(
+					'small'    => 'small',
+					'medium'   => 'medium',
+					'large'    => 'large',
+					'x-large'  => 'x-large',
 					'xx-large' => 'xx-large',
 				),
-				'offset' => 'offset',
-				'centered' => 'centered',
+				'offset'        => 'offset',
+				'centered'      => 'centered',
 				'columns_class' => 'columns',
-				'row_class' => 'row',
+				'row_class'     => 'row',
 			),
 			'foundation' => array(
 				'float' => array(
-					'name' => esc_html__( 'Float Grid (legacy)', 'mesh' ),
-					'columns' => array(
-						'small' => 'small',
-						'medium' => 'medium',
-						'large' => 'large',
-						'x-large' => 'x-large',
+					'name'          => esc_html__( 'Float Grid (legacy)', 'mesh' ),
+					'columns'       => array(
+						'small'    => 'small',
+						'medium'   => 'medium',
+						'large'    => 'large',
+						'x-large'  => 'x-large',
 						'xx-large' => 'xx-large',
 					),
-					'offset' => 'offset',
-					'centered' => 'centered',
+					'offset'        => 'offset',
+					'centered'      => 'centered',
 					'columns_class' => 'columns',
-					'row_class' => 'row', // @since 1.2.5
+					'row_class'     => 'row', // @since 1.2.5
 				),
-				'flex' => array(
-					'name' => esc_html__( 'Flex Grid (Legacy)', 'mesh' ),
-					'columns' => array(
-						'small' => 'small',
-						'medium' => 'medium',
-						'large' => 'large',
-						'x-large' => 'x-large',
+				'flex'  => array(
+					'name'          => esc_html__( 'Flex Grid (Legacy)', 'mesh' ),
+					'columns'       => array(
+						'small'    => 'small',
+						'medium'   => 'medium',
+						'large'    => 'large',
+						'x-large'  => 'x-large',
 						'xx-large' => 'xx-large',
 					),
-					'offset' => 'offset',
-					'centered' => 'centered',
+					'offset'        => 'offset',
+					'centered'      => 'centered',
 					'columns_class' => 'columns',
-					'row_class' => 'row',
+					'row_class'     => 'row',
 				),
-				'xy' => array(
-					'name' => esc_html__( 'XY Grid', 'mesh' ),
-					'columns' => array(
-						'small' => 'small',
-						'medium' => 'medium',
-						'large' => 'large',
-						'x-large' => 'x-large',
+				'xy'    => array(
+					'name'          => esc_html__( 'XY Grid', 'mesh' ),
+					'columns'       => array(
+						'small'    => 'small',
+						'medium'   => 'medium',
+						'large'    => 'large',
+						'x-large'  => 'x-large',
 						'xx-large' => 'xx-large',
 					),
-					'offset' => 'offset',
-					'centered' => 'centered',
+					'offset'        => 'offset',
+					'centered'      => 'centered',
 					'columns_class' => 'cell',
-					'row_class' => 'grid-x',
+					'row_class'     => 'grid-x',
 				),
 			),
-			'bootstrap' => array(
-				'columns' => array(
+			'bootstrap'  => array(
+				'columns'       => array(
 					'x-small' => 'col-xs',
-					'small' => 'col-sm',
-					'medium' => 'col-md',
-					'large' => 'col-lg',
+					'small'   => 'col-sm',
+					'medium'  => 'col-md',
+					'large'   => 'col-lg',
 				),
-				'offset' => 'offset',
+				'offset'        => 'offset',
 				'columns_class' => '',
 			),
 		);
