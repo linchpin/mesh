@@ -50,13 +50,13 @@ $safe_content = array(
 							</div>
 						</div>
 						<div class="mesh-columns-6">
-							Image should go here.
+							<img src="<?php echo esc_url( LINCHPIN_MESH___PLUGIN_URL . 'assets/images/mesh-screenshot-feature2.png' ); ?>" />
 						</div>
 					</div>
 
 					<div class="new mesh-row">
 						<div class="mesh-columns-6">
-							Images Goes Here
+							<img src="<?php echo esc_url( LINCHPIN_MESH___PLUGIN_URL . 'assets/images/mesh-screenshot-feature1.png' ); ?>" />
 						</div>
 						<div class="mesh-columns-6">
 							<div class="new-feature">
