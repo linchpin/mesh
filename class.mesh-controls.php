@@ -20,7 +20,7 @@ class Mesh_Controls {
 	/**
 	 * Mesh_Controls constructor.
 	 */
-	function __construct() {
+	public function __construct() {
 		$this->block_settings = array(
 			'push_pull'        => false,
 			'collapse_spacing' => false,
@@ -41,16 +41,16 @@ class Mesh_Controls {
 	/**
 	 * Only show equalize when the count of our blocks is greater than 1
 	 *
-	 * @param \WP_Post|int $section Our current section.
+	 * @param \WP_Post|array|int $section Our current section.
 	 * @param array        $blocks Blocks within our section.
 	 *
 	 * @return bool
 	 */
-	function show_equalize( $section = array(), $blocks = array() ) {
+	public function show_equalize( $section = array(), $blocks = array() ) {
 
 		$grid = mesh_get_responsive_grid();
 
-		if ( 'XY Grid' === $grid['name'] ) {
+		if ( isset( $grid['name'] ) && 'XY Grid' === $grid['name'] ) {
 			return false;
 		}
 
@@ -60,18 +60,18 @@ class Mesh_Controls {
 	/**
 	 * Only show push pull controls when we have more than 1 block
 	 *
-	 * @param \WP_Post|int $section Section.
+	 * @param \WP_Post|array|int $section Section.
 	 * @param array        $blocks Blocks.
 	 *
 	 * @since 1.2
 	 *
 	 * @return bool
 	 */
-	function show_push_pull( $section = array(), $blocks = array() ) {
+	public function show_push_pull( $section = array(), $blocks = array() ) {
 
 		$grid = mesh_get_responsive_grid();
 
-		if ( 'XY Grid' === $grid['name'] ) {
+		if ( isset( $grid['name'] ) && 'XY Grid' === $grid['name'] ) {
 			return false;
 		}
 
@@ -86,7 +86,7 @@ class Mesh_Controls {
 	 *
 	 * @return bool
 	 */
-	function show_offset( $block, $section_blocks ) {
+	public function show_offset( $block, $section_blocks ) {
 
 		$_block_settings = $this->get_block_settings();
 
@@ -107,7 +107,7 @@ class Mesh_Controls {
 	 *
 	 * @return array
 	 */
-	function get_template_options() {
+	public function get_template_options() {
 		$templates = mesh_locate_template_files();
 		$options = array();
 

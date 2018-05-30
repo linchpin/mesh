@@ -213,9 +213,9 @@ function mesh_get_column_attributes( $post_id = '', $return_type = 'string' ) {
 	}
 
 	$column_attributes = mesh_get_element_attributes( $post_id, 'array' );
-	$grid = mesh_get_responsive_grid();
+	$grid              = mesh_get_responsive_grid();
 
-	if ( 'XY Grid' !== $grid['name'] ) {
+	if ( ! isset( $grid['name'] ) || 'XY Grid' !== $grid['name'] ) {
 		$lp_equal = get_post_meta( get_the_ID(), '_mesh_lp_equal', true );
 		if ( ! empty( $lp_equal ) ) {
 			$column_attributes['data-equalizer-watch'] = '';

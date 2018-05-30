@@ -46,7 +46,6 @@ class Mesh_Upgrades {
 
 			// Latest Version
 			if ( version_compare( $GLOBALS['mesh_current_version'], '1.2.5', '<' ) ) {
-				wp_die( 'ran 1.2.5' );
 				$this->version_1_2_5();
 			}
 		}
