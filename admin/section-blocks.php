@@ -85,7 +85,7 @@ $remaining_columns = $block_settings['max_columns'];
 			$block_classes[] = 'mesh-block-centered';
 		}
 
-		if ( intval( $block_columns ) < 4 ) {
+		if ( intval( $block_columns ) <= 4 ) {
 			$block_classes[] = 'mesh-small-block';
 		}
 
@@ -166,7 +166,7 @@ $remaining_columns = $block_settings['max_columns'];
 
 						$tiny_mce_options = mesh_get_tinymce_defaults();
 
-						if ( intval( $block_columns ) < 4 ) {
+						if ( intval( $block_columns ) <= 4 ) {
 							$tiny_mce_options['toolbar1'] = $tiny_mce_options['small_toolbar1'];
 							$tiny_mce_options['toolbar2'] = $tiny_mce_options['small_toolbar2'];
 						}

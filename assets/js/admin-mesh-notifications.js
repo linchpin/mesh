@@ -21,7 +21,8 @@ mesh.notifications = function ( $ ) {
             self = mesh.notifications;
 
             $body
-                .on('click', '.mesh-update-notice .notice-dismiss', self.dismissNotification );
+                .on('click', '.mesh-update-notice .notice-dismiss', self.dismissNotification )
+                .on('click', '.mesh-review-notice .review-dismiss, .mesh-review-notice .notice-dismiss', self.dismissNotification );
         },
 
         /**
@@ -29,13 +30,22 @@ mesh.notifications = function ( $ ) {
          *
          * @since 1.2
          */
-        dismissNotification : function() {
+        dismissNotification : function( event ) {
+
+            event.preventDefault();
+
+            var $notice = $(this).parents('.mesh-notice');
+
             $.post( ajaxurl, {
                 action                : 'mesh_dismiss_notification',
-                mesh_notification_type : $(this).parents('.mesh-update-notice').attr('data-type'),
+                mesh_notification_type : $notice.attr('data-type'),
                 _wpnonce              : mesh_notifications.dismiss_nonce
             }, function( response ) {
-
+                $notice.fadeTo(100, 0,function() {
+                    $notice.slideUp( 100, function(){
+                        $notice.remove();
+                    });
+                });
             });
         }
     };

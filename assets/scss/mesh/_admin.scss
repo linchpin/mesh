@@ -209,10 +209,6 @@
     }
   }
 
-
-
-
-
 // About Mesh
   .about.hero {
     background-image: url('../images/meshbackground@2x.png');
@@ -473,7 +469,7 @@
 }
 
 // UPDATE Notification
-.mesh-update-notice {
+.mesh-notice {
   padding: 10px 38px;
   border-left-color: $cerise;
   margin: 25px 20px 0 2px ;
@@ -488,7 +484,6 @@
     .table-cell {
       display: table-cell;
       vertical-align: middle;
-
     }
   }
 
@@ -501,7 +496,6 @@
     &:hover, &:focus, &:active {
       color: $lochinvar;
     }
-
   }
 }
 
