@@ -1,6 +1,6 @@
 # Change Log For Mesh
 
-## [1.2.5] - Unreleased
+## [1.2.5] - 2018-05-30
 
 ### Fixes
 
@@ -18,9 +18,10 @@
 - Developers will find section and block controls have even more flexibility (documentation to come soon)
 - Better css when hovering a draggable columns.
 - Moved and Refactored a ton of methods to be more organized (utilities.php)
-- Added utility methods for outputing CSS Classes and other attributes for sections, rows and columns
-- Added more descriptions to optoins within Mesh Settings 
+- Added utility methods for outputting CSS Classes and other attributes for sections, rows and columns
+- Added more descriptions to options within Mesh Settings 
 - Added Mesh_Input class to handle building all input markup (dramatically cutting down code duplications between blocks and sections)
+- Added a nag message for reviews. Please help!
 - Added a ton of new filters
     - You can now define your own max columns using the `mesh_max_columns` filter
     - Filter html attributes for sections, rows and columns, `mesh_element_attributes`
@@ -40,12 +41,12 @@
 - TinyMCE default settings are now shared between blocks built with php and javascript.
 - Dramatically cut down the code needed within mesh php templates (Developers may want to review any custom templates on a staging environment)
 - Admin area now utilizes Mesh_Responsive grid class more extensively
-- Minor code formatting for codeclimate / WPCS
+- Minor code formatting for code climate / WPCS
 - Minor security enhancements to escape admin related content on output
 - Minor JavaScript optimizations
 - Column resizing is now more responsive. Sections no longer redraw on every "slide", instead only redraw after a change occurs.
 
-## [1.2.4] - 2017-05-01
+## [1.2.4] - 2018-05-01
 
 ### Fixes
 

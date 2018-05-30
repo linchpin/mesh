@@ -199,27 +199,27 @@ class Mesh_Controls {
 	 *
 	 * @since 1.2
 	 */
-	function mesh_section_controls( $section, $blocks, $visible = false ) {
+	public function mesh_section_controls( $section, $blocks, $visible = false ) {
 
 		$controls = array(
 			'visible_options' => array(
-				'template' => array(
-					'label'          => esc_html__( 'Columns', 'mesh' ),
-					'type'           => 'select',
-					'css_classes'    => array( 'mesh-choose-layout' ),
-					'validation_cb'  => false,
-					'options_cb'     => array( $this, 'get_template_options' ),
-					'id'             => 'mesh-sections-template-' . $section->ID,
+				'template'      => array(
+					'label'         => esc_html__( 'Columns', 'mesh' ),
+					'type'          => 'select',
+					'css_classes'   => array( 'mesh-choose-layout' ),
+					'validation_cb' => false,
+					'options_cb'    => array( $this, 'get_template_options' ),
+					'id'            => 'mesh-sections-template-' . $section->ID,
 				),
 				'title-display' => array(
-					'label'          => esc_html__( 'Display Title', 'mesh' ),
-					'type'           => 'checkbox',
-					'css_classes'    => array( 'mesh-section-show-title' ),
-					'show_on_cb'     => false,
-					'validation_cb'  => false,
+					'label'         => esc_html__( 'Display Title', 'mesh' ),
+					'type'          => 'checkbox',
+					'css_classes'   => array( 'mesh-section-show-title' ),
+					'show_on_cb'    => false,
+					'validation_cb' => false,
 				),
 			),
-			'more_options' => array(
+			'more_options'    => array(
 				'section-id' => array(
 					'label'         => esc_html__( 'Section ID', 'mesh' ),
 					'type'          => 'text',
@@ -227,40 +227,40 @@ class Mesh_Controls {
 					'show_on_cb'    => false,
 					'validation_cb' => false,
 				),
-				'css-class' => array(
-					'label'          => esc_html__( 'Section Class', 'mesh' ),
-					'type'           => 'text',
-					'css_classes'    => array( 'mesh-section-class' ),
-					'show_on_cb'     => false,
-					'validation_cb'  => false,
+				'css-class'  => array(
+					'label'         => esc_html__( 'Section Class', 'mesh' ),
+					'type'          => 'text',
+					'css_classes'   => array( 'mesh-section-class' ),
+					'show_on_cb'    => false,
+					'validation_cb' => false,
 				),
-				'row-class' => array(
-					'label'          => esc_html__( 'Row Class', 'mesh' ),
-					'type'           => 'text',
-					'css_classes'    => array( 'mesh-row-class' ),
-					'show_on_cb'     => false,
-					'validation_cb'  => false,
+				'row-class'  => array(
+					'label'         => esc_html__( 'Row Class', 'mesh' ),
+					'type'          => 'text',
+					'css_classes'   => array( 'mesh-row-class' ),
+					'show_on_cb'    => false,
+					'validation_cb' => false,
 				),
-				'collapse' => array(
-					'label'          => esc_html__( 'Collapse Padding', 'mesh' ),
-					'type'           => 'checkbox',
-					'css_classes'    => array( 'mesh-section-collapse-input' ),
-					'show_on_cb'     => false,
-					'validation_cb'  => false,
+				'collapse'   => array(
+					'label'         => esc_html__( 'Collapse Padding', 'mesh' ),
+					'type'          => 'checkbox',
+					'css_classes'   => array( 'mesh-section-collapse-input' ),
+					'show_on_cb'    => false,
+					'validation_cb' => false,
 				),
-				'push-pull' => array(
-					'label'          => esc_html__( 'Push Pull', 'mesh' ),
-					'type'           => 'checkbox',
-					'css_classes'    => array( 'mesh-section-push' ),
-					'show_on_cb'     => array( $this, 'show_push_pull' ),
-					'validation_cb'  => false,
+				'push-pull'  => array(
+					'label'         => esc_html__( 'Push Pull', 'mesh' ),
+					'type'          => 'checkbox',
+					'css_classes'   => array( 'mesh-section-push' ),
+					'show_on_cb'    => array( $this, 'show_push_pull' ),
+					'validation_cb' => false,
 				),
-				'lp-equal' => array(
-					'label'          => esc_html__( 'Equalize', 'mesh' ),
-					'type'           => 'checkbox',
-					'css_classes'    => array( 'mesh-section-equalize' ),
-					'show_on_cb'     => array( $this, 'show_equalize' ),
-					'validate_cb'    => false,
+				'lp-equal'   => array(
+					'label'       => esc_html__( 'Equalize', 'mesh' ),
+					'type'        => 'checkbox',
+					'css_classes' => array( 'mesh-section-equalize' ),
+					'show_on_cb'  => array( $this, 'show_equalize' ),
+					'validate_cb' => false,
 				),
 			),
 		);
@@ -268,10 +268,10 @@ class Mesh_Controls {
 		$controls = apply_filters( 'mesh_section_controls', $controls );
 
 		if ( $visible ) {
-			$controls = $controls['visible_options'];
+			$controls        = $controls['visible_options'];
 			$container_class = 'inline-block-list mesh-section-meta-visible-list';
 		} else {
-			$controls = $controls['more_options'];
+			$controls        = $controls['more_options'];
 			$container_class = 'small-block-grid-1 medium-block-grid-4';
 		}
 		?>
@@ -317,13 +317,13 @@ class Mesh_Controls {
 					<?php
 
 					$input_args = array(
-						'block_id' => esc_attr( $section->ID ),
-						'post_meta_key' => esc_attr( $underscore_key ),
-						'input_type' => sanitize_title( $control['type'] ),
+						'block_id'          => esc_attr( $section->ID ),
+						'post_meta_key'     => esc_attr( $underscore_key ),
+						'input_type'        => sanitize_title( $control['type'] ),
 						'input_name_format' => 'mesh-sections[%d][%s]',
 						'input_css_classes' => $css_classes,
-						'options_cb' => ( isset( $control['options_cb'] ) ) ? $control['options_cb'] : array(),
-						'options' => ( isset( $control['options'] ) ) ? $control['options'] : array(),
+						'options_cb'        => ( isset( $control['options_cb'] ) ) ? $control['options_cb'] : array(),
+						'options'           => ( isset( $control['options'] ) ) ? $control['options'] : array(),
 					);
 
 					$input_args['input_name'] = sprintf( $input_args['input_name_format'],
@@ -335,8 +335,8 @@ class Mesh_Controls {
 						$input_args['id'] = esc_attr( $control['id'] );
 					}
 
-					// Create our inputs
-					Mesh_Input::get_input( $control['type'], $input_args, $input_value,true, $section, $blocks );
+					// Create our inputs.
+					Mesh_Input::get_input( $control['type'], $input_args, $input_value, true, $section, $blocks );
 					?>
 				</label>
 			</li>
@@ -353,42 +353,42 @@ class Mesh_Controls {
 	 *
 	 * @since 1.2
 	 */
-	function mesh_block_controls( $block, $section_blocks ) {
+	public function mesh_block_controls( $block, $section_blocks ) {
 
 		$controls = array(
-			'css-class' => array(
-				'label'          => esc_html__( 'CSS Class', 'mesh' ),
-				'type'           => 'text',
-				'css_classes'    => array( 'mesh-section-class' ),
-				'validation_cb'  => false,
+			'css-class'  => array(
+				'label'         => esc_html__( 'CSS Class', 'mesh' ),
+				'type'          => 'text',
+				'css_classes'   => array( 'mesh-section-class' ),
+				'validation_cb' => false,
 			),
-			'offset' => array(
-				'label'          => esc_html__( 'Offset', 'mesh' ),
-				'type'           => 'select',
-				'css_classes'    => array( 'mesh-column-offset' ),
-				'validation_cb'  => false,
-				'options_cb'     => array( $this, 'get_offset_options' ),
-				'show_on_cb'     => array( $this, 'show_offset' ),
+			'offset'     => array(
+				'label'         => esc_html__( 'Offset', 'mesh' ),
+				'type'          => 'select',
+				'css_classes'   => array( 'mesh-column-offset' ),
+				'validation_cb' => false,
+				'options_cb'    => array( $this, 'get_offset_options' ),
+				'show_on_cb'    => array( $this, 'show_offset' ),
 			),
-			'centered' => array(
-				'label'          => esc_html__( 'Centered', 'mesh' ),
-				'type'           => 'checkbox',
-				'css_classes'    => array( 'mesh-section-centered' ),
-				'show_on_cb'     => array( $this, 'show_centered' ),
-				'validation_cb'  => false,
+			'centered'   => array(
+				'label'         => esc_html__( 'Centered', 'mesh' ),
+				'type'          => 'checkbox',
+				'css_classes'   => array( 'mesh-section-centered' ),
+				'show_on_cb'    => array( $this, 'show_centered' ),
+				'validation_cb' => false,
 			),
-			'columns' => array(
-				'label'          => esc_html__( 'Width (In Columns)', 'mesh' ),
-				'type'           => 'dropdown',
-				'css_classes'    => array( 'mesh-block-columns', 'column-width' ),
-				'validation_cb'  => false,
-				'options_cb'     => array( $this, 'get_columns' ),
+			'columns'    => array(
+				'label'         => esc_html__( 'Width (In Columns)', 'mesh' ),
+				'type'          => 'dropdown',
+				'css_classes'   => array( 'mesh-block-columns', 'column-width' ),
+				'validation_cb' => false,
+				'options_cb'    => array( $this, 'get_columns' ),
 			),
 			'menu_order' => array(
-				'label'          => esc_html__( 'Menu Order', 'mesh' ),
-				'type'           => 'hidden',
-				'css_classes'    => array( 'block-menu-order' ),
-				'validation_cb'  => false,
+				'label'         => esc_html__( 'Menu Order', 'mesh' ),
+				'type'          => 'hidden',
+				'css_classes'   => array( 'block-menu-order' ),
+				'validation_cb' => false,
 			),
 		);
 

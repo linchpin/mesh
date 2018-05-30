@@ -35,14 +35,14 @@ class Mesh_Input {
 	 *
 	 * @param string $type
 	 * @param array  $args  The arguments/customizations passed to the input
-	 * @param mixed  $value The value passed to the input
+	 * @param mixed  $input_value The value passed to the input
 	 * @param bool   $echo  Echo instead of returning
 	 * @param array  $section Current section/block
 	 * @param array  $blocks Array of child blocks.
 	 *
 	 * @return mixed
 	 */
-	public static function get_input( $type = 'text', $args, $value = '', $echo = true, $section = array(), $blocks = array() ) {
+	public static function get_input( $type = 'text', $args, $input_value = '', $echo = true, $section = array(), $blocks = array() ) {
 
 		// Make sure our input type is valid before we do anything.
 		if ( ! in_array( $type, self::$input_types, true ) ) {
@@ -86,28 +86,28 @@ class Mesh_Input {
 			);
 		}
 
-		if ( empty( $value ) ) {
-			$value = get_post_meta( $args['block_id'], '_mesh_' . esc_attr( $args['post_meta_key'] ), true );
+		if ( empty( $input_value ) ) {
+			$input_value = get_post_meta( $args['block_id'], '_mesh_' . esc_attr( $args['post_meta_key'] ), true );
 		}
 
 		switch ( $type ) {
 			case 'checkbox':
-				self::get_input_checkbox( $args, $value, $echo );
+				self::get_input_checkbox( $args, $input_value, $echo );
 				break;
 			case 'select':
 			case 'dropdown':
-				self::get_input_select( $args, $value, $echo, $section, $blocks );
+				self::get_input_select( $args, $input_value, $echo, $section, $blocks );
 				break;
 			case 'media':
-				self::get_input_media( $args, $value, $echo );
+				self::get_input_media( $args, $input_value, $echo );
 				break;
 			case 'hidden':
-				self::get_input_hidden( $args, $value, $echo );
+				self::get_input_hidden( $args, $input_value, $echo );
 				break;
 			case 'input':
 			case 'text':
 			default:
-				self::get_input_text( $args, $value, $echo );
+				self::get_input_text( $args, $input_value, $echo );
 				break;
 		}
 	}
@@ -119,17 +119,17 @@ class Mesh_Input {
 	 * @since 1.2.5
 	 *
 	 * @param array $args
-	 * @param mixed $value
+	 * @param mixed $input_value
 	 * @param bool  $echo
 	 *
 	 * @return string
 	 */
-	public static function get_input_media( $args, $value = '', $echo = true ) {
+	public static function get_input_media( $args, $input_value = '', $echo = true ) {
 		ob_start();
 
 		$featured_image_id = get_post_thumbnail_id( intval( $args['block_id'] ) );
-		$background_class = 'mesh-section-background';
-		$background_class = ( ! empty( $featured_image_id ) ) ? $background_class . ' has-background-set' : $background_class;
+		$background_class  = 'mesh-section-background';
+		$background_class  = ( ! empty( $featured_image_id ) ) ? $background_class . ' has-background-set' : $background_class;
 		?>
 		<div class="mesh-section-background <?php echo esc_attr( $background_class ); ?> ">
 			<div class="choose-image">
@@ -158,7 +158,7 @@ class Mesh_Input {
 		if ( true === $echo ) {
 			// Clean whitespace before output to prevent jQuery ajax warnings.
 			echo trim( $output ); // WPCS: XSS ok, sanitization ok.
-			return;
+			return '';
 		}
 
 		return $output;
@@ -168,19 +168,16 @@ class Mesh_Input {
 	 * Hidden Input.
 	 *
 	 * @param array $args
-	 * @param mixed $value
+	 * @param mixed $input_value
 	 * @param bool  $echo
 	 *
 	 * @return mixed|null
 	 */
-	public static function get_input_hidden( $args, $value = '', $echo = true ) {
+	public static function get_input_hidden( $args, $input_value = '', $echo = true ) {
 		ob_start();
 		?>
 		<input type="hidden"
-			<?php esc_html( $args['input_id'] ); ?>
-			   name="<?php echo esc_attr( $args['input_name'] ); ?>"
-			   class="<?php echo esc_attr( implode( ' ', $args['input_css_classes'] ) ); ?>"
-			   value="<?php echo esc_attr( $value ); ?>" />
+			<?php esc_html( $args['input_id'] ); ?> name="<?php echo esc_attr( $args['input_name'] ); ?>" class="<?php echo esc_attr( implode( ' ', $args['input_css_classes'] ) ); ?>" value="<?php echo esc_attr( $input_value ); ?>" />
 		<?php
 
 		$output = ob_get_contents();
@@ -188,7 +185,7 @@ class Mesh_Input {
 		if ( true === $echo ) {
 			// Clean whitespace before output to prevent jQuery ajax warnings.
 			echo trim( $output ); // WPCS: XSS ok, sanitization ok.
-			return;
+			return '';
 		}
 
 		return $output;
@@ -196,19 +193,19 @@ class Mesh_Input {
 
 	/**
 	 * @param array $args
-	 * @param mixed $value
+	 * @param mixed $input_value
 	 * @param bool  $echo
 	 *
 	 * @return string
 	 */
-	public static function get_input_text( $args, $value = '', $echo = true ) {
+	public static function get_input_text( $args, $input_value = '', $echo = true ) {
 		ob_start();
 		?>
 		<input type="text"
 				<?php esc_html( $args['input_id'] ); ?>
 				name="<?php echo esc_attr( $args['input_name'] ); ?>"
 				class="<?php echo esc_attr( implode( ' ', $args['input_css_classes'] ) ); ?>"
-				value="<?php echo esc_attr( $value ); ?>" />
+				value="<?php echo esc_attr( $input_value ); ?>" />
 		<?php
 
 		$output = ob_get_contents();
@@ -216,7 +213,7 @@ class Mesh_Input {
 		if ( true === $echo ) {
 			// Clean whitespace before output to prevent jQuery ajax warnings.
 			echo trim( $output ); // WPCS: XSS ok, sanitization ok.
-			return;
+			return '';
 		}
 
 		return $output;
@@ -227,12 +224,12 @@ class Mesh_Input {
 	 * @since 1.2.5
 	 *
 	 * @param array $args
-	 * @param mixed $value
+	 * @param mixed $input_value
 	 * @param bool  $echo
 	 *
 	 * @return string
 	 */
-	public static function get_input_checkbox( $args, $value = 1, $echo = true ) {
+	public static function get_input_checkbox( $args, $input_value = 1, $echo = true ) {
 
 		ob_start();
 		?>
@@ -241,7 +238,7 @@ class Mesh_Input {
 			   name="<?php echo esc_attr( $args['input_name'] ); ?>"
 			   class="<?php echo esc_attr( implode( ' ', $args['input_css_classes'] ) ); ?>"
 			   value="1"
-				<?php checked( $value ); ?> />
+				<?php checked( $input_value ); ?> />
 		<?php
 
 		$output = ob_get_contents();
@@ -249,7 +246,7 @@ class Mesh_Input {
 		if ( true === $echo ) {
 			// Clean whitespace before output to prevent jQuery ajax warnings.
 			echo trim( $output ); // WPCS: XSS ok, sanitization ok.
-			return;
+			return '';
 		}
 
 		return $output;
@@ -266,7 +263,7 @@ class Mesh_Input {
 	 * @param array $section
 	 * @param array $blocks
 	 *
-	 * @return string|void
+	 * @return string|mixed
 	 */
 	public static function get_input_select( $args, $input_value, $echo = true, $section = array(), $blocks = array() ) {
 
@@ -296,11 +293,11 @@ class Mesh_Input {
 			/**
 			 * Build out our <option> inputs and set the current select value if we have one.
 			 */
-			foreach ( $options as $option_key => $value ) {
+			foreach ( $options as $option_key => $option_value ) {
 				printf( '<option value="%1$s" %2$s>%3$s</option>',
 					esc_attr( $option_key ),
 					selected( esc_attr( $input_value ), esc_attr( $option_key ), false ),
-					esc_attr( $value )
+					esc_attr( $option_value )
 				);
 			}
 			?>
@@ -311,7 +308,7 @@ class Mesh_Input {
 		ob_end_clean();
 		if ( true === $echo ) {
 			echo trim( $output ); // WPCS: XSS ok, sanitization ok.
-			return;
+			return '';
 		}
 
 		return $output;

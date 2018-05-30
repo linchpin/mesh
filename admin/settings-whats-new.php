@@ -31,7 +31,7 @@ $safe_content = array(
 			<div class="gray-bg negative-bg versioninfo">
 				<div class="wrapper">
 					<h2 class="light-weight">
-						<?php printf( 'Mesh Version %s <span class="green-pipe">|</span> Released %s', esc_html( get_option( 'mesh_version' ) ), esc_html__( 'May 25th, 2018', 'mesh' ) ); ?></h2>
+						<?php printf( 'Mesh Version %s <span class="green-pipe">|</span> Released %s', esc_html( get_option( 'mesh_version' ) ), esc_html__( 'May 30th, 2018', 'mesh' ) ); ?></h2>
 				</div>
 			</div>
 			<div class="wrapper">

@@ -26,10 +26,7 @@ class Mesh_Install {
 			return;
 		}
 
-		if ( get_option( 'mesh_settings' ) === false ) {
-			add_action( 'mesh_activate', array( $this, 'setup_first_install' ) );
-		}
-
+		add_action( 'mesh_activate', array( $this, 'setup_activation' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ) );
 		add_action( 'admin_init', array( $this, 'show_welcome' ) );
 	}
@@ -37,7 +34,7 @@ class Mesh_Install {
 	/**
 	 * Enqueue our notifications, but really enqueue everything
 	 */
-	function admin_enqueue_scripts() {
+	public function admin_enqueue_scripts() {
 		wp_enqueue_script( 'admin-mesh-notifications', plugins_url( 'assets/js/admin-mesh-notifications.js', __FILE__ ), array(), LINCHPIN_MESH_VERSION, true );
 
 		wp_localize_script( 'admin-mesh-notifications', 'mesh_notifications', array(
@@ -51,7 +48,7 @@ class Mesh_Install {
 	 *
 	 * @since 1.2
 	 */
-	function show_welcome() {
+	public function show_welcome() {
 
 		if ( is_admin() && 1 === intval( get_option( 'mesh_activation' ) ) ) {
 
@@ -59,7 +56,7 @@ class Mesh_Install {
 
 			$mesh_section_count = wp_count_posts( 'mesh_section' );
 
-			$mesh_sections = $mesh_section_count->publish + $mesh_section_count->draft + $mesh_section_count->trash + $mesh_section_count->auto_draft;
+			$mesh_sections = $mesh_section_count->publish + $mesh_section_count->draft + $mesh_section_count->trash + $mesh_section_count->{'auto-draft'};
 
 			// Send new users to the welcome so they learn how to use mesh.
 			if ( ! isset( $_GET['activate-multi'] ) && 0 === $mesh_sections ) { // WPCS: CSRF ok, input var okay.
@@ -86,14 +83,19 @@ class Mesh_Install {
 	}
 
 	/**
-	 * Sets the options on first install for showing the installation notice
+	 * Sets install date. If the user doesn't have a date it sets it
+	 * on install and activation.
+	 *
+	 * @since 1.2.5
 	 */
-	public function setup_first_install() {
+	public function setup_activation() {
 
 		$options = get_option( 'mesh_settings' );
-		$options['first_activated_on'] = time();
 
-		update_option( 'mesh_settings', $options );
+		if ( empty( $options['first_activated_on'] ) ) {
+			$options['first_activated_on'] = time();
+			update_option( 'mesh_settings', $options );
+		}
 	}
 }
 

@@ -42,6 +42,9 @@ mesh.blocks = function ($) {
 					$(this).closest('.block').addClass('ui-hover-state');
 				}).on('mouseleave', '.the-mover', function() {
 					$(this).closest('.block').removeClass('ui-hover-state');
+				})
+				.on('change', '.mesh-block-columns.column-width', function( event ) {
+					self.change_block_widths( event );
 				});
 
 			self.setup_resize_slider();
@@ -255,7 +258,6 @@ mesh.blocks = function ($) {
 						change: function( event, ui ) {
 							var $tgt     = $(event.target),
 								$columns = $tgt.parents('.mesh-section').find('.mesh-editor-blocks').find('.mesh-row:first .columns');
-
 							self.rerender_blocks($columns.find('.wp-editor-area'));
                         }
 					};

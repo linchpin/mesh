@@ -333,7 +333,6 @@ class Mesh {
 
 		$content_sections   = mesh_get_sections( $post->ID, 'array', array( 'publish', 'draft' ) );
 		$mesh_notifications = get_user_option( 'linchpin_mesh_notifications', get_current_user_id() );
-		$mesh_templates     = mesh_get_templates();
 		?>
 		<div id="mesh-container" class="<?php echo esc_attr( $post->post_type ); ?>">
 			<?php wp_nonce_field( 'mesh_content_sections_nonce', 'mesh_content_sections_nonce' ); ?>
@@ -390,7 +389,7 @@ class Mesh {
 	 *
 	 * @return void
 	 */
-	function save_post( $post_id, $post ) {
+	public function save_post( $post_id, $post ) {
 		// Skip revisions and autosaves.
 		if ( wp_is_post_revision( $post_id ) || ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) ) {
 			return;
@@ -769,7 +768,7 @@ class Mesh {
 	 *
 	 * @param int $post_id ID of the Post to trash.
 	 */
-	function wp_trash_post( $post_id ) {
+	public function wp_trash_post( $post_id ) {
 		$post_to_trash = get_post( $post_id );
 
 		$supported_post_types = get_option( 'mesh_post_types', array() );
@@ -801,7 +800,7 @@ class Mesh {
 	 *
 	 * @param int $post_id ID of the post to be deleted.
 	 */
-	function before_delete_post( $post_id ) {
+	public function before_delete_post( $post_id ) {
 		$post_to_delete = get_post( $post_id );
 
 		$supported_post_types = get_option( 'mesh_post_types', array() );
@@ -834,7 +833,7 @@ class Mesh {
 	 *
 	 * @param int $post_id The trashed Post's ID.
 	 */
-	function untrash_post( $post_id ) {
+	public function untrash_post( $post_id ) {
 		$trashed_post = get_post( $post_id );
 
 		$supported_post_types = get_option( 'mesh_post_types', array() );
@@ -869,7 +868,7 @@ class Mesh {
 	 *
 	 * @return string Return the content that has been filtered.
 	 */
-	function the_content( $content ) {
+	public function the_content( $content ) {
 		$pos = strpos( $content, '<div id="mesh-section-content">' );
 
 		if ( false !== $pos ) {
@@ -888,7 +887,7 @@ class Mesh {
 	 *
 	 * @return array
 	 */
-	function post_class( $classes ) {
+	public function post_class( $classes ) {
 
 		$custom_class = get_post_meta( get_the_ID(), '_mesh_css_class', true );
 
@@ -908,7 +907,7 @@ class Mesh {
 	 *
 	 * @param object $wp_query WordPress Query Object.
 	 */
-	function loop_end( $wp_query ) {
+	public function loop_end( $wp_query ) {
 		if ( ! $wp_query->is_main_query() ) {
 			return;
 		}
@@ -933,7 +932,7 @@ class Mesh {
 	 * @access public
 	 * @return void
 	 */
-	function admin_enqueue_scripts() {
+	public function admin_enqueue_scripts() {
 		global $current_screen, $post;
 
 		$mesh_screens = array( 'post', 'edit', 'settings_page_mesh' );
@@ -1008,7 +1007,7 @@ class Mesh {
 	 * @access public
 	 * @return void
 	 */
-	function admin_enqueue_styles() {
+	public function admin_enqueue_styles() {
 		wp_enqueue_style( 'admin-mesh', plugins_url( 'assets/css/admin-mesh.css', __FILE__ ), array(), LINCHPIN_MESH_VERSION );
 	}
 
@@ -1018,7 +1017,7 @@ class Mesh {
 	 * @access public
 	 * @return void
 	 */
-	function wp_enqueue_scripts() {
+	public function wp_enqueue_scripts() {
 
 		if ( ! empty( $mesh_options['css_mode'] ) ) {
 			$css_mode = intval( $mesh_options['css_mode'] );
