@@ -32,7 +32,7 @@ class Mesh_Templates {
 	/**
 	 * Mesh_Templates constructor.
 	 */
-	function __construct() {
+	public function __construct() {
 		add_action( 'init', array( $this, 'init' ) );
 		add_action( 'save_post', array( $this, 'save_post' ), 20, 2 ); // This saving should happen later to make sure our data is available.
 
@@ -174,7 +174,7 @@ class Mesh_Templates {
 	 *
 	 * @return void
 	 */
-	function save_post( $post_id, $post ) {
+	public function save_post( $post_id, $post ) {
 
 		// Skip revisions and autosaves.
 		if ( wp_is_post_revision( $post_id ) || ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) ) {
@@ -201,15 +201,11 @@ class Mesh_Templates {
 		remove_action( 'save_post', array( $this, 'save_post' ), 10 );
 
 		if ( ( defined( 'DOING_AJAX' ) && DOING_AJAX ) ) {
-			$mesh_layout_post_meta = get_post_meta( $post_id, '_mesh_template_layout', true );
-
-			$single_mesh_section = (array) wp_unslash( $_POST['mesh-sections'] ); // WPCS: input var okay, sanitization ok.
-
+			$mesh_layout_post_meta  = get_post_meta( $post_id, '_mesh_template_layout', true );
+			$single_mesh_section    = (array) wp_unslash( $_POST['mesh-sections'] ); // WPCS: input var okay, sanitization ok.
 			$first_mesh_section_key = key( $single_mesh_section );
-			$single_mesh_section = array_shift( wp_unslash( $_POST['mesh-sections'] ) ); // WPCS: input var okay. sanitization ok.
-
-			$mesh_layout_preview = $this->update_template_single_section_preview( $first_mesh_section_key, $mesh_layout_post_meta, $single_mesh_section );
-
+			$single_mesh_section    = array_shift( wp_unslash( $_POST['mesh-sections'] ) ); // WPCS: input var okay. sanitization ok.
+			$mesh_layout_preview    = $this->update_template_single_section_preview( $first_mesh_section_key, $mesh_layout_post_meta, $single_mesh_section );
 		} else {
 			$mesh_layout_preview = $this->create_template_preview( wp_unslash( $_POST['mesh-sections'] ) ); // WPCS: input var okay, sanitization ok.
 		}
@@ -240,7 +236,7 @@ class Mesh_Templates {
 	 * @param object $section_data     Single object of our new build.
 	 * @return array
 	 */
-	function update_template_single_section_preview( $section_id, $mesh_layout_meta, $section_data ) {
+	public function update_template_single_section_preview( $section_id, $mesh_layout_meta, $section_data ) {
 
 		// Process the section's blocks.
 		$blocks = array();
@@ -258,12 +254,14 @@ class Mesh_Templates {
 				continue;
 			}
 
-			$offset = (int) $section_data['blocks'][ sanitize_title( $block_id ) ]['offset'];
-			$columns = (int) $section_data['blocks'][ sanitize_title( $block_id ) ]['columns'];
+			$offset   = (int) $section_data['blocks'][ intval( $block_id ) ]['offset'];
+			$columns  = (int) $section_data['blocks'][ intval( $block_id ) ]['column_width'];
+			$centered = (bool) $section_data['blocks'][ intval( $block_id ) ]['centered'];
 
 			$mesh_layout_meta[ sanitize_title( 'row-' . $section_id ) ]['blocks'][] = array(
-				'columns' => $columns - $offset,
-				'offset' => $offset,
+				'columns'  => $columns - $offset,
+				'offset'   => $offset,
+				'centered' => $centered,
 			);
 		}
 
@@ -280,9 +278,9 @@ class Mesh_Templates {
 	 * @since 1.1
 	 * @return array
 	 */
-	function create_template_preview( $sections ) {
-		$count = 0;
+	private function create_template_preview( $sections ) {
 
+		$count       = 0;
 		$mesh_layout = array();
 
 		foreach ( $sections as $section_id => $section_data ) {
@@ -316,12 +314,14 @@ class Mesh_Templates {
 					continue;
 				}
 
-				$offset = intval( $section_data['blocks'][ sanitize_title( $block_id ) ]['offset'] );
-				$columns = intval( $section_data['blocks'][ sanitize_title( $block_id ) ]['columns'] );
+				$offset   = intval( $section_data['blocks'][ sanitize_title( $block_id ) ]['offset'] );
+				$columns  = intval( $section_data['blocks'][ sanitize_title( $block_id ) ]['column_width'] );
+				$centered = boolval( $section_data['blocks'][ sanitize_title( $block_id ) ]['centered'] );
 
 				$mesh_layout[ sanitize_title( 'row-' . $section_id ) ]['blocks'][] = array(
-					'columns' => $columns - $offset,
-					'offset' => $offset,
+					'columns'  => $columns - $offset,
+					'offset'   => $offset,
+					'centered' => $centered,
 				);
 			}
 		}
@@ -330,14 +330,14 @@ class Mesh_Templates {
 	}
 
 	/**
-	 * Add Layout Column Title and also reorder out columns
+	 * Add Layout Column Title and also reorder our columns
 	 *
 	 * @since 1.1
 	 * @param int $columns The columns in the admin to iterate through.
 	 *
 	 * @return mixed
 	 */
-	function add_layout_columns( $columns ) {
+	public function add_layout_columns( $columns ) {
 
 		foreach ( $columns as $key => $title ) {
 
@@ -351,11 +351,11 @@ class Mesh_Templates {
 				$date = $columns['date'];
 
 				unset( $columns['date'] );
-				$columns['layout'] = esc_html__( 'Layout', 'mesh' );
-				$columns['title']  = $title;
-				$columns['mesh_template_uses'] = 'Uses';
+				$columns['layout']                       = esc_html__( 'Layout', 'mesh' );
+				$columns['title']                        = $title;
+				$columns['mesh_template_uses']           = 'Uses';
 				$columns['taxonomy-mesh_template_usage'] = 'Template';
-				$columns['date'] = $date;
+				$columns['date']                         = $date;
 
 				break;
 			}
@@ -370,7 +370,7 @@ class Mesh_Templates {
 	 * @param string $column  Column Name.
 	 * @param int    $post_id Post ID.
 	 */
-	function add_layout_column( $column, $post_id ) {
+	public function add_layout_column( $column, $post_id ) {
 
 		switch ( $column ) {
 			case 'mesh_template_uses':

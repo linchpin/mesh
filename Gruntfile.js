@@ -108,6 +108,7 @@ module.exports = function (grunt) {
 			main: {
 				files: [
 					{expand: true, src: ['admin/**'], dest: 'build/mesh/trunk/'},
+                    {expand: true, src: ['includes/**'], dest: 'build/mesh/trunk/'},
 					{expand: true, src: ['assets/**', '!assets/scss/**'], dest: 'build/mesh/trunk/'},
 					{expand: true, src: ['lib/**'], dest: 'build/mesh/trunk/'},
 					{expand: true, src: ['templates/**'], dest: 'build/mesh/trunk/'},

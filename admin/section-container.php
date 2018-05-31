@@ -20,7 +20,8 @@ if ( empty( $closed_metaboxes ) ) {
 }
 
 $mesh_notifications = get_user_option( 'linchpin_mesh_notifications' );
-$closed = '';
+$closed             = '';
+
 if ( in_array( 'mesh-section-' . esc_attr( $section->ID ), $closed_metaboxes, true ) ) {
 	$closed = ' closed';
 }
@@ -43,7 +44,7 @@ if ( in_array( 'mesh-section-' . esc_attr( $section->ID ), $closed_metaboxes, tr
 						<option value="publish" <?php selected( $section->post_status, 'publish' ); ?>><?php esc_html_e( 'Published', 'mesh' ); ?></option>
 					</select>
 					<span class="close-title-edit right"><?php esc_html_e( 'Done', 'mesh' ); ?></span>
-					<span class="handle-title mesh-section-status-text"><?php echo esc_html( 'publish' === $section->post_status ? __( 'Status: Published', 'mesh' ) : __( 'Status: Draft', 'mesh' ) ); ?></span>
+					<span class="handle-title mesh-section-status-text"><?php echo esc_html( 'publish' === $section->post_status ? esc_html__( 'Status: Published', 'mesh' ) : esc_html__( 'Status: Draft', 'mesh' ) ); ?></span>
 				</div>
 			</div>
 		</div>
@@ -51,6 +52,6 @@ if ( in_array( 'mesh-section-' . esc_attr( $section->ID ), $closed_metaboxes, tr
 	<span class="handlediv text-center"></span>
 	<div class="inside">
 		<?php $blocks = mesh_maybe_create_section_blocks( $section, $block_count ); ?>
-		<?php include LINCHPIN_MESH___PLUGIN_DIR . 'admin/section-inside.php'; ?>
+		<?php require LINCHPIN_MESH___PLUGIN_DIR . 'admin/section-inside.php'; ?>
 	</div>
 </div>

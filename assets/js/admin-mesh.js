@@ -300,7 +300,16 @@ mesh.blocks = function ($) {
 				.on('blur', '.mesh-clean-edit-element:not(select)', self.hide_field)
 				.on('click', '.close-title-edit', self.hide_field)
 				.on('click', '.slide-toggle-element', self.slide_toggle_element)
-				.on('change', '.mesh-column-offset', self.display_offset);
+				.on('change', '.mesh-column-offset', self.display_offset)
+				.on('change', 'input.mesh-section-centered', self.display_centered)
+				.on('mouseenter', '.the-mover', function() {
+					$(this).closest('.block').addClass('ui-hover-state');
+				}).on('mouseleave', '.the-mover', function() {
+					$(this).closest('.block').removeClass('ui-hover-state');
+				})
+				.on('change', '.mesh-block-columns.column-width', function( event ) {
+					self.change_block_widths( event );
+				});
 
 			self.setup_resize_slider();
 			self.setup_sortable();
@@ -314,7 +323,7 @@ mesh.blocks = function ($) {
 		setup_sortable: function () {
 			var column_order = [];
 
-			$('.mesh-editor-blocks .mesh-row').sortable({
+			$('.mesh-editor-blocks > .mesh-row[data-section-blocks]').sortable({
 				// OPTIONS
 				axis: 'x',
 				cursor: 'move',
@@ -337,7 +346,7 @@ mesh.blocks = function ($) {
 					$column_slider.fadeOut('fast');
 
 					$('.mesh-section-block:not(.ui-sortable-placeholder)', this).each(function () {
-						column_order.push($(this).attr('class'));
+						column_order.push( $(this).attr('class') );
 					});
 				},
 
@@ -377,15 +386,22 @@ mesh.blocks = function ($) {
 		 * @param ui
 		 * @since 1.0.0
 		 */
-		change_block_widths: function (event, ui) {
-			var $tgt = $(event.target),
-				$columns = $tgt.parent().parent().parent().find('.mesh-editor-blocks').find('.mesh-row:first .columns').addClass('dragging'),
+		change_block_widths: function ( event, ui ) {
+
+            var $tgt = $(event.target);
+
+			if ( typeof( ui ) === 'undefined' ) {
+				ui = {};
+				ui.values = [ parseInt( $tgt.val() ) ];
+			}
+
+			var $columns = $tgt.parents('.mesh-section').find('.mesh-editor-blocks').find('.mesh-row:first .columns').addClass('dragging'),
 				column_length = $columns.length,
-				column_total = 12,
+				column_total = parseInt( mesh_data.max_columns ),
 				column_values = [],
 				slider_values = ui.values,
 				post_data = {
-					post_id: parseInt(mesh_data.post_id),
+					post_id: parseInt( mesh_data.post_id ),
 					section_id: parseInt($tgt.closest('.mesh-section').attr('data-mesh-section-id')),
 					blocks: {}
 				};
@@ -395,8 +411,8 @@ mesh.blocks = function ($) {
 			// -> col 1 = val1 = 3
 			// -> col 2 = (val2 - val1) = (9 - 3) = 6
 			// -> col 3 = (avail - val2) = (12 - 9) = 3
-			if (3 == column_length) {
-				for (var i = 0; i <= column_length; i++) {
+			if ( 3 === column_length ) {
+				for ( var i = 0; i <= column_length; i++ ) {
 					switch (i) {
 						case 0:
 							column_values.push(slider_values[i]);
@@ -417,9 +433,13 @@ mesh.blocks = function ($) {
 			// If returned value is [4]
 			// -> col 1 = val1 = 4
 			// -> col 2 = (avail - val1) = (12 - 4) = 8
-			if (2 == column_length) {
-				column_values.push(slider_values[0]);
-				column_values.push(column_total - slider_values[0]);
+			if ( 2 === column_length ) {
+				column_values.push( slider_values[0] );
+				column_values.push( column_total - slider_values[0] );
+			}
+
+			if ( 1 === column_length ) {
+				column_values.push( $tgt.val() );
 			}
 
 			// Custom class removal based on regex pattern
@@ -437,7 +457,7 @@ mesh.blocks = function ($) {
 				$offset_select.children('option').remove();
 
 				for (var i = 0; i <= max_offset; i++) {
-					$offset_select.append($('<option></option>').attr('value', i).text(i));
+					$offset_select.append( $('<option></option>').attr('value', i).text(i) );
 				}
 
 				if (selected_offset > max_offset) {
@@ -449,20 +469,19 @@ mesh.blocks = function ($) {
 				// Reset column width classes and save post data
 				$this.addClass('mesh-columns-' + column_value);
 
-				if (block_id && column_values[index]) {
+				if ( block_id && column_values[index] ) {
 					$column_input.val(column_value);
-					post_data.blocks[block_id.toString()] = column_value;
+					post_data.blocks[ block_id.toString() ] = column_value;
 				}
 			});
-
-
-			self.rerender_blocks($columns.find('.wp-editor-area'));
 		},
 
 		/**
 		 * Setup Resize Slider
 		 */
 		setup_resize_slider: function () {
+
+			var column_spacing = [];
 
 			$('.column-slider').addClass('ui-slider-horizontal').each(function () {
 				var $this = $(this),
@@ -472,18 +491,39 @@ mesh.blocks = function ($) {
 					data = {
 						range: is_range,
 						min: 0,
-						max: 12,
+						max: parseInt( mesh_data.max_columns ),
 						step: 1,
 						left: 3,
 						right: 9,
 						gap: 3,
-						start: function () {
+						create : function() {
+							var $handle = $('.ui-slider-handle');
+
+							$handle.find('.inner-border').remove();
+                            $handle.append( $('<span class="inner-border" />' ) );
+						},
+						start: function ( event, ui ) {
 							$this.css('z-index', 1000);
+							var $tgt     = $(event.target),
+                                $columns = $tgt.parents('.mesh-section').find('.mesh-editor-blocks').find('.mesh-row:first .columns');
+
+                            $columns.each( function() {
+                                var $btns = $(this).find('.mce-first.mce-btn-group .mce-btn[role="button"]');
+                              		$btns.hide();
+
+                              		$($btns[0]).css('visibility', 'hidden').show();
+							});
 						},
-						stop: function () {
+						stop: function (event, ui) {
 							$this.css('z-index', '').find('.ui-slider-handle').css('z-index', 1000);
+							self.notify_user(event, ui);
 						},
-						slide: self.change_block_widths
+						slide: self.change_block_widths,
+						change: function( event, ui ) {
+							var $tgt     = $(event.target),
+								$columns = $tgt.parents('.mesh-section').find('.mesh-editor-blocks').find('.mesh-row:first .columns');
+							self.rerender_blocks($columns.find('.wp-editor-area'));
+                        }
 					};
 
 				if (vals) {
@@ -501,6 +541,17 @@ mesh.blocks = function ($) {
 			});
 		},
 
+        /**
+		 * Notify the user on some ui changes
+		 *
+         * @param event
+         * @param ui
+         */
+		notify_user : function( event, ui ) {
+            var $tgt = $(event.target),
+            	$columns = $tgt.parents('.mesh-section').find('.mesh-editor-blocks').find('.mesh-row:first .columns').removeClass('dragging');
+        },
+
 		/**
 		 * Render Block after reorder or change.
 		 *
@@ -508,68 +559,39 @@ mesh.blocks = function ($) {
 		 *
 		 * @param $tinymce_editors
 		 */
-		rerender_blocks: function ($tinymce_editors) {
+		rerender_blocks: function ( $tinymce_editors ) {
 
 			$tinymce_editors.each(function () {
 				var editor_id = $(this).prop('id'),
-					proto_id,
-					mce_options = [],
+                    proto_id = 'content',
+					$block = $(this).closest('.mesh-section-block'),
+					mce_options = $.extend( true, {}, mesh_data.tinymce_options ), // get our localized options
+					column_width,
 					qt_options = [];
 
-				if (typeof tinymce !== 'undefined') {
+				column_width = $block.find('.mesh-block-columns').val();
+
+				if ( column_width <= 4 ) {
+					$block.addClass('mesh-small-block');
+                    mce_options.toolbar1 = mesh_data.tinymce_options.small_toolbar1;
+                    mce_options.toolbar2 = mesh_data.tinymce_options.small_toolbar2;
+				} else {
+                    $block.removeClass('mesh-small-block');
+				}
+
+                if ( typeof tinymce !== 'undefined' ) {
 
 					// Reset our editors if we have any
 					if (parseInt(tinymce.majorVersion) >= 4) {
-						tinymce.execCommand('mceRemoveEditor', false, editor_id);
+						tinymce.execCommand( 'mceRemoveEditor', false, editor_id );
 					}
 
 					var $block_content = $(this).closest('.block-content');
 
-					/**
-					 * Props to @danielbachuber for a shove in the right direction to have movable editors in the
-					 * wp-admin
-					 *
-					 * https://github.com/alleyinteractive/wordpress-fieldmanager/blob/master/js/richtext.js#L58-L95
-					 */
-					if (typeof tinyMCEPreInit.mceInit[editor_id] === 'undefined') {
-						proto_id = 'content';
-
-						// Clean up the proto id which appears in some of the wp_editor generated HTML
-
-						var block_html = $(this).closest('.block-content').html();
-
-						block_html = block_html.replace(new RegExp('id="' + proto_id + '"', 'g'), 'id="' + editor_id + '"');
-
-						$block_content.html(block_html);
-
-
-						// This needs to be initialized, so we need to get the options from the proto
-						if (proto_id && typeof tinyMCEPreInit.mceInit[proto_id] !== 'undefined') {
-							mce_options = $.extend(true, {}, tinyMCEPreInit.mceInit[proto_id]);
-							mce_options.body_class = mce_options.body_class.replace(proto_id, editor_id);
-							mce_options.selector = mce_options.selector.replace(proto_id, editor_id);
-							mce_options.wp_skip_init = false;
-							mce_options.plugins = 'lists,media,paste,tabfocus,wordpress,wpautoresize,wpeditimage,wpgallery,wplink,wptextpattern,wpview';
-							mce_options.block_formats = 'Paragraph=p; Heading 3=h3; Heading 4=h4';
-							mce_options.toolbar1 = 'bold,italic,bullist,numlist,hr,alignleft,aligncenter,alignright,alignjustify,link,wp_adv ';
-							mce_options.toolbar2 = 'formatselect,underline,strikethrough,forecolor,pastetext,removeformat ';
-							mce_options.toolbar3 = '';
-							mce_options.toolbar4 = '';
-
-							tinyMCEPreInit.mceInit[editor_id] = mce_options;
-						} else {
-							// TODO: No data to work with, this should throw some sort of error
-							return;
-						}
-					}
+					self.create_editor( editor_id, mce_options, $block_content );
 
 					try {
-						if ('html' !== mesh.blocks.mode_enabled(this)) {
-
-							if (parseInt(tinymce.majorVersion) >= 4) {
-								tinymce.execCommand('mceRemoveEditor', false, editor_id);
-							}
-
+						if ('html' !== mesh.blocks.mode_enabled(this) ) {
 							$(this).closest('.wp-editor-wrap').on('click.wp-editor', function () {
 								if (this.id) {
 									window.wpActiveEditor = this.id.slice(3, -5);
@@ -582,11 +604,9 @@ mesh.blocks = function ($) {
 
 					try {
 
-						proto_id = 'content';
+						if ( proto_id && typeof tinyMCEPreInit.qtInit[proto_id] !== 'undefined' ) {
 
-						if (proto_id && typeof tinyMCEPreInit.qtInit[proto_id] !== 'undefined') {
-							qt_options = $.extend(true, {}, tinyMCEPreInit.qtInit[proto_id]);
-
+							qt_options = tinyMCEPreInit.qtInit[proto_id];
 							qt_options.id = qt_options.id.replace(proto_id, editor_id);
 
 							tinyMCEPreInit.qtInit[editor_id] = qt_options;
@@ -612,18 +632,20 @@ mesh.blocks = function ($) {
 					 * Cache
 					 */
 					if (typeof tinymce !== 'undefined') {
+
 						var editor = tinymce.get(editor_id),
 							cached_block_content = self.get_block_cache(editor_id);
 
 						// Make sure we have an editor and we have cache for it.
 						// Once the cache is
-						if (editor && !editor.hidden) {
-							if (cached_block_content) {
+						if ( editor && ! editor.hidden ) {
+
+							if ( cached_block_content ) {
 								editor.setContent(cached_block_content);
 								self.delete_block_cache(editor_id);
 							}
 						} else {
-							if(cached_block_content) {
+							if( cached_block_content ) {
 								editor.val(cached_block_content);
 							}
 						}
@@ -631,7 +653,7 @@ mesh.blocks = function ($) {
 				}
 			});
 
-			if (typeof mesh.integrations.yoast != 'undefined') {
+			if (typeof mesh.integrations.yoast !== 'undefined') {
 				mesh.integrations.yoast.addMeshSections();
 			}
 		},
@@ -671,7 +693,8 @@ mesh.blocks = function ($) {
 				$section = $button.parents('.block'),
 				section_id = parseInt($section.attr('data-mesh-block-id')),
 				frame_id = 'mesh-background-select-' + section_id,
-				current_image = $button.attr('data-mesh-block-featured-image');
+				current_image = $button.attr('data-mesh-block-featured-image'),
+                $parent_container = $button.parents('.mesh-section-background');
 
 			admin.media_frames = admin.media_frames || [];
 
@@ -726,6 +749,8 @@ mesh.blocks = function ($) {
 							.html('<img src="' + media_attachment.url + '" />')
 							.attr('data-mesh-block-featured-image', parseInt(media_attachment.id))
 							.after($trash);
+
+                        $parent_container.addClass('has-background-set');
 					}
 				});
 			});
@@ -734,34 +759,39 @@ mesh.blocks = function ($) {
 			admin.media_frames[frame_id].open();
 		},
 
-		/**
-		 * Remove selected background from our block
-		 *
-		 * @since 0.3.6
-		 *
-		 * @param event
+        /**
+         * Remove selected background from our block
+         *
+         * @since 0.3.6
+         *
+         * @param event
 		 */
-		remove_background: function (event) {
+		remove_background : function ( event ) {
 
-			event.preventDefault();
-			event.stopPropagation();
+            event.preventDefault();
+            event.stopPropagation();
 
-			var $button = $(this),
-				$section = $button.parents('.block'),
-				section_id = parseInt($section.attr('data-mesh-block-id'));
+            var $button = $(this);
 
-			$.post(ajaxurl, {
-				'action': 'mesh_update_featured_image',
-				'mesh_section_id': parseInt(section_id),
-				'mesh_featured_image_nonce': mesh_data.featured_image_nonce
-			}, function (response) {
-				if (response != -1) {
-					$button.prev().text(mesh_data.strings.add_image);
-					$button.remove();
-				}
-			});
+            if ($button.prev().hasClass('right') && !$button.prev().hasClass('button')) {
+                if (!$button.parents('.block-background-container')) {
+                    $button.prev().toggleClass('button right');
+                } else {
+                    $button.prev().toggleClass('right').attr('data-mesh-block-featured-image', '');
+                }
+            }
+
+            $button.siblings('input[type="hidden"]').val('');
+
+            $button.prev().text(mesh_data.strings.add_image);
+            $button.remove();
 		},
 
+        /**
+         * Show input field
+         *
+         * @param event
+         */
 		show_field: function (event) {
 			event.preventDefault();
 			event.stopPropagation();
@@ -775,6 +805,11 @@ mesh.blocks = function ($) {
 			$(this).addClass('title-input-visible');
 		},
 
+        /**
+         * Hide input field
+         *
+         * @param event
+         */
 		hide_field: function (event) {
 			event.preventDefault();
 			event.stopPropagation();
@@ -782,6 +817,11 @@ mesh.blocks = function ($) {
 			$(this).parent().removeClass('title-input-visible');
 		},
 
+        /**
+         * Toggle Slide click
+         *
+         * @param event
+         */
 		slide_toggle_element: function (event) {
 			event.preventDefault();
 			event.stopPropagation();
@@ -793,13 +833,18 @@ mesh.blocks = function ($) {
 			$this.toggleClass('toggled');
 		},
 
+        /**
+         *
+         * @param event
+         */
 		display_offset: function (event) {
-			var offset = $(this).val(),
-				$block = $(this).parents('.block-header').next('.block-content');
+			var $this  = $(this),
+                offset = parseInt( $this.val() ),
+				$block = $this.parents('.block-header').next('.block-content');
 
 			$block.removeClass('mesh-has-offset mesh-offset-1 mesh-offset-2 mesh-offset-3 mesh-offset-4 mesh-offset-5 mesh-offset-6 mesh-offset-7 mesh-offset-8 mesh-offset-9');
 
-			if (parseInt(offset)) {
+			if ( offset ) {
 				$block.addClass('mesh-has-offset mesh-offset-' + offset);
 			}
 		},
@@ -855,11 +900,11 @@ mesh.blocks = function ($) {
 
 					$swap_clone.css({'top': '', 'left': ''});
 
-					$this.append($swap_clone);
-					$swap_parent.append($tgt_clone);
+					$this.append( $swap_clone );
+					$swap_parent.append( $tgt_clone );
 
-					self.rerender_blocks($section.find('.wp-editor-area'));
-					self.save_order(section_id, event, ui);
+					self.rerender_blocks( $section.find('.wp-editor-area') );
+					self.save_order( section_id, event, ui );
 					self.setup_drag_drop();
 
 					return false;
@@ -886,31 +931,21 @@ mesh.blocks = function ($) {
 			return true;
 		},
 
-		/**
-		 * Get block cached content
-		 *
-		 * @since 1.2
-		 * @param block_id
-		 * @return string
-		 */
-		get_block_cache: function (block_id) {
+        /**
+         * Get block cached content
+         *
+         * @since 1.2
+         * @param block_id
+         * @return string
+         */
+        get_block_cache: function (block_id) {
 
-			if (block_cache[block_id]) {
-				return block_cache[block_id]; // get the block ID from the local cache.
-			}
+            if (block_cache[block_id]) {
+                return block_cache[block_id]; // get the block ID from the local cache.
+            }
 
-			return ''; // cached content for the block.
-		},
-
-		/**
-		 * Get all the editors within a container/section.
-		 *
-		 * @since 1.2
-		 * @param object $container
-		 */
-		get_tinymce_editors: function ($container) {
-			return $container.find('.wp-editor-area');
-		},
+            return ''; // cached content for the block.
+        },
 
 		/**
 		 * Delete specific block cached content
@@ -923,7 +958,77 @@ mesh.blocks = function ($) {
 			if (block_cache[block_id]) {
 				delete block_cache[block_id];
 			}
-		}
+		},
+
+        /**
+         * Get all the editors within a container/section.
+         *
+         * @since 1.2
+         *
+         * @param $container
+         * @return {*}
+         */
+        get_tinymce_editors: function ($container) {
+            return $container.find('.wp-editor-area');
+        },
+
+        /**
+		 * Create an editor within our block.
+         *
+         * Props to @danielbachuber for a shove in the right direction to have movable editors in the
+         * wp-admin
+         *
+         * https://github.com/alleyinteractive/wordpress-fieldmanager/blob/master/js/richtext.js#L58-L95
+         *
+		 * @since 1.2.5
+         * @param editor_id
+         * @param mce_options
+         * @param $block_content
+         */
+		create_editor : function( editor_id, mce_options, $block_content ) {
+
+           	if ( typeof tinyMCEPreInit.mceInit[editor_id] === 'undefined' ) {
+
+                var proto_id = 'content',
+                    block_html = $block_content.html();
+
+                // Clean up the proto id which appears in some of the wp_editor generated HTML
+                block_html = block_html.replace(new RegExp('id="' + proto_id + '"', 'g'), 'id="' + editor_id + '"');
+
+                $block_content.html(block_html);
+
+                // This needs to be initialized, so we need to get the options from the proto
+                if ( proto_id && typeof tinyMCEPreInit.mceInit[proto_id] !== 'undefined') {
+
+                    mce_options = $.extend( true, {}, tinyMCEPreInit.mceInit[proto_id], mce_options );
+                    mce_options.body_class = mce_options.body_class.replace(proto_id, editor_id);
+                    mce_options.selector = mce_options.selector.replace(proto_id, editor_id);
+                }
+            } else {
+                mce_options = $.extend( true, {}, tinyMCEPreInit.mceInit[editor_id], mce_options );
+			}
+
+            tinyMCEPreInit.mceInit[editor_id] = mce_options;
+		},
+
+        /**
+         * Toggling block centering
+         *
+         * @since 1.2.5
+         * @param event
+         */
+        display_centered: function ( event ) {
+
+            var $tgt = $(this),
+                $section = $tgt.parents('.mesh-section-block'),
+                $center_class = 'mesh-block-centered';
+
+            if ( $tgt.is(':checked') ) {
+                $section.addClass( $center_class );
+            } else {
+                $section.removeClass( $center_class );
+            }
+        }
 	};
 
 }(jQuery);
@@ -1292,7 +1397,10 @@ mesh.admin = function ($) {
 				.on('change', 'select.mesh-clean-edit-element', self.change_select_title)
 
 				// @since 1.1.3
-				.on('change', '#mesh-css_mode', self.display_foundation_options);
+				.on('change', '#mesh-css_mode', self.display_foundation_options)
+
+				// @since 1.2.5
+        		.on('change', '#mesh-foundation_version', self.display_foundation_grid_options);
 
 			// @since 1.2
 
@@ -1323,7 +1431,7 @@ mesh.admin = function ($) {
 			self.setup_notifications($meta_box_container);
 
 			self.display_foundation_options();
-
+            self.display_foundation_grid_options();
 		},
 
 		/**
@@ -1765,7 +1873,7 @@ mesh.admin = function ($) {
 
 					var $publish_draft = $current_section.find('.mesh-section-publish, .mesh-section-save-draft');
 
-					if ('publish' == $post_status_field.val()) {
+					if ( 'publish' === $post_status_field.val() ) {
 						$button.removeClass('hidden');
 						$publish_draft.addClass('hidden');
 					} else {
@@ -2070,7 +2178,8 @@ mesh.admin = function ($) {
 			event.preventDefault();
 			event.stopPropagation();
 
-			var $button = $(this);
+			var $button = $(this),
+				$parent_container = $button.parents('.mesh-section-background');
 
 			if ($button.prev().hasClass('right') && !$button.prev().hasClass('button')) {
 				if (!$button.parents('.block-background-container')) {
@@ -2084,6 +2193,7 @@ mesh.admin = function ($) {
 
 			$button.prev().text(mesh_data.strings.add_image);
 			$button.remove();
+            $parent_container.removeClass('has-background-set');
 		},
 
 		/**
@@ -2099,7 +2209,8 @@ mesh.admin = function ($) {
 				$section = $button.parents('.mesh-postbox'),
 				section_id = parseInt($section.attr('data-mesh-section-id')),
 				frame_id = 'mesh-background-select-' + section_id,
-				current_image = $button.attr('data-mesh-section-featured-image');
+				current_image = $button.attr('data-mesh-section-featured-image'),
+				$parent_container = $button.parents('.mesh-section-background');
 
 			// If the frame already exists, re-open it.
 			if (media_frames[frame_id]) {
@@ -2150,6 +2261,8 @@ mesh.admin = function ($) {
 					.html($img)
 					.attr('data-mesh-section-featured-image', parseInt(media_attachment.id))
 					.after($trash);
+
+                $parent_container.addClass('has-background-set');
 
 				// Add selected attachment id to input
 				$button.siblings('input[type="hidden"]').val(media_attachment.id);
@@ -2291,14 +2404,39 @@ mesh.admin = function ($) {
 
 			var using_foundation = $('#mesh-css_mode').find('option:selected').val(),
 				$foundation_version = $('#mesh-foundation_version'),
-				$parent_row = $foundation_version.closest('tr');
+				$parent_row = $foundation_version.closest('tr'),
+                $foundation_grid_system = $('#mesh-grid_system'),
+                $foundation_grid_system_row = $foundation_grid_system.closest('tr');
 
 			if (parseInt(using_foundation) === 1) {
 				$parent_row.show();
 			} else {
 				$parent_row.hide();
+                $foundation_grid_system_row.hide();
+                $foundation_grid_system.val('');
 				$foundation_version.val('');
 			}
+		},
+
+        /**
+		 * Display our grid system options if we are using Foundation 6.4
+		 *
+		 * @since 1.2.5
+		 *
+         * @param event
+         */
+		display_foundation_grid_options: function(event) {
+            var using_foundation = $('#mesh-css_mode').find('option:selected').val(),
+                $foundation_version = $('#mesh-foundation_version'),
+				$foundation_grid_system = $('#mesh-grid_system'),
+            	$foundation_grid_system_row = $foundation_grid_system.closest('tr');
+
+            if ( parseInt( using_foundation ) === 1 && 6.4 === parseFloat( $foundation_version.val() ) ) {
+                $foundation_grid_system_row.show();
+            } else {
+                $foundation_grid_system_row.hide();
+                $foundation_grid_system.val('');
+            }
 		}
 	};
 }(jQuery);

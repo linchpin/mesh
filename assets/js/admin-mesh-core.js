@@ -74,7 +74,10 @@ mesh.admin = function ($) {
 				.on('change', 'select.mesh-clean-edit-element', self.change_select_title)
 
 				// @since 1.1.3
-				.on('change', '#mesh-css_mode', self.display_foundation_options);
+				.on('change', '#mesh-css_mode', self.display_foundation_options)
+
+				// @since 1.2.5
+        		.on('change', '#mesh-foundation_version', self.display_foundation_grid_options);
 
 			// @since 1.2
 
@@ -105,7 +108,7 @@ mesh.admin = function ($) {
 			self.setup_notifications($meta_box_container);
 
 			self.display_foundation_options();
-
+            self.display_foundation_grid_options();
 		},
 
 		/**
@@ -547,7 +550,7 @@ mesh.admin = function ($) {
 
 					var $publish_draft = $current_section.find('.mesh-section-publish, .mesh-section-save-draft');
 
-					if ('publish' == $post_status_field.val()) {
+					if ( 'publish' === $post_status_field.val() ) {
 						$button.removeClass('hidden');
 						$publish_draft.addClass('hidden');
 					} else {
@@ -852,7 +855,8 @@ mesh.admin = function ($) {
 			event.preventDefault();
 			event.stopPropagation();
 
-			var $button = $(this);
+			var $button = $(this),
+				$parent_container = $button.parents('.mesh-section-background');
 
 			if ($button.prev().hasClass('right') && !$button.prev().hasClass('button')) {
 				if (!$button.parents('.block-background-container')) {
@@ -866,6 +870,7 @@ mesh.admin = function ($) {
 
 			$button.prev().text(mesh_data.strings.add_image);
 			$button.remove();
+            $parent_container.removeClass('has-background-set');
 		},
 
 		/**
@@ -881,7 +886,8 @@ mesh.admin = function ($) {
 				$section = $button.parents('.mesh-postbox'),
 				section_id = parseInt($section.attr('data-mesh-section-id')),
 				frame_id = 'mesh-background-select-' + section_id,
-				current_image = $button.attr('data-mesh-section-featured-image');
+				current_image = $button.attr('data-mesh-section-featured-image'),
+				$parent_container = $button.parents('.mesh-section-background');
 
 			// If the frame already exists, re-open it.
 			if (media_frames[frame_id]) {
@@ -932,6 +938,8 @@ mesh.admin = function ($) {
 					.html($img)
 					.attr('data-mesh-section-featured-image', parseInt(media_attachment.id))
 					.after($trash);
+
+                $parent_container.addClass('has-background-set');
 
 				// Add selected attachment id to input
 				$button.siblings('input[type="hidden"]').val(media_attachment.id);
@@ -1073,14 +1081,39 @@ mesh.admin = function ($) {
 
 			var using_foundation = $('#mesh-css_mode').find('option:selected').val(),
 				$foundation_version = $('#mesh-foundation_version'),
-				$parent_row = $foundation_version.closest('tr');
+				$parent_row = $foundation_version.closest('tr'),
+                $foundation_grid_system = $('#mesh-grid_system'),
+                $foundation_grid_system_row = $foundation_grid_system.closest('tr');
 
 			if (parseInt(using_foundation) === 1) {
 				$parent_row.show();
 			} else {
 				$parent_row.hide();
+                $foundation_grid_system_row.hide();
+                $foundation_grid_system.val('');
 				$foundation_version.val('');
 			}
+		},
+
+        /**
+		 * Display our grid system options if we are using Foundation 6.4
+		 *
+		 * @since 1.2.5
+		 *
+         * @param event
+         */
+		display_foundation_grid_options: function(event) {
+            var using_foundation = $('#mesh-css_mode').find('option:selected').val(),
+                $foundation_version = $('#mesh-foundation_version'),
+				$foundation_grid_system = $('#mesh-grid_system'),
+            	$foundation_grid_system_row = $foundation_grid_system.closest('tr');
+
+            if ( parseInt( using_foundation ) === 1 && 6.4 === parseFloat( $foundation_version.val() ) ) {
+                $foundation_grid_system_row.show();
+            } else {
+                $foundation_grid_system_row.hide();
+                $foundation_grid_system.val('');
+            }
 		}
 	};
 }(jQuery);

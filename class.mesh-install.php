@@ -26,19 +26,15 @@ class Mesh_Install {
 			return;
 		}
 
-		if ( get_option( 'mesh_settings' ) === false ) {
-			add_action( 'mesh_activate', array( $this, 'setup_first_install' ) );
-		}
-
+		add_action( 'mesh_activate', array( $this, 'setup_activation' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ) );
-		add_action( 'admin_notices', array( $this, 'show_update_notice' ) );
 		add_action( 'admin_init', array( $this, 'show_welcome' ) );
 	}
 
 	/**
 	 * Enqueue our notifications, but really enqueue everything
 	 */
-	function admin_enqueue_scripts() {
+	public function admin_enqueue_scripts() {
 		wp_enqueue_script( 'admin-mesh-notifications', plugins_url( 'assets/js/admin-mesh-notifications.js', __FILE__ ), array(), LINCHPIN_MESH_VERSION, true );
 
 		wp_localize_script( 'admin-mesh-notifications', 'mesh_notifications', array(
@@ -52,7 +48,7 @@ class Mesh_Install {
 	 *
 	 * @since 1.2
 	 */
-	function show_welcome() {
+	public function show_welcome() {
 
 		if ( is_admin() && 1 === intval( get_option( 'mesh_activation' ) ) ) {
 
@@ -60,7 +56,7 @@ class Mesh_Install {
 
 			$mesh_section_count = wp_count_posts( 'mesh_section' );
 
-			$mesh_sections = $mesh_section_count->publish + $mesh_section_count->draft + $mesh_section_count->trash + $mesh_section_count->auto_draft;
+			$mesh_sections = $mesh_section_count->publish + $mesh_section_count->draft + $mesh_section_count->trash + $mesh_section_count->{'auto-draft'};
 
 			// Send new users to the welcome so they learn how to use mesh.
 			if ( ! isset( $_GET['activate-multi'] ) && 0 === $mesh_sections ) { // WPCS: CSRF ok, input var okay.
@@ -87,51 +83,19 @@ class Mesh_Install {
 	}
 
 	/**
-	 * Sets the options on first install for showing the installation notice
+	 * Sets install date. If the user doesn't have a date it sets it
+	 * on install and activation.
+	 *
+	 * @since 1.2.5
 	 */
-	public function setup_first_install() {
+	public function setup_activation() {
 
 		$options = get_option( 'mesh_settings' );
-		$options['first_activated_on'] = time();
 
-		update_option( 'mesh_settings', $options );
-	}
-
-	/**
-	 * Show the update notification
-	 *
-	 * @since 1.2
-	 */
-	public function show_update_notice() {
-		$mesh_version = get_option( 'mesh_version' );
-		$mesh_settings = get_option( 'mesh_settings' );
-
-		$notifications = get_user_option( 'linchpin_mesh_notifications' );
-
-		if ( false !== $mesh_settings && empty( $notifications['update-notice'] ) ) : ?>
-		<div class="mesh-update-notice notice notice-info is-dismissible" data-type="update-notice">
-			<div class="table">
-				<div class="table-cell">
-					<img src="<?php echo esc_attr( LINCHPIN_MESH___PLUGIN_URL . 'assets/images/mesh-full-logo-full-color@2x.png' ); ?>" >
-				</div>
-				<div class="table-cell">
-					<p class="no-margin">
-						<?php
-						// translators: %1$s: Version Number %2$s: Link to what's new tab.
-						printf( wp_kses_post( __( 'Thanks for updating Mesh to v. (%1$s). We suggest checking out <a href="%2$s">what\'s new</a>', 'mesh' ) ),
-							esc_html( $mesh_version ),
-							esc_url( admin_url( 'options-general.php?page=mesh&tab=new' ) )
-						);
-					?>
-					</p>
-					<p class="no-margin">
-					<?php esc_html_e( "We've focused on maintenance, even more developer flexibility, a better uninstall process and more!",'mesh' ); ?>
-					</p>
-				</div>
-			</div>
-		</div>
-		<?php
-		endif;
+		if ( empty( $options['first_activated_on'] ) ) {
+			$options['first_activated_on'] = time();
+			update_option( 'mesh_settings', $options );
+		}
 	}
 }
 

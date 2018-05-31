@@ -333,7 +333,6 @@ class Mesh {
 
 		$content_sections   = mesh_get_sections( $post->ID, 'array', array( 'publish', 'draft' ) );
 		$mesh_notifications = get_user_option( 'linchpin_mesh_notifications', get_current_user_id() );
-		$mesh_templates     = mesh_get_templates();
 		?>
 		<div id="mesh-container" class="<?php echo esc_attr( $post->post_type ); ?>">
 			<?php wp_nonce_field( 'mesh_content_sections_nonce', 'mesh_content_sections_nonce' ); ?>
@@ -360,7 +359,7 @@ class Mesh {
 			<?php else : ?>
 				<?php if ( empty( $mesh_notifications['intro'] ) ) : ?>
 					<div id="mesh-description" class="description collapse notice is-dismissible notice-info below-h2" data-type="intro">
-						<p><?php esc_html_e( 'Mesh allow you to easily break up your page into different blocks of content/markup.', 'mesh' ); ?></p>
+						<p><?php esc_html_e( 'Mesh allows you to easily break up your page into different blocks of content/markup.', 'mesh' ); ?></p>
 					</div>
 				<?php endif; ?>
 			<?php endif; ?>
@@ -390,7 +389,7 @@ class Mesh {
 	 *
 	 * @return void
 	 */
-	function save_post( $post_id, $post ) {
+	public function save_post( $post_id, $post ) {
 		// Skip revisions and autosaves.
 		if ( wp_is_post_revision( $post_id ) || ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) ) {
 			return;
@@ -483,6 +482,8 @@ class Mesh {
 				'template',
 				'menu_order',
 				'featured_image',
+				'centered',
+				'columns',
 			);
 
 			/*
@@ -506,7 +507,7 @@ class Mesh {
 			} else {
 				update_post_meta( $section->ID, '_mesh_css_class', $sanitized_css_classes );
 			}
-      
+
 			// Save Row CSS Classes.
 			$row_classes           = explode( ' ', $section_data['row_class'] );
 			$sanitized_row_classes = array();
@@ -532,8 +533,8 @@ class Mesh {
 			} else {
 				update_post_meta( $section->ID, '_mesh_section_id', $mesh_section_id );
 			}
-      
-      // Save Featured Image      
+
+			// Save Featured Image
 			$featured_image = $section_data['featured_image'];
 
 			if ( empty( $featured_image ) ) {
@@ -573,6 +574,13 @@ class Mesh {
 				delete_post_meta( $section->ID, '_mesh_collapse' );
 			} else {
 				update_post_meta( $section->ID, '_mesh_collapse', $section_data['collapse'] );
+			}
+
+			// Save Centered.
+			if ( empty( $section_data['centered'] ) ) {
+				delete_post_meta( $section->ID, '_mesh_centered' );
+			} else {
+				update_post_meta( $section->ID, '_mesh_centered', $section_data['centered'] );
 			}
 
 			// Process our custom meta.
@@ -618,10 +626,10 @@ class Mesh {
 
 				wp_update_post( $updates );
 
-				$block_column_width = (int) $section_data['blocks'][ $block_id ]['columns'];
+				$block_column_width = (int) $section_data['blocks'][ $block_id ]['column_width'];
 
 				// If we don't have a column width defined or we are using a 1 column layout clear our saved widths.
-				if ( empty( $block_column_width ) || 'mesh-columns-1.php' === $template ) {
+				if ( empty( $block_column_width ) ) {
 					delete_post_meta( $block_id, '_mesh_column_width' );
 				} else {
 					update_post_meta( $block_id, '_mesh_column_width', $block_column_width );
@@ -653,6 +661,32 @@ class Mesh {
 					delete_post_meta( $block_id, '_mesh_css_class' );
 				} else {
 					update_post_meta( $block_id, '_mesh_css_class', $sanitized_css_classes );
+				}
+
+				// Blocks Center
+				if ( ! isset( $section_data['blocks'][ $block_id ]['centered'] ) ) {
+					$block_centered = false;
+				} else {
+					$block_centered = true;
+				}
+
+				if ( false === $block_centered ) {
+					delete_post_meta( $block_id, '_mesh_centered' );
+				} else {
+					update_post_meta( $block_id, '_mesh_centered', $block_centered );
+				}
+
+				// Save Featured Image
+				$featured_image = '';
+
+				if ( isset( $block_data['featured_image'] ) && '' !== $block_data['featured_image'] ) {
+					$featured_image = $block_data['featured_image'];
+				}
+
+				if ( empty( $featured_image ) ) {
+					delete_post_meta( $block_id, '_thumbnail_id' );
+				} else {
+					update_post_meta( $block_id, '_thumbnail_id', (int) $featured_image );
 				}
 			}
 		}
@@ -734,7 +768,7 @@ class Mesh {
 	 *
 	 * @param int $post_id ID of the Post to trash.
 	 */
-	function wp_trash_post( $post_id ) {
+	public function wp_trash_post( $post_id ) {
 		$post_to_trash = get_post( $post_id );
 
 		$supported_post_types = get_option( 'mesh_post_types', array() );
@@ -766,7 +800,7 @@ class Mesh {
 	 *
 	 * @param int $post_id ID of the post to be deleted.
 	 */
-	function before_delete_post( $post_id ) {
+	public function before_delete_post( $post_id ) {
 		$post_to_delete = get_post( $post_id );
 
 		$supported_post_types = get_option( 'mesh_post_types', array() );
@@ -799,7 +833,7 @@ class Mesh {
 	 *
 	 * @param int $post_id The trashed Post's ID.
 	 */
-	function untrash_post( $post_id ) {
+	public function untrash_post( $post_id ) {
 		$trashed_post = get_post( $post_id );
 
 		$supported_post_types = get_option( 'mesh_post_types', array() );
@@ -834,7 +868,7 @@ class Mesh {
 	 *
 	 * @return string Return the content that has been filtered.
 	 */
-	function the_content( $content ) {
+	public function the_content( $content ) {
 		$pos = strpos( $content, '<div id="mesh-section-content">' );
 
 		if ( false !== $pos ) {
@@ -853,7 +887,7 @@ class Mesh {
 	 *
 	 * @return array
 	 */
-	function post_class( $classes ) {
+	public function post_class( $classes ) {
 
 		$custom_class = get_post_meta( get_the_ID(), '_mesh_css_class', true );
 
@@ -873,7 +907,7 @@ class Mesh {
 	 *
 	 * @param object $wp_query WordPress Query Object.
 	 */
-	function loop_end( $wp_query ) {
+	public function loop_end( $wp_query ) {
 		if ( ! $wp_query->is_main_query() ) {
 			return;
 		}
@@ -898,7 +932,7 @@ class Mesh {
 	 * @access public
 	 * @return void
 	 */
-	function admin_enqueue_scripts() {
+	public function admin_enqueue_scripts() {
 		global $current_screen, $post;
 
 		$mesh_screens = array( 'post', 'edit', 'settings_page_mesh' );
@@ -938,6 +972,8 @@ class Mesh {
 			'confirm_template_section_update' => esc_html__( 'Apply template changes to posts/pages?', 'mesh' ),
 		);
 
+		$tinymce_defaults = mesh_get_tinymce_defaults();
+
 		$strings = apply_filters( 'mesh_strings', $strings ); // Allow filtering of localization strings.
 
 		$localized_data = array(
@@ -945,6 +981,7 @@ class Mesh {
 			'post_type'             => ! is_null( $post ) ? $post->post_type : $current_screen->post_type,
 			'site_uri'              => site_url(),
 			'screen'                => $current_screen->base,
+			'max_columns'           => apply_filters( 'mesh_max_columns', 12 ),
 			'choose_layout_nonce'   => wp_create_nonce( 'mesh_choose_layout_nonce' ),
 			'remove_section_nonce'  => wp_create_nonce( 'mesh_remove_section_nonce' ),
 			'add_section_nonce'     => wp_create_nonce( 'mesh_add_section_nonce' ),
@@ -956,6 +993,7 @@ class Mesh {
 			'choose_template_nonce' => wp_create_nonce( 'mesh_choose_template_nonce' ),
 			'content_css'           => apply_filters( 'mesh_content_css', get_stylesheet_directory_uri() . '/css/admin-editor.css', 'editor_path' ),
 			'strings'               => $strings,
+			'tinymce_options'       => $tinymce_defaults,
 		);
 
 		$localized_data = apply_filters( 'mesh_data', $localized_data ); // Allow filtering of the entire localized dataset.
@@ -969,7 +1007,7 @@ class Mesh {
 	 * @access public
 	 * @return void
 	 */
-	function admin_enqueue_styles() {
+	public function admin_enqueue_styles() {
 		wp_enqueue_style( 'admin-mesh', plugins_url( 'assets/css/admin-mesh.css', __FILE__ ), array(), LINCHPIN_MESH_VERSION );
 	}
 
@@ -979,8 +1017,21 @@ class Mesh {
 	 * @access public
 	 * @return void
 	 */
-	function wp_enqueue_scripts() {
-		wp_enqueue_script( 'mesh-frontend', plugins_url( 'assets/js/mesh.js', __FILE__ ), array( 'jquery' ), LINCHPIN_MESH_VERSION, true );
+	public function wp_enqueue_scripts() {
+
+		if ( ! empty( $mesh_options['css_mode'] ) ) {
+			$css_mode = intval( $mesh_options['css_mode'] );
+		} else {
+			$css_mode = 0;
+		}
+
+		if ( -1 === $css_mode ) {
+			return;
+		} else {
+			if ( 0 === $css_mode ) {
+				wp_enqueue_script( 'mesh-frontend', plugins_url( 'assets/js/mesh.js', __FILE__ ), array( 'jquery' ), LINCHPIN_MESH_VERSION, true );
+			}
+		}
 	}
 
 	/**

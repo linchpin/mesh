@@ -3,7 +3,7 @@
  * Plugin Name: Mesh
  * Plugin URI: https://meshplugin.com?utm_source=mesh&utm_medium=plugin-admin-page&utm_campaign=wp-plugin
  * Description: Adds multiple sections for content on a post by post basis. Mesh also has settings to enable it for specific post types
- * Version: 1.2.4
+ * Version: 1.2.5
  * Text Domain: mesh
  * Domain Path: /languages
  * Author: Linchpin
@@ -21,7 +21,7 @@ if ( ! function_exists( 'add_action' ) ) {
 /**
  * Define all globals.
  */
-define( 'LINCHPIN_MESH_VERSION', '1.2.4' );
+define( 'LINCHPIN_MESH_VERSION', '1.2.5' );
 define( 'LINCHPIN_MESH_PLUGIN_NAME', esc_html__( 'Mesh', 'mesh' ) );
 define( 'LINCHPIN_MESH__MINIMUM_WP_VERSION', '4.0' );
 define( 'LINCHPIN_MESH___PLUGIN_URL', plugin_dir_url( __FILE__ ) );
@@ -36,20 +36,23 @@ define( 'LINCHPIN_MESH_DEBUG_MODE', false );
 
 $GLOBALS['mesh_current_version'] = get_option( 'mesh_version', '0.0' ); // Get our current Mesh Version.
 
-include_once 'class.mesh-settings.php';
-include_once 'class.mesh-controls.php';
-include_once 'class.mesh-templates.php';
-include_once 'class.mesh-pointers.php';
-include_once 'class.mesh.php';
-include_once 'class.mesh-upgrades.php';
-include_once 'class.mesh-reponsive-grid.php';
-include_once 'class.mesh-integrations.php';
+require_once 'includes/utilities.php';
+
+require_once 'class.mesh-settings.php';
+require_once 'class.mesh-templates.php';
+require_once 'class.mesh-pointers.php';
+require_once 'class.mesh.php';
+require_once 'class.mesh-reponsive-grid.php';
+require_once 'class.mesh-controls.php';
+require_once 'class.mesh-input.php';
+require_once 'class.mesh-upgrades.php';
+require_once 'class.mesh-integrations.php';
 
 if ( is_admin() ) {
-	include_once 'class.mesh-install.php';
+	require_once 'class.mesh-install.php';
 }
 
-$mesh          = new Mesh();
+$mesh = new Mesh();
 
 if ( is_admin() ) {
 	$mesh_pointers = new Mesh_Admin_Pointers();
@@ -77,80 +80,6 @@ function mesh_deactivation_hook() {
 	do_action( 'mesh_deactivate' );
 }
 register_deactivation_hook( __FILE__, 'mesh_deactivation_hook' );
-
-
-/**
- * Return the classes used to build our grid structure
- * Return a string of classes back to our block.
- *
- * @since 1.1
- *
- * @param int   $block_id Block ID.
- * @param array $args     Passed arguments.
- */
-function mesh_block_class( $block_id, $args = array() ) {
-
-	$defaults = array(
-		'push_pull'        => false,
-		'collapse_spacing' => false,
-		'total_columns'    => 1,
-		'max_columns'      => apply_filters( 'mesh_max_columns', 12 ),
-		'column_index'     => -1,
-		'column_width'     => 12,
-	);
-
-	$args = wp_parse_args( $args, $defaults );
-
-	$grid_system = apply_filters( 'mesh_grid_system', 'foundation' );
-
-	$grid = Mesh_Responsive_Grid::get_responsive_grid( $grid_system );
-
-	$block_css_class = get_post_meta( $block_id, '_mesh_css_class', true );
-	$block_offset    = (int) get_post_meta( $block_id, '_mesh_offset', true );
-
-	$classes = array(
-		$grid['columns_class'],
-		$grid['columns']['small'] . '-' . $args['max_columns'],
-	);
-
-	$classes[] = $grid['columns']['medium'] . '-' . ( (int) $args['column_width'] - $block_offset );
-
-	if ( $block_offset ) {
-		$classes[] = $grid['columns']['medium'] . '-' . $grid['offset'] . '-' . $block_offset;
-	}
-
-	if ( ! empty( $args['push_pull'] ) ) {
-
-		$push_or_pull = '';
-
-		if ( 2 === (int) $args['total_columns'] ) {
-
-			switch ( (int) $args['column_index'] ) {
-				case 0:
-					$push_or_pull = 'push';
-					break;
-				case 1:
-					$push_or_pull = 'pull';
-					break;
-			}
-
-			if ( ! empty( $push_or_pull ) ) {
-				$classes[] = $grid['columns']['medium'] . '-' . $push_or_pull . '-' . ( $args['max_columns'] - $args['column_width'] );
-			}
-		}
-	}
-
-	// Merge our block classes (from the input field).
-	if ( ! empty( $block_css_class ) ) {
-		$block_css_class = explode( ' ', $block_css_class );
-		$classes = array_merge( $classes, $block_css_class );
-	}
-
-	$classes = array_map( 'sanitize_html_class', $classes );
-	$classes = array_unique( $classes );
-
-	echo 'class="' . join( ' ', $classes ) . '"'; // WPCS: XSS ok, sanitization ok.
-}
 
 /**
  * Get files within our directory
@@ -279,25 +208,22 @@ function mesh_add_section_admin_markup( $section, $closed = false, $return = fal
 	// It's important to pass this to the admin to control if a
 	// section's blocks have a post_status of publish or draft.
 	$block_count       = $templates[ $selected_template ]['blocks'];
-	$css_class         = get_post_meta( $section->ID, '_mesh_css_class', true );
-	$lp_equal          = get_post_meta( $section->ID, '_mesh_lp_equal', true );
-	$offset            = get_post_meta( $section->ID, '_mesh_offset', true );
-	$title_display     = get_post_meta( $section->ID, '_mesh_title_display', true );
-	$push_pull         = get_post_meta( $section->ID, '_mesh_push_pull', true );
-	$collapse          = get_post_meta( $section->ID, '_mesh_collapse', true ); // Collapse our column spacing.
 	$featured_image_id = get_post_thumbnail_id( $section->ID );
-
-	$parents = get_post_ancestors( $section->ID );
-	$section_parent_id = ($parents) ? $parents[ count( $parents ) - 1 ] : $section->ID;
-	$section_parent = get_post( $section_parent_id );
+	$parents           = get_post_ancestors( $section->ID );
+	$section_parent_id = ( $parents ) ? $parents[ count( $parents ) - 1 ] : $section->ID;
+	$section_parent    = get_post( $section_parent_id );
 
 	if ( $return ) {
 		ob_start();
 	}
+
 	include LINCHPIN_MESH___PLUGIN_DIR . 'admin/section-container.php';
+
 	if ( $return ) {
 		return ob_end_flush();
 	}
+
+	return false;
 }
 
 /**
@@ -474,6 +400,8 @@ function mesh_display_sections( $post_id = '', $echo = true ) {
 
 		return $output;
 	}
+
+	return '';
 }
 
 /**
@@ -490,12 +418,12 @@ function mesh_display_sections( $post_id = '', $echo = true ) {
 function mesh_get_section_blocks( $section_id, $post_status = 'publish', $number_needed = 50 ) {
 
 	$args = array(
-		'post_type' => 'mesh_section',
-		'post_status' => $post_status,
+		'post_type'      => 'mesh_section',
+		'post_status'    => $post_status,
 		'posts_per_page' => $number_needed,
-		'orderby' => 'menu_order',
-		'order' => 'ASC',
-		'post_parent' => (int) $section_id,
+		'orderby'        => 'menu_order',
+		'order'          => 'ASC',
+		'post_parent'    => (int) $section_id,
 	);
 
 	if ( isset( $_GET['preview_id'] ) && isset( $_GET['preview_nonce'] ) ) { // Input var okay.
@@ -535,7 +463,7 @@ function mesh_get_section_blocks( $section_id, $post_status = 'publish', $number
 function mesh_cleanup_section_blocks( $section, $number_needed = 0 ) {
 
 	$blocks = mesh_get_section_blocks( $section->ID, array( 'publish', 'draft' ) );
-	$count = count( $blocks );
+	$count  = count( $blocks );
 
 	// Create enough blocks to fill the section.
 	if ( $count < $number_needed ) {
@@ -579,8 +507,8 @@ function mesh_maybe_create_section_blocks( $section, $number_needed = 0 ) {
 	}
 
 	$blocks = mesh_get_section_blocks( $section->ID, array( 'publish', 'draft' ) );
-	$count = count( $blocks );
-	$start = $count;
+	$count  = count( $blocks );
+	$start  = $count;
 
 	if ( $count < $number_needed ) {
 
@@ -607,7 +535,7 @@ function mesh_maybe_create_section_blocks( $section, $number_needed = 0 ) {
 
 		while ( $total > $number_needed ) {
 			wp_update_post( array(
-				'ID' => $blocks[ $total - 1 ]->ID,
+				'ID'          => $blocks[ $total - 1 ]->ID,
 				'post_status' => 'draft',
 			) );
 
@@ -618,7 +546,7 @@ function mesh_maybe_create_section_blocks( $section, $number_needed = 0 ) {
 		$start = 0;
 		while ( $start < $number_needed ) {
 			wp_update_post(array(
-				'ID' => $blocks[ $start ]->ID,
+				'ID'          => $blocks[ $start ]->ID,
 				'post_status' => $section->post_status,
 			) );
 
@@ -629,251 +557,3 @@ function mesh_maybe_create_section_blocks( $section, $number_needed = 0 ) {
 	return mesh_get_section_blocks( $section->ID, array( 'publish', 'draft' ), $number_needed );
 }
 
-/**
- * Utility Method to add a background to a section
- *
- * @todo This should be disabled if the user selects to NOT use foundation.
- * @todo There is definitely a need for some optimization here. Lots of code duplication that could use
- *       a utility method or two.
- *
- * @param int    $post_id     PostID of the Section.
- * @param bool   $echo        Echo the output or not.
- * @param string $size_large  The name of the Thumbnail for our Large image used by Interchange.
- * @param string $size_medium The name of the Thumbnail for our Medium image used by Interchange.
- * @param string $size_xlarge The name of the Thumbnail for our XLarge image used by Interchange.
- * @param string $size_small  The name of the Thumbnail for our small image used by Interchange.
- *
- * @return array|string
- */
-function mesh_section_background( $post_id = 0, $echo = true, $size_large = 'large', $size_medium = 'large', $size_xlarge = 'large', $size_small = 'small' ) {
-
-	global $post;
-
-	if ( empty( $post_id ) ) {
-		$post_id  = $post->ID;
-	}
-
-	if ( has_post_thumbnail( $post_id ) ) {
-
-		$backgrounds = array();
-
-		$mesh_options       = get_option( 'mesh_settings', array(
-			'foundation_version' => 5,
-		) );
-
-		$foundation_version = (int) $mesh_options['foundation_version'];
-		$css_mode           = $mesh_options['css_mode'];
-
-		$default_bg_size = apply_filters( 'mesh_default_bg_size', 'mesh-background' );
-		$size_medium     = apply_filters( 'mesh_small_bg_size', $size_small );
-		$size_medium     = apply_filters( 'mesh_medium_bg_size', $size_medium );
-		$size_large      = apply_filters( 'mesh_large_bg_size', $size_large );
-		$size_xlarge     = apply_filters( 'mesh_xlarge_bg_size', $size_xlarge );
-
-		$default_image_url = wp_get_attachment_image_src( get_post_thumbnail_id( $post_id ), $default_bg_size );
-
-		$using_foundation = ( 0 === (int) $css_mode || 1 === (int) $css_mode );
-
-		// Only allow interchange or backgrounds when using Mesh css or a theme based on foundation.
-		if ( $using_foundation ) {
-
-			if ( 0 === (int) $css_mode ) {
-				$foundation_version = 6;
-			}
-
-			switch ( $foundation_version ) {
-				case 6:
-					$interchange_format = '[%s, %s]';
-					break;
-				default:
-					$interchange_format = '[%s, (%s)]';
-			}
-
-			$background_urls = array();
-
-			if ( ! empty( $default_image_url ) ) {
-				if ( ! empty( $default_image_url[0] ) && '' !== $default_image_url[0] ) {
-
-					// Foundation 6 doesn't use default.
-					if ( 6 !== $foundation_version ) {
-						$background_urls[] = $default_image_url[0];
-						$backgrounds[] = sprintf( $interchange_format, $default_image_url[0], 'default' );
-					}
-
-					$small_image_url = wp_get_attachment_image_src( get_post_thumbnail_id( $post_id ), $size_medium );
-
-					if ( ! empty( $small_image_url ) ) {
-						if ( ! empty( $small_image_url[0] ) && '' !== $small_image_url[0] ) {
-							if ( ! in_array( $small_image_url[0], $background_urls, true ) ) {
-								$background_urls[] = $small_image_url[0];
-								$backgrounds[] = sprintf( $interchange_format, $small_image_url[0], 'small' );
-							}
-						}
-					}
-
-					$medium_image_url = wp_get_attachment_image_src( get_post_thumbnail_id( $post_id ), $size_medium );
-
-					if ( ! empty( $medium_image_url ) ) {
-						if ( ! empty( $medium_image_url[0] ) && '' !== $medium_image_url[0] ) {
-							if ( ! in_array( $medium_image_url[0], $background_urls, true ) ) {
-								$background_urls[] = $medium_image_url[0];
-								$backgrounds[]     = sprintf( $interchange_format, $medium_image_url[0], 'medium' );
-							}
-						}
-					}
-
-					$large_image_url = wp_get_attachment_image_src( get_post_thumbnail_id( $post_id ), $size_large );
-
-					if ( ! empty( $large_image_url ) ) {
-						if ( ! empty( $large_image_url[0] ) && '' !== $large_image_url[0] ) {
-							if ( ! in_array( $large_image_url[0], $background_urls, true ) ) {
-								$background_urls[] = $large_image_url[0];
-								$backgrounds[] = sprintf( $interchange_format, $large_image_url[0], 'large' );
-							}
-						}
-					}
-
-					$xlarge_image_url = wp_get_attachment_image_src( get_post_thumbnail_id( $post_id ), $size_xlarge );
-
-					if ( ! empty( $xlarge_image_url ) ) {
-						if ( ! empty( $xlarge_image_url[0] ) && '' !== $xlarge_image_url[0] ) {
-							if ( ! in_array( $xlarge_image_url[0], $background_urls, true ) ) {
-								$background_urls[] = $xlarge_image_url[0];
-								$backgrounds[] = sprintf( $interchange_format, $xlarge_image_url[0], 'xlarge' );
-							}
-						}
-					}
-				}
-
-				if ( empty( $backgrounds ) ) {
-					return array();
-				}
-			}
-		}
-
-		$style = '';
-
-		if ( is_array( $backgrounds ) && ! empty( $backgrounds ) && $using_foundation ) {
-			$style .= 'data-interchange="' . esc_attr( implode( ', ', $backgrounds ) ) . '"';
-		}
-
-		if ( '' !== $default_image_url[0] ) {
-			$style .= ' style="background-image: url(' . esc_url( $default_image_url[0] ) . ');"';
-		}
-	}
-
-	if ( empty( $style ) ) {
-		return '';
-	} else {
-		if ( false === $echo ) {
-			return $style;
-		} else {
-			echo $style; // WPCS: XSS ok.
-		}
-	}
-
-	return $style;
-}
-
-/**
- * Return an array of allowed html for wp_kses functions
- *
- * @return mixed
- */
-function mesh_get_allowed_html() {
-	$mesh_allowed = apply_filters( 'mesh_default_allowed_html', array(
-		'iframe' => array(
-			'src' => true,
-			'style' => true,
-			'id' => true,
-			'class' => true,
-			'name' => true,
-			'allowfullscreen' => true,
-			'msallowfullscreen' => true,
-			'mozallowfullscreen' => true,
-			'webkitallowfullscreen' => true,
-			'oallowfullscreen' => true,
-			'allowtransparency' => true,
-			'frameborder' => true,
-			'scrolling' => true,
-			'width' => true,
-			'height' => true,
-		),
-		'script' => array(
-			'src' => true,
-		),
-		'div' => array(
-			'data-equalizer' => true,
-			'data-equalizer-watch' => true,
-			'data-interchange' => true,
-			'data-lp-equal' => true,
-			'data-lp-equal-items' => true,
-			'data-lp-equal-children' => true,
-		),
-		'section' => array(
-			'data-interchange' => true,
-		),
-		'span' => array(
-			'class' => true,
-			'style' => true,
-			'id'    => true,
-			'data-equalizer' => true,
-			'data-equalizer-watch' => true,
-			'data-interchange' => true,
-			'data-lp-equal' => true,
-			'data-lp-equal-items' => true,
-			'data-lp-equal-children' => true,
-		),
-		'input' => array(
-			'align' => true,
-			'type' => true,
-			'name' => true,
-			'class' => true,
-			'id' => true,
-			'list' => true,
-			'value' => true,
-			'required' => true,
-			'placeholder' => true,
-			'checked' => true,
-			'disabled' => true,
-			'max' => true,
-			'min' => true,
-			'maxlength' => true,
-			'size' => true,
-			'hidden' => true,
-			'aria-required' => true,
-			'aria-labelledby' => true,
-			'aria-invalid' => true,
-			'aria-checked' => true,
-		),
-		'option' => array(
-			'value' => true,
-		),
-		'textarea' => array(
-			'maxlength' => true,
-			'placeholder' => true,
-			'required' => true,
-			'aria-required' => true,
-			'aria-labelledby' => true,
-			'aria-invalid' => true,
-		),
-		'select' => array(
-			'name' => true,
-			'disabled' => true,
-			'multiple' => true,
-			'required' => true,
-			'size' => true,
-			'aria-required' => true,
-			'aria-labelledby' => true,
-			'aria-invalid' => true,
-		),
-		'fieldset' => array(
-			'name' => true,
-			'disabled' => true,
-		),
-	) );
-
-	$post_allowed = wp_kses_allowed_html( 'post' );
-
-	return apply_filters( 'mesh_allowed_html', array_merge_recursive( $post_allowed, $mesh_allowed ) );
-}
