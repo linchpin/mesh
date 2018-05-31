@@ -563,7 +563,7 @@ function mesh_maybe_show_section_title( $post_id = '', $title = '' ) {
 
 	$title_display = get_post_meta( $post_id, '_mesh_title_display', true );
 
-	if ( false === $title_display ) {
+	if ( empty( $title_display ) || false === $title_display ) {
 		return false;
 	}
 
