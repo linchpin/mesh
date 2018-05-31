@@ -3,7 +3,7 @@ Contributors: linchpin_agency, aware, maxinacube, desrosj, nateallen, ebeltram, 
 Tags: linchpin, sections, content, page builder, page builder plugin, design, wysiwyg, home page builder, template builder, layout builder, responsive, landing page builder, website builder, site builder, drag and drop builder, editor, page layout, visual editor, foundation, bootstrap
 Requires at least: 4.0
 Tested up to: 4.9.6
-Stable tag: 1.2.5
+Stable tag: 1.2.5.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
