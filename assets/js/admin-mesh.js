@@ -469,6 +469,12 @@ mesh.blocks = function ($) {
 				// Reset column width classes and save post data
 				$this.addClass('mesh-columns-' + column_value);
 
+				if ( column_value <= 4 ) {
+                    $this.addClass('mesh-small-block');
+				} else {
+					$this.removeClass('mesh-small-block');
+				}
+
 				if ( block_id && column_values[index] ) {
 					$column_input.val(column_value);
 					post_data.blocks[ block_id.toString() ] = column_value;
@@ -1750,6 +1756,8 @@ mesh.admin = function ($) {
 					self.enable_controls($meta_box_container);
 
 					$meta_box_container.trigger("mesh:add_section");
+
+					blocks.setup_sortable();
 
 				} else {
 					$spinner.removeClass('is-active');
