@@ -428,6 +428,8 @@ mesh.admin = function ($) {
 
 					$meta_box_container.trigger("mesh:add_section");
 
+					blocks.setup_sortable();
+
 				} else {
 					$spinner.removeClass('is-active');
 				}
