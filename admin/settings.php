@@ -67,7 +67,7 @@ $parsedown = new Parsedown();
 			<div id="postbox-container" class="postbox-container">
 				<?php if ( 'settings' === $active_tab ) : ?>
 					<div id="settings">
-						<?php include_once( LINCHPIN_MESH___PLUGIN_DIR . '/admin/settings-meta-box-display.php' ); ?>
+						<?php include_once LINCHPIN_MESH___PLUGIN_DIR . '/admin/settings-meta-box-display.php'; ?>
 					</div>
 				<?php elseif ( 'changelog' === $active_tab ) : ?>
 					<div class="changelog">
@@ -83,9 +83,9 @@ $parsedown = new Parsedown();
 					?>
 					</div>
 				<?php elseif ( 'about' === $active_tab ) : ?>
-					<?php include_once( LINCHPIN_MESH___PLUGIN_DIR . '/admin/settings-about-mesh.php' ); ?>
+					<?php include_once LINCHPIN_MESH___PLUGIN_DIR . '/admin/settings-about-mesh.php'; ?>
 				<?php elseif ( 'new' === $active_tab ) : ?>
-					<?php include_once( LINCHPIN_MESH___PLUGIN_DIR . '/admin/settings-whats-new.php' ); ?>
+					<?php include_once LINCHPIN_MESH___PLUGIN_DIR . '/admin/settings-whats-new.php'; ?>
 				<?php else : ?>
 					<?php do_action( 'mesh_setting_' . $active_tab ); ?>
 				<?php endif; ?>

@@ -12,9 +12,7 @@
 if ( ! function_exists( 'add_action' ) ) {
 	exit;
 }
-?>
-<?php
-global $post;
+
 /**
  * If this is not a reference template. Show our controls.
  *

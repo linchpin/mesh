@@ -20,16 +20,20 @@ $is_active = '';
 if ( ! empty( $default_template ) ) {
 	$is_active = ' active';
 }
+
+$mesh_controls  = new Mesh_Controls();
+$block_settings = $mesh_controls->get_block_settings();
+
 ?>
 <div class="mesh-template-layout <?php echo esc_attr( $is_active ); ?>">
 	<?php foreach ( $layout as $key => $row ) : ?>
 		<div class="mesh-row">
 			<?php
-			$offsets_available = 9;
-			$section_blocks = $row['blocks'];
-			$block_count = count( $section_blocks );
-			$default_block_columns = 12 / $block_count;
-			$block_increment = 0;
+			$offsets_available     = 9;
+			$section_blocks        = $row['blocks'];
+			$block_count           = count( $section_blocks );
+			$default_block_columns = $block_settings['max_columns'] / $block_count;
+			$block_increment       = 0;
 
 			// Loop through the blocks needed for this template.
 			while ( $block_increment < $block_count ) :
@@ -48,7 +52,8 @@ if ( ! empty( $default_template ) ) {
 					$block_columns = $default_block_columns;
 				}
 
-				$block_offset = $section_blocks[ $block_increment ]['offset'];
+				$block_offset   = $section_blocks[ $block_increment ]['offset'];
+				$block_centered = ( isset( $section_blocks[ $block_increment ]['centered'] ) && true === $section_blocks[ $block_increment ]['centered'] ) ? 'centered' : '';
 
 				if ( ! empty( $block_offset ) ) {
 					$block_columns += $block_offset;
@@ -56,7 +61,7 @@ if ( ! empty( $default_template ) ) {
 
 				?>
 
-				<div class="mesh-section-block mesh-columns-<?php echo esc_attr( $block_columns ); ?> columns">
+				<div class="mesh-section-block mesh-columns-<?php echo esc_attr( $block_columns ); ?> columns <?php echo esc_attr( $block_centered ); ?>">
 					<div class="block">
 						<?php
 
