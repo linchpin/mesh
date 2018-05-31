@@ -13,7 +13,7 @@ if ( ! function_exists( 'add_action' ) ) {
 	exit;
 }
 ?>
-<?php include LINCHPIN_MESH___PLUGIN_DIR . 'admin/section-controls.php'; ?>
+<?php require LINCHPIN_MESH___PLUGIN_DIR . 'admin/section-controls.php'; ?>
 <div class="mesh-editor-blocks" id="mesh-sections-editor-<?php echo esc_attr( $section->ID ); ?>">
 <?php
 if ( ! empty( $blocks ) ) {

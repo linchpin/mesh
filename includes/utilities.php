@@ -37,7 +37,7 @@ function mesh_get_element_attributes( $post_id = '', $return_type = 'string' ) {
 	global $post;
 
 	if ( empty( $post_id ) ) {
-		$post_id  = $post->ID;
+		$post_id = $post->ID;
 	}
 
 	$element_attributes = array();
@@ -65,7 +65,7 @@ function mesh_default_section_attributes( $post_id = '', $echo = true ) {
 	global $post;
 
 	if ( empty( $post_id ) ) {
-		$post_id  = $post->ID;
+		$post_id = $post->ID;
 	}
 
 	/*
@@ -284,7 +284,7 @@ function mesh_get_row_attributes( $post_id = '', $return_type = 'string' ) {
 	$lp_equal = get_post_meta( get_the_ID(), '_mesh_lp_equal', true );
 
 	if ( ! empty( $lp_equal ) ) {
-		$row_attributes['data-equalizer'] = '';
+		$row_attributes['data-equalizer']   = '';
 		$row_attributes['data-equalize-on'] = 'medium';
 	}
 

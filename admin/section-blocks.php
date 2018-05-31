@@ -12,7 +12,7 @@ if ( ! function_exists( 'add_action' ) ) {
 	exit;
 }
 
-$mesh_controls = new Mesh_Controls();
+$mesh_controls  = new Mesh_Controls();
 $block_settings = $mesh_controls->get_block_settings();
 
 global $post;
@@ -21,7 +21,7 @@ $reference_template = has_term( 'reference', 'mesh_template_types', $post );
 
 // If the template doesn't have any blocks make sure it has 1.
 if ( ! $section_blocks = (int) $templates[ $selected_template ]['blocks'] ) {
-	$section_blocks = 1;
+	$section_blocks              = 1;
 	$multiple_child_blocks_class = '';
 } else {
 	$multiple_child_blocks_class = ' multiple-blocks';
@@ -33,14 +33,10 @@ if ( 1 === $section_blocks ) {
 	$multiple_child_blocks_class = ' multiple-blocks';
 }
 
-$offsets_available = 9;
-
+$offsets_available     = 9;
 $default_block_columns = $block_settings['max_columns'] / $section_blocks;
-
-// Loop through the blocks needed for this template.
-$block_increment = 0;
-
-$remaining_columns = $block_settings['max_columns'];
+$block_increment       = 0; // Loop through the blocks needed for this template.
+$remaining_columns     = $block_settings['max_columns'];
 
 ?>
 <div class="mesh-row<?php echo esc_attr( $multiple_child_blocks_class ); ?>" data-section-blocks="<?php echo esc_attr( $section_blocks ); ?>">
@@ -124,7 +120,7 @@ $remaining_columns = $block_settings['max_columns'];
 										<?php
 										if ( ! has_term( 'reference', 'mesh_template_types', $post ) ) :
 
-											$featured_image_id = get_post_thumbnail_id( $blocks[ $block_increment ]->ID );
+											$featured_image_id        = get_post_thumbnail_id( $blocks[ $block_increment ]->ID );
 											$section_background_class = 'mesh-section-background';
 											$section_background_class = ( ! empty( $featured_image_id ) ) ? $section_background_class . ' has-background-set' : $section_background_class;
 											?>

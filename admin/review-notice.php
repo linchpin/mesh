@@ -4,8 +4,6 @@
  * Display how long the user has been using mesh for and ask them
  * if they would like to give it a review. We could really use it!
  *
- * class.mesh-upgrades.php
- *
  * @package Mesh
  * @since 1.2.5
  */

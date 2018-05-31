@@ -109,7 +109,7 @@ class Mesh_Controls {
 	 */
 	public function get_template_options() {
 		$templates = mesh_locate_template_files();
-		$options = array();
+		$options   = array();
 
 		foreach ( $templates as $template_key => $value ) {
 			$options[ $template_key ] = $templates[ $template_key ]['file'];
@@ -163,7 +163,7 @@ class Mesh_Controls {
 	 *
 	 * @return array
 	 */
-	function get_columns() {
+	public function get_columns() {
 
 		$_block_settings = $this->get_block_settings();
 

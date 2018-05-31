@@ -22,9 +22,9 @@ global $post;
 		<?php endif; ?>
 	</div>
 
-	<a href="#" class="slide-toggle-element slide-toggle-meta-dropdown mesh-more-section-options"
-	   data-toggle=".mesh-section-meta-dropdown-<?php echo esc_attr( $section->ID ); ?>"><span
-				class="screen-reader-text"><?php esc_html_e( 'More Options', 'mesh' ); ?></span></a>
+	<a href="#" class="slide-toggle-element slide-toggle-meta-dropdown mesh-more-section-options" data-toggle=".mesh-section-meta-dropdown-<?php echo esc_attr( $section->ID ); ?>">
+		<span class="screen-reader-text"><?php esc_html_e( 'More Options', 'mesh' ); ?></span>
+	</a>
 </div>
 
 <div class="mesh-section-meta-dropdown mesh-section-meta-dropdown-<?php echo esc_attr( $section->ID ); ?> mesh-row hide">
@@ -50,7 +50,7 @@ global $post;
 			<?php
 			if ( ! has_term( 'reference', 'mesh_template_types', $post ) ) :
 
-				$featured_image_id = get_post_thumbnail_id( $section->ID );
+				$featured_image_id        = get_post_thumbnail_id( $section->ID );
 				$section_background_class = 'mesh-section-background';
 				$section_background_class = ( ! empty( $featured_image_id ) ) ? $section_background_class . ' has-background-set' : $section_background_class;
 				?>

@@ -208,25 +208,22 @@ function mesh_add_section_admin_markup( $section, $closed = false, $return = fal
 	// It's important to pass this to the admin to control if a
 	// section's blocks have a post_status of publish or draft.
 	$block_count       = $templates[ $selected_template ]['blocks'];
-	$css_class         = get_post_meta( $section->ID, '_mesh_css_class', true );
-	$lp_equal          = get_post_meta( $section->ID, '_mesh_lp_equal', true );
-	$offset            = get_post_meta( $section->ID, '_mesh_offset', true );
-	$title_display     = get_post_meta( $section->ID, '_mesh_title_display', true );
-	$push_pull         = get_post_meta( $section->ID, '_mesh_push_pull', true );
-	$collapse          = get_post_meta( $section->ID, '_mesh_collapse', true ); // Collapse our column spacing.
 	$featured_image_id = get_post_thumbnail_id( $section->ID );
-
-	$parents = get_post_ancestors( $section->ID );
-	$section_parent_id = ($parents) ? $parents[ count( $parents ) - 1 ] : $section->ID;
-	$section_parent = get_post( $section_parent_id );
+	$parents           = get_post_ancestors( $section->ID );
+	$section_parent_id = ( $parents ) ? $parents[ count( $parents ) - 1 ] : $section->ID;
+	$section_parent    = get_post( $section_parent_id );
 
 	if ( $return ) {
 		ob_start();
 	}
+
 	include LINCHPIN_MESH___PLUGIN_DIR . 'admin/section-container.php';
+
 	if ( $return ) {
 		return ob_end_flush();
 	}
+
+	return false;
 }
 
 /**
@@ -403,6 +400,8 @@ function mesh_display_sections( $post_id = '', $echo = true ) {
 
 		return $output;
 	}
+
+	return '';
 }
 
 /**
@@ -419,12 +418,12 @@ function mesh_display_sections( $post_id = '', $echo = true ) {
 function mesh_get_section_blocks( $section_id, $post_status = 'publish', $number_needed = 50 ) {
 
 	$args = array(
-		'post_type' => 'mesh_section',
-		'post_status' => $post_status,
+		'post_type'      => 'mesh_section',
+		'post_status'    => $post_status,
 		'posts_per_page' => $number_needed,
-		'orderby' => 'menu_order',
-		'order' => 'ASC',
-		'post_parent' => (int) $section_id,
+		'orderby'        => 'menu_order',
+		'order'          => 'ASC',
+		'post_parent'    => (int) $section_id,
 	);
 
 	if ( isset( $_GET['preview_id'] ) && isset( $_GET['preview_nonce'] ) ) { // Input var okay.
@@ -464,7 +463,7 @@ function mesh_get_section_blocks( $section_id, $post_status = 'publish', $number
 function mesh_cleanup_section_blocks( $section, $number_needed = 0 ) {
 
 	$blocks = mesh_get_section_blocks( $section->ID, array( 'publish', 'draft' ) );
-	$count = count( $blocks );
+	$count  = count( $blocks );
 
 	// Create enough blocks to fill the section.
 	if ( $count < $number_needed ) {
@@ -508,8 +507,8 @@ function mesh_maybe_create_section_blocks( $section, $number_needed = 0 ) {
 	}
 
 	$blocks = mesh_get_section_blocks( $section->ID, array( 'publish', 'draft' ) );
-	$count = count( $blocks );
-	$start = $count;
+	$count  = count( $blocks );
+	$start  = $count;
 
 	if ( $count < $number_needed ) {
 
@@ -536,7 +535,7 @@ function mesh_maybe_create_section_blocks( $section, $number_needed = 0 ) {
 
 		while ( $total > $number_needed ) {
 			wp_update_post( array(
-				'ID' => $blocks[ $total - 1 ]->ID,
+				'ID'          => $blocks[ $total - 1 ]->ID,
 				'post_status' => 'draft',
 			) );
 
@@ -547,7 +546,7 @@ function mesh_maybe_create_section_blocks( $section, $number_needed = 0 ) {
 		$start = 0;
 		while ( $start < $number_needed ) {
 			wp_update_post(array(
-				'ID' => $blocks[ $start ]->ID,
+				'ID'          => $blocks[ $start ]->ID,
 				'post_status' => $section->post_status,
 			) );
 

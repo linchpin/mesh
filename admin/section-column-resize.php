@@ -14,7 +14,7 @@ if ( ! function_exists( 'add_action' ) ) {
 	exit;
 }
 
-$mesh_controls = new Mesh_Controls();
+$mesh_controls  = new Mesh_Controls();
 $block_settings = $mesh_controls->get_block_settings();
 
 // If the template doesn't have any blocks make sure it has 1.
