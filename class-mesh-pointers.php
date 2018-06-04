@@ -14,20 +14,20 @@ class Mesh_Admin_Pointers {
 	/**
 	 * Mesh_Admin_Pointers constructor.
 	 */
-	function __construct() {
-		add_action( 'admin_enqueue_scripts',     array( $this, 'admin_enqueue_scripts' ) );
+	public function __construct() {
+		add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ) );
 
 		// @todo this filter needs to support multiple post types
 		add_filter( 'mesh_admin_pointers-page', array( $this, 'register_pointers' ) );
 
 		// Output our pointer data.
-		add_filter( 'mesh_data',               array( $this, 'add_pointers' ), 1000, 1 );
+		add_filter( 'mesh_data', array( $this, 'add_pointers' ), 1000, 1 );
 	}
 
 	/**
 	 * Add our pointer styles
 	 */
-	function admin_enqueue_scripts() {
+	public function admin_enqueue_scripts() {
 		// Add pointers style to queue.
 		wp_enqueue_style( 'wp-pointer' );
 	}
@@ -39,14 +39,14 @@ class Mesh_Admin_Pointers {
 	 *
 	 * @return array
 	 */
-	function add_pointers( $localized_data = array() ) {
+	public function add_pointers( $localized_data = array() ) {
 
 		// Don't run on WP < 3.3.
 		if ( get_bloginfo( 'version' ) < '3.3' ) {
 			return $localized_data;
 		}
 
-		$screen = get_current_screen();
+		$screen    = get_current_screen();
 		$screen_id = $screen->id;
 
 		// Get pointers for this screen.
@@ -91,44 +91,44 @@ class Mesh_Admin_Pointers {
 	 *
 	 * @return mixed
 	 */
-	function register_pointers( $p ) {
+	public function register_pointers( $p ) {
 		$p['all_section_options'] = array(
-			'target' => '.mesh-more-section-options:first',
+			'target'  => '.mesh-more-section-options:first',
 			'options' => array(
-				'content' => sprintf( '<h3> %s </h3> <p> %s </p>',
-					__( 'Section Options' ,'mesh' ),
-					__( 'View all section options by click the "More Options" toggle.','mesh' )
+				'content'  => sprintf( '<h3> %s </h3> <p> %s </p>',
+					esc_html__( 'Section Options', 'mesh' ),
+					esc_html__( 'View all section options by click the "More Options" toggle.', 'mesh' )
 				),
 				'position' => array(
-					'edge' => 'bottom',
+					'edge'  => 'bottom',
 					'align' => 'left',
 				),
 			),
 		);
 
 		$p['offset'] = array(
-			'target' => '.mesh-column-offset:first',
+			'target'  => '.mesh-column-offset:first',
 			'options' => array(
-				'content' => sprintf( '<h3> %s </h3> <p> %s </p>',
-					__( 'What is an offset?' ,'mesh' ),
-					__( 'If using Foundation, an offset will indent your column by the amount of columns selected in the dropdown menu.', 'mesh' )
+				'content'  => sprintf( '<h3> %s </h3> <p> %s </p>',
+					esc_html__( 'What is an offset?', 'mesh' ),
+					esc_html__( 'If using Foundation, an offset will indent your column by the amount of columns selected in the dropdown menu.', 'mesh' )
 				),
 				'position' => array(
-					'edge' => 'bottom',
+					'edge'  => 'bottom',
 					'align' => 'left',
 				),
 			),
 		);
 
 		$p['column_slider'] = array(
-			'target' => '.mesh-editor-blocks .the-mover:first',
+			'target'  => '.mesh-editor-blocks .the-mover:first',
 			'options' => array(
-				'content' => sprintf( '<h3> %s </h3> <p> %s </p>',
-					__( 'Rearrange Columns', 'mesh' ),
-					__( 'Use this handle to click and drag this column, giving you the ability to swap columns on the fly.', 'mesh' )
+				'content'      => sprintf( '<h3> %s </h3> <p> %s </p>',
+					esc_html__( 'Rearrange Columns', 'mesh' ),
+					esc_html__( 'Use this handle to click and drag this column, giving you the ability to swap columns on the fly.', 'mesh' )
 				),
-				'position' => array(
-					'edge' => 'left',
+				'position'     => array(
+					'edge'  => 'left',
 					'align' => 'top',
 				),
 				'pointerClass' => 'wp-pointer mesh-pointer-top-left',
