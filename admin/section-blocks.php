@@ -128,16 +128,16 @@ $remaining_columns     = $block_settings['max_columns'];
 											<div class="<?php echo esc_attr( $section_background_class ); ?>">
 												<div class="choose-image">
 													<?php if ( empty( $featured_image_id ) ) : ?>
-														<a class="mesh-featured-image-choose"><?php esc_attr_e( 'Set Background Image', 'mesh' ); ?></a>
+														<a class="mesh-block-featured-image-choose"><?php esc_attr_e( 'Set Background Image', 'mesh' ); ?></a>
 													<?php else : ?>
 														<?php
 														$featured_image = wp_get_attachment_image_src( $featured_image_id, array( 160, 60 ) );
 														?>
-														<a class="mesh-featured-image-choose right" data-mesh-featured-image="<?php echo esc_attr( $featured_image_id ); ?>">
+														<a class="mesh-block-featured-image-choose right" data-mesh-featured-image="<?php echo esc_attr( $featured_image_id ); ?>">
 															<img src="<?php echo esc_attr( $featured_image[0] ); ?>"/></a>
-														<a class="mesh-featured-image-trash dashicons-before dashicons-dismiss" data-mesh-featured-image="<?php echo esc_attr( $featured_image_id ); ?>"></a>
+														<a class="mesh-block-featured-image-trash dashicons-before dashicons-dismiss" data-mesh-featured-image="<?php echo esc_attr( $featured_image_id ); ?>"></a>
 													<?php endif; ?>
-													<input type="hidden" name="mesh-sections[<?php echo esc_attr( $section->ID ); ?>][blocks][<?php echo esc_attr( $blocks[ $block_increment ]->ID ); ?>][<?php echo esc_attr( 'featured_image' ); ?>]" value="<?php echo esc_attr( $featured_image_id ); ?>"/>
+													<input type="hidden" name="mesh-sections[<?php echo esc_attr( $section->ID ); ?>][blocks][<?php echo esc_attr( $blocks[ $block_increment ]->ID ); ?>][featured_image]" value="<?php echo esc_attr( $featured_image_id ); ?>"/>
 												</div>
 											</div>
 										<?php endif; ?>
