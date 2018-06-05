@@ -479,22 +479,21 @@ mesh.blocks = function ($) {
 						'class': 'mesh-block-featured-image-trash dashicons-before dashicons-dismiss'
 					});
 
-				$.post(ajaxurl, {
-					'action': 'mesh_update_featured_image',
-					'mesh_section_id': parseInt(section_id),
-					'mesh_image_id': parseInt(media_attachment.id),
-					'mesh_featured_image_nonce': mesh_data.featured_image_nonce
-				}, function (response) {
-					if (response != -1) {
-						current_image = media_attachment.id;
-						$button
-							.html('<img src="' + media_attachment.url + '" />')
-							.attr('data-mesh-block-featured-image', parseInt(media_attachment.id))
-							.after($trash);
 
-                        $parent_container.addClass('has-background-set');
-					}
-				});
+                current_image = media_attachment.id;
+
+                var $img = $('<img />', {
+                    src: media_attachment.url
+                });
+
+                $button
+                    .html($img)
+                    .attr('data-mesh-section-featured-image', parseInt(media_attachment.id))
+                    .after($trash);
+
+                $parent_container.addClass('has-background-set');
+                // Add selected attachment id to input
+                $button.siblings('input[type="hidden"]').val(media_attachment.id);
 			});
 
 			// Now that everything has been set, let's open up the frame.
