@@ -137,7 +137,7 @@ $remaining_columns     = $block_settings['max_columns'];
 															<img src="<?php echo esc_attr( $featured_image[0] ); ?>"/></a>
 														<a class="mesh-block-featured-image-trash dashicons-before dashicons-dismiss" data-mesh-featured-image="<?php echo esc_attr( $featured_image_id ); ?>"></a>
 													<?php endif; ?>
-													<input type="hidden" name="mesh-sections[<?php echo esc_attr( $section->ID ); ?>][blocks][<?php echo esc_attr( $blocks[ $block_increment ]->ID ); ?>][featured_image]" value="<?php echo esc_attr( $featured_image_id ); ?>"/>
+													<input type="hidden" class="mesh-block-background-input" name="mesh-sections[<?php echo esc_attr( $section->ID ); ?>][blocks][<?php echo esc_attr( $blocks[ $block_increment ]->ID ); ?>][featured_image]" value="<?php echo esc_attr( $featured_image_id ); ?>"/>
 												</div>
 											</div>
 										<?php endif; ?>

@@ -435,7 +435,7 @@ mesh.blocks = function ($) {
 				$section = $button.parents('.block'),
 				section_id = parseInt($section.attr('data-mesh-block-id')),
 				frame_id = 'mesh-background-select-' + section_id,
-				current_image = $button.attr('data-mesh-block-featured-image'),
+				current_image = parseInt( $button.parent().find('.mesh-block-background-input').val() ),
                 $parent_container = $button.parents('.mesh-section-background');
 
 			admin.media_frames = admin.media_frames || [];
