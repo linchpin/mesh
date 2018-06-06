@@ -70,6 +70,7 @@ global $post;
 							   data-mesh-featured-image="<?php echo esc_attr( $featured_image_id ); ?>"></a>
 						<?php endif; ?>
 						<input type="hidden"
+							   class="mesh-section-background-input"
 							   name="mesh-sections[<?php echo esc_attr( $section->ID ); ?>][<?php echo esc_attr( 'featured_image' ); ?>]"
 							   value="<?php echo esc_attr( $featured_image_id ); ?>"/>
 					</div>
