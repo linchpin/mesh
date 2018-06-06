@@ -1,5 +1,15 @@
 # Change Log For Mesh
 
+## [1.2.5.2] - 2018-06-05
+
+### Fixes
+- Fixed some occurances were column BG images were not saving properly.
+
+## [1.2.5.1] - 2018-05-31
+
+### Fixes
+- Inadvertent display of section titles when you didn't want that.
+
 ## [1.2.5] - 2018-05-30
 
 ### Fixes

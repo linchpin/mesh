@@ -888,7 +888,7 @@ mesh.admin = function ($) {
 				$section = $button.parents('.mesh-postbox'),
 				section_id = parseInt($section.attr('data-mesh-section-id')),
 				frame_id = 'mesh-background-select-' + section_id,
-				current_image = $button.attr('data-mesh-section-featured-image'),
+				current_image = parseInt( $button.parent().find('.mesh-section-background-input').val() ),
 				$parent_container = $button.parents('.mesh-section-background');
 
 			// If the frame already exists, re-open it.
