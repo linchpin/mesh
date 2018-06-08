@@ -10,7 +10,13 @@
 /**
  * Mesh_AJAX class.
  */
-class Mesh_AJAX {
+namespace Mesh;
+
+/**
+ * Class AJAX
+ * @package Mesh
+ */
+class AJAX {
 
 	/**
 	 * __construct function.

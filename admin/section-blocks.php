@@ -12,15 +12,16 @@ if ( ! function_exists( 'add_action' ) ) {
 	exit;
 }
 
+global $post;
+
 $mesh_controls  = new Mesh_Controls();
 $block_settings = $mesh_controls->get_block_settings();
 
-global $post;
-
 $reference_template = has_term( 'reference', 'mesh_template_types', $post );
+$section_blocks     = (int) $templates[ $selected_template ]['blocks'];
 
 // If the template doesn't have any blocks make sure it has 1.
-if ( ! $section_blocks = (int) $templates[ $selected_template ]['blocks'] ) {
+if ( ! $section_blocks ) {
 	$section_blocks              = 1;
 	$multiple_child_blocks_class = '';
 } else {
@@ -44,7 +45,7 @@ $remaining_columns     = $block_settings['max_columns'];
 	<?php
 
 	if ( ! $reference_template ) {
-		include LINCHPIN_MESH___PLUGIN_DIR . 'admin/section-column-resize.php';
+		mesh_get_plugin_template( 'section-column-resize' );
 	}
 
 	while ( $block_increment < $section_blocks ) :

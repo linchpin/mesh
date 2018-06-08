@@ -27,8 +27,8 @@ class Mesh_Integrations {
 	/**
 	 * Mesh_Integrations constructor.
 	 */
-	function __construct() {
-		$this->integrations = Mesh::scandir( LINCHPIN_MESH___PLUGIN_DIR . '/integrations', 'php', 0, false );
+	public function __construct() {
+		$this->integrations = Mesh_FileSystem::scandir( LINCHPIN_MESH___PLUGIN_DIR . '/integrations', 'php', 0, false );
 
 		if ( ! empty( $this->integrations ) ) {
 			foreach ( $this->integrations as $file ) {

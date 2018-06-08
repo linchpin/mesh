@@ -52,6 +52,6 @@ if ( in_array( 'mesh-section-' . esc_attr( $section->ID ), $closed_metaboxes, tr
 	<span class="handlediv text-center"></span>
 	<div class="inside">
 		<?php $blocks = mesh_maybe_create_section_blocks( $section, $block_count ); ?>
-		<?php require LINCHPIN_MESH___PLUGIN_DIR . 'admin/section-inside.php'; ?>
+		<?php mesh_get_plugin_template( 'section-inside' ); ?>
 	</div>
 </div>

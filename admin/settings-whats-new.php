@@ -9,8 +9,8 @@
  */
 
 $safe_content = array(
-	'a' => array(
-		'href' => array(),
+	'a'    => array(
+		'href'  => array(),
 		'class' => array(),
 	),
 	'span' => array(
@@ -117,10 +117,10 @@ $safe_content = array(
 							<div class="bug-fix">
 								<h5 class="no-margin"><?php esc_html_e( 'While features are great, stability and bug fixes are equally important. Below are some of the items we tackled this release:', 'mesh' ); ?></h5>
 								<ul>
-									<li><?php esc_html_e( 'Quality of life fixes for UI.','mesh' ); ?></li>
-									<li><?php esc_html_e( 'Background images can now be removed on blocks!','mesh' ); ?></li>
-									<li><?php esc_html_e( 'Tons of refactoring for section and block option customization','mesh' ); ?></li>
-									<li><?php esc_html_e( 'Fixed offset selector being shown when it shouldn\'t be','mesh' ); ?></li>
+									<li><?php esc_html_e( 'Quality of life fixes for UI.', 'mesh' ); ?></li>
+									<li><?php esc_html_e( 'Background images can now be removed on blocks!', 'mesh' ); ?></li>
+									<li><?php esc_html_e( 'Tons of refactoring for section and block option customization', 'mesh' ); ?></li>
+									<li><?php esc_html_e( 'Fixed offset selector being shown when it shouldn\'t be', 'mesh' ); ?></li>
 								</ul>
 							</div>
 						</div>

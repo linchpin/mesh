@@ -12,13 +12,14 @@
 if ( ! function_exists( 'add_action' ) ) {
 	exit;
 }
+
+mesh_get_plugin_template( 'section-controls' );
 ?>
-<?php require LINCHPIN_MESH___PLUGIN_DIR . 'admin/section-controls.php'; ?>
 <div class="mesh-editor-blocks" id="mesh-sections-editor-<?php echo esc_attr( $section->ID ); ?>">
 <?php
 if ( ! empty( $blocks ) ) {
-	include LINCHPIN_MESH___PLUGIN_DIR . 'admin/section-blocks.php';
-	include LINCHPIN_MESH___PLUGIN_DIR . 'admin/section-template-warnings.php';
+	mesh_get_plugin_template( 'section-blocks' );
+	mesh_get_plugin_template( 'section-template-warnings' );
 } else {
 	esc_html_e( 'No Blocks Available', 'mesh' );
 }

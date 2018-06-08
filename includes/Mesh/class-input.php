@@ -7,8 +7,11 @@
  * @since       1.2.5
  */
 
+namespace Mesh;
+
 /**
- * Class Mesh_Inputs
+ * Class Mesh_Input
+ * @package Mesh
  */
 class Mesh_Input {
 

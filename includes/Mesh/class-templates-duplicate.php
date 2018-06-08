@@ -15,15 +15,17 @@
  * @subpackage Templates_Duplicate
  */
 
+namespace Mesh;
+
 /**
  * Class Mesh_Templates_Duplicate
  */
-class Mesh_Templates_Duplicate {
+class Templates_Duplicate {
 
 	/**
 	 * Mesh_Templates_Duplicate constructor.
 	 */
-	function __construct() {
+	public function __construct() {
 		// Duplicate Post Meta.
 		add_action( 'mesh_duplicate_template_section', array( $this, 'duplicate_post_meta' ), 10, 2 );
 
@@ -43,9 +45,9 @@ class Mesh_Templates_Duplicate {
 	 *
 	 * @return string
 	 */
-	function duplicate_sections( $template_id, $post_id, $include_drafts ) {
+	public function duplicate_sections( $template_id, $post_id, $include_drafts ) {
 
-		$template_id = absint( $template_id );
+		$template_id   = absint( $template_id );
 		$template_post = get_post( $template_id );
 
 		if ( ! empty( $template_post ) ) {
@@ -82,7 +84,7 @@ class Mesh_Templates_Duplicate {
 	 *
 	 * @return array $duplicate_children Array of IDs
 	 */
-	function duplicate_children( $new_id, $template_post, $include_drafts = false ) {
+	public function duplicate_children( $new_id, $template_post, $include_drafts = false ) {
 
 		$post_status = array(
 			'publish',
@@ -92,7 +94,7 @@ class Mesh_Templates_Duplicate {
 			$post_status[] = 'draft';
 		}
 
-		$children = new WP_Query( array(
+		$children = new \WP_Query( array(
 			'post_type'      => array( 'mesh_section', 'attachment' ),
 			'posts_per_page' => apply_filters( 'mesh_templates_per_page', 50 ),
 			'post_status'    => $post_status,
@@ -128,9 +130,9 @@ class Mesh_Templates_Duplicate {
 	 * @param object $post      Post Object.
 	 * @param string $parent_id Parent Post ID.
 	 *
-	 * @return int|mixed|WP_Error
+	 * @return int|mixed|\WP_Error
 	 */
-	function duplicate_section( $post, $parent_id = '' ) {
+	public function duplicate_section( $post, $parent_id = '' ) {
 
 		// Skip Revisions.
 		if ( wp_is_post_revision( $post ) || 'revision' === $post->post_type ) {
@@ -198,7 +200,7 @@ class Mesh_Templates_Duplicate {
 	 * @param int    $new_id New Post ID.
 	 * @param object $post   Post Object.
 	 */
-	function duplicate_taxonomies( $new_id, $post ) {
+	public function duplicate_taxonomies( $new_id, $post ) {
 		global $wpdb;
 
 		if ( isset( $wpdb->terms ) ) {
@@ -209,12 +211,12 @@ class Mesh_Templates_Duplicate {
 
 			foreach ( $taxonomies as $taxonomy ) {
 
-				$post_terms = wp_get_object_terms( $post->ID, $taxonomy,
+				$post_terms  = wp_get_object_terms( $post->ID, $taxonomy,
 					array(
 						'orderby' => 'term_order',
 					)
 				);
-				$terms = array();
+				$terms       = array();
 				$term_length = count( $post_terms );
 
 				for ( $i = 0; $i < $term_length; $i++ ) {
@@ -232,7 +234,7 @@ class Mesh_Templates_Duplicate {
 	 * @param int    $new_id New Post ID.
 	 * @param object $post   Original Post Object.
 	 */
-	function duplicate_post_meta( $new_id, $post ) {
+	public function duplicate_post_meta( $new_id, $post ) {
 		$post_meta_keys = get_post_custom_keys( $post->ID );
 
 		if ( empty( $post_meta_keys ) ) {

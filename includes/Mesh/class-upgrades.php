@@ -7,15 +7,18 @@
  * @subpackage Upgrades
  */
 
+namespace Mesh;
+
 // Make sure we don't expose any info if called directly.
 if ( ! function_exists( 'add_action' ) ) {
 	exit;
 }
 
 /**
- * Class Mesh_Upgrades
+ * Class Upgrades
+ * @package Mesh
  */
-class Mesh_Upgrades {
+class Upgrades {
 
 	/**
 	 * Mesh_Upgrades constructor.
@@ -197,6 +200,13 @@ class Mesh_Upgrades {
 		}
 	}
 
+	/**
+	 * Beg and plead with users for a review
+	 *
+	 * @since 1.2.5
+	 *
+	 * @return string
+	 */
 	public function show_review_nag() {
 		$mesh_settings = get_option( 'mesh_settings' );
 		$notifications = get_user_option( 'linchpin_mesh_notifications' );

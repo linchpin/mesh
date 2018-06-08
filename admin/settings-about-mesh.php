@@ -9,8 +9,8 @@
  */
 
 $safe_content = array(
-	'a' => array(
-		'href' => array(),
+	'a'    => array(
+		'href'  => array(),
 		'class' => array(),
 	),
 	'span' => array(

@@ -7,10 +7,13 @@
  * @since 1.2
  */
 
+namespace Mesh;
+
 /**
- * Class Mesh_Controls
+ * Class Controls
+ * @package Mesh
  */
-class Mesh_Controls {
+class Controls {
 
 	/**
 	 * @var array

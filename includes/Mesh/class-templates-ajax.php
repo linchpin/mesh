@@ -7,28 +7,33 @@
  * @subpackage Template_AJAX
  */
 
+namespace Mesh;
+
+use Mesh\Templates_Duplicate;
+
 /**
- * Mesh_Templates_AJAX class.
+ * Class Templates_AJAX
+ * @package Mesh
  */
-class Mesh_Templates_AJAX {
+class Templates_AJAX {
 
 	/**
 	 * __construct function.
 	 *
 	 * @access public
 	 */
-	function __construct() {
-		add_action( 'wp_ajax_mesh_list_templates',       array( $this, 'list_templates' ) );
-		add_action( 'wp_ajax_mesh_choose_template',      array( $this, 'choose_template' ) );
+	public function __construct() {
+		add_action( 'wp_ajax_mesh_list_templates', array( $this, 'list_templates' ) );
+		add_action( 'wp_ajax_mesh_choose_template', array( $this, 'choose_template' ) );
 
-		add_action( 'wp_ajax_mesh_remove_template',      array( $this, 'remove_template' ) );
+		add_action( 'wp_ajax_mesh_remove_template', array( $this, 'remove_template' ) );
 		add_action( 'wp_ajax_mesh_change_template_type', array( $this, 'change_template_type' ) );
 
 		add_action( 'wp_ajax_mesh_apply_template_changes', array( $this, 'apply_template_changes' ) );
 
 		add_action( 'wp_ajax_mesh_template_update_welcome_panel', array( $this, 'update_welcome_panel' ) );
 
-		include_once LINCHPIN_MESH___PLUGIN_DIR . '/class.mesh-templates-duplicate.php';
+		// include_once LINCHPIN_MESH___PLUGIN_DIR . '/includes/Mesh/class-templates-duplicate.php';
 	}
 
 	/**
@@ -36,7 +41,7 @@ class Mesh_Templates_AJAX {
 	 *
 	 * @since 1.1
 	 */
-	function apply_template_changes() {
+	public function apply_template_changes() {
 
 		check_ajax_referer( 'mesh_choose_template_nonce', 'mesh_choose_template_nonce' );
 
@@ -54,7 +59,7 @@ class Mesh_Templates_AJAX {
 
 		$available_post_types = get_option( 'mesh_post_types', array() );
 
-		$template_references = new WP_Query( array(
+		$template_references = new \WP_Query( array(
 			'post_type' => $available_post_types,
 			'tax_query' => array( // WPCS: slow query ok.
 				'relation' => 'AND',
@@ -91,7 +96,7 @@ class Mesh_Templates_AJAX {
 	 *
 	 * @since 1.1
 	 */
-	function update_welcome_panel() {
+	public function update_welcome_panel() {
 
 		check_ajax_referer( 'meshtemplatepanelnonce', 'meshtemplatepanelnonce' );
 
@@ -111,7 +116,7 @@ class Mesh_Templates_AJAX {
 	 *
 	 * @since 1.1
 	 */
-	function list_templates() {
+	public function list_templates() {
 
 		check_ajax_referer( 'mesh_choose_template_nonce', 'mesh_choose_template_nonce' );
 
@@ -121,7 +126,7 @@ class Mesh_Templates_AJAX {
 
 		global $post;
 
-		$mesh_templates = new WP_Query( array(
+		$mesh_templates = new \WP_Query( array(
 			'post_type'      => 'mesh_template',
 			'posts_per_page' => apply_filters( 'mesh_templates_per_page', 50 ),
 			'no_found_rows'  => true,
@@ -129,7 +134,7 @@ class Mesh_Templates_AJAX {
 		) );
 
 		$mesh_template_selectable = true;
-		$default_template = false;
+		$default_template         = false;
 
 		if ( $mesh_templates->have_posts() ) {
 			while ( $mesh_templates->have_posts() ) {
@@ -138,7 +143,7 @@ class Mesh_Templates_AJAX {
 				$mesh_templates->the_post();
 
 				$mesh_template_title = get_the_title( $post->ID );
-				$mesh_template_id = $post->ID;
+				$mesh_template_id    = $post->ID;
 
 				$layout = get_post_meta( $post->ID, '_mesh_template_layout', true );
 
@@ -147,18 +152,21 @@ class Mesh_Templates_AJAX {
 					continue;
 				}
 
-				include LINCHPIN_MESH___PLUGIN_DIR . 'admin/template-layout-preview.php';
+				mesh_get_plugin_template( 'template-layout-preview' );
 			}
 
 			$mesh_template_title = esc_html__( 'Blank Template', 'mesh' );
 			$mesh_template_id    = 'blank';
-			$layout              = array();
+
+			$layout                          = array();
 			$layout['row-blank']['blocks'][] = array(
 				'columns' => 12,
-				'offset' => 0,
+				'offset'  => 0,
 			);
+
 			$default_template = true;
-			include LINCHPIN_MESH___PLUGIN_DIR . 'admin/template-layout-preview.php';
+
+			mesh_get_plugin_template( 'template-layout-preview' );
 
 			wp_reset_postdata();
 		} else {
@@ -170,7 +178,7 @@ class Mesh_Templates_AJAX {
 		</p>
 		<?php
 
-		include LINCHPIN_MESH___PLUGIN_DIR . 'admin/template-layout-usage.php';
+		mesh_get_plugin_template( 'template-layout-usage' );
 
 		wp_die();
 	}
@@ -184,7 +192,7 @@ class Mesh_Templates_AJAX {
 	 *
 	 * @since 1.1
 	 */
-	function choose_template() {
+	public function choose_template() {
 		check_ajax_referer( 'mesh_choose_template_nonce', 'mesh_choose_template_nonce' );
 
 		$post_id            = ( isset( $_POST['mesh_post_id'] ) && '' !== $_POST['mesh_post_id'] ) ? absint( $_POST['mesh_post_id'] ) : 0; // Input var okay.
@@ -203,9 +211,9 @@ class Mesh_Templates_AJAX {
 			wp_set_object_terms( $post_id, array( $mesh_template->post_name ), 'mesh_template_usage', false );
 
 			$template_terms = get_terms( array(
-				'taxonomy' => 'mesh_template_types',
+				'taxonomy'   => 'mesh_template_types',
 				'hide_empty' => false,
-				'fields' => 'id=>slug',
+				'fields'     => 'id=>slug',
 			) );
 
 			if ( in_array( $mesh_template_type, $template_terms, true ) ) {
@@ -215,14 +223,14 @@ class Mesh_Templates_AJAX {
 				wp_set_object_terms( $post_id, 'starter', 'mesh_template_types', false );
 			}
 
-			$mesh_templates_duplicate = new Mesh_Templates_Duplicate();
+			$mesh_templates_duplicate = new Templates_Duplicate();
 
-			$duplicate_sections = $mesh_templates_duplicate->duplicate_sections( $mesh_template_id, $post_id );
+			$duplicate_sections = $mesh_templates_duplicate->duplicate_sections( $mesh_template_id, $post_id, false );
 
 			if ( ! empty( $duplicate_sections ) ) {
 				echo wp_kses( $duplicate_sections, Mesh::get_admin_template_kses() );
 			} else {
-				echo 'did not duplicate sections';
+				esc_html_e( 'did not duplicate sections', 'mesh' );
 			}
 		}
 		exit;

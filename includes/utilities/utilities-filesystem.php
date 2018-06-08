@@ -94,3 +94,33 @@ function mesh_locate_template_files() {
 
 	return $section_templates;
 }
+
+/**
+ * Get our admin templates. Only file name is needed
+ * no extension is required
+ *
+ * @since 1.3
+ *
+ * @param $template
+ *
+ * @return mixed|bool
+ */
+function mesh_get_plugin_template( $template ) {
+
+	if ( empty( $template ) ) {
+		return false;
+	}
+
+	$path = sprintf(
+		'%s/admin/%s.php',
+		LINCHPIN_MESH___PLUGIN_DIR,
+		sanitize_title( $template )
+	);
+
+	if ( file_exists( $path ) ) {
+		require $path;
+		return true;
+	}
+
+	return false;
+}

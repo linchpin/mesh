@@ -6,8 +6,11 @@
  * @package Mesh
  */
 
+namespace Mesh;
+
 /**
  * Class Mesh
+ * @package Mesh
  */
 class Mesh {
 
@@ -60,7 +63,6 @@ class Mesh {
 		);
 
 		add_action( 'init', array( $this, 'init' ) );
-		add_action( 'admin_init', array( $this, 'admin_init' ) );
 
 		// Edit form is static so it can be called elsewhere.
 		add_action( 'edit_form_after_editor', array( 'Mesh', 'edit_page_form' ) );
@@ -85,8 +87,8 @@ class Mesh {
 		add_filter( 'edit_form_after_title', array( $this, 'output_debug_post_info' ) );
 
 		if ( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
-			include_once( 'class.mesh-ajax.php' );
-			include_once( 'class.mesh-templates-ajax.php' );
+			include_once 'class.mesh-ajax.php';
+			include_once 'class.mesh-templates-ajax.php';
 		}
 
 		// Adjust TinyMCE and Media buttons.
@@ -110,7 +112,7 @@ class Mesh {
 	 *
 	 * @return mixed
 	 */
-	function get_edit_post_link( $link, $post_id, $context ) {
+	public function get_edit_post_link( $link, $post_id, $context ) {
 		global $post;
 
 		if ( empty( $post->post_parent ) ) {
@@ -139,14 +141,14 @@ class Mesh {
 	/**
 	 * Output some useful information about posts.
 	 */
-	function output_debug_post_info() {
+	public function output_debug_post_info() {
 		global $post;
 	}
 
 	/**
 	 * Add Screen Options to the Plugin
 	 */
-	function admin_menu() {
+	public function admin_menu() {
 		add_action( 'load-post.php', array( $this, 'add_screen_options' ) );
 		add_filter( 'set-screen-option', array( $this, 'set_screen_option' ), 10, 3 );
 	}
@@ -162,7 +164,7 @@ class Mesh {
 	 *
 	 * @return mixed
 	 */
-	function set_screen_option( $status, $option, $value ) {
+	public function set_screen_option( $status, $option, $value ) {
 		if ( 'linchpin_mesh_section_kitchensink' === $option ) {
 			return $value;
 		}
@@ -175,7 +177,7 @@ class Mesh {
 	 *
 	 * @since 0.4.4
 	 */
-	function add_screen_options() {
+	public function add_screen_options() {
 		$screen = get_current_screen();
 
 		if ( ! is_object( $screen ) || 'page' !== $screen->id ) {
@@ -198,7 +200,7 @@ class Mesh {
 	 *
 	 * @return array $in Input Object
 	 */
-	function tiny_mce_before_init( $in ) {
+	public function tiny_mce_before_init( $in ) {
 
 		global $post;
 
@@ -247,7 +249,7 @@ class Mesh {
 	 * @access public
 	 * @return void
 	 */
-	function init() {
+	public function init() {
 
 		load_plugin_textdomain( 'mesh', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
 
@@ -294,19 +296,6 @@ class Mesh {
 			'show_ui'             => LINCHPIN_MESH_DEBUG_MODE,
 			'rewrite'             => false,
 		) );
-	}
-
-	/**
-	 * The first time the plugin is activated, we need to add some default options.
-	 */
-	function admin_init() {
-		if ( false === get_option( 'mesh_version' ) ) {
-			update_option( 'mesh_post_types', array(
-				'page' => 1,
-				'mesh_template' => 1,
-			) );
-			update_option( 'mesh_version', LINCHPIN_MESH_VERSION );
-		}
 	}
 
 	/**
@@ -1060,55 +1049,6 @@ class Mesh {
 	}
 
 	/**
-	 * Scan directory for files.
-	 *
-	 * @param string $path          Path to file.
-	 * @param null   $extensions    Allow file extensions.
-	 * @param int    $depth         Depth to search within directory structure.
-	 * @param string $relative_path Use relative paths.
-	 *
-	 * @return array|bool
-	 */
-	public static function scandir( $path, $extensions = null, $depth = 0, $relative_path = '' ) {
-		if ( ! is_dir( $path ) ) {
-			return false;
-		}
-
-		$_extensions = '';
-
-		if ( $extensions ) {
-			$extensions  = (array) $extensions;
-			$_extensions = implode( '|', $extensions );
-		}
-
-		$relative_path = trailingslashit( $relative_path );
-
-		if ( '/' === $relative_path ) {
-			$relative_path = '';
-		}
-
-		$results = scandir( $path );
-		$files   = array();
-
-		foreach ( $results as $result ) {
-			if ( '.' === $result[0] ) {
-				continue;
-			}
-			if ( is_dir( $path . '/' . $result ) ) {
-				if ( ! $depth || 'CVS' === $result ) {
-					continue;
-				}
-				$found = self::scandir( $path . '/' . $result, $extensions, $depth - 1, $relative_path . $result );
-				$files = array_merge_recursive( $files, $found );
-			} elseif ( ! $extensions || preg_match( '~\.(' . $_extensions . ')$~', $result ) ) {
-				$files[ $relative_path . $result ] = $path . '/' . $result;
-			}
-		}
-
-		return $files;
-	}
-
-	/**
 	 * Return a list of valid admin markup kses passing elements.
 	 *
 	 * @since 1.1
@@ -1116,13 +1056,13 @@ class Mesh {
 	 */
 	public static function get_admin_template_kses() {
 		return array(
-			'div' => array(
+			'div'    => array(
 				'class'     => array(),
 				'id'        => array(),
 				'data-type' => array(),
 				'style'     => array(),
 			),
-			'a' => array(
+			'a'      => array(
 				'href'  => array(),
 				'title' => array(),
 				'class' => array(),

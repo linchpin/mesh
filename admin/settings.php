@@ -83,9 +83,9 @@ $parsedown = new Parsedown();
 					?>
 					</div>
 				<?php elseif ( 'about' === $active_tab ) : ?>
-					<?php include_once LINCHPIN_MESH___PLUGIN_DIR . '/admin/settings-about-mesh.php'; ?>
+					<?php mesh_get_plugin_template( 'settings-about-mesh' ); ?>
 				<?php elseif ( 'new' === $active_tab ) : ?>
-					<?php include_once LINCHPIN_MESH___PLUGIN_DIR . '/admin/settings-whats-new.php'; ?>
+					<?php mesh_get_plugin_template( 'settings-whats-new' ); ?>
 				<?php else : ?>
 					<?php do_action( 'mesh_setting_' . $active_tab ); ?>
 				<?php endif; ?>

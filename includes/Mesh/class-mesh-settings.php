@@ -7,15 +7,18 @@
  * @subpackage Settings
  */
 
+namespace Mesh;
+
 // Make sure we don't expose any info if called directly.
 if ( ! function_exists( 'add_action' ) ) {
 	exit;
 }
 
 /**
- * Class Mesh_Settings
+ * Class Settings
+ * @package Mesh
  */
-class Mesh_Settings {
+class Settings {
 
 	/**
 	 * Define our settings page
@@ -40,7 +43,7 @@ class Mesh_Settings {
 		add_action( 'admin_menu', array( 'Mesh_Settings', 'add_admin_menu' ) );
 		add_action( 'admin_init', array( 'Mesh_Settings', 'settings_init' ) );
 
-		add_filter( 'plugin_action_links', array( 'Mesh_Settings', 'add_settings_link' ), 10, 5 );
+		add_filter( 'plugin_action_links', array( 'Settings', 'add_settings_link' ), 10, 5 );
 	}
 
 	/**
@@ -61,7 +64,7 @@ class Mesh_Settings {
 		if ( $plugin === $plugin_file ) {
 
 			$settings  = array( 'settings' => '<a href="options-general.php?page=mesh">' . esc_html__( 'Settings', 'mesh' ) . '</a>' );
-			$site_link = array( 'faq' => '<a href="https://meshplugin.com/knowledgebase/" target="_blank">' . esc_html__( 'FAQ', 'mesh' ) . '</a>');
+			$site_link = array( 'faq' => '<a href="https://meshplugin.com/knowledgebase/" target="_blank">' . esc_html__( 'FAQ', 'mesh' ) . '</a>' );
 
 			$actions = array_merge( $settings, $actions );
 			$actions = array_merge( $site_link, $actions );
@@ -118,14 +121,14 @@ class Mesh_Settings {
 	 */
 	public static function validate_mesh_post_types( $input ) {
 		$message = '';
-		$type = '';
+		$type    = '';
 
 		if ( null !== $input ) {
 			$message = esc_html__( 'Mesh Settings Saved.', 'mesh' );
-			$type = 'updated';
+			$type    = 'updated';
 		} else {
 			$message = esc_html__( 'Mesh Settings Saved. You have disabled all post types. We suggest disabling the plugin if it is no longer needed', 'mesh' );
-			$type = 'updated';
+			$type    = 'updated';
 		}
 
 		add_settings_error( 'mesh_post_types', 'mesh_post_types_notice', $message, $type );
@@ -209,10 +212,10 @@ class Mesh_Settings {
 			self::$settings_page,
 			'mesh_sections',
 			array(
-				'field' => 'css_mode',
-				'label' => esc_html__( 'CSS', 'mesh' ),
+				'field'       => 'css_mode',
+				'label'       => esc_html__( 'CSS', 'mesh' ),
 				'description' => esc_html__( 'Choose whether or not to enqueue CSS with Mesh. You can also select which responsive framework you are using Foundation, Bootstrap or custom (using hooks)', 'mesh' ),
-				'options' => $css_mode,
+				'options'     => $css_mode,
 			)
 		);
 
@@ -245,10 +248,10 @@ class Mesh_Settings {
 			self::$settings_page,
 			'mesh_sections',
 			array(
-				'field' => 'foundation_version',
-				'label' => esc_html__( 'Foundation Version', 'mesh' ),
+				'field'       => 'foundation_version',
+				'label'       => esc_html__( 'Foundation Version', 'mesh' ),
 				'description' => esc_html__( 'Choose which version of Foundation you are using. Foundation 5 and 6 have subtle yet important differences when it comes to markup for components like interchange that Mesh utilizes.', 'mesh' ),
-				'options' => $foundation_version,
+				'options'     => $foundation_version,
 			)
 		);
 
@@ -261,11 +264,11 @@ class Mesh_Settings {
 			self::$settings_page,
 			'mesh_sections',
 			array(
-				'field' => 'grid_system',
-				'label' => esc_html__( 'Foundation Grid System', 'mesh' ),
+				'field'       => 'grid_system',
+				'label'       => esc_html__( 'Foundation Grid System', 'mesh' ),
 				'description' => esc_html__( 'Choose which version of Foundation Flexbox you are using: Flexbox or XY-grid. Foundation 6.4.0 introduced new class names for row and columns: grid-x and cell.', 'mesh' ),
-				'options_cb' => array( 'Mesh_Settings', 'get_foundation_grid_systems' ),
-				'default' => 'float',
+				'options_cb'  => array( 'Mesh_Settings', 'get_foundation_grid_systems' ),
+				'default'     => 'float',
 			)
 		);
 
@@ -295,7 +298,7 @@ class Mesh_Settings {
 					self::$settings_page,
 					'mesh_post_type_section',
 					array(
-						'field'    => $post_type_object->name,
+						'field'   => $post_type_object->name,
 						'name'    => $post_type_object->labels->name,
 						'options' => 'mesh_post_types',
 					)
@@ -320,11 +323,11 @@ class Mesh_Settings {
 			self::$settings_page,
 			'mesh_uninstall',
 			array(
-				'options'     => 'mesh_settings',
-				'field'       => 'uninstall',
-				'label'       => esc_html__( 'Uninstall', 'mesh' ),
-				'type'        => $post_type_object->name,
-				'name'        => $post_type_object->labels->name,
+				'options' => 'mesh_settings',
+				'field'   => 'uninstall',
+				'label'   => esc_html__( 'Uninstall', 'mesh' ),
+				'type'    => $post_type_object->name,
+				'name'    => $post_type_object->labels->name,
 			)
 		);
 	}
@@ -334,13 +337,11 @@ class Mesh_Settings {
 	 */
 	public static function add_options_page() {
 
-		$tabs = self::get_tabs();
-
+		$tabs        = self::get_tabs();
 		$default_tab = self::get_default_tab_slug();
+		$active_tab  = isset( $_GET['tab'] ) && array_key_exists( sanitize_text_field( wp_unslash( $_GET['tab'] ) ), $tabs ) ? sanitize_text_field( wp_unslash( $_GET['tab'] ) ) : $default_tab; // WPCS: input var okay, CSRF ok.
 
-		$active_tab = isset( $_GET['tab'] ) && array_key_exists( sanitize_text_field( wp_unslash( $_GET['tab'] ) ), $tabs ) ? sanitize_text_field( wp_unslash( $_GET['tab'] ) ) : $default_tab; // WPCS: input var okay, CSRF ok.
-
-		include_once( LINCHPIN_MESH___PLUGIN_DIR . '/admin/settings.php' );
+		mesh_get_plugin_template( 'settings' );
 	}
 
 	/**
@@ -481,7 +482,7 @@ class Mesh_Settings {
 	 *
 	 * @return array
 	 */
-	static private function apply_tab_slug_filters( $default_settings ) {
+	private static function apply_tab_slug_filters( $default_settings ) {
 
 		$extended_settings[] = array();
 		$extended_tabs       = self::get_tabs();
@@ -501,7 +502,7 @@ class Mesh_Settings {
 	 *
 	 * @return mixed
 	 */
-	static public function get_default_tab_slug() {
+	public static function get_default_tab_slug() {
 		return key( self::get_tabs() );
 	}
 
@@ -511,9 +512,9 @@ class Mesh_Settings {
 	 * @since    1.0.0
 	 * @return   array $tabs Settings tabs
 	 */
-	static public function get_tabs() {
+	public static function get_tabs() {
 		$tabs = array(
-			'settings'  => esc_html__( 'Settings',   'mesh' ),
+			'settings'  => esc_html__( 'Settings', 'mesh' ),
 			'about'     => esc_html__( 'About Mesh', 'mesh' ),
 			'new'       => esc_html__( "What's New", 'mesh' ),
 			'changelog' => esc_html__( 'Change Log', 'mesh' ),

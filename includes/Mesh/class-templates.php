@@ -13,19 +13,24 @@
  * @since      1.1
  */
 
+namespace Mesh;
+
 // Make sure we don't expose any info if called directly.
 if ( ! function_exists( 'add_action' ) ) {
 	exit;
 }
 
+use Mesh\Templates_Duplicate;
+
 /**
- * Class Mesh_Templates
+ * Class Templates
+ * @package Mesh
  */
-class Mesh_Templates {
+class Templates {
 	/**
 	 * Store an instance of our Duplicate Class
 	 *
-	 * @var Mesh_Templates_Duplicate
+	 * @var Templates_Duplicate
 	 */
 	private $mesh_templates_duplicate;
 
@@ -40,8 +45,6 @@ class Mesh_Templates {
 		add_action( 'manage_mesh_template_posts_custom_column', array( $this, 'add_layout_column' ), 10, 2 );
 		add_filter( 'manage_mesh_template_posts_columns', array( $this, 'add_layout_columns' ) );
 
-		include LINCHPIN_MESH___PLUGIN_DIR . '/class.mesh-templates-duplicate.php';
-
 		add_action( 'load-edit.php', array( $this, 'admin_notices' ) );
 	}
 
@@ -50,7 +53,7 @@ class Mesh_Templates {
 	 *
 	 * @since 1.1
 	 */
-	function admin_notices() {
+	public function admin_notices() {
 
 		$screen = get_current_screen();
 
@@ -63,8 +66,8 @@ class Mesh_Templates {
 	/**
 	 * Output our welcome markup
 	 */
-	function welcome_message() {
-		include_once LINCHPIN_MESH___PLUGIN_DIR . 'admin/welcome.php';
+	public function welcome_message() {
+		mesh_get_plugin_template( 'welcome' );
 	}
 
 	/**
@@ -74,47 +77,47 @@ class Mesh_Templates {
 	 * @access public
 	 * @return void
 	 */
-	function init() {
+	public function init() {
 
 		$labels = array(
-			'name'                => esc_html_x( 'Mesh Templates', 'Mesh Templates', 'mesh' ),
-			'singular_name'       => esc_html_x( 'Mesh Template', 'Mesh Template', 'mesh' ),
-			'menu_name'           => esc_html__( 'Mesh', 'mesh' ),
-			'name_admin_bar'      => esc_html__( 'Mesh Template', 'mesh' ),
-			'parent_item_colon'   => esc_html__( 'Parent Mesh Template:', 'mesh' ),
-			'all_items'           => esc_html__( 'Mesh Templates', 'mesh' ),
-			'add_new_item'        => esc_html__( 'Add New Mesh Template', 'mesh' ),
-			'add_new'             => esc_html__( 'Add Template', 'mesh' ),
-			'new_item'            => esc_html__( 'New Mesh Template', 'mesh' ),
-			'edit_item'           => esc_html__( 'Edit Mesh Template', 'mesh' ),
-			'update_item'         => esc_html__( 'Update Mesh Template', 'mesh' ),
-			'view_item'           => esc_html__( 'View Mesh Template', 'mesh' ),
-			'search_items'        => esc_html__( 'Search Mesh Templates', 'mesh' ),
-			'not_found'           => esc_html__( 'Not found', 'mesh' ),
-			'not_found_in_trash'  => esc_html__( 'Not found in Trash', 'mesh' ),
+			'name'               => esc_html_x( 'Mesh Templates', 'Mesh Templates', 'mesh' ),
+			'singular_name'      => esc_html_x( 'Mesh Template', 'Mesh Template', 'mesh' ),
+			'menu_name'          => esc_html__( 'Mesh', 'mesh' ),
+			'name_admin_bar'     => esc_html__( 'Mesh Template', 'mesh' ),
+			'parent_item_colon'  => esc_html__( 'Parent Mesh Template:', 'mesh' ),
+			'all_items'          => esc_html__( 'Mesh Templates', 'mesh' ),
+			'add_new_item'       => esc_html__( 'Add New Mesh Template', 'mesh' ),
+			'add_new'            => esc_html__( 'Add Template', 'mesh' ),
+			'new_item'           => esc_html__( 'New Mesh Template', 'mesh' ),
+			'edit_item'          => esc_html__( 'Edit Mesh Template', 'mesh' ),
+			'update_item'        => esc_html__( 'Update Mesh Template', 'mesh' ),
+			'view_item'          => esc_html__( 'View Mesh Template', 'mesh' ),
+			'search_items'       => esc_html__( 'Search Mesh Templates', 'mesh' ),
+			'not_found'          => esc_html__( 'Not found', 'mesh' ),
+			'not_found_in_trash' => esc_html__( 'Not found in Trash', 'mesh' ),
 		);
 
 		register_post_type( 'mesh_template', array(
 			'label'               => esc_html__( 'Mesh Template', 'mesh' ),
 			'description'         => esc_html__( 'Mesh Template', 'mesh' ),
 			'labels'              => $labels,
-			'public' => false,
-			'hierarchical' => true,
-			'supports' => array( 'title', 'editor' ),
-			'capability_type' => 'post',
-			'has_archive' => false,
-			'show_in_menus' => false,
-			'show_in_nav_menus' => false,
+			'public'              => false,
+			'hierarchical'        => true,
+			'supports'            => array( 'title', 'editor' ),
+			'capability_type'     => 'post',
+			'has_archive'         => false,
+			'show_in_menus'       => false,
+			'show_in_nav_menus'   => false,
 			'exclude_from_search' => true,
-			'publicly_queryable' => false,
-			'menu_icon' => 'dashicons-mesh-logo',
-			'show_ui' => true,
-			'rewrite' => false,
+			'publicly_queryable'  => false,
+			'menu_icon'           => 'dashicons-mesh-logo',
+			'show_ui'             => true,
+			'rewrite'             => false,
 		) );
 
 		// Using an extra variable for the array to support PHP 5.4.
 		$mesh_post_types_array = get_option( 'mesh_post_types', array() );
-		$mesh_post_types = array();
+		$mesh_post_types       = array();
 
 		if ( ! empty( $mesh_post_types_array ) ) {
 			$mesh_post_types = array_keys( $mesh_post_types_array );
@@ -123,7 +126,7 @@ class Mesh_Templates {
 		$available_post_types = array_merge( array( 'mesh_template' ), $mesh_post_types );
 
 		register_taxonomy( 'mesh_template_usage', $available_post_types, array(
-			'labels' => array(
+			'labels'            => array(
 				'name'              => esc_html_x( 'Mesh Template', 'Mesh Template', 'mesh' ),
 				'singular_name'     => esc_html_x( 'Mesh Template', 'Mesh Template', 'mesh' ),
 				'search_items'      => esc_html__( 'Search Mesh Template Usage', 'mesh' ),
@@ -136,14 +139,14 @@ class Mesh_Templates {
 				'new_item_name'     => esc_html__( 'New Mesh Template Usage Name', 'mesh' ),
 				'menu_name'         => esc_html__( 'Mesh Template Usage', 'mesh' ),
 			),
-			'show_ui' => LINCHPIN_MESH_DEBUG_MODE,
-			'query_var' => true,
-			'rewrite' => false,
+			'show_ui'           => LINCHPIN_MESH_DEBUG_MODE,
+			'query_var'         => true,
+			'rewrite'           => false,
 			'show_admin_column' => true,
 		) );
 
 		register_taxonomy( 'mesh_template_types', $available_post_types, array(
-			'labels' => array(
+			'labels'            => array(
 				'name'              => esc_html_x( 'Mesh Template Type', 'Mesh Template Type', 'mesh' ),
 				'singular_name'     => esc_html_x( 'Mesh Template Type', 'Mesh Template Type', 'mesh' ),
 				'search_items'      => esc_html__( 'Search Mesh Template Types', 'mesh' ),
@@ -156,10 +159,10 @@ class Mesh_Templates {
 				'new_item_name'     => esc_html__( 'New Mesh Template Type Name', 'mesh' ),
 				'menu_name'         => esc_html__( 'Mesh Template Type', 'mesh' ),
 			),
-			'show_ui' => LINCHPIN_MESH_DEBUG_MODE,
-			'rewrite' => false,
+			'show_ui'           => LINCHPIN_MESH_DEBUG_MODE,
+			'rewrite'           => false,
 			'show_in_nav_menus' => false,
-			'show_in_rest' => false,
+			'show_in_rest'      => false,
 			'show_admin_column' => false, // @todo this should be added back in, in a later version.
 		) );
 	}
@@ -411,7 +414,7 @@ class Mesh_Templates {
  * @param string $return_type Query or Array.
  * @param array  $statuses    Publish, Draft.
  *
- * @return array|WP_Query
+ * @return array|\WP_Query
  */
 function mesh_get_templates( $return_type = 'array', $statuses = array( 'publish' ) ) {
 	$template_query = new WP_Query( array(
@@ -432,4 +435,4 @@ function mesh_get_templates( $return_type = 'array', $statuses = array( 'publish
 	}
 }
 
-$mesh_templates = new Mesh_Templates();
+$mesh_templates = new Templates();

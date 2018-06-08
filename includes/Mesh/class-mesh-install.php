@@ -29,6 +29,20 @@ class Mesh_Install {
 		add_action( 'mesh_activate', array( $this, 'setup_activation' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ) );
 		add_action( 'admin_init', array( $this, 'show_welcome' ) );
+		add_action( 'admin_init', array( $this, 'setup_default_options' ) );
+	}
+
+	/**
+	 * The first time the plugin is activated, we need to add some default options.
+	 */
+	public function setup_default_options() {
+		if ( $this->is_first_install() ) {
+			update_option( 'mesh_post_types', array(
+				'page'          => 1,
+				'mesh_template' => 1,
+			) );
+			update_option( 'mesh_version', LINCHPIN_MESH_VERSION );
+		}
 	}
 
 	/**
