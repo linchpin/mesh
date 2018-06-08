@@ -1,5 +1,16 @@
 # Change Log For Mesh
 
+## [1.2.5.3] - 2018-06-08
+
+### Fixes
+- Fixed a minor issue with column centering using default mesh styles
+- Fixed a minor typo in the changelog
+
+## [1.2.5.2] - 2018-06-05
+
+### Fixes
+- Fixed some occurrences were column BG images were not saving properly.
+
 ## [1.2.5.1] - 2018-05-31
 
 ### Fixes
