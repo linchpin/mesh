@@ -456,6 +456,7 @@ function mesh_block_class( $block_id, $args = array() ) {
 	$grid            = mesh_get_responsive_grid();
 	$column_width    = (int) get_post_meta( $block_id, '_mesh_column_width', true );
 	$block_css_class = get_post_meta( $block_id, '_mesh_css_class', true );
+	$block_centered  = get_post_meta( $block_id, '_mesh_centered', true );
 	$block_offset    = (int) get_post_meta( $block_id, '_mesh_offset', true );
 
 	// Define our column width
@@ -493,6 +494,10 @@ function mesh_block_class( $block_id, $args = array() ) {
 				$classes[] = $grid['columns']['medium'] . '-' . $push_or_pull . '-' . ( $args['max_columns'] - $args['column_width'] );
 			}
 		}
+	}
+
+	if ( ! empty( $block_centered ) ) {
+		$classes[] = $grid['columns']['medium'] . '-centered';
 	}
 
 	$classes = apply_filters( 'mesh_column_classes', $classes, $block_id );
@@ -650,7 +655,7 @@ function mesh_section_background( $post_id = 0, $echo = true, $size_large = 'lar
 			switch ( $foundation_version ) {
 				case 6:
 					$interchange_format = '[%s, %s]';
-				break;
+					break;
 				default:
 					$interchange_format = '[%s, (%s)]';
 			}

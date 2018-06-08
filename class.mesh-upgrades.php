@@ -49,8 +49,8 @@ class Mesh_Upgrades {
 			}
 
 			// Latest Version
-			if ( version_compare( $GLOBALS['mesh_current_version'], '1.2.5.2', '<' ) ) {
-				$this->update_version( '1.2.5.2' );
+			if ( version_compare( $GLOBALS['mesh_current_version'], '1.2.5.3', '<' ) ) {
+				$this->update_version( '1.2.5.3' );
 			}
 		}
 	}
@@ -148,7 +148,7 @@ class Mesh_Upgrades {
 		update_option( 'mesh_settings', $mesh_options );
 
 		// If for some reason we DO NOT have mesh_template enabled be sure we enable it again.
-		$available_post_types = get_option( 'mesh_post_types', array() );
+		$available_post_types                  = get_option( 'mesh_post_types', array() );
 		$available_post_types['mesh_template'] = 1;
 		update_option( 'mesh_post_types', $available_post_types );
 
@@ -217,6 +217,8 @@ class Mesh_Upgrades {
 		if ( false !== $mesh_settings && ( ! empty( $notifications['update-notice'] ) && empty( $notifications['review-notice'] ) ) ) {
 			include LINCHPIN_MESH___PLUGIN_DIR . 'admin/review-notice.php';
 		}
+
+		return '';
 	}
 }
 
