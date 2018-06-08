@@ -7,7 +7,7 @@ content by adding multiple content sections within Pages, Posts, or Custom
 
 [![Build Status](https://travis-ci.org/linchpin/mesh.svg?branch=master)](https://travis-ci.org/linchpin/mesh) [![Code Climate](https://codeclimate.com/github/linchpin/mesh/badges/gpa.svg)](https://codeclimate.com/github/linchpin/mesh)
 
-**Latest Release 1.2.5.2** on June 5th 2018. You can get the stable release in
+**Latest Release 1.2.5.3** on June 8th 2018. You can get the stable release in
  the master branch or install from [wordpress.org/plugins/mesh](https://wordpress.org/plugins/mesh)
 
 ## What is Mesh?
