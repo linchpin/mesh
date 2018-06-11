@@ -3,16 +3,18 @@
  * Handle everything related to Admin Pointers
  *
  * @package    Mesh
- * @subpackage Admin_Pointers
+ * @subpackage Pointers
  */
+
+namespace Mesh;
 
 /**
- * Class Mesh Pointers
+ * Class Pointers
+ * @package Mesh
  */
-class Mesh_Admin_Pointers {
-
+class Pointers {
 	/**
-	 * Mesh_Admin_Pointers constructor.
+	 * Pointers constructor.
 	 */
 	public function __construct() {
 		add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ) );

@@ -196,7 +196,7 @@ class Upgrades {
 		$notifications = get_user_option( 'linchpin_mesh_notifications' );
 
 		if ( false !== $mesh_settings && empty( $notifications['update-notice'] ) ) {
-			include LINCHPIN_MESH___PLUGIN_DIR . 'admin/upgrade-notice.php';
+			mesh_get_plugin_template( 'upgrade-notice' );
 		}
 	}
 
@@ -225,11 +225,11 @@ class Upgrades {
 		}
 
 		if ( false !== $mesh_settings && ( ! empty( $notifications['update-notice'] ) && empty( $notifications['review-notice'] ) ) ) {
-			include LINCHPIN_MESH___PLUGIN_DIR . 'admin/review-notice.php';
+			mesh_get_plugin_template( 'review-notice' );
 		}
 
 		return '';
 	}
 }
 
-$mesh_upgrades = new Mesh_Upgrades();
+$mesh_upgrades = new Upgrades();

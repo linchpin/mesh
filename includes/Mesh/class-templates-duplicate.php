@@ -127,8 +127,8 @@ class Templates_Duplicate {
 	/**
 	 * Duplicate the section
 	 *
-	 * @param object $post      Post Object.
-	 * @param string $parent_id Parent Post ID.
+	 * @param \WP_Post $post      Post Object.
+	 * @param string   $parent_id Parent Post ID.
 	 *
 	 * @return int|mixed|\WP_Error
 	 */
@@ -136,7 +136,7 @@ class Templates_Duplicate {
 
 		// Skip Revisions.
 		if ( wp_is_post_revision( $post ) || 'revision' === $post->post_type ) {
-			return;
+			return '';
 		}
 
 		$status = 'draft';

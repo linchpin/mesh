@@ -7,15 +7,18 @@
  * @subpackage Install
  */
 
+namespace Mesh;
+
 // Make sure we don't expose any info if called directly.
 if ( ! function_exists( 'add_action' ) ) {
 	exit;
 }
 
 /**
- * Class Mesh_Install
+ * Class Install
+ * @package Mesh
  */
-class Mesh_Install {
+class Install {
 
 	/**
 	 * Check to see if mesh has been installed before.

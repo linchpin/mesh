@@ -7,15 +7,18 @@
  * @subpackage Responsive_Grid
  */
 
+namespace Mesh;
+
 // Make sure we don't expose any info if called directly.
 if ( ! function_exists( 'add_action' ) ) {
 	exit;
 }
 
 /**
- * Class Mesh_Responsive_Grid
+ * Class Responsive_Grid
+ * @package Mesh
  */
-class Mesh_Responsive_Grid {
+class Responsive_Grid {
 
 	/**
 	 * Available Grid Systems,
@@ -155,26 +158,4 @@ class Mesh_Responsive_Grid {
 
 		return apply_filters( 'mesh_responsive_grid_systems', self::$grid_systems );
 	}
-}
-
-/**
- * Return a specific grid systems for usage in our templates.
- *
- * @since 1.2.5
- *
- * @return mixed
- */
-function mesh_get_responsive_grid() {
-	return Mesh_Responsive_Grid::get_responsive_grid();
-}
-
-/**
- * Get our list of filtered grid systems.
- *
- * @since 1.2.5
- *
- * @return array
- */
-function mesh_get_responsive_grid_systems() {
-	return Mesh_Responsive_Grid::get_grid_systems();
 }

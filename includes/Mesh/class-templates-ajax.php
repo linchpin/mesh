@@ -9,7 +9,7 @@
 
 namespace Mesh;
 
-use Mesh\Templates_Duplicate;
+use \Mesh\Templates_Duplicate;
 
 /**
  * Class Templates_AJAX
@@ -32,8 +32,6 @@ class Templates_AJAX {
 		add_action( 'wp_ajax_mesh_apply_template_changes', array( $this, 'apply_template_changes' ) );
 
 		add_action( 'wp_ajax_mesh_template_update_welcome_panel', array( $this, 'update_welcome_panel' ) );
-
-		// include_once LINCHPIN_MESH___PLUGIN_DIR . '/includes/Mesh/class-templates-duplicate.php';
 	}
 
 	/**
@@ -79,16 +77,6 @@ class Templates_AJAX {
 		if ( ! $template_references->have_posts() ) {
 			wp_die( -1 );
 		}
-
-		/*
-		 * @todo loop through all of our posts and get all the child sections.
-         *
-  		 * while( $template_references->have_posts() ) {
-         *
-         * }
-         *
-         */
-
 	}
 
 	/**
@@ -277,4 +265,4 @@ class Templates_AJAX {
 	}
 }
 
-$mesh_templates_ajax = new Mesh_Templates_AJAX();
+$mesh_templates_ajax = new Templates_AJAX();

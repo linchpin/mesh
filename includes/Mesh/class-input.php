@@ -13,7 +13,7 @@ namespace Mesh;
  * Class Mesh_Input
  * @package Mesh
  */
-class Mesh_Input {
+class Input {
 
 	/**
 	 * Define our standard set of inputs that we use within our controls.

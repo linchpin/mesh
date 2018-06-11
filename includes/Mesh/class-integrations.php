@@ -7,15 +7,20 @@
  * @subpackage Integrations
  */
 
+namespace Mesh;
+
+use \Mesh\FileSystem as FileSystem;
+
 // Make sure we don't expose any info if called directly.
 if ( ! function_exists( 'add_action' ) ) {
 	exit;
 }
 
 /**
- * Class Mesh_Integrations
+ * Class Integrations
+ * @package Mesh
  */
-class Mesh_Integrations {
+class Integrations {
 
 	/**
 	 * Store our integration
@@ -25,10 +30,10 @@ class Mesh_Integrations {
 	private $integrations;
 
 	/**
-	 * Mesh_Integrations constructor.
+	 * Integrations constructor.
 	 */
 	public function __construct() {
-		$this->integrations = Mesh_FileSystem::scandir( LINCHPIN_MESH___PLUGIN_DIR . '/integrations', 'php', 0, false );
+		$this->integrations = FileSystem::scandir( LINCHPIN_MESH___PLUGIN_DIR . '/integrations', 'php', 0, false );
 
 		if ( ! empty( $this->integrations ) ) {
 			foreach ( $this->integrations as $file ) {
@@ -42,4 +47,4 @@ class Mesh_Integrations {
 	}
 }
 
-$mesh_integrations = new Mesh_Integrations();
+$mesh_integrations = new Integrations();

@@ -186,7 +186,7 @@ class AJAX {
 		 * It's important to pass this to the admin to control if a
 		 * section's blocks have a post_status of publish or draft.
 		 */
-		include LINCHPIN_MESH___PLUGIN_DIR . '/admin/section-inside.php';
+		mesh_get_plugin_template( 'section-inside' );
 		$output = ob_get_contents();
 
 		ob_end_clean();
@@ -294,7 +294,8 @@ class AJAX {
 				wp_set_object_terms( $post_id, null, 'mesh_template_types' );
 				wp_set_object_terms( $post_id, null, 'mesh_template_usage' );
 
-				include LINCHPIN_MESH___PLUGIN_DIR . 'admin/sections-empty.php';
+				mesh_get_plugin_template( 'sections-empty' );
+
 				exit;
 			} else {
 				wp_die( 1 );
@@ -408,4 +409,4 @@ class AJAX {
 	}
 }
 
-$mesh_ajax = new Mesh_AJAX();
+$mesh_ajax = new AJAX();

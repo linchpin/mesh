@@ -9,6 +9,8 @@
 
 namespace Mesh;
 
+use \Mesh\Input as Input;
+
 /**
  * Class Controls
  * @package Mesh
@@ -94,7 +96,7 @@ class Controls {
 		$_block_settings = $this->get_block_settings();
 
 		$default_block_columns = $_block_settings['max_columns'] / $section_blocks;
-		$block_columns = get_post_meta( $block->ID, '_mesh_column_width', true );
+		$block_columns         = get_post_meta( $block->ID, '_mesh_column_width', true );
 
 		if ( empty( $block_columns ) ) {
 			$block_columns = $default_block_columns;
@@ -129,7 +131,7 @@ class Controls {
 	 *
 	 * @return array
 	 */
-	function get_offset_options( $block, $section_blocks ) {
+	public function get_offset_options( $block, $section_blocks ) {
 
 		$_block_settings = $this->get_block_settings();
 
@@ -189,8 +191,8 @@ class Controls {
 	 *
 	 * @return boolean
 	 */
-	function show_centered( $block, $section_blocks ) {
-		return  ( 1 === $section_blocks );
+	public function show_centered( $block, $section_blocks ) {
+		return ( 1 === $section_blocks );
 	}
 
 	/**
@@ -339,7 +341,7 @@ class Controls {
 					}
 
 					// Create our inputs.
-					Mesh_Input::get_input( $control['type'], $input_args, $input_value, true, $section, $blocks );
+					Input::get_input( $control['type'], $input_args, $input_value, true, $section, $blocks );
 					?>
 				</label>
 			</li>
@@ -454,19 +456,19 @@ class Controls {
 					</span>
 					<?php
 					$input_args = array(
-						'post_parent' => esc_attr( $block->post_parent ),
-						'block_id' => esc_attr( $block->ID ),
-						'post_meta_key' => esc_attr( $underscore_key ),
-						'input_type' => sanitize_title( $control['type'] ),
+						'post_parent'       => esc_attr( $block->post_parent ),
+						'block_id'          => esc_attr( $block->ID ),
+						'post_meta_key'     => esc_attr( $underscore_key ),
+						'input_type'        => sanitize_title( $control['type'] ),
 						'input_css_classes' => $css_classes,
-						'options_cb' => ( isset( $control['options_cb'] ) ) ? $control['options_cb'] : array(),
+						'options_cb'        => ( isset( $control['options_cb'] ) ) ? $control['options_cb'] : array(),
 					);
 
 					if ( isset( $control['id'] ) ) {
 						$input_args['id'] = esc_attr( $control['id'] );
 					}
 
-					Mesh_Input::get_input( $control['type'], $input_args, $input_value, true, $block );
+					Input::get_input( $control['type'], $input_args, $input_value, true, $block );
 					?>
 				</label>
 			</li>
@@ -486,7 +488,7 @@ class Controls {
  * @since 1.2
  */
 function mesh_section_controls( $section, $blocks, $visible ) {
-	$mesh_controls = new Mesh_Controls();
+	$mesh_controls = new Controls();
 	$mesh_controls->mesh_section_controls( $section, $blocks, $visible );
 }
 
@@ -499,6 +501,6 @@ function mesh_section_controls( $section, $blocks, $visible ) {
  * @since 1.2
  */
 function mesh_block_controls( $block, $section_blocks ) {
-	$mesh_controls = new Mesh_Controls();
+	$mesh_controls = new Controls();
 	$mesh_controls->mesh_block_controls( $block, $section_blocks );
 }
