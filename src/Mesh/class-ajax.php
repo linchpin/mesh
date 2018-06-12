@@ -408,5 +408,3 @@ class AJAX {
 		}
 	}
 }
-
-$mesh_ajax = new AJAX();

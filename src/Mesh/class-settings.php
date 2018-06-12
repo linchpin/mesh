@@ -40,17 +40,17 @@ class Settings {
 	 * @since 1.0.0
 	 */
 	public static function init() {
-		add_action( 'admin_menu', array( 'Mesh_Settings', 'add_admin_menu' ) );
-		add_action( 'admin_init', array( 'Mesh_Settings', 'settings_init' ) );
+		add_action( 'admin_menu', array( '\Mesh\Settings', 'add_admin_menu' ) );
+		add_action( 'admin_init', array( '\Mesh\Settings', 'settings_init' ) );
 
-		add_filter( 'plugin_action_links', array( 'Settings', 'add_settings_link' ), 10, 5 );
+		add_filter( 'plugin_action_links', array( '\Mesh\Settings', 'add_settings_link' ), 10, 5 );
 	}
 
 	/**
 	 * Add the options page to our settings menu
 	 */
 	public static function add_admin_menu() {
-		add_options_page( LINCHPIN_MESH_PLUGIN_NAME, LINCHPIN_MESH_PLUGIN_NAME, 'manage_options', self::$settings_page, array( 'Mesh_Settings', 'add_options_page' ) );
+		add_options_page( LINCHPIN_MESH_PLUGIN_NAME, LINCHPIN_MESH_PLUGIN_NAME, 'manage_options', self::$settings_page, array( '\Mesh\Settings', 'add_options_page' ) );
 		add_submenu_page( 'edit.php?post_type=mesh_template', esc_html__( 'Settings', 'mesh' ), esc_html__( 'Settings', 'mesh' ), 'manage_options', 'options-general.php?page=mesh' );
 	}
 
@@ -172,13 +172,13 @@ class Settings {
 	public static function settings_init() {
 
 		register_setting( self::$settings_page, 'mesh_settings' );
-		register_setting( self::$settings_page, 'mesh_post_types', array( 'Mesh_Settings', 'validate_mesh_post_types' ) );
+		register_setting( self::$settings_page, 'mesh_post_types', array( '\Mesh\Settings', 'validate_mesh_post_types' ) );
 
 		// Default Settings Section.
 		add_settings_section(
 			'mesh_sections',
 			esc_html__( 'Basic Settings', 'mesh' ),
-			array( 'Mesh_Settings', 'create_section' ),
+			array( '\Mesh\Settings', 'create_section' ),
 			self::$settings_page
 		);
 
@@ -208,7 +208,7 @@ class Settings {
 		add_settings_field(
 			'css_mode',
 			esc_html__( 'CSS Settings', 'mesh' ),
-			array( 'Mesh_Settings', 'add_select' ),
+			array( '\Mesh\Settings', 'add_select' ),
 			self::$settings_page,
 			'mesh_sections',
 			array(
@@ -244,7 +244,7 @@ class Settings {
 		add_settings_field(
 			'foundation_version',
 			esc_html__( 'Foundation Version', 'mesh' ),
-			array( 'Mesh_Settings', 'add_select' ),
+			array( '\Mesh\Settings', 'add_select' ),
 			self::$settings_page,
 			'mesh_sections',
 			array(
@@ -260,14 +260,14 @@ class Settings {
 		add_settings_field(
 			'grid_system',
 			esc_html__( 'Foundation Grid System', 'mesh' ),
-			array( 'Mesh_Settings', 'add_select' ),
+			array( '\Mesh\Settings', 'add_select' ),
 			self::$settings_page,
 			'mesh_sections',
 			array(
 				'field'       => 'grid_system',
 				'label'       => esc_html__( 'Foundation Grid System', 'mesh' ),
 				'description' => esc_html__( 'Choose which version of Foundation Flexbox you are using: Flexbox or XY-grid. Foundation 6.4.0 introduced new class names for row and columns: grid-x and cell.', 'mesh' ),
-				'options_cb'  => array( 'Mesh_Settings', 'get_foundation_grid_systems' ),
+				'options_cb'  => array( '\Mesh\Settings', 'get_foundation_grid_systems' ),
 				'default'     => 'float',
 			)
 		);
@@ -279,7 +279,7 @@ class Settings {
 			add_settings_section(
 				'mesh_post_type_section',
 				esc_html__( 'Post Types', 'mesh' ),
-				array( 'Mesh_Settings', 'create_post_type_section' ),
+				array( '\Mesh\Settings', 'create_post_type_section' ),
 				self::$settings_page
 			);
 
@@ -294,7 +294,7 @@ class Settings {
 				add_settings_field(
 					'mesh_post_types_' . $post_type,
 					$post_type_object->labels->name,
-					array( 'Mesh_Settings', 'add_checkbox' ),
+					array( '\Mesh\Settings', 'add_checkbox' ),
 					self::$settings_page,
 					'mesh_post_type_section',
 					array(
@@ -312,14 +312,14 @@ class Settings {
 		add_settings_section(
 			'mesh_uninstall',
 			esc_html__( 'Mesh Uninstall', 'mesh' ),
-			array( 'Mesh_Settings', 'create_section' ),
+			array( '\Mesh\Settings', 'create_section' ),
 			self::$settings_page
 		);
 
 		add_settings_field(
 			'mesh_uninstall',
 			esc_html__( 'Remove All Data on Uninstall?', 'mesh' ),
-			array( 'Mesh_Settings', 'add_checkbox' ),
+			array( '\Mesh\Settings', 'add_checkbox' ),
 			self::$settings_page,
 			'mesh_uninstall',
 			array(

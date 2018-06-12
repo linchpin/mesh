@@ -243,7 +243,7 @@ class Templates_AJAX {
 	 *
 	 * @since 1.1
 	 */
-	function change_template_type() {
+	public function change_template_type() {
 		check_ajax_referer( 'mesh_choose_template_nonce', 'mesh_choose_template_nonce' );
 
 		$post_id = ( isset( $_POST['mesh_post_id'] ) && '' !== $_POST['mesh_post_id'] ) ? absint( $_POST['mesh_post_id'] ) : 0; // Input var okay.
@@ -264,5 +264,3 @@ class Templates_AJAX {
 		wp_die( -1 );
 	}
 }
-
-$mesh_templates_ajax = new Templates_AJAX();

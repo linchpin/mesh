@@ -46,5 +46,3 @@ class Integrations {
 		}
 	}
 }
-
-$mesh_integrations = new Integrations();

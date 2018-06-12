@@ -477,30 +477,3 @@ class Controls {
 		<?php
 	}
 }
-
-/**
- * Public functions to call classes
- *
- * @param object $section Current Section.
- * @param array  $blocks  Our Sections Current Block.
- * @param bool   $visible Show visible options.
- *
- * @since 1.2
- */
-function mesh_section_controls( $section, $blocks, $visible ) {
-	$mesh_controls = new Controls();
-	$mesh_controls->mesh_section_controls( $section, $blocks, $visible );
-}
-
-/**
- * Public functions to call classes
- *
- * @param array $block          Our Current Block.
- * @param array $section_blocks Blocks within the current section.
- *
- * @since 1.2
- */
-function mesh_block_controls( $block, $section_blocks ) {
-	$mesh_controls = new Controls();
-	$mesh_controls->mesh_block_controls( $block, $section_blocks );
-}

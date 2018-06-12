@@ -36,25 +36,25 @@ define( 'LINCHPIN_MESH_DEBUG_MODE', false );
 
 $GLOBALS['mesh_current_version'] = get_option( 'mesh_version', '0.0' ); // Get our current Mesh Version.
 
-require_once 'includes\utilities\utilities.php';
-require_once 'includes\utilities\utilities-columns.php';
-require_once 'includes\utilities\utilities-rows.php';
-require_once 'includes\utilities\utilities-templates.php';
-require_once 'includes\utilities\utilities-filesystem.php';
+require_once 'src/utilities/utilities.php';
+require_once 'src/utilities/utilities-columns.php';
+require_once 'src/utilities/utilities-rows.php';
+require_once 'src/utilities/utilities-templates.php';
+require_once 'src/utilities/utilities-filesystem.php';
 
-require_once 'includes\Mesh\class-mesh.php';
-require_once 'includes\Mesh\class-settings.php';
-require_once 'includes\Mesh\class-templates.php';
-require_once 'includes\Mesh\class-responsive-grid.php';
-require_once 'includes\Mesh\class-integrations.php';
+// Fire off our autoloader
+require_once 'src/autoloader.php';
+
+$mesh_loader = new \Mesh\Psr4AutoloaderClass();
+$mesh_loader->register();
+$mesh_loader->add_namespace( 'Mesh', LINCHPIN_MESH___PLUGIN_DIR . 'src/Mesh' );
+
+$mesh_ajax         = new \Mesh\AJAX();
+$mesh_integrations = new \Mesh\Integrations();
 
 if ( is_admin() ) {
-	require_once 'includes\Mesh\class-filesystem.php';
-	require_once 'includes\Mesh\class-controls.php';
-	require_once 'includes\Mesh\class-input.php';
-	require_once 'includes\Mesh\class-upgrades.php';
-	require_once 'includes\Mesh\class-pointers.php';
-	require_once 'includes\Mesh\class-install.php';
+	$mesh_upgrades = new \Mesh\Upgrades();
+	$mesh_install  = new \Mesh\Install();
 }
 
 $mesh = new Mesh\Mesh();
@@ -63,7 +63,7 @@ if ( is_admin() ) {
 	$mesh_pointers = new \Mesh\Pointers();
 }
 
-add_action( 'init', array( 'Mesh_Settings', 'init' ) );
+add_action( 'init', array( '\Mesh\Settings', 'init' ) );
 
 /**
  * Flush rewrite rules when the plugin is activated.

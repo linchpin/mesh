@@ -116,4 +116,3 @@ class Install {
 	}
 }
 
-$mesh_install = new Mesh_Install();

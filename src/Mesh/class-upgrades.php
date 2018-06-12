@@ -231,5 +231,3 @@ class Upgrades {
 		return '';
 	}
 }
-
-$mesh_upgrades = new Upgrades();
