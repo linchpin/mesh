@@ -72,7 +72,7 @@ class Psr4AutoloaderClass
 
 		// work backwards through the namespace names of the fully-qualified
 		// class name to find a mapped file name
-		while ( false !== $pos = strrpos($prefix, '\\' ) ) {
+		while ( false !== $pos = strrpos( $prefix, '\\' ) ) {
 
 			// retain the trailing namespace separator in the prefix
 			$prefix = substr( $class, 0, $pos + 1 );
@@ -115,9 +115,9 @@ class Psr4AutoloaderClass
 			// replace the namespace prefix with the base directory,
 			// replace namespace separators with directory separators
 			// in the relative class name, append with .php
-
 			$relative_class = str_replace( '_', '-', sanitize_title( $relative_class ) );
 
+			// rename build out our file.
 			$file = $base_dir . 'class-' . str_replace( '\\', '/', sanitize_title( $relative_class ) ) . '.php';
 
 			// if the mapped file exists, require it
