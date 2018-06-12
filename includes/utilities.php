@@ -191,7 +191,7 @@ function mesh_get_section_attributes( $post_id = '', $return_type = 'string' ) {
 function mesh_section_attributes( $post_id = '', $return_type = 'string' ) {
 	$section_attributes = mesh_get_section_attributes( $post_id, $return_type );
 
-	echo esc_html( $section_attributes );
+	echo $section_attributes;
 }
 
 /**
