@@ -9,8 +9,8 @@
  */
 
 $safe_content = array(
-	'a' => array(
-		'href' => array(),
+	'a'    => array(
+		'href'  => array(),
 		'class' => array(),
 	),
 	'span' => array(
@@ -138,7 +138,7 @@ $safe_content = array(
                                     <a href="%s" target="_blank">Linchpin</a> actively manages and maintains 
                                     the project. Take a look at the code, fork and submit pull requests or 
                                     provide feedback/feature requests right from GitHub.', 'mesh' ), $safe_content ),
-									esc_url( 'https://linchpin.agency' )
+									esc_url( 'https://linchpin.com' )
 								);
 								?>
 							</p>
