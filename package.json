@@ -1,9 +1,9 @@
 {
   "name": "mesh",
-  "version": "1.2.5.3",
+  "version": "1.2.5.4",
   "license": "GPL-2.0",
   "respository": "https://github.com/linchpin/mesh",
-  "author": "Linchpin <sayhi@linchpin.agency> (https://linchpin.agency)",
+  "author": "Linchpin <sayhi@linchpin.com> (https://linchpin.com)",
   "devDependencies": {
     "grunt": "~0.4.1",
     "grunt-contrib-concat": "~0.5.1",
@@ -36,7 +36,7 @@
     "page layout",
     "visual editor"
   ],
-  "description": "![Mesh Banner Image](https://linchpin.agency/wp-content/uploads/2016/05/mesh-banner-github.jpg) # Mesh - A WordPress Page Builder, Simplified",
+  "description": "![Mesh Banner Image](https://linchpin.com/wp-content/uploads/2016/05/mesh-banner-github.jpg) # Mesh - A WordPress Page Builder, Simplified",
   "main": "Gruntfile.js",
   "directories": {
     "doc": "docs",
@@ -48,10 +48,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://aaronware@github.com/linchpinagency/mesh.git"
+    "url": "git+https://aaronware@github.com/linchpin/mesh.git"
   },
   "bugs": {
-    "url": "https://github.com/linchpinagency/mesh/issues"
+    "url": "https://github.com/linchpin/mesh/issues"
   },
   "homepage": "https://meshplugin.com"
 }

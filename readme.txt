@@ -73,6 +73,11 @@ Learn more about available hooks (filters and actions) by visiting the mesh our 
 
 == Changelog ==
 
+= 1.2.5.4 =
+
+- Fixed over zealous sanitization
+- Fixed missing integration folder on .org
+
 = 1.2.5.3 =
 
 - Minor fix for column centering using default mesh styles
