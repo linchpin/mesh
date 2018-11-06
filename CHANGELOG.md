@@ -1,12 +1,11 @@
 # Change Log For Mesh
 
 ## [1.2.5.4] - 2018-11-06
-- Fixed over zealous sanitization
-- Fixed missing integration folder on .org
 
 ### Fixes
-- Fixed a minor issue with column centering using default mesh styles
-- Fixed a minor typo in the changelog
+
+- Fixed over zealous sanitization
+- Fixed missing integration folder on wordpress.org
 
 ## [1.2.5.3] - 2018-06-08
 
