@@ -131,17 +131,18 @@ class Mesh_AJAX {
 
 		$_POST = array_merge( $_POST, $new_data ); // WPCS: input var okay.
 
-		$section_title = wp_unslash( $_POST['mesh-sections'][ $section->ID ]['post_title'] );
-
 		$section_args = array(
 			'ID'         => $section->ID,
 			'menu_order' => intval( wp_unslash( $_POST['mesh-sections'][ $section->ID ]['menu_order'] ) ), // WPCS: input var okay.
 		);
 
-		if ( empty( $section_title ) ) {
-			$section_args['post_title'] = 'No Section Title - ' . $section_id;
-		}
+		$section_title = wp_unslash( $_POST['mesh-sections'][ $section->ID ]['post_title'] );
 
+		if ( empty( $section_title ) ) {
+			$section_args['post_title'] = sanitize_text_field( 'No Section Title - ' . $section_id );
+		} else {
+			$section_args['post_title'] = $section_title;
+		}
 
 		wp_update_post( $section_args );
 	}

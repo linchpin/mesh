@@ -85,8 +85,8 @@ class Mesh {
 		add_filter( 'edit_form_after_title', array( $this, 'output_debug_post_info' ) );
 
 		if ( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
-			include_once( 'class.mesh-ajax.php' );
-			include_once( 'class.mesh-templates-ajax.php' );
+			include_once 'class.mesh-ajax.php';
+			include_once 'class.mesh-templates-ajax.php';
 		}
 
 		// Adjust TinyMCE and Media buttons.
@@ -110,7 +110,7 @@ class Mesh {
 	 *
 	 * @return mixed
 	 */
-	function get_edit_post_link( $link, $post_id, $context ) {
+	public function get_edit_post_link( $link, $post_id, $context ) {
 		global $post;
 
 		if ( empty( $post->post_parent ) ) {
@@ -302,7 +302,7 @@ class Mesh {
 	function admin_init() {
 		if ( false === get_option( 'mesh_version' ) ) {
 			update_option( 'mesh_post_types', array(
-				'page' => 1,
+				'page'          => 1,
 				'mesh_template' => 1,
 			) );
 			update_option( 'mesh_version', LINCHPIN_MESH_VERSION );
@@ -410,6 +410,50 @@ class Mesh {
 
 		remove_action( 'save_post', array( $this, 'save_post' ), 10 );
 
+		/**
+		 * Process Section Meta
+		 */
+		$default_section_meta = array(
+			'css_class',
+			'row_class',
+			'section_id',
+			'lp_equal',
+			'title_display',
+			'push_pull',
+			'collapse',
+			'blocks',
+			'post_title',
+			'post_status',
+			'template',
+			'menu_order',
+			'featured_image',
+			'centered',
+			'columns',
+		);
+		/*
+		 * This filter is used to remove or add elements to the default section meta
+		 * @todo "meta" related to a section
+		 */
+		$default_section_meta = apply_filters( 'mesh_default_section_meta_fields', $default_section_meta );
+
+		$default_section_values = array(
+			'css_class'      => '',
+			'row_class'      => '',
+			'section_id'     => '',
+			'lp_equal'       => false,
+			'title_display'  => '',
+			'push_pull'      => false,
+			'collapse'       => false,
+			'blocks'         => [],
+			'post_title'     => '',
+			'post_status'    => '',
+			'template'       => '',
+			'menu_order'     => 0,
+			'featured_image' => '',
+			'centered'       => false,
+			'columns'        => 1,
+		);
+
 		$count = 0;
 
 		$column_title_pattern = '/(no (section|column) title)( - ([0-9]*))?/mi'; // Match both old format and new format including - POST_ID also match column or sections
@@ -458,10 +502,18 @@ class Mesh {
 
 			// If empty or matches "No Section Title" or "No Column Title" and does not have a post_id
 			// Set a new title that includes the post_id suffix
-			if ( empty( $post_title ) || ! empty( $section_title_matches[1] ) && empty( $section_title_matches[3] ) ) {
-				$updates['post_title'] = 'No Section Title - ' . $section_id;
+
+			if ( empty( $section_data['post_title'] ) || ! empty( $section_title_matches ) ) {
+				if ( ! empty( $section_title_matches[1] ) && empty( $section_title_matches[3] ) ) {
+					$updates['post_title'] = 'No Section Title - ' . $section_id;
+				}
 			} else {
 				$updates['post_title'] = sanitize_text_field( $section_data['post_title'] );
+			}
+
+			// double catch
+			if ( empty( $updates['post_title'] ) ) {
+				$updates['post_title'] = 'No Section Title - ' . $section_id;
 			}
 
 			wp_update_post( $updates );
@@ -472,33 +524,6 @@ class Mesh {
 			$template = sanitize_text_field( $section_data['template'] );
 
 			Mesh_Common::update_delete_section_meta( $section->ID, '_mesh_template', $template );
-
-			/**
-			 * Process Section Meta
-			 */
-			$default_section_meta = array(
-				'css_class',
-				'row_class',
-				'section_id',
-				'lp_equal',
-				'title_display',
-				'push_pull',
-				'collapse',
-				'blocks',
-				'post_title',
-				'post_status',
-				'template',
-				'menu_order',
-				'featured_image',
-				'centered',
-				'columns',
-			);
-
-			/*
-			 * This filter is used to remove or add elements to the default section meta
-			 * @todo "meta" related to a section
-			 */
-			$default_section_meta = apply_filters( 'mesh_default_section_meta_fields', $default_section_meta );
 
 			// Save Section CSS Classes.
 			$css_classes           = explode( ' ', $section_data['css_class'] );
@@ -531,7 +556,7 @@ class Mesh {
 			Mesh_Common::update_delete_section_meta( $section->ID, '_mesh_section_id', $mesh_section_id );
 
 			// Save Featured Image
-			$featured_image = $section_data['featured_image'];
+			$featured_image = ( isset( $section_data['featured_image'] ) ) ? (int) $section_data['featured_image'] : '';
 
 			Mesh_Common::update_delete_section_meta( $section->ID, '_thumbnail_id', (int) $featured_image );
 
@@ -545,16 +570,20 @@ class Mesh {
 			Mesh_Common::update_delete_section_meta( $section->ID, '_mesh_lp_equal', $lp_equal );
 
 			// Save Title Display.
-			Mesh_Common::update_delete_section_meta( $section->ID, '_mesh_title_display', $section_data['title_display'] );
+			$section_title = ( isset( $section_data['title_display'] ) ) ? $section_data['title_display'] : '';
+			Mesh_Common::update_delete_section_meta( $section->ID, '_mesh_title_display', $section_title );
 
 			// Save Push / Pull.
-			Mesh_Common::update_delete_section_meta( $section->ID, '_mesh_push_pull', $section_data['push_pull'] );
+			$push_pull = ( isset( $section_data['push_pull'] ) ) ? $section_data['push_pull'] : '';
+			Mesh_Common::update_delete_section_meta( $section->ID, '_mesh_push_pull', $push_pull );
 
 			// Save Collapse.
-			Mesh_Common::update_delete_section_meta( $section->ID, '_mesh_collapse', $section_data['collapse'] );
+			$collapse = ( isset( $section_data['collapse'] ) ) ? $section_data['collapse'] : '';
+			Mesh_Common::update_delete_section_meta( $section->ID, '_mesh_collapse', $collapse );
 
 			// Save Centered.
-			Mesh_Common::update_delete_section_meta( $section->ID, '_mesh_centered', $section_data['centered'] );
+			$centered = ( isset( $section_data['centered'] ) ) ? $section_data['centered'] : '';
+			Mesh_Common::update_delete_section_meta( $section->ID, '_mesh_centered', $centered );
 
 			// Process our custom meta.
 			foreach ( $section_data as $data_key => $data_field ) {
@@ -589,9 +618,10 @@ class Mesh {
 					'ID'           => (int) $block_id,
 					'post_content' => wp_kses( $block_data['post_content'], mesh_get_allowed_html() ),
 					'post_status'  => $status,
-					'post_title'   => ( $block_data['post_title'] ) ? sanitize_text_field( $block_data['post_title'] ) : 'no section title - ' . $section_id,
 					'menu_order'   => (int) $block_data['menu_order'],
 				);
+
+				$updates['post_title'] = Mesh_Common::validate_section_title( $block_data['post_title'], $block_id, esc_html__( 'Column', 'mesh' ) );
 
 				wp_update_post( $updates );
 
@@ -601,7 +631,7 @@ class Mesh {
 				Mesh_Common::update_delete_section_meta( $block_id, '_mesh_column_width', $block_column_width );
 
 				// Save Column Offset.
-				$offset = absint( $section_data['blocks'][ $block_id ]['offset'] );
+				$offset = ( isset( $section_data['blocks'][ $block_id ]['offset'] ) ) ? absint( $section_data['blocks'][ $block_id ]['offset'] ) : 0;
 
 				Mesh_Common::update_delete_section_meta( $block_id, '_mesh_offset', $offset );
 
@@ -659,12 +689,10 @@ class Mesh {
 
 				foreach ( $blocks as $block ) {
 
-					$title = strip_tags( $block->post_title );
+					$block_title = strip_tags( $block->post_title );
 
-					preg_match_all( $column_title_pattern, $title, $matches, PREG_SET_ORDER, 0 );
-
-					if ( ! empty( $title ) && count( $matches ) === 0 ) {
-						$section_content[] = $title;
+					if ( ! empty( $block_title ) ) {
+						$section_content[] = $block_title;
 					}
 
 					if ( ! empty( $block->post_content ) ) {
@@ -693,8 +721,8 @@ class Mesh {
 
 				preg_match_all( $column_title_pattern, $p_title, $p_matches, PREG_SET_ORDER, 0 );
 
-				if ( ! empty( $p_title ) && count( $p_matches ) === 0 ) {
-					$page_content_sections[] = strip_tags( $p_title );
+				if ( ! empty( $p_title ) ) {
+					$page_content_sections[] = $p_title;
 				}
 
 				if ( ! empty( $p->post_content ) ) {

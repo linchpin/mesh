@@ -576,9 +576,17 @@ function mesh_maybe_show_section_title( $post_id = '', $title = '' ) {
 		$title = $post->post_title;
 	}
 
-	$column_title_pattern = '/no column title( - ([0-9]*))?/mi'; // Match both old format and new format
+	$section_title_pattern = '/(no (section|column) title)( - ([0-9]*))?/mi'; // Match both old format and new format including - POST_ID also match column or sections
 
-	if ( ! empty( $title ) && 'no section title' === strtolower( $title ) ) {
+	preg_match_all( $section_title_pattern, $title, $section_title_matches, PREG_SET_ORDER, 0 );
+
+	if ( empty( $title ) ) {
+		return false;
+	}
+
+	wp_die( print_r( $section_title_matches, true ) );
+
+	if ( ! empty( $section_title_matches[1] ) ) {
 		return false;
 	}
 
@@ -595,7 +603,16 @@ function mesh_maybe_show_section_title( $post_id = '', $title = '' ) {
  * @return bool
  */
 function mesh_maybe_show_block_title( $title = '' ) {
-	if ( ! empty( $title ) && 'no column title' === strtolower( $title ) ) {
+
+	$section_title_pattern = '/(no (section|column) title)( - ([0-9]*))?/mi'; // Match both old format and new format including - POST_ID also match column or sections
+
+	preg_match_all( $section_title_pattern, $title, $section_title_matches, PREG_SET_ORDER, 0 );
+
+	if ( empty( $title ) ) {
+		return false;
+	}
+
+	if ( ! empty( $section_title_matches[0][1] ) ) {
 		return false;
 	}
 

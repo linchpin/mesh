@@ -30,9 +30,9 @@ if ( in_array( 'mesh-section-' . esc_attr( $section->ID ), $closed_metaboxes, tr
 	<div class="mesh-row mesh-title-row mesh-row-padding">
 		<div class="mesh-columns-8">
 			<div class="mesh-clean-edit">
-				<input type="text" name="mesh-sections[<?php echo esc_attr( $section->ID ); ?>][post_title]" class="mesh-clean-edit-element widefat mesh-section-title left" value="<?php echo esc_attr( $section->post_title ); ?>" />
+				<input type="text" name="mesh-sections[<?php echo esc_attr( $section->ID ); ?>][post_title]" class="mesh-clean-edit-element widefat mesh-section-title left" value="<?php echo esc_attr( Mesh_Common::get_section_title( $section ) ); ?>" />
 				<span class="close-title-edit left"><?php esc_html_e( 'Done', 'mesh' ); ?></span>
-				<span class="handle-title mesh-section-title-text"><?php echo esc_html( $section->post_title ); ?></span>
+				<span class="handle-title mesh-section-title-text"><?php echo esc_html( Mesh_Common::get_section_title( $section ) ); ?></span>
 			</div>
 		</div>
 		<div class="mesh-columns-4 text-right">
