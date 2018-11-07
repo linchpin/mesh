@@ -576,6 +576,8 @@ function mesh_maybe_show_section_title( $post_id = '', $title = '' ) {
 		$title = $post->post_title;
 	}
 
+	$column_title_pattern = '/no column title( - ([0-9]*))?/mi'; // Match both old format and new format
+
 	if ( ! empty( $title ) && 'no section title' === strtolower( $title ) ) {
 		return false;
 	}

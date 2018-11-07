@@ -47,6 +47,7 @@ require_once 'class.mesh-controls.php';
 require_once 'class.mesh-input.php';
 require_once 'class.mesh-upgrades.php';
 require_once 'class.mesh-integrations.php';
+require_once 'class.mesh-common.php';
 
 if ( is_admin() ) {
 	require_once 'class.mesh-install.php';
