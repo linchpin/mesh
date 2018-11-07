@@ -19,14 +19,14 @@ $mesh_version = get_option( 'mesh_version' );
 			<p class="no-margin">
 				<?php
 				// translators: %1$s: Version Number %2$s: Link to what's new tab.
-				printf( wp_kses_post( __( 'Thanks for updating Mesh to v. (%1$s). <strong>This is another huge update</strong>. We suggest checking out <a href="%2$s">what\'s new</a>', 'mesh' ) ),
+				printf( wp_kses_post( __( 'Thanks for updating Mesh to v. (%1$s). <strong>Minor release</strong>.  <a href="%2$s">what\'s new</a>', 'mesh' ) ),
 					esc_html( $mesh_version ),
 					esc_url( admin_url( 'options-general.php?page=mesh&tab=new' ) )
 				);
 				?>
 			</p>
 			<p class="no-margin">
-				<?php echo wp_kses_post( __( '<strong>Better Quality of Life!</strong> Centered Single Column, Support for Foundation 6.4.X, Flex Grid, XY Grid, CSS Grid, bug fixes, even more developer flexibility, and lots more!', 'mesh' ) ); ?>
+				<?php echo wp_kses_post( __( 'Fixes integrations and over zealous escaping', 'mesh' ) ); ?>
 			</p>
 		</div>
 	</div>

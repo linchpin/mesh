@@ -85,8 +85,8 @@ class Mesh {
 		add_filter( 'edit_form_after_title', array( $this, 'output_debug_post_info' ) );
 
 		if ( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
-			include_once( 'class.mesh-ajax.php' );
-			include_once( 'class.mesh-templates-ajax.php' );
+			include_once 'class.mesh-ajax.php';
+			include_once 'class.mesh-templates-ajax.php';
 		}
 
 		// Adjust TinyMCE and Media buttons.
@@ -110,7 +110,7 @@ class Mesh {
 	 *
 	 * @return mixed
 	 */
-	function get_edit_post_link( $link, $post_id, $context ) {
+	public function get_edit_post_link( $link, $post_id, $context ) {
 		global $post;
 
 		if ( empty( $post->post_parent ) ) {
@@ -302,7 +302,7 @@ class Mesh {
 	function admin_init() {
 		if ( false === get_option( 'mesh_version' ) ) {
 			update_option( 'mesh_post_types', array(
-				'page' => 1,
+				'page'          => 1,
 				'mesh_template' => 1,
 			) );
 			update_option( 'mesh_version', LINCHPIN_MESH_VERSION );
@@ -410,7 +410,53 @@ class Mesh {
 
 		remove_action( 'save_post', array( $this, 'save_post' ), 10 );
 
+		/**
+		 * Process Section Meta
+		 */
+		$default_section_meta = array(
+			'css_class',
+			'row_class',
+			'section_id',
+			'lp_equal',
+			'title_display',
+			'push_pull',
+			'collapse',
+			'blocks',
+			'post_title',
+			'post_status',
+			'template',
+			'menu_order',
+			'featured_image',
+			'centered',
+			'columns',
+		);
+		/*
+		 * This filter is used to remove or add elements to the default section meta
+		 * @todo "meta" related to a section
+		 */
+		$default_section_meta = apply_filters( 'mesh_default_section_meta_fields', $default_section_meta );
+
+		$default_section_values = array(
+			'css_class'      => '',
+			'row_class'      => '',
+			'section_id'     => '',
+			'lp_equal'       => false,
+			'title_display'  => '',
+			'push_pull'      => false,
+			'collapse'       => false,
+			'blocks'         => [],
+			'post_title'     => '',
+			'post_status'    => '',
+			'template'       => '',
+			'menu_order'     => 0,
+			'featured_image' => '',
+			'centered'       => false,
+			'columns'        => 1,
+		);
+
 		$count = 0;
+
+		$column_title_pattern = '/(no (section|column) title)( - ([0-9]*))?/mi'; // Match both old format and new format including - POST_ID also match column or sections
 
 		// Check if we are doing a section update via AJAX.
 		$saving_section_via_ajax = false;
@@ -432,7 +478,8 @@ class Mesh {
 				continue;
 			}
 
-			$section = get_post( (int) $section_id );
+			$section_id = (int) $section_id;
+			$section    = get_post( $section_id );
 
 			if ( 'mesh_section' !== $section->post_type ) {
 				continue;
@@ -446,11 +493,28 @@ class Mesh {
 
 			$updates = array(
 				'ID'           => (int) $section_id,
-				'post_title'   => sanitize_text_field( $section_data['post_title'] ),
 				'post_content' => '', // Sections don't have content.
 				'post_status'  => $status,
 				'menu_order'   => ( empty( $section_data['menu_order'] ) ) ? $count : absint( $section_data['menu_order'] ),
 			);
+
+			preg_match_all( $column_title_pattern, $section_data['post_title'], $section_title_matches, PREG_SET_ORDER, 0 );
+
+			// If empty or matches "No Section Title" or "No Column Title" and does not have a post_id
+			// Set a new title that includes the post_id suffix
+
+			if ( empty( $section_data['post_title'] ) || ! empty( $section_title_matches ) ) {
+				if ( ! empty( $section_title_matches[1] ) && empty( $section_title_matches[3] ) ) {
+					$updates['post_title'] = 'No Section Title - ' . $section_id;
+				}
+			} else {
+				$updates['post_title'] = sanitize_text_field( $section_data['post_title'] );
+			}
+
+			// double catch
+			if ( empty( $updates['post_title'] ) ) {
+				$updates['post_title'] = 'No Section Title - ' . $section_id;
+			}
 
 			wp_update_post( $updates );
 
@@ -459,38 +523,7 @@ class Mesh {
 			// Save Template.
 			$template = sanitize_text_field( $section_data['template'] );
 
-			if ( empty( $template ) ) {
-				delete_post_meta( $section->ID, '_mesh_template' );
-			} else {
-				update_post_meta( $section->ID, '_mesh_template', $template );
-			}
-
-			/**
-			 * Process Section Meta
-			 */
-			$default_section_meta = array(
-				'css_class',
-				'row_class',
-				'section_id',
-				'lp_equal',
-				'title_display',
-				'push_pull',
-				'collapse',
-				'blocks',
-				'post_title',
-				'post_status',
-				'template',
-				'menu_order',
-				'featured_image',
-				'centered',
-				'columns',
-			);
-
-			/*
-			 * This filter is used to remove or add elements to the default section meta
-			 * @todo "meta" related to a section
-			 */
-			$default_section_meta = apply_filters( 'mesh_default_section_meta_fields', $default_section_meta );
+			Mesh_Common::update_delete_section_meta( $section->ID, '_mesh_template', $template );
 
 			// Save Section CSS Classes.
 			$css_classes           = explode( ' ', $section_data['css_class'] );
@@ -502,11 +535,7 @@ class Mesh {
 
 			$sanitized_css_classes = implode( ' ', $sanitized_css_classes );
 
-			if ( empty( $sanitized_css_classes ) ) {
-				delete_post_meta( $section->ID, '_mesh_css_class' );
-			} else {
-				update_post_meta( $section->ID, '_mesh_css_class', $sanitized_css_classes );
-			}
+			Mesh_Common::update_delete_section_meta( $section->ID, '_mesh_css_class', $sanitized_css_classes );
 
 			// Save Row CSS Classes.
 			$row_classes           = explode( ' ', $section_data['row_class'] );
@@ -518,70 +547,43 @@ class Mesh {
 
 			$sanitized_row_classes = implode( ' ', $sanitized_row_classes );
 
-			if ( empty( $sanitized_row_classes ) ) {
-				delete_post_meta( $section->ID, '_mesh_row_class' );
-			} else {
-				update_post_meta( $section->ID, '_mesh_row_class', $sanitized_row_classes );
-			}
+			Mesh_Common::update_delete_section_meta( $section->ID, '_mesh_row_class', $sanitized_row_classes );
 
 			// Save Section ID
 			$mesh_section_id = $section_data['section_id'];
 			$mesh_section_id = sanitize_html_class( $mesh_section_id );
 
-			if ( empty( $mesh_section_id ) ) {
-				delete_post_meta( $section->ID, '_mesh_section_id' );
-			} else {
-				update_post_meta( $section->ID, '_mesh_section_id', $mesh_section_id );
-			}
+			Mesh_Common::update_delete_section_meta( $section->ID, '_mesh_section_id', $mesh_section_id );
 
 			// Save Featured Image
-			$featured_image = $section_data['featured_image'];
+			$featured_image = ( isset( $section_data['featured_image'] ) ) ? (int) $section_data['featured_image'] : '';
 
-			if ( empty( $featured_image ) ) {
-				delete_post_meta( $section->ID, '_thumbnail_id' );
-			} else {
-				update_post_meta( $section->ID, '_thumbnail_id', (int) $featured_image );
-			}
+			Mesh_Common::update_delete_section_meta( $section->ID, '_thumbnail_id', (int) $featured_image );
 
 			// Save LP Equal.
 			$lp_equal = '';
+
 			if ( ! empty( $section_data['lp_equal'] ) ) {
 				$lp_equal = sanitize_text_field( $section_data['lp_equal'] );
 			}
 
-			if ( empty( $lp_equal ) ) {
-				delete_post_meta( $section->ID, '_mesh_lp_equal' );
-			} else {
-				update_post_meta( $section->ID, '_mesh_lp_equal', $lp_equal );
-			}
+			Mesh_Common::update_delete_section_meta( $section->ID, '_mesh_lp_equal', $lp_equal );
 
 			// Save Title Display.
-			if ( empty( $section_data['title_display'] ) ) {
-				delete_post_meta( $section->ID, '_mesh_title_display' );
-			} else {
-				update_post_meta( $section->ID, '_mesh_title_display', $section_data['title_display'] );
-			}
+			$section_title = ( isset( $section_data['title_display'] ) ) ? $section_data['title_display'] : '';
+			Mesh_Common::update_delete_section_meta( $section->ID, '_mesh_title_display', $section_title );
 
 			// Save Push / Pull.
-			if ( empty( $section_data['push_pull'] ) ) {
-				delete_post_meta( $section->ID, '_mesh_push_pull' );
-			} else {
-				update_post_meta( $section->ID, '_mesh_push_pull', $section_data['push_pull'] );
-			}
+			$push_pull = ( isset( $section_data['push_pull'] ) ) ? $section_data['push_pull'] : '';
+			Mesh_Common::update_delete_section_meta( $section->ID, '_mesh_push_pull', $push_pull );
 
 			// Save Collapse.
-			if ( empty( $section_data['collapse'] ) ) {
-				delete_post_meta( $section->ID, '_mesh_collapse' );
-			} else {
-				update_post_meta( $section->ID, '_mesh_collapse', $section_data['collapse'] );
-			}
+			$collapse = ( isset( $section_data['collapse'] ) ) ? $section_data['collapse'] : '';
+			Mesh_Common::update_delete_section_meta( $section->ID, '_mesh_collapse', $collapse );
 
 			// Save Centered.
-			if ( empty( $section_data['centered'] ) ) {
-				delete_post_meta( $section->ID, '_mesh_centered' );
-			} else {
-				update_post_meta( $section->ID, '_mesh_centered', $section_data['centered'] );
-			}
+			$centered = ( isset( $section_data['centered'] ) ) ? $section_data['centered'] : '';
+			Mesh_Common::update_delete_section_meta( $section->ID, '_mesh_centered', $centered );
 
 			// Process our custom meta.
 			foreach ( $section_data as $data_key => $data_field ) {
@@ -591,11 +593,7 @@ class Mesh {
 				}
 
 				// Save Custom Meta Field.
-				if ( empty( $section_data[ $data_key ] ) ) {
-					delete_post_meta( $section->ID, '_mesh_' . $data_key );
-				} else {
-					update_post_meta( $section->ID, '_mesh_' . $data_key, $section_data[ $data_key ] );
-				}
+				Mesh_Common::update_delete_section_meta( $section->ID, '_mesh_' . $data_key, $section_data[ $data_key ] );
 			}
 
 			// Process the section's blocks.
@@ -620,29 +618,22 @@ class Mesh {
 					'ID'           => (int) $block_id,
 					'post_content' => wp_kses( $block_data['post_content'], mesh_get_allowed_html() ),
 					'post_status'  => $status,
-					'post_title'   => sanitize_text_field( $block_data['post_title'] ),
 					'menu_order'   => (int) $block_data['menu_order'],
 				);
+
+				$updates['post_title'] = Mesh_Common::validate_section_title( $block_data['post_title'], $block_id, esc_html__( 'Column', 'mesh' ) );
 
 				wp_update_post( $updates );
 
 				$block_column_width = (int) $section_data['blocks'][ $block_id ]['column_width'];
 
 				// If we don't have a column width defined or we are using a 1 column layout clear our saved widths.
-				if ( empty( $block_column_width ) ) {
-					delete_post_meta( $block_id, '_mesh_column_width' );
-				} else {
-					update_post_meta( $block_id, '_mesh_column_width', $block_column_width );
-				}
+				Mesh_Common::update_delete_section_meta( $block_id, '_mesh_column_width', $block_column_width );
 
 				// Save Column Offset.
-				$offset = absint( $section_data['blocks'][ $block_id ]['offset'] );
+				$offset = ( isset( $section_data['blocks'][ $block_id ]['offset'] ) ) ? absint( $section_data['blocks'][ $block_id ]['offset'] ) : 0;
 
-				if ( empty( $offset ) ) {
-					delete_post_meta( $block_id, '_mesh_offset' );
-				} else {
-					update_post_meta( $block_id, '_mesh_offset', $offset );
-				}
+				Mesh_Common::update_delete_section_meta( $block_id, '_mesh_offset', $offset );
 
 				// @todo: optimize this loop into a utility method
 				$block_css_class = $section_data['blocks'][ $block_id ]['css_class'];
@@ -657,11 +648,7 @@ class Mesh {
 
 				$sanitized_css_classes = implode( ' ', $sanitized_css_classes );
 
-				if ( empty( $sanitized_css_classes ) ) {
-					delete_post_meta( $block_id, '_mesh_css_class' );
-				} else {
-					update_post_meta( $block_id, '_mesh_css_class', $sanitized_css_classes );
-				}
+				Mesh_Common::update_delete_section_meta( $block_id, '_mesh_css_class', $sanitized_css_classes );
 
 				// Blocks Center
 				if ( ! isset( $section_data['blocks'][ $block_id ]['centered'] ) ) {
@@ -670,11 +657,7 @@ class Mesh {
 					$block_centered = true;
 				}
 
-				if ( false === $block_centered ) {
-					delete_post_meta( $block_id, '_mesh_centered' );
-				} else {
-					update_post_meta( $block_id, '_mesh_centered', $block_centered );
-				}
+				Mesh_Common::update_delete_section_meta( $block_id, '_mesh_centered', $block_centered );
 
 				// Save Featured Image
 				$featured_image = '';
@@ -683,11 +666,7 @@ class Mesh {
 					$featured_image = $block_data['featured_image'];
 				}
 
-				if ( empty( $featured_image ) ) {
-					delete_post_meta( $block_id, '_thumbnail_id' );
-				} else {
-					update_post_meta( $block_id, '_thumbnail_id', (int) $featured_image );
-				}
+				Mesh_Common::update_delete_section_meta( $block_id, '_thumbnail_id', (int) $featured_image );
 			}
 		}
 
@@ -709,8 +688,11 @@ class Mesh {
 				$blocks = mesh_get_section_blocks( $p->ID );
 
 				foreach ( $blocks as $block ) {
-					if ( ! empty( $block->post_title ) && esc_html__( 'No Column Title', 'mesh' ) !== $block->post_title ) {
-						$section_content[] = strip_tags( $block->post_title );
+
+					$block_title = strip_tags( $block->post_title );
+
+					if ( ! empty( $block_title ) ) {
+						$section_content[] = $block_title;
 					}
 
 					if ( ! empty( $block->post_content ) ) {
@@ -735,8 +717,12 @@ class Mesh {
 					continue;
 				}
 
-				if ( ! empty( $p->post_title ) && esc_html__( 'No Section Title', 'mesh' ) !== $p->post_title ) {
-					$page_content_sections[] = strip_tags( $p->post_title );
+				$p_title = strip_tags( $p->post_title );
+
+				preg_match_all( $column_title_pattern, $p_title, $p_matches, PREG_SET_ORDER, 0 );
+
+				if ( ! empty( $p_title ) ) {
+					$page_content_sections[] = $p_title;
 				}
 
 				if ( ! empty( $p->post_content ) ) {
@@ -1116,13 +1102,13 @@ class Mesh {
 	 */
 	public static function get_admin_template_kses() {
 		return array(
-			'div' => array(
+			'div'    => array(
 				'class'     => array(),
 				'id'        => array(),
 				'data-type' => array(),
 				'style'     => array(),
 			),
-			'a' => array(
+			'a'      => array(
 				'href'  => array(),
 				'title' => array(),
 				'class' => array(),

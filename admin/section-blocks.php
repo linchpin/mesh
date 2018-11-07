@@ -103,9 +103,9 @@ $remaining_columns     = $block_settings['max_columns'];
 									<span></span>
 								</span>
 								<div class="mesh-clean-edit left mesh-column-title-container">
-									<input id="<?php echo esc_attr( 'mesh-sections-' . $section->ID . '-' . $blocks[ $block_increment ]->ID . '-title' ); ?>" type="text" class="mesh-column-title mesh-clean-edit-element widefat left" name="mesh-sections[<?php echo esc_attr( $section->ID ); ?>][blocks][<?php echo esc_attr( $blocks[ $block_increment ]->ID ); ?>][post_title]" value="<?php echo esc_attr( $blocks[ $block_increment ]->post_title ); ?>"/>
+									<input id="<?php echo esc_attr( 'mesh-sections-' . $section->ID . '-' . $blocks[ $block_increment ]->ID . '-title' ); ?>" type="text" class="mesh-column-title mesh-clean-edit-element widefat left" name="mesh-sections[<?php echo esc_attr( $section->ID ); ?>][blocks][<?php echo esc_attr( $blocks[ $block_increment ]->ID ); ?>][post_title]" value="<?php echo esc_attr( Mesh_Common::get_section_title( $blocks[ $block_increment ] ) ); ?>"/>
 									<span class="close-title-edit left"><?php esc_html_e( 'Done', 'mesh' ); ?></span>
-									<span class="handle-title mesh-section-title-text mesh-column-title-text"><?php echo esc_attr( $blocks[ $block_increment ]->post_title ); ?></span>
+									<span class="handle-title mesh-section-title-text mesh-column-title-text"><?php echo esc_attr( Mesh_Common::get_section_title( $blocks[ $block_increment ] ) ); ?></span>
 								</div>
 
 								<a href="#" class="slide-toggle-element mesh-more-section-options right slide-toggle-meta-dropdown mesh-hide-for-small" data-toggle=".mesh-block-meta-dropdown-<?php echo esc_attr( $blocks[ $block_increment ]->ID ); ?>"><span class="screen-reader-text"><?php esc_html_e( 'More', 'mesh' ); ?></span></a>

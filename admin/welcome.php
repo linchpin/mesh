@@ -35,7 +35,7 @@ if ( ! $show ) {
 				<h3><?php esc_html_e( 'More Actions', 'mesh' ); ?></h3>
 				<ul>
 					<li><?php printf( '<a href="%s" class="welcome-icon welcome-learn-more" target="_blank">' . esc_html__( 'Learn more about Mesh', 'mesh' ) . '</a>', esc_url( __( 'https://github.com/linchpin/mesh', 'mesh' ) ) ); ?></li>
-					<li><?php printf( '<a href="%s" class="welcome-icon welcome-view-linchin icon-linchpin-logo" target="_blank">' . esc_html__( 'About Linchpin', 'mesh' ) . '</a>', esc_url( __( 'https://linchpin.agency', 'mesh' ) ) ); ?></li>
+					<li><?php printf( '<a href="%s" class="welcome-icon welcome-view-linchin icon-linchpin-logo" target="_blank">' . esc_html__( 'About Linchpin', 'mesh' ) . '</a>', esc_url( __( 'https://linchpin.com', 'mesh' ) ) ); ?></li>
 					<li><?php printf( '<a href="%s" class="welcome-icon welcome-view-github icon-github" target="_blank">' . esc_html__( 'View Features Requests', 'mesh' ) . '</a>', esc_url( __( 'https://github.com/linchpin/mesh/issues', 'mesh' ) ) ); ?></li>
 				</ul>
 			</div>

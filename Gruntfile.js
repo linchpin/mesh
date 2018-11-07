@@ -1,3 +1,6 @@
+'use strict';
+const sass = require('node-sass');
+
 module.exports = function (grunt) {
 
 	// Load all grunt tasks
@@ -9,6 +12,7 @@ module.exports = function (grunt) {
 		sass: {
 			dist: {
 				options: {
+					implementation: sass,
 					outputStyle: 'compressed',
 					sourceMap: false
 				},
@@ -112,6 +116,7 @@ module.exports = function (grunt) {
 					{expand: true, src: ['assets/**', '!assets/scss/**'], dest: 'build/mesh/trunk/'},
 					{expand: true, src: ['lib/**'], dest: 'build/mesh/trunk/'},
 					{expand: true, src: ['templates/**'], dest: 'build/mesh/trunk/'},
+                    {expand: true, src: ['integrations/**'], dest: 'build/mesh/trunk/'},
 					{expand: true, src: ['./readme.txt'], dest: 'build/mesh/trunk/', isFile: true},
 					{expand: true, src: ['./CHANGELOG.md'], dest: 'build/mesh/trunk/', isFile: true},
 					{expand: true, src: ['./README.md'], dest: 'build/mesh/trunk/', isFile: true},

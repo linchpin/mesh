@@ -56,7 +56,7 @@ class Mesh_AJAX {
 
 		$section_args = array(
 			'post_type'   => 'mesh_section',
-			'post_title'  => esc_html__( 'No Section Title', 'mesh' ),
+			'post_title'  => esc_html__( 'No Section Title', 'mesh' ), // Needs to have a title when created (needs updated once created)
 			'post_status' => 'draft',
 			'post_parent' => $post_id,
 			'menu_order'  => $menu_order,
@@ -66,6 +66,13 @@ class Mesh_AJAX {
 
 		if ( ! empty( $new_section ) ) {
 			$section = get_post( $new_section );
+
+			/**
+			 * Update the post_title to include the post ID
+			 */
+			wp_update_post( $post_id, array(
+				'post_title' => $section->post_title . ' - ' . $new_section,
+			) );
 
 			// Make sure the new section has one block (default number needed).
 			mesh_maybe_create_section_blocks( $section, 1 );
@@ -126,9 +133,16 @@ class Mesh_AJAX {
 
 		$section_args = array(
 			'ID'         => $section->ID,
-			'post_title' => sanitize_text_field( wp_unslash( $_POST['mesh-sections'][ $section->ID ]['post_title'] ) ), // WPCS: input var okay.
 			'menu_order' => intval( wp_unslash( $_POST['mesh-sections'][ $section->ID ]['menu_order'] ) ), // WPCS: input var okay.
 		);
+
+		$section_title = wp_unslash( $_POST['mesh-sections'][ $section->ID ]['post_title'] );
+
+		if ( empty( $section_title ) ) {
+			$section_args['post_title'] = sanitize_text_field( 'No Section Title - ' . $section_id );
+		} else {
+			$section_args['post_title'] = $section_title;
+		}
 
 		wp_update_post( $section_args );
 	}

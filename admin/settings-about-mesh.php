@@ -9,8 +9,8 @@
  */
 
 $safe_content = array(
-	'a' => array(
-		'href' => array(),
+	'a'    => array(
+		'href'  => array(),
 		'class' => array(),
 	),
 	'span' => array(
@@ -145,7 +145,7 @@ $safe_content = array(
                                 their local WordPress communities, not only leading the <a href="%3$s">WordPress 
                                 Rhode Island Meetup</a> group for several years, but also organizing, volunteering, 
                                 speaking at or sponsoring local WordCamp conferences in the greater New England area.', 'mesh' ), $safe_content ),
-								esc_url( 'https://linchpin.agency' ),
+								esc_url( 'https://linchpin.com' ),
 								esc_url( 'https://profiles.wordpress.org/linchpin_agency/' ),
 								esc_url( 'https://www.meetup.com/WordPressRI/' )
 							);
@@ -154,14 +154,14 @@ $safe_content = array(
 						<p>
 							<?php
 								// translators: %s Linchpin URL.
-								printf( wp_kses( __( 'Check out our <a href="%s">site</a>, connect with us or come say hi at a local event.', 'mesh' ), $safe_content ), esc_url( 'https://linchpin.agency' ) );
+								printf( wp_kses( __( 'Check out our <a href="%s">site</a>, connect with us or come say hi at a local event.', 'mesh' ), $safe_content ), esc_url( 'https://linchpin.com' ) );
 							?>
 						</p>
 						<p class="no-margin">
 							<?php
 								// translators: %1$s Linchpin URL, %2$s Linchpin. %3$s Jetpack.pro url, %4$s Jetpack.pro label.
 								printf( wp_kses( __( '<a href="%1$s">%2$s</a> | <a href="%3$s">%4$s</a> | ', 'mesh' ), $safe_content ),
-									esc_url( 'https://linchpin.agency' ),
+									esc_url( 'https://linchpin.com' ),
 									esc_html( 'Linchpin' ),
 									esc_url( 'https://jetpack.pro/profile/linchpin/' ),
 									esc_html( 'jetpack.pro' )

@@ -1,5 +1,16 @@
 # Change Log For Mesh
 
+## [1.2.5.4] - 2018-11-06
+
+### Fixes
+
+- Fixed over zealous sanitization
+- Fixed missing integration folder on wordpress.org
+- Fixed an issue with not allowing you to reset section/column titles
+
+### Added
+- Better support for WordPress Export / Import tools 
+
 ## [1.2.5.3] - 2018-06-08
 
 ### Fixes

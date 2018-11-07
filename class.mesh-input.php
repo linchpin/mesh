@@ -93,22 +93,22 @@ class Mesh_Input {
 		switch ( $type ) {
 			case 'checkbox':
 				self::get_input_checkbox( $args, $input_value, $echo );
-				break;
+			break;
 			case 'select':
 			case 'dropdown':
 				self::get_input_select( $args, $input_value, $echo, $section, $blocks );
-				break;
+			break;
 			case 'media':
 				self::get_input_media( $args, $input_value, $echo );
-				break;
+			break;
 			case 'hidden':
 				self::get_input_hidden( $args, $input_value, $echo );
-				break;
+			break;
 			case 'input':
 			case 'text':
 			default:
 				self::get_input_text( $args, $input_value, $echo );
-				break;
+			break;
 		}
 	}
 
@@ -147,8 +147,8 @@ class Mesh_Input {
 				<?php endif; ?>
 
 				<input type="hidden"
-					   name="<?php echo esc_attr( $args['input_name'] ); ?>"
-					   value="<?php echo esc_attr( $featured_image_id ); ?>"/>
+				       name="<?php echo esc_attr( $args['input_name'] ); ?>"
+				       value="<?php echo esc_attr( $featured_image_id ); ?>"/>
 			</div>
 		</div>
 		<?php
@@ -202,10 +202,10 @@ class Mesh_Input {
 		ob_start();
 		?>
 		<input type="text"
-				<?php esc_html( $args['input_id'] ); ?>
-				name="<?php echo esc_attr( $args['input_name'] ); ?>"
-				class="<?php echo esc_attr( implode( ' ', $args['input_css_classes'] ) ); ?>"
-				value="<?php echo esc_attr( $input_value ); ?>" />
+			<?php esc_html( $args['input_id'] ); ?>
+			   name="<?php echo esc_attr( $args['input_name'] ); ?>"
+			   class="<?php echo esc_attr( implode( ' ', $args['input_css_classes'] ) ); ?>"
+			   value="<?php echo esc_attr( $input_value ); ?>" />
 		<?php
 
 		$output = ob_get_contents();
@@ -234,11 +234,11 @@ class Mesh_Input {
 		ob_start();
 		?>
 		<input type="checkbox"
-				<?php esc_html( $args['input_id'] ); ?>
+			<?php esc_html( $args['input_id'] ); ?>
 			   name="<?php echo esc_attr( $args['input_name'] ); ?>"
 			   class="<?php echo esc_attr( implode( ' ', $args['input_css_classes'] ) ); ?>"
 			   value="1"
-				<?php checked( $input_value ); ?> />
+			<?php checked( $input_value ); ?> />
 		<?php
 
 		$output = ob_get_contents();
@@ -277,8 +277,8 @@ class Mesh_Input {
 
 		?>
 		<select name="<?php echo esc_attr( $args['input_name'] ); ?>"
-				class="<?php echo esc_attr( implode( ' ', $args['input_css_classes'] ) ); ?>"
-				<?php echo $multiple; // WPCS xss okay. ?>>
+		        class="<?php echo esc_attr( implode( ' ', $args['input_css_classes'] ) ); ?>"
+			<?php echo $multiple; // WPCS xss okay. ?>>
 			<?php
 
 			// @todo this needs to be cleaned up to meet wpcs
@@ -314,4 +314,3 @@ class Mesh_Input {
 		return $output;
 	}
 }
-

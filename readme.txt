@@ -73,6 +73,15 @@ Learn more about available hooks (filters and actions) by visiting the mesh our 
 
 == Changelog ==
 
+= 1.2.5.4 =
+
+### Fixes
+
+- Fixed over zealous sanitization
+- Fixed missing integration folder on wordpress.org
+- Fixed an issue with not allowing you to reset section/column titles
+- Added better support for WordPress Export / Import tools
+
 = 1.2.5.3 =
 
 - Minor fix for column centering using default mesh styles
