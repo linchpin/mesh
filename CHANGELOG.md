@@ -1,5 +1,11 @@
 # Change Log For Mesh
 
+## [1.2.5.5] - 2018-11-12
+
+### Fixes
+
+- Fixed wp_die in utilities
+
 ## [1.2.5.4] - 2018-11-06
 
 ### Fixes

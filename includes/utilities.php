@@ -584,8 +584,6 @@ function mesh_maybe_show_section_title( $post_id = '', $title = '' ) {
 		return false;
 	}
 
-	wp_die( print_r( $section_title_matches, true ) );
-
 	if ( ! empty( $section_title_matches[1] ) ) {
 		return false;
 	}
