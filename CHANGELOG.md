@@ -1,5 +1,11 @@
 # Change Log For Mesh
 
+## [1.2.5.6] - 2018-11-15
+
+### Fixes
+
+- Removed yoast content scoring from Mesh due to undocumented changes in WordPress SEO (Feature will come back at a later date)
+
 ## [1.2.5.5] - 2018-11-12
 
 ### Fixes
