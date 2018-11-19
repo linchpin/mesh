@@ -3,7 +3,7 @@ Contributors: linchpin_agency, aware, maxinacube, desrosj, nateallen, ebeltram, 
 Tags: page builder, template builder, layout builder, responsive, landing page builder, site builder, foundation, bootstrap, linchpin
 Requires at least: 4.0
 Tested up to: 4.9.8
-Stable tag: 1.2.5.5
+Stable tag: 1.2.5.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -72,6 +72,12 @@ Learn more about available hooks (filters and actions) by visiting the mesh our 
 3. Mesh templates and welcome.
 
 == Changelog ==
+
+= 1.2.5.6 =
+
+### Fixes
+
+- Had to temporarily disable WordPress SEO / Yoast Content Analysis from Mesh due to an undocumented change on Yoast's side. We will enable this feature again soon
 
 = 1.2.5.5 =
 

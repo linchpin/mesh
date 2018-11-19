@@ -19,18 +19,20 @@ mesh.integrations.yoast = function ( $ ) {
 
             $postBody = $('#post-body');
 
-            YoastSEO.app.registerPlugin( 'MeshAnalysis', {status: 'ready'});
-            YoastSEO.app.registerModification(
-                'content',
-                self.addMeshSections,
-                'MeshAnalysis'
-            );
+            if( typeof(YoastSEO) != 'undefined' ) {
+                YoastSEO.app.registerPlugin( 'MeshAnalysis', {status: 'ready'});
+                YoastSEO.app.registerModification(
+                    'content',
+                    self.addMeshSections,
+                    'MeshAnalysis'
+                );
 
-            $postBody.find(
-                'textarea.mesh-wp-editor-area'
-            ).on('keyup paste cut click', function () {
-                YoastSEO.app.pluginReloaded( 'MeshAnalysis' );
-            });
+                $postBody.find(
+                    'textarea.mesh-wp-editor-area'
+                ).on('keyup paste cut click', function () {
+                    YoastSEO.app.pluginReloaded( 'MeshAnalysis' );
+                });
+            }
         },
 
         /**
@@ -64,7 +66,9 @@ mesh.integrations.yoast = function ( $ ) {
                     }
                 }
             }).on('keyup paste cut click', function () {
-                YoastSEO.app.pluginReloaded( 'MeshAnalysis' );
+                if( typeof(YoastSEO) != 'undefined') {
+                    YoastSEO.app.pluginReloaded('MeshAnalysis');
+                }
             });
             return data + mesh_content;
         }
@@ -72,5 +76,5 @@ mesh.integrations.yoast = function ( $ ) {
 } ( jQuery );
 
 jQuery(function( $ ) {
-    mesh.integrations.yoast.init();
+   // mesh.integrations.yoast.init();
 });

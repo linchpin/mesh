@@ -82,8 +82,8 @@ class Yoast_SEO {
 			return;
 		}
 
-		wp_register_script( 'mesh-yoast-support', LINCHPIN_MESH___PLUGIN_URL . 'assets/js/integrations/yoast-seo.js', array( 'jquery', 'yoast-seo-post-scraper' ), LINCHPIN_MESH_VERSION );
-		wp_enqueue_script( 'mesh-yoast-support' );
+	//	wp_register_script( 'mesh-yoast-support', LINCHPIN_MESH___PLUGIN_URL . 'assets/js/integrations/yoast-seo.js', array( 'jquery', 'yoast-seo-post-scraper' ), LINCHPIN_MESH_VERSION );
+	//	wp_enqueue_script( 'mesh-yoast-support' );
 	}
 
 	/**
