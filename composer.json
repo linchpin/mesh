@@ -1,6 +1,7 @@
 {
   "name": "linchpin/mesh",
   "description": "A WordPress page builder, simplified.",
+  "version": "1.4.0",
   "homepage": "https://meshplugin.com",
   "authors": [
     {

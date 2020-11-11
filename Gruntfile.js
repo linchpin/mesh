@@ -106,7 +106,7 @@ module.exports = function (grunt) {
 				tasks: ['concat', 'uglify']
 			}
 		},
-
+/*
 		// copy all the files needed for a build within wordpress.org
 		copy: {
 			main: {
@@ -123,7 +123,7 @@ module.exports = function (grunt) {
 					{expand: true, src: ['./*.php'], dest: 'build/mesh/trunk/'}
 				]
 			}
-		}
+		} */
 	});
 
 	grunt.loadNpmTasks('grunt-wp-i18n');
