@@ -16,6 +16,9 @@ jobs:
         id: get_version
         run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\/v/}
 
+      - name: Composer Install
+        uses: php-actions/composer@v5
+
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
@@ -36,7 +39,7 @@ jobs:
         env:
           SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
           SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
-          SLUG: courier-notices
+          SLUG: mesh
 
       - name: Upload release assets
         uses: actions/upload-release-asset@v1
@@ -53,6 +56,3 @@ jobs:
         env:
           SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
           SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
-
-
-

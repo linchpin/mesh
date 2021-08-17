@@ -6,8 +6,9 @@ let rimraf        = require('rimraf');
 let yaml          = require('js-yaml');
 let fs            = require('fs');
 let named         = require('vinyl-named');
-let autoprefixer   = require('autoprefixer');
+let autoprefixer  = require('autoprefixer');
 let through2      = require('through2');
+let sass          = require('gulp-sass')(require('node-sass'));
 
 // Load all Gulp plugins into one variable
 const $ = plugins();
@@ -51,7 +52,7 @@ gulp.task(
 		setProductionMode,
 		clean,
 		javascript,
-		sass,
+		buildSass,
 		bumpPluginFile,
 		bumpPackageJson,
 		bumpReadmeStableTag,
@@ -76,7 +77,7 @@ gulp.task(
 	gulp.series(
 		clean,
 		javascript,
-		sass,
+		buildSass,
 		copy,
 		gulp.parallel(watch)
 	)
@@ -276,13 +277,13 @@ function copy() {
  *
  * @return {*}
  */
-function sass() {
+function buildSass() {
 	return gulp.src('assets/scss/*.scss')
 		.pipe($.sourcemaps.init())
-		.pipe($.sass({
+		.pipe(sass({
 			includePaths: PATHS.sass
-		}).on('error', $.sass.logError))
-		.pipe(gulp.dest('css'));
+		}).on('error', sass.logError))
+		.pipe( gulp.dest('css') );
 }
 
 /**

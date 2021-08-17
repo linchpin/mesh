@@ -10,7 +10,12 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 A page builder, simplified. Get the most flexibility to display content by adding multiple content sections within Pages, Posts, or Custom Post Types.
 
 == Description ==
-Mesh is the easiest way to add additional content to your Page, Post, or Custom Post Type in a responsive grid system. Adding a Mesh Section creates a new row on your page below the default WordPress content. Each Section can be divided into 1 to 4 Columns, providing Visual/Text editors for each Column. Give your Sections and Columns titles, drag to rearrange, add background images to Columns or an entire Section, then Publish your Section or save it as a Draft until your content is just right.
+
+This plugin is deprecated and no longer actively maintained excluding any security updates. The Block Editor/Gutenberg can handle many aspects of row and column content that this plugin provides.
+
+If you still would like to utilize this plugin you need to additionally install the classic-editor plugin as mesh *is not* compatible with the block editor
+
+Page, Post, or Custom Post Type in a responsive grid system. Adding a Mesh Section creates a new row on your page below the default WordPress content. Each Section can be divided into 1 to 4 Columns, providing Visual/Text editors for each Column. Give your Sections and Columns titles, drag to rearrange, add background images to Columns or an entire Section, then Publish your Section or save it as a Draft until your content is just right.
 
 Efficient and unobtrusive, Mesh was designed to simply extend the functionality of the normal page editor within WordPress to provide the flexibility of building pages in a responsive grid without adding code or editing page templates.
 
@@ -70,6 +75,18 @@ Learn more about available hooks (filters and actions) by visiting the mesh our 
 1. Mesh editor interface.
 2. Mesh front end display.
 3. Mesh templates and welcome.
+
+== 1.4.0 ==
+
+### Updated
+
+- Update the build process from grunt to gulp
+- Implemented deployments to .org from github
+
+### Fixes
+
+- Fixed an issue with ajax calls to Mesh Templates
+
 
 == Changelog ==
 
