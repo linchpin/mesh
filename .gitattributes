@@ -1,0 +1,19 @@
+# Ignore directories and files from the release zips
+
+# Directories
+/.wordpress-org export-ignore
+/.git/ export-ignore
+/.github/ export-ignore
+/assets/ export-ignore
+/node_modules/ export-ignore
+
+# Files
+/.gitignore export-ignore
+/.gitattributes export-ignore
+/.codeclimate.yml export-ignore
+/.editorconfig export-ignore
+/.distignore export-ignore
+/gulpfile.babel.js export-ignore
+/yarn.lock export-ignore
+/config.yml export-ignore
+/renovate.json export-ignore
