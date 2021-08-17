@@ -40,7 +40,7 @@ class Mesh_Templates {
 		add_action( 'manage_mesh_template_posts_custom_column', array( $this, 'add_layout_column' ), 10, 2 );
 		add_filter( 'manage_mesh_template_posts_columns', array( $this, 'add_layout_columns' ) );
 
-		include LINCHPIN_MESH___PLUGIN_DIR . '/class.mesh-templates-duplicate.php';
+		require_once LINCHPIN_MESH___PLUGIN_DIR . '/class.mesh-templates-duplicate.php';
 
 		add_action( 'load-edit.php', array( $this, 'admin_notices' ) );
 	}
@@ -245,7 +245,11 @@ class Mesh_Templates {
 			$blocks = $section_data['blocks'];
 		}
 
-		$mesh_layout_meta[ sanitize_title( 'row-' . $section_id ) ]['blocks'] = array(); // Reset blocks array.
+		if ( is_array( $mesh_layout_meta[ sanitize_title( 'row-' . $section_id ) ] ) ) {
+			$mesh_layout_meta[ sanitize_title( 'row-' . $section_id ) ]['blocks'] = array(); // Reset blocks array.
+		} else {
+			return;
+		}
 
 		foreach ( $blocks as $block_id => $block_data ) {
 			$block = get_post( (int) $block_id );
