@@ -35,7 +35,7 @@ class Mesh_Install {
 	 * Enqueue our notifications, but really enqueue everything
 	 */
 	public function admin_enqueue_scripts() {
-		wp_enqueue_script( 'admin-mesh-notifications', plugins_url( 'assets/js/admin-mesh-notifications.js', __FILE__ ), array(), LINCHPIN_MESH_VERSION, true );
+		wp_enqueue_script( 'admin-mesh-notifications', plugins_url( 'js/admin-mesh-notifications.js', __FILE__ ), array(), LINCHPIN_MESH_VERSION, true );
 
 		wp_localize_script( 'admin-mesh-notifications', 'mesh_notifications', array(
 			'dismiss_nonce' => wp_create_nonce( 'mesh_dismiss_notification_nonce' ),

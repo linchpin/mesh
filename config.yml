@@ -4,7 +4,7 @@ PORT: 8000
 # Autoprefixer will make sure your CSS works with these browsers
 COMPATIBILITY:
   - "last 2 versions"
-  - "ie >= 10"
+  - "ie >= 11"
   - "ios >= 7"
 
 # Gulp will reference these paths when it copies files
@@ -17,6 +17,7 @@ PATHS:
     - "!assets/{img,js,scss,css}/**/*"
   # Paths to JavaScript entry points for webpack to bundle modules
   entries:
+    - "assets/js/admin-mesh-notifications.js"
     - "assets/js/mesh.js"
     - "assets/js/admin-mesh.js"
 

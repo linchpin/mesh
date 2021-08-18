@@ -931,7 +931,7 @@ class Mesh {
 			return;
 		}
 
-		wp_enqueue_script( 'admin-mesh', plugins_url( 'assets/js/admin-mesh.js', __FILE__ ), array(
+		wp_enqueue_script( 'admin-mesh', plugins_url( 'js/admin-mesh.js', __FILE__ ), array(
 			'jquery',
 			'jquery-ui-draggable',
 			'jquery-ui-droppable',
@@ -994,7 +994,7 @@ class Mesh {
 	 * @return void
 	 */
 	public function admin_enqueue_styles() {
-		wp_enqueue_style( 'admin-mesh', plugins_url( 'assets/css/admin-mesh.css', __FILE__ ), array(), LINCHPIN_MESH_VERSION );
+		wp_enqueue_style( 'admin-mesh', plugins_url( 'css/admin-mesh.css', __FILE__ ), array(), LINCHPIN_MESH_VERSION );
 	}
 
 	/**
@@ -1015,7 +1015,7 @@ class Mesh {
 			return;
 		} else {
 			if ( 0 === $css_mode ) {
-				wp_enqueue_script( 'mesh-frontend', plugins_url( 'assets/js/mesh.js', __FILE__ ), array( 'jquery' ), LINCHPIN_MESH_VERSION, true );
+				wp_enqueue_script( 'mesh-frontend', plugins_url( 'js/mesh.js', __FILE__ ), array( 'jquery' ), LINCHPIN_MESH_VERSION, true );
 			}
 		}
 	}

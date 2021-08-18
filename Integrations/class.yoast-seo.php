@@ -70,8 +70,8 @@ class Yoast_SEO {
 			return;
 		}
 
-		$mesh_screens = array( 'post', 'edit' );
-		$current_screen = get_current_screen();
+		$mesh_screens      = array( 'post', 'edit' );
+		$current_screen    = get_current_screen();
 		$current_post_type = get_post_type_object( $current_screen->post_type );
 
 		if ( ! in_array( $current_screen->base, $mesh_screens, true ) ) {

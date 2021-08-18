@@ -46,7 +46,7 @@ class Mesh_Admin_Pointers {
 			return $localized_data;
 		}
 
-		$screen = get_current_screen();
+		$screen    = get_current_screen();
 		$screen_id = $screen->id;
 
 		// Get pointers for this screen.
