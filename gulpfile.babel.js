@@ -316,7 +316,7 @@ function javascript() {
  */
 function watch() {
 	gulp.watch('readme.txt', readme);
-	gulp.watch('assets/scss/**/*.scss').on('all', sass);
+	gulp.watch('assets/scss/**/*.scss').on('all', buildSass);
 	gulp.watch('assets/js/**/*.js').on('all', gulp.series(javascript));
 	gulp.watch(PATHS.assets, copy);
 }
