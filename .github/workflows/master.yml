@@ -35,6 +35,16 @@ jobs:
           yarn install
           yarn build
 
+      - name: Clean Build Files/Folders
+        run : |
+          chmod +x ./.deployment/cleanup.sh
+          sh ./.deployment/cleanup.sh;
+
+      - name: Create Sync Zip
+        run: |
+          zip -r mesh.zip ./mesh
+          zip -r mesh-${{ steps.get_version.outputs.VERSION }}.zip ./mesh
+
       - name: Create Release
         id: create_release
         uses: actions/create-release@latest
