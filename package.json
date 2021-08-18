@@ -45,7 +45,7 @@
     "email": "sayhi@linchpin.com"
   },
   "engines": {
-    "node": "14.10.0"
+    "node": "^14"
   },
   "browserslist": [
     "last 1 version",
