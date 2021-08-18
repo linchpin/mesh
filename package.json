@@ -1,57 +1,56 @@
 {
   "name": "mesh",
-  "version": "1.2.5.5",
-  "license": "GPL-2.0",
-  "respository": "https://github.com/linchpin/mesh",
-  "author": "Linchpin <sayhi@linchpin.com> (https://linchpin.com)",
-  "devDependencies": {
-    "grunt": "^1.0.3",
-    "grunt-contrib-concat": "~1.0.1",
-    "grunt-contrib-copy": "^1.0.0",
-    "grunt-contrib-cssmin": "^3.0.0",
-    "grunt-contrib-uglify": "^4.0.0",
-    "grunt-contrib-watch": "^1.1.0",
-    "grunt-newer": "^1.3.0",
-    "grunt-sass": "^3.0.2",
-    "grunt-wp-i18n": "^1.0.2",
-    "matchdep": "^2.0.0",
-    "node-sass": "^4.10.0"
-  },
-  "keywords": [
-    "linchpin",
-    "sections",
-    "content",
-    "page builder",
-    "page builder plugin",
-    "design",
-    "wysiwyg",
-    "home page builder",
-    "template builder",
-    "layout builder",
-    "landing page builder",
-    "website builder",
-    "site builder",
-    "drag and drop builder",
-    "editor",
-    "page layout",
-    "visual editor"
-  ],
-  "description": "![Mesh Banner Image](https://linchpin.com/wp-content/uploads/2016/05/mesh-banner-github.jpg) # Mesh - A WordPress Page Builder, Simplified",
-  "main": "Gruntfile.js",
-  "directories": {
-    "doc": "docs",
-    "test": "tests"
-  },
-  "dependencies": {},
+  "version": "1.4.0",
+  "description": "A way to display, manage, and control front end notifications for users, globally or individually, in the header,footer, by shortcode or by page.",
+  "main": "gulpfile.babel.js",
   "scripts": {
-    "test": "mocha"
+    "start": "gulp",
+    "build": "gulp build:release --production --release"
+  },
+  "author": "Linchpin <sayhi@linchpin.com>",
+  "license": "GPL-2.0-or-later",
+  "dependencies": {
+    "lodash": "^4.17.20",
+    "save-dev": "^0.0.1-security",
+    "through2": "^4.0.2"
+  },
+  "devDependencies": {
+    "gulp": "4.0.2",
+    "gulp-bump": "3.2.0",
+    "gulp-clean-css": "4.3.0",
+    "gulp-cli": "2.3.0",
+    "gulp-concat": "2.6.1",
+    "gulp-extname": "0.2.2",
+    "gulp-if": "3.0.0",
+    "gulp-load-plugins": "2.0.7",
+    "gulp-postcss": "9.0.0",
+    "gulp-readme-to-markdown": "0.2.1",
+    "gulp-replace": "1.1.3",
+    "gulp-sass": "5.0.0",
+    "gulp-sourcemaps": "3.0.0",
+    "gulp-uglify": "3.0.2",
+    "js-yaml": "4.1.0",
+    "kind-of": "6.0.3",
+    "postcss": "^8.3.6",
+    "rimraf": "3.0.2",
+    "vinyl-named": "1.1.0",
+    "yargs": "17.1.1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://aaronware@github.com/linchpin/mesh.git"
+    "url": "https://github.com/linchpin/mesh.git"
   },
   "bugs": {
-    "url": "https://github.com/linchpin/mesh/issues"
+    "url": "https://github.com/linchpin/mesh/issues",
+    "email": "sayhi@linchpin.com"
   },
-  "homepage": "https://meshplugin.com"
+  "engines": {
+    "node": "14.10.0"
+  },
+  "browserslist": [
+    "last 1 version",
+    "> 1%",
+    "maintained node versions",
+    "not dead"
+  ]
 }

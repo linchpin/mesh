@@ -24,6 +24,7 @@ class Mesh_Upgrades {
 		add_action( 'admin_init', array( $this, 'admin_init' ) );
 		add_action( 'admin_notices', array( $this, 'show_update_notice' ) );
 		add_action( 'admin_notices', array( $this, 'show_review_nag' ), 11 );
+		add_action( 'admin_notices', array( $this, 'show_classic_editor_notice' ), 12 );
 	}
 
 	/**
@@ -194,6 +195,17 @@ class Mesh_Upgrades {
 
 		if ( false !== $mesh_settings && empty( $notifications['update-notice'] ) ) {
 			include LINCHPIN_MESH___PLUGIN_DIR . 'admin/upgrade-notice.php';
+		}
+	}
+
+	/**
+	 * Show a notice if the user does not have the classic editor enabled.
+	 *
+	 * @since 1.4.0
+	 */
+	public function show_classic_editor_notice() {
+		if ( ! class_exists( 'Classic_Editor' ) ) {
+			include LINCHPIN_MESH___PLUGIN_DIR . 'admin/editor-notice.php';
 		}
 	}
 

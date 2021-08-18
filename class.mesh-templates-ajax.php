@@ -217,7 +217,7 @@ class Mesh_Templates_AJAX {
 
 			$mesh_templates_duplicate = new Mesh_Templates_Duplicate();
 
-			$duplicate_sections = $mesh_templates_duplicate->duplicate_sections( $mesh_template_id, $post_id );
+			$duplicate_sections = $mesh_templates_duplicate->duplicate_sections( $mesh_template_id, $post_id, false );
 
 			if ( ! empty( $duplicate_sections ) ) {
 				echo wp_kses( $duplicate_sections, Mesh::get_admin_template_kses() );
