@@ -17,7 +17,7 @@ gulpfile.babel.js
 markdown.rb
 phpdoc.config.xml
 phpunit.xml.dist
-.codeclimage.yml
+.codeclimate.yml
 .eslintrc
 .jshintignore
 .mdlrc
@@ -59,6 +59,7 @@ phpunit.xml
 scss
 Thumbs.db
 mesh
+package.json
 phpDocumentor.phar
 yarn-error.log
 dependabot.yml
