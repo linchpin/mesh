@@ -6,7 +6,6 @@ let rimraf        = require('rimraf');
 let yaml          = require('js-yaml');
 let fs            = require('fs');
 let named         = require('vinyl-named');
-let autoprefixer  = require('autoprefixer');
 let through2      = require('through2');
 let sass          = require('gulp-sass')(require('node-sass'));
 
@@ -57,16 +56,6 @@ gulp.task(
 		bumpPackageJson,
 		bumpReadmeStableTag,
 		bumpComposerJson,
-		readme,
-		copy
-	)
-);
-
-// Generate the changelog.md from the readme.txt
-gulp.task(
-	'readme',
-	gulp.series(
-		readme,
 		copy
 	)
 );
@@ -95,24 +84,6 @@ function clean(done) {
 	rimraf('js', done);
 
 	done();
-}
-
-/**
- * Create a README.MD file for github from the WordPress.org readme
- *
- * @since 1.4.0
- */
-function readme(done) {
-	return gulp.src(['readme.txt'])
-		.pipe($.readmeToMarkdown({
-			details: false,
-			screenshot_ext: ['jpg', 'jpg', 'png'],
-			extract: {
-				'changelog': 'CHANGELOG',
-				'Frequently Asked Questions': 'FAQ'
-			}
-		}))
-		.pipe( gulp.dest('./') );
 }
 
 /**

@@ -7,15 +7,6 @@ COMPATIBILITY:
   - "ie >= 10"
   - "ios >= 7"
 
-# UnCSS will use these settings
-UNCSS_OPTIONS:
-  html:
-    # Search for used CSS classes in generated HTML files
-    - "dist/**/*.html"
-  ignore:
-    - !!js/regexp .foundation-mq
-    - !!js/regexp ^\.is-.*
-
 # Gulp will reference these paths when it copies files
 PATHS:
   # Path to dist folder

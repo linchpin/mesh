@@ -76,7 +76,9 @@ Learn more about available hooks (filters and actions) by visiting the mesh our 
 2. Mesh front end display.
 3. Mesh templates and welcome.
 
-== 1.4.0 ==
+== Changelog ==
+
+= 1.4.0 =
 
 ### Updated
 
@@ -86,9 +88,6 @@ Learn more about available hooks (filters and actions) by visiting the mesh our 
 ### Fixes
 
 - Fixed an issue with ajax calls to Mesh Templates
-
-
-== Changelog ==
 
 = 1.2.5.6 =
 

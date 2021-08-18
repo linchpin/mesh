@@ -1,0 +1,21 @@
+# Basic dependabot.yml file with
+# minimum configuration for two package managers
+
+version: 2
+
+updates:
+  - package-ecosystem: composer
+    directory: /
+    schedule:
+      interval: daily
+    allow:
+      - dependency-type: production
+    versioning-strategy: increase
+
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: daily
+    allow:
+      - dependency-type: production
+    versioning-strategy: increase
