@@ -5,12 +5,12 @@
   "main": "gulpfile.babel.js",
   "scripts": {
     "start": "gulp",
-    "build": "gulp build:release --production --release"
+    "build": "gulp build --production"
   },
   "author": "Linchpin <sayhi@linchpin.com>",
   "license": "GPL-2.0-or-later",
   "dependencies": {
-    "lodash": "^4.17.20",
+    "lodash": "^4.17.21",
     "node-sass": "^6.0.1",
     "save-dev": "^0.0.1-security",
     "through2": "^4.0.2"
