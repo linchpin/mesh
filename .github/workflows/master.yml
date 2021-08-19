@@ -27,7 +27,7 @@ jobs:
 
       - name: Install Composer Dependencies
         run: |
-          composer install --prefer-dist --no-progress --no-suggest
+          composer install --prefer-dist --no-progress --no-suggest --no-ansi --no-dev --no-interaction --no-plugins --no-progress --no-scripts --optimize-autoloader
 
       - name: Build Plugin Frontend
         run: |
