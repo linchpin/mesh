@@ -2,8 +2,8 @@
 Contributors: linchpin_agency, aware, maxinacube, desrosj, nateallen, ebeltram, lulu5588, fischfood
 Tags: page builder, template builder, layout builder, responsive, landing page builder, site builder, foundation, bootstrap, linchpin
 Requires at least: 4.0
-Tested up to: 5.8.2
-Stable tag: 1.4.0
+Tested up to: 5.9
+Stable tag: 1.4.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -77,6 +77,12 @@ Learn more about available hooks (filters and actions) by visiting the mesh our 
 3. Mesh templates and welcome.
 
 == Changelog ==
+
+= 1.4.1 =
+
+### Fixes
+
+- Fixed integrations directory not being called based on capitalization rules
 
 = 1.4.0 =
 

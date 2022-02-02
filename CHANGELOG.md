@@ -6,7 +6,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [1.4.0] - 08-18-2021
+## [1.4.1] - 2022-02-02
+### Fixed
+- Fixed integrations directory not being called based on capitalization rules
+
+## [1.4.0] - 2021-08-18
 ### Updated
 - Update the build process from grunt to gulp
 - Implemented deployments to .org from github
