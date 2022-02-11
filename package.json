@@ -11,7 +11,7 @@
   "license": "GPL-2.0-or-later",
   "dependencies": {
     "lodash": "^4.17.21",
-    "node-sass": "^6.0.1",
+    "node-sass": "^7.0.0",
     "save-dev": "^0.0.1-security",
     "through2": "^4.0.2"
   },
